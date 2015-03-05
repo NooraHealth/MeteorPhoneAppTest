@@ -1,0 +1,36 @@
+<template name="layout">
+  <div class="uk-container uk-container-center uk-margin-large-top">
+    <header>
+      {{> yield region='title_bar'}}
+    </header>
+  </div>
+    
+  <div id="nh_content">
+    <div class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom">
+      {{> yield region='content'}}
+    </div>
+  </div>
+</template>
+
+<template name='loading'>
+  <div class="uk-container uk-container-center uk-margin-large-top">
+<div class="uk-container-center uk-width-1-1">
+  <span class="uk-text-center uk-text-bold uk-text-large"> NooraHealth is loading, this process may take some time <i class="uk-icon-spinner uk-icon-spin" ></i></span>
+</div>
+</div>
+</template>
+
+<template name="module_layout">
+   <div class="uk-container uk-container-center uk-margin-large-top uk-margin-large-bottom">
+    <header>
+      {{nav}}
+      {{> yield region='title_bar'}}
+    </header>
+  </div>
+    
+  <div id="nh_content">
+    <div class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom">
+      {{> yield region='content'}}
+    </div>
+  </div>
+</template>
