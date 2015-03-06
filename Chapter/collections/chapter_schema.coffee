@@ -3,7 +3,9 @@
 # and is displayed on the home page. 
 ###
 
-Schema.Chapter = new SimpleSchema
+Chapters = new Meteor.collection 'nh_chapters'
+
+ChapterSchema = new SimpleSchema
   title:
     type:String
   lessons:
@@ -16,4 +18,4 @@ Schema.Chapter = new SimpleSchema
     type:String
     min:0
 
-Chapters.attachSchema Schema.Chapter
+Chapters.attachSchema ChapterSchema
