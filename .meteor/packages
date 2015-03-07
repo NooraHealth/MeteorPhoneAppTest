@@ -12,3 +12,4 @@ underscore
 coffeescript
 mike:mocha
 aldeed:collection2
+iron:router
