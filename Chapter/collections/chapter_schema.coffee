@@ -3,8 +3,6 @@
 # and is displayed on the home page. 
 ###
 
-#Chapters = new Meteor.collection 'nh_chapters'
-
 ChapterSchema = new SimpleSchema
   title:
     type:String
