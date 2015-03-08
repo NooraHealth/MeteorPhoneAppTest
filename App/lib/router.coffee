@@ -8,6 +8,8 @@ Router.map ()->
   this.route '/', {
     path: '/'
     name: 'home'
+    data: ()->
+      return {chapters: [0,1,2]}
   }
 
   ###
