@@ -13,7 +13,7 @@ DATA_URL = "http://serene-forest-4377.herokuapp.com/VascularContent/VascularMeta
 /** ------------------ COLLECTION DEFINITIONS ----------------- **/
 
 //The necessary collections --It would be great
-Chapters = new Meteor.Collection("nh_chapters");
+Curriculum = new Meteor.Collection("nh_home_pages");
 Modules = new Meteor.Collection("nh_modules");
 Lessons = new Meteor.Collection("nh_lessons");
 Attempts = new Meteor.Collection("nh_attempts");

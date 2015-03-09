@@ -5,7 +5,7 @@ if typeof MochaWeb isnt 'undefined'
         chai.assert Meteor.release
 
       it "should have all collections defined", ()->
-        chai.assert Chapters
+        chai.assert Curriculum
         chai.assert Modules
         chai.assert PreviousJson
         chai.assert Lessons

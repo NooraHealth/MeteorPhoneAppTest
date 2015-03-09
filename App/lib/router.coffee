@@ -10,7 +10,8 @@ Router.map ()->
     template: 'home'
     layoutTemplate: 'layout'
     data: ()->
-      return {chapters: [0,1,2]}
+      console.log Curriculum.findOne({})
+      return Curriculum.findOne({})
   }
 
   ###
