@@ -13,3 +13,4 @@ coffeescript
 mike:mocha
 aldeed:collection2
 iron:router
+dburles:collection-helpers
