@@ -2,8 +2,7 @@ Lessons.helpers {
   getSublessonDocuments: ()->
     
     if !this.has_sublessons
-      throw new Meteor.error "malformed-document", "Your curriculum object
-        does not contain a properly formed lessons field."
+      return []
 
     lessons = []
     _.each this.lessons, (lessonID) ->

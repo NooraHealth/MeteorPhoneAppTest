@@ -32,7 +32,7 @@ Router.map ()->
     data: ()->
       if this.ready()
         chapterID = this.params.nh_id
-        chapter = Lessons.findOne {nh_id: this.params.id}
+        chapter = Lessons.findOne {nh_id: chapterID}
         if chapter
           return {lessons: chapter.getSublessonDocuments()}
   }
