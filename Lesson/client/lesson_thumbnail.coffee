@@ -12,12 +12,7 @@ Template.lessonThumbnail.events
 
     $(".cd-panel").addClass 'is-visible'
 
-  '.click .container': (event, template) ->
-    event.preventDefault()
-    console.log "removing class"
-    $(".cd-panel").removeClass 'is-visible'
-
-  '.click .cd-panel-close': (event, template) ->
+  '.click .cd-panel': (event, template) ->
     event.preventDefault()
     console.log "removing class"
     $(".cd-panel").removeClass 'is-visible'
