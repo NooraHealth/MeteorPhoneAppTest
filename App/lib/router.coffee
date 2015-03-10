@@ -31,6 +31,4 @@ Router.map ()->
     name: 'chapter'
     data: ()->
       console.log "in the chapter page route"
-    
-    
   }
