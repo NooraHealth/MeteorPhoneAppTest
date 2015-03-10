@@ -37,25 +37,20 @@ input {
   margin: 5px;
 }
 
+.lesson-panel {
+ border: 1px solid #ddd; 
+ max-width: 900px;
+}
+
+.lesson-panel img {
+  width:100%;
+}
+
 .silver {
   color: #c5c5c5 !important;
   font-weight: 600;
 }
 
-.donation-card {
-  background-color: #FFFFFF;
-  padding: 10px;
-  height: 420px;
-}
-
-.donation-card input:not([type='submit']) {
-  background-color: #FFFFFF;
-}
-
-.donation-card input[type='submit'] {
-  height: 40px;
-  font-size: 20px;
-}
  
 #login-form {
   padding-left: 40px;
@@ -342,7 +337,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 
 @media (min-width: 992px) {
   .thumbnail {
-    height: 280px;
+    height: 300px;
   }
 }
 
