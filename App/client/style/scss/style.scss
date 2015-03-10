@@ -34,6 +34,89 @@ a {
 	text-decoration: none;
 }
 
+
+/* -------------------------------- 
+
+Custom NH components 
+
+-------------------------------- */
+
+.lesson-panel {
+  color: #333;
+  border: 1px solid $border-color; 
+  margin-left: auto;
+  margin-right: auto;
+  overflow-y: scroll;
+}
+
+.greyed-out {
+  opacity: .75;
+  -webkit-opacity: .75;
+  -moz-opacity: .75;
+}
+
+.greyed-out:hover {
+  opacity: 1;
+  -webkit-opacity: 1;
+  -moz-opacity: 1;
+}
+
+.lesson-panel img {
+  width:100%;
+  border-radius: 10px 10px 10px 10px;
+  -moz-border-radius: 10px 10px 10px 10px;
+  -webkit-border-radius: 10px 10px 10px 10px;
+  border: 0px solid $border-color;
+  
+}
+
+.progress {
+  margin: 5px;
+}
+
+.padding-bottom {
+  padding-bottom: 30px;
+}
+
+.padding-bottom-sm {
+  padding-bottom: 10px;
+}
+
+.padding-top {
+  padding-top: 30px;
+}
+
+.padding-top-sm {
+  padding-top: 10px;
+}
+
+
+@media (max-width: 768px) {
+  .lesson-panel {
+    max-width: 500px;
+  }
+}
+
+@media (max-width: 992px) {
+  .thumbnail {
+    max-width: 400px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+}
+@media (min-width: 768px) {
+
+  .lesson-panel {
+    max-width: 700px;
+  }
+}
+
+@media (min-width: 992px) {
+  .thumbnail {
+    height: 330px;
+  }
+}
 /* -------------------------------- 
 
 Main components 
@@ -45,29 +128,11 @@ html, body {
 }
 
 .cd-main-content {
-	text-align: center;
 
 	h1 {
 		@include font-size(20px);
 		color: lighten($color-3, 16%);
 		padding: 4em 0;
-	}
-
-	.cd-btn {
-		position: relative;
-		display: inline-block;
-		padding: 1em 2em;
-		background-color: $color-2;
-		color: $color-4;
-		font-weight: bold;
-		@include font-smoothing;
-		border-radius: 50em;
-		box-shadow: inset 0 1px 0 rgba(#fff, .5), 0 0 5px rgba(#000, .1);
-		@include transition(all .2s);
-
-		.no-touch &:hover {
-			box-shadow: inset 0 1px 0 rgba(#fff, .5), 0 0 20px rgba(#000, .3);
-		}
 	}
 
 	@include MQ(L) {
