@@ -1,6 +1,6 @@
 <template name="lessonThumbnail">
   <a href="{{ pathFor 'section'}}">
-    <div class="panel lesson-panel">
+    <div class="panel lesson-panel greyed-out">
       <div class="panel-heading"> 
         <div class="panel-title">{{title}}</div>
       </div> 
@@ -20,7 +20,10 @@
       </div>
 
       <div class="col-lg-6 col-md-6 col-sm-6 ">
-        <p>{{description}}</p>
+        <span class="description">{{description}}</span>
+        <span class="hidden-text">
+          I AM HIDDEN
+        </span>
       </div>
       </div>
     </div>

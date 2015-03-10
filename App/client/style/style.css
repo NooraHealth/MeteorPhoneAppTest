@@ -39,9 +39,32 @@ input {
 
 .lesson-panel {
   color: #333;
- border: 1px solid #ddd; 
- margin-left: auto;
- margin-right: auto;
+  border: 1px solid #ddd; 
+  margin-left: auto;
+  margin-right: auto;
+  overflow-y: scroll;
+}
+
+.greyed-out {
+  opacity: .75;
+  -webkit-opacity: .75;
+  -moz-opacity: .75;
+}
+
+.greyed-out:hover {
+  opacity: 1;
+  -webkit-opacity: 1;
+  -moz-opacity: 1;
+}
+
+.hidden-text {
+  opacity: 0;
+}
+.hidden-text:hover {
+  opacity: 100;
+}
+.description:hover {
+  opacity: 0;
 }
 
 .lesson-panel img {
