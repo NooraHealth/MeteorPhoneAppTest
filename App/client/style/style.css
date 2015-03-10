@@ -87,10 +87,6 @@ h6,
   line-height: 1.1;
 }
 
-.container {
-  padding: 0px 80px 0px 80px !important;
-}
-
 .form-row {
   border-bottom: solid 1px black;
   padding: 20px 20px 5px 0px;
