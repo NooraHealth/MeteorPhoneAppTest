@@ -13,7 +13,7 @@ Router.map ()->
       if this.ready()
         curr = Curriculum.findOne({})
         if curr
-          return {chapters: curr.getLessons()}
+          return {chapters: curr.getLessonDocuments()}
   }
 
   ###
