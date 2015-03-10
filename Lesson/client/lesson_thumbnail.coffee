@@ -7,10 +7,7 @@ Template.lessonThumbnail.helpers
     
 Template.lessonThumbnail.events
   'click .lesson-panel':(event, template)->
-    console.log "adding class"
-    event.preventDefault()
-
-    $(".cd-panel").addClass 'is-visible'
+    $("#panel" + @.nh_id).addClass 'is-visible'
 
 
 
