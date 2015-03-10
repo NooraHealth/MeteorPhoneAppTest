@@ -25,13 +25,13 @@ Router.map ()->
     where: 'server'
   }
 
-  this.route '/chapter/:id', {
-    path: '/chapter/:id'
+  this.route '/chapter/:nh_id', {
+    path: '/chapter/:nh_id'
     name: 'chapter'
     layoutTemplate: 'layout'
     data: ()->
       if this.ready()
-        chapterID = this.params.id
+        chapterID = this.params.nh_id
         chapter = Lessons.findOne {nh_id: this.params.id}
         if chapter
           return {lessons: chapter.getSublessonDocuments()}
