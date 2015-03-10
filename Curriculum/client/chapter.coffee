@@ -1,4 +1,4 @@
-Template.chapter.helpers
+Template.chapterThumbnail.helpers
   imageURL: ()->
     if _.isEmpty(@)
       return ""
@@ -6,7 +6,7 @@ Template.chapter.helpers
       return MEDIA_URL+ @.image
     
 
-Template.chapter.events
+Template.chapterThumbnail.events
   "click .thumbnail" : (event, template)->
     id = $(event.target).parent('a').attr('id')
     console.log id

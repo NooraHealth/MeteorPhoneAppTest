@@ -25,3 +25,12 @@ Router.map ()->
     where: 'server'
 
   }
+
+  this.route '/chapter/:id', {
+    path: '/chapter/:id'
+    name: 'chapter'
+    data: ()->
+      console.log "in the chapter page route"
+    
+    
+  }
