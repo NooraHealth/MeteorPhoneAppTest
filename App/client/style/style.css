@@ -40,6 +40,8 @@ input {
 .lesson-panel {
  border: 1px solid #ddd; 
  max-width: 900px;
+ margin-left: auto;
+ margin-right: auto;
 }
 
 .lesson-panel img {
