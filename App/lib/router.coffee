@@ -23,12 +23,16 @@ Router.map ()->
     path: '/logout'
     name: 'logout'
     where: 'server'
-
   }
 
   this.route '/chapter/:id', {
     path: '/chapter/:id'
     name: 'chapter'
+    layoutTemplate: 'layout'
     data: ()->
-      console.log "in the chapter page route"
+      if this.ready()
+        chapterID = this.params.id
+        chapter = Lessons.findOne {nh_id: this.params.id}
+        if chapter
+          return {lessons: chapter.getSublessonDocuments()}
   }
