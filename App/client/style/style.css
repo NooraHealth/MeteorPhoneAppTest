@@ -38,6 +38,7 @@ input {
 }
 
 .lesson-panel {
+  color: #333;
  border: 1px solid #ddd; 
  margin-left: auto;
  margin-right: auto;
