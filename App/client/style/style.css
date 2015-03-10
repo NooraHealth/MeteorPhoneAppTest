@@ -33,10 +33,6 @@ input {
   background-color: #78e95c !important;
 }
 
-.thumbnail {
-  height: 280px;
-}
-
 .progress {
   margin: 5px;
 }
@@ -343,6 +339,13 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     width: 100%;
   }
 }
+
+@media (min-width: 992px) {
+  .thumbnail {
+    height: 280px;
+  }
+}
+
 .has-error .input-group-addon {
   color: #a94442;
   background-color: #f2dede;
