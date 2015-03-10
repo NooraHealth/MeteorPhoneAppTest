@@ -8,7 +8,10 @@ Template.chapter.helpers
 
 Template.chapter.events
   "click .thumbnail" : (event, template)->
-    console.log $(event.target).parent('a')
+    id = $(event.target).parent('a').attr('id')
+    console.log id
+    Router.go '/chapter/'+id
+
 
 
 
