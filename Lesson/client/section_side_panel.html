@@ -10,7 +10,12 @@
 
     <div class="cd-panel-container">
       <div class="cd-panel-content">
-        CONTENT
+        <ul class="list-group">
+          {{#each sections}}
+          <li class="list-group-item"> {{ >sectionThumbnail}} </li>
+          {{/each}}
+
+        </ul>
       </div>
     </div>
   </div>

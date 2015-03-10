@@ -344,7 +344,7 @@ html, body {
 	/* smooth scrolling on touch devices */
 	-webkit-overflow-scrolling: touch;
 
-	p {
+	p, li {
 		@include font-size(14px);
 		color: $color-3;
 		line-height: 1.4;
@@ -356,7 +356,7 @@ html, body {
 	}
 
 	@include MQ(M) {
-		p {
+		p, li {
 			@include font-size(16px);
 			line-height: 1.6;
 		}
