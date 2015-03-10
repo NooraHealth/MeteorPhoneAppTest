@@ -10,8 +10,10 @@ Router.map ()->
     template: 'home'
     layoutTemplate: 'layout'
     data: ()->
-      console.log Curriculum.findOne({})
-      return Curriculum.findOne({})
+      if this.ready()
+        curr = Curriculum.findOne({})
+        if curr
+          return {chapters: curr.getLessons()}
   }
 
   ###
