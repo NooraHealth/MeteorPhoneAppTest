@@ -33,6 +33,13 @@ input {
   background-color: #78e95c !important;
 }
 
+.thumbnail {
+  height: 280px;
+}
+
+.progress {
+  margin: 5px;
+}
 
 .silver {
   color: #c5c5c5 !important;
