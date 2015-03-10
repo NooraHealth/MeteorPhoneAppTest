@@ -39,7 +39,6 @@ input {
 
 .lesson-panel {
  border: 1px solid #ddd; 
- max-width: 900px;
  margin-left: auto;
  margin-right: auto;
 }
@@ -318,6 +317,21 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .btn-toolbar .input-group {
   float: left;
 }
+@media (max-width: 768px) {
+  .lesson-panel {
+    max-width: 500px;
+  }
+}
+
+@media (max-width: 992px) {
+  .thumbnail {
+    max-width: 400px;
+    margin-right: auto;
+    margin-left: auto;
+
+  }
+
+}
 @media (min-width: 768px) {
   .form-inline .input-group {
     display: inline-table;
@@ -330,6 +344,9 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
   .form-inline .input-group > .form-control {
     width: 100%;
+  }
+  .lesson-panel {
+    max-width: 700px;
   }
 }
 
