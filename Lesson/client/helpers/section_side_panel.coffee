@@ -9,7 +9,7 @@ Template.sectionSidePanel.helpers
         return @.getSublessonDocuments()
 
 Template.sectionSidePanel.events
-  
+ 
   'click .cd-panel-close': (event, template) ->
     $("#panel" + @.nh_id).removeClass 'is-visible'
 

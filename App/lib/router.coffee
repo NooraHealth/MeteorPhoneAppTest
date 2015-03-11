@@ -25,6 +25,23 @@ Router.map ()->
     where: 'server'
   }
 
+  ###
+  # Module Sequence
+  ###
+  this.route '/modules/:nh_id', {
+    path: '/modules/:nh_id'
+    layoutTemplate: 'layout'
+    name: 'ModulesSequence'
+    data: () ->
+      if this.ready()
+        lesson = Lessons.findOne {nh_id: this.params.nh_id}
+        return {lesson: lesson}
+        
+  }
+
+  ###
+  # Chapter Page
+  ###
   this.route '/chapter/:nh_id', {
     path: '/chapter/:nh_id'
     name: 'chapter'
@@ -36,3 +53,4 @@ Router.map ()->
         if chapter
           return {lessons: chapter.getSublessonDocuments()}
   }
+  
