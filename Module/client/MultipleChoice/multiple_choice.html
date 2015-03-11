@@ -1,4 +1,25 @@
 
 <template name="multipleChoiceModule">
-  <p>Multiple CHOICE </p>
+
+{{>question}}
+
+<form  role='form'>  
+  {{#each options}}
+
+  {{/each}}
+  <div class="row">
+    <button value="{{option 0}}"> <img src="{{normalIconSrc}}"/></button>
+  </div>
+  <div class="row">
+    <button value="{{option 1}}"> <img src="{{callDoctorIconSrc}}"/></button>
+  </div>
+  <div class="row">
+    <button value="{{option 2}}"> <img src="{{emergencyIcon}}"/></button>
+  </div>
+</form>
+
+{{>moduleImage}}
+
+{{>answer}}
+
 </template>
