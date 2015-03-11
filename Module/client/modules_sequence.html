@@ -1,3 +1,10 @@
 <template name="ModulesSequence">
   <p> MODULE SEQUNECE</p>
+  {{#each modules}} 
+    {{> modulePanel}}
+  {{/each}}
+</template>
+
+<template name="modulePanel">
+  <p>I am a module panel</p>
 </template>

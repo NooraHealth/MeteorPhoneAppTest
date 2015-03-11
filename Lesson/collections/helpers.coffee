@@ -11,4 +11,18 @@ Lessons.helpers {
         lessons.push lesson
 
     return lessons
+
+  getModulesSequence: ()->
+    if !this.first_module
+      Meteor.Error "This lesson does not have any modules"
+
+    else
+      modules = []
+      next_module = @.first_module
+      while next_module != '-1'
+        module = Modules.findOne {nh_id: next_module}
+        modules.push module
+        next_module = module.next_module
+
+      return modules
 }
