@@ -44,16 +44,15 @@ Custom NH components
 .section-panel {
   display: inline-block;
   width: $panel-width-S;
-}
-
-.section-panel img {
-  width: $panel-width-XL;
-  padding: 5px;
-  vertical-align: middle;
-}
-
-.section-panel span {
-  vertical-align: middle;
+  
+  img {
+    width: $panel-width-XL;
+    padding: 5px;
+    vertical-align: middle;
+  }
+  span {
+    vertical-align: middle;
+  }
 }
 
 .lesson-panel {
@@ -66,10 +65,15 @@ Custom NH components
 
   td {
     padding: $padding-M;
+    vertical-align: middle;
   }
 
-  div {
-    vertical-align: middle;
+  img {
+    width: 100%;
+    border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border: 0px solid $border-color;
   }
 }
 
@@ -85,39 +89,14 @@ Custom NH components
   -moz-opacity: 1;
 }
 
-.lesson-panel img {
-  vertical-align: middle;
-  width: 100%;
-  border-radius: 10px 10px 10px 10px;
-  -moz-border-radius: 10px 10px 10px 10px;
-  -webkit-border-radius: 10px 10px 10px 10px;
-  border: 0px solid $border-color;
-}
-
 .progress {
   margin: 5px;
 }
 
-.padding-bottom {
-  padding-bottom: 30px;
-}
-
-.padding-bottom-sm {
-  padding-bottom: 10px;
-}
-
-.padding-top {
-  padding-top: 30px;
-}
-
-.padding-top-sm {
-  padding-top: 10px;
-}
-
-
 @media (max-width: 768px) {
   .lesson-panel {
     max-width: 500px;
+    font-size: 60%;
   }
 }
 
