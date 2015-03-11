@@ -1,6 +1,8 @@
 <template name="sectionThumbnail">
-  <div class="section">
-  <img src="{{imageURL}}"/>
-  <span>{{title}}</span>
-  </div>
+  <a href="{{pathFor 'modules'}}">
+    <div class="panel section-panel greyed-out">
+      <img src="{{imageURL}}"/>
+      <span>{{title}}</span>
+    </div>
+  </a>
 </template>

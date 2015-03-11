@@ -41,6 +41,20 @@ Custom NH components
 
 -------------------------------- */
 
+.section-panel {
+  display: inline-block;
+}
+
+.section-panel img {
+  width: 40%;
+  padding: 5px;
+  vertical-align: middle;
+}
+
+.section-panel span {
+  vertical-align: middle;
+}
+
 .lesson-panel {
   color: #333;
   border: 1px solid $border-color; 
