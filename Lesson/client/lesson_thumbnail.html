@@ -3,24 +3,11 @@
     <div class="panel-heading"> 
       <div class="panel-title"><h3>{{title}}</h3></div>
     </div> 
-    <div class="row">
-
-    <div class="col-lg-6 col-md-6 col-sm-6">
-      <img src="{{imageURL}}"/>
-      
-      <div class="progress">
-        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width: 30%;">
-            <span class="sr-only">30% Successful</span>
-        </div>
-        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-            <span class="sr-only">60% Incorrect</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-lg-6 col-md-6 col-sm-6 ">
-      <span>{{description}}</span>
-    </div>
-    </div>
+    <table>
+      <tr>
+        <td><img src="{{imageURL}}"/></td>
+        <td><span> {{description}}</span></td>
+      </tr>
+    </table>
   </div>
 </template>

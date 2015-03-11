@@ -47,7 +47,7 @@ Custom NH components
 }
 
 .section-panel img {
-  width: 40%;
+  width: $panel-width-XL;
   padding: 5px;
   vertical-align: middle;
 }
@@ -62,6 +62,15 @@ Custom NH components
   margin-left: auto;
   margin-right: auto;
   overflow-y: scroll;
+  padding: $padding-S;
+
+  td {
+    padding: $padding-M;
+  }
+
+  div {
+    vertical-align: middle;
+  }
 }
 
 .greyed-out {
@@ -77,12 +86,12 @@ Custom NH components
 }
 
 .lesson-panel img {
-  width:100%;
+  vertical-align: middle;
+  width: 100%;
   border-radius: 10px 10px 10px 10px;
   -moz-border-radius: 10px 10px 10px 10px;
   -webkit-border-radius: 10px 10px 10px 10px;
   border: 0px solid $border-color;
-  
 }
 
 .progress {
