@@ -5,11 +5,11 @@
 
 <form  role='form'>  
   {{#each options}}
-
-  {{/each}}
   <div class="row">
     <button value="{{option 0}}"> <img src="{{normalIconSrc}}"/></button>
+    <input type="checkbox" value="{{this}}"> <img src="{{normalIconSrc}}"/></button>
   </div>
+  {{/each}}
   <div class="row">
     <button value="{{option 1}}"> <img src="{{callDoctorIconSrc}}"/></button>
   </div>

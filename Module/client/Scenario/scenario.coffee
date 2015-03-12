@@ -8,9 +8,4 @@ Template.scenarioModule.helpers
   emergencyIcon: ()->
     return MEDIA_URL + "VascularContent/Images/emergency.png"
 
-  imgSrc: ()->
-    if _.isEmpty @
-      return ""
-    else
-      return MEDIA_URL + @.image
 
