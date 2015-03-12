@@ -1,5 +1,6 @@
 <template name="ModulesSequence">
   {{#each modules}} 
+    <div class="module">
       {{#if audio}}
         {{>audio}}
       {{/if}}
@@ -17,7 +18,7 @@
       {{/if}}
 
       {{#if isGoalChoiceModule}}
-        {{>goalChoiceModule}}
+        {{>multipleChoiceModule}}
       {{/if}}
 
       {{#if isBinaryChoiceModule}}
@@ -27,5 +28,6 @@
       {{#if isScenarioModule}}
         {{>slideModule}}
       {{/if}}  
+    </div>
   {{/each}}
 </template>

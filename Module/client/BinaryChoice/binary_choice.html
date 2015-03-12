@@ -1,3 +1,22 @@
 <template name="binaryChoiceModule">
-  <p>BINARY CHOICE </p>
+  {{>question}}
+
+  <form  role='form'>  
+
+    <div class="row">
+      <label>{{option 0}} </label>
+      <input type="radio" name="options" value="{{option 0}}"/>
+    </div>
+
+    <div class="row">
+      <label>{{option 1}} </label>
+      <input type="radio" name="options" value="{{option 1}}"/>
+    </div>
+
+  </form>
+
+  {{>moduleImage}}
+
+  {{>answer}}
+
 </template>
