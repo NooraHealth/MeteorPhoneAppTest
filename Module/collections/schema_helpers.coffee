@@ -16,3 +16,25 @@ Modules.helpers {
 
   isCorrectAnswer: (response)->
     return response in @.correct_answer
+
+  option: (i)->
+    return @.options[i]
+
+  isVideoModule: ()->
+    return @.type == "VIDEO"
+
+  isBinaryModule: ()->
+    return @.type == "BINARY"
+
+  isMultipleChoiceModule: ()->
+    return @.type == "MULTIPLE_CHOICE"
+
+  isSlideModule: ()->
+    return @.type == "SLIDE"
+  
+  isGoalChoiceModule: ()->
+    return @.type == "GOAL_CHOICE"
+
+  isScenario: ()->
+    return @.type == "SCENARIO"
+
