@@ -19,10 +19,12 @@ Lessons.helpers {
     else
       modules = []
       module = @.getFirstModule()
-      while !module.isLastModule()
-        modules.push module
+      modules.push module
+      until module.isLastModule()
         module = module.nextModule()
+        modules.push module
 
+      console.log "Got the modules!", modules
       return modules
 
   getFirstModule: ()->
