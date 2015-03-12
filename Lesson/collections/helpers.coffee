@@ -27,4 +27,13 @@ Lessons.helpers {
 
   getFirstModule: ()->
     return Modules.findOne {nh_id: @.first_module}
+
+  hasSublessons: ()->
+    if @.has_sublessons
+      return @.has_sublessons == 'true'
+    else
+      return false
+
+  imgSrc: ()->
+    return MEDIA_URL + @.image
 }
