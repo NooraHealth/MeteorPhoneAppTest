@@ -27,6 +27,7 @@ body {
 	}
 	color: $color-1;
 	background: $color-3;
+  margin-bottom: $footer-height;
 }
 
 a {
@@ -40,6 +41,13 @@ a {
 Custom NH components 
 
 -------------------------------- */
+.my-footer {
+  /*position: absolute;*/
+  /*bottom:0;*/
+  /*width: 100%;*/
+  height: $footer-height;
+  background-color: $color-1;
+}
 
 //CUSTOM CSS3 SLIDING PANELS
 .sliding-panel {
