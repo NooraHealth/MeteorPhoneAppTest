@@ -1,4 +1,4 @@
-Lessons.helpers {
+Modules.helpers {
   imgSrc: ()->
     return MEDIA_URL+ @.image
 
@@ -13,3 +13,6 @@ Lessons.helpers {
   
   videoSrc: ()->
     return MEDIA_URL + this.video
+
+  isCorrectAnswer: (response)->
+    return response in @.correct_answer
