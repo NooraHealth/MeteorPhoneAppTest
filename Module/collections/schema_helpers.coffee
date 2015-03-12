@@ -38,3 +38,9 @@ Modules.helpers {
   isScenario: ()->
     return @.type == "SCENARIO"
 
+  isLastModule: ()->
+    return @.next_module == '-1' or @.next_module == -1
+
+  nextModule: ()->
+    return Modules.findOne {nh_id: @.next_module}
+
