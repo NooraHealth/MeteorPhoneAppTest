@@ -30,7 +30,7 @@ Router.map ()->
   ###
   this.route '/modules/:nh_id', {
     path: '/modules/:nh_id'
-    layoutTemplate: 'layout'
+    layoutTemplate: 'moduleLayout'
     name: 'ModulesSequence'
     data: () ->
       if this.ready()
