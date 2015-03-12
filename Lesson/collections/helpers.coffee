@@ -18,11 +18,13 @@ Lessons.helpers {
 
     else
       modules = []
-      next_module = @.first_module
-      while next_module != '-1'
-        module = Modules.findOne {nh_id: next_module}
+      module = @.getFirstModule()
+      while !module.isLastModule()
         modules.push module
-        next_module = module.next_module
+        module = module.nextModule()
 
       return modules
+
+  getFirstModule: ()->
+    return Modules.findOne {nh_id: @.first_module}
 }
