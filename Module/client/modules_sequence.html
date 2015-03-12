@@ -4,27 +4,27 @@
         {{>audio}}
       {{/if}}
 
-      {{#if video}}
+      {{#if isVideoModule}}
         {{>videoModule}}
       {{/if}}
 
-      {{#if slide}}
+      {{#if isSlideModule}}
         {{>slideModule}}
       {{/if}}
 
-      {{#if multipleChoice}}
+      {{#if isMultipleChoiceModule}}
         {{>multipleChoiceModule}}
       {{/if}}
 
-      {{#if goalChoice}}
+      {{#if isGoalChoiceModule}}
         {{>goalChoiceModule}}
       {{/if}}
 
-      {{#if binaryChoice}}
+      {{#if isBinaryChoiceModule}}
         {{>binaryChoiceModule}}
       {{/if}}
 
-      {{#if scenario}}
+      {{#if isScenarioModule}}
         {{>slideModule}}
       {{/if}}  
   {{/each}}
