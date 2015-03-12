@@ -6,16 +6,10 @@
 <form  role='form'>  
   {{#each options}}
   <div class="row">
-    <button value="{{option 0}}"> <img src="{{normalIconSrc}}"/></button>
-    <input type="checkbox" value="{{this}}"> <img src="{{normalIconSrc}}"/></button>
+    <input type="checkbox" value="{{option}}"/><img src="{{optionImgSrc}}"/>
   </div>
   {{/each}}
-  <div class="row">
-    <button value="{{option 1}}"> <img src="{{callDoctorIconSrc}}"/></button>
-  </div>
-  <div class="row">
-    <button value="{{option 2}}"> <img src="{{emergencyIcon}}"/></button>
-  </div>
+
 </form>
 
 {{>moduleImage}}

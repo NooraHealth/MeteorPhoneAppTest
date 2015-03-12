@@ -17,6 +17,9 @@ Modules.helpers {
   isCorrectAnswer: (response)->
     return response in @.correct_answer
 
+  getOptionObjects: ()->
+   return {option: option, optionImgSrc: MEDIA_URL + option } for option in @.options
+
   option: (i)->
     return @.options[i]
 
@@ -43,5 +46,6 @@ Modules.helpers {
 
   nextModule: ()->
     return Modules.findOne {nh_id: @.next_module}
+    
 }
 
