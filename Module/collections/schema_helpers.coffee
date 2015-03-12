@@ -43,4 +43,5 @@ Modules.helpers {
 
   nextModule: ()->
     return Modules.findOne {nh_id: @.next_module}
+}
 
