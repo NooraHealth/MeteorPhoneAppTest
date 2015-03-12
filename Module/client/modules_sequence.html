@@ -1,6 +1,8 @@
 <template name="ModulesSequence">
-  {{#each modules}} 
-    <div class="module">
+ 
+{{#each modules}} 
+  <div class="row sliding-panel">
+    <div class="sliding-panel-content from-right">
       {{#if audio}}
         {{>audio}}
       {{/if}}
@@ -29,5 +31,7 @@
         {{>slideModule}}
       {{/if}}  
     </div>
+  </div>
   {{/each}}
+
 </template>
