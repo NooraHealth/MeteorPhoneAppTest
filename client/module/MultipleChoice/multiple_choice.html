@@ -4,8 +4,10 @@
 {{>question}}
 
 <form  role='form'>  
-  {{#each options}}
+  {{#each getOptionObjects}}
   <div class="row">
+    <p>{{option}}</p>
+    <p>{{optionImgSrc}}</p>
     <input type="checkbox" value="{{option}}"/><img src="{{optionImgSrc}}"/>
   </div>
   {{/each}}

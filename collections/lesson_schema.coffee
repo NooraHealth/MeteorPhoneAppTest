@@ -68,7 +68,6 @@ Lessons.helpers {
         module = module.nextModule()
         modules.push module
 
-      console.log "Got the modules!", modules
       return modules
 
   getFirstModule: ()->
