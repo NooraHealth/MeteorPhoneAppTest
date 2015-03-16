@@ -3,7 +3,15 @@
   <div class="container-fluid">
     
     <ul class="nav navbar-left navbar-nav">
-      <li><a name="previous">PREVIOUS</a></li>
+          {{#if isFirstModule}}
+          <a name="return_to_chapter">
+            RETURN TO CHAPTER
+          </a>
+          {{else}}
+          <a name="previous">
+            PREVIOUS
+          </a>
+          {{/if}}
     </ul>
 
     <ul class="nav navbar-right navbar-nav">
