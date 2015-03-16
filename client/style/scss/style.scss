@@ -76,7 +76,6 @@ Custom NH components
   position: absolute;
   top: 0;
   bottom:0;
-  width: 300px;
   @include transform(translateX(300px));
   @include transition-property(transform);
   @include transition-delay(0.2s);
@@ -84,7 +83,7 @@ Custom NH components
   @include transition-timing-function(ease-in-out);
 }
 
-.visible {
+.visible-module {
   visibility:visible;
   @include transform(translateX(300px));
   @include transition-property(transform);
