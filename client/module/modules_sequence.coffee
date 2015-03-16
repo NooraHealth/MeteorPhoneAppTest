@@ -10,7 +10,6 @@ Template.ModulesSequence.helpers
         return moduleSequence
 
   currentModuleID: (nh_id)->
-    console.log "getting current module"
     index = Session.get "current module index"
     sequence = Session.get "module sequence"
     module = sequence[index]

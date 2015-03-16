@@ -7,7 +7,15 @@
     </ul>
 
     <ul class="nav navbar-right navbar-nav">
-      <li><a name="next">NEXT</a></li>
+      <li>
+        <a name="next">
+          {{#if isLastModule}}
+            FINISH
+          {{else}}
+            NEXT
+          {{/if}}
+        </a>
+      </li>
     </ul>
 
   </div>
