@@ -21,15 +21,12 @@ Template.ModulesSequence.helpers
 ####
 
 Tracker.autorun ()->
-  console.log "autorunning"
   moduleSequence = Session.get "module sequence"
   currentModuleIndex = Session.get "current module index"
   previousModuleIndex = Session.get "previous module index"
   
   if currentModuleIndex?
-    console.log "currentModuleIndex ", currentModuleIndex
     moduleToDisplay = $("#module"+ moduleSequence[currentModuleIndex].nh_id)
-    console.log "module to display", moduleToDisplay
     moduleToDisplay.addClass 'visible-module'
   
   if previousModuleIndex?
