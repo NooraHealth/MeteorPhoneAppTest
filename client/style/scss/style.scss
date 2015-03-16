@@ -6,6 +6,7 @@
 
 @import '_layout'; // responsive grid and media queries
 
+@include font-face("Quicksand", "http://www.google.com/fonts/specimen/Quicksand");
 /* -------------------------------- 
 
 Primary style
@@ -23,7 +24,7 @@ Primary style
 body {
 	font: {
 		size: 100%;
-		family: $primary-font; // variables inside partials > _variables.scss
+    family: "Quicksand";
 	}
 	color: $color-1;
 	background: $color-3;

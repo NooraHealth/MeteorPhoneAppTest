@@ -8,8 +8,8 @@ $color-4: #ffffff; // white
 $border-color: #ddd;
 // fonts 
 
-$primary-font: 'Quicksand', sans-serif;
-$secondary-font: 'Quicksand', serif;
+@include font-face("Quicksand", "http://www.google.com/fonts/specimen/Quicksand");
+$primary-font: 'Quicksand';
 
 // panel size
 
