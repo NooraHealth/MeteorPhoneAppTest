@@ -59,6 +59,10 @@ Custom NH components
   background-color: $color-3;
 }
 
+.answer {
+  visibility: hidden;
+}
+
 //CUSTOM CSS3 SLIDING PANELS
 .module-panel {
   & img {

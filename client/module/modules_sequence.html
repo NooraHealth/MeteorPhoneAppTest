@@ -5,7 +5,7 @@
 {{#each modules}} 
 <div id = "module{{nh_id}}" class="hidden-left {{#if currentModuleID nh_id}} visible-module {{/if}}" >
       {{#if audio}}
-        {{>audio}}
+        <audio src="{{audioSrc}}" id="audio" autoplay></audio>
       {{/if}}
 
       {{#if isVideoModule}}
@@ -24,7 +24,7 @@
         {{>multipleChoiceModule}}
       {{/if}}
 
-      {{#if isBinaryChoiceModule}}
+      {{#if isBinaryModule}}
         {{>binaryChoiceModule}}
       {{/if}}
 
