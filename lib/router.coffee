@@ -51,6 +51,7 @@ Router.map ()->
         chapterID = this.params.nh_id
         chapter = Lessons.findOne {nh_id: chapterID}
         if chapter
+          Session.set "current chapter", chapterID
           return {lessons: chapter.getSublessonDocuments()}
   }
   

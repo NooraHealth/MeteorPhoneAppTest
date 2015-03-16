@@ -1,5 +1,12 @@
 Template.moduleFooter.events
-  'click .next': (event, template)->
-    next_module = @.modules[0].nh_id
-    $("#"+next_module).addClass "is-visible"
+  'click [name=next]': (event, template)->
+    console.log "CLICKED NEXT"
+    currentIndex = Session.get "current module index"
+    moduleSequence = Session.get "module sequence"
+    if moduleSequence.length == currentIndex + 1
+      Router.go "chapter", {nh_id: Session.get "current chapter"}
+    Session.set "current module index", currentIndex++
+    console.log Session.get "current module index"
+    console.log Session.get "module sequence"
+  
 
