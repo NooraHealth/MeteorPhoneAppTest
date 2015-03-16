@@ -4,7 +4,7 @@
     
     <ul class="nav navbar-left navbar-nav">
           {{#if isFirstModule}}
-          <a name="return_to_chapter">
+          <a name="return_to_chapter"  href="{{pathToCurrentChapterPage}}">
             RETURN TO CHAPTER
           </a>
           {{else}}
@@ -17,7 +17,7 @@
     <ul class="nav navbar-right navbar-nav">
       <li>
           {{#if isLastModule}}
-          <a name="finish">
+          <a name="finish" href="{{pathToCurrentChapterPage}}">
             FINISH
           </a>
           {{else}}
