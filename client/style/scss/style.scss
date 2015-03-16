@@ -60,23 +60,22 @@ Custom NH components
 }
 
 //CUSTOM CSS3 SLIDING PANELS
-.sliding-panel {
-  width:100%;
+.module-panel {
+  & img {
+    width: 100%;
+  }
 }
 
 .hidden-right {
   visibility:hidden;
   position: absolute;
-  right:-500px;
   transition: all 1s;
 }
 
 .hidden-left {
   visibility:hidden;
   position: absolute;
-  top: 0;
-  bottom:0;
-  @include transform(translateX(300px));
+  /*@include transform(translateX(300px));*/
   @include transition-property(transform);
   @include transition-delay(0.2s);
   @include transition-duration(0.3s);
@@ -85,7 +84,7 @@ Custom NH components
 
 .visible-module {
   visibility:visible;
-  @include transform(translateX(300px));
+  /*@include transform(translateX(300px));*/
   @include transition-property(transform);
   @include transition-delay(0.2s);
   @include transition-duration(0.3s);
