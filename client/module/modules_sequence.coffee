@@ -20,19 +20,19 @@ Template.ModulesSequence.helpers
 ## moves the current module into visibility when the current module changes
 ####
 
-#Tracker.autorun ()->
-  #console.log "autorunning"
-  #moduleSequence = Session.get "module sequence"
-  #currentModuleIndex = Session.get "current module index"
-  #previousModuleIndex = Session.get "previous module index"
+Tracker.autorun ()->
+  console.log "autorunning"
+  moduleSequence = Session.get "module sequence"
+  currentModuleIndex = Session.get "current module index"
+  previousModuleIndex = Session.get "previous module index"
   
-  #if currentModuleIndex?
-    #console.log "currentModuleIndex ", currentModuleIndex
-    #moduleToDisplay = $("#module"+ moduleSequence[currentModuleIndex].nh_id)
-    #console.log "module to display", moduleToDisplay
-    #moduleToDisplay.addClass 'visible-module'
+  if currentModuleIndex?
+    console.log "currentModuleIndex ", currentModuleIndex
+    moduleToDisplay = $("#module"+ moduleSequence[currentModuleIndex].nh_id)
+    console.log "module to display", moduleToDisplay
+    moduleToDisplay.addClass 'visible-module'
   
-  #if previousModuleIndex?
-    #moduleToHide = $("#module" + moduleSequence[previousModuleIndex].nh_id)
-    #moduleToHide.removeClass 'visible-module'
+  if previousModuleIndex?
+    moduleToHide = $("#module" + moduleSequence[previousModuleIndex].nh_id)
+    moduleToHide.removeClass 'visible-module'
   
