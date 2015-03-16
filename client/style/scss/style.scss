@@ -26,8 +26,8 @@ body {
 		size: 100%;
     family: "Quicksand";
 	}
-	color: $color-1;
-	background: $color-3;
+	color: $color-3;
+	background: $color-1;
   margin-bottom: $footer-height;
 }
 
@@ -48,6 +48,15 @@ Custom NH components
   /*width: 100%;*/
   height: $footer-height;
   background-color: $color-1;
+}
+
+.navbar-default {
+  background-color: $color-1;
+  border:none;
+}
+
+.panel {
+  background-color: $color-3;
 }
 
 //CUSTOM CSS3 SLIDING PANELS
