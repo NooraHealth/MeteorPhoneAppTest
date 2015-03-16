@@ -54,16 +54,33 @@ Custom NH components
   width:100%;
 }
 
-.sliding-panel-content {
-  top:0;
-  right:0;
+.hidden-right {
   visibility:hidden;
-	@include transition(visibility 0s .6s);
-	
-  &.is-visible {
-		visibility: visible;
-		@include transition(visibility 0s 0s);
-  }
+  position: absolute;
+  right:-500px;
+  transition: all 1s;
+}
+
+.hidden-left {
+  visibility:hidden;
+  position: absolute;
+  top: 0;
+  bottom:0;
+  width: 300px;
+  @include transform(translateX(300px));
+  @include transition-property(transform);
+  @include transition-delay(0.2s);
+  @include transition-duration(0.3s);
+  @include transition-timing-function(ease-in-out);
+}
+
+.visible {
+  visibility:visible;
+  @include transform(translateX(300px));
+  @include transition-property(transform);
+  @include transition-delay(0.2s);
+  @include transition-duration(0.3s);
+  @include transition-timing-function(ease-in-out);
 }
 
 video {

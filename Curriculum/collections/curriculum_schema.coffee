@@ -4,6 +4,8 @@
 # A single Noora Health curriculum for a condition.
 ###
 
+#Curriculum = new Mongo.Collection("nh_home_pages");
+
 CurriculumSchema = new SimpleSchema
   title:
     type:String
