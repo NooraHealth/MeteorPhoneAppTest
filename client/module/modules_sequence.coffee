@@ -29,11 +29,14 @@ Tracker.autorun ()->
     moduleToDisplay = $("#module"+ moduleSequence[currentModuleIndex].nh_id)
     moduleToDisplay.addClass 'visible-module'
     audio = moduleToDisplay.find("[name=audio]")
-    audio.play()
+    console.log audio
+    if audio.length
+      audio.play()
   
   if previousModuleIndex?
     moduleToHide = $("#module" + moduleSequence[previousModuleIndex].nh_id)
     moduleToHide.removeClass 'visible-module'
     audio = moduleToHide.find("[name=audio]")
-    audio.pause()
+    if audio.length
+      audio.pause()
   
