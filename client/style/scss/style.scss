@@ -42,6 +42,10 @@ a {
 Custom NH components 
 
 -------------------------------- */
+.padding-bottom-lg {
+  padding-bottom: $padding-L;
+}
+
 .my-footer {
   /*position: absolute;*/
   /*bottom:0;*/
@@ -79,6 +83,7 @@ Custom NH components
 .hidden-left {
   visibility:hidden;
   position: absolute;
+  width:100%;
   /*@include transform(translateX(300px));*/
   @include transition-property(transform);
   @include transition-delay(0.2s);
