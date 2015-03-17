@@ -37,8 +37,13 @@ footer {
   position: fixed;
   left: 0;
   bottom:0;
-  height: 50;
+  height: 50px;
   width:100%;
+
+  & .breadcrumb {
+    background-color: $color-3;
+    color: $color-4;
+  }
 }
 
 a {

@@ -1,9 +1,18 @@
 <template name="footer">
   <footer>
-    <h3> I am a footer </h3>  
-    <ol class="breadcrumbs">
-      <li><a>Number 1</a></li>
-      <li><a>Number 32</a></li>
+    <ol class="breadcrumb">
+      <li><a href="{{pathFor 'home'}}">Home</a></li>
+      {{#if currentChapterTitle}}
+      <li><a href="{{pathToCurrentChapterPage}}">{{currentChapterTitle}}</a></li>
+        
+        {{#if currentSectionTitle}}
+        <li><a href="{{pathToCurrentChapterPage}}">{{currentSectionTitle}}</a></li>
+        {{/if}}
+
+        {{#if currentModuleTitle}}
+        <li>{{currentModuleTitle}}</li>
+        {{/if}}
+      {{/if}}
     </ol>
   </footer>
 </template>

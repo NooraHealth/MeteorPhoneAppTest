@@ -13,6 +13,10 @@ Router.map ()->
       if this.ready()
         curr = Curriculum.findOne({})
         if curr
+          Session.set "current chapter", null
+          Session.set "current lesson", null
+          Session.set "current module index", null
+          Session.set "module sequence", null
           return {chapters: curr.getLessonDocuments()}
   }
 
@@ -35,6 +39,7 @@ Router.map ()->
     data: () ->
       if this.ready()
         lesson = Lessons.findOne {nh_id: this.params.nh_id}
+        Session.set "current lesson", lesson
         return {lesson: lesson}
         
   }
@@ -51,7 +56,8 @@ Router.map ()->
         chapterID = this.params.nh_id
         chapter = Lessons.findOne {nh_id: chapterID}
         if chapter
-          Session.set "current chapter", chapterID
+          Session.set "current chapter", chapter
           return {lessons: chapter.getSublessonDocuments()}
   }
-  
+
+
