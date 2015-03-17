@@ -31,6 +31,16 @@ body {
   margin-bottom: $footer-height;
 }
 
+footer {
+  background-color: $color-3;
+  color: $color-4;
+  position: fixed;
+  left: 0;
+  bottom:0;
+  height: 50;
+  width:100%;
+}
+
 a {
 	color: $color-2;
 	text-decoration: none;
@@ -44,14 +54,6 @@ Custom NH components
 -------------------------------- */
 .padding-bottom-lg {
   padding-bottom: $padding-L;
-}
-
-.my-footer {
-  /*position: absolute;*/
-  /*bottom:0;*/
-  /*width: 100%;*/
-  height: $footer-height;
-  background-color: $color-1;
 }
 
 .navbar-default {
