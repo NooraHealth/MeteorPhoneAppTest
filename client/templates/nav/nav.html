@@ -1,11 +1,25 @@
 <template name="nav">
 
-<nav class="navbar navbar-default">
+<tile class="brand-tile">
+  <img class="img-circle shadow-z-2" alt="Noora Health" src="/NHlogo.png" />
+</tile>
 
-  <div class='row-picture'>
-    <img class="circle" alt="Noora Health" src="/NHlogo.png" />
-  </div>
-<!--  <div class="container-fluid">-->
+<nav class="navbar">
+    <ol class="breadcrumb">
+      <li><a href="{{pathFor 'home'}}">Home</a></li>
+      {{#if currentChapterTitle}}
+      <li><a href="{{pathToCurrentChapterPage}}">{{currentChapterTitle}}</a></li>
+        
+        {{#if currentSectionTitle}}
+        <li><a href="{{pathToCurrentChapterPage}}">{{currentSectionTitle}}</a></li>
+        {{/if}}
+
+        {{#if currentModuleTitle}}
+        <li>{{currentModuleTitle}}</li>
+        {{/if}}
+      {{/if}}
+    </ol>
+    <!--  <div class="container-fluid">-->
     <!--[> Brand and toggle get grouped for better mobile display <]-->
     <!--<div class="navbar-header">-->
       <!--<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">-->
@@ -25,5 +39,5 @@
       <!--</ul>-->
     <!--</div>[> /.navbar-collapse <]-->
   <!--</div>[> /.container-fluid <]-->
-</nav>
+  </nav>
 </template>

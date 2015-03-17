@@ -46,9 +46,45 @@ footer {
   }
 }
 
+nav {
+  position: fixed;
+  vertical-align: center;
+  width: 100%;
+  background-color: $color-4;
+  z-index:-1;
+
+  & .fixed {
+    position: fixed;
+    top: 0;
+    left:0;
+    z-index:-1;
+  }
+
+  & .breadcrumb {
+    background-color: $color-4;
+  }
+}
+
 a {
-	color: $color-2;
+	color: lighten($color-4, 16%);
 	text-decoration: none;
+  
+  &:hover {
+    color: $color-4; 
+    text-decoration: none;
+  }
+}
+
+tile {
+  position: fixed;
+  z-index: 1;
+  top: 20;
+  margin-left: 10px;
+  & img {
+    max-width: 60px;
+    background-color: #FFFFFF;
+    padding: 10px;
+  }
 }
 
 
