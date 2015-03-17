@@ -1,8 +1,8 @@
 <template name="ModulesSequence">
  
-<div class="row module-panel">
-  <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset1 ">
 {{#each modules}} 
+<div class="row module-panel">
+<div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset1 ">
 <div id = "module{{nh_id}}" class="hidden-left {{#if currentModuleID nh_id}} visible-module {{/if}}" >
       {{#if audio}}
         {{#if currentModuleID nh_id}}
@@ -33,11 +33,11 @@
       {{/if}}
 
       {{#if isScenarioModule}}
-        {{>slideModule}}
+        {{>scenarioModule}}
       {{/if}}  
     </div>
-  {{/each}}
-  </div>
 </div>
+</div>
+  {{/each}}
 
 </template>

@@ -103,7 +103,7 @@ Modules.helpers {
   isGoalChoiceModule: ()->
     return @.type == "GOAL_CHOICE"
 
-  isScenario: ()->
+  isScenarioModule: ()->
     return @.type == "SCENARIO"
 
   isLastModule: ()->
