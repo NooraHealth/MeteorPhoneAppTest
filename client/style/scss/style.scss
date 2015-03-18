@@ -48,10 +48,9 @@ footer {
 
 nav {
   position: fixed;
-  vertical-align: center;
+  vertical-align: middle;
   width: 100%;
   background-color: $color-4;
-  z-index:-1;
 
   & .fixed {
     position: fixed;
@@ -62,6 +61,9 @@ nav {
 
   & .breadcrumb {
     background-color: $color-4;
+    margin-bottom: 0;
+    vertical-align: middle;
+    margin-left: 75px;
   }
 }
 
@@ -77,13 +79,16 @@ a {
 
 tile {
   position: fixed;
-  z-index: 1;
-  top: 20;
-  margin-left: 10px;
-  & img {
-    max-width: 60px;
-    background-color: #FFFFFF;
-    padding: 10px;
+  z-index: 2;
+
+  &.brand-tile {
+    & img {
+      top: 20;
+      margin-left: 10px;
+      max-width: 60px;
+      background-color: #FFFFFF;
+      padding: 10px;
+    }
   }
 }
 
@@ -93,6 +98,11 @@ tile {
 Custom NH components 
 
 -------------------------------- */
+
+.middle {
+  height: 100%;
+  vertical-align: middle;
+}
 .padding-bottom-lg {
   padding-bottom: $padding-L;
 }
@@ -248,6 +258,7 @@ html, body {
 
 .cd-panel {
 	position: fixed;
+  z-index:2;
 	top: 0;
 	left: 0;
 	height: 100%;
