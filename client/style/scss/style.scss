@@ -28,10 +28,11 @@ body {
 	color: $primary-font-color;
 	background: $light-blue-1;
   margin-bottom: $footer-height;
+  min-height: 50px;
 }
 
 footer {
-	background-color: $light-blue-1;
+	background-color: $white;
   color: $muted;
   position: fixed;
   left: 0;
@@ -107,7 +108,7 @@ Custom NH components
 	height: 100%;
 	outline: none;
 	border-radius: 50%;
-	background-color: $primary-blue;
+	background-color: $light-blue-2;
 	/*background-color: rgba(255,255,255,0.3);*/
 	text-indent: -999em;
 	cursor: pointer; /* make the text accessible to screen readers */
@@ -121,20 +122,19 @@ Custom NH components
 
 .dotstyle-scaleup li a:hover,
 .dotstyle-scaleup li a:focus {
-	background-color: white;
+  opacity: 1;
+	background-color: $light-blue-1;
 }
 
 .dotstyle-scaleup li.current a {
-	background-color: white;
+	background-color: $primary-blue;
 	-webkit-transform: scale(1.5);
 	transform: scale(1.5);
 }
 
 .module-navigation-bar {
-  position: fixed;
   width: 100%;
   text-align: center;
-  bottom: 30px;
 }
 
 .panel > .panel-heading {
