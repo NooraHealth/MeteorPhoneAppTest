@@ -1,30 +1,5 @@
 <template name="moduleFooter">
-<footer>
-    
-    <ul class="nav navbar-left navbar-nav">
-          {{#if isFirstModule}}
-          <a name="return_to_chapter"  href="{{pathToCurrentChapterPage}}">
-            RETURN TO CHAPTER
-          </a>
-          {{else}}
-          <a name="previous">
-            PREVIOUS
-          </a>
-          {{/if}}
-    </ul>
-
-    <ul class="nav navbar-right navbar-nav">
-      <li>
-          {{#if isLastModule}}
-          <a name="finish" href="{{pathToCurrentChapterPage}}">
-            FINISH
-          </a>
-          {{else}}
-          <a name="next">
-            NEXT
-          </a>
-          {{/if}}
-      </li>
-    </ul>
-</footer>
+  <div class="module-navigation-bar">
+     
+  </div>
 </template>

@@ -6,7 +6,6 @@
 
 @import '_layout'; // responsive grid and media queries
 
-@include font-face("Quicksand", "http://www.google.com/fonts/specimen/Quicksand");
 /* -------------------------------- 
 
 Primary style
@@ -23,56 +22,35 @@ Primary style
 
 body {
 	font: {
-		size: 100%;
-    family: "Quicksand";
+    font-weight: $primary-font-weight;
+    family: "Roboto";
 	}
-	color: $color-3;
-	background: $color-1;
+	color: $primary-font-color;
+	background: $light-blue-1;
   margin-bottom: $footer-height;
 }
 
 footer {
-  background-color: $color-3;
-  color: $color-4;
+	background-color: $light-blue-1;
+  color: $muted;
   position: fixed;
   left: 0;
   bottom:0;
-  height: 50px;
+  padding: $padding-S;
   width:100%;
 
   & .breadcrumb {
-    background-color: $color-3;
-    color: $color-4;
-  }
-}
-
-nav {
-  position: fixed;
-  vertical-align: middle;
-  width: 100%;
-  background-color: $color-4;
-
-  & .fixed {
-    position: fixed;
-    top: 0;
-    left:0;
-    z-index:-1;
-  }
-
-  & .breadcrumb {
-    background-color: $color-4;
-    margin-bottom: 0;
-    vertical-align: middle;
-    margin-left: 75px;
+    background-color: $primary-blue;
+    color: $dark-blue-1;
   }
 }
 
 a {
-	color: lighten($color-4, 16%);
+	color: lighten($primary-font-color, 16%);
 	text-decoration: none;
   
   &:hover {
-    color: $color-4; 
+	  color: $primary-font-color;
     text-decoration: none;
   }
 }
@@ -99,6 +77,14 @@ Custom NH components
 
 -------------------------------- */
 
+.panel > .panel-heading {
+  background-color: $white;
+}
+
+.navbar {
+  background-color: $primary-blue;
+}
+
 .middle {
   height: 100%;
   vertical-align: middle;
@@ -108,7 +94,7 @@ Custom NH components
 }
 
 .panel {
-  background-color: $color-3;
+  background-color: $white;
 }
 
 .answer {
@@ -155,6 +141,7 @@ video {
 .section-panel {
   display: inline-block;
   width: $panel-width-S;
+  background-color: $white;
   
   img {
     width: $panel-width-XL;
@@ -167,6 +154,7 @@ video {
 }
 
 .lesson-panel {
+  background-color: $white;
   color: #333;
   border: 1px solid $border-color; 
   margin-left: auto;
@@ -241,21 +229,6 @@ html, body {
 	height: 100%;
 }
 
-.cd-main-content {
-
-	h1 {
-		@include font-size(20px);
-		color: lighten($color-3, 16%);
-		padding: 4em 0;
-	}
-
-	@include MQ(L) {
-		h1 {
-			@include font-size(32px);
-		}
-	}
-}
-
 .cd-panel {
 	position: fixed;
   z-index:2;
@@ -322,14 +295,13 @@ html, body {
 	width: $panel-width-S; // variables inside partials > _variables.scss
 	height: 50px;
 	line-height: 50px;
-	background: rgba($color-4, .96);
+	background: rgba($white, .96);
 	z-index: 2;
 	box-shadow: 0 1px 1px rgba(#000, .08);
 	@include transition(top .3s 0s);
 
 	h1 {
-		font-weight: bold;
-		color: $color-2;
+    color: lighten($primary-font-color, 16%);
 		padding-left: 5%;
 	}
 
@@ -379,7 +351,7 @@ html, body {
 		left: 20px;
 		height: 3px;
 		width: 20px;
-		background-color: $color-3;
+		background-color: $primary-blue;
 		/* this fixes a bug where pseudo elements are slighty off position */
 		-webkit-backface-visibility: hidden;
 		backface-visibility: hidden;
@@ -394,10 +366,10 @@ html, body {
 	}
 
 	.no-touch &:hover {
-		background-color: $color-3;
+		background-color: $primary-blue;
 
 		&::before, &::after {
-			background-color: $color-4;
+			background-color: $dark-blue-1;
 			@include transition-property(transform);
 			@include transition-duration(.3s);
 		}
@@ -417,7 +389,7 @@ html, body {
 	width: $panel-width-S;
 	height: 100%;
 	top: 0;
-	background: $color-1;
+	background: $light-blue-1;
 	z-index: 1;
 	@include transition-property(transform);
 	@include transition-duration(.3s);
@@ -461,7 +433,7 @@ html, body {
 
 	p, li {
 		@include font-size(14px);
-		color: $color-3;
+		color: $primary-blue;
 		line-height: 1.4;
 		margin: 2em 0;
 

@@ -1,18 +1,19 @@
 // colors
 
-/*$color-1: #dbe2e9; // blue light*/
-$color-1: #E1F5FE; // blue light
-/*$color-2: #89ba2c; // green*/
-$color-2: #81D4FA; // green
-/*$color-3: #424f5c; // blue dark*/
-$color-3: #03A9F4; // blue dark
-/*$color-3: #F5FFFF; // blue dark*/
-$color-4: #0277BD; // white
+$light-blue-1: #E1F5FE; // blue light03A9F4
+$light-blue-2: #81D4FA; // green
+$primary-blue: #03A9F4; // 
+$dark-blue-1: #0277BD; // white
+$white: #FFFFFF;
 
 $border-color: #ddd;
 // fonts 
 
-$primary-font: 'Quicksand';
+$primary-font: 'Roboto';
+$primary-font-color: black;
+$muted: #757575;
+$primary-font-weight: 400;
+$bold-font-weight: 700;
 
 $nav-height: 50px;
 
