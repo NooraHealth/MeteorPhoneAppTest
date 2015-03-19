@@ -295,7 +295,7 @@ html, body {
 	width: $panel-width-S; // variables inside partials > _variables.scss
 	height: 50px;
 	line-height: 50px;
-	background: rgba($white, .96);
+	background: rgba($primary-blue, .96);
 	z-index: 2;
 	box-shadow: 0 1px 1px rgba(#000, .08);
 	@include transition(top .3s 0s);
@@ -351,7 +351,7 @@ html, body {
 		left: 20px;
 		height: 3px;
 		width: 20px;
-		background-color: $primary-blue;
+		background-color: #333;
 		/* this fixes a bug where pseudo elements are slighty off position */
 		-webkit-backface-visibility: hidden;
 		backface-visibility: hidden;
@@ -389,7 +389,7 @@ html, body {
 	width: $panel-width-S;
 	height: 100%;
 	top: 0;
-	background: $light-blue-1;
+	background: $white;
 	z-index: 1;
 	@include transition-property(transform);
 	@include transition-duration(.3s);
