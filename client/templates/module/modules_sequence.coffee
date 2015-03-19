@@ -29,7 +29,6 @@ Tracker.autorun ()->
     moduleToDisplay = $("#module"+ moduleSequence[currentModuleIndex].nh_id)
     moduleToDisplay.addClass 'visible-module'
     audio = moduleToDisplay.find("[name=audio]")
-    console.log audio
     if audio.length
       audio.play()
   

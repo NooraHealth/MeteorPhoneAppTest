@@ -98,7 +98,13 @@ Custom NH components
 	margin: 0 5px;
 	width: 16px;
 	height: 16px;
-	cursor: pointer;
+  cursor: pointer;
+
+  @media (max-width: 768px) {
+    width: 10px;
+    height: 10px;
+    margin: 0 3px;
+  }
 }
 
 .dotstyle li a {

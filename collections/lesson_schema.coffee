@@ -62,9 +62,6 @@ Lessons.helpers {
 
     else
       modules = []
-      console.log "this is the lesson getting modules of : "
-      console.log @
-      console.log @.getFirstModule()
       module = @.getFirstModule()
       modules.push module
       until module.isLastModule()

@@ -36,29 +36,11 @@ Tracker.autorun ()->
   if currentModuleIndex?
     currentModule = moduleSequence[currentModuleIndex]
     currentActiveNav = $(".module-navigation-bar").find("li[name="+ currentModule.nh_id+"]")
-    #if !currentActiveNav.length
-      #console.log "filling the nav list"
-      #fillNavList()
-    #else
     currentActiveNav.addClass "current"
   
   if previousModuleIndex?
     previousModule = moduleSequence[previousModuleIndex]
     previousActiveNav = $(".module-navigation-bar").find("li[name="+ previousModule.nh_id+"]")
     previousActiveNav.removeClass "current"
-
-#fillNavList = ()->
-  #modules = Session.get "module sequence"
-  #if !modules?
-    #return ""
-
-  #list = ""
-  #for module, index in modules
-    #if index == 0
-      #list += "<li class='current' name="+module.nh_id+"><a>"+module.nh_id+"</a></li>"
-    #else
-      #list += "<li class='' name="+module.nh_id+"><a>"+module.nh_id+"</a></li>"
-  
-  #(".module-navigation-bar").find("ul").html list
 
   
