@@ -1,15 +1,16 @@
 <template name="moduleFooter">
 <footer>
-  <img class="mdi-navigation-arrow-back"/>
   <div class="module-navigation-bar">
     <div class="dotstyle dotstyle-scaleup"> 
       <ul class="">
-        <li class="current"><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Products</a></li>
-        <li><a href="#">Portfolio</a></li>
-        <li><a href="#">Blog</a></li>
-        <li><a href="#">Contact</a></li>
+        {{#each modules}}
+          {{#if currentModule}} 
+            <li name="{{nh_id}}" class="current"><a></a></li>
+          {{else}}
+            <li name="{{nh_id}}"><a></a></li>
+          {{/if}}
+        {{/each}}
+            
       </ul>
     </div>
   </div>
