@@ -38,20 +38,17 @@ Template.moduleFooter.events
     Session.set "current module index", --currentIndex
  
 Tracker.autorun ()->
-  console.log "going to adjust footer"
   moduleSequence = Session.get "module sequence"
   currentModuleIndex = Session.get "current module index"
   previousModuleIndex = Session.get "previous module index"
 
   if currentModuleIndex?
-    currentModule = moduleSequence[currentModuleIndex]
-    currentActiveNav = $(".module-navigation-bar").find("li[name="+ currentModule.nh_id+"]")
-    console.log "current active nav: ", currentActiveNav
+    console.log "THERE WAS A CURRENT MODULE INDEX", currentModuleIndex
+    currentActiveNav = $(".module-navigation-bar").find("li[name="+ currentModuleIndex+"]")
     currentActiveNav.addClass "current"
   
   if previousModuleIndex?
-    previousModule = moduleSequence[previousModuleIndex]
-    previousActiveNav = $(".module-navigation-bar").find("li[name="+ previousModule.nh_id+"]")
+    previousActiveNav = $(".module-navigation-bar").find("li[name="+ previousModuleIndex+"]")
     previousActiveNav.removeClass "current"
 
   
