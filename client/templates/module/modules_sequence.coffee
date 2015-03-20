@@ -25,6 +25,9 @@ Tracker.autorun ()->
   currentModuleIndex = Session.get "current module index"
   previousModuleIndex = Session.get "previous module index"
   
+  if !moduleSequence or !moduleSequence?
+    return
+
   if currentModuleIndex?
     moduleToDisplay = $("#module"+ moduleSequence[currentModuleIndex].nh_id)
     moduleToDisplay.addClass 'visible-module'

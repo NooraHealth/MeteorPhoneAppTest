@@ -1,19 +1,34 @@
 <template name="scenarioModule">
-{{>question}}
 
-<form  role='form'>  
-  <div class="row">
-    <button value="{{option 0}}"> <img src="{{normalIconSrc}}"/></button>
-  </div>
-  <div class="row">
-    <button value="{{option 1}}"> <img src="{{callDoctorIconSrc}}"/></button>
-  </div>
-  <div class="row">
-    <button value="{{option 2}}"> <img src="{{emergencyIcon}}"/></button>
-  </div>
-</form>
+  <form  role='form' class="form-horizontal">  
+    <legend>{{>question}}</legend>
 
-{{>moduleImage}}
+    <table class="table table-responsive">
+        <tr class="row">
+          <td> 
+            <div class="col-lg-6 col-md-6 col-sm-8 col-xs-8">
+            <div class="row">
+              <a href="" class="btn btn-success btn-raised" value="{{option 0}}"><img src="{{normalIconSrc}}"/>NORMAL</a>
+            </div>
+            <div class="row">
+              <a href="" class="btn btn-warning btn-raised" value="{{option 0}}"><img src="{{callDoctorIconSrc}}"/>CALL DOCTOR</a>
+            </div>
+            <div class="row">
+              <a href="" class="btn btn-danger btn-raised" value="{{option 0}}"><img src="{{emergencyIcon}}"/>CALL 911</a>
+
+            </div>
+            </div>
+          </td>
+          <td> 
+            <div class="col-lg-6 col-md-6 col-sm-4 col-xs-4">
+              {{>moduleImage}} 
+            </div>
+          </td>
+        </tr>
+
+      </table>
+   
+  </form>
 
 {{>answer}}
 

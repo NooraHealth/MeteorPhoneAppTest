@@ -78,6 +78,12 @@ tile {
 Custom NH components 
 
 -------------------------------- */
+
+.radio-btn {
+  padding: $padding-S;
+}
+
+
 .dotstyle {
   display: inline-block;
 }
@@ -174,7 +180,7 @@ Custom NH components
 }
 
 .answer {
-  visibility: hidden;
+  display: none;
 }
 
 //CUSTOM CSS3 SLIDING PANELS
@@ -201,6 +207,7 @@ Custom NH components
 }
 
 .visible-module {
+  padding: $padding-M; 
   visibility:visible;
 
   @include transition-property(transform);
