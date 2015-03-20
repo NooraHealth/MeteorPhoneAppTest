@@ -79,6 +79,7 @@ Modules.helpers {
     return response in @.correct_answer
 
   getOptionObjects: ()->
+    console.log @.options
     newArr = ({option: option, optionImgSrc: MEDIA_URL + option } for option in @.options)
     return newArr
 

@@ -94,8 +94,7 @@ Custom NH components
 }
 
 .module-table {
-  &img {
-    max-width: 
+  & img {
   }
 }
 
@@ -228,7 +227,7 @@ Custom NH components
 }
 
 .add-margin {
-  margin: 20px;
+  margin-bottom: 20px;
 }
 
 .panel > .panel-heading {
@@ -252,6 +251,15 @@ Custom NH components
 }
 
 .image-choice {
+  width: 100%;
+  cursor: pointer;
+
+  &.selected{
+    border: 4px solid $success;
+  }
+  &.incorrect {
+    border: 4px solid $danger;
+  }
 }
 
 .answer {
@@ -259,7 +267,7 @@ Custom NH components
 }
 
 //CUSTOM CSS3 SLIDING PANELS
-.module-panel {
+.slide {
   & img {
     width: 100%;
   }
