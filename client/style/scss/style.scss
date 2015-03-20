@@ -95,9 +95,26 @@ Custom NH components
   height:75px;
   margin-right: auto;
   margin-left: auto;
+  line-height: 55px;
+
+  @media (max-width: 480px) {
+    width: 50px;
+    height: 35px;
+    line-height: 17px;
+
+  }
 
   & img {
     max-width: 50px;
+  }
+  
+  &.large-font {
+    font-size: 24px;
+    padding: 10px;
+
+    @media (max-width: 480px) {
+      font-size: 14px;
+    }
   }
 
 }
