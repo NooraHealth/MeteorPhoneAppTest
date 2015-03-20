@@ -80,7 +80,6 @@ Modules.helpers {
 
   getOptionObjects: ()->
     newArr = ({option: option, optionImgSrc: MEDIA_URL + option } for option in @.options)
-    console.log newArr
     return newArr
 
   option: (i)->

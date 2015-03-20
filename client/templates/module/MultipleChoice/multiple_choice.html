@@ -1,19 +1,25 @@
 
 <template name="multipleChoiceModule">
 
-
-<form  role='form' class="form-horizontal">  
-  <legend>{{>question}}</legend>
-  <div class="row">
-  {{#each getOptionObjects}}
-    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-      <img src="{{optionImgSrc}}" class="image-choice" name="{{option}}"/>
+<div class="front">
+  <form  role='form' class="form-horizontal">  
+    <legend>{{>question}}</legend>
+    <div class="row">
+    {{#each getOptionObjects}}
+      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+        <img src="{{optionImgSrc}}" class="image-choice" name="{{option}}"/>
+      </div>
+    {{/each}}
     </div>
-  {{/each}}
-  </div>
+    <div class="row centered-content-row">
+      <a href="javascript:void(0)" class="btn btn-raised btn-info btn-lg">SUBMIT</a>
+    </div>
 
-</form>
+  </form>
+</div>
 
-{{>answer}}
+<div class="back">
+  {{>answer}}
+</div>
 
 </template>

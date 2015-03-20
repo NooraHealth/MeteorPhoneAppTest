@@ -5,7 +5,6 @@ Template.ModulesSequence.helpers
     else
       if @.lesson
         moduleSequence = @.lesson.getModulesSequence()
-        console.log "modules: ", moduleSequence
         Session.set "module sequence", moduleSequence
         Session.set "current module index", 0
         return moduleSequence
