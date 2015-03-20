@@ -22,8 +22,7 @@ Template.moduleFooter.events
     currentIndex = Session.get "current module index"
     moduleSequence = Session.get "module sequence"
     Session.set "previous module index", currentIndex
-    nextModule = event.target.find('a').attr 'name'
-    console.log nextModule
+    nextModule = $(event.target).attr 'name'
     Session.set "current module index", nextModule
   
   'click [name=next]': (event, template)->
@@ -39,6 +38,7 @@ Template.moduleFooter.events
     Session.set "current module index", --currentIndex
  
 Tracker.autorun ()->
+  console.log "going to adjust footer"
   moduleSequence = Session.get "module sequence"
   currentModuleIndex = Session.get "current module index"
   previousModuleIndex = Session.get "previous module index"
@@ -46,6 +46,7 @@ Tracker.autorun ()->
   if currentModuleIndex?
     currentModule = moduleSequence[currentModuleIndex]
     currentActiveNav = $(".module-navigation-bar").find("li[name="+ currentModule.nh_id+"]")
+    console.log "current active nav: ", currentActiveNav
     currentActiveNav.addClass "current"
   
   if previousModuleIndex?
