@@ -72,13 +72,35 @@ tile {
   }
 }
 
+td {
+  vertical-align:middle;
+}
+
 
 /* -------------------------------- 
 
 Custom NH components 
 
 -------------------------------- */
+.row {
+  margin: 0;
+}
 
+.centered-content-row {
+  text-align: center;
+}
+
+.scenario-btn {
+  width: 200px;
+  height:75px;
+  margin-right: auto;
+  margin-left: auto;
+
+  & img {
+    max-width: 50px;
+  }
+
+}
 .radio-btn {
   padding: $padding-S;
 }

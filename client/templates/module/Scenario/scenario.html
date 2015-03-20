@@ -4,25 +4,21 @@
     <legend>{{>question}}</legend>
 
     <table class="table table-responsive">
-        <tr class="row">
+        <tr >
           <td> 
-            <div class="col-lg-6 col-md-6 col-sm-8 col-xs-8">
-            <div class="row">
-              <a href="" class="btn btn-success btn-raised" value="{{option 0}}"><img src="{{normalIconSrc}}"/>NORMAL</a>
+            <div class="row centered-content-row">
+              <a href="" class="btn btn-success btn-raised scenario-btn" value="{{option 0}}"><img src="{{normalIconSrc}}"/>NORMAL</a>
             </div>
-            <div class="row">
-              <a href="" class="btn btn-warning btn-raised" value="{{option 0}}"><img src="{{callDoctorIconSrc}}"/>CALL DOCTOR</a>
+            <div class="row centered-content-row">
+              <a href="" class="btn btn-warning btn-raised scenario-btn" value="{{option 0}}"><img src="{{callDoctorIconSrc}}"/>CALL DOCTOR</a>
             </div>
-            <div class="row">
-              <a href="" class="btn btn-danger btn-raised" value="{{option 0}}"><img src="{{emergencyIcon}}"/>CALL 911</a>
+            <div class="row centered-content-row">
+              <a href="" class="btn btn-danger btn-raised scenario-btn" value="{{option 0}}"><img src="{{emergencyIcon}}"/>CALL 911</a>
 
-            </div>
             </div>
           </td>
           <td> 
-            <div class="col-lg-6 col-md-6 col-sm-4 col-xs-4">
               {{>moduleImage}} 
-            </div>
           </td>
         </tr>
 
