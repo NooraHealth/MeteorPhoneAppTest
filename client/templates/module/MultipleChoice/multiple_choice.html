@@ -1,12 +1,14 @@
 
 <template name="multipleChoiceModule">
 
-{{>question}}
 
-<form  role='form'>  
+<form  role='form' class="form-horizontal">  
+  <legend>{{>question}}</legend>
   {{#each getOptionObjects}}
   <div class="row">
-    <input type="checkbox" value="{{option}}"/><img src="{{optionImgSrc}}"/>
+    <div class="checkbox col-lg-2 col-md-2 col-sm-4">
+      <input type="checkbox" value="{{option}}"/><img src="{{optionImgSrc}}" class="image-choice"/>
+    </div>
   </div>
   {{/each}}
 
