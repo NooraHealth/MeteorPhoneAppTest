@@ -5,26 +5,34 @@
 
     <table class="table table-responsive no-border">
         <tr >
-          <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
             <td> 
-                {{>moduleImage}} 
+              {{>moduleImage}} 
             </td>
-          </div>
 
-          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
             <td> 
-                <div class="row centered-content-row">
-                  <a class="btn btn-success btn-raised response-btn" value="{{option 0}}"><div class="inner-btn-container"><img src="{{normalIconSrc}}"/><span >NORMAL</span></div></a>
-                </div>
-                <div class="row centered-content-row">
-                  <a class="btn btn-warning btn-raised response-btn" value="{{option 0}}"><img src="{{callDoctorIconSrc}}"/><span>CALL DOCTOR</span></a>
-                </div>
-                <div class="row centered-content-row">
-                  <a class="btn btn-danger btn-raised response-btn" value="{{option 0}}"><img src="{{emergencyIcon}}"/><span>CALL 911</span></a>
+              <div class="row centered-content-row">
+                <a class="btn btn-success btn-raised scenario-btn" value="{{option 0}}"><div class="inner-btn-container"><img src="{{normalIconSrc}}"/><span >NORMAL</span></div></a>
+              </div>
+              
+              <div class="row centered-content-row">
+                <a class="btn btn-warning btn-raised scenario-btn" value="{{option 1}}">
+                  <div class="inner-btn-container">
+                    <img src="{{callDoctorIconSrc}}"/>
+                    <span>CALL DOCTOR</span>
+                  </div>
+                </a>
+              </div>
 
-                </div>
+              <div class="row centered-content-row">
+                <a class="btn btn-danger btn-raised scenario-btn" value="{{option 2}}">
+                  <div class="inner-btn-container">
+                    <img src="{{emergencyIcon}}"/>
+                    <span>CALL 911</span>
+                  </div>
+                </a>
+
+              </div>
             </td>
-          </div>
           
         </tr>
 

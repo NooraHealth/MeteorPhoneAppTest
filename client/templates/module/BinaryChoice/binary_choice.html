@@ -5,20 +5,20 @@
 
     <table class="table table-responsive no-border">
         <tr class="row">
-          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+         
+            <td> 
+              {{>moduleImage}} 
+            </td>           
+            
             <td> 
               <div class="row centered-content-row">
-                <a class="btn btn-success btn-raised response-btn large-font" value="yes">YES</a>
+                <a class="btn btn-success btn-raised binary-btn large-font" value="yes">YES</a>
               </div>
               <div class="row centered-content-row">
-                <a class="btn btn-danger btn-raised response-btn large-font" value="no">NO</a>
+                <a class="btn btn-danger btn-raised binary-btn large-font" value="no">NO</a>
               </div>
             </td>
-          </div>
-          
-          <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-            <td> {{>moduleImage}} </td>
-          </div>
+  
         </tr>
 
       </table>

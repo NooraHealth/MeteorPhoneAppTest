@@ -73,7 +73,10 @@ tile {
 }
 
 td {
-  display: inline-block;
+  vertical-align: middle;
+  /*display: inline-block;*/
+  width: 100%;
+  padding: 10px;
 
   & img {
     vertical-align: middle;
@@ -90,6 +93,12 @@ Custom NH components
   margin: 0;
 }
 
+.module-table {
+  &img {
+    max-width: 
+  }
+}
+
 .centered-content-row {
   text-align: center;
 }
@@ -97,55 +106,52 @@ Custom NH components
   border: none;
 }
 
-.response-btn {
+.binary-btn, .scenario-btn {
   width: 200px;
   height:75px;
   margin-right: auto;
   margin-left: auto;
   line-height: 55px;
+}
 
-/*  @media (max-width: 480px) {*/
-    /*width: 80%;*/
-    /*height: 50px;*/
-    /*line-height: 45px;*/
-    /*padding: 0;*/
-  /*}*/
+.binary-btn {
+  font-size: 24px;
+  padding: 10px;
 
-  & img, span {
+  @media (max-width: 480px) {
+    width: 64px;
+    height: 40px;
+    line-height: 2.5;
+    font-size: 14px;
+    padding: 5px;
+  }
+}
+
+.scenario-btn {
+
+  padding: 10px;
+
+  img, span {
     max-width: 50px;
     vertical-align: middle;
     margin-left: 5px;
     margin-right: 5px;
+  }   
 
-/*    @media (max-width: 480px) {*/
-      /*max-width: 25px;*/
-      /*font-size: 10px;  */
-      
-      /*span {*/
-        /*display: none; */
-      /*}*/
-    /*}*/
+  @media (max-width: 480px) {
+    zoom: .5;
+    height: 80px;
+    padding:0;
   }
-  
-  &.large-font {
-    font-size: 24px;
-    padding: 10px;
 
-    @media (max-width: 480px) {
-      font-size: 14px;
-      padding: 5px;
-    }
-  }
 
   &.inner-btn-container {
     display: inline-block;
   }
 
-  /*&.inner-btn-container > .inner-btn-content {*/
-    /*vertical-align: middle;*/
-  
-  /*}*/
-
+  &.inner-btn-container > img, span {
+    vertical-align: middle;
+  }
 }
 
 .radio-btn {
@@ -312,11 +318,6 @@ video {
   margin-right: auto;
   overflow-y: scroll;
   padding: $padding-S;
-
-  td {
-    padding: $padding-M;
-    vertical-align: middle;
-  }
 
   img {
     width: 100%;
