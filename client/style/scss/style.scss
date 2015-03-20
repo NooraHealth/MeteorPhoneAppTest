@@ -272,23 +272,24 @@ Custom NH components
 }
 
 .hidden-left {
-  visibility:hidden;
-  position: absolute;
+  /*visibility:hidden;*/
+  /*position: absolute;*/
+  display: none;
   width:100%;
-  @include transition-property(transform);
-  @include transition-delay(0.2s);
-  @include transition-duration(0.3s);
-  @include transition-timing-function(ease-in-out);
+  /*@include transition-property(transform);*/
+  /*@include transition-delay(0.2s);*/
+  /*@include transition-duration(0.3s);*/
+  /*@include transition-timing-function(ease-in-out);*/
 }
 
 .visible-module {
   padding: $padding-M; 
   visibility:visible;
 
-  @include transition-property(transform);
-  @include transition-delay(0.2s);
-  @include transition-duration(0.3s);
-  @include transition-timing-function(ease-in-out);
+  /*@include transition-property(transform);*/
+  /*@include transition-delay(0.2s);*/
+  /*@include transition-duration(0.3s);*/
+  /*@include transition-timing-function(ease-in-out);*/
 }
 
 video {

@@ -31,8 +31,10 @@ Tracker.autorun ()->
   if currentModuleIndex?
     moduleToDisplay = $("#module"+ moduleSequence[currentModuleIndex].nh_id)
     moduleToDisplay.addClass 'visible-module'
+    moduleToDisplay.removeClass 'hidden-left'
   
   if previousModuleIndex?
     moduleToHide = $("#module" + moduleSequence[previousModuleIndex].nh_id)
     moduleToHide.removeClass 'visible-module'
+    moduleToHide.addClass 'hidden-left'
   
