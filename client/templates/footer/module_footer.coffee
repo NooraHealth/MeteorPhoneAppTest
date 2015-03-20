@@ -22,20 +22,23 @@ Template.moduleFooter.events
     currentIndex = Session.get "current module index"
     moduleSequence = Session.get "module sequence"
     Session.set "previous module index", currentIndex
-    nextModule = $(event.target).attr 'name'
-    Session.set "current module index", nextModule
+    nextIndex = $(event.target).attr 'name'
+    if nextIndex == currentIndex
+      return
+    else
+      Session.set "current module index", nextIndex
   
-  'click [name=next]': (event, template)->
-    currentIndex = Session.get "current module index"
-    moduleSequence = Session.get "module sequence"
-    Session.set "previous module index", currentIndex
-    Session.set "current module index", ++currentIndex
+#  'click [name=next]': (event, template)->
+    #currentIndex = Session.get "current module index"
+    #moduleSequence = Session.get "module sequence"
+    #Session.set "previous module index", currentIndex
+    #Session.set "current module index", ++currentIndex
 
-  'click [name=previous]': ()->
-    currentIndex = Session.get "current module index"
-    moduleSequence = Session.get "module sequence"
-    Session.set "previous module index", currentIndex
-    Session.set "current module index", --currentIndex
+  #'click [name=previous]': ()->
+    #currentIndex = Session.get "current module index"
+    #moduleSequence = Session.get "module sequence"
+    #Session.set "previous module index", currentIndex
+    #Session.set "current module index", --currentIndex
  
 Tracker.autorun ()->
   moduleSequence = Session.get "module sequence"
@@ -43,7 +46,6 @@ Tracker.autorun ()->
   previousModuleIndex = Session.get "previous module index"
 
   if currentModuleIndex?
-    console.log "THERE WAS A CURRENT MODULE INDEX", currentModuleIndex
     currentActiveNav = $(".module-navigation-bar").find("li[name="+ currentModuleIndex+"]")
     currentActiveNav.addClass "current"
   

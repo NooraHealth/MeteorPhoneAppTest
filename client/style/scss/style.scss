@@ -29,6 +29,7 @@ body {
 	background: $light-blue-1;
   margin-bottom: $footer-height;
   min-height: 50px;
+
 }
 
 footer {
@@ -143,6 +144,10 @@ Custom NH components
   margin-bottom: 10px;
   width: 100%;
   text-align: center;
+}
+
+.add-margin {
+  margin: 20px;
 }
 
 .panel > .panel-heading {
@@ -499,7 +504,7 @@ html, body {
 	-webkit-overflow-scrolling: touch;
 
 	p, li {
-		@include font-size(14px);
+		/*@include font-size(14px);*/
 		color: $primary-blue;
 		line-height: 1.4;
 		margin: 2em 0;
@@ -511,7 +516,7 @@ html, body {
 
 	@include MQ(M) {
 		p, li {
-			@include font-size(16px);
+			/*@include font-size(16px);*/
 			line-height: 1.6;
 		}
 	}
