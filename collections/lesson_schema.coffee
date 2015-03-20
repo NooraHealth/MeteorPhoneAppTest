@@ -67,7 +67,7 @@ Lessons.helpers {
       until module.isLastModule()
         module = module.nextModule()
         modules.push module
-
+      console.log typeof modules
       return modules
 
   getFirstModule: ()->

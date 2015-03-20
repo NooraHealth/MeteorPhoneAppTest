@@ -176,31 +176,30 @@ Custom NH components
   }
 }
 
-/*.hidden-right {*/
-  /*visibility:hidden;*/
-  /*position: absolute;*/
-  /*transition: all 1s;*/
-/*}*/
+.hidden-right {
+  visibility:hidden;
+  position: absolute;
+  transition: all 1s;
+}
 
-/*.hidden-left {*/
-  /*visibility:hidden;*/
-  /*position: absolute;*/
-  /*width:100%;*/
-  /*[>@include transform(translateX(300px));<]*/
-  /*@include transition-property(transform);*/
-  /*@include transition-delay(0.2s);*/
-  /*@include transition-duration(0.3s);*/
-  /*@include transition-timing-function(ease-in-out);*/
-/*}*/
+.hidden-left {
+  visibility:hidden;
+  position: absolute;
+  width:100%;
+  @include transition-property(transform);
+  @include transition-delay(0.2s);
+  @include transition-duration(0.3s);
+  @include transition-timing-function(ease-in-out);
+}
 
-/*.visible-module {*/
-  /*visibility:visible;*/
-  /*[>@include transform(translateX(300px));<]*/
-  /*@include transition-property(transform);*/
-  /*@include transition-delay(0.2s);*/
-  /*@include transition-duration(0.3s);*/
-  /*@include transition-timing-function(ease-in-out);*/
-/*}*/
+.visible-module {
+  visibility:visible;
+
+  @include transition-property(transform);
+  @include transition-delay(0.2s);
+  @include transition-duration(0.3s);
+  @include transition-timing-function(ease-in-out);
+}
 
 video {
   width: 100%;

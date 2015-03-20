@@ -1,6 +1,11 @@
 Template.moduleFooter.helpers
   modules: ()->
-    return Session.get "module sequence"
+    modules = Session.get "module sequence"
+    if !modules?
+      return
+    arr = ({module: module, i: i} for module, i in modules)
+    console.log arr
+    return arr
 
   currentModule: ()->
     moduleSequence = Session.get "module sequence"
@@ -8,14 +13,22 @@ Template.moduleFooter.helpers
       return ""
 
     currentModuleIndex = Session.get "current module index"
-    currentModule = moduleSequence[currentModuleIndex]
+    #currentModule = moduleSequence[currentModuleIndex]
     if !currentModuleIndex?
       firstModule = moduleSequence[0]
-      return @.nh_id == firstModule.nh_id
+      return @.index == 0
     else
-      return @.nh_id == currentModule.nh_id
+      return @.index = currentModuleIndex
 
 Template.moduleFooter.events
+  'click [name=module_nav]': (event, template) ->
+    currentIndex = Session.get "current module index"
+    moduleSequence = Session.get "module sequence"
+    Session.set "previous module index", currentIndex
+    nextModule = event.target.find('a').attr 'name'
+    console.log nextModule
+    Session.set "current module index", nextModule
+  
   'click [name=next]': (event, template)->
     currentIndex = Session.get "current module index"
     moduleSequence = Session.get "module sequence"
