@@ -4,7 +4,6 @@ Template.moduleFooter.helpers
     if !modules?
       return
     arr = ({module: module, i: i} for module, i in modules)
-    console.log arr
     return arr
 
   currentModule: ()->
@@ -13,15 +12,13 @@ Template.moduleFooter.helpers
       return ""
 
     currentModuleIndex = Session.get "current module index"
-    #currentModule = moduleSequence[currentModuleIndex]
     if !currentModuleIndex?
-      firstModule = moduleSequence[0]
-      return @.index == 0
+      return @.i == 0
     else
-      return @.index = currentModuleIndex
+      return @.i == currentModuleIndex
 
 Template.moduleFooter.events
-  'click [name=module_nav]': (event, template) ->
+  'click .module_nav': (event, template) ->
     currentIndex = Session.get "current module index"
     moduleSequence = Session.get "module sequence"
     Session.set "previous module index", currentIndex
