@@ -98,6 +98,37 @@ Custom NH components
   }
 }
 
+.container {
+  perspective: 800px;
+}
+
+.module-panel {
+  display: block;
+  @include transform-style(preserve-3d);
+  @include transition-property(transform);
+  @include transition-duration(1.0s);
+  @include transition-delay(0.5s);
+}
+
+figure {
+  position: absolute;
+  display: block;
+  backface-visibility: hidden;
+  @include transition-property(transform);
+  @include transition-duration(1.0s);
+  @include transition-delay(0.5s);
+  
+
+  &.back {
+    @include transform(rotateY(180deg));
+  }
+}
+
+
+.flipped {
+  @include transform(rotateY(180deg));
+}
+
 .centered-content-row {
   text-align: center;
 }
@@ -263,7 +294,7 @@ Custom NH components
 }
 
 .answer {
-  display: none;
+  /*display: none;*/
 }
 
 //CUSTOM CSS3 SLIDING PANELS
