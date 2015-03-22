@@ -98,12 +98,12 @@ Custom NH components
   }
 }
 
-.container {
-  perspective: 800px;
+.hidden-card {
+  display: none;
 }
 
 .module-card {
-  perspective: 800px;
+  perspective: 1100px;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -115,9 +115,9 @@ Custom NH components
   figure {
     position: absolute;
     display: block;
-    backface-visibility: hidden;
     height: 100%;
     width: 100%;
+    @include backface-visibility(hidden);
 
     &.back {
       background-color: white;
@@ -132,8 +132,8 @@ Custom NH components
 
 .module-container {
   position: relative;
-  width: 400px;
-  height:400px;
+  min-height: 400px;
+  width: 100%;
 }
 
 .flipped {
