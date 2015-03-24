@@ -103,36 +103,61 @@ Custom NH components
 }
 
 .module-card {
+
+  &.back-facing {
+    .front {
+      opacity: 0;
+      display: none;
+    }
+
+    .back {
+      opacity: 1;
+    }
+  }
+
+  &.front-facing {
+  
+    .front {
+      opacity: 1;
+    }
+
+    .back {
+      /*opacity: 0;*/
+      display: none;
+    }
+  }
+
   perspective: 1100px;
-  position: absolute;
+  /*position: absolute;*/
   width: 100%;
   height: 100%;
   @include transform-style(preserve-3d);
-  @include transition-property(transform);
+  @include transition-property(all);
   @include transition-duration(1.0s);
   @include transition-delay(0.5s);
 
   figure {
-    position: absolute;
+    /*position: absolute;*/
+    padding: 10px 20px 10px 20px;
     display: block;
     height: 100%;
     width: 100%;
     @include backface-visibility(hidden);
 
-    &.back {
-      background-color: white;
-      @include transform(rotateY(180deg));
-    }
+    /*&.back {*/
+      /*background-color: white;*/
+      /*@include transform(rotateY(180deg));*/
+    /*}*/
 
-    &.front {
-      background-color: red;
-    }
+    /*&.front {*/
+      /*background-color: red;*/
+    /*}*/
   }
 }
 
 .module-container {
   position: relative;
-  min-height: 400px;
+  /*min-height: 400px;*/
   width: 100%;
 }
 

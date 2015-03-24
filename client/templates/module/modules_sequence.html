@@ -2,8 +2,8 @@
  
 <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
 {{#each modules}}
-<div class="module-container {{#unless currentModuleID nh_id}} hidden-card {{/unless}}">
-    <div class="module-card">
+<div class="module-container panel {{#unless currentModuleID nh_id}} hidden-card {{/unless}}">
+    <div class="module-card front-facing">
       {{#if audio}}
         {{#if currentModuleID nh_id}}
         <audio src="{{audioSrc}}" name="audio" autoplay></audio>
@@ -39,45 +39,5 @@
   </div>
 {{/each}}
 </div>
-
-<!--<div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">-->
-<!--{{#each modules}} -->
-<!--<div class="module-container">-->
-  <!--<div id = "module{{nh_id}}" class="card {{#if currentModuleID nh_id}} visible-module {{else}} hidden-left {{/if}}" >-->
-      <!--{{#if audio}}-->
-        <!--{{#if currentModuleID nh_id}}-->
-        <!--<audio src="{{audioSrc}}" name="audio" autoplay></audio>-->
-        <!--{{else}}-->
-        <!--<audio src="{{audioSrc}}" name="audio"></audio>-->
-        <!--{{/if}}-->
-      <!--{{/if}}-->
-
-      <!--{{#if isVideoModule}}-->
-        <!--{{>videoModule}}-->
-      <!--{{/if}}-->
-
-      <!--{{#if isSlideModule}}-->
-        <!--{{>slideModule}}-->
-      <!--{{/if}}-->
-
-      <!--{{#if isMultipleChoiceModule}}-->
-        <!--{{>multipleChoiceModule}}-->
-      <!--{{/if}}-->
-
-      <!--{{#if isGoalChoiceModule}}-->
-        <!--{{>multipleChoiceModule}}-->
-      <!--{{/if}}-->
-
-      <!--{{#if isBinaryModule}}-->
-        <!--{{>binaryChoiceModule}}-->
-      <!--{{/if}}-->
-
-      <!--{{#if isScenarioModule}}-->
-        <!--{{>scenarioModule}}-->
-      <!--{{/if}}  -->
-    <!--</div>-->
-<!--</div>-->
-<!--</div>-->
-  <!--{{/each}}-->
 
 </template>
