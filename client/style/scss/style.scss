@@ -529,6 +529,7 @@ html, body {
 
 .cd-panel-header {
 	position: fixed;
+  padding-left: 15px;
 	width: $panel-width-S; // variables inside partials > _variables.scss
 	height: 50px;
 	line-height: 50px;
