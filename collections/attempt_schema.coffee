@@ -5,7 +5,6 @@
 # on a single module of any type. 
 ###
 
-
 AttemptSchema = new SimpleSchema
   nickname:
     type:String

@@ -27,15 +27,15 @@ LessonSchema = new SimpleSchema
   lessons:
     type:[String]
     optional:true
-    custom: ()->
-      if this.field('has_sublessons').value == "true"
-        return "required"
+    #custom: ()->
+#      if this.field('has_sublessons').value == "true"
+        #return "required"
   first_module:
     type:String
     optional:true
-    custom: ()->
-      if this.field('has_sublessons').value == "true"
-        return "required"
+#    custom: ()->
+      #if this.field('has_sublessons').value == "true"
+        #return "required"
   nh_id:
     type:String
     min:0

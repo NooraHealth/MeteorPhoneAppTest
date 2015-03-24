@@ -23,6 +23,7 @@ ModuleSchema = new SimpleSchema
     optional:true
   image:
     type:String
+    optional: true
     regEx: /^([/]?\w+)+[.]png$/
 
   #QUESTION MODULE

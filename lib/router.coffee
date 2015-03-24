@@ -60,4 +60,16 @@ Router.map ()->
           return {lessons: chapter.getSublessonDocuments()}
   }
 
+  ###
+  # Refresh the content
+  ###
+  this.route '/refreshcontent', {
+    path: '/refreshcontent'
+    data: ()->
+      Meteor.call "refreshContent", ()->
+        console.log "Yey called refresh"
+  }
+
+
+
 
