@@ -1,34 +1,22 @@
 <template name="binaryChoiceModule">
 <div class="front">
-  <form  role='form' class="form-horizontal">  
-    <legend>{{>question}}</legend>
-
-    <table class="table table-responsive no-border">
-        <tr class="row">
-         
-            <td> 
-              {{>moduleImage}} 
-            </td>           
-            
-            <td> 
-              <div class="row centered-content-row">
-                <a class="btn btn-success btn-raised binary-btn large-font" value="yes">YES</a>
-              </div>
-              <div class="row centered-content-row">
-                <a class="btn btn-danger btn-raised binary-btn large-font" value="no">NO</a>
-              </div>
-            </td>
-  
-        </tr>
-
-      </table>
-
-      <!--<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">-->
-        <!--{{>moduleImage}}-->
-      <!--</div>-->
+    <div class="card-image">
+      {{>moduleImage}} 
+    </div>
     
-  </form>
-</div>
+    <div class="card-content">
+      {{>question}}
+    </div>
+
+    <div class="card-action center-align">
+
+      <a class="btn green waves-light waves-effect white-text" value="yes">YES</a>
+
+      <a class="btn red waves-effect waves-light white-text" value="no">NO</a>
+
+    </div>
+
+  </div>
 
 <div class="back">
 

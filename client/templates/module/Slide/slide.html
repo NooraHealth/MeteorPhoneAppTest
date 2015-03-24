@@ -1,9 +1,13 @@
 
 <template name="slideModule">
 <div class="front">
-  {{>title}}
-  <div class="slide">
-    <img src="{{imgSrc}}" />
+
+  <div class="card-image">
+    {{>moduleImage}} 
+  </div>
+
+  <div class="card-title grey-text text-darken-2 center-align">
+    {{title}}
   </div>
 </div>
 </template>

@@ -1,50 +1,39 @@
 <template name="scenarioModule">
 <div class="front">
+  <div class="card-image">
+    {{>moduleImage}} 
+  </div>
+  
+  <div class="card-content">
+    {{>question}}
+  </div>
 
-  <form  role='form' class="form-horizontal">  
-    <legend>{{>question}}</legend>
+  <div class="card-action center-align">
+    <a class="btn btn-success" value="{{option 0}}">
+      <div class="inner-btn-container">
+        <img src="{{normalIconSrc}}"/>
+        <span >NORMAL</span>
+      </div>
+    </a>
+            
+      <a class="btn btn-warning" value="{{option 1}}">
+        <div class="inner-btn-container">
+          <img src="{{callDoctorIconSrc}}"/>
+          <span>CALL DOCTOR</span>
+        </div>
+      </a>
 
-    <table class="table table-responsive no-border">
-        <tr >
-            <td> 
-              {{>moduleImage}} 
-            </td>
-
-            <td> 
-              <div class="row centered-content-row">
-                <a class="btn btn-success btn-raised scenario-btn" value="{{option 0}}"><div class="inner-btn-container"><img src="{{normalIconSrc}}"/><span >NORMAL</span></div></a>
-              </div>
-              
-              <div class="row centered-content-row">
-                <a class="btn btn-warning btn-raised scenario-btn" value="{{option 1}}">
-                  <div class="inner-btn-container">
-                    <img src="{{callDoctorIconSrc}}"/>
-                    <span>CALL DOCTOR</span>
-                  </div>
-                </a>
-              </div>
-
-              <div class="row centered-content-row">
-                <a class="btn btn-danger btn-raised scenario-btn" value="{{option 2}}">
-                  <div class="inner-btn-container">
-                    <img src="{{emergencyIcon}}"/>
-                    <span>CALL 911</span>
-                  </div>
-                </a>
-
-              </div>
-            </td>
-          
-        </tr>
-
-      </table>
-   
-  </form>
+      <a class="btn btn-danger" value="{{option 2}}">
+        <div class="inner-btn-container">
+          <img src="{{emergencyIcon}}"/>
+          <span>CALL 911</span>
+        </div>
+      </a>
+  </div>
 </div>
 
 <div class="back">
 {{>answer}}
-
 </div>
 
 </template>
