@@ -1,13 +1,15 @@
 <template name="chapterThumbnail">
   <div class="col m4 l4 greyed-out">
-    <div class="card z-depth-2 chapter-card">
-      <div class="card-image chapter-card-image" href="{{ pathFor 'chapter'}}"> 
-        <img src="{{imgSrc}}"/>
-      </div> 
+    <a href="{{ pathFor 'chapter'}}">
+      <div class="card z-depth-2 chapter-card">
+        <div class="card-image chapter-card-image"> 
+          <img src="{{imgSrc}}"/>
+        </div> 
 
-      <div class="card-content">
-        <p class="text-center">{{title}}</p>
+        <div class="card-content">
+          <p class="text-center">{{title}}</p>
+        </div>
       </div>
-    </div>
+    </a>
   </div>
 </template>

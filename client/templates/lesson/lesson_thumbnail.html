@@ -1,13 +1,15 @@
 <template name="lessonThumbnail">
-  <div class="panel lesson-panel greyed-out cd-main-content">
-    <div class="panel-heading"> 
-      <div class="panel-title"><h3>{{title}}</h3></div>
+  <div class="card-panel lesson-panel greyed-out cd-main-content">
+    <div class="row">
+      <p class="left-align">{{title}}</p>
     </div> 
-    <table class="table-responsive">
-      <tr>
-        <td class="col-xs-6 col-sm-4 col-md-4 col-lg-4" ><img src="{{imgSrc}}"/></td>
-        <td><span> {{description}}</span></td>
-      </tr>
-    </table>
+    <div class="row valign-wrapper">
+        <div class="col s6 m8 l4" >
+          <img src="{{imgSrc}}"/>
+        </div>
+        <div class="col s6 m4 l8"> 
+          <span class=""> {{description}}</span>
+        </div>
+    </div>
   </div>
 </template>

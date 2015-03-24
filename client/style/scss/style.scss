@@ -23,10 +23,10 @@ Primary style
 }
 
 body {
-	font: {
-    font-weight: $primary-font-weight;
-    family: "Roboto";
-	}
+ /* font: {*/
+    /*font-weight: $primary-font-weight;*/
+    /*family: "Roboto";*/
+	/*}*/
 	color: $primary-font-color;
 	background: $light-blue-1;
   margin-bottom: $footer-height;
@@ -394,15 +394,14 @@ video {
   border: 1px solid $border-color; 
   margin-left: auto;
   margin-right: auto;
-  overflow-y: scroll;
   padding: $padding-S;
 
   img {
     width: 100%;
-    border-radius: 10px 10px 10px 10px;
-    -moz-border-radius: 10px 10px 10px 10px;
-    -webkit-border-radius: 10px 10px 10px 10px;
-    border: 0px solid $border-color;
+    /*border-radius: 10px 10px 10px 10px;*/
+    /*-moz-border-radius: 10px 10px 10px 10px;*/
+    /*-webkit-border-radius: 10px 10px 10px 10px;*/
+    /*border: 0px solid $border-color;*/
   }
 }
 
@@ -435,7 +434,7 @@ video {
 @media (max-width: 768px) {
   .lesson-panel {
     max-width: 500px;
-    font-size: 60%;
+    font-size: 80%;
   }
 }
 
@@ -448,17 +447,11 @@ video {
 
 }
 @media (min-width: 768px) {
-
   .lesson-panel {
     max-width: 700px;
   }
 }
 
-@media (min-width: 992px) {
-  .thumbnail {
-    height: 330px;
-  }
-}
 /* -------------------------------- 
 
 Main components 
