@@ -18,3 +18,5 @@ wolves:bourbon
 http
 useraccounts:materialize
 d0minikk:materialize-meteor
+accounts-google
+accounts-facebook

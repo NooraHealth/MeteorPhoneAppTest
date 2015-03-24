@@ -418,8 +418,18 @@ video {
   -moz-opacity: 1;
 }
 
-.progress {
-  margin: 5px;
+.chapter-card {
+  @media (max-width:992px) {
+    height: 250px;  
+  }
+
+  @media (max-width: 600px) {
+    height: 325px;
+  }
+
+  @media (min-width: 992px) {
+    height: 350px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -430,7 +440,7 @@ video {
 }
 
 @media (max-width: 992px) {
-  .thumbnail {
+  .chapter-card-image {
     max-width: 400px;
     margin-right: auto;
     margin-left: auto;
