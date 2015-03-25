@@ -40,3 +40,8 @@ Template.registerHelper 'currentModuleTitle', ()->
     return null
   return sequence[index].title
 
+Template.registerHelper 'isCorrectAnswer', (answer)->
+  #all possible answers to lowercase
+  answers = (answer.toLowerCase() for answer in this.correct_answer)
+  return answer.toLowerCase() in answers
+
