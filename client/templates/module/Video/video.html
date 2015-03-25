@@ -1,8 +1,15 @@
 <template name="videoModule">
 <div class="front">
-  {{>title}}
-  <video src="{{videoSrc}}" class="inherit" controls autoplay>
-    Your browser does not support the video tag. Please logout and use another browser.
-  </video>
+
+  <div class="card-image">
+    <video src="{{videoSrc}}" class="inherit" controls autoplay>
+      Your browser does not support the video tag. Please logout and use another browser.
+    </video>
+  </div>
+
+  <div class="card-title grey-text text-darken-2 center-align">
+    {{title}}
+  </div>
+
 </div>
 </template>
