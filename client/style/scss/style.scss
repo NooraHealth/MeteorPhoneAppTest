@@ -164,51 +164,58 @@ Custom NH components
 
 .binary-btn, .scenario-btn {
   width: 200px;
-  height:75px;
-  margin-right: auto;
-  margin-left: auto;
-  line-height: 55px;
-}
+  
+  @media (max-width: 992px) {
+    width: 150px;
+  }
 
-.binary-btn {
-  font-size: 24px;
-  padding: 10px;
+  @media (max-width: 600px) {
+  
+  }
 
-  @media (max-width: 480px) {
-    width: 64px;
-    height: 40px;
-    line-height: 2.5;
-    font-size: 14px;
-    padding: 5px;
+  @media (min-width: 992px) {
   }
 }
 
-.scenario-btn {
+/*.binary-btn {*/
+  /*font-size: 24px;*/
+  /*padding: 10px;*/
 
-  padding: 10px;
+  /*@media (max-width: 480px) {*/
+    /*width: 64px;*/
+    /*height: 40px;*/
+    /*line-height: 2.5;*/
+    /*font-size: 14px;*/
+    /*padding: 5px;*/
+  /*}*/
+/*}*/
 
-  img, span {
-    max-width: 50px;
-    vertical-align: middle;
-    margin-left: 5px;
-    margin-right: 5px;
-  }   
+/*.scenario-btn {*/
 
-  @media (max-width: 480px) {
-    zoom: .5;
-    height: 80px;
-    padding:0;
-  }
+  /*padding: 10px;*/
+
+  /*img, span {*/
+    /*max-width: 50px;*/
+    /*vertical-align: middle;*/
+    /*margin-left: 5px;*/
+    /*margin-right: 5px;*/
+  /*}   */
+
+  /*@media (max-width: 480px) {*/
+    /*zoom: .5;*/
+    /*height: 80px;*/
+    /*padding:0;*/
+  /*}*/
 
 
-  &.inner-btn-container {
-    display: inline-block;
-  }
+  /*&.inner-btn-container {*/
+    /*display: inline-block;*/
+  /*}*/
 
-  &.inner-btn-container > img, span {
-    vertical-align: middle;
-  }
-}
+  /*&.inner-btn-container > img, span {*/
+    /*vertical-align: middle;*/
+  /*}*/
+/*}*/
 
 .radio-btn {
   padding: $padding-S;
