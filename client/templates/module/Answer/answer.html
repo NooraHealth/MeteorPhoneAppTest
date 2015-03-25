@@ -1,8 +1,7 @@
 <template name="answer">
-  <p>I AM ANSWER</p>
   <div class="answer" id="answer{{nh_id}}">
     <button id="selectedButton{{nh_id}}"></button>
-    <img src="{{imgSrc}}"/>
+    {{>moduleImage}}
     <p>{{explanation}}</p>
     <audio src="{{correctAnswerAudio}}"></audio>
     <audio src="{{incorrectAnswerAudio}}"></audio>
