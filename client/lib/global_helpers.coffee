@@ -40,8 +40,11 @@ Template.registerHelper 'currentModuleTitle', ()->
     return null
   return sequence[index].title
 
-Template.registerHelper 'isCorrectAnswer', (answer)->
+Template.registerHelper 'isCorrectAnswer', (response)->
   #all possible answers to lowercase
   answers = (answer.toLowerCase() for answer in this.correct_answer)
-  return answer.toLowerCase() in answers
+  console.log response
+  console.log "in correct answer helper"
+  console.log response
+  return response.toLowerCase() in answers
 
