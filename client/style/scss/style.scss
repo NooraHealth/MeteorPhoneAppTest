@@ -48,6 +48,9 @@ footer {
     color: $dark-blue-1;
   }
 }
+nav {
+  background-color: $primary-blue;
+}
 
 a {
 	color: lighten($primary-font-color, 16%);
