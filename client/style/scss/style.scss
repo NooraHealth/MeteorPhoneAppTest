@@ -85,6 +85,10 @@ td {
   }
 }
 
+.container {
+  padding-bottom: 100px;
+}
+
 
 /* -------------------------------- 
 
@@ -403,7 +407,7 @@ video {
 
 .chapter-card {
   @media (max-width:992px) {
-    height: 250px;  
+    height: 425px;  
   }
 
   @media (max-width: 600px) {
@@ -411,7 +415,7 @@ video {
   }
 
   @media (min-width: 992px) {
-    height: 350px;
+    height: 425px;
   }
 }
 
