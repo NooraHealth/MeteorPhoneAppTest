@@ -24,7 +24,8 @@
 </div>
 
 <div class="back">
-{{>answer}}
+  <audio name="audio{{nh_id}}" class="correct" src="{{correctAnswerAudio}}"></audio>
+  <audio name="audio{{nh_id}}" class="incorrect" src="{{incorrectAnswerAudio}}"></audio>
 </div>
 
 </template>
