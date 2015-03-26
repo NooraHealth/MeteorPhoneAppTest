@@ -35,3 +35,10 @@ this.goToPreviousModule = (event, template) ->
     
     Session.set "previous module index", currentIndex
     Session.set "current module index", --currentIndex
+
+this.showNextModuleBtn = (module) ->
+  console.log "showing the next module"
+  nh_id = module.nh_id
+  $("#nextbtn#{nh_id}").fadeIn()
+  $("#nextbtn#{nh_id}").removeClass("hidden")
+    

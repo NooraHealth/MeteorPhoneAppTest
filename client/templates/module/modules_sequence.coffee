@@ -32,6 +32,7 @@ Template.ModulesSequence.events
     hideIncorrectResponses(module)
     showSticker(event.target, module)
     playAnswerAudio(event.target, module)
+    showNextModuleBtn(module)
 
   'click [name=next]': (event, template) ->
     goToNextModule(event, template)

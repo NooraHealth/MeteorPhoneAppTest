@@ -23,6 +23,6 @@ Template.multipleChoiceModule.events
     if numIncorrect > 0
       playAnswerAudio(event.target, module)
 
-    $("#nextbtn#{nh_id}").fadeIn()
+    showNextModuleBtn(module)
 
 
