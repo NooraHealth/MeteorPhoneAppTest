@@ -101,7 +101,6 @@ Custom NH components
 -------------------------------- */
 
 .response-sticker-container {
-  display: none;
   position: fixed;
   margin-top: -25px;
   margin-left:-15px;
@@ -117,7 +116,7 @@ Custom NH components
   margin: 0;
 }
 
-.hidden-card {
+.hidden-card, .hidden {
   display: none;
 }
 
