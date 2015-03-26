@@ -1,7 +1,7 @@
 <template name="scenarioModule">
 <div class="front">
   <div class="card-image">
-    {{>moduleImage}} 
+    <img src="{{imgSrc}}"/>
   </div>
   
   <div class="card-content flow-text">
@@ -20,6 +20,7 @@
     <a name="{{nh_id}}" class="response btn waves-effect waves-light white-text red scenario-btn {{#if isCorrectAnswer 'call 911' }} correct {{/if}}" value="{{option 2}}">
       <i class="mdi-maps-local-hospital"></i> CALL 911
     </a>
+    {{>nextBtn}}
   </div>
 </div>
 
