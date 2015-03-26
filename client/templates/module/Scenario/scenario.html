@@ -9,15 +9,15 @@
   </div>
 
   <div class="card-action center-align">
-    <a class="btn waves-effect waves-light white-text green scenario-btn" value="{{option 0}}">
+    <a name="{{nh_id}}" class="response btn waves-effect waves-light white-text green scenario-btn {{#if isCorrectAnswer 'normal' }} correct {{/if}}" value="{{option 0}}">
       <i class="mdi-action-home"></i> NORMAL
     </a>
             
-    <a class="btn yellow darken-3 waves-effect waves-light white-text scenario-btn" value="{{option 1}}">
+    <a name="{{nh_id}}" class="response btn waves-effect waves-light white-text yellow darken-3 scenario-btn {{#if isCorrectAnswer 'call doc' }} correct {{/if}}" value="{{option 1}}">
       <i class="mdi-action-settings-phone"></i> CALL DOCTOR
     </a>
 
-    <a class="btn red waves-effect waves-light white-text scenario-btn" value="{{option 2}}">
+    <a name="{{nh_id}}" class="response btn waves-effect waves-light white-text red scenario-btn {{#if isCorrectAnswer 'call 911' }} correct {{/if}}" value="{{option 2}}">
       <i class="mdi-maps-local-hospital"></i> CALL 911
     </a>
   </div>
