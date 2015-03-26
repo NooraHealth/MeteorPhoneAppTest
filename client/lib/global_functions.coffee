@@ -20,10 +20,18 @@ this.playAnswerAudio = (response, module)->
   else
     $("audio[name=audio#{nh_id}][class=incorrect]")[0].play()
 
-this.goToNextModule = (event, template)-> 
+this.goToNextModule = (event, template)->
     currentIndex = Session.get "current module index"
     moduleSequence = Session.get "module sequence"
     resetModules(moduleSequence[currentIndex])
     
     Session.set "previous module index", currentIndex
     Session.set "current module index", ++currentIndex
+
+this.goToPreviousModule = (event, template) ->
+    currentIndex = Session.get "current module index"
+    moduleSequence = Session.get "module sequence"
+    resetModules(moduleSequence[currentIndex])
+    
+    Session.set "previous module index", currentIndex
+    Session.set "current module index", --currentIndex
