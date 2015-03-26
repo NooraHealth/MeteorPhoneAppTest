@@ -41,7 +41,6 @@ Template.registerHelper 'currentModuleTitle', ()->
   return sequence[index].title
 
 Template.registerHelper 'isCorrectAnswer', (response)->
-  console.log "Getting the correct answer"
   #all possible answers to lowercase
   answers = (answer.toLowerCase() for answer in Template.instance().data.correct_answer)
   return response.toLowerCase() in answers

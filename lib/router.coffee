@@ -37,7 +37,6 @@ Router.map ()->
     layoutTemplate: 'moduleLayout'
     name: 'ModulesSequence'
     data: () ->
-      console.log "getting the modules sequence"
       if this.ready()
         lesson = Lessons.findOne {nh_id: this.params.nh_id}
         Session.set "current lesson", lesson
