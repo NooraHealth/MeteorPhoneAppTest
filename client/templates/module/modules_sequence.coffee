@@ -24,17 +24,7 @@ Template.ModulesSequence.events
 
     hideIncorrectResponses(module)
     showSticker(event.target, module)
-    playAudio(event.target, module)
-
-playAudio = (response, module)->
-  nh_id = module.nh_id
-  $("audio[name=audio#{nh_id}][class=question]")[0].pause()
-  if $(response).hasClass "correct"
-    $("audio[name=audio#{nh_id}][class=correct]")[0].play()
-  else
-    $("audio[name=audio#{nh_id}][class=incorrect]")[0].play()
-
-
+    playAnswerAudio(event.target, module)
 
 showSticker= (response, module) ->
   nh_id = module.nh_id

@@ -41,7 +41,15 @@ Template.registerHelper 'currentModuleTitle', ()->
   return sequence[index].title
 
 Template.registerHelper 'isCorrectAnswer', (response)->
+  console.log "Getting the correct answer"
   #all possible answers to lowercase
-  answers = (answer.toLowerCase() for answer in this.correct_answer)
+  answers = (answer.toLowerCase() for answer in Template.instance().data.correct_answer)
   return response.toLowerCase() in answers
 
+playAnswerAudio = (response, module)->
+  nh_id = module.nh_id
+  $("audio[name=audio#{nh_id}][class=question]")[0].pause()
+  if $(response).hasClass "correct"
+    $("audio[name=audio#{nh_id}][class=correct]")[0].play()
+  else
+    $("audio[name=audio#{nh_id}][class=incorrect]")[0].play()
