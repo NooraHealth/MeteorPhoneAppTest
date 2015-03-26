@@ -1,4 +1,3 @@
-
 <template name="multipleChoiceModule">
 <div class="front">
 
@@ -8,22 +7,21 @@
     <div class="row">
     {{#each getOptionObjects}}
       <div class="col l4 m4 s4">
-        <img src="{{optionImgSrc}}" class="image-choice" name="{{option}}"/>
+        <img name="option{{nh_id}}" alt="{{option}}" src="{{optionImgSrc}}" class="image-choice {{#if isCorrectAnswer option }} correct {{/if}}" />
       </div>
     {{/each}}
     </div>
   </div>
 
   <div class="card-action center-align">
-      <a class="btn waves-effect waves-light white-text">SUBMIT</a>
+      <a name="submit_multiple_choice" class="btn waves-effect waves-light white-text">SUBMIT</a>
   </div>
     
 </div>
 
 <div class="back">
-<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-  {{>answer}}
-</div>
+  <audio name="audio{{nh_id}}" class="correct" src="{{correctAnswerAudio}}"></audio>
+  <audio name="audio{{nh_id}}" class="incorrect" src="{{incorrectAnswerAudio}}"></audio>
 </div>
 
 </template>
