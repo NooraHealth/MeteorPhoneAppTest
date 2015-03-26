@@ -43,8 +43,5 @@ Template.registerHelper 'currentModuleTitle', ()->
 Template.registerHelper 'isCorrectAnswer', (response)->
   #all possible answers to lowercase
   answers = (answer.toLowerCase() for answer in this.correct_answer)
-  console.log response
-  console.log "in correct answer helper"
-  console.log response
   return response.toLowerCase() in answers
 

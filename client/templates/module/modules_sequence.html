@@ -3,6 +3,15 @@
 {{#each modules}}
 <div class="module-container card {{#unless currentModuleID nh_id}} hidden-card {{/unless}}">
     <div class="module-card front-facing">
+
+      <div name="{{nh_id}}" class="response-sticker-container red valign-wrapper center-align z-depth-2">
+        <i class="mdi-navigation-close small"></i>
+      </div>
+
+      <div name="{{nh_id}}" class="response-sticker-container green valign-wrapper center-align z-depth-2">
+        <i class="mdi-navigation-check small"></i>
+      </div>
+
       {{#if audio}}
         {{#if currentModuleID nh_id}}
         <audio src="{{audioSrc}}" name="audio" autoplay></audio>

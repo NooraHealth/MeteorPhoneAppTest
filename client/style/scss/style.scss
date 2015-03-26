@@ -99,17 +99,22 @@ td {
 Custom NH components 
 
 -------------------------------- */
-.title {
-  font-weight: $bold-font-weight;
+
+.response-sticker-container {
+  display: none;
+  position: fixed;
+  margin-top: -25px;
+  margin-left:-15px;
+  width: 60px;
+  height: 60px;
+  z-index: 1;
+  border-radius: 50px;
+  /*@include transition(.3s);*/
+  /*@include transform(scale(1.5));*/
 }
 
 .row {
   margin: 0;
-}
-
-.module-table {
-  & img {
-  }
 }
 
 .hidden-card {
