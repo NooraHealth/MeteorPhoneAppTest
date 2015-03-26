@@ -1,3 +1,7 @@
+###
+# MODULES SEQUENCE HELPERS
+###
+
 Template.ModulesSequence.helpers
   modules: ()->
     if _.isEmpty @
@@ -15,6 +19,9 @@ Template.ModulesSequence.helpers
     module = sequence[index]
     return module.nh_id == nh_id
 
+###
+# MODULES SEQUENCE EVENTS
+###
 Template.ModulesSequence.events
   'click .response': (event, template)->
     response = $(event.target).val()
@@ -26,28 +33,15 @@ Template.ModulesSequence.events
     showSticker(event.target, module)
     playAnswerAudio(event.target, module)
 
-showSticker= (response, module) ->
-  nh_id = module.nh_id
-  console.log response
-  
-  if $(response).hasClass "correct"
-    $("#sticker_correct").removeClass("hidden")
-  else
-    console.log "showing red sticked"
-    $("#sticker_incorrect").removeClass("hidden")
+  'click [name=next]': (event, template) ->
+    goToNextModule(event, template)
 
-
-hideIncorrectResponses = (module)->
-    nh_id = module.nh_id
-    responseBtns =  $("a[name=#{nh_id}]")
-    for btn in responseBtns
-      if not $(btn).hasClass "correct"
-        if $(btn).hasClass "response"
-          $(btn).hide()
-####
-## Tracks the current module in the series and
-## moves the current module into visibility when the current module changes
-####
+###
+# AUTORUN
+# 
+# Tracks the current module in the series and
+# moves the current module into visibility when the current module changes
+###
 
 Tracker.autorun ()->
   moduleSequence = Session.get "module sequence"
@@ -66,4 +60,26 @@ Tracker.autorun ()->
     moduleToHide = $("#module" + moduleSequence[previousModuleIndex].nh_id)
     moduleToHide.removeClass 'visible-module'
     moduleToHide.addClass 'hidden-left'
+
+###
+# HELPER FUNCTIONS
+###
+
+showSticker = (response, module) ->
+  nh_id = module.nh_id
   
+  if $(response).hasClass "correct"
+    $("#sticker_correct").removeClass("hidden")
+  else
+    console.log "showing red sticked"
+    $("#sticker_incorrect").removeClass("hidden")
+
+
+hideIncorrectResponses = (module)->
+    nh_id = module.nh_id
+    responseBtns =  $("a[name=#{nh_id}]")
+    for btn in responseBtns
+      if not $(btn).hasClass "correct"
+        if $(btn).hasClass "response"
+          $(btn).hide()
+

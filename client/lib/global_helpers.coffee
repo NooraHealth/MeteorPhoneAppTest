@@ -45,11 +45,4 @@ Template.registerHelper 'isCorrectAnswer', (response)->
   answers = (answer.toLowerCase() for answer in Template.instance().data.correct_answer)
   return response.toLowerCase() in answers
 
-this.playAnswerAudio = (response, module)->
-  nh_id = module.nh_id
-  $("audio[name=audio#{nh_id}][class=question]")[0].pause()
-  if $(response).hasClass "correct"
-    $("audio[name=audio#{nh_id}][class=correct]")[0].play()
-  else
-    $("audio[name=audio#{nh_id}][class=incorrect]")[0].play()
 

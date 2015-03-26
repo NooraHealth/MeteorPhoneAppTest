@@ -2,7 +2,7 @@
 <div class="front">
 
   <div class="card-content">
-    <div class="flow-text grey-text text-darken-2">{{>question}}</div>
+    <div class="flow-text grey-text text-darken-2">{{question}}</div>
     
     <div class="row">
     {{#each getOptionObjects}}
@@ -15,6 +15,7 @@
 
   <div class="card-action center-align">
     <a name="submit_multiple_choice{{nh_id}}" class="btn waves-effect waves-light white-text">SUBMIT</a>
+    {{>nextBtn}}
   </div>
     
 </div>
@@ -23,5 +24,6 @@
   <audio name="audio{{nh_id}}" class="correct" src="{{correctAnswerAudio}}"></audio>
   <audio name="audio{{nh_id}}" class="incorrect" src="{{incorrectAnswerAudio}}"></audio>
 </div>
+
 
 </template>

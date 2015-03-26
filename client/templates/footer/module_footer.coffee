@@ -21,7 +21,7 @@ Template.moduleFooter.events
   'click .module_nav': (event, template) ->
     currentIndex = Session.get "current module index"
     moduleSequence = Session.get "module sequence"
-    reset(moduleSequence[currentIndex])
+    resetModules(moduleSequence[currentIndex])
     
     Session.set "previous module index", currentIndex
     nextIndex = $(event.target).attr 'name'
@@ -29,22 +29,12 @@ Template.moduleFooter.events
       return
     else
       Session.set "current module index", nextIndex
-  
-  'click [name=next]': (event, template)->
-    currentIndex = Session.get "current module index"
-    moduleSequence = Session.get "module sequence"
-    reset(moduleSequence[currentIndex])
-    
-    Session.set "previous module index", currentIndex
-    Session.set "current module index", ++currentIndex
 
-  'click [name=previous]': ()->
-    currentIndex = Session.get "current module index"
-    moduleSequence = Session.get "module sequence"
-    reset(moduleSequence[currentIndex])
-    
-    Session.set "previous module index", currentIndex
-    Session.set "current module index", --currentIndex
+  'click [name=next]': (event, template)->
+    goToNextModule(event, template)
+
+  'click [name=previous]': (event, template)->
+    goToPreviousModule(event, template)
  
 Tracker.autorun ()->
   moduleSequence = Session.get "module sequence"
@@ -59,16 +49,5 @@ Tracker.autorun ()->
     previousActiveNav = $(".module-navigation-bar").find("li[name="+ previousModuleIndex+"]")
     previousActiveNav.removeClass "current"
 
-reset = (previousModule) ->
-  nh_id = previousModule.nh_id
-
-  #Pause all playing audio
-  audioArr = $("audio[name=audio#{nh_id}]")
-  for audioElem in audioArr
-    $(audioElem)[0].pause()
-
-  #Hide the stickers
-  $("#sticker_incorrect").addClass "hidden"
-  $("#sticker_correct").addClass "hidden"
 
 
