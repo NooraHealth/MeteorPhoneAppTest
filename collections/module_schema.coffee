@@ -80,7 +80,8 @@ Modules.helpers {
     return response in @.correct_answer
 
   getOptionObjects: ()->
-    newArr = ({option: option, optionImgSrc: MEDIA_URL + option } for option in @.options)
+    module = @
+    newArr = ({option: option, optionImgSrc: MEDIA_URL + option, nh_id: module.nh_id} for option in @.options)
     return newArr
 
   option: (i)->
