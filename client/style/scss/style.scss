@@ -281,6 +281,7 @@ Custom NH components
   cursor: pointer;
 
   &.correctly_selected {
+    @include transition-delay(.3s);
     @include transition(scale, 1s);
     border: 4px solid $success;
   }
@@ -290,11 +291,13 @@ Custom NH components
   }
 
   &.incorrectly_selected {
+    @include transition-delay(.3s);
     @include transition(scale, 1s);
     border: 4px solid $danger;
   }
 
   &.expanded {
+    @include transition-delay(.3s);
     @include transition(scale, 2s);
 
     @media(min-width: 600px) {
@@ -306,6 +309,7 @@ Custom NH components
   }
 
   &.faded {
+    @include transition-delay(.3s);
     @include transform(scale(.75));
     @include transition(2s);
     opacity: 0.5;
