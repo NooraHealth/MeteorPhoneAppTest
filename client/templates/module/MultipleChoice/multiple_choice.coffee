@@ -8,7 +8,7 @@ Template.multipleChoiceModule.events
     numPossibleCorrect = module.correct_answer.length
    
     #fade out all the containers of the incorrect options
-    numIncorrect = displayOnlyCorrectOptions(module)
+    numIncorrect = expandCorrectOptions(module)
 
     #Fade out the submit btn
     $(event.target).fadeOut()
@@ -24,19 +24,25 @@ Template.multipleChoiceModule.events
 # HELPER FUNCTIONS
 ###
 
-displayOnlyCorrectOptions = (module) ->
+expandCorrectOptions = (module) ->
     nh_id = module.nh_id
     options = $("img[name=option#{nh_id}]")
     numIncorrect = 0
     for option in options
       if not $(option).hasClass "correct"
-        $(option).fadeOut()
+        $(option).addClass "faded"
       else
+
+        $(option).addClass "expanded"
+        
         if not $(option).hasClass "selected"
-          displayIncorrectSticker(module, option)
+          #displayIncorrectSticker(module, option)
           numIncorrect += 1
+          $(option).addClass "incorrectly_selected"
+
         else
-          displayCorrectSticker(module, option)
+         $(option).removeClass "selected"
+         $(option).addClass "correctly_selected"
 
     return numIncorrect
 
