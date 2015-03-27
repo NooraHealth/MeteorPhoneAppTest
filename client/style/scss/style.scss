@@ -269,10 +269,9 @@ Custom NH components
 .next-module-btn {
   @include transition(all, 1s);
   width: 100%;
-  font-color: $primary-blue;
 
   &:hover {
-    background-color: $light-blue-2;
+    background-color: lighten($light-blue-2, 30%);
   }
 }
 
