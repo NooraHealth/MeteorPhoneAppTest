@@ -39,6 +39,9 @@ this.goToPreviousModule = (event, template) ->
 this.showNextModuleBtn = (module) ->
   console.log "showing the next module"
   nh_id = module.nh_id
-  $("#nextbtn#{nh_id}").fadeIn()
-  $("#nextbtn#{nh_id}").removeClass("hidden")
+  btn = $("#nextbtn#{nh_id}")
+  if btn.hasClass "hidden"
+    btn.removeClass("hidden")
+  else if btn.hasClass "back"
+    btn.parent().addClass "flipped"
     

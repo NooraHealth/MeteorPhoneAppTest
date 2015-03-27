@@ -46,17 +46,17 @@ expandCorrectOptions = (module) ->
 
     return numIncorrect
 
-displayCorrectSticker = (module, optionImg)->
-  console.log optionImg
-  console.log "showing correct stcker"
-  optionIndex = $(optionImg).attr "alt"
-  nh_id = module.nh_id
-  console.log $("sticker_correct#{optionIndex}#{nh_id}")
-  $("#sticker_correct#{optionIndex}#{nh_id}").removeClass("hidden")
+#displayCorrectSticker = (module, optionImg)->
+  #console.log optionImg
+  #console.log "showing correct stcker"
+  #optionIndex = $(optionImg).attr "alt"
+  #nh_id = module.nh_id
+  #console.log $("sticker_correct#{optionIndex}#{nh_id}")
+  #$("#sticker_correct#{optionIndex}#{nh_id}").removeClass("hidden")
 
-displayIncorrectSticker = (module, optionImg)->
-  console.log optionImg
-  console.log $(optionImg)
-  optionIndex = $(optionImg).attr "alt"
-  nh_id = module.nh_id
-  $("#sticker_incorrect#{optionIndex}#{nh_id}").removeClass "hidden"
+#displayIncorrectSticker = (module, optionImg)->
+  #console.log optionImg
+  #console.log $(optionImg)
+  #optionIndex = $(optionImg).attr "alt"
+  #nh_id = module.nh_id
+  #$("#sticker_incorrect#{optionIndex}#{nh_id}").removeClass "hidden"

@@ -7,16 +7,6 @@
     <div class="row">
     {{#each getOptionObjects}}
       <div class="col l4 m4 s4">
-        
-        <!-- CORRECT AND INCORRECT STICKERS -->
-        <div id="sticker_incorrect{{i}}{{nh_id}}" class="response-sticker-container red valign-wrapper center-align z-depth-2 hidden">
-          <i class="mdi-navigation-close small"></i>
-        </div>
-
-        <div id="sticker_correct{{i}}{{nh_id}}" class="response-sticker-container green valign-wrapper center-align z-depth-2 hidden">
-          <i class="mdi-navigation-check small"></i>
-        </div>
-
         <!-- IMG -->
         <img name="option{{nh_id}}" alt="{{i}}" src="{{optionImgSrc}}" class="image-choice {{#if isCorrectAnswer option }} correct {{/if}}" />
       </div>
@@ -25,10 +15,11 @@
   </div>
 
   <div class="card-action center-align">
-    <a name="submit_multiple_choice{{nh_id}}" class="btn waves-effect waves-light white-text">SUBMIT</a>
-    {{>nextBtn class="hidden" nh_id=nh_id}}
-  </div>
-    
+    <div class="flip-button-container">
+      <a name="submit_multiple_choice{{nh_id}}" class="front btn waves-effect waves-blue white-text">SUBMIT</a>
+      {{>nextBtn class="back" nh_id=nh_id}}
+    </div>
+  </div> 
 </div>
 
 <div class="back">
