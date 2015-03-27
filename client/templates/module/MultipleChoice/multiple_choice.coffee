@@ -26,13 +26,31 @@ Template.multipleChoiceModule.events
 
 displayOnlyCorrectOptions = (module) ->
     nh_id = module.nh_id
-    optionContainers = $("img[name=option#{nh_id}]")
+    options = $("img[name=option#{nh_id}]")
     numIncorrect = 0
-    for option in optionContainers
+    for option in options
       if not $(option).hasClass "correct"
         $(option).fadeOut()
       else
         if not $(option).hasClass "selected"
+          displayIncorrectSticker(module, option)
           numIncorrect += 1
+        else
+          displayCorrectSticker(module, option)
 
     return numIncorrect
+
+displayCorrectSticker = (module, optionImg)->
+  console.log optionImg
+  console.log "showing correct stcker"
+  optionIndex = $(optionImg).attr "alt"
+  nh_id = module.nh_id
+  console.log $("sticker_correct#{optionIndex}#{nh_id}")
+  $("#sticker_correct#{optionIndex}#{nh_id}").removeClass("hidden")
+
+displayIncorrectSticker = (module, optionImg)->
+  console.log optionImg
+  console.log $(optionImg)
+  optionIndex = $(optionImg).attr "alt"
+  nh_id = module.nh_id
+  $("#sticker_incorrect#{optionIndex}#{nh_id}").removeClass "hidden"

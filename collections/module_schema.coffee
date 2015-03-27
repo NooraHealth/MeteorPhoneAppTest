@@ -81,7 +81,7 @@ Modules.helpers {
 
   getOptionObjects: ()->
     module = @
-    newArr = ({option: option, optionImgSrc: MEDIA_URL + option, nh_id: module.nh_id} for option in @.options)
+    newArr = ({option: option, optionImgSrc: MEDIA_URL + option, nh_id: module.nh_id, i: i} for option, i in @.options)
     return newArr
 
   option: (i)->

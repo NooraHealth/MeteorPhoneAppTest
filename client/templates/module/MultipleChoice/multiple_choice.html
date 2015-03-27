@@ -9,16 +9,16 @@
       <div class="col l4 m4 s4">
         
         <!-- CORRECT AND INCORRECT STICKERS -->
-        <div id="sticker_incorrect{{option}}{{nh_id}}" class="response-sticker-container red valign-wrapper center-align z-depth-2 hidden">
+        <div id="sticker_incorrect{{i}}{{nh_id}}" class="response-sticker-container red valign-wrapper center-align z-depth-2 hidden">
           <i class="mdi-navigation-close small"></i>
         </div>
 
-        <div id="sticker_correct{{option}}{{nh_id}}" class="response-sticker-container green valign-wrapper center-align z-depth-2 hidden">
+        <div id="sticker_correct{{i}}{{nh_id}}" class="response-sticker-container green valign-wrapper center-align z-depth-2 hidden">
           <i class="mdi-navigation-check small"></i>
         </div>
 
         <!-- IMG -->
-        <img name="option{{nh_id}}" alt="{{option}}" src="{{optionImgSrc}}" class="image-choice {{#if isCorrectAnswer option }} correct {{/if}}" />
+        <img name="option{{nh_id}}" alt="{{i}}" src="{{optionImgSrc}}" class="image-choice {{#if isCorrectAnswer option }} correct {{/if}}" />
       </div>
     {{/each}}
     </div>
