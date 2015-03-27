@@ -146,6 +146,8 @@ Custom NH components
     display: block;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
+    letter-spacing: 2px;
+    font-size: 20px;
 
     &.back {
       @include transform(rotateY(180deg));
@@ -268,6 +270,8 @@ Custom NH components
 
 .next-module-btn {
   @include transition(all, 1s);
+  letter-spacing: 2px;
+  font-size: 20px;
   width: 100%;
 
   &:hover {
