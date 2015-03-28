@@ -16,3 +16,7 @@ Template.sectionSidePanel.events
   'click .cd-panel': (event, template) ->
     $("#panel" + @.nh_id).removeClass 'is-visible'
 
+  'click [name=section_thumbnail]': (event, template) ->
+    console.log "this is the event", event
+    console.log "this is the template", template
+
