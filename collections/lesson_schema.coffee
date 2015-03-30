@@ -44,17 +44,20 @@ Lessons.attachSchema LessonSchema
 
 Lessons.helpers {
   getSublessonDocuments: ()->
-    
+    console.log "getting the sublesson documents"
     if !this.has_sublessons
       return []
 
-    lessons = []
+    lessonDocuments = []
     _.each this.lessons, (lessonID) ->
+      console.log lessonID
       lesson = Lessons.findOne {nh_id: lessonID}
-      if lesson
-        lessons.push lesson
+      console.log lesson
+      if lesson?
+        console.log "There was a lesson!"
+        lessonDocuments.push lesson
 
-    return lessons
+    return lessonDocuments
 
   getModulesSequence: ()->
     if !this.first_module

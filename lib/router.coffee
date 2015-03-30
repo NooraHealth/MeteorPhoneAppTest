@@ -13,10 +13,13 @@ Router.map ()->
       if this.ready()
         curr = Curriculum.findOne({})
         if curr
+          console.log "in the home route"
           Session.set "current chapter", null
           Session.set "current lesson", null
           Session.set "current module index", null
           Session.set "module sequence", null
+          Session.set "sections map", []
+          Session.set "current sections", null
           return {chapters: curr.getLessonDocuments()}
   }
 
@@ -53,11 +56,31 @@ Router.map ()->
     layoutTemplate: 'layout'
     data: ()->
       if this.ready()
+        console.log "getting the chapter"
         chapterID = this.params.nh_id
         chapter = Lessons.findOne {nh_id: chapterID}
         if chapter
+          console.log "getting the sublesson documents for te lessons"
           Session.set "current chapter", chapter
           return {lessons: chapter.getSublessonDocuments()}
+
+    onAfterAction: ()->
+      lessons = Template.currentData().lessons
+      newSectionEntries = []
+      for lesson in lessons
+        nh_id = lesson.nh_id
+        sectionsMap = Session.get "sections map"
+       
+        if not sectionsMap[nh_id]
+          sectionDocuments = @.getSublessonDocuments()
+          newSectionEntries.push({nh_id: sectionDocuments})
+        
+      Session.set "sections map", sectionsMap
+      console.log sectionDocuments
+      sectionDocuments = @.getSublessonDocuments()
+      sectionsMap.push({nh_id: sectionDocuments})
+      Session.set "sections map", sectionsMap
+      console.log sectionDocuments
   }
 
   ###
