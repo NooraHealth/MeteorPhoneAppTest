@@ -16,6 +16,8 @@ Template.ModulesSequence.helpers
   currentModuleID: (nh_id)->
     index = Session.get "current module index"
     sequence = Session.get "module sequence"
+    if !index? or !sequence?
+      return
     module = sequence[index]
     return module.nh_id == nh_id
 
@@ -35,7 +37,7 @@ Template.ModulesSequence.events
     showNextModuleBtn(module)
 
   'click [name=next]': (event, template) ->
-    goToNextModule(event, template)
+    goToNext(event, template)
 
 ###
 # AUTORUN
@@ -58,6 +60,7 @@ Tracker.autorun ()->
     moduleToDisplay.removeClass 'hidden-left'
   
   if previousModuleIndex?
+    console.log "previousModuleIndex? chechking"
     moduleToHide = $("#module" + moduleSequence[previousModuleIndex].nh_id)
     moduleToHide.removeClass 'visible-module'
     moduleToHide.addClass 'hidden-left'

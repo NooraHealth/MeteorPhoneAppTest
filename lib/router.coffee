@@ -66,6 +66,7 @@ Router.map ()->
         chapter = Lessons.findOne {nh_id: chapterID}
         if chapter
           Session.set "current chapter", chapter
+          console.log "set the current chapter"
           lessons = chapter.getSublessonDocuments()
           Session.set "current lessons", lessons
           Session.set "current chapter", chapter

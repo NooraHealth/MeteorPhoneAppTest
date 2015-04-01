@@ -20,13 +20,18 @@ this.playAnswerAudio = (response, module)->
   else
     $("audio[name=audio#{nh_id}][class=incorrect]")[0].play()
 
-this.goToNextModule = (event, template)->
+this.goToNext = (event, template)->
     currentIndex = Session.get "current module index"
     moduleSequence = Session.get "module sequence"
     resetModules(moduleSequence[currentIndex])
-    
-    Session.set "previous module index", currentIndex
-    Session.set "current module index", ++currentIndex
+
+    if currentIndex == moduleSequence.length - 1
+      goBackToChapterPage()
+      Session.set "previous module index", currentIndex
+      Session.set "current module index", null
+    else
+      Session.set "previous module index", currentIndex
+      Session.set "current module index", ++currentIndex
 
 this.goToPreviousModule = (event, template) ->
     currentIndex = Session.get "current module index"
@@ -44,4 +49,9 @@ this.showNextModuleBtn = (module) ->
     btn.removeClass("hidden")
   else if btn.hasClass "back"
     btn.parent().addClass "flipped"
+
+this.goBackToChapterPage = ()->
+  currentChapter = Session.get "current chapter"
+  Router.go "/chapter/"  + currentChapter.nh_id
+  
     
