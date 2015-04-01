@@ -16,8 +16,7 @@ mrt:q
 fourseven:scss
 wolves:bourbon
 http
-useraccounts:materialize
-d0minikk:materialize-meteor
 accounts-google
-accounts-facebook
-useraccounts:core
+accounts-ui
+materialize:materialize
+useraccounts:materialize
