@@ -94,11 +94,13 @@ Router.map ()->
             console.log "this is the lesson, I'm getting the subdocuments: ", lesson
             lessonDoc = Lessons.findOne {nh_id: lesson.nh_id}
             console.log "This is the lessonDoc: ", lessonDoc
-            sectionDocuments = lessonDoc.getSublessonDocuments()
-
-            #If there are no sublessons, then 
-            if sectionDocuments.length == 0
+            if not lessonDoc?
               sectionDocuments.push lesson
+            else
+              sectionDocuments = lessonDoc.getSublessonDocuments()
+              #If there are no sublessons, then 
+              if sectionDocuments.length == 0
+                sectionDocuments.push lesson
             console.log "Well 89 wasnt the problem"
             console.log "sectionDocuments: ", sectionDocuments
             sectionsMap[nh_id] = sectionDocuments

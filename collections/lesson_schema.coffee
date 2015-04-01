@@ -77,8 +77,6 @@ Lessons.helpers {
     else
       return false
 
-  imgSrc: ()->
-    return MEDIA_URL + @.image
 }
 
 
