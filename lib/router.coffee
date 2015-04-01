@@ -13,7 +13,6 @@ Router.map ()->
       if this.ready()
         curr = Curriculum.findOne({})
         if curr
-          console.log "in the home route"
           Session.set "current chapter", null
           Session.set "current lesson", null
           Session.set "current module index", null
@@ -60,22 +59,18 @@ Router.map ()->
         return {lessons: Session.get "current lessons"}
 
     onBeforeAction: ()->
-      if this.ready()
-        console.log "getting the chapter"
-        chapterID = this.params.nh_id
-        chapter = Lessons.findOne {nh_id: chapterID}
-        if chapter
-          Session.set "current chapter", chapter
-          console.log "set the current chapter"
-          lessons = chapter.getSublessonDocuments()
-          Session.set "current lessons", lessons
-          Session.set "current chapter", chapter
+      chapterID = this.params.nh_id
+      chapter = Lessons.findOne {nh_id: chapterID}
+      if chapter
+        Session.set "current chapter", chapter
+        lessons = chapter.getSublessonDocuments()
+        Session.set "current lessons", lessons
+        Session.set "current chapter", chapter
 
       @.next()
 
     onAfterAction: ()->
       Tracker.nonreactive ()->
-        console.log "I'm in the after action!"
         lessons = Session.get "current lessons"
         if not lessons?
           return
@@ -84,17 +79,10 @@ Router.map ()->
         if not sectionsMap?
           sectionsMap = {}
           Session.set "sections map", sectionsMap
-        console.log "1"
-        console.log "These are all the lessons I'm iterating over: ", lessons
         for lesson in lessons
           nh_id = lesson.nh_id
-          console.log "2 : nh_id ", nh_id
-          console.log "this is the sections Map: ", sectionsMap
           if not sectionsMap.nh_id?
-            console.log "$!!!"
-            console.log "this is the lesson, I'm getting the subdocuments: ", lesson
             lessonDoc = Lessons.findOne {nh_id: lesson.nh_id}
-            console.log "This is the lessonDoc: ", lessonDoc
             if not lessonDoc?
               sectionDocuments.push lesson
             else
@@ -102,13 +90,9 @@ Router.map ()->
               #If there are no sublessons, then 
               if sectionDocuments.length == 0
                 sectionDocuments.push lesson
-            console.log "Well 89 wasnt the problem"
-            console.log "sectionDocuments: ", sectionDocuments
             sectionsMap[nh_id] = sectionDocuments
           
         Session.set "sections map", sectionsMap
-        console.log "this is the sections Map NOW:"
-        console.log Session.get "sections map"
   }
 
   ###
