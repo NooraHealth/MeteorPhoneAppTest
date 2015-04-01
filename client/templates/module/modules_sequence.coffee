@@ -60,7 +60,6 @@ Tracker.autorun ()->
     moduleToDisplay.removeClass 'hidden-left'
   
   if previousModuleIndex?
-    console.log "previousModuleIndex? chechking"
     moduleToHide = $("#module" + moduleSequence[previousModuleIndex].nh_id)
     moduleToHide.removeClass 'visible-module'
     moduleToHide.addClass 'hidden-left'

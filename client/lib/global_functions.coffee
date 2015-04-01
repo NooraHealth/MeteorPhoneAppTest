@@ -42,7 +42,6 @@ this.goToPreviousModule = (event, template) ->
     Session.set "current module index", --currentIndex
 
 this.showNextModuleBtn = (module) ->
-  console.log "showing the next module"
   nh_id = module.nh_id
   btn = $("#nextbtn#{nh_id}")
   if btn.hasClass "hidden"
@@ -53,5 +52,8 @@ this.showNextModuleBtn = (module) ->
 this.goBackToChapterPage = ()->
   currentChapter = Session.get "current chapter"
   Router.go "/chapter/"  + currentChapter.nh_id
+
+this.goToNextSection = ()->
+  
   
     

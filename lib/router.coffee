@@ -40,9 +40,9 @@ Router.map ()->
     name: 'ModulesSequence'
     data: () ->
       if this.ready()
-        lesson = Lessons.findOne {nh_id: this.params.nh_id}
-        Session.set "current lesson", lesson
-        return {lesson: lesson}
+        section = Lessons.findOne {nh_id: this.params.nh_id}
+        Session.set "current section", section
+        return {section: section}
         
   }
 
@@ -55,17 +55,16 @@ Router.map ()->
     layoutTemplate: 'layout'
     data: ()->
       if @.ready()
-        console.log ""
         return {lessons: Session.get "current lessons"}
 
     onBeforeAction: ()->
+      console.log "getting the chapter"
       chapterID = this.params.nh_id
       chapter = Lessons.findOne {nh_id: chapterID}
       if chapter
         Session.set "current chapter", chapter
         lessons = chapter.getSublessonDocuments()
         Session.set "current lessons", lessons
-        Session.set "current chapter", chapter
 
       @.next()
 
