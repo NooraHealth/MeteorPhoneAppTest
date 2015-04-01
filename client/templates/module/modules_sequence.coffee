@@ -7,8 +7,8 @@ Template.ModulesSequence.helpers
     if _.isEmpty @
       return []
     else
-      if @.lesson
-        moduleSequence = @.lesson.getModulesSequence()
+      if @.section
+        moduleSequence = @.section.getModulesSequence()
         Session.set "module sequence", moduleSequence
         Session.set "current module index", 0
         return moduleSequence
