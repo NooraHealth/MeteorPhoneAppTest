@@ -6,8 +6,10 @@ Template.sectionSidePanel.helpers
       if @.has_sections == 'false'
         return [@]
       else
-        console.log "getting the sections"
-        return @.getSublessonDocuments()
+        lessonNh_id = @.nh_id
+        sectionsMap = Session.get "sections map"
+        return sectionsMap[lessonNh_id]
+      
 
 Template.sectionSidePanel.events
  
