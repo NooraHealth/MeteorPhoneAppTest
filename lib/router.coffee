@@ -18,7 +18,7 @@ Router.map ()->
           Session.set "current lesson", null
           Session.set "current module index", null
           Session.set "module sequence", null
-          Session.set "sections map", []
+          Session.set "sections map", {}
           Session.set "current sections", null
           return {chapters: curr.getLessonDocuments()}
   }
@@ -55,32 +55,57 @@ Router.map ()->
     name: 'chapter'
     layoutTemplate: 'layout'
     data: ()->
+      if @.ready()
+        console.log ""
+        return {lessons: Session.get "current lessons"}
+
+    onBeforeAction: ()->
       if this.ready()
         console.log "getting the chapter"
         chapterID = this.params.nh_id
         chapter = Lessons.findOne {nh_id: chapterID}
         if chapter
-          console.log "getting the sublesson documents for te lessons"
           Session.set "current chapter", chapter
-          return {lessons: chapter.getSublessonDocuments()}
+          lessons = chapter.getSublessonDocuments()
+          Session.set "current lessons", lessons
+          Session.set "current chapter", chapter
+
+      @.next()
 
     onAfterAction: ()->
-      lessons = Template.currentData().lessons
-      newSectionEntries = []
-      for lesson in lessons
-        nh_id = lesson.nh_id
-        sectionsMap = Session.get "sections map"
-       
-        if not sectionsMap[nh_id]
-          sectionDocuments = @.getSublessonDocuments()
-          newSectionEntries.push({nh_id: sectionDocuments})
+      Tracker.nonreactive ()->
+        console.log "I'm in the after action!"
+        lessons = Session.get "current lessons"
+        if not lessons?
+          return
         
-      Session.set "sections map", sectionsMap
-      console.log sectionDocuments
-      sectionDocuments = @.getSublessonDocuments()
-      sectionsMap.push({nh_id: sectionDocuments})
-      Session.set "sections map", sectionsMap
-      console.log sectionDocuments
+        sectionsMap = Session.get "sections map"
+        if not sectionsMap?
+          sectionsMap = {}
+          Session.set "sections map", sectionsMap
+        console.log "1"
+        console.log "These are all the lessons I'm iterating over: ", lessons
+        for lesson in lessons
+          nh_id = lesson.nh_id
+          console.log "2 : nh_id ", nh_id
+          console.log "this is the sections Map: ", sectionsMap
+          if not sectionsMap.nh_id?
+            console.log "$!!!"
+            console.log "this is the lesson, I'm getting the subdocuments: ", lesson
+            lessonDoc = Lessons.findOne {nh_id: lesson.nh_id}
+            console.log "This is the lessonDoc: ", lessonDoc
+            sectionDocuments = lessonDoc.getSublessonDocuments()
+
+            #If there are no sublessons, then 
+            if sectionDocuments.length == 0
+              sectionDocuments.push lesson
+            console.log "Well 89 wasnt the problem"
+            console.log "sectionDocuments: ", sectionDocuments
+            sectionsMap[nh_id] = sectionDocuments
+          
+        Session.set "sections map", sectionsMap
+        console.log "this is the sections Map NOW:"
+        console.log Session.get "sections map"
   }
 
   ###
