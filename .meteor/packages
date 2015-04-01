@@ -20,3 +20,4 @@ accounts-google
 accounts-ui
 materialize:materialize
 useraccounts:materialize
+accounts-password
