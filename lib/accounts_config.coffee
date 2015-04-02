@@ -47,7 +47,7 @@ AccountsTemplates.configure {
     texts: {
 
       errors: {
-        mustBeLoggedIn: "",
+        mustBeLoggedIn: "Please log in",
       },
       button: {
           signUp: "Register Now!"
@@ -64,14 +64,14 @@ AccountsTemplates.configure {
 
       title: {
         signIn: "",
+        signUp: "",
         forgotPwd: "Recover Your Password"
       },
     }
 }
 
 AccountsTemplates.configureRoute 'ensureSignedIn', {
-  template: 'entry',
-  layoutTemplate: 'layout'
+  template: 'entry'
 }
 
 Router.plugin "ensureSignedIn"
