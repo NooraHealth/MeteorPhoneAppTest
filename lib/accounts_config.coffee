@@ -2,7 +2,7 @@ AccountsTemplates.configure {
     confirmPassword: true,
     enablePasswordChange: true,
     forbidClientAccountCreation: false,
-    overrideLoginErrors: false,
+    overrideLoginErrors: true,
     sendVerificationEmail: true,
     lowercaseUsername: false,
 
@@ -37,6 +37,7 @@ AccountsTemplates.configure {
 
     # Texts
     texts: {
+
       button: {
           signUp: "Register Now!"
       },
@@ -44,8 +45,15 @@ AccountsTemplates.configure {
       socialIcons: {
           "meteor-developer": "fa fa-rocket"
       },
+      inputIcons: {
+        isValidating: "fa fa-spin fa-spinner",
+        hasSuccess: "fa fa-check",
+        hasError: "fa fa-cross"
+      },
+
       title: {
-          forgotPwd: "Recover Your Password"
+        signIn: "",
+        forgotPwd: "Recover Your Password"
       },
     }
 }
