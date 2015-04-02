@@ -1,3 +1,11 @@
+AccountsTemplates.configureRoute 'signIn', {
+  name: 'signin',
+  path:'/signIn',
+  redirect: '/',
+  layoutTemplate: 'layout',
+  template: 'entry',
+}
+
 AccountsTemplates.configure {
     confirmPassword: true,
     enablePasswordChange: true,
@@ -26,7 +34,7 @@ AccountsTemplates.configure {
     termsUrl: 'terms-of-use',
 
     # Redirects
-    homeRoutePath: '/home',
+    homeRoutePath: '/',
     redirectTimeout: 4000,
 
     # Hooks
