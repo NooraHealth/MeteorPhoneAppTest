@@ -2,13 +2,13 @@ AccountsTemplates.configure {
     confirmPassword: true,
     enablePasswordChange: true,
     forbidClientAccountCreation: false,
-    overrideLoginErrors: true,
+    overrideLoginErrors: false,
     sendVerificationEmail: true,
     lowercaseUsername: false,
 
     # Appearance
     showAddRemoveServices: false,
-    showForgotPasswordLink: false,
+    showForgotPasswordLink: true,
     showLabels: true,
     showPlaceholders: true,
     defaultLayout: 'entry',
@@ -38,6 +38,9 @@ AccountsTemplates.configure {
     # Texts
     texts: {
 
+      errors: {
+        mustBeLoggedIn: "",
+      },
       button: {
           signUp: "Register Now!"
       },

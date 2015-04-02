@@ -27,7 +27,6 @@ body {
   background: $light-blue-1;
   margin-bottom: $footer-height;
   min-height: 50px;
-
 }
 
 footer {
@@ -49,7 +48,7 @@ nav {
 }
 
 a {
-  color: lighten($primary-font-color, 16%);
+  color: $primary-font-color ;
   text-decoration: none;
   
   &:hover {
@@ -603,20 +602,14 @@ html, body {
   /* smooth scrolling on touch devices */
   -webkit-overflow-scrolling: touch;
 
-  p, li {
-    color: $primary-blue;
-    line-height: 1.4;
-    margin: 2em 0;
+  /*p, li {*/
+    /*color: $primary-blue;*/
+    /*line-height: 1.4;*/
+    /*margin: 2em 0;*/
 
-    &:first-of-type {
-      margin-top: 0;
-    }
-  }
+    /*&:first-of-type {*/
+      /*margin-top: 0;*/
+    /*}*/
+  /*}*/
 
-  @include MQ(M) {
-    p, li {
-      /*@include font-size(16px);*/
-      line-height: 1.6;
-    }
-  }
 }
