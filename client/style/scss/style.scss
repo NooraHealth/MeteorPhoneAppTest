@@ -607,6 +607,16 @@ html, body {
   padding: 70px 5%;
   overflow: auto;
 
+  a {
+    color: lighten($primary-font-color, 10%);
+    text-decoration: none;
+    
+    &:hover {
+      color: $primary-font-color;
+      text-decoration: none;
+    }
+  }
+
   /* smooth scrolling on touch devices */
   -webkit-overflow-scrolling: touch;
 
