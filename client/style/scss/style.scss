@@ -27,6 +27,16 @@ body {
   background: $light-blue-1;
   margin-bottom: $footer-height;
   min-height: 50px;
+
+  a {
+    color: lighten($primary-blue, 10%);
+    text-decoration: none;
+    
+    &:hover {
+      color: $primary-blue;
+      text-decoration: none;
+    }
+  }
 }
 
 footer {
@@ -45,16 +55,6 @@ footer {
 }
 nav {
   background-color: $primary-blue;
-}
-
-a {
-  color: $primary-font-color ;
-  text-decoration: none;
-  
-  &:hover {
-    color: $primary-font-color;
-    text-decoration: none;
-  }
 }
 
 tile {
@@ -610,14 +610,14 @@ html, body {
   /* smooth scrolling on touch devices */
   -webkit-overflow-scrolling: touch;
 
-  /*p, li {*/
-    /*color: $primary-blue;*/
-    /*line-height: 1.4;*/
-    /*margin: 2em 0;*/
+  p, li {
+    color: $primary-blue;
+    line-height: 1.4;
+    margin: 2em 0;
 
-    /*&:first-of-type {*/
-      /*margin-top: 0;*/
-    /*}*/
-  /*}*/
+    &:first-of-type {
+      margin-top: 0;
+    }
+  }
 
 }
