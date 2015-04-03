@@ -32,19 +32,23 @@ Template.ModulesSequence.events
     module = moduleSequence[currentModuleIndex]
 
     hideIncorrectResponses(module)
-    if correctResponse(module)
+    if correctResponse(event.target)
       #showSticker "correct", module
       playAnswerAudio "correct", module
+      handleSuccessfulAttempt(module, 0)
     else
       #showSticker "incorrect", module
       playAnswerAudio "incorrect", module
+      handleFailedAttempt module, [$(event.target).val()], 0
 
-    showSticker(event.target, module)
-    playAnswerAudio(event.target, module)
     showNextModuleBtn(module)
 
   'click [name=next]': (event, template) ->
-    goToNext(event, template)
+    module = currentModule()
+    if module.type == "VIDEO" or module.type == "SLIDE"
+      handleSuccessfulAttempt(module, 0)
+
+    goToNext()
 
 ###
 # AUTORUN
@@ -75,15 +79,17 @@ Tracker.autorun ()->
 # HELPER FUNCTIONS
 ###
 
-showSticker = (response, module) ->
-  nh_id = module.nh_id
+#showSticker = (response, module) ->
+  #nh_id = module.nh_id
   
-  if $(response).hasClass "correct"
-    $("#sticker_correct").removeClass("hidden")
-  else
-    console.log "showing red sticked"
-    $("#sticker_incorrect").removeClass("hidden")
+  #if $(response).hasClass "correct"
+    #$("#sticker_correct").removeClass("hidden")
+  #else
+    #console.log "showing red sticked"
+    #$("#sticker_incorrect").removeClass("hidden")
 
+correctResponse = (response) ->
+  return $(response).hasClass "correct"
 
 hideIncorrectResponses = (module)->
     nh_id = module.nh_id

@@ -10,19 +10,20 @@
 # time_to_complete  the time to complete the module in ms
 ###
 this.handleFailedAttempt = (module, responses, time_to_complete) ->
+  console.log "this is the module ID"
+  console.log responses
+  console.log module.nh_id
   Attempts.insert {
     user: Meteor.user()._id
     responses: responses
     passed: false
     date: new Date().getTime()
-    time_to_complete_in_ms: 0
     nh_id: module.nh_id
   }, (error, _id) ->
     if error
-      console.log "There was an error inserting the incorrect attempt into the database"
+      console.log "There was an error inserting the incorrect attempt into the database", error
     else
       console.log "Just inserted this incorrect attempt into the DB: ", Attempts.findOne {_id: _id}
-
 
 
 
@@ -40,7 +41,6 @@ this.handleSuccessfulAttempt = (module, time_to_complete)->
     user: Meteor.user()._id
     passed: true
     date: new Date().getTime()
-    time_to_complete_in_ms: 0
     nh_id: module.nh_id
   }, (error, _id) ->
     if error
@@ -130,3 +130,9 @@ this.goBackToChapterPage = ()->
   Router.go "/chapter/"  + currentChapter.nh_id
 
 this.goToNextSection = ()->
+
+
+this.currentModule = ()->
+  moduleSequence = Session.get "module sequence"
+  currentIndex = Session.get "current module index"
+  return moduleSequence[currentIndex]

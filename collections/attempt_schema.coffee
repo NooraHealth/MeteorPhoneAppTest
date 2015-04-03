@@ -18,6 +18,7 @@ AttemptSchema = new SimpleSchema
   date:
     type:String
   time_to_complete_in_ms:
+    optional: true
     type: Number
   nh_id:
     type:String
