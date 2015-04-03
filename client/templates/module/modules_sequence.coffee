@@ -32,6 +32,13 @@ Template.ModulesSequence.events
     module = moduleSequence[currentModuleIndex]
 
     hideIncorrectResponses(module)
+    if correctResponse(module)
+      #showSticker "correct", module
+      playAnswerAudio "correct", module
+    else
+      #showSticker "incorrect", module
+      playAnswerAudio "incorrect", module
+
     showSticker(event.target, module)
     playAnswerAudio(event.target, module)
     showNextModuleBtn(module)
