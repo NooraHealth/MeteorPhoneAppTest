@@ -32,6 +32,7 @@ Template.ModulesSequence.events
     module = moduleSequence[currentModuleIndex]
 
     hideIncorrectResponses(module)
+    
     if correctResponse(event.target)
       #showSticker "correct", module
       playAnswerAudio "correct", module
@@ -98,4 +99,8 @@ hideIncorrectResponses = (module)->
       if not $(btn).hasClass "correct"
         if $(btn).hasClass "response"
           $(btn).hide()
+      else
+        $(btn).addClass "disabled"
+        $(btn).removeClass "response"
+        console.log "making this button disabled: ", btn
 
