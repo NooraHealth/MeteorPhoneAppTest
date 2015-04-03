@@ -40,13 +40,15 @@ AccountsTemplates.configure {
     # Hooks
     #onLogoutHook: myLogoutFunc,
     onSubmitHook: (error, action, final) ->
+      console.log ""
+      console.log ""
+      console.log ""
       console.log "in the submit hook"
       console.log error
       console.log action
       user = Meteor.user()
-
-      #if !error
-        #Router.go "/"
+      if !error
+        Router.go "/"
 
     # Texts
     texts: {

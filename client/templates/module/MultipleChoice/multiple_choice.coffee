@@ -29,7 +29,7 @@ Template.multipleChoiceModule.events
 expandCorrectOptions = (module) ->
     nh_id = module.nh_id
     options = $("img[name=option#{nh_id}]")
-    incorrect = 0
+    incorrect = []
     for option in options
       if not $(option).hasClass "correct"
         $(option).addClass "faded"
@@ -37,27 +37,12 @@ expandCorrectOptions = (module) ->
         $(option).addClass "expanded"
         
         if not $(option).hasClass "selected"
-          #displayIncorrectSticker(module, option)
-          incorrect.push $(option).val()
+          incorrect.push $(option).attr "src"
           $(option).addClass "incorrectly_selected"
 
         else
          $(option).removeClass "selected"
          $(option).addClass "correctly_selected"
 
-    return numIncorrect
+    return incorrect
 
-#displayCorrectSticker = (module, optionImg)->
-  #console.log optionImg
-  #console.log "showing correct stcker"
-  #optionIndex = $(optionImg).attr "alt"
-  #nh_id = module.nh_id
-  #console.log $("sticker_correct#{optionIndex}#{nh_id}")
-  #$("#sticker_correct#{optionIndex}#{nh_id}").removeClass("hidden")
-
-#displayIncorrectSticker = (module, optionImg)->
-  #console.log optionImg
-  #console.log $(optionImg)
-  #optionIndex = $(optionImg).attr "alt"
-  #nh_id = module.nh_id
-  #$("#sticker_incorrect#{optionIndex}#{nh_id}").removeClass "hidden"
