@@ -40,7 +40,7 @@ Template.ModulesSequence.events
     else
       #showSticker "incorrect", module
       playAnswerAudio "incorrect", module
-      handleFailedAttempt module, [$(event.target).val()], 0
+      handleFailedAttempt module, [$(event.target).attr "value"], 0
 
     showNextModuleBtn(module)
 
