@@ -15,6 +15,7 @@ Template.multipleChoiceModule.events
 
     #play the audio depending on whether the user answered correctly or not
     if numIncorrect > 0
+      handleFailedAttempt(module)
       playAnswerAudio(event.target, module)
   
     showNextModuleBtn(module)
@@ -32,7 +33,6 @@ expandCorrectOptions = (module) ->
       if not $(option).hasClass "correct"
         $(option).addClass "faded"
       else
-
         $(option).addClass "expanded"
         
         if not $(option).hasClass "selected"

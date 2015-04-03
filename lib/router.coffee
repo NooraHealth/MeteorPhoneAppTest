@@ -11,6 +11,7 @@ Router.map ()->
     layoutTemplate: 'layout'
     data: ()->
       if this.ready()
+        console.log "this is the user: ", Meteor.user()
         curr = Curriculum.findOne({})
         if curr
           Session.set "current chapter", null

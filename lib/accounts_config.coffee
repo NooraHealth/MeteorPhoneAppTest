@@ -39,7 +39,10 @@ AccountsTemplates.configure {
 
     # Hooks
     #onLogoutHook: myLogoutFunc,
-    #onSubmitHook: () ->
+    onSubmitHook: (error, action, final) ->
+      console.log "in the submit hook"
+      console.log error
+      console.log action
       #if !error
         #Router.go "/"
 
@@ -68,6 +71,10 @@ AccountsTemplates.configure {
         forgotPwd: "Recover Your Password"
       },
     }
+}
+AccountsTemplates.addField {
+  _id: "attempts",
+  type: "hidden",
 }
 
 AccountsTemplates.configureRoute 'ensureSignedIn', {
