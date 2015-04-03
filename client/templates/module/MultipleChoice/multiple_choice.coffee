@@ -8,16 +8,17 @@ Template.multipleChoiceModule.events
     numPossibleCorrect = module.correct_answer.length
    
     #fade out all the containers of the incorrect options
-    numIncorrect = expandCorrectOptions(module)
+    incorrectResponses= expandCorrectOptions(module)
 
     #Fade out the submit btn
     $(event.target).fadeOut()
 
     #play the audio depending on whether the user answered correctly or not
-    if numIncorrect > 0
-      handleFailedAttempt(module)
+    if incorrectResponses.length > 0
+      handleFailedAttempt(module, )
       playAnswerAudio(event.target, module)
-  
+    else
+      handleSuccessfulAttempt(module)
     showNextModuleBtn(module)
 
 
@@ -28,7 +29,7 @@ Template.multipleChoiceModule.events
 expandCorrectOptions = (module) ->
     nh_id = module.nh_id
     options = $("img[name=option#{nh_id}]")
-    numIncorrect = 0
+    incorrect = 0
     for option in options
       if not $(option).hasClass "correct"
         $(option).addClass "faded"
@@ -37,7 +38,7 @@ expandCorrectOptions = (module) ->
         
         if not $(option).hasClass "selected"
           #displayIncorrectSticker(module, option)
-          numIncorrect += 1
+          incorrect.push $(option).val()
           $(option).addClass "incorrectly_selected"
 
         else

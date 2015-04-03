@@ -43,6 +43,8 @@ AccountsTemplates.configure {
       console.log "in the submit hook"
       console.log error
       console.log action
+      user = Meteor.user()
+
       #if !error
         #Router.go "/"
 
