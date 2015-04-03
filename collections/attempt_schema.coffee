@@ -6,18 +6,19 @@
 ###
 
 AttemptSchema = new SimpleSchema
-  nickname:
+  user:
     type:String
   responses:
     type:[String]
     minCount:1
+    optional:true
   passed:
-    type:String
+    type: Boolean
     min:0
   date:
     type:String
-  time_to_complete:
-    type: String
+  time_to_complete_in_ms:
+    type: Number
   nh_id:
     type:String
     min:0
