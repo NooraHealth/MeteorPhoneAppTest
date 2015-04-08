@@ -7,8 +7,8 @@ Router.map ()->
   this.route '/', {
     path: '/'
     name: 'home'
-    template: 'home'
-    layoutTemplate: 'layout'
+    template: 'layout'
+    #layoutTemplate: 'layout'
     data: ()->
       if this.ready()
         console.log "in the home route"

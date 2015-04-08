@@ -1,9 +1,18 @@
 <template name="layout">
-  
-  {{>nav}}
-  <div class="container">
-    {{> yield}}
-  </div>
+{{#famousContext id="context"}}
+  {{#HeaderFooterLayout size="[200, 500]" headerSize="50" footerSize="45"}}
+    {{#Surface target="header" class="red"}}
+      HEADER
+    {{/Surface}}
 
-  {{>footer}}
+    {{#Surface target="content" class="green"}}
+      CONTENT
+    {{/Surface}}
+    
+    {{#Surface target="footer" class="blue"}}
+      FOOTER
+    {{/Surface}}
+
+  {{/HeaderFooterLayout}}
+{{/famousContext}}
 </template>
