@@ -3,7 +3,7 @@
 {{#famousContext id="mainCtx"}}
   {{#HeaderFooterLayout size="[undefined, undefined]" headerSize="50" footerSize="45"}}
     {{#Surface target="header" class="red"}}
-      HEADER
+      {{>nav}}
     {{/Surface}}
 
     {{#RenderController target="content" transition="opacity"}}
@@ -11,7 +11,7 @@
     {{/RenderController}}
     
     {{#Surface target="footer" class="blue"}}
-      FOOTER
+    {{>footer}}
     {{/Surface}}
 
   {{/HeaderFooterLayout}}
