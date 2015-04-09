@@ -1,8 +1,9 @@
 <template name="home">
-{{#SequentialLayout direction="0" align="[0, 0.5]" origin="[0.5,0.5]"}}
-  {{#famousEach chapters}}
-    {{>famous template="chapterThumbnail"}}
-  {{/famousEach}}
-{{/SequentialLayout}}
-
+{{#Scrollview direction="0"}}
+  {{#SequentialLayout direction="0" align="[0, 0.5]" origin="[0.5,0.5]"}}
+    {{#famousEach chapters}}
+      {{>famous template="chapterThumbnail"}}
+    {{/famousEach}}
+  {{/SequentialLayout}}
+{{/Scrollview}}
 </template>
