@@ -1,7 +1,15 @@
 <template name="home">
-  <div class="row">
-    {{#each chapters}}
-      {{> chapterThumbnail}}
-    {{/each}}
-  </div>
+{{#SequentialLayout}}
+  {{#famousEach chapters}}
+    {{#Surface size="[100,100]" class="white"}}
+      FAMOUS EACH
+    {{/Surface}}
+    <!--[>{{> chapterThumbnail}}<]-->
+  {{/famousEach}}
+  {{/SequentialLayout}}
+<!--{{#SequentialLayout direction="x" size="[undefined, 200]"}}-->
+  <!--{{#famousEach chapters}}-->
+    <!--{{> chapterThumbnail}}-->
+  <!--{{/famousEach}}-->
+<!--{{/SequentialLayout}}-->
 </template>

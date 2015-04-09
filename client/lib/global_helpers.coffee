@@ -1,3 +1,5 @@
+#FView.registerView "ContainerSurface", famous.views.ContainerSurface
+
 Template.registerHelper 'isLastModule', () ->
   index = Session.get "current module index"
   sequence = Session.get "module sequence"

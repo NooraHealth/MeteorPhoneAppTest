@@ -1,13 +1,14 @@
 <template name="layout">
-{{#famousContext id="context"}}
-  {{#HeaderFooterLayout size="[200, 500]" headerSize="50" footerSize="45"}}
+
+{{#famousContext id="mainCtx"}}
+  {{#HeaderFooterLayout size="[undefined, undefined]" headerSize="50" footerSize="45"}}
     {{#Surface target="header" class="red"}}
       HEADER
     {{/Surface}}
 
-    {{#Surface target="content" class="green"}}
-      CONTENT
-    {{/Surface}}
+    {{#RenderController target="content" transition="opacity"}}
+      {{>yield}}
+    {{/RenderController}}
     
     {{#Surface target="footer" class="blue"}}
       FOOTER

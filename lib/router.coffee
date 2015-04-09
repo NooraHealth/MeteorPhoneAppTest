@@ -7,13 +7,10 @@ Router.map ()->
   this.route '/', {
     path: '/'
     name: 'home'
-    template: 'layout'
-    #layoutTemplate: 'layout'
+    template: 'home'
+    layoutTemplate: 'layout'
     data: ()->
       if this.ready()
-        console.log "in the home route"
-        console.log "is there a user? ", Meteor.user()?
-        console.log "this is the user: ", Meteor.user()
         curr = Curriculum.findOne({})
         if curr
           Session.set "current chapter", null
