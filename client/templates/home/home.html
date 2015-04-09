@@ -1,13 +1,8 @@
 <template name="home">
-{{#SequentialLayout direction="0" align="[0.5, 0.5]" origin="[0.5,0.5]"}}
+{{#SequentialLayout direction="0" align="[0, 0.5]" origin="[0.5,0.5]"}}
   {{#famousEach chapters}}
     {{>famous template="chapterThumbnail"}}
-    <!--[>{{> chapterThumbnail}}<]-->
   {{/famousEach}}
 {{/SequentialLayout}}
-<!--{{#SequentialLayout direction="x" size="[undefined, 200]"}}-->
-  <!--{{#famousEach chapters}}-->
-    <!--{{> chapterThumbnail}}-->
-  <!--{{/famousEach}}-->
-<!--{{/SequentialLayout}}-->
+
 </template>
