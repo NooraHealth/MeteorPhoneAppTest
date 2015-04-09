@@ -1,7 +1,5 @@
-Template.home.helpers {
-  #chapters: ()->
-    #console.log "getting the chapters: ", this
-    #if this
-      #console.log "returning the chapters"
-      #return this.chapters
+Template.chapterThumbnail.helpers {
+  getSize: ()->
+    console.log "returning the size"
+    return [400,400]
 }

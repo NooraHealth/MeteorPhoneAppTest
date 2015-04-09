@@ -1,5 +1,6 @@
 <template name="chapterThumbnail">
-  {{#Surface size="[400,400]" class="" textAlign="center" align="[.5, .5]" origin="[1,1]"}}
+{{#StateModifier size=getSize align="[.5, .5]" origin="[.5,.5]"}}
+  {{#Surface  class="" textAlign="center" }}
     <a href="{{ pathFor 'chapter'}}">
       <div class="card z-depth-1 chapter-card">
         <div class="card-image chapter-card-image"> 
@@ -11,6 +12,6 @@
       </div>
     </a>
   {{/Surface}}
-
+{{/StateModifier}}
 <!--  <div class="col s12 m6 l4 greyed-out">-->
 </template>
