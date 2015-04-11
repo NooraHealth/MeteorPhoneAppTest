@@ -11,13 +11,14 @@ Template.chapterThumbnail.helpers {
       done: ()->
         console.log "rotation transformation done"
     }
-}
 
-Template.home.helpers {
   getTranslate: ()->
     width = Session.get "chapter card width"
     cardsComplete = Session.get "num cards complete"
     return [-1 * width * (cardsComplete + 1),0, 0]
+}
+
+Template.home.helpers {
 }
 
 Template.chapterThumbnail.events {
@@ -27,6 +28,9 @@ Template.chapterThumbnail.events {
     console.log fview
     console.log fview.modifier
 }
+
+Template.home.rendered = ()->
+  fview = FView.byId "scrollview"
 
 
 
