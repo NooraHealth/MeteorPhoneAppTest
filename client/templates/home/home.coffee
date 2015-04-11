@@ -31,9 +31,10 @@ Template.chapterThumbnail.events {
 
 Template.chapterThumbnail.rendered= ()->
   fview = FView.from this
-  console.log "This is this in  the chapterThumbnail ", this
-  fview.id = this.data.nh_id
-  console.log "in the chapter thumbnail rendered: ", fview
+  fview.modifier.setSize [400, 400]
+  fview.modifier.setOrigin [.5, .5]
+  fview.modifier.setAlign [.5, .5]
+  console.log fview.modifier
 
 
 

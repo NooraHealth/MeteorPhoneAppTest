@@ -1,7 +1,7 @@
 <template name="home">
-  {{#Scrollview direction="0"  id="scrollview" }}
+  {{#Scrollview direction="0"  id="scrollview" modifier = "StateModifier" }}
     {{#famousEach chapters}}
-      {{>famous template="chapterThumbnail"}}
+      {{>Surface template="chapterThumbnail" modifier="StateModifier" }}
     {{/famousEach}}
   {{/Scrollview}}
 </template>
