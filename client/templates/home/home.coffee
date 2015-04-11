@@ -17,7 +17,7 @@ Template.home.helpers {
   getTranslate: ()->
     width = Session.get "chapter card width"
     cardsComplete = Session.get "num cards complete"
-    return [0, -1 * width * (cardsComplete + 1), 0]
+    return [-1 * width * (cardsComplete + 1),0, 0]
 }
 
 Template.chapterThumbnail.events {
