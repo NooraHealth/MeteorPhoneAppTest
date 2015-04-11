@@ -2,6 +2,7 @@ Template.chapterThumbnail.helpers {
   getSize: ()->
     width = Session.get "chapter card width"
     height = Session.get "chapter card height"
+    currentCardIndex = Session.get "current chapter card index"
     return [width,height]
 
   getRotateY: ()->
@@ -13,13 +14,16 @@ Template.chapterThumbnail.helpers {
     }
 
   getTranslate: ()->
+    template = Template.instance()
+    console.log "getting translate"
+    console.log template
+    fview = FView.from template
+    console.log fview
     width = Session.get "chapter card width"
-    cardsComplete = Session.get "num cards complete"
+    cardsComplete = Session.get "current chapter card index"
     return [-1 * width * (cardsComplete + 1),0, 0]
 }
 
-Template.home.helpers {
-}
 
 Template.chapterThumbnail.events {
   "click .card": (event, template) ->
@@ -29,8 +33,9 @@ Template.chapterThumbnail.events {
     console.log fview.modifier
 }
 
-Template.home.rendered = ()->
-  fview = FView.byId "scrollview"
+Template.chapterThumbnail.rendered= ()->
+  fview = FView.from this
+  console.log "in the chapter thumbnail rendered: ", fview
 
 
 
