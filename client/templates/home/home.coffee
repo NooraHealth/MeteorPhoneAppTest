@@ -2,7 +2,10 @@ Template.chapterThumbnail.helpers {
   getSize: ()->
     width = Session.get "chapter card width"
     height = Session.get "chapter card height"
-    return [400,400]
+    return [width,height]
+
+  currentCardTransform: ()->
+    return Session.get "current chapter card transform"
 }
 
 Template.home.helpers {
@@ -12,3 +15,14 @@ Template.home.helpers {
     cardsComplete = Session.get "num cards complete"
     return [-1 * width * (cardsComplete + 1), 0, 0]
 }
+
+Template.chapterThumbnail.events {
+  "click .card": (event, template) ->
+    fview = FView.from(template)
+    console.log "There was a click!"
+    console.log fview
+    console.log fview.modifier
+}
+
+
+
