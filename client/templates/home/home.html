@@ -1,7 +1,7 @@
 <template name="home">
-  {{#SequentialLayout direction="0" translate=getTranslate}}
+  {{#Scrollview direction="0" translate=getTranslate}}
     {{#famousEach chapters}}
       {{>famous template="chapterThumbnail"}}
     {{/famousEach}}
-  {{/SequentialLayout}}
+  {{/Scrollview}}
 </template>

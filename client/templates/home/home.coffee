@@ -4,16 +4,20 @@ Template.chapterThumbnail.helpers {
     height = Session.get "chapter card height"
     return [width,height]
 
-  currentCardTransform: ()->
-    return Session.get "current chapter card transform"
+  getRotateY: ()->
+    return {
+      value:30,
+      transition: {curve: 'easeIn', duration: 1000},
+      done: ()->
+        console.log "rotation transformation done"
+    }
 }
 
 Template.home.helpers {
   getTranslate: ()->
-    console.log "getting the translate"
     width = Session.get "chapter card width"
     cardsComplete = Session.get "num cards complete"
-    return [-1 * width * (cardsComplete + 1), 0, 0]
+    return [0, -1 * width * (cardsComplete + 1), 0]
 }
 
 Template.chapterThumbnail.events {
