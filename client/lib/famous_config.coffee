@@ -7,8 +7,7 @@ Transform = null
 
 FView.ready ()->
 
-  Transform = famous.core.Transform
+  this.Transform = famous.core.Transform
 
-  console.log "FAOUNS: ", famous
   famous.polyfills
   famous.core.famous
