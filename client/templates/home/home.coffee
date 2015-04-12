@@ -29,6 +29,12 @@ Template.chapterThumbnail.events {
     fview = FView.from(template)
 }
 
+Template.home.rendered = ()->
+  console.log this
+  console.log FView.from this
+  fview = FView.from this
+
+
 Template.chapterThumbnail.rendered= ()->
   fview = FView.from this
   fview.id = this.data.nh_id
@@ -37,12 +43,12 @@ Template.chapterThumbnail.rendered= ()->
   fview.modifier.setSize [400, 400]
   fview.modifier.setOrigin [.5, .5]
   fview.modifier.setAlign [.5, .5]
-  #fview.modifier.setTransform Transform.translate [-1000, 0, 0]
 
-  #fview.modifier.setTransform Transform.translate [0,0,0], {duration: 1000, curve: "easeIn"}
+  fview.modifier.setTransform Transform.translate [0,0,0]
 
   #if Session.get "current chapter card" == fview.id
-  fview.modifier.setSize [500, 500], {duration: 1000, curve: "easeIn"}
+  #fview.modifier.setSize [500, 500], {duration: 1000, curve: "easeIn"}
+  #fview.modifier.setTransform Transform.scale(1.5, 1.5, 1.5), {duration: 1000, curve: "easeIn"}
   
   console.log fview.modifier
 
