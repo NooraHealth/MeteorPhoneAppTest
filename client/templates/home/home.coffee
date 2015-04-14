@@ -29,13 +29,9 @@ Template.chapterThumbnail.events {
 
 Template.home.rendered = ()->
   scrollview = FView.byId "scrollview"
-  console.log "YEAIN"
-  #scrollview.modifier.setTransform Transform.translate(-400, 0, 0)
+  scrollview.modifier.setTransform Transform.translate(-400, 0, 0)
 
 Template.chapterThumbnail.rendered= ()->
-  console.log ""
-  console.log "MAKING CHAPTER "
-  console.log ""
   fview = FView.from this
   fview.id = this.data.nh_id
 

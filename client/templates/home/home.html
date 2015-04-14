@@ -1,5 +1,5 @@
 <template name="home">
-  {{#SequentialLayout direction="0"  id="scrollview"}}
+  {{#SequentialLayout direction="0"  id="scrollview" modifier="StateModifier"}}
     {{#famousEach chapters}}
       {{>Surface template="chapterThumbnail" modifier="StateModifier" }}
     {{/famousEach}}
