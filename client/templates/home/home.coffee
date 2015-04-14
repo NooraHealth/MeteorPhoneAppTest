@@ -16,11 +16,9 @@ Template.chapterThumbnail.helpers {
   getTranslate: ()->
     width = Session.get "chapter card width"
     cardsComplete = Session.get "current chapter card index"
-    return {
-      #value: [-1 * width * (cardsComplete + 1),0, 0],
-      value: [0,0,0],
-      #transition: {curve: "easeIn", duration: 1000}
-    }
+    console.log "cards Compete: ", cardsComplete
+    console.log width
+    return Transform.translate [-1 * width * (cardsComplete + 1),0, 0]
 }
 
 
