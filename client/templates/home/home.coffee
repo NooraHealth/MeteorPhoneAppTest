@@ -31,9 +31,7 @@ Template.home.rendered = ()->
   cards.modifier.setTransform Transform.translate(-1 * width * cardsComplete ,0, 0), {duration: 2000, curve: "easeIn"}
 
 Template.chapterThumbnail.rendered= ()->
-  console.log this
   fview = FView.from this
-  console.log fview
   chapters = Session.get "chapters sequence"
   currentChapterIndex = Session.get "current chapter card index"
   currentChapter = chapters[currentChapterIndex]
@@ -45,16 +43,19 @@ Template.chapterThumbnail.rendered= ()->
   fview.modifier.setAlign [.5, .5]
 
   if fview.id == currentChapter.nh_id
-    fview.modifier.setTransform Transform.scale(1.25, 1.25, 1.25), {duration: 1000, curve: "easeIn"}
+    fview.modifier.setTransform Transform.scale(1.15, 1.15, 1.15), {duration: 1000, curve: "easeIn"}
     fview.modifier.setOpacity 1, {duration:500, curve: "easeIn"}
-    fview.surface.setProperties {zIndex: 10}
-    console.log "SET THE PROPERTIES"
-    console.log fview
+    surface = fview.surface or fview.view
+    surface.setProperties {zIndex: 10}
 
-  #fview.modifier.setTransform Transform.translate [0,0,0]
+    surface.on "mouseout", ()->
+      fview.modifier.halt()
+      fview.modifier.setTransform Transform.scale(1.15, 1.15, 1.15), {duration: 500, curve: "easeIn"}
+    
+    surface.on "mouseover", ()->
+      fview.modifier.halt()
+      fview.modifier.setTransform Transform.scale(1.25, 1.25, 1.25), {duration: 500, curve: "easeIn"}
 
-  #if Session.get "current chapter card" == fview.id
-  #fview.modifier.setSize [500, 500], {duration: 1000, curve: "easeIn"}
 
   this.autorun ()->
 #THIS IS WHERE YOU PUT AUTORUN
