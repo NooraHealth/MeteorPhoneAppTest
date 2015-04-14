@@ -28,10 +28,12 @@ Template.home.rendered = ()->
   console.log "cards Compete: ", cardsComplete
   console.log width
   console.log cards
-  cards.modifier.setTransform Transform.translate(-1 * width * cardsComplete ,0, 0)
+  cards.modifier.setTransform Transform.translate(-1 * width * cardsComplete ,0, 0), {duration: 2000, curve: "easeIn"}
 
 Template.chapterThumbnail.rendered= ()->
+  console.log this
   fview = FView.from this
+  console.log fview
   chapters = Session.get "chapters sequence"
   currentChapterIndex = Session.get "current chapter card index"
   currentChapter = chapters[currentChapterIndex]
@@ -45,6 +47,9 @@ Template.chapterThumbnail.rendered= ()->
   if fview.id == currentChapter.nh_id
     fview.modifier.setTransform Transform.scale(1.25, 1.25, 1.25), {duration: 1000, curve: "easeIn"}
     fview.modifier.setOpacity 1, {duration:500, curve: "easeIn"}
+    fview.surface.setProperties {zIndex: 10}
+    console.log "SET THE PROPERTIES"
+    console.log fview
 
   #fview.modifier.setTransform Transform.translate [0,0,0]
 
