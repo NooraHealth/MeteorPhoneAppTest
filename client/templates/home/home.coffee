@@ -31,7 +31,7 @@ Template.chapterThumbnail.events {
 
 Template.home.rendered = ()->
   console.log this
-  console.log FView.from this
+  console.log FView.byId "scrollview"
   fview = FView.from this
 
 
@@ -39,12 +39,11 @@ Template.chapterThumbnail.rendered= ()->
   fview = FView.from this
   fview.id = this.data.nh_id
 
-    
   fview.modifier.setSize [400, 400]
   fview.modifier.setOrigin [.5, .5]
   fview.modifier.setAlign [.5, .5]
 
-  fview.modifier.setTransform Transform.translate [0,0,0]
+  #fview.modifier.setTransform Transform.translate [0,0,0]
 
   #if Session.get "current chapter card" == fview.id
   #fview.modifier.setSize [500, 500], {duration: 1000, curve: "easeIn"}
