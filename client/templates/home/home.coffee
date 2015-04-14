@@ -49,7 +49,9 @@ Template.chapterThumbnail.rendered= ()->
   
   console.log fview.modifier
 
-Tracker.autorun
+  this.autorun ()->
+#THIS IS WHERE YOU PUT AUTORUN
+
 
 
 
