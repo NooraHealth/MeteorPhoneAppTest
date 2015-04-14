@@ -1,7 +1,7 @@
 <template name="home">
-  {{#SequentialLayout direction="0"  id="cardLayout" modifier="StateModifier"}}
+  {{#Scrollview direction="0"  id="cardLayout" modifier="StateModifier"}}
     {{#famousEach chapters}}
       {{>Surface zIndex="2" template="chapterThumbnail" modifier="StateModifier" }}
     {{/famousEach}}
-  {{/SequentialLayout}}
+  {{/Scrollview}}
 </template>
