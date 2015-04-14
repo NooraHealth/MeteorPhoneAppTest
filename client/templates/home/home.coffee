@@ -18,7 +18,7 @@ Template.chapterThumbnail.helpers {
     cardsComplete = Session.get "current chapter card index"
     console.log "cards Compete: ", cardsComplete
     console.log width
-    return Transform.translate [-1 * width * (cardsComplete + 1),0, 0]
+    #return Transform.translate(-1 * width * (cardsComplete + 1),0, 0)
 }
 
 
@@ -28,12 +28,14 @@ Template.chapterThumbnail.events {
 }
 
 Template.home.rendered = ()->
-  console.log this
-  console.log FView.byId "scrollview"
-  fview = FView.from this
-
+  scrollview = FView.byId "scrollview"
+  console.log "YEAIN"
+  #scrollview.modifier.setTransform Transform.translate(-400, 0, 0)
 
 Template.chapterThumbnail.rendered= ()->
+  console.log ""
+  console.log "MAKING CHAPTER "
+  console.log ""
   fview = FView.from this
   fview.id = this.data.nh_id
 
