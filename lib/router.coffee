@@ -19,7 +19,9 @@ Router.map ()->
           Session.set "module sequence", null
           Session.set "sections map", {}
           Session.set "current sections", null
-          return {chapters: curr.getLessonDocuments()}
+          chapters =  curr.getLessonDocuments()
+          Session.set "chapters sequence", chapters
+          return {chapters: chapters}
   }
 
   ###
