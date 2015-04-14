@@ -25,9 +25,6 @@ Template.home.rendered = ()->
   cards = FView.byId "cardLayout"
   width = Session.get "chapter card width"
   cardsComplete = Session.get "current chapter card index"
-  console.log "cards Compete: ", cardsComplete
-  console.log width
-  console.log cards
   cards.modifier.setTransform Transform.translate(-1 * width * cardsComplete ,0, 0), {duration: 2000, curve: "easeIn"}
 
 Template.chapterThumbnail.rendered= ()->
@@ -38,7 +35,6 @@ Template.chapterThumbnail.rendered= ()->
   fview.id = this.data.nh_id
 
   fview.modifier.setSize [400, 400]
-  fview.modifier.setOpacity .5
   fview.modifier.setOrigin [.5, .5]
   fview.modifier.setAlign [.5, .5]
 
