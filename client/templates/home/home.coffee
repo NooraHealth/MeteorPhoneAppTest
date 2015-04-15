@@ -38,6 +38,10 @@ Template.chapterThumbnail.rendered= ()->
     surface.on "mouseover", ()->
       fview.modifier.halt()
       fview.modifier.setTransform Transform.scale(1.25, 1.25, 1.25), {duration: 500, curve: "easeIn"}
+
+    surface.on "click", ()->
+      console.log "going to the modules page"
+      Router.go "ModulesSequence", {nh_id: fview.id}
   
   else
     fview.modifier.setOpacity .5
