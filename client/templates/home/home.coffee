@@ -39,10 +39,18 @@ Template.chapterThumbnail.rendered= ()->
   fview.modifier.setAlign [.5, .5]
 
   if fview.id == currentChapter.nh_id
+    
     fview.modifier.setTransform Transform.scale(1.15, 1.15, 1.15), {duration: 1000, curve: "easeIn"}
     fview.modifier.setOpacity 1, {duration:500, curve: "easeIn"}
     surface = fview.surface or fview.view
     surface.setProperties {zIndex: 10}
+
+    #Listen to the surface's deploy event to know when it has
+    #been inserted into the DOM, after which jquery queries will 
+    #work
+    surface.on "deploy", ()->
+      console.log "DEPLOYYYYY"
+      $("#"+fview.id).find(".chapter-overlay").addClass "hidden"
 
     surface.on "mouseout", ()->
       fview.modifier.halt()
