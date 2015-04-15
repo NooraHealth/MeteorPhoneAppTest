@@ -51,3 +51,4 @@ Template.registerHelper 'isCorrectAnswer', (response)->
 Template.registerHelper 'imgSrc', () ->
   return MEDIA_URL + @.image
 
+
