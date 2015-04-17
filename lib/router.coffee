@@ -8,6 +8,9 @@ Router.map ()->
     path: '/'
     name: 'home'
     template: 'home'
+    yieldTemplates: {
+      'footer': {to:"footer"}
+    }
     layoutTemplate: 'layout'
     data: ()->
       if this.ready()
@@ -38,8 +41,12 @@ Router.map ()->
   ###
   this.route '/modules/:nh_id', {
     path: '/modules/:nh_id'
-    layoutTemplate: 'moduleLayout'
+    layoutTemplate: 'layout'
     name: 'ModulesSequence'
+    template: "modules_sequence"
+    yieldTemplates: {
+      'module_footer': {to:"footer"}
+    }
     data: () ->
       if this.ready()
         section = Lessons.findOne {nh_id: this.params.nh_id}
