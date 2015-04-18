@@ -1,0 +1,53 @@
+<template name="ModulesSequence">
+{{#Surface class="card" origin="[.5, .5]" align="[.5, .5]" proportions="[.75, .75]"}}
+  <h2> SURRAFFFACCEE</h2>
+{{/Surface}}
+
+<!--<div id="sticker_incorrect" class="response-sticker-container red valign-wrapper center-align z-depth-2 hidden">-->
+  <!--<i class="mdi-navigation-close small"></i>-->
+<!--</div>-->
+
+<!--<div id="sticker_correct" class="response-sticker-container green valign-wrapper center-align z-depth-2 hidden">-->
+  <!--<i class="mdi-navigation-check small"></i>-->
+<!--</div>-->
+
+<!--{{#each modules}}-->
+<!--<div class="module-container card {{#unless currentModuleID nh_id}} hidden-card {{/unless}}">-->
+    <!--<div class="module-card front-facing">-->
+
+      <!--{{#if audio}}-->
+        <!--{{#if currentModuleID nh_id}}-->
+          <!--<audio src="{{audioSrc}}" name="audio{{nh_id}}" autoplay class="question" ></audio>-->
+        <!--{{else}}-->
+          <!--<audio src="{{audioSrc}}" name="audio{{nh_id}}" class="question"></audio>-->
+        <!--{{/if}}-->
+      <!--{{/if}}-->
+
+      <!--{{#if isVideoModule}}-->
+        <!--{{>videoModule}}-->
+      <!--{{/if}}-->
+
+      <!--{{#if isSlideModule}}-->
+        <!--{{>slideModule}}-->
+      <!--{{/if}}-->
+
+      <!--{{#if isMultipleChoiceModule}}-->
+        <!--{{>multipleChoiceModule}}-->
+      <!--{{/if}}-->
+
+      <!--{{#if isGoalChoiceModule}}-->
+        <!--{{>multipleChoiceModule}}-->
+      <!--{{/if}}-->
+
+      <!--{{#if isBinaryModule}}-->
+        <!--{{>binaryChoiceModule}}-->
+      <!--{{/if}}-->
+
+      <!--{{#if isScenarioModule}}-->
+        <!--{{>scenarioModule}}-->
+      <!--{{/if}}      -->
+    <!--</div>-->
+  <!--</div>-->
+<!--{{/each}}-->
+
+</template>
