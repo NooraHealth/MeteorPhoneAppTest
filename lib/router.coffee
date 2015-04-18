@@ -47,6 +47,9 @@ Router.map ()->
     yieldTemplates: {
       'moduleFooter': {to:"footer"}
     }
+    #onBeforeAction: ()->
+      #Session.set "current transition", "slideWindowLeft"
+
     data: () ->
       console.log "going to the modules section"
       if this.ready()
