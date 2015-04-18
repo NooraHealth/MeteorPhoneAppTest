@@ -41,13 +41,14 @@ Router.map ()->
   ###
   this.route '/modules/:nh_id', {
     path: '/modules/:nh_id'
-    layoutTemplate: 'layout'
+    layoutTemplate: 'moduleLayout'
     name: 'ModulesSequence'
-    template: "modules_sequence"
-    yieldTemplates: {
-      'module_footer': {to:"footer"}
-    }
+    template: "ModulesSequence"
+    #yieldTemplates: {
+      #'moduleFooter': {to:"footer"}
+    #}
     data: () ->
+      console.log "going to the modules section"
       if this.ready()
         section = Lessons.findOne {nh_id: this.params.nh_id}
         Session.set "current section", section

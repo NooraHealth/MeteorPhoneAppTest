@@ -22,14 +22,25 @@ Template.chapterThumbnail.rendered= ()->
   fview.modifier.setAlign [.5, .5]
   
   surface = fview.surface or fview.view
+  
   if completedChapter(fview.id)
     $("#"+fview.id).find(".success-overlay").removeClass "hidden"
+    #fview.onDestroy= ()->
+      #console.log "ON DESTROY 1"
+      #fview.modifier.setOpacity 0, {duration: 500, curve: "easeIn"}, ()->
+        #fview.destroy()
 
   else if fview.id == currentChapter.nh_id
     
     fview.modifier.setTransform Transform.scale(1.15, 1.15, 1.15), {duration: 1000, curve: "easeIn"}
     fview.modifier.setOpacity 1, {duration:500, curve: "easeIn"}
     surface.setProperties {zIndex: 10}
+
+    #fview.onDestroy =  ()->
+      #console.log "ON DESTROY 2"
+      #fview.modifier.setTransform Transform.scale(2,2,2), {duration:500, curve:"easeIn"}, ()->
+        #fview.modifier.setOpacity 0, {duration: 500, curve: "easeIn"}, ()->
+          #fview.destroy()
 
     surface.on "mouseout", ()->
       fview.modifier.halt()
@@ -46,7 +57,14 @@ Template.chapterThumbnail.rendered= ()->
   else
     fview.modifier.setOpacity .5
 
+  fview.preventDestroy()
 
+  fview.onDestroy= ()->
+    console.log "ON DESTROY 3"
+    fview = @
+    fview.modifier.setOpacity 0, {duration: 500, curve: "easeIn"}, ()->
+      fview.destroy()
+  
   this.autorun ()->
 #THIS IS WHERE YOU PUT AUTORUN
 
