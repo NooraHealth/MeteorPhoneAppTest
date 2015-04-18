@@ -7,7 +7,7 @@ Template.moduleFooter.helpers
     return arr
 
   currentModule: ()->
-    moduleSequence = Session.get "module sequence"
+    moduleSequence = Session.get "modules sequence"
     if !moduleSequence?
       return ""
 

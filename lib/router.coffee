@@ -53,9 +53,9 @@ Router.map ()->
         lesson = Lessons.findOne {nh_id: this.params.nh_id}
         Session.set "current lesson", lesson
         modules = lesson.getModulesSequence()
-        Session.set "module sequence", modules
+        Session.set "modules sequence", modules
         console.log "modules: ", modules
-        console.log Session.get "module sequence"
+        console.log Session.get "modules sequence"
         return {modules: modules}
         
   }
