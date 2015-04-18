@@ -4,13 +4,14 @@ Template.chapterThumbnail.events {
     fview = FView.from(template)
 }
 
-Template.home.rendered = ()->
+Template.home.onRendered ()->
   cards = FView.byId "cardLayout"
   width = Session.get "chapter card width"
   cardsComplete = Session.get "current chapter index"
   cards.modifier.setTransform Transform.translate(-1 * width * cardsComplete ,0, 0), {duration: 2000, curve: "easeIn"}
+  console.log "the cards fview"
 
-Template.chapterThumbnail.rendered= ()->
+Template.chapterThumbnail.onRendered ()->
   fview = FView.from this
   chapters = Session.get "chapters sequence"
   currentChapterIndex = Session.get "current chapter index"
@@ -57,6 +58,7 @@ Template.chapterThumbnail.rendered= ()->
   else
     fview.modifier.setOpacity .5
 
+  console.log "ON DESTROY = ", fview.onDestroy
   fview.preventDestroy()
 
   fview.onDestroy= ()->
@@ -64,6 +66,8 @@ Template.chapterThumbnail.rendered= ()->
     fview = @
     fview.modifier.setOpacity 0, {duration: 500, curve: "easeIn"}, ()->
       fview.destroy()
+  
+  console.log fview.onDestroy
   
   this.autorun ()->
 #THIS IS WHERE YOU PUT AUTORUN

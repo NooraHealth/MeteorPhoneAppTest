@@ -6,7 +6,7 @@
       {{>nav}}
     {{/Surface}}
 
-    {{#RenderController target="content" transition="opacity"}}
+    {{#RenderController target="content" transition=getTransition id="renderController"}}
       {{>yield}}
     {{/RenderController}}
     
