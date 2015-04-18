@@ -41,12 +41,12 @@ Router.map ()->
   ###
   this.route '/modules/:nh_id', {
     path: '/modules/:nh_id'
-    layoutTemplate: 'moduleLayout'
+    layoutTemplate: 'layout'
     name: 'ModulesSequence'
     template: "ModulesSequence"
-    #yieldTemplates: {
-      #'moduleFooter': {to:"footer"}
-    #}
+    yieldTemplates: {
+      'moduleFooter': {to:"footer"}
+    }
     data: () ->
       console.log "going to the modules section"
       if this.ready()
