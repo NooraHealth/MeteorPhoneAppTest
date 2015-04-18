@@ -43,7 +43,7 @@ Router.map ()->
     path: '/modules/:nh_id'
     layoutTemplate: 'layout'
     name: 'ModulesSequence'
-    template: "ModulesSequence"
+    template: "Module"
     yieldTemplates: {
       'moduleFooter': {to:"footer"}
     }
@@ -54,9 +54,10 @@ Router.map ()->
         Session.set "current lesson", lesson
         modules = lesson.getModulesSequence()
         Session.set "modules sequence", modules
-        console.log "modules: ", modules
-        console.log Session.get "modules sequence"
-        return {modules: modules}
+        Session.set "current module index", 0
+        #console.log "modules: ", modules
+        #console.log Session.get "modules sequence"
+        #return {modules: modules}
         
   }
 

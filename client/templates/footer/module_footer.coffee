@@ -37,7 +37,7 @@ Template.moduleFooter.helpers
     #goToPreviousModule(event, template)
  
 Tracker.autorun ()->
-  moduleSequence = Session.get "module sequence"
+  moduleSequence = Session.get "modules sequence"
   currentModuleIndex = Session.get "current module index"
   previousModuleIndex = Session.get "previous module index"
 
