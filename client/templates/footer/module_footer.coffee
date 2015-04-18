@@ -1,6 +1,6 @@
 Template.moduleFooter.helpers
   modules: ()->
-    modules = Session.get "module sequence"
+    modules = Session.get "modules sequence"
     if !modules?
       return
     arr = ({module: module, i: i} for module, i in modules)
@@ -17,24 +17,24 @@ Template.moduleFooter.helpers
     else
       return @.i == currentModuleIndex
 
-Template.moduleFooter.events
-  'click .module_nav': (event, template) ->
-    currentIndex = Session.get "current module index"
-    moduleSequence = Session.get "module sequence"
-    resetModules(moduleSequence[currentIndex])
+#Template.moduleFooter.events
+  #'click .module_nav': (event, template) ->
+    #currentIndex = Session.get "current module index"
+    #moduleSequence = Session.get "module sequence"
+    #resetModules(moduleSequence[currentIndex])
     
-    Session.set "previous module index", currentIndex
-    nextIndex = $(event.target).attr 'name'
-    if nextIndex == currentIndex
-      return
-    else
-      Session.set "current module index", nextIndex
+    #Session.set "previous module index", currentIndex
+    #nextIndex = $(event.target).attr 'name'
+    #if nextIndex == currentIndex
+      #return
+    #else
+      #Session.set "current module index", nextIndex
 
-  'click [name=next]': (event, template)->
-    goToNextModule(event, template)
+  #'click [name=next]': (event, template)->
+    #goToNextModule(event, template)
 
-  'click [name=previous]': (event, template)->
-    goToPreviousModule(event, template)
+  #'click [name=previous]': (event, template)->
+    #goToPreviousModule(event, template)
  
 Tracker.autorun ()->
   moduleSequence = Session.get "module sequence"

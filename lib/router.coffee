@@ -47,65 +47,19 @@ Router.map ()->
     yieldTemplates: {
       'moduleFooter': {to:"footer"}
     }
-    #onBeforeAction: ()->
-      #Session.set "current transition", "slideWindowLeft"
-
     data: () ->
       console.log "going to the modules section"
       if this.ready()
-        section = Lessons.findOne {nh_id: this.params.nh_id}
-        Session.set "current section", section
-        return {section: section}
+        lesson = Lessons.findOne {nh_id: this.params.nh_id}
+        Session.set "current lesson", lesson
+        modules = lesson.getModulesSequence()
+        Session.set "module sequence", modules
+        console.log "modules: ", modules
+        console.log Session.get "module sequence"
+        return {modules: modules}
         
   }
 
-  ###
-  # Chapter Page
-  ###
-  this.route '/chapter/:nh_id', {
-    path: '/chapter/:nh_id'
-    name: 'chapter'
-    layoutTemplate: 'layout'
-    data: ()->
-      if @.ready()
-        return {lessons: Session.get "current lessons"}
-
-    onBeforeAction: ()->
-      console.log "getting the chapter"
-      chapterID = this.params.nh_id
-      chapter = Lessons.findOne {nh_id: chapterID}
-      if chapter
-        Session.set "current chapter", chapter
-        lessons = chapter.getSublessonDocuments()
-        Session.set "current lessons", lessons
-
-      @.next()
-
-    onAfterAction: ()->
-      Tracker.nonreactive ()->
-        lessons = Session.get "current lessons"
-        if not lessons?
-          return
-        
-        sectionsMap = Session.get "sections map"
-        if not sectionsMap?
-          sectionsMap = {}
-          Session.set "sections map", sectionsMap
-        for lesson in lessons
-          nh_id = lesson.nh_id
-          if not sectionsMap.nh_id?
-            lessonDoc = Lessons.findOne {nh_id: lesson.nh_id}
-            if not lessonDoc?
-              sectionDocuments.push lesson
-            else
-              sectionDocuments = lessonDoc.getSublessonDocuments()
-              #If there are no sublessons, then 
-              if sectionDocuments.length == 0
-                sectionDocuments.push lesson
-            sectionsMap[nh_id] = sectionDocuments
-          
-        Session.set "sections map", sectionsMap
-  }
 
   ###
   # Refresh the content

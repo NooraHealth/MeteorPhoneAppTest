@@ -2,32 +2,29 @@
 # MODULES SEQUENCE HELPERS
 ###
 
-Template.ModulesSequence.helpers
-  modules: ()->
-    if _.isEmpty @
-      return []
-    else
-      if @.section
-        moduleSequence = @.section.getModulesSequence()
-        Session.set "module sequence", moduleSequence
-        Session.set "current module index", 0
-        return moduleSequence
+Template.Module.helpers
+  module: ()->
+    if @ and @.modules
+      moduleSequence = @.modules
+      currentModuleIndex = Session.get "current module index"
+      return moduleSequence[currentModuleIndex]
 
   currentModuleID: (nh_id)->
     index = Session.get "current module index"
-    sequence = Session.get "module sequence"
+    sequence = @.modules
     if !index? or !sequence?
       return
     module = sequence[index]
     return module.nh_id == nh_id
 
+
 ###
 # MODULES SEQUENCE EVENTS
 ###
-Template.ModulesSequence.events
+Template.Module.events
   'click .response': (event, template)->
     response = $(event.target).val()
-    moduleSequence = Session.get "module sequence"
+    moduleSequence = @.modules
     currentModuleIndex = Session.get "current module index"
     module = moduleSequence[currentModuleIndex]
 
