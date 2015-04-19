@@ -132,7 +132,7 @@ this.goBackToChapterPage = ()->
 this.goToNextSection = ()->
 
 
-this.currentModule = ()->
-  moduleSequence = Session.get "module sequence"
+this.getCurrentModule = ()->
+  moduleSequence = Session.get "modules sequence"
   currentIndex = Session.get "current module index"
   return moduleSequence[currentIndex]

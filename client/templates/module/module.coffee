@@ -4,10 +4,25 @@
 
 Template.Module.helpers
   module: ()->
-    if @ and @.modules
-      moduleSequence = @.modules
-      currentModuleIndex = Session.get "current module index"
-      return moduleSequence[currentModuleIndex]
+    if @
+      return getCurrentModule()
+
+  getTemplate: ()->
+    console.log "getting the current module!!"
+    console.log ""
+    console.log ""
+    currentModule = getCurrentModule()
+    console.log "returning the template fr: ", currentModule
+    if currentModule.type == "SLIDE"
+      return "slideModule"
+    if currentModule.type == "VIDEO"
+      return "videoModule"
+    if currentModule.type == "BINARY"
+      return "binaryModule"
+    if currentModule.type == "MULTIPLE_CHOICE"
+      return "multipleChoiceModule"
+    if currentModule.type == "SCENARIO"
+      return "scenarioModule"
 
   currentModuleID: (nh_id)->
     index = Session.get "current module index"

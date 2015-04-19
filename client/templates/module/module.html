@@ -1,7 +1,8 @@
 <template name="Module">
-{{#Surface class="card" origin="[.5, .5]" align="[.5, .5]" proportions="[.75, .75]"}}
-SEUERHN
-  <!--{{#with currentModule}}-->
+{{#with module}}
+  {{>Surface class="card" origin="[.5, .5]" align="[.5, .5]" proportions="[.75, .75]" template=getTemplate}}
+{{/with}}
+    <!--SEUERHN-->
       <!--{{#if audio}}-->
         <!--{{#if currentModuleID nh_id}}-->
           <!--<audio src="{{audioSrc}}" name="audio{{nh_id}}" autoplay class="question" ></audio>-->
@@ -34,7 +35,7 @@ SEUERHN
         <!--{{>scenarioModule}}-->
       <!--{{/if}}      -->
     <!--{{/with}}-->
-{{/Surface}}
+<!--{{/Surface}}-->
 
 <!--<div id="sticker_incorrect" class="response-sticker-container red valign-wrapper center-align z-depth-2 hidden">-->
   <!--<i class="mdi-navigation-close small"></i>-->
