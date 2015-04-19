@@ -5,7 +5,7 @@
 Template.Module.helpers
   module: ()->
     if @
-      return getCurrentModule()
+      return @.moduleDocs[Session.get "current module index"]
 
   getTemplate: ()->
     console.log "getting the current module!!"

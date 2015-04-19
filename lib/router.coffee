@@ -57,7 +57,7 @@ Router.map ()->
         Session.set "current module index", 0
         #console.log "modules: ", modules
         #console.log Session.get "modules sequence"
-        #return {modules: modules}
+        return {moduleDocs: modules}
         
   }
 

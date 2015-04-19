@@ -1,15 +1,8 @@
 <template name="Module">
 {{#with module}}
-  {{>Surface class="card" origin="[.5, .5]" align="[.5, .5]" proportions="[.75, .75]" template=getTemplate}}
+  {{>Surface class="card" origin="[.5, .5]" align="[.5, .5]" size="[600, 500]" template=getTemplate}}
 {{/with}}
     <!--SEUERHN-->
-      <!--{{#if audio}}-->
-        <!--{{#if currentModuleID nh_id}}-->
-          <!--<audio src="{{audioSrc}}" name="audio{{nh_id}}" autoplay class="question" ></audio>-->
-        <!--{{else}}-->
-          <!--<audio src="{{audioSrc}}" name="audio{{nh_id}}" class="question"></audio>-->
-        <!--{{/if}}-->
-      <!--{{/if}}-->
 
       <!--{{#if isVideoModule}}-->
         <!--{{>videoModule}}-->
