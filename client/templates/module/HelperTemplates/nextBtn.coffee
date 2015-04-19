@@ -1,3 +1,8 @@
+Template.nextBtn.events
+  "click #nextbtn": ()->
+    index = Session.get "current module index"
+    Session.set "current module index", index + 1
+
 Template.nextBtn.helpers
   ###
   # Returns true if the next item is the next chapter
