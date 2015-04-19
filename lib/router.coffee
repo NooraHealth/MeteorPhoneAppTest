@@ -39,8 +39,8 @@ Router.map ()->
   ###
   # Module Sequence
   ###
-  this.route '/modules/:nh_id', {
-    path: '/modules/:nh_id'
+  this.route '/modules/:nh_id/:index', {
+    path: '/modules/:nh_id/:index'
     layoutTemplate: 'layout'
     name: 'ModulesSequence'
     template: "Module"
@@ -50,14 +50,18 @@ Router.map ()->
     data: () ->
       console.log "going to the modules section"
       if this.ready()
-        lesson = Lessons.findOne {nh_id: this.params.nh_id}
-        Session.set "current lesson", lesson
-        modules = lesson.getModulesSequence()
-        Session.set "modules sequence", modules
-        Session.set "current module index", 0
-        #console.log "modules: ", modules
+        if !Session.get "modules sequence"
+          console.log "no modules sequence"
+          console.log ""
+          lesson = Lessons.findOne {nh_id: this.params.nh_id}
+          Session.set "current lesson", lesson
+          modules = lesson.getModulesSequence()
+          Session.set "modules sequence", modules
+          Session.set "current module index", this.params.nh_id
+        modules = Session.get "modules sequence"
         #console.log Session.get "modules sequence"
-        return {moduleDocs: modules}
+        module = modules[this.params.index]
+        return {module: module}
         
   }
 
