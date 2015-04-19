@@ -401,9 +401,9 @@ video {
 .chapter-card {
   padding: $padding-S;
   margin: 10px;
-  @media (min-width: 600px) {
-    height: 425px;  
-  }
+  /*@media (min-width: 600px) {*/
+    /*height: 425px;  */
+  /*}*/
 }
 
 @media (max-width: 768px) {
