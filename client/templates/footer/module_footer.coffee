@@ -7,11 +7,12 @@ Template.moduleFooter.helpers
     return arr
 
   currentModule: ()->
-    moduleSequence = Session.get "modules sequence"
-    if !moduleSequence?
-      return ""
 
     currentModuleIndex = Session.get "current module index"
+    console.log "this is the currnet module index", currentModuleIndex
+    console.log @
+    console.log @.i
+    console.log @.i == currentModuleIndex
     if !currentModuleIndex?
       return @.i == 0
     else
@@ -39,15 +40,14 @@ Template.moduleFooter.helpers
 Tracker.autorun ()->
   moduleSequence = Session.get "modules sequence"
   currentModuleIndex = Session.get "current module index"
-  previousModuleIndex = Session.get "previous module index"
-
+  
   if currentModuleIndex?
     currentActiveNav = $(".module-navigation-bar").find("li[name="+ currentModuleIndex+"]")
+    currentlyActive = $(".module-navigation-bar").find(".current")[0]
+    if currentlyActive?
+      currentlyActive.removeClass "current"
     currentActiveNav.addClass "current"
-  
-  if previousModuleIndex?
-    previousActiveNav = $(".module-navigation-bar").find("li[name="+ previousModuleIndex+"]")
-    previousActiveNav.removeClass "current"
+
 
 
 

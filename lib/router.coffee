@@ -48,18 +48,14 @@ Router.map ()->
       'moduleFooter': {to:"footer"}
     }
     data: () ->
-      console.log "going to the modules section"
       if this.ready()
         if !Session.get "modules sequence"
-          console.log "no modules sequence"
-          console.log ""
           lesson = Lessons.findOne {nh_id: this.params.nh_id}
           Session.set "current lesson", lesson
           modules = lesson.getModulesSequence()
           Session.set "modules sequence", modules
-          Session.set "current module index", this.params.nh_id
+          Session.set "current module index", parseInt this.params.index
         modules = Session.get "modules sequence"
-        #console.log Session.get "modules sequence"
         module = modules[this.params.index]
         return {module: module}
         
