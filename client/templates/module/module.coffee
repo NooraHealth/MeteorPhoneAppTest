@@ -7,39 +7,25 @@ Template.Module.helpers
     if @
       return @.modules[Session.get "current module index"]
 
-  getTemplate: ()->
-    if @
-      if @.type == "SLIDE"
-        Session.set "next button is hidden", false
-        return "slideModule"
-      if @.type == "VIDEO"
-        Session.set "next button is hidden", false
-        return "videoModule"
-      if @.type == "BINARY"
-        Session.set "next button is hidden", true
-        return "binaryChoiceModule"
-      if @.type == "MULTIPLE_CHOICE"
-        Session.set "next button is hidden", true
-        return "multipleChoiceModule"
-      if @.type == "SCENARIO"
-        Session.set "next button is hidden", true
-        return "scenarioModule"
+Tracker.autorun ()->
+  modules = Session.get "modules sequence"
+  if !modules?
+    return
 
-  #currentModuleID: (nh_id)->
-    #index = Session.get "current module index"
-    #sequence = @.modules
-    #if !index? or !sequence?
-      #return
-    #module = sequence[index]
-    #return module.nh_id == nh_id
+  currentModule = modules[Session.get "current module index"]
+  if !currentModule?
+    return
 
-
-#Template.Module.onRendered ()->
-  #fview = FView.byId "module"
-  #surface = fview.view or fview.surface
-
-  ##Move the surface to the back of the screen
-  #surface.setProperties {zIndex: -1}
+  if currentModule.type == "SLIDE"
+    Session.set "next button is hidden", false
+  if currentModule.type == "VIDEO"
+    Session.set "next button is hidden", false
+  if currentModule.type == "BINARY"
+    Session.set "next button is hidden", true
+  if currentModule.type == "MULTIPLE_CHOICE"
+    Session.set "next button is hidden", true
+  if currentModule.type == "SCENARIO"
+    Session.set "next button is hidden", true
 
 ###
 # MODULES SEQUENCE EVENTS
@@ -64,12 +50,6 @@ Template.Module.events
 
     showNextModuleBtn(module)
 
-  'click [name=next]': (event, template) ->
-    module = currentModule()
-    if module.type == "VIDEO" or module.type == "SLIDE"
-      handleSuccessfulAttempt(module, 0)
-
-    goToNext()
 
 ###
 # AUTORUN
