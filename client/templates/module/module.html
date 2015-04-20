@@ -1,6 +1,8 @@
 <template name="Module">
 {{#with module}}
-  {{>Surface class="white z-depth-3" origin="[.5, .5]" align="[.5, .5]" proportions="[.6, .75]" template=getTemplate}}
+  {{#EdgeSwapper}}
+    {{>Surface id="module" class="white z-depth-3" origin="[.5, .5]" align="[.5, .5]" proportions="[.6, .75]" template=getTemplate}}
+  {{/EdgeSwapper}}
 {{/with}}
     <!--SEUERHN-->
 
