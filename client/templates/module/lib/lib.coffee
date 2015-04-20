@@ -1,3 +1,4 @@
+
 this.isCorrectResponse = (response) ->
   return $(response).hasClass "correct"
 #
@@ -13,9 +14,6 @@ this.isCorrectResponse = (response) ->
 # time_to_complete  the time to complete the module in ms
 ###
 this.handleFailedAttempt = (module, responses, time_to_complete) ->
-  console.log "this is the module ID"
-  console.log responses
-  console.log module.nh_id
   Attempts.insert {
     user: Meteor.user()._id
     responses: responses

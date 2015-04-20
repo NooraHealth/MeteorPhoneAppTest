@@ -9,26 +9,24 @@ Template.binaryChoiceModule.events
     hideIncorrectResponses(module)
     
     if isCorrectResponse(event.target)
-      console.log "Correct"
-      #showSticker "correct", module
+      $("#sticker_correct").removeClass("hidden")
+      showSticker "correct", module
       playAnswerAudio "correct", module
       handleSuccessfulAttempt(module, 0)
     else
-      console.log "incorrect"
-      #showSticker "incorrect", module
+      $("#sticker_incorrect").removeClass("hidden")
+      showSticker "incorrect", module
       playAnswerAudio "incorrect", module
       handleFailedAttempt module, [$(event.target).attr "value"], 0
 
-    showNextModuleBtn(module)
+    showNextModuleBtn()
 
-hideIncorrectResponses = (module)->
-  console.log "hiding the incorrent response"
+hideIncorrectResponses = ()->
   responseBtns =  $(".response")
   for btn in responseBtns
     if not $(btn).hasClass "correct"
-      $(btn).hide()
+      $(btn).addClass "faded"
     else
       $(btn).addClass "disabled"
-      $(btn).removeClass "response"
-      console.log "making this button disabled: ", btn
+      $(btn).addClass "expanded"
 

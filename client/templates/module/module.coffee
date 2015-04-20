@@ -57,13 +57,3 @@ Tracker.autorun ()->
 # HELPER FUNCTIONS
 ###
 
-#showSticker = (response, module) ->
-  #nh_id = module.nh_id
-  
-  #if $(response).hasClass "correct"
-    #$("#sticker_correct").removeClass("hidden")
-  #else
-    #console.log "showing red sticked"
-    #$("#sticker_incorrect").removeClass("hidden")
-
-
