@@ -17,9 +17,9 @@
     </div>
     <div class="row center-align">
       <div class="card-action">
-        <a name="{{nh_id}}" class="disabled response btn green waves-light waves-effect white-text {{#if isCorrectAnswer 'yes' }} correct {{/if}}" value="yes">YES</a>
+        <a class="response btn green waves-light waves-effect white-text {{#if isCorrectAnswer 'yes' }} correct {{/if}}" value="yes">YES</a>
 
-        <a name="{{nh_id}}" class="disabled response btn red waves-effect waves-light white-text {{#if isCorrectAnswer 'no'}} correct {{/if}} " value="no">NO</a>
+        <a class="response btn red waves-effect waves-light white-text {{#if isCorrectAnswer 'no'}} correct {{/if}} " value="no">NO</a>
       </div>
     </div>
   <audio name="audio{{nh_id}}" class="correct" src="{{correctAnswerAudio}}"></audio>

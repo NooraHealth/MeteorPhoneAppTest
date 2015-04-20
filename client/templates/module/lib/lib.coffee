@@ -1,3 +1,6 @@
+this.isCorrectResponse = (response) ->
+  return $(response).hasClass "correct"
+#
 ###
 # Handler for all failed attempts on a module
 #

@@ -27,29 +27,6 @@ Tracker.autorun ()->
   if currentModule.type == "SCENARIO"
     Session.set "next button is hidden", true
 
-###
-# MODULES SEQUENCE EVENTS
-###
-Template.Module.events
-  'click .response': (event, template)->
-    response = $(event.target).val()
-    moduleSequence = @.modules
-    currentModuleIndex = Session.get "current module index"
-    module = moduleSequence[currentModuleIndex]
-
-    hideIncorrectResponses(module)
-    
-    if correctResponse(event.target)
-      #showSticker "correct", module
-      playAnswerAudio "correct", module
-      handleSuccessfulAttempt(module, 0)
-    else
-      #showSticker "incorrect", module
-      playAnswerAudio "incorrect", module
-      handleFailedAttempt module, [$(event.target).attr "value"], 0
-
-    showNextModuleBtn(module)
-
 
 ###
 # AUTORUN
@@ -89,18 +66,4 @@ Tracker.autorun ()->
     #console.log "showing red sticked"
     #$("#sticker_incorrect").removeClass("hidden")
 
-correctResponse = (response) ->
-  return $(response).hasClass "correct"
-
-hideIncorrectResponses = (module)->
-    nh_id = module.nh_id
-    responseBtns =  $("a[name=#{nh_id}]")
-    for btn in responseBtns
-      if not $(btn).hasClass "correct"
-        if $(btn).hasClass "response"
-          $(btn).hide()
-      else
-        $(btn).addClass "disabled"
-        $(btn).removeClass "response"
-        console.log "making this button disabled: ", btn
 
