@@ -115,10 +115,7 @@ this.goToPreviousModule = () ->
 ###
 
 this.showNextModuleBtn = (module) ->
-  nh_id = module.nh_id
-  btn = $("#nextbtn")
-  if btn.hasClass "hidden"
-    btn.removeClass("hidden")
+  Session.set "next button is hidden", false
 
 ###
 # Go back to the chapter page of the current chapter

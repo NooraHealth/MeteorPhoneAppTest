@@ -10,14 +10,19 @@ Template.Module.helpers
   getTemplate: ()->
     if @
       if @.type == "SLIDE"
+        Session.set "next button is hidden", false
         return "slideModule"
       if @.type == "VIDEO"
+        Session.set "next button is hidden", false
         return "videoModule"
       if @.type == "BINARY"
+        Session.set "next button is hidden", true
         return "binaryChoiceModule"
       if @.type == "MULTIPLE_CHOICE"
+        Session.set "next button is hidden", true
         return "multipleChoiceModule"
       if @.type == "SCENARIO"
+        Session.set "next button is hidden", true
         return "scenarioModule"
 
   #currentModuleID: (nh_id)->

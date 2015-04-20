@@ -5,39 +5,14 @@ Template.nextBtn.events
     modulesSequence = Session.get "modules sequence"
     
     if index < modulesSequence.length
-      Router.go "ModulesSequence", {nh_id: currLesson.nh_id, index: index+1}
+      Session.set "current module index", ++index
     else
       currentChapter = Session.get "current chapter index"
       Session.set "current chapter index", currentChapter + 1
       Router.go "home"
 
 Template.nextBtn.helpers
-  ###
-  # Returns true if the next item is the next chapter
-  ###
-  nextChapter: ()->
+  isHidden: ()->
+    return Session.get "next button is hidden"
 
-  ###
-  # Returns true if the next item is the next lesson
-  ###
-  nextLesson: ()->
-
-  ###
-  # Returns true if the next item is the next section
-  ###
-  nextSection: ()->
-
-  ###
-  # returns the title of the next chapter
-  ###
-  nextChapterTitle: ()->
-
-  ###
-  # Returns the title of the next section
-  ###
-  nextSectionTitle: ()->
-
-  ###
-  # Returns the title of the next lesson
-  ###
-  nextLessonTitle: ()->
+  
