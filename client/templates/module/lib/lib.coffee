@@ -116,11 +116,9 @@ this.goToPreviousModule = () ->
 
 this.showNextModuleBtn = (module) ->
   nh_id = module.nh_id
-  btn = $("#nextbtn#{nh_id}")
+  btn = $("#nextbtn")
   if btn.hasClass "hidden"
     btn.removeClass("hidden")
-  else if btn.hasClass "back"
-    btn.parent().addClass "flipped"
 
 ###
 # Go back to the chapter page of the current chapter

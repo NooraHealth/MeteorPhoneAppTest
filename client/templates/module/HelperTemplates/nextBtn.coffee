@@ -1,7 +1,14 @@
 Template.nextBtn.events
   "click #nextbtn": ()->
     index = Session.get "current module index"
-    Session.set "current module index", index + 1
+    currLesson = Session.get "current lesson"
+    modulesSequence = Session.get "modules sequence"
+    if index < modulesSequence.length
+      Router.go "ModulesSequence", {nh_id: currLesson.nh_id, index: index+1}
+    else
+      currentChapter = Session.get "current chapter index"
+      Session.set "current chapter index", currentChapter + 1
+      Router.go "home"
 
 Template.nextBtn.helpers
   ###

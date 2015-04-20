@@ -21,7 +21,10 @@ Template.multipleChoiceModule.events
       handleSuccessfulAttempt(module)
     showNextModuleBtn(module)
 
-
+Template.multipleChoiceModule.helpers
+  module: ()->
+    console.log "GETING MC module ", @
+    return @
 ###
 # HELPER FUNCTIONS
 ###

@@ -80,6 +80,9 @@ Modules.helpers {
     return response in @.correct_answer
 
   getOptionObjects: ()->
+    console.log "!!!"
+    console.log "getting the options objects"
+    console.log "!!!"
     module = @
     newArr = ({option: option, optionImgSrc: MEDIA_URL + option, nh_id: module.nh_id, i: i} for option, i in @.options)
     return newArr

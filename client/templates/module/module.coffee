@@ -8,9 +8,6 @@ Template.Module.helpers
       #return @.moduleDocs[Session.get "current module index"]
 
   getTemplate: ()->
-    console.log "getting the current template!!"
-    console.log ""
-    console.log @
     if @
       if @.type == "SLIDE"
         return "slideModule"
@@ -19,17 +16,18 @@ Template.Module.helpers
       if @.type == "BINARY"
         return "binaryModule"
       if @.type == "MULTIPLE_CHOICE"
+        console.log "getting the multiple choice module"
         return "multipleChoiceModule"
       if @.type == "SCENARIO"
         return "scenarioModule"
 
-  currentModuleID: (nh_id)->
-    index = Session.get "current module index"
-    sequence = @.modules
-    if !index? or !sequence?
-      return
-    module = sequence[index]
-    return module.nh_id == nh_id
+  #currentModuleID: (nh_id)->
+    #index = Session.get "current module index"
+    #sequence = @.modules
+    #if !index? or !sequence?
+      #return
+    #module = sequence[index]
+    #return module.nh_id == nh_id
 
 
 ###

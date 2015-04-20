@@ -9,10 +9,7 @@ Template.moduleFooter.helpers
   currentModule: ()->
 
     currentModuleIndex = Session.get "current module index"
-    console.log "this is the currnet module index", currentModuleIndex
-    console.log @
-    console.log @.i
-    console.log @.i == currentModuleIndex
+    
     if !currentModuleIndex?
       return @.i == 0
     else

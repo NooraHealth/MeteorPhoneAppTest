@@ -49,6 +49,7 @@ Router.map ()->
     }
     data: () ->
       if this.ready()
+        console.log "going to the module"
         if !Session.get "modules sequence"
           lesson = Lessons.findOne {nh_id: this.params.nh_id}
           Session.set "current lesson", lesson
@@ -56,8 +57,11 @@ Router.map ()->
           Session.set "modules sequence", modules
           Session.set "current module index", parseInt this.params.index
         modules = Session.get "modules sequence"
-        module = modules[this.params.index]
-        return {module: module}
+        nh_id = modules[this.params.index].nh_id
+        moduleDoc = Modules.findOne {nh_id: nh_id}
+        console.log "this is the module DoC", moduleDoc
+
+        return {module: moduleDoc}
         
   }
 
