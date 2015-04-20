@@ -1,22 +1,27 @@
 <template name="binaryChoiceModule">
   <audio src="{{audioSrc}}" name="audio{{nh_id}}" class="question" autoplay></audio>
-    <div class="card-image">
-      <img src="{{imgSrc}}"/>
+    <!--<div class="card-image">-->
+      <!--<img src="{{imgSrc}}"/>-->
+    <!--</div>-->
+  <div class="row">
+    <div class="col s4 l4 m4 offset-s4 offset-m4 offset-l4">
+      <div class="card-image">
+        <img src="{{imgSrc}}">
+      </div>
     </div>
-    
-    <div class="card-content flow-text">
-      <!--{{question}}-->
-      QUEEETTTION
+  </div>
+    <div class="row center-align padded">
+      <div class="card-content flow-text">
+        {{question}}
+      </div>
     </div>
+    <div class="row center-align">
+      <div class="card-action">
+        <a name="{{nh_id}}" class="disabled response btn green waves-light waves-effect white-text {{#if isCorrectAnswer 'yes' }} correct {{/if}}" value="yes">YES</a>
 
-    <div class="card-action center-align">
-
-      <a name="{{nh_id}}" class="disabled response btn green waves-light waves-effect white-text {{#if isCorrectAnswer 'yes' }} correct {{/if}}" value="yes">YES</a>
-
-      <a name="{{nh_id}}" class="disabled response btn red waves-effect waves-light white-text {{#if isCorrectAnswer 'no'}} correct {{/if}} " value="no">NO</a>
-
+        <a name="{{nh_id}}" class="disabled response btn red waves-effect waves-light white-text {{#if isCorrectAnswer 'no'}} correct {{/if}} " value="no">NO</a>
+      </div>
     </div>
-
   <audio name="audio{{nh_id}}" class="correct" src="{{correctAnswerAudio}}"></audio>
   <audio name="audio{{nh_id}}" class="incorrect" src="{{incorrectAnswerAudio}}"></audio>
 

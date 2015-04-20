@@ -34,12 +34,12 @@ Template.Module.helpers
     #return module.nh_id == nh_id
 
 
-Template.Module.onRendered ()->
-  fview = FView.byId "module"
-  surface = fview.view or fview.surface
+#Template.Module.onRendered ()->
+  #fview = FView.byId "module"
+  #surface = fview.view or fview.surface
 
-  #Move the surface to the back of the screen
-  surface.setProperties {zIndex: -1}
+  ##Move the surface to the back of the screen
+  #surface.setProperties {zIndex: -1}
 
 ###
 # MODULES SEQUENCE EVENTS
