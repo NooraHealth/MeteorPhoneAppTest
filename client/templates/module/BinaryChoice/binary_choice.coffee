@@ -10,12 +10,12 @@ Template.binaryChoiceModule.events
     
     if isCorrectResponse(event.target)
       $("#sticker_correct").removeClass("hidden")
-      showSticker "correct", module
+      Materialize.toast "Correct!", "green rounded"
       playAnswerAudio "correct", module
       handleSuccessfulAttempt(module, 0)
     else
       $("#sticker_incorrect").removeClass("hidden")
-      showSticker "incorrect", module
+      Materialize.toast "<i class='mdi-navigation-close'></i>", "red rounded"
       playAnswerAudio "incorrect", module
       handleFailedAttempt module, [$(event.target).attr "value"], 0
 
