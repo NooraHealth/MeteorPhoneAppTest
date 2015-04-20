@@ -4,10 +4,6 @@ Template.nextBtn.events
     currLesson = Session.get "current lesson"
     modulesSequence = Session.get "modules sequence"
     
-    fview = FView.byId "module"
-    console.log "fview on clicking nect: ", fview
-    fview.destroy()
-    
     if index < modulesSequence.length
       Router.go "ModulesSequence", {nh_id: currLesson.nh_id, index: index+1}
     else

@@ -60,7 +60,7 @@ Router.map ()->
         nh_id = modules[this.params.index].nh_id
         moduleDoc = Modules.findOne {nh_id: nh_id}
         console.log "this is the module DoC", moduleDoc
-
+        Session.set "current template type", moduleDoc.type
         return {module: moduleDoc}
         
   }

@@ -8,16 +8,17 @@ Template.Module.helpers
       #return @.moduleDocs[Session.get "current module index"]
 
   getTemplate: ()->
+    type = Session.get "current template type"
     if @
-      if @.type == "SLIDE"
+      if type == "SLIDE"
         return "slideModule"
-      if @.type == "VIDEO"
+      if type == "VIDEO"
         return "videoModule"
-      if @.type == "BINARY"
+      if type == "BINARY"
         return "binaryChoiceModule"
-      if @.type == "MULTIPLE_CHOICE"
+      if type == "MULTIPLE_CHOICE"
         return "multipleChoiceModule"
-      if @.type == "SCENARIO"
+      if type == "SCENARIO"
         return "scenarioModule"
 
   #currentModuleID: (nh_id)->
@@ -28,6 +29,14 @@ Template.Module.helpers
     #module = sequence[index]
     #return module.nh_id == nh_id
 
+
+Template.Module.onRendered ()->
+  fview = FView.byId "module"
+  surface = fview.view or fview.surface
+  console.log "this is the fview: ", fview
+
+  #Move the surface to the back of the screen
+  surface.setProperties {zIndex: -1}
 
 ###
 # MODULES SEQUENCE EVENTS
