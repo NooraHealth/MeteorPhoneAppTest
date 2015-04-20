@@ -43,7 +43,7 @@ Template.chapterThumbnail.onRendered ()->
 
     surface.on "click", ()->
       console.log "going to the modules page"
-      Router.go "ModulesSequence", {nh_id: fview.id, index: 0}
+      Router.go "ModulesSequence", {nh_id: fview.id}
   
   else
     fview.modifier.setOpacity .5

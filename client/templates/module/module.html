@@ -1,7 +1,7 @@
 <template name="Module">
-{{#with module}}
+{{#with currentModule}}
   {{#EdgeSwapper}}
-    {{>Surface id="module" class="white padded"  origin="[.5, .5]" align="[.5, .5]"  template=getTemplate modifier="StateModifier"}}
+    {{>Surface id="module" class="white padded"  origin="[.5, .5]" align="[.5, .5]" template=getTemplate modifier="StateModifier"}}
   {{/EdgeSwapper}}
 {{/with}}
     <!--SEUERHN-->
