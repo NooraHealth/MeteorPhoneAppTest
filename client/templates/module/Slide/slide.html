@@ -2,14 +2,17 @@
 <template name="slideModule">
   <audio src="{{audioSrc}}" name="audio{{nh_id}}" class="question" autoplay></audio>
   
-  <div class="card-image center-align">
-    <img src="{{imgSrc}}"/>
-  </div>
+<div class="valign-wrapper module">
+  <div class="valign module-wrapper">
+    <div class="center-align">
+      <img class="module-image" src="{{imgSrc}}"/>
+    </div>
 
-  <div class="flow-text grey-text text-darken-2 center-align">
-    {{title}}
+    <div class="flow-text grey-text text-darken-2 center-align">
+      {{title}}
+    </div>
   </div>
-  
+</div>
   <!--<div class="card-content center-align valign-wrapper">-->
     <!--[>{{>nextBtn class="" nh_id=nh_id}}<]-->
   <!--<a class=" blue-text text-lighten-3 flow-text btn-flat waves-effect waves-light {{class}} next large valign-wrapper next-module-btn" id="nextbtn{{nh_id}}" name="next">NEXT [>{{#if nextChapter}} CHAPTER {{else nextSection}} SECTION {{else nextLesson}} LESSON {{/if}}<]-->
