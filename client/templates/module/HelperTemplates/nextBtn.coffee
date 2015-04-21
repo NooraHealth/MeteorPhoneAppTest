@@ -10,7 +10,7 @@ Template.nextBtn.events
       correctlyAnswered.push index
       Session.set "correctly answered", correctlyAnswered
    
-    if index < modulesSequence.length
+    if index+1 < modulesSequence.length
       Session.set "current module index", ++index
       resetTemplate()
     else
@@ -21,7 +21,10 @@ Template.nextBtn.events
 Template.nextBtn.helpers
   isLastModule: ()->
     numModules = (Session.get "modules sequence").length
-    return Session.get "current module index" == numModules-2
+    console.log "is this the last module? ", numModules
+    console.log "current module index", Session.get "current module index"
+    index = Session.get "current module index"
+    return index == numModules-1
 
   isHidden: ()->
     return Session.get "next button is hidden"

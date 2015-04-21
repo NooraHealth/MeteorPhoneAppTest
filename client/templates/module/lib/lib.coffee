@@ -19,7 +19,6 @@ this.handleResponse = (response)->
   showNextModuleBtn()
 
 
-
 hideIncorrectResponses = ()->
   responseBtns =  $(".response")
   for btn in responseBtns
