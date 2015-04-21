@@ -3,24 +3,28 @@
     <!--<div class="card-image">-->
       <!--<img src="{{imgSrc}}"/>-->
     <!--</div>-->
-  <div class="row center-align">
-    <div class="card-image">
-      <img src="{{imgSrc}}">
-    </div>
-  </div>
-    <div class="row center-align padded">
-      <div class="card-content flow-text">
-        {{question}}
-      </div>
-    </div>
-    <div class="row center-align">
-      <div class="card-action">
-        <a class="response btn green waves-light waves-effect white-text {{#if isCorrectAnswer 'yes' }} correct {{/if}}" value="yes">YES</a>
+    <div class="valign-wrapper module">
+      <div class="valign module-wrapper">
+        <div class="row center-align">
+          <div class="center-align">
+            <img src="{{imgSrc}}" class="module-image">
+          </div>
+        </div>
+          <div class="row center-align padded">
+            <div class="card-content flow-text">
+              {{question}}
+            </div>
+          </div>
+          <div class="row center-align">
+            <div class="card-action">
+              <a class="response btn green waves-light waves-effect white-text {{#if isCorrectAnswer 'yes' }} correct {{/if}}" value="yes">YES</a>
 
-        <a class="response btn red waves-effect waves-light white-text {{#if isCorrectAnswer 'no'}} correct {{/if}} " value="no">NO</a>
+              <a class="response btn red waves-effect waves-light white-text {{#if isCorrectAnswer 'no'}} correct {{/if}} " value="no">NO</a>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  <audio name="audio{{nh_id}}" class="correct" src="{{correctAnswerAudio}}"></audio>
-  <audio name="audio{{nh_id}}" class="incorrect" src="{{incorrectAnswerAudio}}"></audio>
+      <audio name="audio{{nh_id}}" class="correct" src="{{correctAnswerAudio}}"></audio>
+      <audio name="audio{{nh_id}}" class="incorrect" src="{{incorrectAnswerAudio}}"></audio>
 
 </template>
