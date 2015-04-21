@@ -163,7 +163,12 @@ Custom NH components
 }
 
 .hidden-card, .hidden {
+  /*@include transform(translate3d(0,-1000, 0));*/
   display: none;
+}
+
+.slide-down {
+  @include transform(translate3d(0, 1000px,0));  
 }
 
 .module-card {
@@ -313,7 +318,9 @@ Custom NH components
   @include transition(all, 1s);
   letter-spacing: 2px;
   font-size: 20px;
-  width: 100%;
+  width: 150px;
+  margin-left: 100px;
+  /*width: 100%;*/
 
   &:hover {
     background-color: lighten($light-blue-2, 30%);
@@ -415,7 +422,7 @@ video {
 
 .chapter-card {
   padding: $padding-S;
-  margin: 10px;
+  margin: 30px;
   /*@media (min-width: 600px) {*/
     /*height: 425px;  */
   /*}*/

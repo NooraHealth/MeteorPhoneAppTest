@@ -117,6 +117,7 @@ this.goToPreviousModule = () ->
 ###
 
 this.showNextModuleBtn = (module) ->
+  $("#nextbtn").fadeIn()
   Session.set "next button is hidden", false
 
 ###
