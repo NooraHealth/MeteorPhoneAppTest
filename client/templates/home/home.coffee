@@ -1,4 +1,8 @@
 
+Template.home.helpers {
+  displayTrophy: ()->
+    return Session.get "display trophy"
+}
 Template.chapterThumbnail.events {
   "click .card": (event, template) ->
     fview = FView.from(template)
@@ -9,6 +13,8 @@ Template.home.onRendered ()->
   width = Session.get "chapter card width"
   cardsComplete = Session.get "current chapter index"
   cards.modifier.setTransform Transform.translate(-1 * width * cardsComplete ,0, 0), {duration: 2000, curve: "easeIn"}
+  #controller = FView.from this
+  #console.log "CONTROLLER: ", controller
 
 Template.chapterThumbnail.onRendered ()->
   fview = FView.from this

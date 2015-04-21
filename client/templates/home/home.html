@@ -1,7 +1,11 @@
 <template name="home">
-  {{#Scrollview direction="1"  id="cardLayout" modifier="StateModifier"}}
+  {{#Scrollview direction="0"  id="cardLayout" modifier="StateModifier"}}
     {{#famousEach chapters}}
       {{>Surface template="chapterThumbnail" modifier="StateModifier"}}
     {{/famousEach}}
   {{/Scrollview}}
+
+  {{#if displayTrophy}}
+    {{>Surface template="trophy" id="trophy" modifier="StateModifier" size="[200, 200]" align="[.5, .5]" origin="[-20, 0]"}}
+  {{/if}}
 </template>
