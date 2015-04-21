@@ -1,6 +1,14 @@
 Template.multipleChoiceModule.events
   "click .image-choice": (event, template)->
-    $(event.target).toggleClass "selected"
+    numCorrect = $("img[class~=correct]").length
+    numSelected = $("img[class~=selected]").length
+    console.log "numCorrect: ", numCorrect
+    console.log "numSelected", numSelected
+    if numSelected >= numCorrect
+      $(event.target).removeClass "selected"
+      return
+    else
+      $(event.target).toggleClass "selected"
 
   "click [name^=submit_multiple_choice]": (event, template)->
     module = template.data
