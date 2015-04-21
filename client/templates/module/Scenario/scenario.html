@@ -1,33 +1,35 @@
 <template name="scenarioModule">
   <audio src="{{audioSrc}}" name="audio{{nh_id}}" class="question" autoplay></audio>
-<div class="front">
-  <div class="card-image">
-    <img src="{{imgSrc}}"/>
+  
+  <div class="row center-align">
+    <div class="card-image">
+      <img src="{{imgSrc}}">
+    </div>
   </div>
   
-  <div class="card-content flow-text">
-    {{question}}
-  </div>
+    <div class="row center-align padded">
+      <div class="card-content flow-text">
+        {{question}}
+      </div>
+    </div>
 
-  <div class="card-action center-align">
-    <a name="{{nh_id}}" class="response btn waves-effect waves-light white-text green scenario-btn {{#if isCorrectAnswer 'normal' }} correct {{/if}}" value="{{option 0}}">
-      <i class="mdi-action-home"></i> NORMAL
-    </a>
-            
-    <a name="{{nh_id}}" class="response btn waves-effect waves-light white-text yellow darken-3 scenario-btn {{#if isCorrectAnswer 'call doc' }} correct {{/if}}" value="{{option 1}}">
-      <i class="mdi-action-settings-phone"></i> CALL DOCTOR
-    </a>
+    <div class="row center-align">
+      <div class="card-action">
+        <a  class="response btn waves-effect waves-light white-text green scenario-btn {{#if isCorrectAnswer 'normal' }} correct {{/if}}" value="{{option 0}}">
+          <i class="mdi-action-home"></i> NORMAL
+        </a>
+                
+        <a class="response btn waves-effect waves-light white-text yellow darken-3 scenario-btn {{#if isCorrectAnswer 'call doc' }} correct {{/if}}" value="{{option 1}}">
+          <i class="mdi-action-settings-phone"></i> CALL DOCTOR
+        </a>
 
-    <a name="{{nh_id}}" class="response btn waves-effect waves-light white-text red scenario-btn {{#if isCorrectAnswer 'call 911' }} correct {{/if}}" value="{{option 2}}">
-      <i class="mdi-maps-local-hospital"></i> CALL 911
-    </a>
-    {{>nextBtn class="hidden" nh_id=nh_id}}
-  </div>
-</div>
+        <a class="response btn waves-effect waves-light white-text red scenario-btn {{#if isCorrectAnswer 'call 911' }} correct {{/if}}" value="{{option 2}}">
+          <i class="mdi-maps-local-hospital"></i> CALL 911
+        </a>
+      </div>
+    </div>
 
-<div class="back">
-  <audio name="audio{{nh_id}}" class="correct" src="{{correctAnswerAudio}}"></audio>
-  <audio name="audio{{nh_id}}" class="incorrect" src="{{incorrectAnswerAudio}}"></audio>
-</div>
+<audio name="audio{{nh_id}}" class="correct" src="{{correctAnswerAudio}}"></audio>
+<audio name="audio{{nh_id}}" class="incorrect" src="{{incorrectAnswerAudio}}"></audio>
 
 </template>

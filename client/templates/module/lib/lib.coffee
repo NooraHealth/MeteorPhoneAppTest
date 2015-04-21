@@ -1,3 +1,35 @@
+this.handleResponse = (response)->
+  moduleSequence = Session.get "modules sequence"
+  currentModuleIndex = Session.get "current module index"
+  module = moduleSequence[currentModuleIndex]
+
+  hideIncorrectResponses(module)
+  
+  if isCorrectResponse(event.target)
+    Materialize.toast "<i class='mdi-navigation-check medium'></i>", 5000, "left green rounded"
+    playAnswerAudio "correct", module
+    handleSuccessfulAttempt(module, 0)
+    updateModuleNav "correct"
+  else
+    Materialize.toast "<i class='mdi-navigation-close medium'></i>", 5000, "left red rounded"
+    playAnswerAudio "incorrect", module
+    handleFailedAttempt module, [$(event.target).attr "value"], 0
+    updateModuleNav "incorrect"
+
+  showNextModuleBtn()
+
+
+
+hideIncorrectResponses = ()->
+  responseBtns =  $(".response")
+  for btn in responseBtns
+    if not $(btn).hasClass "correct"
+      $(btn).addClass "faded"
+    else
+      $(btn).addClass "disabled"
+      $(btn).addClass "expanded"
+
+
 
 this.updateModuleNav = (responseStatus)->
   if responseStatus == "correct"

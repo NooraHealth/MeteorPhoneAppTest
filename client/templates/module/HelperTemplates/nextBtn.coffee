@@ -21,7 +21,7 @@ Template.nextBtn.events
 Template.nextBtn.helpers
   isLastModule: ()->
     numModules = (Session.get "modules sequence").length
-    return Session.get "current module index" == numModules-1
+    return Session.get "current module index" == numModules-2
 
   isHidden: ()->
     return Session.get "next button is hidden"

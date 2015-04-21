@@ -9,3 +9,7 @@ Template.scenarioModule.helpers
     return MEDIA_URL + "VascularContent/Images/emergency.png"
 
 
+Template.scenarioModule.events
+  'click .response': (event, template)->
+    response = $(event.target).val()
+    handleResponse response
