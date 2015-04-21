@@ -1,11 +1,13 @@
 <template name="scenarioModule">
   <audio src="{{audioSrc}}" name="audio{{nh_id}}" class="question" autoplay></audio>
   
-  <div class="row center-align">
-    <div class="card-image">
-      <img src="{{imgSrc}}">
+<div class="valign-wrapper module">
+  <div class="valign module-wrapper">
+    <div class="row center-align">
+      <div class="center-align">
+        <img src="{{imgSrc}}" class="module-image">
+      </div>
     </div>
-  </div>
   
     <div class="row center-align padded">
       <div class="card-content flow-text">
@@ -28,7 +30,8 @@
         </a>
       </div>
     </div>
-
+  </div>
+</div>
 <audio name="audio{{nh_id}}" class="correct" src="{{correctAnswerAudio}}"></audio>
 <audio name="audio{{nh_id}}" class="incorrect" src="{{incorrectAnswerAudio}}"></audio>
 
