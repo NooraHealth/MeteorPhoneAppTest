@@ -28,16 +28,24 @@ hideIncorrectResponses = ()->
       $(btn).addClass "disabled"
       $(btn).addClass "expanded"
 
-
-
 this.updateModuleNav = (responseStatus)->
+  moduleIndex = Session.get "current module index"
+  correctAnswers = Session.get "correctly answered"
+  incorrectlyAnswered = Session.get "incorrectly answered"
+
   if responseStatus == "correct"
-    correctAnswers = Session.get "correctly answered"
+    if moduleIndex in correctAnswers
+      return
+    #Remove the index from the array of incorrect answers
+    if moduleIndex in incorrectlyAnswered
+      incorrectlyAnswered = incorrectlyAnswered.filter (i) -> i isnt moduleIndex
+      Session.set "incorrectly answered", incorrectlyAnswered
     correctAnswers.push Session.get "current module index"
     Session.set "correctly answered", correctAnswers
 
   if responseStatus == "incorrect"
-    incorrectlyAnswered = Session.get "incorrectly answered"
+    if moduleIndex in incorrectlyAnswered
+      return
     incorrectlyAnswered.push Session.get "current module index"
     Session.set "incorrectly answered", incorrectlyAnswered
 

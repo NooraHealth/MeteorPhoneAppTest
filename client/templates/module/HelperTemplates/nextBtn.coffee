@@ -3,15 +3,24 @@ Template.nextBtn.events
     index = Session.get "current module index"
     currLesson = Session.get "current lesson"
     modulesSequence = Session.get "modules sequence"
+    incorrectlyAnswered = Session.get "incorrectly answered"
+    correctlyAnswered = Session.get "correctly answered"
 
     currentModule = modulesSequence[index]
     if currentModule.type == "VIDEO" or currentModule.type == "SLIDE"
-      correctlyAnswered = Session.get "correctly answered"
       correctlyAnswered.push index
       Session.set "correctly answered", correctlyAnswered
    
     if index+1 < modulesSequence.length
-      Session.set "current module index", ++index
+      if correctlyAnswered.length + incorrectlyAnswered.length == modulesSequence.length
+        Session.set "current module index", incorrectlyAnswered[0]
+      else
+        Session.set "current module index", ++index
+      
+      resetTemplate()
+
+    else if incorrectlyAnswered.length > 0
+      Session.set "current module index", incorrectlyAnswered[0]
       resetTemplate()
     else
       currentChapter = Session.get "current chapter index"
@@ -21,10 +30,12 @@ Template.nextBtn.events
 Template.nextBtn.helpers
   isLastModule: ()->
     numModules = (Session.get "modules sequence").length
+    numIncorrect = (Session.get "incorrectly answered").length
+
     console.log "is this the last module? ", numModules
     console.log "current module index", Session.get "current module index"
     index = Session.get "current module index"
-    return index == numModules-1
+    return index == numModules-1 and numIncorrect == 0
 
   isHidden: ()->
     return Session.get "next button is hidden"

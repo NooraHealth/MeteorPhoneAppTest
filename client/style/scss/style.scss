@@ -341,6 +341,13 @@ Custom NH components
   &:hover {
     background-color: lighten($light-blue-2, 30%);
   }
+  @media(min-width: 600px) {
+   width: 200px;
+  }
+  @media(max-width: 600px) {
+    width:150px;
+  }
+
 }
 
 .image-choice {
