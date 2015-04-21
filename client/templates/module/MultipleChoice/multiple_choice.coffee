@@ -17,8 +17,11 @@ Template.multipleChoiceModule.events
     if numIncorrect > 0
       handleFailedAttempt(module, responses )
       playAnswerAudio(event.target, module)
+      updateModuleNav "incorrect"
     else
       handleSuccessfulAttempt(module)
+      updateModuleNav "correct"
+    
     showNextModuleBtn(module)
 
 Template.multipleChoiceModule.helpers

@@ -27,9 +27,16 @@ Template.nextBtn.helpers
     return Session.get "next button is hidden"
 
 resetTemplate = ()->
+  if $("#submit_multiple_choice")
+    $("#submit_multiple_choice").fadeIn()
+    
   responseBtns = $(".response")
   for btn in responseBtns
     $(btn).removeClass "disabled"
     $(btn).removeClass "faded"
     $(btn).removeClass "expanded"
+    $(btn).removeClass "correctly_selected"
+    $(btn).removeClass "incorrectly_selected"
+    $(btn).removeClass "selected"
+
 

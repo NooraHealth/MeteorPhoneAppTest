@@ -1,4 +1,15 @@
 
+this.updateModuleNav = (responseStatus)->
+  if responseStatus == "correct"
+    correctAnswers = Session.get "correctly answered"
+    correctAnswers.push Session.get "current module index"
+    Session.set "correctly answered", correctAnswers
+
+  if responseStatus == "incorrect"
+    incorrectlyAnswered = Session.get "incorrectly answered"
+    incorrectlyAnswered.push Session.get "current module index"
+    Session.set "incorrectly answered", incorrectlyAnswered
+
 this.isCorrectResponse = (response) ->
   return $(response).hasClass "correct"
 #
@@ -25,8 +36,6 @@ this.handleFailedAttempt = (module, responses, time_to_complete) ->
       console.log "There was an error inserting the incorrect attempt into the database", error
     else
       console.log "Just inserted this incorrect attempt into the DB: ", Attempts.findOne {_id: _id}
-
-this.colorFooterNav = (color, index) ->
 
 
 ###
@@ -57,6 +66,7 @@ this.handleSuccessfulAttempt = (module, time_to_complete)->
 # module    The module to play the answer audio for
 ###
 this.playAnswerAudio = (type, module)->
+  console.log "playing the answer audio"
   nh_id = module.nh_id
   $("audio[name=audio#{nh_id}][class=question]")[0].pause()
   if type== "correct"
