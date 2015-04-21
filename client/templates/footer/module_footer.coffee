@@ -13,7 +13,6 @@ Template.moduleFooter.helpers
     return index in Session.get "incorrectly answered"
 
   currentModule: ()->
-
     currentModuleIndex = Session.get "current module index"
     
     if !currentModuleIndex?
