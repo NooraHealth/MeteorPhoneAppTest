@@ -11,8 +11,8 @@ Template.nextBtn.events
       Session.set "correctly answered", correctlyAnswered
    
     if index < modulesSequence.length
-      resetTemplate()
       Session.set "current module index", ++index
+      resetTemplate()
     else
       currentChapter = Session.get "current chapter index"
       Session.set "current chapter index", currentChapter + 1

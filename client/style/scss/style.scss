@@ -162,6 +162,10 @@ Custom NH components
   margin: 0;
 }
 
+.mc_submit_btn {
+  width:100%;
+}
+
 .hidden-card, .hidden {
   /*@include transform(translate3d(0,-1000, 0));*/
   display: none;
