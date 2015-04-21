@@ -26,6 +26,7 @@ this.handleFailedAttempt = (module, responses, time_to_complete) ->
     else
       console.log "Just inserted this incorrect attempt into the DB: ", Attempts.findOne {_id: _id}
 
+this.colorFooterNav = (color, index) ->
 
 
 ###

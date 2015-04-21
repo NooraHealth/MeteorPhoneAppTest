@@ -3,6 +3,12 @@ Template.nextBtn.events
     index = Session.get "current module index"
     currLesson = Session.get "current lesson"
     modulesSequence = Session.get "modules sequence"
+
+    currentModule = modulesSequence[index]
+    if currentModule.type == "VIDEO" or currentModule.type == "SLIDE"
+      correctlyAnswered = Session.get "correctly answered"
+      correctlyAnswered.push index
+      Session.set "correctly answered", correctlyAnswered
    
     if index < modulesSequence.length
       resetTemplate()

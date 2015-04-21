@@ -6,6 +6,12 @@ Template.moduleFooter.helpers
     arr = ({module: module, i: i} for module, i in modules)
     return arr
 
+  correctlyAnswered: (index)->
+    return index in Session.get "correctly answered"
+
+  incorrectlyAnswered: (index)->
+    return index in Session.get "incorrectly answered"
+
   currentModule: ()->
 
     currentModuleIndex = Session.get "current module index"
@@ -44,6 +50,9 @@ Tracker.autorun ()->
     if currentlyActive?
       currentlyActive.removeClass "current"
     currentActiveNav.addClass "current"
+
+
+
 
 
 

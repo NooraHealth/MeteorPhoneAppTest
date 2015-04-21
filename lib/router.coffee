@@ -54,6 +54,8 @@ Router.map ()->
         modules = lesson.getModulesSequence()
         Session.set "modules sequence", modules
         Session.set "current module index", 0
+        Session.set "correctly answered", []
+        Session.set "incorrectly answered", []
         return {modules: modules}
         
   }
