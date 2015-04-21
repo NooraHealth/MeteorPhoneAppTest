@@ -20,6 +20,16 @@ Template.moduleFooter.helpers
     else
       return @.i == currentModuleIndex
 
+Template.footer.onRendered ()->
+  fview = FView.from this
+  surface = fview.view or fview.surface
+  surface.setProperties {zIndex: 12}
+
+Template.moduleFooter.onRendered ()->
+  fview = FView.from this
+  surface = fview.view or fview.surface
+  surface.setProperties {zIndex: 12}
+
 #Template.moduleFooter.events
   #'click .module_nav': (event, template) ->
     #currentIndex = Session.get "current module index"

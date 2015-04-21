@@ -6,12 +6,12 @@ this.handleResponse = (response)->
   hideIncorrectResponses(module)
   
   if isCorrectResponse(event.target)
-    Materialize.toast "<i class='mdi-navigation-check medium'></i>", 5000, "left green rounded"
+    Materialize.toast "<i class='mdi-navigation-check medium'></i>", 5000, "left valign green rounded"
     playAnswerAudio "correct", module
     handleSuccessfulAttempt(module, 0)
     updateModuleNav "correct"
   else
-    Materialize.toast "<i class='mdi-navigation-close medium'></i>", 5000, "left red rounded"
+    Materialize.toast "<i class='mdi-navigation-close medium'></i>", 5000, "left valign red rounded"
     playAnswerAudio "incorrect", module
     handleFailedAttempt module, [$(event.target).attr "value"], 0
     updateModuleNav "incorrect"

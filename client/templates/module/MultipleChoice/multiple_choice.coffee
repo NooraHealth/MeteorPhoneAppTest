@@ -2,8 +2,6 @@ Template.multipleChoiceModule.events
   "click .image-choice": (event, template)->
     numCorrect = $("img[class~=correct]").length
     numSelected = $("img[class~=selected]").length
-    console.log "numCorrect: ", numCorrect
-    console.log "numSelected", numSelected
     if numSelected >= numCorrect
       $(event.target).removeClass "selected"
       return
