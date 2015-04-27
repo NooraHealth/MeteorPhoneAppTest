@@ -18,9 +18,9 @@ Template.createCurriculum.events {
     $("#lessonsList").append "<li>
       <div class='collapsible-header'>
       #{title}  
-      <a class='btn' name='addModule' id='#{_id}'><i class='mdi-content-action'></i></a>
+      <a style='float:right' class='waves-effect waves-blue right-align btn-flat' name='addModule' id='#{_id}'><i class='mdi-content-add'></i></a>
       </div>
-      <div class='collapsible-body'><p>BODY</p></div></li>"
+      <div class='collapsible-body'></div></li>"
 
     $(".collapsible").collapsible {
       accordion:false
@@ -29,5 +29,9 @@ Template.createCurriculum.events {
 
   "click [name^=addModule]": (event, target) ->
     console.log "add module clicked"
+    console.log event.target
+    console.log $(event.target).closest "a"
+    id = $(event.target).closest("a").attr 'id'
+    console.log id
 }
 
