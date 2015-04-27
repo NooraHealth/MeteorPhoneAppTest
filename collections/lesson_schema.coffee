@@ -17,6 +17,7 @@ LessonSchema = new SimpleSchema
   image:
     type: String
     regEx:  /^([/]?\w+)+[.]png/
+    optional:true
   tags:
     type:[String]
     minCount:0
@@ -38,6 +39,7 @@ LessonSchema = new SimpleSchema
         #return "required"
   nh_id:
     type:String
+    optional: true
     min:0
 
 Lessons.attachSchema LessonSchema

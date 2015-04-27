@@ -1,6 +1,29 @@
 Template.createCurriculum.events {
   "click #addLesson":(event, target) ->
-    console.log "clicked"
     $("#addLessonModal").openModal()
-  
+
+  "click #submitLesson": (event, target)->
+    files = event.target.files
+    title =  $("#lessonTitle").val()
+    shortTitle = $("#lessonShortTitle").val()
+    tags = $("#lessonTags").val().split()
+    _id = Lessons.insert {
+      title: title
+      short_title: shortTitle
+      tags: tags
+    }
+
+    lesson = Lessons.update {_id: _id}, {$set: {nh_id: _id}}
+
+    $("#lessonsList").append "<li>
+      <div class='collapsible-header'>
+      #{title}  
+      </div>
+      <div class='collapsible-body'><p>BODY</p></div></li>"
+
+    $(".collapsible").collapsible {
+      accordion:false
+      expandable:true
+    }
 }
+
