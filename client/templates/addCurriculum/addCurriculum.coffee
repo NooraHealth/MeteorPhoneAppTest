@@ -1,8 +1,8 @@
 Template.createCurriculum.events {
-  "click #addLesson":(event, target) ->
+  "click #addLesson":(event, template) ->
     $("#addLessonModal").openModal()
 
-  "click #submitLesson": (event, target)->
+  "click #submitLesson": (event, template)->
     files = event.target.files
     title =  $("#lessonTitle").val()
     shortTitle = $("#lessonShortTitle").val()
@@ -27,11 +27,16 @@ Template.createCurriculum.events {
       expandable:true
     }
 
-  "click [name^=addModule]": (event, target) ->
-    console.log "add module clicked"
-    console.log event.target
-    console.log $(event.target).closest "a"
+  "click [name^=addModule]": (event, template) ->
     id = $(event.target).closest("a").attr 'id'
-    console.log id
+    $("#moduleLessonId").attr "value", id
+    Session.set "current editing lesson", id
+
+    $("#addModuleModal").openModal()
+
+  "change #moduleType": (event, template) ->
+    console.log "selector"
+    
 }
+
 

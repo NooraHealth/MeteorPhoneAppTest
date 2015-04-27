@@ -18,6 +18,7 @@ ModuleSchema = new SimpleSchema
     type:String
   next_module:
     type:String
+    optional:true
   title:
     type:String
     optional:true

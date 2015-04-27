@@ -31,6 +31,9 @@ LessonSchema = new SimpleSchema
     #custom: ()->
 #      if this.field('has_sublessons').value == "true"
         #return "required"
+  modules:
+    type: [String]
+    optional:true
   first_module:
     type:String
     optional:true

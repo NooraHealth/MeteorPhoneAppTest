@@ -57,4 +57,114 @@
     <button id="submitLesson" class="waves-effect btn-flat waves-green modal-action modal-close"> Submit Lesson</button>
   </div>
 </div>
+{{>addModuleModal}}
+</template>
+
+<template name="addModuleModal">
+<div id="addModuleModal" class="modal">
+  <div class="modal-content">  
+    <form action="#" id="addModuleForm">
+      <input class="hidden" id="moduleLessonId" value="">
+
+      <div class="row">
+        <div class="input-field col l6 m6 ">
+          <select id="moduleType" style="display:inline">
+            <option value="" disabled selected>Module Type</option>
+            <option value="SCENARIO"> Scenario </option>
+            <option value="MULTIPLE_CHOICE"> Multiple Choice </option>
+            <option value="GOAL_CHOICE"> Goal Choice </option>
+            <option value="BINARY_CHOICE"> Binary Choice </option>
+            <option value="SLIDE"> Slide </option>
+            <option value="VIDEO"> Video </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-field col l12 m12 slide video hidden">
+          <label for="moduleTitle">Title</label>
+          <input type="text" id="moduleTitle"/>  
+        </div>
+
+        <div class="input-field col l12 m12 binary multiple_choice goal_choice scenario hidden">
+          <label for="moduleQuestion">Question</label>
+          <input type="text" class="materialize-textarea" id="moduleQuestion">  
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="input-field col l12 m12 ">
+          <label for="lessonTags">Tags (separate each tag by a single space)</label>
+          <input type="text" id="lessonTags" class="materialize-textarea">  
+        </div>
+      </div>
+        
+      <div class="row multiple_choice goal_choice hidden">
+        <p>Options</p>
+        <div class="input-field col l4 m4">
+          <label for="option1"></label>
+          <input type="text" id="option1">  
+        </div>
+        <div class="input-field col l4 m4">
+          <label for="option2"></label>
+          <input type="text" id="option2">  
+        </div>
+        <div class="input-field col l4 m4">
+          <label for="option3"></label>
+          <input type="text" id="option3">  
+        </div>
+      </div>
+      
+      <div class="row multiple_choice goal_choice hidden">
+        <div class="input-field col l4 m4">
+          <label for="option4"></label>
+          <input type="text" id="option4">  
+        </div>
+        <div class="input-field col l4 m4">
+          <label for="option5"></label>
+          <input type="text" id="option5">  
+        </div>
+        <div class="input-field col l4 m4">
+          <label for="option6"></label>
+          <input type="text" id="option6">  
+        </div>
+      </div>
+
+      <div class="row slide scenario multiple_choice goal_choice binary hidden">
+        <div class="col l12 m12">
+          <label for="moduleAudio"> Audio </label>
+          <input  id="moduleAudio" type="file"/>
+        </div>
+      </div>
+
+      <div class="row scenario multiple_choice goal_choice binary hidden">
+        <div class="col l6 m6">
+          <label for="moduleCorrectAudio"> Correct Audio </label>
+          <input  id="moduleCorrectAudio" type="file"/>
+        </div>
+        <div class="col l6 m6">
+          <label for="moduleIncorrectAudio"> Incorrect Audio </label>
+          <input  id="moduleIncorrectAudio" type="file"/>
+        </div>
+      </div>
+      
+      <div class="row slide scenario multiple_choice goal_choice binary hidden">
+        <div class="col l12 m12">
+          <label for="moduleImage"> Image </label>
+          <input  id="moduleImage" type="file"/>
+        </div>
+      </div>
+
+      <div class="row video hidden">
+        <div class="col l12 m12">
+          <label for="moduleVideo"> Video </label>
+          <input  id="moduleVideo" type="file"/>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">  
+    <button id="submitModule" class="waves-effect btn-flat waves-green modal-action modal-close"> Submit Module </button>
+  </div>
+</div>
 </template>
