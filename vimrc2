@@ -1,5 +1,6 @@
 " this file has ordered commands for it to work. don't blindly change the order.
 
+
 " Lang {{{
 language messages en_US.utf8
 set langmenu=en_US.utf8
@@ -8,7 +9,6 @@ source $VIMRUNTIME/delmenu.vim
 source $VIMRUNTIME/menu.vim
 set spelllang=en,es
 " }}}
-
 " Vim-Plug Config {{{
 " Example config:
 " call plug#begin('~/.vim/plugged')
