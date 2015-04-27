@@ -35,7 +35,10 @@ Template.createCurriculum.events {
     $("#addModuleModal").openModal()
 
   "change #moduleType": (event, template) ->
-    console.log "selector"
+    type = $(event.target).val()
+    console.log "selector", type
+    if type== "SCENARIO"
+      $(".scenario").slideDown()
     
 }
 
