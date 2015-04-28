@@ -15,10 +15,10 @@ Template.createCurriculum.events {
 
     lesson = Lessons.update {_id: _id}, {$set: {nh_id: _id}}
 
-    $("#lessonsList").append "<li>
+    $("#lessonsList").append "<li name='lesson' id='#{_id}'>
       <div class='collapsible-header'>
       #{title}  
-      <a style='float:right' class='waves-effect waves-blue right-align btn-flat' name='addModule' id='#{_id}'><i class='mdi-content-add'></i></a>
+      <a style='float:right' class='waves-effect waves-blue right-align btn-flat' name='addModule'><i class='mdi-content-add'></i></a>
       </div>
       <div class='collapsible-body'><ul class='collection' id='moduleList#{_id}'></ul></div></li>"
 
@@ -28,7 +28,7 @@ Template.createCurriculum.events {
     }
 
   "click [name^=addModule]": (event, template) ->
-    id = $(event.target).closest("a").attr 'id'
+    id = $(event.target).closest("li").attr 'id'
     $("#moduleLessonId").attr "value", id
     Session.set "current editing lesson", id
     $("#moduleInitialization")[0].reset()
@@ -56,6 +56,10 @@ Template.createCurriculum.events {
     tags = $("#moduleTags").val().split()
     type= $("#moduleType").val()
     
+    if !type
+      alert "please identify a module type"
+      return
+
     id = Modules.insert {
       type:type
       title:title
@@ -64,9 +68,18 @@ Template.createCurriculum.events {
       options:options
     }
 
-    console.log "id! ", id
     lessonId = Session.get "current editing lesson"
-    $("#moduleList"+ Session.get "current editing lesson").append "<li class='collection-item' id='#{id}' name='#{lessonId}'>#{title}#{question}</li>"
+    $("#moduleList"+ Session.get "current editing lesson").append "<li class='collection-item' id='#{id}' name='moduleof#{lessonId}'>#{title}#{question}</li>"
 
+"click #submitCurriculum": (event, template) ->
+  lessons = $("li[name=lesson]")
+  console.log "click"
+  console.log lessons
+  $.each lessons, (index, lesson)->
+    lessonId = $(lesson).attr 'id'
+    modules = $("li[name=moduleof"+lessonId)
+    moduleIds = ( $(module).attr 'id' for module in modules)
+    console.log "module ids", moduleIds
+    console.log "modules", modules
 }
 
