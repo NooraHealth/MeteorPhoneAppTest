@@ -16,7 +16,10 @@ LessonSchema = new SimpleSchema
     optional:true
   image:
     type: String
-    regEx:  /^([/]?\w+)+[.]png/
+    #regEx:  /^([/]?\w+)+[.]png/
+    optional:true
+  imageUrl:
+    type:String
     optional:true
   tags:
     type:[String]

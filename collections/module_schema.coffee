@@ -26,8 +26,12 @@ ModuleSchema = new SimpleSchema
   image:
     type:String
     optional: true
-    regEx: /^([/]?\w+)+[.]png$/
-
+  image_url:
+    type:String
+    optional:true
+  video_url:
+    type:String
+    optional: true
   #QUESTION MODULE
   question:
     type:String
@@ -38,8 +42,20 @@ ModuleSchema = new SimpleSchema
   options:
     type:[String]
     optional:true
+  option_urls:
+    type:[String]
+    optional:true
   correct_answer:
     type:[String]
+    optional:true
+  audio_url:
+    type:String
+    optional:true
+  correct_audio_url:
+    type:String
+    optional:true
+  incorrect_audio_url:
+    type:String
     optional:true
   incorrect_audio:
     type:String
@@ -52,13 +68,13 @@ ModuleSchema = new SimpleSchema
   video:
     type:String
     optional:true
-    regEx: /^([/]?\w+)+[.]mp4$/
+    #regEx: /^([/]?\w+)+[.]mp4$/
 
   #SLIDE OR AUDIO MODULE
   audio:
     type:String
     optional:true
-    regEx: /^([/]?\w+)+[.]mp3$/
+    #regEx: /^([/]?\w+)+[.]mp3$/
 
 Modules.attachSchema ModuleSchema
 

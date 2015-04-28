@@ -55,7 +55,7 @@
               <!--<span> LABEL</span>-->
               <label for="lessonImage" class="file-input"> Image </label>
               <!--<input  id="lessonImage" type="file"/>-->
-              {{>upload_bootstrap}}
+              {{>upload_bootstrap callbacks=lessonImageUploaded}}
             <!--</div>-->
           <!--</div>-->
         </div>
@@ -146,69 +146,87 @@
 
       <div  name="attributeRow" class=" row MULTIPLE_CHOICE GOAL_CHOICE hidden">
         <p>Options (Select if correct) </p>
-        <p>
-          <input type="checkbox" name="option" id="option1">  
-          <label for="option1"> 
-          <input type="file"> </label>
-        </p>
-        <p>
-          <input type="checkbox" name="option" id="option2">  
-        <label for="option2">
-          <input type="file"> </label>
-        </p>
-        <p>
-          <input type="checkbox" name="option" id="option3">  
-          <label for="option3">
-          <input type="file"> </label>
-        </p>
-        <p>
-          <input type="checkbox" name="option" id="option4">  
-          <label for="option4">
-          <input type="file"> </label>
-        </p>
-        <p>
-          <input type="checkbox" name="option" id="option5">  
-          <label for="option5">
-          <input type="file"> </label>
-        </p>
-        <p>
-          <input type="checkbox" name="option" id="option6">  
-          <label for="option6">
-          <input type="file"> </label>
-        </p>
+        <div class="row uploadOption">
+          <input type="checkbox" name="option" id="0">  
+          <label for="option1" class="optionCheckbox"> 
+          {{#with option 0}}
+            {{>upload_bootstrap callbacks=optionUploaded formData=getOptionFormData}}
+          {{/with}}
+          </label>
+        </div>
+        <div class="row uploadOption">
+          <input type="checkbox" name="option" id="1">  
+        <label for="option2" class="optionCheckbox">
+          {{#with option 1}}
+            {{>upload_bootstrap callbacks=optionUploaded formData=getOptionFormData}}
+          {{/with}}
+          </label>
+        </div>
+        <div class="row uploadOption">
+          <input type="checkbox" name="option" id="2">  
+          <label for="option3" class="optionCheckbox">
+          {{#with option 2}}
+            {{>upload_bootstrap callbacks=optionUploaded formData=getOptionFormData}}
+          {{/with}}
+          </label>
+        </div>
+        <div class="row uploadOption">
+          <input type="checkbox" name="option" id="3">  
+          <label for="option4" class="optionCheckbox">
+          {{#with option 3}}
+            {{>upload_bootstrap callbacks=optionUploaded formData=getOptionFormData}}
+          {{/with}}
+          </label>
+        </div>
+        <div class="row uploadOption">
+          <input type="checkbox" name="option" id="4">  
+          <label for="option5" class="optionCheckbox">
+          {{#with option 4}}
+            {{>upload_bootstrap callbacks=optionUploaded formData=getOptionFormData}}
+          {{/with}}
+          </label>
+        </div>
+        <div class="row uploadOption">
+          <input type="checkbox" name="option" id="5">  
+          <label for="option6" class="optionCheckbox">
+          {{#with option 5}}
+            {{>upload_bootstrap callbacks=optionUploaded formData=getOptionFormData}}
+          {{/with}}
+          </label>
+        </div>
       </div>
 
       <div  name="attributeRow" class="row SLIDE SCENARIO MULTIPLE_CHOICE GOAL_CHOICE BINARY hidden">
         <div class="col l12 m12">
           <label class="file-input"  for="moduleAudio"> Audio </label>
-          <input  id="moduleAudio" type="file"/>
+          {{>upload_bootstrap callbacks=audioUploaded}}
         </div>
       </div>
 
       <div name="attributeRow" class="row SCENARIO MULTIPLE_CHOICE GOAL_CHOICE BINARY hidden">
         <div class="col l12 m12">
           <label class="file-input" for="moduleCorrectAudio"> Correct Audio </label>
-          <input  id="moduleCorrectAudio" type="file"/>
+          {{>upload_bootstrap callbacks=correctAudioUploaded}}
         </div>
       </div>
       <div name="attributeRow" class="row SCENARIO MULTIPLE_CHOICE GOAL_CHOICE BINARY hidden">
         <div class="col l12 m12">
           <label  class="file-input"  for="moduleIncorrectAudio"> Incorrect Audio </label>
-          <input  id="moduleIncorrectAudio"  type="file"/>
+          {{>upload_bootstrap callbacks=incorrectAudioUploaded}}
         </div>
       </div>
       
       <div name="attributeRow" class="row SLIDE SCENARIO BINARY hidden">
         <div class="col l12 m12">
           <label for="moduleImage" class="file-input"> Image </label>
-          <input  id="moduleImage"  type="file"/>
+          {{>upload_bootstrap callbacks=imageUploaded}}
         </div>
       </div>
 
       <div name="attributeRow"  class="row VIDEO hidden">
         <div class="col l12 m12">
           <label for="moduleVideo" class="file-input"> Video </label>
-          <input  id="moduleVideo" type="file"/>
+          {{>upload_bootstrap callbacks=videoUploaded}}
         </div>
       </div>
     </form>

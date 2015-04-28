@@ -1,9 +1,71 @@
+Template.createCurriculum.helpers {
+  lessonImageUploaded: ()->
+    return {
+      finished: (index, fileInfo, context)->
+        Session.set "current uploaded lesson image", fileInfo
+    }
+}
+
+Template.addModuleModal.helpers {
+  optionUploaded: (index)->
+    return {
+      finished: (index, fileInfo, context) ->
+        if !Session.get "module options"
+          Session.set "module options", []
+        options = Session.get "module options"
+        options[context.data.formData.option] = fileInfo
+        Session.set "module options", options
+    }
+
+  getOptionFormData: ()->
+    return Template.currentData()
+
+  videoUploaded: ()->
+    return {
+      finished: (index, fileInfo, context) ->
+        Session.set "module video", fileInfo
+    }
+  
+  imageUploaded: ()->
+    return {
+      finished: (index, fileInfo, context) ->
+        Session.set "module image", fileInfo
+    }
+
+  
+  option: (index)->
+    return {option: index}
+ 
+  correctAudioUploaded: ()->
+    return {
+      finished: (index, fileInfo, context) ->
+        Session.set "correct audio", fileInfo
+    }
+
+  incorrectAudioUploaded: ()->
+    return {
+      finished: (index, fileInfo, context) ->
+        Session.set "incorrect audio", fileInfo
+    }
+  
+  audioUploaded: ()->
+    return {
+      finished: (index, fileInfo, context) ->
+        Session.set "audio", fileInfo
+    }
+}
+
+
 Template.createCurriculum.events {
   "click #addLesson":(event, template) ->
     $("#addLessonModal").openModal()
 
   "click #submitLesson": (event, template)->
-    files = event.target.files
+    lessonImage = Session.get "current uploaded lesson image"
+    if !lessonImage
+      alert "Please upload a lesson image before submitting"
+      return
+
     title =  $("#lessonTitle").val()
     shortTitle = $("#lessonShortTitle").val()
     tags = $("#lessonTags").val().split()
@@ -11,7 +73,10 @@ Template.createCurriculum.events {
       title: title
       short_title: shortTitle
       tags: tags
+      image: lessonImage.path
+      imageUrl: lessonImage.url
     }
+
 
     lesson = Lessons.update {_id: _id}, {$set: {nh_id: _id}}
 
@@ -26,6 +91,7 @@ Template.createCurriculum.events {
       accordion:false
       expandable:true
     }
+    resetUploadSessions()
 
   "click [name^=addModule]": (event, template) ->
     id = $(event.target).closest("li").attr 'id'
@@ -47,16 +113,19 @@ Template.createCurriculum.events {
     )
 
   "click #submitModule": (event, template)->
-    options = []
-    correct_answer = []
-    $.each $("input[name=option]"), (index, option) ->
-      options.push $(option).val()
-
+  
     question = $("#moduleQuestion").val()
     title=$("#moduleTitle").val()
     tags = $("#moduleTags").val().split()
     type= $("#moduleType").val()
-    
+   
+    audio = if Session.get "audio" then Session.get("audio").path
+    correctAudio = if Session.get "correct audio" then Session.get("correct audio").path
+    incorrectAudio = if Session.get "incorrect audio" then Session.get("incorrect audio").path
+    image = if Session.get "module image" then Session.get("module image").path
+    video = if Session.get "module video" then Session.get("module video").path
+    options = Session.get "module options"
+
     if !type
       alert "please identify a module type"
       return
@@ -68,48 +137,74 @@ Template.createCurriculum.events {
       correct_answer=  $("input[name=binary_answer]:checked").val()
 
     if type=="MULTIPLE_CHOICE" || type=="GOAL_CHOICE"
-      correct_answer = $("input[name=option]:checked").val()
+      optionImages = (option.path for option in options)
+      correctOptions =( optionImages[$(option).attr "id"] for option in $("input[name=option]:checked"))
 
-    console.log correct_answer
-
-    id = Modules.insert {
+    _id = Modules.insert {
       type:type
+      correct_answer: correctOptions
       title:title
       question:question
       tags: tags
-      options:options
+      options:optionImages
+      video: video
+      image: image
+      audio: audio
+      correct_audio: correctAudio
+      incorrect_audio: incorrectAudio
     }
+    console.log Modules.findOne {_id: _id}
 
     lessonId = Session.get "current editing lesson"
-    $("#moduleList"+ Session.get "current editing lesson").append "<li class='collection-item' id='#{id}' name='moduleof#{lessonId}'>#{title}#{question}</li>"
+    $("#moduleList"+ Session.get "current editing lesson").append "<li class='collection-item' id='#{_id}' name='moduleof#{lessonId}'>#{title}#{question}</li>"
+    resetUploadSessions()
 
-"click #submitCurriculum": (event, template) ->
-  title = $("#curriculumTitle").val()
-  if !title
-    alert "Please identify a title for your curriculum"
-    return
-  condition = $("#condition").val()
-  if !condition
-    alert "Please identify a condition for your curriculum"
-    return
+  "click #submitCurriculum": (event, template) ->
+    title = $("#curriculumTitle").val()
+    if !title
+      alert "Please identify a title for your curriculum"
+      return
+    condition = $("#condition").val()
+    if !condition
+      alert "Please identify a condition for your curriculum"
+      return
 
-  lessons = $("li[name=lesson]")
-  $.each lessons, (index, lesson)->
-    lessonId = $(lesson).attr 'id'
-    modules = $("li[name=moduleof"+lessonId)
-    moduleIds = ( $(module).attr 'id' for module in modules)
-    lessonDoc = Lessons.update {_id: lessonId}, {$set:{modules: moduleIds}}
-  
-  lessonIds = ($(lesson).attr "id" for lesson in lessons)
+    lessons = $("li[name=lesson]")
+    $.each lessons, (index, lesson)->
+      lessonId = $(lesson).attr 'id'
+      modules = $("li[name=moduleof"+lessonId)
+      moduleIds = ( $(module).attr 'id' for module in modules)
+      lessonDoc = Lessons.update {_id: lessonId}, {$set:{modules: moduleIds}}
+    
+    lessonIds = ($(lesson).attr "id" for lesson in lessons)
 
-  _id = Curriculum.insert {
-    title:title
-    lessons: lessonIds
-    condition: condition
-  }
+    _id = Curriculum.insert {
+      title:title
+      lessons: lessonIds
+      condition: condition
+    }
 
-  Curriculum.update {_id: _id}, {$set: {nh_id:_id}}
+    Curriculum.update {_id: _id}, {$set: {nh_id:_id}}
+}
+
+Template.addModuleModal.events {
+  "click .optionCheckbox": (event, template)->
+    box = $(event.target).closest(".uploadOption").find("input[type=checkbox]")
+    if box.is ":checked"
+      box.prop "checked", false
+    else
+      box.prop "checked", true
 }
 
 Template.createCurriculum.onRendered ()->
   $("select").material_select()
+
+resetUploadSessions = ()->
+  Session.set "module options", null
+  Session.set "audio", null
+  Session.set "correct audio", null
+  Session.set "module video", null
+  Session.set "incorrect audio", null
+  Session.set "module image", null
+  Session.get "current uploaded lesson image", null
+  Session.set "module image", null
