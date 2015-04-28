@@ -10,6 +10,7 @@ ModuleSchema = new SimpleSchema
   nh_id:
     type:String
     min:0
+    optional:true
   tags:
     type:[String]
     minCount:0
