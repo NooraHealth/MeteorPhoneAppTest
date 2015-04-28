@@ -54,7 +54,7 @@
             <!--<div class="btn">-->
               <!--<span> LABEL</span>-->
               <label for="lessonImage" class="file-input"> Image </label>
-              <input  id="lessonImage" type="file"/>
+              <input  id="lessonImage" class="file-input" type="file"/>
             <!--</div>-->
           <!--</div>-->
         </div>
@@ -114,70 +114,99 @@
         </div>
       </div>
 
-      <div name="attributeRow" class="row SCENARIO">
+      <div name="attributeRow" class="row BINARY hidden">
+        <p> Select the CORRECT answer </p>
+        <p>
+          <label for="no"> NO </label>
+          <input id="no" name="binary_answer" type="radio" value="NO">
+        </p>
+        <p>
+          <label for="yes"> YES</label>
+          <input id="yes" name="binary_answer" type="radio" value="YES">
+        </p>
       </div>
-      
+
+
+      <div name="attributeRow" class="row SCENARIO hidden">
+        <p> Select the CORRECT answer </p>
+        <p>
+          <input id="normal" name="scenario_answer" type="radio" value="normal">
+          <label for="normal"> Normal</label>
+        </p>
+        <p>
+          <input id="callDoc" name="scenario_answer" type="radio" value="Call Doc">
+          <label for="callDoc"> Call Doctor </label>
+        </p>
+        <p>
+          <input id="call911" name="scenario_answer" type="radio" value="Call 911">
+          <label for="call911"> Call 911 </label>
+        </p>
+      </div>
+
       <div  name="attributeRow" class=" row MULTIPLE_CHOICE GOAL_CHOICE hidden">
-        <p>Options</p>
-        <div class="input-field col l4 m4">
-          <label for="option1"></label>
-          <input type="text" name="option" id="option1">  
-        </div>
-        <div class="input-field col l4 m4">
-          <label for="option2"></label>
-          <input type="text" name="option" id="option2">  
-        </div>
-        <div class="input-field col l4 m4">
-          <label for="option3"></label>
-          <input type="text" name="option" id="option3">  
-        </div>
-      </div>
-      
-      <div name="attributeRow" class="row MULTIPLE_CHOICE GOAL_CHOICE hidden">
-        <div class="input-field col l4 m4">
-          <label for="option4"></label>
-          <input type="text" name="option" id="option4">  
-        </div>
-        <div class="input-field col l4 m4">
-          <label for="option5"></label>
-          <input type="text" name="option" id="option5">  
-        </div>
-        <div class="input-field col l4 m4">
-          <label for="option6"></label>
-          <input type="text" name="option" id="option6">  
-        </div>
+        <p>Options (Select if correct) </p>
+        <p>
+          <input type="checkbox" name="option" id="option1">  
+          <label for="option1"> 
+          <input type="file"> </label>
+        </p>
+        <p>
+          <input type="checkbox" name="option" id="option2">  
+        <label for="option2">
+          <input type="file"> </label>
+        </p>
+        <p>
+          <input type="checkbox" name="option" id="option3">  
+          <label for="option3">
+          <input type="file"> </label>
+        </p>
+        <p>
+          <input type="checkbox" name="option" id="option4">  
+          <label for="option4">
+          <input type="file"> </label>
+        </p>
+        <p>
+          <input type="checkbox" name="option" id="option5">  
+          <label for="option5">
+          <input type="file"> </label>
+        </p>
+        <p>
+          <input type="checkbox" name="option" id="option6">  
+          <label for="option6">
+          <input type="file"> </label>
+        </p>
       </div>
 
       <div  name="attributeRow" class="row SLIDE SCENARIO MULTIPLE_CHOICE GOAL_CHOICE BINARY hidden">
         <div class="col l12 m12">
-          <label for="moduleAudio"> Audio </label>
+          <label class="file-input"  for="moduleAudio"> Audio </label>
           <input  id="moduleAudio" type="file"/>
         </div>
       </div>
 
       <div name="attributeRow" class="row SCENARIO MULTIPLE_CHOICE GOAL_CHOICE BINARY hidden">
-        <div class="col l6 m6">
-          <label for="moduleCorrectAudio"> Correct Audio </label>
+        <div class="col l12 m12">
+          <label class="file-input" for="moduleCorrectAudio"> Correct Audio </label>
           <input  id="moduleCorrectAudio" type="file"/>
         </div>
       </div>
       <div name="attributeRow" class="row SCENARIO MULTIPLE_CHOICE GOAL_CHOICE BINARY hidden">
-        <div class="col l6 m6">
-          <label for="moduleIncorrectAudio"> Incorrect Audio </label>
-          <input  id="moduleIncorrectAudio" type="file"/>
+        <div class="col l12 m12">
+          <label  class="file-input"  for="moduleIncorrectAudio"> Incorrect Audio </label>
+          <input  id="moduleIncorrectAudio"  type="file"/>
         </div>
       </div>
       
-      <div name="attributeRow" class="row SLIDE SCENARIO MULTIPLE_CHOICE GOAL_CHOICE BINARY hidden">
+      <div name="attributeRow" class="row SLIDE SCENARIO BINARY hidden">
         <div class="col l12 m12">
-          <label for="moduleImage"> Image </label>
-          <input  id="moduleImage" type="file"/>
+          <label for="moduleImage" class="file-input"> Image </label>
+          <input  id="moduleImage"  type="file"/>
         </div>
       </div>
 
       <div name="attributeRow"  class="row VIDEO hidden">
         <div class="col l12 m12">
-          <label for="moduleVideo"> Video </label>
+          <label for="moduleVideo" class="file-input"> Video </label>
           <input  id="moduleVideo" type="file"/>
         </div>
       </div>
