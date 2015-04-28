@@ -31,15 +31,36 @@ Template.createCurriculum.events {
     id = $(event.target).closest("a").attr 'id'
     $("#moduleLessonId").attr "value", id
     Session.set "current editing lesson", id
-
+    $("#moduleInitialization")[0].reset()
+    $("#moduleAttributes")[0].reset()
     $("#addModuleModal").openModal()
 
   "change #moduleType": (event, template) ->
     type = $(event.target).val()
+    $("#moduleAttributes")[0].reset()
     console.log "selector", type
-    if type== "SCENARIO"
-      $(".scenario").slideDown()
+    rows = $("#addModuleModal").find("div[name=attributeRow]")
+    console.log "rows", rows
+    $.each(rows, (index, row)->
+      if $(row).hasClass type
+        $(row).slideDown()
+      else
+        $(row).slideUp()
+    )
+    #if type== "SCENARIO"
+      #$(".scenario").slideDown()
+    #if type=="VIDEO"
+      #$(".video").slideDown()
+    #if type=="MULTIPLE_CHOICE"
+      #$(".multiple_choice").slideDown()
+    #if type=="BINARY"
+      #$(".binary").slideDown()
+    #if type=="GOAL_CHOICE"
+
+      #$(".goal_choice").slideDown()
+    #if type=="SLIDE"
+      #$(".slide").slideDown()
+    
     
 }
-
 
