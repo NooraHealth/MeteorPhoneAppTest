@@ -16,6 +16,7 @@ CurriculumSchema = new SimpleSchema
     type:String
     min:0
   nh_id:
+    optional:true
     type:String
     min:0
 

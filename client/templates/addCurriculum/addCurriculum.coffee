@@ -72,14 +72,33 @@ Template.createCurriculum.events {
     $("#moduleList"+ Session.get "current editing lesson").append "<li class='collection-item' id='#{id}' name='moduleof#{lessonId}'>#{title}#{question}</li>"
 
 "click #submitCurriculum": (event, template) ->
+  title = $("#curriculumTitle").val()
+  if !title
+    alert "Please identify a title for your curriculum"
+    return
+  condition = $("#condition").val()
+  if !condition
+    alert "Please identify a condition for your curriculum"
+    return
+
   lessons = $("li[name=lesson]")
-  console.log "click"
-  console.log lessons
   $.each lessons, (index, lesson)->
     lessonId = $(lesson).attr 'id'
     modules = $("li[name=moduleof"+lessonId)
     moduleIds = ( $(module).attr 'id' for module in modules)
-    console.log "module ids", moduleIds
-    console.log "modules", modules
+    lessonDoc = Lessons.update {_id: lessonId}, {$set:{modules: moduleIds}}
+    console.log Lessons.findOne {_id: lessonId}
+  
+  lessonIds = ($(lesson).attr "id" for lesson in lessons)
+  console.log "lesson ids", lessonIds
+
+  _id = Curriculum.insert {
+    title:title
+    lessons: lessonIds
+    condition: condition
+  }
+
+  Curriculum.update {_id: _id}, {$set: {nh_id:_id}}
+  console.log "this is the curriculum", Curriculum.findOne {nh_id: _id}
 }
 
