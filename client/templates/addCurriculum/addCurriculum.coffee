@@ -87,10 +87,8 @@ Template.createCurriculum.events {
     modules = $("li[name=moduleof"+lessonId)
     moduleIds = ( $(module).attr 'id' for module in modules)
     lessonDoc = Lessons.update {_id: lessonId}, {$set:{modules: moduleIds}}
-    console.log Lessons.findOne {_id: lessonId}
   
   lessonIds = ($(lesson).attr "id" for lesson in lessons)
-  console.log "lesson ids", lessonIds
 
   _id = Curriculum.insert {
     title:title
@@ -99,6 +97,7 @@ Template.createCurriculum.events {
   }
 
   Curriculum.update {_id: _id}, {$set: {nh_id:_id}}
-  console.log "this is the curriculum", Curriculum.findOne {nh_id: _id}
 }
 
+Template.createCurriculum.onRendered ()->
+  $("select").material_select()
