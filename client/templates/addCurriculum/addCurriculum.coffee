@@ -48,6 +48,7 @@ Template.createCurriculum.events {
 
   "click #submitModule": (event, template)->
     options = []
+    correct_answer = []
     $.each $("input[name=option]"), (index, option) ->
       options.push $(option).val()
 
@@ -59,6 +60,17 @@ Template.createCurriculum.events {
     if !type
       alert "please identify a module type"
       return
+    
+    if type=="SCENARIO"
+      correct_answer = $("input[name=scenario_answer]:checked").val()
+
+    if type=="BINARY"
+      correct_answer=  $("input[name=binary_answer]:checked").val()
+
+    if type=="MULTIPLE_CHOICE" || type=="GOAL_CHOICE"
+      correct_answer = $("input[name=option]:checked").val()
+
+    console.log correct_answer
 
     id = Modules.insert {
       type:type
