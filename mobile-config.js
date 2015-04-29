@@ -8,7 +8,7 @@ App.info({
 
 App.icons({
   "ipad": "public/NHlogo.png",
-  "iphone5" :"public/NHlogo.png",
+  "iphone" :"public/NHlogo.png",
 });
 
 App.launchScreens({
