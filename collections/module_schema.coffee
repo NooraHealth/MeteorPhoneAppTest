@@ -103,6 +103,8 @@ Modules.helpers {
     return newArr
 
   option: (i)->
+    console.log "getting the option ", @.options
+    console.log @
     return @.options[i]
 
   isVideoModule: ()->

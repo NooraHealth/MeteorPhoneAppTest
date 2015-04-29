@@ -77,7 +77,6 @@ Template.createCurriculum.events {
       imageUrl: lessonImage.url
     }
 
-
     lesson = Lessons.update {_id: _id}, {$set: {nh_id: _id}}
 
     $("#lessonsList").append "<li name='lesson' id='#{_id}'>
@@ -131,10 +130,12 @@ Template.createCurriculum.events {
       return
     
     if type=="SCENARIO"
-      correct_answer = $("input[name=scenario_answer]:checked").val()
+      correctOptions = [$("input[name=scenario_answer]:checked").val()]
+      options = ["Normal" , "Call Doc", "Call 911"]
 
     if type=="BINARY"
-      correct_answer=  $("input[name=binary_answer]:checked").val()
+      correctOptions=  [$("input[name=binary_answer]:checked").val()]
+      options = ["Yes", "No"]
 
     if type=="MULTIPLE_CHOICE" || type=="GOAL_CHOICE"
       optionImages = (option.path for option in options)
@@ -185,6 +186,8 @@ Template.createCurriculum.events {
     }
 
     Curriculum.update {_id: _id}, {$set: {nh_id:_id}}
+    alert("AYAYYYY!! new curriculum created")
+    Router.go "home"
 }
 
 Template.addModuleModal.events {

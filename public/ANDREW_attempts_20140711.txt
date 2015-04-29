@@ -1,0 +1,1060 @@
+
+"7eb02198-2eee-44bf-98ea-ea78a6cbae19", "de0d49d4-81c6-4f8d-825c-e91ba2c8e1c9", "993ac405-1161-474e-a2d2-45dad6728090", "e0f24b70-ae62-43df-8f33-0f875bce62b5", "debc705c-900e-4c89-b87d-98c856ceab11", "87a3164c-b888-4b62-bc95-3b010e319fdd", "6a089d70-b0c5-4123-8363-939779ad8936", "94ebe79a-e2b5-4cab-bdb8-dee78956e2c4", "0c175969-0e0f-421c-975
+
+curl https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/?search_option=ew0KImZpbHRlciI6ew0KIm5pY2tuYW1lIjoiQU5EUkVXIg0KfSwNCiJzY2hlbWFfaWQiOiIwYzgxZmQxOC1iYzRlLTRiMmUtYWI0OS1mZjFhNzNjY2M5YjkiLA0KInBlcl9wYWdlIjoxMDANCn0g -u edc24259-eeeb-41b4-81fd-5e870a8eba19:
+
+0c81fd18-bc4e-4b2e-ab49-ff1a73ccc9b9
+
+curl https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents/243c35e4-b131-4f5a-b3e1-d7685ceeebdc -u edc24259-eeeb-41b4-81fd-5e870a8eba19:
+
+2014-07-11 15:14:36.648 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405116876;
+    "nh_id" = 1000071;
+    nickname = ANDREW;
+    passed = YES;
+    responses = "Call Doc";
+    "time_to_complete" = 19971;
+}
+2014-07-11 15:14:36.878 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x160ce660> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:14:36 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:14:36.879 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 30393366 64363233 2d303066 362d3463 30622d38 3562632d 39303431 32373736 37616230 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 63343535 30623432 2d383237 322d3462 64372d39 3335392d 32663430 35326365 33636432 227d>
+2014-07-11 15:14:36.880 NooraHealth[1518:752964] string: {"transaction_id": "093fd623-00f6-4c0b-85bc-904127767ab0", "result": "success", "document_id": "c4550b42-8272-4bd7-9359-2f4052ce3cd2"}
+2014-07-11 15:14:36.884 NooraHealth[1518:752964] dict: {
+    "document_id" = "c4550b42-8272-4bd7-9359-2f4052ce3cd2";
+    result = success;
+    "transaction_id" = "093fd623-00f6-4c0b-85bc-904127767ab0";
+}
+2014-07-11 15:14:36.885 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:14:51.645 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405116891;
+    "nh_id" = 1000073;
+    nickname = ANDREW;
+    passed = YES;
+    responses = "Call 911";
+    "time_to_complete" = 14994;
+}
+
+2014-07-11 15:14:51.870 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x14ea4fe0> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:14:51 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:14:51.872 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 36363465 39363566 2d656261 342d3437 39382d39 3032642d 30323065 33373833 65623262 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 63316362 36656138 2d313363 652d3432 39632d62 3633312d 35653261 64303537 31373538 227d>
+2014-07-11 15:14:51.873 NooraHealth[1518:752964] string: {"transaction_id": "664e965f-eba4-4798-902d-020e3783eb2b", "result": "success", "document_id": "c1cb6ea8-13ce-429c-b631-5e2ad0571758"}
+2014-07-11 15:14:51.874 NooraHealth[1518:752964] dict: {
+    "document_id" = "c1cb6ea8-13ce-429c-b631-5e2ad0571758";
+    result = success;
+    "transaction_id" = "664e965f-eba4-4798-902d-020e3783eb2b";
+}
+2014-07-11 15:14:51.874 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:15:00.036 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405116900;
+    "nh_id" = 1000075;
+    nickname = ANDREW;
+    passed = YES;
+    responses = "Call Doc";
+    "time_to_complete" = 8389;
+}
+2014-07-11 15:15:00.530 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x14ed3e40> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:15:00 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:15:00.532 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 33333461 35373930 2d633539 612d3464 32642d62 6163662d 35656163 37656361 32306131 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 38323130 33376464 2d373335 622d3461 63352d61 3430322d 62383334 39663034 33633334 227d>
+2014-07-11 15:15:00.533 NooraHealth[1518:752964] string: {"transaction_id": "334a5790-c59a-4d2d-bacf-5eac7eca20a1", "result": "success", "document_id": "821037dd-735b-4ac5-a402-b8349f043c34"}
+2014-07-11 15:15:00.534 NooraHealth[1518:752964] dict: {
+    "document_id" = "821037dd-735b-4ac5-a402-b8349f043c34";
+    result = success;
+    "transaction_id" = "334a5790-c59a-4d2d-bacf-5eac7eca20a1";
+}
+2014-07-11 15:15:00.535 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:15:09.955 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405116909;
+    "nh_id" = 1000077;
+    nickname = ANDREW;
+    passed = YES;
+    responses = "Call Doc";
+    "time_to_complete" = 9916;
+}
+2014-07-11 15:15:10.180 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x14ee4980> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:15:10 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:15:10.182 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 63393137 66363132 2d623237 342d3430 39642d61 3433322d 39373538 32656334 39363737 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 30626161 36613836 2d646537 662d3431 38632d61 6566342d 35646463 30633864 36666162 227d>
+2014-07-11 15:15:10.183 NooraHealth[1518:752964] string: {"transaction_id": "c917f612-b274-409d-a432-97582ec49677", "result": "success", "document_id": "0baa6a86-de7f-418c-aef4-5ddc0c8d6fab"}
+2014-07-11 15:15:10.186 NooraHealth[1518:752964] dict: {
+    "document_id" = "0baa6a86-de7f-418c-aef4-5ddc0c8d6fab";
+    result = success;
+    "transaction_id" = "c917f612-b274-409d-a432-97582ec49677";
+}
+2014-07-11 15:15:10.187 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:15:21.398 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405116921;
+    "nh_id" = 1000079;
+    nickname = ANDREW;
+    passed = YES;
+    responses = "Call 911";
+    "time_to_complete" = 11440;
+}
+2014-07-11 15:15:21.633 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x14ea6ff0> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:15:21 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:15:21.634 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 64323836 31356364 2d333032 652d3439 66302d61 3933332d 37306130 38393436 36313830 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 34333761 39306635 2d666361 612d3438 38612d39 3835372d 34646661 30393630 36346163 227d>
+2014-07-11 15:15:21.637 NooraHealth[1518:752964] string: {"transaction_id": "d28615cd-302e-49f0-a933-70a089466180", "result": "success", "document_id": "437a90f5-fcaa-488a-9857-4dfa096064ac"}
+2014-07-11 15:15:21.638 NooraHealth[1518:752964] dict: {
+    "document_id" = "437a90f5-fcaa-488a-9857-4dfa096064ac";
+    result = success;
+    "transaction_id" = "d28615cd-302e-49f0-a933-70a089466180";
+}
+2014-07-11 15:15:21.639 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:18:55.711 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405117135;
+    "nh_id" = 1000048;
+    nickname = ANDREW;
+    passed = YES;
+    responses = NA;
+    "time_to_complete" = 5230;
+}
+2014-07-11 15:18:56.306 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x14d568e0> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:18:56 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:18:56.308 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 37663662 37313363 2d626533 642d3432 31652d38 6432322d 62383733 34633434 61623734 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 36336463 30393131 2d663761 382d3461 36632d38 6161382d 31626331 32666539 63323663 227d>
+2014-07-11 15:18:56.309 NooraHealth[1518:752964] string: {"transaction_id": "7f6b713c-be3d-421e-8d22-b8734c44ab74", "result": "success", "document_id": "63dc0911-f7a8-4a6c-8aa8-1bc12fe9c26c"}
+2014-07-11 15:18:56.310 NooraHealth[1518:752964] dict: {
+    "document_id" = "63dc0911-f7a8-4a6c-8aa8-1bc12fe9c26c";
+    result = success;
+    "transaction_id" = "7f6b713c-be3d-421e-8d22-b8734c44ab74";
+}
+2014-07-11 15:18:56.312 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:18:56.702 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405117136;
+    "nh_id" = 1000049;
+    nickname = ANDREW;
+    passed = YES;
+    responses = NA;
+    "time_to_complete" = 987;
+}
+2014-07-11 15:18:56.920 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x160156d0> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:18:56 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:18:56.921 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 35373762 65373632 2d626239 382d3437 33362d38 6363322d 33633936 63333863 65366339 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 65356331 62356466 2d616535 372d3431 35392d61 3336652d 34346466 62303533 38666462 227d>
+2014-07-11 15:18:56.922 NooraHealth[1518:752964] string: {"transaction_id": "577be762-bb98-4736-8cc2-3c96c38ce6c9", "result": "success", "document_id": "e5c1b5df-ae57-4159-a36e-44dfb0538fdb"}
+2014-07-11 15:18:56.924 NooraHealth[1518:752964] dict: {
+    "document_id" = "e5c1b5df-ae57-4159-a36e-44dfb0538fdb";
+    result = success;
+    "transaction_id" = "577be762-bb98-4736-8cc2-3c96c38ce6c9";
+}
+2014-07-11 15:18:56.924 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:18:57.582 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405117137;
+    "nh_id" = 1000050;
+    nickname = ANDREW;
+    passed = YES;
+    responses = NA;
+    "time_to_complete" = 877;
+}
+2014-07-11 15:18:57.804 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x161a9850> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:18:57 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:18:57.805 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 39643637 66656134 2d353335 662d3462 63652d38 3137312d 61396430 30663534 32653132 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 30623835 35383138 2d396266 342d3461 38392d62 6237382d 65386462 62383036 33376534 227d>
+2014-07-11 15:18:57.806 NooraHealth[1518:752964] string: {"transaction_id": "9d67fea4-535f-4bce-8171-a9d00f542e12", "result": "success", "document_id": "0b855818-9bf4-4a89-bb78-e8dbb80637e4"}
+2014-07-11 15:18:57.807 NooraHealth[1518:752964] dict: {
+    "document_id" = "0b855818-9bf4-4a89-bb78-e8dbb80637e4";
+    result = success;
+    "transaction_id" = "9d67fea4-535f-4bce-8171-a9d00f542e12";
+}
+2014-07-11 15:18:57.807 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:19:06.993 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405117146;
+    "nh_id" = 1000051;
+    nickname = ANDREW;
+    passed = YES;
+    responses = NA;
+    "time_to_complete" = 9409;
+}
+2014-07-11 15:19:07.212 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x1617d3f0> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:19:07 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:19:07.213 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 62646264 32363033 2d633637 652d3431 61372d61 6334642d 38396336 64656638 30343837 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 66666165 37323462 2d666435 382d3430 39652d38 3939632d 39643139 64393838 65326331 227d>
+2014-07-11 15:19:07.214 NooraHealth[1518:752964] string: {"transaction_id": "bdbd2603-c67e-41a7-ac4d-89c6def80487", "result": "success", "document_id": "ffae724b-fd58-409e-899c-9d19d988e2c1"}
+2014-07-11 15:19:07.217 NooraHealth[1518:752964] dict: {
+    "document_id" = "ffae724b-fd58-409e-899c-9d19d988e2c1";
+    result = success;
+    "transaction_id" = "bdbd2603-c67e-41a7-ac4d-89c6def80487";
+}
+2014-07-11 15:19:07.218 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:19:07.778 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405117147;
+    "nh_id" = 1000052;
+    nickname = ANDREW;
+    passed = YES;
+    responses = NA;
+    "time_to_complete" = 782;
+}
+2014-07-11 15:19:08.056 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x14f67fa0> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:19:07 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:19:08.058 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 33623530 38346661 2d623165 642d3439 65322d39 3532632d 38313239 64343165 32343835 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 31393834 37623364 2d373562 362d3433 34302d61 6263642d 30646138 63666332 38356132 227d>
+2014-07-11 15:19:08.060 NooraHealth[1518:752964] string: {"transaction_id": "3b5084fa-b1ed-49e2-952c-8129d41e2485", "result": "success", "document_id": "19847b3d-75b6-4340-abcd-0da8cfc285a2"}
+2014-07-11 15:19:08.061 NooraHealth[1518:752964] dict: {
+    "document_id" = "19847b3d-75b6-4340-abcd-0da8cfc285a2";
+    result = success;
+    "transaction_id" = "3b5084fa-b1ed-49e2-952c-8129d41e2485";
+}
+2014-07-11 15:19:08.062 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:19:14.601 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405117154;
+    "nh_id" = 1000053;
+    nickname = ANDREW;
+    passed = YES;
+    responses = NA;
+    "time_to_complete" = 6820;
+}
+2014-07-11 15:19:14.817 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x14da9760> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:19:14 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:19:14.819 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 31326234 63333733 2d653466 342d3435 36322d38 3033612d 36336561 63336239 33626132 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 62623965 65653030 2d313238 392d3438 65662d38 6663332d 33393934 37336462 33306331 227d>
+2014-07-11 15:19:14.821 NooraHealth[1518:752964] string: {"transaction_id": "12b4c373-e4f4-4562-803a-63eac3b93ba2", "result": "success", "document_id": "bb9eee00-1289-48ef-8fc3-399473db30c1"}
+2014-07-11 15:19:14.822 NooraHealth[1518:752964] dict: {
+    "document_id" = "bb9eee00-1289-48ef-8fc3-399473db30c1";
+    result = success;
+    "transaction_id" = "12b4c373-e4f4-4562-803a-63eac3b93ba2";
+}
+2014-07-11 15:19:14.824 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:19:25.280 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405117165;
+    "nh_id" = 1000003;
+    nickname = ANDREW;
+    passed = YES;
+    responses = NA;
+    "time_to_complete" = 2144;
+}
+2014-07-11 15:19:25.520 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x14db8bf0> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:19:25 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:19:25.522 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 30326433 36626538 2d393461 322d3461 35352d61 6264622d 39393962 63356633 30643336 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 66663365 38373138 2d353861 392d3436 35652d39 6461362d 62306532 38313732 39613762 227d>
+2014-07-11 15:19:25.523 NooraHealth[1518:752964] string: {"transaction_id": "02d36be8-94a2-4a55-abdb-999bc5f30d36", "result": "success", "document_id": "ff3e8718-58a9-465e-9da6-b0e281729a7b"}
+2014-07-11 15:19:25.524 NooraHealth[1518:752964] dict: {
+    "document_id" = "ff3e8718-58a9-465e-9da6-b0e281729a7b";
+    result = success;
+    "transaction_id" = "02d36be8-94a2-4a55-abdb-999bc5f30d36";
+}
+2014-07-11 15:19:25.525 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:19:28.205 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405117168;
+    "nh_id" = 1000007;
+    nickname = ANDREW;
+    passed = YES;
+    responses = NA;
+    "time_to_complete" = 733;
+}
+2014-07-11 15:19:28.445 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x1618b9c0> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:19:28 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:19:28.447 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 63316431 65616565 2d393162 322d3432 66312d39 6436632d 65663734 33393832 65633232 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 62356233 66326232 2d663761 352d3461 38382d61 3265382d 65383337 33313265 34386162 227d>
+2014-07-11 15:19:28.448 NooraHealth[1518:752964] string: {"transaction_id": "c1d1eaee-91b2-42f1-9d6c-ef743982ec22", "result": "success", "document_id": "b5b3f2b2-f7a5-4a88-a2e8-e837312e48ab"}
+2014-07-11 15:19:28.450 NooraHealth[1518:752964] dict: {
+    "document_id" = "b5b3f2b2-f7a5-4a88-a2e8-e837312e48ab";
+    result = success;
+    "transaction_id" = "c1d1eaee-91b2-42f1-9d6c-ef743982ec22";
+}
+2014-07-11 15:19:28.451 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:19:30.769 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405117170;
+    "nh_id" = 1000008;
+    nickname = ANDREW;
+    passed = YES;
+    responses = NA;
+    "time_to_complete" = 833;
+}
+2014-07-11 15:19:31.055 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x1617ad00> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:19:30 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:19:31.056 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 30393562 38323361 2d386364 322d3464 32392d38 6164372d 32626133 39613963 62373637 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 65333731 66616636 2d373139 392d3463 30312d38 3063352d 38623162 66663766 33336532 227d>
+2014-07-11 15:19:31.057 NooraHealth[1518:752964] string: {"transaction_id": "095b823a-8cd2-4d29-8ad7-2ba39a9cb767", "result": "success", "document_id": "e371faf6-7199-4c01-80c5-8b1bff7f33e2"}
+2014-07-11 15:19:31.058 NooraHealth[1518:752964] dict: {
+    "document_id" = "e371faf6-7199-4c01-80c5-8b1bff7f33e2";
+    result = success;
+    "transaction_id" = "095b823a-8cd2-4d29-8ad7-2ba39a9cb767";
+}
+2014-07-11 15:19:31.059 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:19:32.877 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405117172;
+    "nh_id" = 1000010;
+    nickname = ANDREW;
+    passed = YES;
+    responses = NA;
+    "time_to_complete" = 1214;
+}
+2014-07-11 15:19:33.186 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x16057310> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:19:33 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:19:33.187 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 32303765 35643738 2d636562 392d3438 30662d38 3637662d 35383064 64303134 65333661 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 62336534 37336432 2d663333 372d3461 39352d38 3230322d 64613336 65386233 38616365 227d>
+2014-07-11 15:19:33.188 NooraHealth[1518:752964] string: {"transaction_id": "207e5d78-ceb9-480f-867f-580dd014e36a", "result": "success", "document_id": "b3e473d2-f337-4a95-8202-da36e8b38ace"}
+2014-07-11 15:19:33.189 NooraHealth[1518:752964] dict: {
+    "document_id" = "b3e473d2-f337-4a95-8202-da36e8b38ace";
+    result = success;
+    "transaction_id" = "207e5d78-ceb9-480f-867f-580dd014e36a";
+}
+2014-07-11 15:19:33.191 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:26:46.633 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405117606;
+    "nh_id" = 1000009;
+    nickname = ANDREW;
+    passed = YES;
+    responses = NA;
+    "time_to_complete" = 959;
+}
+2014-07-11 15:26:47.244 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x14f8c2e0> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:26:47 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:26:47.245 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 66323335 62666135 2d623034 622d3432 39332d39 3138652d 31643961 31663438 32343737 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 35346239 63333561 2d326239 392d3436 34392d39 3531322d 62343333 37346662 66626535 227d>
+2014-07-11 15:26:47.246 NooraHealth[1518:752964] string: {"transaction_id": "f235bfa5-b04b-4293-918e-1d9a1f482477", "result": "success", "document_id": "54b9c35a-2b99-4649-9512-b43374fbfbe5"}
+2014-07-11 15:26:47.247 NooraHealth[1518:752964] dict: {
+    "document_id" = "54b9c35a-2b99-4649-9512-b43374fbfbe5";
+    result = success;
+    "transaction_id" = "f235bfa5-b04b-4293-918e-1d9a1f482477";
+}
+2014-07-11 15:26:47.248 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:26:49.799 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405117609;
+    "nh_id" = 1000013;
+    nickname = ANDREW;
+    passed = YES;
+    responses = NA;
+    "time_to_complete" = 2173;
+}
+2014-07-11 15:26:50.019 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x14d9f410> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:26:49 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:26:50.021 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 33613666 66303130 2d336433 642d3432 63352d62 6431352d 30373763 62306635 39333336 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 38386364 64366364 2d393430 322d3437 36642d39 3661322d 63623965 66643861 38333733 227d>
+2014-07-11 15:26:50.022 NooraHealth[1518:752964] string: {"transaction_id": "3a6ff010-3d3d-42c5-bd15-077cb0f59336", "result": "success", "document_id": "88cdd6cd-9402-476d-96a2-cb9efd8a8373"}
+2014-07-11 15:26:50.023 NooraHealth[1518:752964] dict: {
+    "document_id" = "88cdd6cd-9402-476d-96a2-cb9efd8a8373";
+    result = success;
+    "transaction_id" = "3a6ff010-3d3d-42c5-bd15-077cb0f59336";
+}
+2014-07-11 15:26:50.024 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:26:51.205 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405117611;
+    "nh_id" = 1000005;
+    nickname = ANDREW;
+    passed = YES;
+    responses = NA;
+    "time_to_complete" = 748;
+}
+2014-07-11 15:26:51.440 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x14f9a330> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:26:51 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:26:51.442 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 37663031 66303238 2d616431 302d3438 61652d61 3730362d 34356136 36623462 32363838 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 33353237 63633339 2d636564 332d3436 38322d62 3534632d 62643830 61393337 31333638 227d>
+2014-07-11 15:26:51.443 NooraHealth[1518:752964] string: {"transaction_id": "7f01f028-ad10-48ae-a706-45a66b4b2688", "result": "success", "document_id": "3527cc39-ced3-4682-b54c-bd80a9371368"}
+2014-07-11 15:26:51.446 NooraHealth[1518:752964] dict: {
+    "document_id" = "3527cc39-ced3-4682-b54c-bd80a9371368";
+    result = success;
+    "transaction_id" = "7f01f028-ad10-48ae-a706-45a66b4b2688";
+}
+2014-07-11 15:26:51.447 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:26:52.855 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405117612;
+    "nh_id" = 1000006;
+    nickname = ANDREW;
+    passed = YES;
+    responses = NA;
+    "time_to_complete" = 639;
+}
+2014-07-11 15:26:53.093 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x161ac180> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:26:53 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:26:53.094 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 35306235 34303762 2d363065 352d3431 65372d61 3937642d 64363364 36373834 61623361 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 32343363 33356534 2d623133 312d3466 35612d62 3365312d 64373638 35636565 65626463 227d>
+2014-07-11 15:26:53.095 NooraHealth[1518:752964] string: {"transaction_id": "50b5407b-60e5-41e7-a97d-d63d6784ab3a", "result": "success", "document_id": "243c35e4-b131-4f5a-b3e1-d7685ceeebdc"}
+2014-07-11 15:26:53.097 NooraHealth[1518:752964] dict: {
+    "document_id" = "243c35e4-b131-4f5a-b3e1-d7685ceeebdc";
+    result = success;
+    "transaction_id" = "50b5407b-60e5-41e7-a97d-d63d6784ab3a";
+}
+2014-07-11 15:26:53.098 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:26:54.296 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405117614;
+    "nh_id" = 1000007;
+    nickname = ANDREW;
+    passed = YES;
+    responses = NA;
+    "time_to_complete" = 768;
+}
+2014-07-11 15:26:54.520 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x16073040> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:26:54 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:26:54.522 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 31656464 62373835 2d616330 392d3434 33362d62 6535312d 34613837 38303065 30333865 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 33323933 37333930 2d663837 612d3464 64372d38 3366342d 62316539 65623763 33623161 227d>
+2014-07-11 15:26:54.523 NooraHealth[1518:752964] string: {"transaction_id": "1eddb785-ac09-4436-be51-4a87800e038e", "result": "success", "document_id": "32937390-f87a-4dd7-83f4-b1e9eb7c3b1a"}
+2014-07-11 15:26:54.524 NooraHealth[1518:752964] dict: {
+    "document_id" = "32937390-f87a-4dd7-83f4-b1e9eb7c3b1a";
+    result = success;
+    "transaction_id" = "1eddb785-ac09-4436-be51-4a87800e038e";
+}
+2014-07-11 15:26:54.525 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:26:55.702 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405117615;
+    "nh_id" = 1000010;
+    nickname = ANDREW;
+    passed = YES;
+    responses = NA;
+    "time_to_complete" = 693;
+}
+2014-07-11 15:26:55.941 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x16197870> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:26:55 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:26:55.943 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 36373633 62306365 2d653632 652d3432 33652d38 6533372d 36373031 30316237 33613963 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 32326337 31303261 2d633761 622d3439 30362d61 3462612d 66316466 36366230 30666430 227d>
+2014-07-11 15:26:55.943 NooraHealth[1518:752964] string: {"transaction_id": "6763b0ce-e62e-423e-8e37-670101b73a9c", "result": "success", "document_id": "22c7102a-c7ab-4906-a4ba-f1df66b00fd0"}
+2014-07-11 15:26:55.947 NooraHealth[1518:752964] dict: {
+    "document_id" = "22c7102a-c7ab-4906-a4ba-f1df66b00fd0";
+    result = success;
+    "transaction_id" = "6763b0ce-e62e-423e-8e37-670101b73a9c";
+}
+2014-07-11 15:26:55.947 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:26:57.142 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405117617;
+    "nh_id" = 1000009;
+    nickname = ANDREW;
+    passed = YES;
+    responses = NA;
+    "time_to_complete" = 718;
+}
+2014-07-11 15:26:57.390 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x1618f1d0> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:26:57 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:26:57.392 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 39353831 62643964 2d343739 382d3465 33642d38 3230652d 63323835 34326136 62666265 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 37353565 39643833 2d363634 382d3461 37642d62 3536622d 34343136 36666234 38366165 227d>
+2014-07-11 15:26:57.393 NooraHealth[1518:752964] string: {"transaction_id": "9581bd9d-4798-4e3d-820e-c28542a6bfbe", "result": "success", "document_id": "755e9d83-6648-4a7d-b56b-44166fb486ae"}
+2014-07-11 15:26:57.396 NooraHealth[1518:752964] dict: {
+    "document_id" = "755e9d83-6648-4a7d-b56b-44166fb486ae";
+    result = success;
+    "transaction_id" = "9581bd9d-4798-4e3d-820e-c28542a6bfbe";
+}
+2014-07-11 15:26:57.397 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:26:58.678 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405117618;
+    "nh_id" = 1000008;
+    nickname = ANDREW;
+    passed = YES;
+    responses = NA;
+    "time_to_complete" = 735;
+}
+2014-07-11 15:26:58.897 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x1627daf0> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:26:58 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:26:58.898 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 38346537 31656665 2d396566 392d3464 32652d39 6539342d 37653239 31363965 39396331 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 33383637 32656463 2d646230 612d3464 62342d38 3761342d 32626638 62336137 36333535 227d>
+2014-07-11 15:26:58.899 NooraHealth[1518:752964] string: {"transaction_id": "84e71efe-9ef9-4d2e-9e94-7e29169e99c1", "result": "success", "document_id": "38672edc-db0a-4db4-87a4-2bf8b3a76355"}
+2014-07-11 15:26:58.900 NooraHealth[1518:752964] dict: {
+    "document_id" = "38672edc-db0a-4db4-87a4-2bf8b3a76355";
+    result = success;
+    "transaction_id" = "84e71efe-9ef9-4d2e-9e94-7e29169e99c1";
+}
+2014-07-11 15:26:58.901 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:27:00.231 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405117620;
+    "nh_id" = 1000011;
+    nickname = ANDREW;
+    passed = YES;
+    responses = NA;
+    "time_to_complete" = 819;
+}
+2014-07-11 15:27:00.484 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x1604abf0> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:27:00 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:27:00.485 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 38313933 36376565 2d383731 612d3436 31372d39 3963622d 39323565 62643836 31626138 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 63356662 30336663 2d303234 372d3433 33652d62 6138352d 31656136 63643933 64653663 227d>
+2014-07-11 15:27:00.487 NooraHealth[1518:752964] string: {"transaction_id": "819367ee-871a-4617-99cb-925ebd861ba8", "result": "success", "document_id": "c5fb03fc-0247-433e-ba85-1ea6cd93de6c"}
+2014-07-11 15:27:00.488 NooraHealth[1518:752964] dict: {
+    "document_id" = "c5fb03fc-0247-433e-ba85-1ea6cd93de6c";
+    result = success;
+    "transaction_id" = "819367ee-871a-4617-99cb-925ebd861ba8";
+}
+2014-07-11 15:27:00.488 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:27:02.085 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405117622;
+    "nh_id" = 1000012;
+    nickname = ANDREW;
+    passed = YES;
+    responses = NA;
+    "time_to_complete" = 911;
+}
+2014-07-11 15:27:02.501 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x162982d0> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:27:02 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:27:02.502 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 39633334 39663138 2d646162 612d3437 32382d62 6339352d 30643536 36323632 38663239 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 38333362 31396561 2d343731 622d3462 31612d62 3836372d 33666435 62633063 34626436 227d>
+2014-07-11 15:27:02.503 NooraHealth[1518:752964] string: {"transaction_id": "9c349f18-daba-4728-bc95-0d5662628f29", "result": "success", "document_id": "833b19ea-471b-4b1a-b867-3fd5bc0c4bd6"}
+2014-07-11 15:27:02.504 NooraHealth[1518:752964] dict: {
+    "document_id" = "833b19ea-471b-4b1a-b867-3fd5bc0c4bd6";
+    result = success;
+    "transaction_id" = "9c349f18-daba-4728-bc95-0d5662628f29";
+}
+2014-07-11 15:27:02.506 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:27:03.716 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405117623;
+    "nh_id" = 1000013;
+    nickname = ANDREW;
+    passed = YES;
+    responses = NA;
+    "time_to_complete" = 815;
+}
+2014-07-11 15:27:03.965 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x14f5dce0> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:27:03 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:27:03.966 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 62333562 39633134 2d336163 302d3435 65392d39 6331642d 32356561 30636666 64373937 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 39396166 38303331 2d353635 372d3463 61372d62 6262662d 31643065 65386562 39613761 227d>
+2014-07-11 15:27:03.967 NooraHealth[1518:752964] string: {"transaction_id": "b35b9c14-3ac0-45e9-9c1d-25ea0cffd797", "result": "success", "document_id": "99af8031-5657-4ca7-bbbf-1d0ee8eb9a7a"}
+2014-07-11 15:27:03.970 NooraHealth[1518:752964] dict: {
+    "document_id" = "99af8031-5657-4ca7-bbbf-1d0ee8eb9a7a";
+    result = success;
+    "transaction_id" = "b35b9c14-3ac0-45e9-9c1d-25ea0cffd797";
+}
+2014-07-11 15:27:03.971 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:27:06.689 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405117626;
+    "nh_id" = 1000014;
+    nickname = ANDREW;
+    passed = YES;
+    responses = NA;
+    "time_to_complete" = 1501;
+}
+2014-07-11 15:27:06.910 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x160eb4b0> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:27:06 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:27:06.911 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 62613663 62316237 2d373733 332d3462 66332d61 6131612d 34653135 37663139 65353434 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 39333161 65316135 2d376233 632d3437 35642d39 6332302d 31396535 36313839 62393230 227d>
+2014-07-11 15:27:06.912 NooraHealth[1518:752964] string: {"transaction_id": "ba6cb1b7-7733-4bf3-aa1a-4e157f19e544", "result": "success", "document_id": "931ae1a5-7b3c-475d-9c20-19e56189b920"}
+2014-07-11 15:27:06.915 NooraHealth[1518:752964] dict: {
+    "document_id" = "931ae1a5-7b3c-475d-9c20-19e56189b920";
+    result = success;
+    "transaction_id" = "ba6cb1b7-7733-4bf3-aa1a-4e157f19e544";
+}
+2014-07-11 15:27:06.916 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:27:17.809 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405117637;
+    "nh_id" = 1000101;
+    nickname = ANDREW;
+    passed = YES;
+    responses = NA;
+    "time_to_complete" = 1293;
+}
+2014-07-11 15:27:18.118 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x16284ef0> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:27:18 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:27:18.120 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 34656130 62306432 2d353863 302d3438 35662d38 6664622d 38336332 35653538 37306530 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 37303064 62616535 2d366635 392d3436 62642d39 3234352d 39303934 65323264 32306462 227d>
+2014-07-11 15:27:18.121 NooraHealth[1518:752964] string: {"transaction_id": "4ea0b0d2-58c0-485f-8fdb-83c25e5870e0", "result": "success", "document_id": "700dbae5-6f59-46bd-9245-9094e22d20db"}
+2014-07-11 15:27:18.122 NooraHealth[1518:752964] dict: {
+    "document_id" = "700dbae5-6f59-46bd-9245-9094e22d20db";
+    result = success;
+    "transaction_id" = "4ea0b0d2-58c0-485f-8fdb-83c25e5870e0";
+}
+2014-07-11 15:27:18.123 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:27:19.618 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405117639;
+    "nh_id" = 1000102;
+    nickname = ANDREW;
+    passed = YES;
+    responses = NA;
+    "time_to_complete" = 1096;
+}
+2014-07-11 15:27:19.969 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x16180550> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:27:19 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:27:19.970 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 36333466 32626463 2d396166 632d3461 63372d61 3664302d 31343733 32326433 33306365 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 33333935 37616263 2d663139 302d3435 35322d39 3762382d 62643762 33373732 33653836 227d>
+2014-07-11 15:27:19.971 NooraHealth[1518:752964] string: {"transaction_id": "634f2bdc-9afc-4ac7-a6d0-147322d330ce", "result": "success", "document_id": "33957abc-f190-4552-97b8-bd7b37723e86"}
+2014-07-11 15:27:19.974 NooraHealth[1518:752964] dict: {
+    "document_id" = "33957abc-f190-4552-97b8-bd7b37723e86";
+    result = success;
+    "transaction_id" = "634f2bdc-9afc-4ac7-a6d0-147322d330ce";
+}
+2014-07-11 15:27:19.975 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:27:20.384 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405117640;
+    "nh_id" = 1000103;
+    nickname = ANDREW;
+    passed = YES;
+    responses = NA;
+    "time_to_complete" = 763;
+}
+2014-07-11 15:27:20.614 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x14d603b0> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:27:20 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:27:20.615 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 36343933 32396664 2d373964 632d3437 61382d61 3532312d 66653165 63643261 34333436 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 34643961 31306136 2d343336 622d3432 33652d39 6665392d 33333636 63373736 66656431 227d>
+2014-07-11 15:27:20.617 NooraHealth[1518:752964] string: {"transaction_id": "649329fd-79dc-47a8-a521-fe1ecd2a4346", "result": "success", "document_id": "4d9a10a6-436b-423e-9fe9-3366c776fed1"}
+2014-07-11 15:27:20.620 NooraHealth[1518:752964] dict: {
+    "document_id" = "4d9a10a6-436b-423e-9fe9-3366c776fed1";
+    result = success;
+    "transaction_id" = "649329fd-79dc-47a8-a521-fe1ecd2a4346";
+}
+2014-07-11 15:27:20.621 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:27:21.275 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405117641;
+    "nh_id" = 1000104;
+    nickname = ANDREW;
+    passed = NO;
+    responses = NA;
+    "time_to_complete" = 888;
+}
+2014-07-11 15:27:21.634 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x160c4a20> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:27:21 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:27:21.636 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 65613861 66353962 2d623762 642d3461 35322d61 6332612d 37316134 61386261 31643063 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 32306634 61653063 2d633336 612d3466 39362d62 3039372d 35366565 31393332 64313536 227d>
+2014-07-11 15:27:21.637 NooraHealth[1518:752964] string: {"transaction_id": "ea8af59b-b7bd-4a52-ac2a-71a4a8ba1d0c", "result": "success", "document_id": "20f4ae0c-c36a-4f96-b097-56ee1932d156"}
+2014-07-11 15:27:21.645 NooraHealth[1518:752964] dict: {
+    "document_id" = "20f4ae0c-c36a-4f96-b097-56ee1932d156";
+    result = success;
+    "transaction_id" = "ea8af59b-b7bd-4a52-ac2a-71a4a8ba1d0c";
+}
+2014-07-11 15:27:21.647 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:27:22.178 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405117642;
+    "nh_id" = 1000105;
+    nickname = ANDREW;
+    passed = YES;
+    responses = NA;
+    "time_to_complete" = 900;
+}
+2014-07-11 15:27:22.418 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x14f08ce0> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:27:22 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:27:22.420 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 35383738 34326463 2d393761 392d3433 65362d39 6639302d 31356335 30306336 61373762 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 39333530 33363664 2d353735 322d3464 65642d61 3637642d 64323238 64663765 30383166 227d>
+2014-07-11 15:27:22.421 NooraHealth[1518:752964] string: {"transaction_id": "587842dc-97a9-43e6-9f90-15c500c6a77b", "result": "success", "document_id": "9350366d-5752-4ded-a67d-d228df7e081f"}
+2014-07-11 15:27:22.424 NooraHealth[1518:752964] dict: {
+    "document_id" = "9350366d-5752-4ded-a67d-d228df7e081f";
+    result = success;
+    "transaction_id" = "587842dc-97a9-43e6-9f90-15c500c6a77b";
+}
+2014-07-11 15:27:22.425 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:27:23.521 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405117643;
+    "nh_id" = 1000106;
+    nickname = ANDREW;
+    passed = NO;
+    responses = NA;
+    "time_to_complete" = 1341;
+}
+2014-07-11 15:27:23.922 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x14e5b700> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:27:23 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:27:23.929 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 30623465 31393136 2d333361 642d3435 63662d61 3030352d 33663436 63336630 39666265 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 35653732 31333762 2d326630 342d3431 35362d38 3838312d 30626539 64333062 32313863 227d>
+2014-07-11 15:27:23.931 NooraHealth[1518:752964] string: {"transaction_id": "0b4e1916-33ad-45cf-a005-3f46c3f09fbe", "result": "success", "document_id": "5e72137b-2f04-4156-8881-0be9d30b218c"}
+2014-07-11 15:27:23.932 NooraHealth[1518:752964] dict: {
+    "document_id" = "5e72137b-2f04-4156-8881-0be9d30b218c";
+    result = success;
+    "transaction_id" = "0b4e1916-33ad-45cf-a005-3f46c3f09fbe";
+}
+2014-07-11 15:27:23.933 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:27:24.529 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405117644;
+    "nh_id" = 1000107;
+    nickname = ANDREW;
+    passed = YES;
+    responses = NA;
+    "time_to_complete" = 1004;
+}
+2014-07-11 15:27:24.785 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x14ea28e0> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:27:24 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:27:24.787 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 35666631 34643733 2d313765 362d3438 39662d61 6237322d 61383264 61336331 61356231 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 31623835 35363431 2d336130 382d3439 30662d38 6462642d 30313061 38343938 32353666 227d>
+2014-07-11 15:27:24.788 NooraHealth[1518:752964] string: {"transaction_id": "5ff14d73-17e6-489f-ab72-a82da3c1a5b1", "result": "success", "document_id": "1b855641-3a08-490f-8dbd-010a8498256f"}
+2014-07-11 15:27:24.789 NooraHealth[1518:752964] dict: {
+    "document_id" = "1b855641-3a08-490f-8dbd-010a8498256f";
+    result = success;
+    "transaction_id" = "5ff14d73-17e6-489f-ab72-a82da3c1a5b1";
+}
+2014-07-11 15:27:24.790 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:27:26.239 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405117646;
+    "nh_id" = 1000108;
+    nickname = ANDREW;
+    passed = YES;
+    responses = NA;
+    "time_to_complete" = 749;
+}
+2014-07-11 15:27:26.466 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x14de2120> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:27:26 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:27:26.469 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 36653566 66613634 2d666230 612d3435 34662d61 6165372d 32653964 30623236 63623436 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 32323538 66663966 2d323937 632d3439 30612d62 6234312d 37396538 64323533 65613839 227d>
+2014-07-11 15:27:26.470 NooraHealth[1518:752964] string: {"transaction_id": "6e5ffa64-fb0a-454f-aae7-2e9d0b26cb46", "result": "success", "document_id": "2258ff9f-297c-490a-bb41-79e8d253ea89"}
+2014-07-11 15:27:26.471 NooraHealth[1518:752964] dict: {
+    "document_id" = "2258ff9f-297c-490a-bb41-79e8d253ea89";
+    result = success;
+    "transaction_id" = "6e5ffa64-fb0a-454f-aae7-2e9d0b26cb46";
+}
+2014-07-11 15:27:26.472 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:27:27.439 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405117647;
+    "nh_id" = 1000109;
+    nickname = ANDREW;
+    passed = NO;
+    responses = NA;
+    "time_to_complete" = 1196;
+}
+2014-07-11 15:27:27.799 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x160129d0> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:27:27 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:27:27.800 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 34336135 63376461 2d326263 662d3439 32372d62 6461332d 38356534 61363538 61633563 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 39323432 32366464 2d366333 312d3466 39392d62 6361362d 35313666 34653430 36393433 227d>
+2014-07-11 15:27:27.801 NooraHealth[1518:752964] string: {"transaction_id": "43a5c7da-2bcf-4927-bda3-85e4a658ac5c", "result": "success", "document_id": "924226dd-6c31-4f99-bca6-516f4e406943"}
+2014-07-11 15:27:27.802 NooraHealth[1518:752964] dict: {
+    "document_id" = "924226dd-6c31-4f99-bca6-516f4e406943";
+    result = success;
+    "transaction_id" = "43a5c7da-2bcf-4927-bda3-85e4a658ac5c";
+}
+2014-07-11 15:27:27.803 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:27:28.335 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405117648;
+    "nh_id" = 1000110;
+    nickname = ANDREW;
+    passed = YES;
+    responses = NA;
+    "time_to_complete" = 892;
+}
+2014-07-11 15:27:28.625 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x16056b60> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:27:28 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:27:28.627 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 65356566 36313432 2d363066 302d3466 30332d61 6461612d 35336439 39313431 36306464 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 39313030 63346266 2d326566 662d3435 63652d62 6161332d 37323539 37343662 61663765 227d>
+2014-07-11 15:27:28.628 NooraHealth[1518:752964] string: {"transaction_id": "e5ef6142-60f0-4f03-adaa-53d9914160dd", "result": "success", "document_id": "9100c4bf-2eff-45ce-baa3-7259746baf7e"}
+2014-07-11 15:27:28.633 NooraHealth[1518:752964] dict: {
+    "document_id" = "9100c4bf-2eff-45ce-baa3-7259746baf7e";
+    result = success;
+    "transaction_id" = "e5ef6142-60f0-4f03-adaa-53d9914160dd";
+}
+2014-07-11 15:27:28.634 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:27:29.263 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405117649;
+    "nh_id" = 1000111;
+    nickname = ANDREW;
+    passed = YES;
+    responses = NA;
+    "time_to_complete" = 926;
+}
+2014-07-11 15:27:29.553 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x16004bb0> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:27:29 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:27:29.556 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 32386661 34383736 2d326266 652d3463 37372d38 3062382d 36396636 63313932 36653964 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 63626239 39386531 2d326530 302d3433 36652d62 3662642d 39303131 62643539 36643431 227d>
+2014-07-11 15:27:29.556 NooraHealth[1518:752964] string: {"transaction_id": "28fa4876-2bfe-4c77-80b8-69f6c1926e9d", "result": "success", "document_id": "cbb998e1-2e00-436e-b6bd-9011bd596d41"}
+2014-07-11 15:27:29.565 NooraHealth[1518:752964] dict: {
+    "document_id" = "cbb998e1-2e00-436e-b6bd-9011bd596d41";
+    result = success;
+    "transaction_id" = "28fa4876-2bfe-4c77-80b8-69f6c1926e9d";
+}
+2014-07-11 15:27:29.567 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:27:30.319 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405117650;
+    "nh_id" = 1000112;
+    nickname = ANDREW;
+    passed = YES;
+    responses = NA;
+    "time_to_complete" = 1053;
+}
+2014-07-11 15:27:30.605 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x161a6330> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:27:30 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:27:30.606 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 63333566 34323531 2d323363 652d3437 61662d62 3634352d 39343831 62303936 32653430 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 39353231 36373761 2d373566 392d3436 34622d39 3134392d 39376432 61626264 62396365 227d>
+2014-07-11 15:27:30.609 NooraHealth[1518:752964] string: {"transaction_id": "c35f4251-23ce-47af-b645-9481b0962e40", "result": "success", "document_id": "9521677a-75f9-464b-9149-97d2abbdb9ce"}
+2014-07-11 15:27:30.616 NooraHealth[1518:752964] dict: {
+    "document_id" = "9521677a-75f9-464b-9149-97d2abbdb9ce";
+    result = success;
+    "transaction_id" = "c35f4251-23ce-47af-b645-9481b0962e40";
+}
+2014-07-11 15:27:30.618 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:27:31.358 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405117651;
+    "nh_id" = 1000113;
+    nickname = ANDREW;
+    passed = YES;
+    responses = NA;
+    "time_to_complete" = 1036;
+}
+2014-07-11 15:27:31.708 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x160247b0> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:27:31 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:27:31.710 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 65653861 61656333 2d316132 612d3438 33612d61 3465392d 62323964 33343663 64666262 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 38366535 32323934 2d303635 642d3430 30302d61 6135362d 66636361 66393735 38653331 227d>
+2014-07-11 15:27:31.711 NooraHealth[1518:752964] string: {"transaction_id": "ee8aaec3-1a2a-483a-a4e9-b29d346cdfbb", "result": "success", "document_id": "86e52294-065d-4000-aa56-fccaf9758e31"}
+2014-07-11 15:27:31.715 NooraHealth[1518:752964] dict: {
+    "document_id" = "86e52294-065d-4000-aa56-fccaf9758e31";
+    result = success;
+    "transaction_id" = "ee8aaec3-1a2a-483a-a4e9-b29d346cdfbb";
+}
+2014-07-11 15:27:31.716 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:27:32.316 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405117652;
+    "nh_id" = 1000114;
+    nickname = ANDREW;
+    passed = YES;
+    responses = NA;
+    "time_to_complete" = 956;
+}
+2014-07-11 15:27:32.646 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x162a8400> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:27:32 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:27:32.650 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 61376331 34313439 2d363466 622d3436 62372d39 6366622d 37663534 31313966 38366266 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 66323332 37373537 2d356132 332d3432 39372d38 6661302d 31396536 31663537 39393735 227d>
+2014-07-11 15:27:32.653 NooraHealth[1518:752964] string: {"transaction_id": "a7c14149-64fb-46b7-9cfb-7f54119f86bf", "result": "success", "document_id": "f2327757-5a23-4297-8fa0-19e61f579975"}
+2014-07-11 15:27:32.656 NooraHealth[1518:752964] dict: {
+    "document_id" = "f2327757-5a23-4297-8fa0-19e61f579975";
+    result = success;
+    "transaction_id" = "a7c14149-64fb-46b7-9cfb-7f54119f86bf";
+}
+2014-07-11 15:27:32.659 NooraHealth[1518:752964] User's Attempt was saved.
+2014-07-11 15:27:34.318 NooraHealth[1518:752964] Attempt dict: {
+    date = 1405117654;
+    "nh_id" = 1000115;
+    nickname = ANDREW;
+    passed = YES;
+    responses = NA;
+    "time_to_complete" = 863;
+}
+2014-07-11 15:27:34.545 NooraHealth[1518:752964] response: <NSHTTPURLResponse: 0x16287bc0> { URL: https://api.truevault.com/v1/vaults/b378b53a-a0ae-48e9-95d6-ac0fecf89a62/documents } { status code: 200, headers {
+    "Cache-Control" = "no-cache";
+    Connection = "keep-alive";
+    "Content-Length" = 134;
+    "Content-Type" = "application/json";
+    Date = "Fri, 11 Jul 2014 22:27:34 GMT";
+    Server = "gunicorn/18.0";
+    "Strict-Transport-Security" = "max-age=31536000";
+} }
+2014-07-11 15:27:34.547 NooraHealth[1518:752964] data: <7b227472 616e7361 6374696f 6e5f6964 223a2022 66633337 30386433 2d633361 662d3435 61382d61 3330662d 34333161 33383164 64346636 222c2022 72657375 6c74223a 20227375 63636573 73222c20 22646f63 756d656e 745f6964 223a2022 62336635 30613836 2d633062 392d3436 37372d61 3231382d 34353634 39613363 39363138 227d>
+2014-07-11 15:27:34.548 NooraHealth[1518:752964] string: {"transaction_id": "fc3708d3-c3af-45a8-a30f-431a381dd4f6", "result": "success", "document_id": "b3f50a86-c0b9-4677-a218-45649a3c9618"}
+2014-07-11 15:27:34.550 NooraHealth[1518:752964] dict: {
+    "document_id" = "b3f50a86-c0b9-4677-a218-45649a3c9618";
+    result = success;
+    "transaction_id" = "fc3708d3-c3af-45a8-a30f-431a381dd4f6";
+}
+2014-07-11 15:27:34.551 NooraHealth[1518:752964] User's Attempt was saved.
