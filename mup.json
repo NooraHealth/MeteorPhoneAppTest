@@ -11,7 +11,8 @@
  "app": "/Users/user/NooraHealth/NooraPhoneApp/",
  "env":{
   "PORT": 80,
-  "ROOT_URL": "http://52.8.104.184"
+  "ROOT_URL": "http://52.8.104.184",
+  ""
  },
  "deployCheckWaitTime": 15
 
