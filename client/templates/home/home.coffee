@@ -30,7 +30,7 @@ Template.chapterThumbnail.onRendered ()->
   surface = fview.surface or fview.view
   
   if completedChapter(fview.id)
-    $("#"+fview.id).find(".success-overlay").removeClass "hidden"
+    this.$("#"+fview.id).find(".success-overlay").removeClass "hidden"
 
   else if fview.id == currentChapter.nh_id
     
