@@ -1,6 +1,9 @@
 <template name="moduleFooter">
 <div class=" bottom row valign-wrapper">
   <div class="col s4 m4 l4">
+    {{#each moduleDocs}}
+      <audio src="{{audioSrc}}" name="audio{{nh_id}}" class="question"></audio>
+    {{/each}}
   </div>
 
   <div class="col s4 m4 l4 center-align valign">

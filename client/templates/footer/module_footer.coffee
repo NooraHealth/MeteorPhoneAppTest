@@ -1,4 +1,6 @@
 Template.moduleFooter.helpers
+  moduleDocs: ()->
+    return @.modules
   modules: ()->
     modules = Session.get "modules sequence"
     if !modules?

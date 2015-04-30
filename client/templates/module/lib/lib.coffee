@@ -106,9 +106,14 @@ this.handleSuccessfulAttempt = (module, time_to_complete)->
 ###
 this.playAudio = (type, module)->
   nh_id = module.nh_id
+  console.log "nh_id", nh_id
+  console.log module
   if type=="question"
     elem = $("audio[name=audio#{nh_id}][class=question]")[0]
+    console.log "ADUIO"
+    console.log elem
     if elem
+      console.log "playing..."
       elem.play()
   else
     $("audio[name=audio#{nh_id}][class=question]")[0].pause()
