@@ -1,18 +1,16 @@
 <template name="videoModule">
-<div class="front">
+<div class="valign-wrapper module">
+  <div class="valign module-wrapper">
+    <div class="center-align">
+      <video src="{{videoSrc}}" class="inherit video-responsive" controls autoplay>
+        Your browser does not support the video tag. Please logout and use another browser.
+      </video>
+    </div>
 
-  <div class="card-image">
-    <video src="{{videoSrc}}" class="inherit video-responsive" controls autoplay>
-      Your browser does not support the video tag. Please logout and use another browser.
-    </video>
-  </div>
-
-  <div class="flow-text grey-text text-darken-2 center-align">
-    {{title}}
-  </div>
-
-  <div class="card-content center-align valign-wrapper">
-    {{>nextBtn class="" nh_id=nh_id}}
+    <div class="flow-text grey-text text-darken-2 center-align">
+      {{title}}
+    </div>
   </div>
 </div>
+
 </template>

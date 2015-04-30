@@ -16,7 +16,6 @@ Template.nextBtn.events
         Session.set "current module index", incorrectlyAnswered[0]
       else
         Session.set "current module index", ++index
-      
       resetTemplate()
 
     else if incorrectlyAnswered.length > 0
@@ -25,6 +24,7 @@ Template.nextBtn.events
     else
       currentChapter = Session.get "current chapter index"
       Session.set "current chapter index", currentChapter + 1
+      stopAllAudio()
       Router.go "home"
 
 Template.nextBtn.helpers
@@ -41,6 +41,8 @@ Template.nextBtn.helpers
     return Session.get "next button is hidden"
 
 resetTemplate = ()->
+  stopAllAudio()
+
   if $("[name^=submit_multiple_choice]")
     $("[name^=submit_multiple_choice]").fadeIn()
     
@@ -53,4 +55,6 @@ resetTemplate = ()->
     $(btn).removeClass "incorrectly_selected"
     $(btn).removeClass "selected"
 
-
+stopAllAudio = ()->
+  for audioElem in $("audio")
+    audioElem.pause()

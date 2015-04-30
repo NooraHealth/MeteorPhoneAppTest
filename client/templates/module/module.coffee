@@ -7,53 +7,42 @@ Template.Module.helpers
     if @
       return @.modules[Session.get "current module index"]
 
-Tracker.autorun ()->
-  modules = Session.get "modules sequence"
-  if !modules?
-    return
+Template.Module.onRendered ()->
+  console.log "MODULE RENDERED"
+  fview = FView.from this
+  events = new EventHandler()
+  surfaces = (child.surface for child in fview.children.splice(1))
+  eventHandlers = []
+  for surface in surfaces
+    console.log "surface"
+    handler = new EventHandler()
+    eventHandlers.push handler
+    handler.subscribe events
+    handler.on "yourTurn", ()->
+      console.log "MY TURN!"
+    console.log handler
+  console.log surfaces
 
-  currentModule = modules[Session.get "current module index"]
-  if !currentModule?
-    return
-
-  if currentModule.type == "SLIDE"
-    Session.set "next button is hidden", false
-  if currentModule.type == "VIDEO"
-    Session.set "next button is hidden", false
-  if currentModule.type == "BINARY"
-    Session.set "next button is hidden", true
-  if currentModule.type == "MULTIPLE_CHOICE"
-    Session.set "next button is hidden", true
-  if currentModule.type == "SCENARIO"
-    Session.set "next button is hidden", true
-
-
-###
-# AUTORUN
-# 
-# Tracks the current module in the series and
-# moves the current module into visibility when the current module changes
-###
-
-Tracker.autorun ()->
-  moduleSequence = Session.get "module sequence"
-  currentModuleIndex = Session.get "current module index"
-  previousModuleIndex = Session.get "previous module index"
+  #fview.node._object.show fview.children[1].surface
   
-  if !moduleSequence or !moduleSequence?
-    return
+  this.autorun ()->
+    moduleIndex = Session.get "current module index"
+    #fview.node._object.show fview.children[moduleIndex + 1].surface
+    events.emit "yourTurn"
 
-  if currentModuleIndex?
-    moduleToDisplay = $("#module"+ moduleSequence[currentModuleIndex].nh_id)
-    moduleToDisplay.addClass 'visible-module'
-    moduleToDisplay.removeClass 'hidden-left'
-  
-  if previousModuleIndex?
-    moduleToHide = $("#module" + moduleSequence[previousModuleIndex].nh_id)
-    moduleToHide.removeClass 'visible-module'
-    moduleToHide.addClass 'hidden-left'
+  this.autorun ()->
+    moduleIndex = Session.get "current module index"
+    modules = Template.currentData().modules
+    #playAudio "question", modules[moduleIndex]
 
-###
-# HELPER FUNCTIONS
-###
+
+Template.multipleChoiceModule.onRendered ()->
+  fview = FView.from this
+  console.log "MC RENDERED"
+  console.log fview
+
+Template.slideModule.onRendered ()->
+  fview = FView.from this
+  console.log "SLIDE RENDERED"
+  console.log fview
 

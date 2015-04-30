@@ -22,8 +22,6 @@ Router.map ()->
           Session.set "module sequence", null
           Session.set "sections map", {}
           Session.set "current sections", null
-          console.log "current curriculum"
-          console.log curr
           chapters =  curr.getLessonDocuments()
           Session.set "chapters sequence", chapters
           return {chapters: chapters}
@@ -56,9 +54,12 @@ Router.map ()->
         modules = lesson.getModulesSequence()
         console.log "modules: ", modules
         Session.set "modules sequence", modules
-        Session.set "current module index", 0
+        Session.set "current module index",0
         Session.set "correctly answered", []
         Session.set "incorrectly answered", []
+
+        #move the first module to the end as a famous
+        #render controller HACk
         return {modules: modules}
         
   }

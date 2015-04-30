@@ -7,12 +7,12 @@ this.handleResponse = (response)->
   
   if isCorrectResponse(event.target)
     Materialize.toast "<i class='mdi-navigation-check medium'></i>", 5000, "left valign green rounded"
-    playAnswerAudio "correct", module
+    playAudio "correct"
     handleSuccessfulAttempt(module, 0)
     updateModuleNav "correct"
   else
     Materialize.toast "<i class='mdi-navigation-close medium'></i>", 5000, "left valign red rounded"
-    playAnswerAudio "incorrect", module
+    playAudio "incorrect"
     handleFailedAttempt module, [$(event.target).attr "value"], 0
     updateModuleNav "incorrect"
 
@@ -104,10 +104,15 @@ this.handleSuccessfulAttempt = (module, time_to_complete)->
 # type      Either "correct" or "incorrect"
 # module    The module to play the answer audio for
 ###
-this.playAnswerAudio = (type, module)->
-  console.log "playing the answer audio"
+this.playAudio = (type, module)->
   nh_id = module.nh_id
-  $("audio[name=audio#{nh_id}][class=question]")[0].pause()
+  if type=="question"
+    elem = $("audio[name=audio#{nh_id}][class=question]")[0]
+    if elem
+      elem.play()
+  else
+    $("audio[name=audio#{nh_id}][class=question]")[0].pause()
+
   if type== "correct"
     $("audio[name=audio#{nh_id}][class=correct]")[0].play()
   else if type == "incorrect"

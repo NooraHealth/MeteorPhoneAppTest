@@ -22,18 +22,17 @@ Template.multipleChoiceModule.events
     #play the audio depending on whether the user answered correctly or not
     if numIncorrect > 0
       handleFailedAttempt(module, responses )
-      playAnswerAudio("incorrect", module)
+      playAudio("incorrect")
       updateModuleNav "incorrect"
     else
       handleSuccessfulAttempt(module)
       updateModuleNav "correct"
-      playAnswerAudio("correct", module)
+      playAudio("correct")
     
     showNextModuleBtn(module)
 
 Template.multipleChoiceModule.helpers
   module: ()->
-    console.log "GETING MC module ", @
     return @
 ###
 # HELPER FUNCTIONS

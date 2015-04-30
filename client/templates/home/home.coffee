@@ -29,18 +29,20 @@ Template.chapterThumbnail.onRendered ()->
   
   surface = fview.surface or fview.view
   
-  if completedChapter(fview.id)
-    this.$("#"+fview.id).find(".success-overlay").removeClass "hidden"
-
-  else if fview.id == currentChapter.nh_id
-    
+  if fview.id == currentChapter.nh_id
     fview.modifier.setTransform Transform.scale(1.15, 1.15, 1.15), {duration: 1000, curve: "easeIn"}
+
+  if fview.id == currentChapter.nh_id or completedChapter(fview.id)
+    
     fview.modifier.setOpacity 1, {duration:500, curve: "easeIn"}
     surface.setProperties {zIndex: 10}
 
     surface.on "mouseout", ()->
       fview.modifier.halt()
-      fview.modifier.setTransform Transform.scale(1.15, 1.15, 1.15), {duration: 500, curve: "easeIn"}
+      if fview.id== currentChapter.nh_id
+        fview.modifier.setTransform Transform.scale(1.15, 1.15, 1.15), {duration: 500, curve: "easeIn"}
+      else
+        fview.modifier.setTransform Transform.scale(1, 1, 1), {duration: 500, curve: "easeIn"}
     
     surface.on "mouseover", ()->
       fview.modifier.halt()
