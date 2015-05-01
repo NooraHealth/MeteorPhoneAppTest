@@ -1,11 +1,11 @@
 Template.nextBtn.events
   "click #nextbtn": ()->
+    Session.set "next button is hidden", true
     index = Session.get "current module index"
     currLesson = Session.get "current lesson"
     modulesSequence = Session.get "modules sequence"
     incorrectlyAnswered = Session.get "incorrectly answered"
     correctlyAnswered = Session.get "correctly answered"
-
     currentModule = modulesSequence[index]
     if currentModule.type == "VIDEO" or currentModule.type == "SLIDE"
       correctlyAnswered.push index
