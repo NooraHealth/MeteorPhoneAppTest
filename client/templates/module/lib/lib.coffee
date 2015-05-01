@@ -1,3 +1,15 @@
+this.isLastModule = ()->
+  numModules = (Session.get "modules sequence").length
+  numIncorrect = (Session.get "incorrectly answered").length
+  index = Session.get "current module index"
+  return index == numModules-1 and numIncorrect == 0
+
+this.stopAllAudio = ()->
+  console.log "stopping all audio"
+  for audioElem in $("audio")
+    console.log "STOPPING"
+    audioElem.pause()
+
 this.handleResponse = (response)->
   moduleSequence = Session.get "modules sequence"
   currentModuleIndex = Session.get "current module index"
@@ -105,18 +117,21 @@ this.handleSuccessfulAttempt = (module, time_to_complete)->
 # module    The module to play the answer audio for
 ###
 this.playAudio = (type, module)->
+  #stopAllAudio()
   nh_id = module.nh_id
-  if type=="question"
-    elem = $("audio[name=audio#{nh_id}][class=question]")[0]
-    if elem
-      elem.play()
-  else
-    $("audio[name=audio#{nh_id}][class=question]")[0].pause()
+  elem = $("audio[name=audio#{nh_id}][class=question]")[0]
+  if elem and type=="question"
+    elem.play()
+    return
 
+  console.log elem
+
+  elem.remove()
   if type== "correct"
     $("audio[name=audio#{nh_id}][class=correct]")[0].play()
-  else if type == "incorrect"
+  else
     $("audio[name=audio#{nh_id}][class=incorrect]")[0].play()
+
 
 ###
 # Stop all module media and prepare to show the next module

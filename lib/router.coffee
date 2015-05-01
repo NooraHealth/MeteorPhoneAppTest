@@ -57,10 +57,12 @@ Router.map ()->
         Session.set "current module index",0
         Session.set "correctly answered", []
         Session.set "incorrectly answered", []
+        firstModule = modules[0]
+        rearrangedModules = modules.splice(0)
 
         #move the first module to the end as a famous
         #render controller HACk
-        return {modules: modules}
+        return {modules:  rearrangedModules  }
         
   }
 

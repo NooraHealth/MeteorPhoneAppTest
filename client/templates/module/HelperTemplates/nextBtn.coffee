@@ -29,13 +29,7 @@ Template.nextBtn.events
 
 Template.nextBtn.helpers
   isLastModule: ()->
-    numModules = (Session.get "modules sequence").length
-    numIncorrect = (Session.get "incorrectly answered").length
-
-    console.log "is this the last module? ", numModules
-    console.log "current module index", Session.get "current module index"
-    index = Session.get "current module index"
-    return index == numModules-1 and numIncorrect == 0
+    return isLastModule()
 
   isHidden: ()->
     return Session.get "next button is hidden"
@@ -55,6 +49,3 @@ resetTemplate = ()->
     $(btn).removeClass "incorrectly_selected"
     $(btn).removeClass "selected"
 
-stopAllAudio = ()->
-  for audioElem in $("audio")
-    audioElem.pause()

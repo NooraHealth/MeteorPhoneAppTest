@@ -13,24 +13,11 @@ Template.Module.onRendered ()->
   events = new EventHandler()
   children = fview.children
   eventHandlers = []
-  for child in children
-    if child.surface
-      handler = new EventHandler()
-      eventHandlers.push handler
-      handler.subscribe events
-      console.log child.surface
-      handler.on "yourTurn", (s)->
-        console.log ""
-        console.log "s"
-        console.log s
-        console.log child.surface
-        console.log child.surface ==s
-        console.log ""
-      console.log handler
-
   #fview.node._object.show fview.children[1].surface
   
   this.autorun ()->
+    if isLastModule()
+      return
     moduleIndex = Session.get "current module index"
     fview.node._object.show fview.children[moduleIndex + 1].surface
     events.emit "yourTurn", fview.children[moduleIndex+1].surface

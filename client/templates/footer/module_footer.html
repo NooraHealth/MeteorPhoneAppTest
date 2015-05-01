@@ -3,6 +3,8 @@
   <div class="col s4 m4 l4">
     {{#each moduleDocs}}
       <audio src="{{audioSrc}}" name="audio{{nh_id}}" class="question"></audio>
+        <audio name="audio{{nh_id}}" class="correct" src="{{correctAnswerAudio}}"></audio>
+        <audio name="audio{{nh_id}}" class="incorrect" src="{{incorrectAnswerAudio}}"></audio>
     {{/each}}
   </div>
 
