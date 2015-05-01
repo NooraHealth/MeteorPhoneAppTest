@@ -5,6 +5,8 @@ Meteor.startup ()->
     bucket: 'elasticbeanstalk-us-west-1-584511731882',
     region: "us-west-1"
   }
+
+  console.log S3.config
   #UploadServer.init {
     #tmpDir:process.env.PWD +  '/.uploads/tmp'
     #uploadDir: process.env.PWD + '/.uploads'
