@@ -43,7 +43,7 @@ Router.map ()->
     path: '/modules/:nh_id'
     layoutTemplate: 'layout'
     name: 'ModulesSequence'
-    template: "Module"
+    template: "module"
     yieldTemplates: {
       'moduleFooter': {to:"footer"}
     }

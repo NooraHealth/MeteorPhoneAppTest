@@ -1,31 +1,65 @@
-<template name="Module">
-{{#each modules}}
-  <!--{{>Surface id="module" class="white padded"  origin="[.5, .5]" align="[.5, .5]" template=getTemplate modifier="StateModifier"}}-->
-      {{#if isVideoModule}}
-      
-        {{>Surface id=getId class="white padded"  origin="[.5, .5]" align="[.5, .5]" template="videoModule" modifier="StateModifier"}}
-      {{/if}}
+<template name="module">
 
-      {{#if isSlideModule}}
-        {{>Surface id=getId class="white padded"  origin="[.5, .5]" align="[.5, .5]" template="slideModule" modifier="StateModifier" transition="opacity"}}
-      {{/if}}
+{{#each restOfDocs}}
+  {{#if isVideoModule}}
+  
+    {{>Surface id=getId class="white padded"  origin="[.5, .5]" align="[.5, .5]" template="videoModule" modifier="StateModifier"}}
+  {{/if}}
 
-      {{#if isMultipleChoiceModule}}
-        {{>Surface id=getId class="white padded"  origin="[.5, .5]" align="[.5, .5]" template="multipleChoiceModule" modifier="StateModifier"}}
-      {{/if}}
+  {{#if isSlideModule}}
+    {{>Surface id=getId class="white padded"  origin="[.5, .5]" align="[.5, .5]" template="slideModule" modifier="StateModifier" transition="opacity"}}
+  {{/if}}
 
-      {{#if isGoalChoiceModule}}
-        {{>Surface id=getId class="white padded"  origin="[.5, .5]" align="[.5, .5]" template="multipleChoiceModule" modifier="StateModifier"}}
-      {{/if}}
+  {{#if isMultipleChoiceModule}}
+    {{>Surface id=getId class="white padded"  origin="[.5, .5]" align="[.5, .5]" template="multipleChoiceModule" modifier="StateModifier"}}
+  {{/if}}
 
-      {{#if isBinaryModule}}
-        <!--{{>binaryChoiceModule}}-->
-        {{>Surface id=getId class="white padded"  origin="[.5, .5]" align="[.5, .5]" template="binaryChoiceModule" modifier="StateModifier" transition="opacity"}}
-      {{/if}}
+  {{#if isGoalChoiceModule}}
+    {{>Surface id=getId class="white padded"  origin="[.5, .5]" align="[.5, .5]" template="multipleChoiceModule" modifier="StateModifier"}}
+  {{/if}}
 
-      {{#if isScenarioModule}}
-        {{>Surface id=getId class="white padded"  origin="[.5, .5]" align="[.5, .5]" template="scenarioModule" modifier="StateModifier"}}
-      {{/if}}      
+  {{#if isBinaryModule}}
+    <!--{{>binaryChoiceModule}}-->
+    {{>Surface id=getId class="white padded"  origin="[.5, .5]" align="[.5, .5]" template="binaryChoiceModule" modifier="StateModifier" transition="opacity"}}
+  {{/if}}
+
+  {{#if isScenarioModule}}
+    {{>Surface id=getId class="white padded"  origin="[.5, .5]" align="[.5, .5]" template="scenarioModule" modifier="StateModifier"}}
+  {{/if}} 
 {{/each}}
 
+{{#with firstModule}}
+  {{#if isVideoModule}}
+  
+    {{>Surface id=getId class="white padded"  origin="[.5, .5]" align="[.5, .5]" template="videoModule" modifier="StateModifier"}}
+  {{/if}}
+
+  {{#if isSlideModule}}
+    {{>Surface id=getId class="white padded"  origin="[.5, .5]" align="[.5, .5]" template="slideModule" modifier="StateModifier" transition="opacity"}}
+  {{/if}}
+
+  {{#if isMultipleChoiceModule}}
+    {{>Surface id=getId class="white padded"  origin="[.5, .5]" align="[.5, .5]" template="multipleChoiceModule" modifier="StateModifier"}}
+  {{/if}}
+
+  {{#if isGoalChoiceModule}}
+    {{>Surface id=getId class="white padded"  origin="[.5, .5]" align="[.5, .5]" template="multipleChoiceModule" modifier="StateModifier"}}
+  {{/if}}
+
+  {{#if isBinaryModule}}
+    <!--{{>binaryChoiceModule}}-->
+    {{>Surface id=getId class="white padded"  origin="[.5, .5]" align="[.5, .5]" template="binaryChoiceModule" modifier="StateModifier" transition="opacity"}}
+  {{/if}}
+
+  {{#if isScenarioModule}}
+    {{>Surface id=getId class="white padded"  origin="[.5, .5]" align="[.5, .5]" template="scenarioModule" modifier="StateModifier"}}
+  {{/if}} 
+{{/with}}
+
 </template>
+
+<template name="moduleSurface">     
+      
+     
+</template>
+

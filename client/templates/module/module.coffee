@@ -2,13 +2,14 @@
 # MODULES SEQUENCE HELPERS
 ###
 
-Template.Module.helpers
-  modules: ()->
-    modules = (module for module in @.modules)
-    firstModule = modules[0]
-    rearrangedModules = modules.splice(1)
-    rearrangedModules.push firstModule
-    return rearrangedModules
+Template.module.helpers
+  restOfDocs: ()->
+    rest = (module for module, index in @.modules when index != 0)
+    console.log "These are the rest!", rest
+    return rest
+
+  firstModule: ()->
+    return @.modules[0]
 
   currentModule: ()->
     if @
@@ -16,15 +17,14 @@ Template.Module.helpers
   getId: ()->
     return @.nh_id
 
-Template.Module.onRendered ()->
+Template.module.onRendered ()->
   fview = FView.from this
   this.autorun ()->
-    if isLastModule()
-      return
     moduleIndex = Session.get "current module index"
+    console.log "what is the module index? ", moduleIndex
     nh_id = Session.get("modules sequence")[moduleIndex].nh_id
+    console.log "What is the nh_id ?", nh_id
     surface = FView.byId nh_id
-    console.log "surface"
-    console.log surface
+    console.log "SURAFEc", surface
     fview.node._object.show surface
 
