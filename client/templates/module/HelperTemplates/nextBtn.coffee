@@ -21,7 +21,7 @@ Template.nextBtn.events
         moduleIndex = ++index
       Session.set "current module index", moduleIndex
       resetTemplate()
-      playAudio 'question', Session.get("modules sequence")[moduleIndex]
+      #playAudio 'question', Session.get("modules sequence")[moduleIndex]
 
     else if incorrectlyAnswered.length > 0
       moduleIndex = incorrectlyAnswered[0]
@@ -44,9 +44,6 @@ Template.nextBtn.helpers
 resetTemplate = ()->
   stopAllAudio()
 
-  if $("[name^=submit_multiple_choice]")
-    $("[name^=submit_multiple_choice]").fadeIn()
-    
   responseBtns = $(".response")
   for btn in responseBtns
     $(btn).removeClass "disabled"

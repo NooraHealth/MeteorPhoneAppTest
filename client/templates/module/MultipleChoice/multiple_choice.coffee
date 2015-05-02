@@ -17,7 +17,7 @@ Template.multipleChoiceModule.events
     [responses, numIncorrect] = expandCorrectOptions(module)
 
     #Fade out the submit btn
-    $(event.target).fadeOut()
+    $(event.target).fadeTo(500, .75).prop "disabled", true
 
     #play the audio depending on whether the user answered correctly or not
     if numIncorrect > 0

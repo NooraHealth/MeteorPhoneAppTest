@@ -1,7 +1,6 @@
 Template.moduleFooter.helpers
   restOfDocs: ()->
     rest = (module for module, index in @.modules when index != 0)
-    console.log "These are the rest!", rest
     return rest
 
   firstModule: ()->
