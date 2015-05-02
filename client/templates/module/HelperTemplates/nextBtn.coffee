@@ -7,20 +7,29 @@ Template.nextBtn.events
     incorrectlyAnswered = Session.get "incorrectly answered"
     correctlyAnswered = Session.get "correctly answered"
     currentModule = modulesSequence[index]
+    
+    module = undefined
     if currentModule.type == "VIDEO" or currentModule.type == "SLIDE"
       correctlyAnswered.push index
       Session.set "correctly answered", correctlyAnswered
    
     if index+1 < modulesSequence.length
+      moduleIndex = 0
       if correctlyAnswered.length + incorrectlyAnswered.length == modulesSequence.length
-        Session.set "current module index", incorrectlyAnswered[0]
+        moduleIndex = incorrectlyAnswered[0]
       else
-        Session.set "current module index", ++index
+        moduleIndex = ++index
+      Session.set "current module index", moduleIndex
       resetTemplate()
+      #insertQuestionAudio(module)
+      playAudio 'question', Session.get("modules sequence")[moduleIndex]
 
     else if incorrectlyAnswered.length > 0
-      Session.set "current module index", incorrectlyAnswered[0]
+      moduleIndex = incorrectlyAnswered[0]
+      Session.set "current module index", moduleIndex
       resetTemplate()
+      #insertQuestionAudio()
+      playAudio 'question', Session.get("modules sequence")[moduleIndex]
     else
       currentChapter = Session.get "current chapter index"
       Session.set "current chapter index", currentChapter + 1

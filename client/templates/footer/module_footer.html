@@ -1,10 +1,8 @@
 <template name="moduleFooter">
 <div class=" bottom row valign-wrapper">
-  <div class="col s4 m4 l4">
+  <div class="col s4 m4 l4" id="audioDiv">
     {{#each moduleDocs}}
-      <audio src="{{audioSrc}}" name="audio{{nh_id}}" class="question"></audio>
-        <audio name="audio{{nh_id}}" class="correct" src="{{correctAnswerAudio}}"></audio>
-        <audio name="audio{{nh_id}}" class="incorrect" src="{{incorrectAnswerAudio}}"></audio>
+        <audio src="{{audioSrc}}" name="audio{{nh_id}}" class="question"></audio>
     {{/each}}
   </div>
 

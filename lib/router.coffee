@@ -52,17 +52,15 @@ Router.map ()->
         lesson = Lessons.findOne {nh_id: this.params.nh_id}
         Session.set "current lesson", lesson
         modules = lesson.getModulesSequence()
-        console.log "modules: ", modules
         Session.set "modules sequence", modules
         Session.set "current module index",0
         Session.set "correctly answered", []
         Session.set "incorrectly answered", []
-        firstModule = modules[0]
-        rearrangedModules = modules.splice(0)
+        Session.set "next button is hidden", false
 
         #move the first module to the end as a famous
         #render controller HACk
-        return {modules:  rearrangedModules  }
+        return {modules:  modules  }
         
   }
 

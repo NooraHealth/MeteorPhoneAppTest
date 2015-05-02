@@ -1,6 +1,7 @@
 Template.moduleFooter.helpers
   moduleDocs: ()->
     return @.modules
+  
   modules: ()->
     modules = Session.get "modules sequence"
     if !modules?
@@ -51,7 +52,7 @@ Template.moduleFooter.onRendered ()->
   #'click [name=previous]': (event, template)->
     #goToPreviousModule(event, template)
  
-Tracker.autorun ()->
+moduleFooter.autorun ()->
   moduleSequence = Session.get "modules sequence"
   currentModuleIndex = Session.get "current module index"
   

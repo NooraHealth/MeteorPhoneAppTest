@@ -4,6 +4,12 @@ this.isLastModule = ()->
   index = Session.get "current module index"
   return index == numModules-1 and numIncorrect == 0
 
+#this.insertQuestionAudio = ()->
+  #audioSrc = module.audioSrc()
+  #nh_id = module.nh_id
+  #console.log "inserting qstion audio"
+  #$("#audioDiv").append "<audio src='#{audioSrc}' name='audio#{nh_id}' class='question' autorun></audio>"
+
 this.stopAllAudio = ()->
   console.log "stopping all audio"
   for audioElem in $("audio")
@@ -11,6 +17,7 @@ this.stopAllAudio = ()->
     audioElem.pause()
 
 this.handleResponse = (response)->
+  console.log "handling response"
   moduleSequence = Session.get "modules sequence"
   currentModuleIndex = Session.get "current module index"
   module = moduleSequence[currentModuleIndex]
@@ -19,19 +26,18 @@ this.handleResponse = (response)->
   
   if isCorrectResponse(event.target)
     Materialize.toast "<i class='mdi-navigation-check medium'></i>", 5000, "left valign green rounded"
-    playAudio "correct"
+    playAudio "correct", module
     handleSuccessfulAttempt(module, 0)
     updateModuleNav "correct"
   else
     Materialize.toast "<i class='mdi-navigation-close medium'></i>", 5000, "left valign red rounded"
-    playAudio "incorrect"
+    playAudio "incorrect", module
     handleFailedAttempt module, [$(event.target).attr "value"], 0
     updateModuleNav "incorrect"
 
   showNextModuleBtn()
 
-
-hideIncorrectResponses = ()->
+this.hideIncorrectResponses = ()->
   responseBtns =  $(".response")
   for btn in responseBtns
     if not $(btn).hasClass "correct"
@@ -117,21 +123,20 @@ this.handleSuccessfulAttempt = (module, time_to_complete)->
 # module    The module to play the answer audio for
 ###
 this.playAudio = (type, module)->
-  #stopAllAudio()
   nh_id = module.nh_id
   elem = $("audio[name=audio#{nh_id}][class=question]")[0]
   if elem and type=="question"
     elem.play()
     return
+  else if elem
+    elem.pause()
 
-  console.log elem
-
-  elem.remove()
+  #remove the elem from the DOM because pausing doesnt work for some
+  #reason
   if type== "correct"
     $("audio[name=audio#{nh_id}][class=correct]")[0].play()
   else
     $("audio[name=audio#{nh_id}][class=incorrect]")[0].play()
-
 
 ###
 # Stop all module media and prepare to show the next module
