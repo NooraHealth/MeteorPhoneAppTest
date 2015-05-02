@@ -79,3 +79,4 @@ Router.map ()->
   this.route '/createCurriculum', {
     path: '/createCurriculum'
   }
+

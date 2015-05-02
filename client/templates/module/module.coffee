@@ -13,6 +13,8 @@ Template.Module.helpers
   currentModule: ()->
     if @
       return @.modules[Session.get "current module index"]
+  getId: ()->
+    return @.nh_id
 
 Template.Module.onRendered ()->
   fview = FView.from this
@@ -20,4 +22,9 @@ Template.Module.onRendered ()->
     if isLastModule()
       return
     moduleIndex = Session.get "current module index"
-    fview.node._object.show fview.children[moduleIndex].surface
+    nh_id = Session.get("modules sequence")[moduleIndex].nh_id
+    surface = FView.byId nh_id
+    console.log "surface"
+    console.log surface
+    fview.node._object.show surface
+
