@@ -21,14 +21,12 @@ Template.nextBtn.events
         moduleIndex = ++index
       Session.set "current module index", moduleIndex
       resetTemplate()
-      #insertQuestionAudio(module)
       playAudio 'question', Session.get("modules sequence")[moduleIndex]
 
     else if incorrectlyAnswered.length > 0
       moduleIndex = incorrectlyAnswered[0]
       Session.set "current module index", moduleIndex
       resetTemplate()
-      #insertQuestionAudio()
       playAudio 'question', Session.get("modules sequence")[moduleIndex]
     else
       currentChapter = Session.get "current chapter index"

@@ -1,7 +1,10 @@
 <template name="moduleFooter">
 <div class=" bottom row valign-wrapper">
   <div class="col s4 m4 l4" id="audioDiv">
-    {{#each moduleDocs}}
+    {{#with firstModule}}
+        <audio src="{{audioSrc}}" name="audio{{nh_id}}" class="question" autoplay></audio>
+    {{/with}}
+    {{#each restOfDocs}}
         <audio src="{{audioSrc}}" name="audio{{nh_id}}" class="question"></audio>
     {{/each}}
   </div>

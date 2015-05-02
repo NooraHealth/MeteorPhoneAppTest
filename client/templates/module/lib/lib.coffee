@@ -129,14 +129,19 @@ this.playAudio = (type, module)->
     elem.play()
     return
   else if elem
+    elem.currentTime = 0
     elem.pause()
 
   #remove the elem from the DOM because pausing doesnt work for some
   #reason
   if type== "correct"
-    $("audio[name=audio#{nh_id}][class=correct]")[0].play()
+    elem =  $("audio[name=audio#{nh_id}][class=correct]")[0]
+    elem.currentTime = 0
+    elem.play()
   else
-    $("audio[name=audio#{nh_id}][class=incorrect]")[0].play()
+    elem =  $("audio[name=audio#{nh_id}][class=incorrect]")[0]
+    elem.currentTime = 0
+    elem.play()
 
 ###
 # Stop all module media and prepare to show the next module

@@ -8,8 +8,6 @@ Template.Module.helpers
     firstModule = modules[0]
     rearrangedModules = modules.splice(1)
     rearrangedModules.push firstModule
-    console.log "rearranged modules", rearrangedModules
-    console.log "Template.Data -- ", Template.currentData()
     return rearrangedModules
 
   currentModule: ()->
