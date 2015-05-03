@@ -57,9 +57,6 @@ Router.map ()->
         Session.set "correctly answered", []
         Session.set "incorrectly answered", []
         Session.set "next button is hidden", false
-
-        #move the first module to the end as a famous
-        #render controller HACk
         return {modules:  modules  }
         
   }

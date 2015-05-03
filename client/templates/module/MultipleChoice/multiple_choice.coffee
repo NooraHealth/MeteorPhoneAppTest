@@ -34,6 +34,7 @@ Template.multipleChoiceModule.events
 Template.multipleChoiceModule.helpers
   module: ()->
     return @
+
 ###
 # HELPER FUNCTIONS
 ###

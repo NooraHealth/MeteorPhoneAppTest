@@ -13,6 +13,7 @@ Template.home.onRendered ()->
   width = Session.get "chapter card width"
   cardsComplete = Session.get "current chapter index"
   cards.modifier.setTransform Transform.translate(-1 * width * cardsComplete ,0, 0), {duration: 2000, curve: "easeIn"}
+
   #controller = FView.from this
   #console.log "CONTROLLER: ", controller
 
@@ -28,7 +29,9 @@ Template.chapterThumbnail.onRendered ()->
   fview.modifier.setAlign [.5, .5]
   
   surface = fview.surface or fview.view
-  
+
+  #fview.preventDestroy()
+
   if fview.id == currentChapter.nh_id
     fview.modifier.setTransform Transform.scale(1.15, 1.15, 1.15), {duration: 1000, curve: "easeIn"}
 
