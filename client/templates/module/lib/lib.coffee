@@ -124,8 +124,10 @@ this.handleSuccessfulAttempt = (module, time_to_complete)->
 ###
 this.playAudio = (type, module)->
   nh_id = module.nh_id
+  console.log "playing the audio ", module
+  console.log "type: ", type
   elem = $("audio[name=audio#{nh_id}][class=question]")[0]
-  if elem and type=="question"
+  if elem and type =="question"
     elem.play()
     return
   else if elem
@@ -136,10 +138,12 @@ this.playAudio = (type, module)->
   #reason
   if type== "correct"
     elem =  $("audio[name=audio#{nh_id}][class=correct]")[0]
+    console.log "Correct answer audio: ", elem
     elem.currentTime = 0
     elem.play()
   else
     elem =  $("audio[name=audio#{nh_id}][class=incorrect]")[0]
+    console.log "Incorrect answer audio: ", elem
     elem.currentTime = 0
     elem.play()
 

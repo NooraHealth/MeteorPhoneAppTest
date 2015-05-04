@@ -45,6 +45,7 @@ resetTemplate = ()->
   stopAllAudio()
 
   responseBtns = $(".response")
+  console.log "Here are the response btns to reset: ", responseBtns
   for btn in responseBtns
     $(btn).removeClass "disabled"
     $(btn).removeClass "faded"
