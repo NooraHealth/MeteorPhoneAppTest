@@ -9,11 +9,20 @@ Template.nextBtn.events
     currentModule = modulesSequence[index]
     
     module = undefined
+    console.log "Here are the inccorectlyAnswered: ", incorrectlyAnswered
+    console.log "Here are the correctly answered", correctlyAnswered
+    console.log "Here is the current module", currentModule
+    console.log "module index: ", index
+    if correctlyAnswered.length == modulesSequence.length
+      chapterComplete()
+      return
+
     if currentModule.type == "VIDEO" or currentModule.type == "SLIDE"
       correctlyAnswered.push index
       Session.set "correctly answered", correctlyAnswered
    
     if index+1 < modulesSequence.length
+      console.log "Less than modules sequence.length"
       moduleIndex = 0
       if correctlyAnswered.length + incorrectlyAnswered.length == modulesSequence.length
         moduleIndex = incorrectlyAnswered[0]
@@ -29,10 +38,7 @@ Template.nextBtn.events
       resetTemplate()
       playAudio 'question', Session.get("modules sequence")[moduleIndex]
     else
-      currentChapter = Session.get "current chapter index"
-      Session.set "current chapter index", currentChapter + 1
-      stopAllAudio()
-      Router.go "home"
+      chapterComplete()
 
 Template.nextBtn.helpers
   isLastModule: ()->
@@ -54,3 +60,9 @@ resetTemplate = ()->
     $(btn).removeClass "incorrectly_selected"
     $(btn).removeClass "selected"
 
+
+chapterComplete = () ->
+  currentChapter = Session.get "current chapter index"
+  Session.set "current chapter index", currentChapter + 1
+  stopAllAudio()
+  Router.go "home"
