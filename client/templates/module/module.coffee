@@ -7,13 +7,13 @@ Template.module.helpers
      modules = (module for module in @.modules)
      firstModule = modules[0]
      rearrangedModules = modules.splice(1)
+     rearrangedModules.push {nh_id: "dummyModule", type:"dummy"}
      rearrangedModules.push firstModule
-     rearrangedModules.unshift {nh_id: "dummyModule", type="dummy"}
      console.log "REARRAd=nh_id NGED: ", rearrangedModules
      return rearrangedModules
    
    dummyModule: ()->
-     return type == "dummy"
+     return @.type == "dummy"
    #restOfDocs: ()->
     #rest = (module for module, index in @.modules when index != 0)
     #return rest
@@ -36,7 +36,7 @@ Template.module.onRendered ()->
     nh_id = Session.get("modules sequence")[moduleIndex].nh_id
     #console.log "What is the nh_id ?", nh_id
     surface = FView.byId nh_id
-    #fview.node._object.show surface
+    fview.node._object.show surface
     #console.log "SURAFEc", surface
     #console.log "This is the renderController", fview
     #console.log "TEST SURFACE: ", FView.byId "1000170"
