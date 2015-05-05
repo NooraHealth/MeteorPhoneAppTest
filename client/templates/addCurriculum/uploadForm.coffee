@@ -1,18 +1,30 @@
 Template.uploadForm.events {
   "click button[name=upload]":(event, template) ->
     console.log "cLICKES "
-    files= $("input.file")[0].files
-    console.log "CLICKED:", files
-    S3.upload {
-      files: files,
-      path: "/NooraHealth/",
-    }, (e, r) ->
-      if e
-        alert "There was an error uploading your image, please try again"
-      else
-        console.log "File upload result: ", r
+    event.preventDefault()
+    type = "type"
+    console.log event.target
+    if $(event.target).hasClass "video"
+      type = "video"
+    else if $(event.target).hasClass "image"
+      type= "image"
+    else if $(event.target).hasClass "audio"
+      type = "audio"
 
-    return false
+    file =  $("input.file")[0].files[0]
+    console.log "FILE: ", file
+
+    uploader = new Slingshot.Upload "s3"
+
+    uploader.send file , (err, downloadURL) ->
+      if err
+        console.log "Error uploading file: ", err
+      else
+        console.log downloadURL
+
+    #Meteor.call "uploadContent", file, type, (error)->
+      #if error
+        #console.log error
   }
 
 Template.uploadForm.helpers {

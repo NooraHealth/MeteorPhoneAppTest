@@ -25,6 +25,7 @@ Template.chapterThumbnail.onRendered ()->
     currentChapterId= chaptersComplete[numChaptersComplete -1]
   else
     currentChapterId = chapters[0].nh_id
+
   fview.id = this.data.nh_id
   console.log "Chapter thumbnail rendered!"
   console.log "This fview: ", fview.id
