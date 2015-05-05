@@ -9,10 +9,7 @@ Template.nextBtn.events
     currentModule = modulesSequence[index]
     
     module = undefined
-    console.log "Here are the inccorectlyAnswered: ", incorrectlyAnswered
-    console.log "Here are the correctly answered", correctlyAnswered
-    console.log "Here is the current module", currentModule
-    console.log "module index: ", index
+
     if correctlyAnswered.length == modulesSequence.length
       chapterComplete()
       return
@@ -51,7 +48,6 @@ resetTemplate = ()->
   stopAllAudio()
 
   responseBtns = $(".response")
-  console.log "Here are the response btns to reset: ", responseBtns
   for btn in responseBtns
     $(btn).removeClass "disabled"
     $(btn).removeClass "faded"
@@ -62,7 +58,12 @@ resetTemplate = ()->
 
 
 chapterComplete = () ->
-  currentChapter = Session.get "current chapter index"
-  Session.set "current chapter index", currentChapter + 1
+  chaptersComplete = Session.get("chapters complete")
+  currLesson = Session.get "current lesson"
+  if currLesson.nh_id not in chaptersComplete
+    currentLength = Object.keys(chaptersComplete).length
+    chaptersComplete[currentLength] = currLesson
+    Session.set "chapters complete", chaptersComplete
+
   stopAllAudio()
   Router.go "home"

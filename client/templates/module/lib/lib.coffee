@@ -11,9 +11,7 @@ this.isLastModule = ()->
   #$("#audioDiv").append "<audio src='#{audioSrc}' name='audio#{nh_id}' class='question' autorun></audio>"
 
 this.stopAllAudio = ()->
-  console.log "stopping all audio"
   for audioElem in $("audio")
-    console.log "STOPPING"
     audioElem.pause()
 
 this.handleResponse = (response)->
