@@ -1,58 +1,7 @@
-Template.createCurriculum.helpers {
-  lessonImageUploaded: ()->
-    return {
-      finished: (index, fileInfo, context)->
-        Session.set "current uploaded lesson image", fileInfo
-    }
-}
 
 Template.addModuleModal.helpers {
-  optionUploaded: (index)->
-    return {
-      finished: (index, fileInfo, context) ->
-        if !Session.get "module options"
-          Session.set "module options", []
-        options = Session.get "module options"
-        options[context.data.formData.option] = fileInfo
-        Session.set "module options", options
-    }
-
-  getOptionFormData: ()->
-    return Template.currentData()
-
-  videoUploaded: ()->
-    return {
-      finished: (index, fileInfo, context) ->
-        Session.set "module video", fileInfo
-    }
-  
-  imageUploaded: ()->
-    return {
-      finished: (index, fileInfo, context) ->
-        Session.set "module image", fileInfo
-    }
-
-  
   option: (index)->
     return {option: index}
- 
-  correctAudioUploaded: ()->
-    return {
-      finished: (index, fileInfo, context) ->
-        Session.set "correct audio", fileInfo
-    }
-
-  incorrectAudioUploaded: ()->
-    return {
-      finished: (index, fileInfo, context) ->
-        Session.set "incorrect audio", fileInfo
-    }
-  
-  audioUploaded: ()->
-    return {
-      finished: (index, fileInfo, context) ->
-        Session.set "audio", fileInfo
-    }
 }
 
 
@@ -61,24 +10,23 @@ Template.createCurriculum.events {
     $("#addLessonModal").openModal()
 
   "click #submitLesson": (event, template)->
-    lessonImage = Session.get "current uploaded lesson image"
-    if !lessonImage
-      alert "Please upload a lesson image before submitting"
-      return
-
     title =  $("#lessonTitle").val()
     shortTitle = $("#lessonShortTitle").val()
     tags = $("#lessonTags").val().split()
+    lessonImage = $("#lessonImage")[0].files[0]
+
+    prefix = Meteor.filePrefix lessonImage
+    
     _id = Lessons.insert {
       title: title
       short_title: shortTitle
       tags: tags
-      image: lessonImage.path
-      imageUrl: lessonImage.url
+      image: prefix
     }
 
     lesson = Lessons.update {_id: _id}, {$set: {nh_id: _id}}
 
+    console.log Lessons.findOne {_id: _id}
     $("#lessonsList").append "<li name='lesson' id='#{_id}'>
       <div class='collapsible-header'>
       #{title}  

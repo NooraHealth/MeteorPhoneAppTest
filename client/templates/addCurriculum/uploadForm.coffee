@@ -3,15 +3,17 @@ Template.uploadForm.events {
     console.log "cLICKES "
     event.preventDefault()
 
-    file =  $("input.file")[0].files[0]
+    files =  $("input.file")[0].files
 
-    uploader = new Slingshot.Upload "s3"
+    for file in files
+      uploader = new Slingshot.Upload "s3"
 
-    uploader.send file , (err, downloadURL) ->
-      if err
-        console.log "Error uploading file: ", err
-      else
-        console.log downloadURL
+      uploader.send file , (err, downloadURL) ->
+        if err
+          console.log "Error uploading file: ", err
+        else
+          console.log downloadURL
+        
   }
 
 Template.uploadForm.helpers {
