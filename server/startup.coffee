@@ -6,14 +6,12 @@ Meteor.startup ()->
   Slingshot.createDirective "s3",Slingshot.S3Storage, {
     bucket: BUCKET
     acl: "public-read",
-    AWSAccessKeyId: Meteor.settings.AWSAccessKeyId,
-    AWSSecretAccessKey: Meteor.settings.AWSSecretAccessKey,
+    AWSAccessKeyId: process.env.AWS_ACCESS_KEY
+    AWSSecretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
     region: REGION,
     authorize: () ->
       #Deny uploads if user is not logged in.
-      console.log Meteor.user()
       if not Meteor.user()?
-        console.log "No meteor user"
         message = "Please login before posting files"
         throw new Meteor.Error("Login Required", message)
 
@@ -21,8 +19,13 @@ Meteor.startup ()->
 
     key:(file) ->
       #Store file into a directory by the user's username.
-      user = Meteor.users.findOne(this.userId)
-      return user.username + "/" + file.name
+      console.log "getting the key: ", file
+      if file.type.indexOf "image"
+        prefix = CONTENT_FOLDER + IMAGE_FOLDER
+      else
+        prefix = "TEST/"
+      return prefix + file.name
+
   }
   #if Meteor.settings.AWS
     #AWS.config.update

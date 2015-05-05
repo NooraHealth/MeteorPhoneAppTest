@@ -5,16 +5,6 @@ Meteor.methods {
     console.log typeof file
     console.log "TYEP: ", type
 
-    folder = CONTENT_FOLDER
-    if type== "video"
-      prefix = folder + VIDEO_FOLDER
-    else if type== "image"
-      prefix = folder+ IMAGE_FOLDER
-    else if type == "audio"
-      prefix = folder + AUDIO_FOLDER
-    else
-      console.log "sending error"
-      Meteor.Error "invalid parameter", "Invalid file type"
 
     s3.upload {Bucket: BUCKET, ContentType: file.type,  Key: prefix + file.name, Body: JSON.stringify(file, null, '')}, (err, data) ->
       console.log "upload CALLBACK"
