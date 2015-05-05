@@ -12,10 +12,6 @@ Template.uploadForm.events {
         console.log "Error uploading file: ", err
       else
         console.log downloadURL
-
-    #Meteor.call "uploadContent", file, type, (error)->
-      #if error
-        #console.log error
   }
 
 Template.uploadForm.helpers {
