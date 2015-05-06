@@ -104,7 +104,7 @@ Template.createCurriculum.events {
 
     if type=="MULTIPLE_CHOICE" || type=="GOAL_CHOICE"
       options = ( Meteor.filePrefix input.files[0] for input in $("input[name=option]") )
-      correctOptions = (Meteor.filePrefix input.files[0] for input in $("input[name=options][class=correct]"))
+      correctOptions = (Meteor.filePrefix input.files[0] for input in $("input[name=option]") when input.hasClass 'correct')
 
     _id = Modules.insert {
       type:type
