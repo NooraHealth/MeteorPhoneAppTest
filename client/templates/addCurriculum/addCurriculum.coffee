@@ -103,8 +103,8 @@ Template.createCurriculum.events {
       options = ["Yes", "No"]
 
     if type=="MULTIPLE_CHOICE" || type=="GOAL_CHOICE"
-      options = ( Meteor.filePrefix input.files[0] for input in $("input[name=options]") )
-      correctOptions = (Meteor.filePrefix input.files[0] for input in $("input[name=options].correct"))
+      options = ( Meteor.filePrefix input.files[0] for input in $("input[name=option]") )
+      correctOptions = (Meteor.filePrefix input.files[0] for input in $("input[name=options][class=correct]"))
 
     _id = Modules.insert {
       type:type
@@ -158,6 +158,7 @@ Template.createCurriculum.events {
 Template.addModuleModal.events {
   "click div.uploadOption": (event, template)->
     $(event.target).closest("div").toggleClass "correctly_selected"
+    $(event.target).closest("input.file").toggleClass "correct"
 }
 
 Template.createCurriculum.onRendered ()->
