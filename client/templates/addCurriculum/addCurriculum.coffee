@@ -6,6 +6,23 @@ Template.addModuleModal.helpers {
 
 
 Template.createCurriculum.events {
+  "click button[name=upload]":(event, template) ->
+    event.preventDefault()
+    console.log "sending the file"
+
+    inputs =  $("input.file")
+
+    for input in inputs
+      file = input.files[0]
+      if file?
+        uploader = new Slingshot.Upload "s3"
+
+        uploader.send file , (err, downloadURL) ->
+          if err
+            console.log "Error uploading file: ", err
+          else
+            console.log downloadURL
+    
   "click #addLesson":(event, template) ->
     $("#addLessonModal").openModal()
 
@@ -38,7 +55,8 @@ Template.createCurriculum.events {
       accordion:false
       expandable:true
     }
-    resetUploadSessions()
+
+    resetForm()
 
   "click [name^=addModule]": (event, template) ->
     id = $(event.target).closest("li").attr 'id'
@@ -60,18 +78,17 @@ Template.createCurriculum.events {
     )
 
   "click #submitModule": (event, template)->
-  
+    console.log "In the submit module"
     question = $("#moduleQuestion").val()
     title=$("#moduleTitle").val()
     tags = $("#moduleTags").val().split()
     type= $("#moduleType").val()
    
-    audio = if Session.get "audio" then Session.get("audio").path
-    correctAudio = if Session.get "correct audio" then Session.get("correct audio").path
-    incorrectAudio = if Session.get "incorrect audio" then Session.get("incorrect audio").path
-    image = if Session.get "module image" then Session.get("module image").path
-    video = if Session.get "module video" then Session.get("module video").path
-    options = Session.get "module options"
+    audio = Meteor.filePrefix $("#moduleAudio")[0].files[0]
+    correctAudio = Meteor.filePrefix $("#moduleCorrectAudio")[0].files[0]
+    incorrectAudio = Meteor.filePrefix $("#moduleIncorrectAudio")[0].files[0]
+    image =  Meteor.filePrefix $("#moduleImage")[0].files[0]
+    video =  Meteor.filePrefix $("#moduleVideo")[0].files[0]
 
     if !type
       alert "please identify a module type"
@@ -86,8 +103,8 @@ Template.createCurriculum.events {
       options = ["Yes", "No"]
 
     if type=="MULTIPLE_CHOICE" || type=="GOAL_CHOICE"
-      optionImages = (option.path for option in options)
-      correctOptions =( optionImages[$(option).attr "id"] for option in $("input[name=option]:checked"))
+      options = ( Meteor.filePrefix input.files[0] for input in $("input[name=options]") )
+      correctOptions = (Meteor.filePrefix input.files[0] for input in $("input[name=options].correct"))
 
     _id = Modules.insert {
       type:type
@@ -95,7 +112,7 @@ Template.createCurriculum.events {
       title:title
       question:question
       tags: tags
-      options:optionImages
+      options:options
       video: video
       image: image
       audio: audio
@@ -106,7 +123,7 @@ Template.createCurriculum.events {
 
     lessonId = Session.get "current editing lesson"
     $("#moduleList"+ Session.get "current editing lesson").append "<li class='collection-item' id='#{_id}' name='moduleof#{lessonId}'>#{title}#{question}</li>"
-    resetUploadSessions()
+    resetForm()
 
   "click #submitCurriculum": (event, template) ->
     title = $("#curriculumTitle").val()
@@ -139,23 +156,13 @@ Template.createCurriculum.events {
 }
 
 Template.addModuleModal.events {
-  "click .optionCheckbox": (event, template)->
-    box = $(event.target).closest(".uploadOption").find("input[type=checkbox]")
-    if box.is ":checked"
-      box.prop "checked", false
-    else
-      box.prop "checked", true
+  "click div.uploadOption": (event, template)->
+    $(event.target).closest("div").toggleClass "correctly_selected"
 }
 
 Template.createCurriculum.onRendered ()->
   $("select").material_select()
 
-resetUploadSessions = ()->
-  Session.set "module options", null
-  Session.set "audio", null
-  Session.set "correct audio", null
-  Session.set "module video", null
-  Session.set "incorrect audio", null
-  Session.set "module image", null
-  Session.get "current uploaded lesson image", null
-  Session.set "module image", null
+resetForm = () ->
+  for input in $("input")
+    input.value = ""

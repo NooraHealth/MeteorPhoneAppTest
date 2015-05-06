@@ -1,6 +1,8 @@
 
 Meteor.filePrefix = (file)->
   #Store file into a directory by the user's username.
+  if not file?
+    return ""
   if file.type.match /// video/ ///
     prefix = CONTENT_FOLDER + VIDEO_FOLDER
   if file.type.match /// audio/ ///
