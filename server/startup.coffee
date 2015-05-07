@@ -3,7 +3,7 @@ Meteor.startup ()->
   Slingshot.createDirective "s3",Slingshot.S3Storage, {
     bucket: BUCKET
     acl: "public-read",
-    AWSAccessKeyId: process.env.AWS_ACCESS_KEY
+    AWSAccessKeyId: process.env.AWS_ACCESS_KEY_ID
     AWSSecretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
     region: REGION,
     authorize: () ->
