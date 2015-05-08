@@ -88,7 +88,7 @@ Modules.helpers {
   incorrectAnswerAudio: ()->
     return MEDIA_URL + @.incorrect_audio
 
-  correctAnswerAudio: ()->
+correctAnswerAudio: ()->
     return MEDIA_URL + @.correct_audio
   
   videoSrc: ()->

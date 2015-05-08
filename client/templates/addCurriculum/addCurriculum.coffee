@@ -118,8 +118,9 @@ Template.createCurriculum.events {
       correct_audio: correctAudio
       incorrect_audio: incorrectAudio
     }
-    console.log Modules.findOne {_id: _id}
 
+    updated = Modules.update {_id: _id}, {$set: {nh_id: _id}}
+    console.log Modules.findOne {_id: _id}
     lessonId = Session.get "current editing lesson"
     $("#moduleList"+ Session.get "current editing lesson").append "<li class='collection-item' id='#{_id}' name='moduleof#{lessonId}'>#{title}#{question}</li>"
     resetForm()

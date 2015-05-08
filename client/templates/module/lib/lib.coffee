@@ -4,12 +4,6 @@ this.isLastModule = ()->
   index = Session.get "current module index"
   return index == numModules-1 and numIncorrect == 0
 
-#this.insertQuestionAudio = ()->
-  #audioSrc = module.audioSrc()
-  #nh_id = module.nh_id
-  #console.log "inserting qstion audio"
-  #$("#audioDiv").append "<audio src='#{audioSrc}' name='audio#{nh_id}' class='question' autorun></audio>"
-
 this.stopAllAudio = ()->
   for audioElem in $("audio")
     audioElem.pause()
@@ -136,12 +130,10 @@ this.playAudio = (type, module)->
   #reason
   if type== "correct"
     elem =  $("audio[name=audio#{nh_id}][class=correct]")[0]
-    console.log "Correct answer audio: ", elem
     elem.currentTime = 0
     elem.play()
   else
     elem =  $("audio[name=audio#{nh_id}][class=incorrect]")[0]
-    console.log "Incorrect answer audio: ", elem
     elem.currentTime = 0
     elem.play()
 
