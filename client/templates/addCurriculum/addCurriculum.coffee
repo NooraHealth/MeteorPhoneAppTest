@@ -158,12 +158,13 @@ Template.createCurriculum.events {
 Template.addModuleModal.events {
   "click div.uploadOption": (event, template)->
     $(event.target).closest("div").toggleClass "correctly_selected"
-    $(event.target).closest("input.file").toggleClass "correct"
+    $(event.taddrget).closest("input.file").toggleClass "correct"
 }
 
 Template.createCurriculum.onRendered ()->
   $("select").material_select()
 
 resetForm = () ->
+
   for input in $("input")
     input.value = ""
