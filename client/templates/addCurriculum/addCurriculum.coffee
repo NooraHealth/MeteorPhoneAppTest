@@ -78,7 +78,6 @@ Template.createCurriculum.events {
     )
 
   "click #submitModule": (event, template)->
-    console.log "In the submit module"
     question = $("#moduleQuestion").val()
     title=$("#moduleTitle").val()
     tags = $("#moduleTags").val().split()
@@ -96,7 +95,7 @@ Template.createCurriculum.events {
     
     if type=="SCENARIO"
       correctOptions = [$("input[name=scenario_answer]:checked").attr "id"]
-      options = ["Normal" , "Call Doc", "Call 911"]
+      options = ["Normal" , "CallDoc", "Call911"]
 
     if type=="BINARY"
       correctOptions=  [$("input[name=binary_answer]:checked").attr "id"]
