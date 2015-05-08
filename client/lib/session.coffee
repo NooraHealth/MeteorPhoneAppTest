@@ -9,5 +9,5 @@ Session.setDefault "current transition", "slideWindowRight"
 Session.setDefault "display trophy", false
 #}
 
-Session.set "condition", "Test"
+Session.set "condition", "VIDEO"
 
