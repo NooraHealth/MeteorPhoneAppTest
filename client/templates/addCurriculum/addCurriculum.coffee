@@ -95,16 +95,16 @@ Template.createCurriculum.events {
       return
     
     if type=="SCENARIO"
-      correctOptions = [$("input[name=scenario_answer]:checked").val()]
+      correctOptions = [$("input[name=scenario_answer]:checked").attr "id"]
       options = ["Normal" , "Call Doc", "Call 911"]
 
     if type=="BINARY"
-      correctOptions=  [$("input[name=binary_answer]:checked").val()]
+      correctOptions=  [$("input[name=binary_answer]:checked").attr "id"]
       options = ["Yes", "No"]
 
     if type=="MULTIPLE_CHOICE" || type=="GOAL_CHOICE"
       options = ( Meteor.filePrefix input.files[0] for input in $("input[name=option]") )
-      correctOptions = (Meteor.filePrefix input.files[0] for input in $("input[name=option]") when $(input).hasClass 'correct')
+      correctOptions = (Meteor.filePrefix input.files[0] for input in $("input[name=option]") when $(input).closest("div").hasClass 'correctly_selected')
 
     _id = Modules.insert {
       type:type
