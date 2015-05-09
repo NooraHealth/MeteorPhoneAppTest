@@ -11,18 +11,22 @@ Template.chapterThumbnail.events {
 Template.home.onRendered ()->
   cards = FView.byId "cardLayout"
   width = Session.get "chapter card width"
-  cardsComplete = Object.keys(Session.get("chapters complete")).length
+  cardsComplete = Session.get("chapters complete").split " ".length
   cards.modifier.setTransform Transform.translate(-1 * width * cardsComplete ,0, 0), {duration: 2000, curve: "easeIn"}
 
 Template.chapterThumbnail.onRendered ()->
   fview = FView.from this
+  console.log Meteor.user()
+  Meteor.user().chapters_complete = []
+  Meteor.users.update {_id: Meteor.userId()}, {$set: {chapters_complete: ["none"]}}
+  console.log Meteor.user()
   chapters = Session.get "chapters sequence"
-  chaptersComplete = Session.get("chapters complete")
-  numChaptersComplete = Object.keys(Session.get("chapters complete")).length
+  console.log "Chapters complete string: ", Session.get "chapters complete"
+  chaptersComplete = (word for word in string.split " " when word != "")
   console.log chaptersComplete
   console.log typeof chaptersComplete
-  if numChaptersComplete.length > 0
-    currentChapterId= chaptersComplete[numChaptersComplete -1]
+  if chaptersComplete.length > 0
+    currentChapterId= chaptersComplete[chaptersComplete.length -1]
   else
     currentChapterId = chapters[0].nh_id
 
@@ -65,9 +69,5 @@ Template.chapterThumbnail.onRendered ()->
     fview.modifier.setOpacity .5
 
 completedChapter = (nh_id)->
-  for key in Object.keys(Session.get "chapters complete")
-    id = Session.get("chapters complete")[key]
-    if parseInt(id) == parseInt nh_id
-      return true
-  return false
+  return nh_id in Session.get("chapters complete").split " "
 

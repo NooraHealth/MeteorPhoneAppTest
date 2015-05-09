@@ -95,6 +95,7 @@ correctAnswerAudio: ()->
     return MEDIA_URL + this.video
 
   isCorrectAnswer: (response)->
+    
     return response in @.correct_answer
 
   getOptionObjects: ()->
@@ -103,8 +104,6 @@ correctAnswerAudio: ()->
     return newArr
 
   option: (i)->
-    console.log "getting the option ", @.options
-    console.log @
     return @.options[i]
 
   isVideoModule: ()->

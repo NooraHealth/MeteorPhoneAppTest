@@ -19,7 +19,6 @@ Template.nextBtn.events
       Session.set "correctly answered", correctlyAnswered
    
     if index+1 < modulesSequence.length
-      console.log "Less than modules sequence.length"
       moduleIndex = 0
       if correctlyAnswered.length + incorrectlyAnswered.length == modulesSequence.length
         moduleIndex = incorrectlyAnswered[0]
@@ -58,12 +57,14 @@ resetTemplate = ()->
 
 
 chapterComplete = () ->
-  chaptersComplete = Session.get("chapters complete")
+  chaptersComplete =  Session.get("chapters complete").split " "
   currLesson = Session.get "current lesson"
   if currLesson.nh_id not in chaptersComplete
-    currentLength = Object.keys(chaptersComplete).length
-    chaptersComplete[currentLength] = currLesson
-    Session.set "chapters complete", chaptersComplete
+    chaptersString = Session.get "chapters complete"
+    console.log "chapters string: ", chaptersString
+    chaptersString += currLesson.nh_id + " "
+    console.log "after: ", chaptersString
+    Session.set "chapters complete", chaptersString
 
   stopAllAudio()
   Router.go "home"

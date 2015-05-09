@@ -21,7 +21,6 @@ Template.module.helpers
 
 Template.module.onRendered ()->
   fview = FView.from this
-  console.log fview
   fview.node._object.hide()
 
   this.autorun ()->
