@@ -61,7 +61,7 @@ chapterComplete = () ->
   chaptersComplete = Meteor.user().profile.chapters_complete
   currLesson = Session.get "current lesson"
   if currLesson.nh_id not in chaptersComplete
-    Meteor.users.update {_id: Meteor.user()._id}, {$push: {chapters_complete: currLesson.nh_id}}, (err) ->
+    Meteor.users.update {_id: Meteor.user()._id}, {$push: {"profile.chapters_complete": currLesson.nh_id}}, (err) ->
       console.log err
 
   stopAllAudio()
