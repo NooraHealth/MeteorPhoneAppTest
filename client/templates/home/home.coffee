@@ -20,7 +20,8 @@ Template.chapterThumbnail.onRendered ()->
   chaptersComplete = Meteor.user().profile.chapters_complete
   chapters = Session.get "chapters sequence"
   if chaptersComplete.length>0
-    currentChapterId= chaptersComplete[chaptersComplete.length-1]
+    currentChapterId= chapters[chaptersComplete.length].nh_id
+    console.log "Just set the current chapter ID to : ", currentChapterId
   else
     currentChapterId = chapters[0].nh_id
 
@@ -31,7 +32,8 @@ Template.chapterThumbnail.onRendered ()->
   fview.modifier.setAlign [.5, .5]
   
   surface = fview.surface or fview.view
-
+  console.log "current chapter IOD: ", currentChapterId
+  console.log "this fview: ", fview.id
   if fview.id == currentChapterId
     fview.modifier.setTransform Transform.scale(1.15, 1.15, 1.15), {duration: 1000, curve: "easeIn"}
 
