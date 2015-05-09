@@ -11,25 +11,20 @@ Template.chapterThumbnail.events {
 Template.home.onRendered ()->
   cards = FView.byId "cardLayout"
   width = Session.get "chapter card width"
-  cardsComplete = Session.get("chapters complete").split " ".length
+  cardsComplete = Meteor.user().profile.chapters_complete.length
   cards.modifier.setTransform Transform.translate(-1 * width * cardsComplete ,0, 0), {duration: 2000, curve: "easeIn"}
 
 Template.chapterThumbnail.onRendered ()->
   fview = FView.from this
   console.log Meteor.user()
   chaptersComplete = Meteor.user().profile.chapters_complete
-  console.log chaptersComplete
   chapters = Session.get "chapters sequence"
-  if chaptersComplete.length > 0
-    currentChapterId= chaptersComplete[chaptersComplete.length -1]
+  if chaptersComplete.length>0
+    currentChapterId= chaptersComplete[chaptersComplete.length-1]
   else
     currentChapterId = chapters[0].nh_id
 
   fview.id = this.data.nh_id
-  console.log "Chapter thumbnail rendered!"
-  console.log "This fview: ", fview.id
-  console.log "Current chapter ID: ", currentChapterId
-  console.log "Did I complete the chapter? ", completedChapter(currentChapterId)
 
   fview.modifier.setSize [400, 400]
   fview.modifier.setOrigin [.5, .5]
@@ -64,5 +59,6 @@ Template.chapterThumbnail.onRendered ()->
     fview.modifier.setOpacity .5
 
 completedChapter = (nh_id)->
-  return nh_id in Session.get("chapters complete").split " "
+  chaptersComplete = Meteor.user().profile.chapters_complete
+  return nh_id in chaptersComplete
 
