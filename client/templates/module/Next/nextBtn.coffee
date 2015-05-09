@@ -57,14 +57,12 @@ resetTemplate = ()->
 
 
 chapterComplete = () ->
-  chaptersComplete =  Session.get("chapters complete").split " "
+
+  chaptersComplete = Meteor.user().profile.chapters_complete
   currLesson = Session.get "current lesson"
   if currLesson.nh_id not in chaptersComplete
-    chaptersString = Session.get "chapters complete"
-    console.log "chapters string: ", chaptersString
-    chaptersString += currLesson.nh_id + " "
-    console.log "after: ", chaptersString
-    Session.set "chapters complete", chaptersString
+    Meteor.users.update {_id: Meteor.user()._id}, {$push: {chapters_complete: currLesson.nh_id}}, (err) ->
+      console.log err
 
   stopAllAudio()
   Router.go "home"

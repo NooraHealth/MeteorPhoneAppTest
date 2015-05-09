@@ -17,7 +17,7 @@ Template.home.onRendered ()->
 Template.chapterThumbnail.onRendered ()->
   fview = FView.from this
   console.log Meteor.user()
-  chaptersComplete = Meteor.user().chapters_complete
+  chaptersComplete = Meteor.user().profile.chapters_complete
   console.log chaptersComplete
   chapters = Session.get "chapters sequence"
   if chaptersComplete.length > 0
