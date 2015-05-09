@@ -17,14 +17,9 @@ Template.home.onRendered ()->
 Template.chapterThumbnail.onRendered ()->
   fview = FView.from this
   console.log Meteor.user()
-  Meteor.user().chapters_complete = []
-  Meteor.users.update {_id: Meteor.userId()}, {$set: {chapters_complete: ["none"]}}
-  console.log Meteor.user()
-  chapters = Session.get "chapters sequence"
-  console.log "Chapters complete string: ", Session.get "chapters complete"
-  chaptersComplete = (word for word in string.split " " when word != "")
+  chaptersComplete = Meteor.user().chapters_complete
   console.log chaptersComplete
-  console.log typeof chaptersComplete
+  chapters = Session.get "chapters sequence"
   if chaptersComplete.length > 0
     currentChapterId= chaptersComplete[chaptersComplete.length -1]
   else
