@@ -12,16 +12,18 @@ Template.home.onRendered ()->
   cards = FView.byId "cardLayout"
   width = Session.get "chapter card width"
   cardsComplete = Meteor.user().profile.chapters_complete.length
-  cards.modifier.setTransform Transform.translate(-1 * width * cardsComplete ,0, 0), {duration: 2000, curve: "easeIn"}
+  chapters = Session.get "chapters sequence"
+  if cardsComplete < chapters.length
+    cards.modifier.setTransform Transform.translate(-1 * width * cardsComplete ,0, 0), {duration: 2000, curve: "easeIn"}
 
 Template.chapterThumbnail.onRendered ()->
   fview = FView.from this
-  console.log Meteor.user()
   chaptersComplete = Meteor.user().profile.chapters_complete
   chapters = Session.get "chapters sequence"
-  if chaptersComplete.length>0
+  if chaptersComplete.length == chapters.length
+    currentChapterId = ""
+  else if chaptersComplete.length>0
     currentChapterId= chapters[chaptersComplete.length].nh_id
-    console.log "Just set the current chapter ID to : ", currentChapterId
   else
     currentChapterId = chapters[0].nh_id
 
@@ -32,8 +34,6 @@ Template.chapterThumbnail.onRendered ()->
   fview.modifier.setAlign [.5, .5]
   
   surface = fview.surface or fview.view
-  console.log "current chapter IOD: ", currentChapterId
-  console.log "this fview: ", fview.id
   if fview.id == currentChapterId
     fview.modifier.setTransform Transform.scale(1.15, 1.15, 1.15), {duration: 1000, curve: "easeIn"}
 
