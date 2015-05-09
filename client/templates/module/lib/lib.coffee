@@ -1,8 +1,7 @@
 this.isLastModule = ()->
   numModules = (Session.get "modules sequence").length
-  numIncorrect = (Session.get "incorrectly answered").length
-  index = Session.get "current module index"
-  return index == numModules-1 and numIncorrect == 0
+  numCorrect = (Session.get "correctly answered").length
+  return numCorrect == numModules
 
 this.stopAllAudio = ()->
   for audioElem in $("audio")
