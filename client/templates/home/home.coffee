@@ -20,6 +20,7 @@ Template.chapterThumbnail.onRendered ()->
   fview = FView.from this
   chaptersComplete = Meteor.user().profile.chapters_complete
   chapters = Session.get "chapters sequence"
+  console.log "Chapters sequence: ", chapters
   if chaptersComplete.length == chapters.length
     currentChapterId = ""
   else if chaptersComplete.length>0

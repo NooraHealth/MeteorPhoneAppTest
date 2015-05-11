@@ -75,6 +75,13 @@ AccountsTemplates.addField {
   type: "hidden",
 }
 
+AccountsTemplates.addField {
+  _id: 'condition'
+  required: true
+  type: 'text'
+  displayName: 'Condition'
+}
+
 AccountsTemplates.configureRoute 'ensureSignedIn', {
   template: 'entry'
 }

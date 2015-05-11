@@ -13,8 +13,8 @@ Router.map ()->
     }
     layoutTemplate: 'layout'
     data: ()->
-      if this.ready()
-        curr = Curriculum.findOne({condition: Session.get "condition"})
+      if this.ready() and Meteor.user()
+        curr = Curriculum.findOne({condition: Meteor.user().profile.condition})
         if curr
           Session.set "current chapter", null
           Session.set "current lesson", null
