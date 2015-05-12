@@ -62,13 +62,10 @@ Template.createCurriculum.events {
     id = $(event.target).closest("li").attr 'id'
     $("#moduleLessonId").attr "value", id
     Session.set "current editing lesson", id
-    #$("#moduleInitialization")[0].reset()
-    #$("#moduleAttributes")[0].reset()
     $("#addModuleModal").openModal()
 
   "change #moduleType": (event, template) ->
     type = $(event.target).val()
-    $("#moduleAttributes")[0].reset()
     rows = $("#addModuleModal").find("div[name=attributeRow]")
     $.each(rows, (index, row)->
       if $(row).hasClass type
