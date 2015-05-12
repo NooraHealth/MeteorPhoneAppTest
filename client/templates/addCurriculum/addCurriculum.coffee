@@ -20,6 +20,7 @@ Template.createCurriculum.events {
         uploader.send file , (err, downloadURL) ->
           if err
             console.log "Error uploading file: ", err
+            alert "A file failed to load! ", err
           else
             console.log downloadURL
     
@@ -131,11 +132,11 @@ Template.createCurriculum.events {
       correctOptions = (Meteor.filePrefix input.files[0] for input in $("input[name=option]") when $(input).closest("div").hasClass 'correctly_selected')
 
 
-    if options.length==0 and !isQuestion(type)
+    if isQuestion() and options.length==0
       alert "You did not specify any options"
       return
     
-    if correctOptions.length==0 and isQuestion()
+    if isQuestion() and correctOptions.length==0
       alert "You did not select the correct answer(s)"
       return
 
@@ -161,6 +162,7 @@ Template.createCurriculum.events {
 
   "click #submitCurriculum": (event, template) ->
     title = $("#curriculumTitle").val()
+
     if !title
       alert "Please identify a title for your curriculum"
       return
