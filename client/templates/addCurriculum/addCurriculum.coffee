@@ -31,6 +31,10 @@ Template.createCurriculum.events {
     shortTitle = $("#lessonShortTitle").val()
     tags = $("#lessonTags").val().split()
     lessonImage = $("#lessonImage")[0].files[0]
+    
+    if !title or !lessonImage
+      alert "You are missing either the title or the Lesson's image."
+      return
 
     prefix = Meteor.filePrefix lessonImage
     
@@ -85,11 +89,35 @@ Template.createCurriculum.events {
     incorrectAudio = Meteor.filePrefix $("#moduleIncorrectAudio")[0].files[0]
     image =  Meteor.filePrefix $("#moduleImage")[0].files[0]
     video =  Meteor.filePrefix $("#moduleVideo")[0].files[0]
-
+    
     if !type
       alert "please identify a module type"
       return
     
+    if !audio and type != "VIDEO"
+      alert "Missing module audio"
+      return
+
+    if (!correctAudio or !incorrectAudio) and isQuestion(type)
+      alert "You are missing some audio files"
+      return
+
+    if !video and type=="VIDEO"
+      alert "You are missing the video file"
+      return
+    
+    if !image and type!="VIDEO" and type!="MULTIPLE_CHOICE" and type!="GOAL_CHOICE"
+      alert "Missing image file"
+      return
+
+    if !title and (type=="VIDEO" or type=="SLIDE")
+      alert "Missing title"
+      return
+
+    if !question and isQuestion(type)
+      alert "Missing question"
+      return
+
     if type=="SCENARIO"
       correctOptions = [$("input[name=scenario_answer]:checked").attr "id"]
       options = ["Normal" , "CallDoc", "Call911"]
@@ -101,6 +129,15 @@ Template.createCurriculum.events {
     if type=="MULTIPLE_CHOICE" || type=="GOAL_CHOICE"
       options = ( Meteor.filePrefix input.files[0] for input in $("input[name=option]") )
       correctOptions = (Meteor.filePrefix input.files[0] for input in $("input[name=option]") when $(input).closest("div").hasClass 'correctly_selected')
+
+
+    if options.length==0 and !isQuestion(type)
+      alert "You did not specify any options"
+      return
+    
+    if correctOptions.length==0 and isQuestion()
+      alert "You did not select the correct answer(s)"
+      return
 
     _id = Modules.insert {
       type:type
@@ -175,3 +212,6 @@ resetForm = () ->
   for input in $("input:not(.no-reset)")
     console.log "clearding: ", input
     input.value = ""
+
+isQuestion = (type)->
+  return type== "BINARY" or type=="SCENARIO" or type=="MULTIPLE_CHOICE" or type=="GOAL_CHOICE"
