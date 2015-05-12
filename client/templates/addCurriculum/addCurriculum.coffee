@@ -167,7 +167,7 @@ Template.createCurriculum.onRendered ()->
 resetForm = () ->
 
   addModuleModal = $("#addModuleModal")
-  for input in addModuleModal.find("input:not(#moduleType):not(.select-dropdown)")
+  for input in addModuleModal.find("div[name=attributeRow]")
     console.log "Sliding up!: ", input
     $(input).slideUp()
     
