@@ -171,8 +171,8 @@ resetForm = () ->
     console.log "Sliding up!: ", input
     $(input).slideUp()
 
-  #$("#default-select").attr "disabled", true
-  #$("#default-select").attr "selected", true
+  $("#default-select").attr "disabled", true
+  $("#default-select").attr "selected", true
 
     
   for input in $("input:not(.no-reset)")
