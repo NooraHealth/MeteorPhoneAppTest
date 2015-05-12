@@ -62,8 +62,8 @@ Template.createCurriculum.events {
     id = $(event.target).closest("li").attr 'id'
     $("#moduleLessonId").attr "value", id
     Session.set "current editing lesson", id
-    $("#moduleInitialization")[0].reset()
-    $("#moduleAttributes")[0].reset()
+    #$("#moduleInitialization")[0].reset()
+    #$("#moduleAttributes")[0].reset()
     $("#addModuleModal").openModal()
 
   "change #moduleType": (event, template) ->
@@ -166,9 +166,11 @@ Template.createCurriculum.onRendered ()->
 
 resetForm = () ->
 
-  addModuleModal = $("#addModulModal")
-  for input in addModuleModal.find("input")
-    input.slideUp()
+  addModuleModal = $("#addModuleModal")
+  for input in addModuleModal.find("input:not(#moduleType):not(.select-dropdown)")
+    console.log "Sliding up!: ", input
+    $(input).slideUp()
     
   for input in $("input:not(.no-reset)")
+    console.log "clearding: ", input
     input.value = ""
