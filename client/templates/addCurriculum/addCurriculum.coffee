@@ -151,7 +151,7 @@ Template.createCurriculum.events {
     }
 
     Curriculum.update {_id: _id}, {$set: {nh_id:_id}}
-    alert("AYAYYYY!! new curriculum created")
+    alert("New curriculum created")
     Router.go "home"
 }
 
@@ -166,5 +166,9 @@ Template.createCurriculum.onRendered ()->
 
 resetForm = () ->
 
-  for input in $("input")
+  addModuleModal = $("#addModulModal")
+  for input in addModuleModal.find("input")
+    input.slideUp()
+    
+  for input in $("input:not(.no-reset)")
     input.value = ""
