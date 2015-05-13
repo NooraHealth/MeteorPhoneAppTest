@@ -1,8 +1,7 @@
-AccountsTemplates.configureRoute 'signIn', {
-  name: 'signin',
+AccountsTemplates.configureRoute "signIn", {
+  name: 'signIn',
   path:'/signIn',
   redirect: '/',
-  layoutTemplate: 'layout',
   template: 'entry',
 }
 
@@ -85,5 +84,7 @@ AccountsTemplates.addField {
 AccountsTemplates.configureRoute 'ensureSignedIn', {
   template: 'entry'
 }
+
+
 
 Router.plugin "ensureSignedIn"

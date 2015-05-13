@@ -16,6 +16,7 @@ Router.map ()->
       if this.ready() and Meteor.user()
         curr = Curriculum.findOne({condition: Meteor.user().profile.condition})
         if curr
+          console.log "Getting the home page", curr
           Session.set "current chapter", null
           Session.set "current lesson", null
           Session.set "current module index", null
@@ -70,10 +71,5 @@ Router.map ()->
     data: ()->
       Meteor.call "refreshContent", ()->
         console.log "Yey called refresh"
-  }
-
-
-  this.route '/createCurriculum', {
-    path: '/createCurriculum'
   }
 

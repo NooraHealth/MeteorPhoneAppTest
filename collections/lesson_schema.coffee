@@ -51,6 +51,9 @@ LessonSchema = new SimpleSchema
 Lessons.attachSchema LessonSchema
 
 Lessons.helpers {
+  imgSrc: ()->
+    return getMediaUrl()+ @.image
+
   getSublessonDocuments: ()->
     if !this.has_sublessons
       return []

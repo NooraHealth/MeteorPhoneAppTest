@@ -80,19 +80,19 @@ Modules.attachSchema ModuleSchema
 
 Modules.helpers {
   imgSrc: ()->
-    return MEDIA_URL+ @.image
+    return getMediaUrl()+ @.image
 
   audioSrc: ()->
-    return MEDIA_URL + @.audio
+    return getMediaUrl() + @.audio
 
   incorrectAnswerAudio: ()->
-    return MEDIA_URL + @.incorrect_audio
+    return getMediaUrl() + @.incorrect_audio
 
-correctAnswerAudio: ()->
-    return MEDIA_URL + @.correct_audio
+  correctAnswerAudio: ()->
+    return getMediaUrl() + @.correct_audio
   
   videoSrc: ()->
-    return MEDIA_URL + this.video
+    return getMediaUrl() + this.video
 
   isCorrectAnswer: (response)->
     
@@ -100,7 +100,7 @@ correctAnswerAudio: ()->
 
   getOptionObjects: ()->
     module = @
-    newArr = ({option: option, optionImgSrc: MEDIA_URL + option, nh_id: module.nh_id, i: i} for option, i in @.options)
+    newArr = ({option: option, optionImgSrc: getMediaUrl() + option, nh_id: module.nh_id, i: i} for option, i in @.options)
     return newArr
 
   option: (i)->
@@ -131,7 +131,4 @@ correctAnswerAudio: ()->
     return Modules.findOne {nh_id: @.next_module}
     
 }
-
-
-
-
+      
