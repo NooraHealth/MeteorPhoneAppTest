@@ -6,6 +6,7 @@ AccountsTemplates.configureRoute "signIn", {
       Router.go 'home'
     else
       Router.go 'selectCondition'
+      
   template: 'entry',
 }
 
