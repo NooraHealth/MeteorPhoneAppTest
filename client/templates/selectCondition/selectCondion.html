@@ -1,27 +1,21 @@
 <template name="selectCondition">
-  {{#Surface  origin="[.5, .5]" align="[.5, .5]" size="[600, 400]" id="selectConditionSurface"}}
-    <div class="row center-align noora-entry-logo" style="margin-bottom:50px;">
-      <div class="col offset-s5 offset-m5 offset-l5 s2 m2 l2">
-        <img src="./NHlogo.png">
-      </div>
-    </div>
+  {{#Surface  origin="[.5, .5]" align="[.5, .5]" size="[600, 700]" id="selectConditionSurface"}}
     <div class="row">
       <form action="#" id="selectCondition">
-          <div class="row">
-            <div class="input-field ">
-              <div class="row">
-                <div class="col l4 m4 s4">
-                  <p>Please select a condition </p>
-                </div>
-                <div class="col l8 m8 s8">
-                  <select >
-                    <option value=""  disabled selected >Condition</option>
-                    {{#each curriculums}}
-                    <option value="{{condition}}" >{{condition}}</option>
-                    {{/each}}
-                  </select>
-                </div>
-              </div>
+        <div class="row">
+          <h4> Please select a curriculum</h4>
+        </div>
+
+        <div class="row" >
+          <div class="input-field ">
+            <div class="col l8 m8 s8 offset-s2 offset-l2 offset-m2">
+              {{#each curriculums}}
+              <p>
+                <input id="{{title}}" class="with-gap" type="radio" name="curriculum">
+                <label for="{{title}}"> {{title}}</label>
+              </p>
+              {{/each}}
+            </div>
           </div>
         </div>
 
