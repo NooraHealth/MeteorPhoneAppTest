@@ -1,29 +1,26 @@
 <template name="selectCondition">
-  {{#Surface  origin="[.5, .5]" align="[.5, .5]" modifier="StateModifier"}}
-    <div class="container">
-      <div class="row center-align noora-entry-logo">
-        <div class="col offset-s5 offset-m5 offset-l5 s2 m2 l2">
-          <img src="./NHlogo.png">
-        </div>
+  {{#Surface  origin="[.5, .5]" align="[.5, .5]" id="selectConditionSurface"}}
+    <div class="row center-align noora-entry-logo">
+      <div class="col offset-s5 offset-m5 offset-l5 s2 m2 l2">
+        <img src="./NHlogo.png">
       </div>
-      <div class="row">
-        <form action="#" id="selectCondition">
-        
-            <div class="row">
-              <div class="input-field col l6 m6 ">
-              <label for="moduleType">Please select your condition: </label>
-              <br/>
-              <select id="moduleType">
-                <option value="" id="default-select" disabled selected >Condition</option>
-                {{#each curriculums}}
-                <option value="{{condition}}" id="default-select">{{condition}}</option>
-                {{/each}}
-              </select>
-            </div>
+    </div>
+    <div class="row">
+      <form action="#" id="selectCondition">
+          <div class="row">
+            <div class="input-field offset-s3 offset-m3 offset-l3 col l6 m6 ">
+            <label for="moduleType">Please select your condition: </label>
+            <br/>
+            <select >
+              <option value=""  disabled selected >Condition</option>
+              {{#each curriculums}}
+              <option value="{{condition}}" >{{condition}}</option>
+              {{/each}}
+            </select>
           </div>
+        </div>
 
-        </form>
-      </div>
+      </form>
     </div>
   {{/Surface}}
 </template>
