@@ -1,7 +1,11 @@
 AccountsTemplates.configureRoute "signIn", {
   name: 'signIn',
   path:'/signIn',
-  redirect: '/',
+  redirect: ()->
+    if Meteor.user().profile.condition
+      Router.go 'home'
+    else
+      Router.go 'selectCondition'
   template: 'entry',
 }
 

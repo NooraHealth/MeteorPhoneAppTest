@@ -14,7 +14,11 @@ Router.map ()->
     layoutTemplate: 'layout'
     data: ()->
       if this.ready() and Meteor.user()
+        if !Meteor.user().profile.condition
+          Router.go "selectCondition"
         curr = Curriculum.findOne({condition: Meteor.user().profile.condition})
+        console.log "Found a curriculum: ", curr
+        console.log "This is the user: ", Meteor.user()
         if curr
           console.log "Getting the home page", curr
           Session.set "current chapter", null
@@ -28,13 +32,13 @@ Router.map ()->
           return {chapters: chapters}
   }
 
-  ###
-  # Logout
-  ###
-  this.route '/logout', {
-    path: '/logout'
-    name: 'logout'
-    where: 'server'
+  this.route '/selectCondition', {
+    path: '/selectCondition'
+    layoutTemplate: 'layout'
+    name: 'selectCondition'
+    yieldTemplates: {
+      'footer': {to:"footer"}
+    }
   }
 
   ###
