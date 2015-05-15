@@ -12,10 +12,13 @@ Router.map ()->
       'footer': {to:"footer"}
     }
     layoutTemplate: 'layout'
+    onBeforeAction: ()->
+      if Meteor.user() and !Meteor.user().profile.condition
+        Router.go "selectCurriculum"
+      else
+        this.next()
     data: ()->
       if this.ready() and Meteor.user()
-        if !Meteor.user().profile.condition
-          Router.go "selectCondition"
         curr = Curriculum.findOne({condition: Meteor.user().profile.condition})
         console.log "Found a curriculum: ", curr
         console.log "This is the user: ", Meteor.user()
@@ -32,12 +35,12 @@ Router.map ()->
           return {chapters: chapters}
   }
 
-  this.route '/selectCondition', {
-    path: '/selectCondition'
+  this.route '/selectCurriculum', {
+    path: '/selectCurriculum'
     layoutTemplate: 'layout'
-    name: 'selectCondition'
+    name: 'selectCurriculum'
     yieldTemplates: {
-      'footer': {to:"footer"}
+      'selectCurriculumFooter': {to:"footer"}
     }
   }
 

@@ -5,7 +5,7 @@ AccountsTemplates.configureRoute "signIn", {
     if Meteor.user().profile.condition
       Router.go 'home'
     else
-      Router.go 'selectCondition'
+      Router.go 'selectCurriculum'
       
   template: 'entry',
 }
