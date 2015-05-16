@@ -11,7 +11,7 @@
             <div class="col l8 m8 s8 offset-s2 offset-l2 offset-m2">
               {{#each curriculums}}
               <p>
-                <input id="{{title}}" class="with-gap" type="radio" name="curriculum" value="{{_id}}">
+          <input id="{{title}}" class="with-gap" type="radio" name="curriculum" value="{{_id}}">
                 <label for="{{title}}"> {{title}}</label>
               </p>
               {{/each}}

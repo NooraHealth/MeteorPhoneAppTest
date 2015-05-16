@@ -15,4 +15,10 @@ Template.selectCurriculum.onRendered ()->
     console.log $("select")
     #$('select').material_select()
 
-  
+Template.selectCurriculumFooter.events {
+  'click #submitCurriculumSelect':(event, template) ->
+    console.log "clicked"
+    condition = $("input[name=curriculum]:selected")
+    console.log condition
+
+}
