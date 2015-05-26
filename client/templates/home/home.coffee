@@ -61,6 +61,14 @@ Template.chapterThumbnail.onRendered ()->
   else
     fview.modifier.setOpacity .5
 
+Template.chapterThumbnail.helpers {
+  imageSource: ()->
+    mediaUrl = Session.get "media url"
+    console.log "getting the image src", mediaUrl + @.image
+    return mediaUrl + @.image
+    #return "https://noorahealth-development.s3-west-1.amazonaws.com/" + @.image
+
+}
 completedChapter = (nh_id)->
   chaptersComplete = Meteor.user().profile.chapters_complete
   return nh_id in chaptersComplete

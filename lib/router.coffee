@@ -15,13 +15,14 @@ Router.map ()->
     onBeforeAction: ()->
       if Meteor.user() and (!Meteor.user().profile or !Meteor.user().profile.curriculumId)
         Router.go "selectCurriculum"
-      if !Meteor.user().profile.chapters_complete
+      if Meteor.user() and !Meteor.user().profile.chapters_complete
         Meteor.users.update {_id: Meteor.user()._id}, {$set:{"profile.chapters_complete": []}}
       else
         Meteor.call "mediaUrl", (err, result) ->
           if err
             console.log "error retrieving mediaURL: ", err
           else
+            console.log "SETTING the mediaUrl", result
             Session.set "media url", result
       this.next()
     data: ()->
@@ -36,6 +37,7 @@ Router.map ()->
           Session.set "current sections", null
           chapters =  curr.getLessonDocuments()
           Session.set "chapters sequence", chapters
+          Session.set "media url", "Something"
           return {chapters: chapters}
   }
 

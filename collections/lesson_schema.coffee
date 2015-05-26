@@ -51,9 +51,6 @@ LessonSchema = new SimpleSchema
 Lessons.attachSchema LessonSchema
 
 Lessons.helpers {
-  #imgSrc: ()->
-    #console.log Meteor.MEDIA_URL
-    #return Meteor.MEDIA_URL+@.image
 
   getSublessonDocuments: ()->
     if !this.has_sublessons

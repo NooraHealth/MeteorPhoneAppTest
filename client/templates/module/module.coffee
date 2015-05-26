@@ -12,8 +12,11 @@ Template.module.helpers
      console.log "REARRAd=nh_id NGED: ", rearrangedModules
      return rearrangedModules
    
-   dummyModule: ()->
-     return @.type == "dummy"
+  dummyModule: ()->
+    return @.type == "dummy"
+
+  imgSrc: ()->
+    return Session.get "media url" + @.image
 
   currentModule: ()->
     if @

@@ -6,26 +6,13 @@ Meteor.methods {
       return 'https://noorahealth-development.s3-west-1.amazonaws.com/'
 
   isProduction: ()->
-    return process.env.NODE_ENV == 'production'
+    return process.env.METEOR_ENV == 'production'
 
   getBucket: ()->
-    if process.env.NODE_ENV == 'production'
+    if process.env.METEOR_ENV== 'production'
       return BUCKET
     else
       return DEV_BUCKET
-
-  #uploadContent: (file, type)->
-    #s3 = new AWS.S3()
-    #console.log file
-    #console.log typeof file
-    #console.log "TYEP: ", type
-
-
-    #s3.upload {Bucket: BUCKET, ContentType: file.type,  Key: prefix + file.name, Body: JSON.stringify(file, null, '')}, (err, data) ->
-      #console.log "upload CALLBACK"
-      #console.log err
-      #console.log data
-    
 
   refreshContent: ()->
     Curriculum.remove({})
