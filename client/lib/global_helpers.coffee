@@ -47,7 +47,9 @@ Template.registerHelper 'isCorrectAnswer', (response)->
   answers = (answer.toLowerCase() for answer in Template.instance().data.correct_answer)
   return response.toLowerCase() in answers
 
-#Template.registerHelper 'imgSrc', () ->
-  #return MEDIA_URL + @.image
+Template.registerHelper 'imgSrc', () ->
+  console.log "getting the image src"
+  console.log Session.get "media url"
+  return Session.get "media url" + @.image
 
 

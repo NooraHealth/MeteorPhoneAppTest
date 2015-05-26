@@ -79,8 +79,8 @@ ModuleSchema = new SimpleSchema
 Modules.attachSchema ModuleSchema
 
 Modules.helpers {
-  imgSrc: ()->
-    return getMediaUrl()+ @.image
+  #imgSrc: ()->
+    #return getMediaUrl()+ @.image
 
   audioSrc: ()->
     return getMediaUrl() + @.audio

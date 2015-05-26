@@ -18,7 +18,9 @@ Template.selectCurriculum.onRendered ()->
 Template.selectCurriculumFooter.events {
   'click #submitCurriculumSelect':(event, template) ->
     console.log "clicked"
-    condition = $("input[name=curriculum]:selected")
-    console.log condition
+    curriculumId = $("input[name=curriculum]:checked").val()
+    Meteor.users.update {_id: Meteor.user()._id}, {$set: {"profile.curriculumId": curriculumId}}
+    console.log curriculumId
+    Router.go "home"
 
 }

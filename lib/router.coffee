@@ -13,17 +13,21 @@ Router.map ()->
     }
     layoutTemplate: 'layout'
     onBeforeAction: ()->
-      if Meteor.user() and !Meteor.user().profile.condition
+      if Meteor.user() and (!Meteor.user().profile or !Meteor.user().profile.curriculumId)
         Router.go "selectCurriculum"
+      if !Meteor.user().profile.chapters_complete
+        Meteor.users.update {_id: Meteor.user()._id}, {$set:{"profile.chapters_complete": []}}
       else
-        this.next()
+        Meteor.call "mediaUrl", (err, result) ->
+          if err
+            console.log "error retrieving mediaURL: ", err
+          else
+            Session.set "media url", result
+      this.next()
     data: ()->
       if this.ready() and Meteor.user()
-        curr = Curriculum.findOne({condition: Meteor.user().profile.condition})
-        console.log "Found a curriculum: ", curr
-        console.log "This is the user: ", Meteor.user()
+        curr = Curriculum.findOne({_id: Meteor.user().profile.curriculumId})
         if curr
-          console.log "Getting the home page", curr
           Session.set "current chapter", null
           Session.set "current lesson", null
           Session.set "current module index", null
