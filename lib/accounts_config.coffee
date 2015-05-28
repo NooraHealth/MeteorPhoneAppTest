@@ -47,7 +47,7 @@ AccountsTemplates.configure {
       user = Meteor.user()
       if !error
         Router.go "/"
-
+    
     # Texts
     texts: {
 

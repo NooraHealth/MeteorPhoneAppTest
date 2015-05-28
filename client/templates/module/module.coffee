@@ -15,9 +15,9 @@ Template.module.helpers
   dummyModule: ()->
     return @.type == "dummy"
 
-  imgSrc: ()->
-    return Session.get "media url" + @.image
-
+  #imgSrc: ()->
+    #return Session.get "media url" + @.image
+  
   currentModule: ()->
     if @
       return @.modules[Session.get "current module index"]

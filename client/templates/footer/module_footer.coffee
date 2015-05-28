@@ -1,10 +1,14 @@
 Template.moduleFooter.helpers
+  #audioSrc: ()->
+    #return Session.get "media url" + @.audio
+
   restOfDocs: ()->
     rest = (module for module, index in @.modules when index != 0)
     return rest
 
   firstModule: ()->
     return @.modules[0]
+  
   modules: ()->
     modules = Session.get "modules sequence"
     if !modules?
@@ -55,7 +59,7 @@ Template.moduleFooter.onRendered ()->
   #'click [name=previous]': (event, template)->
     #goToPreviousModule(event, template)
  
-moduleFooter.autorun ()->
+Tracker.autorun ()->
   moduleSequence = Session.get "modules sequence"
   currentModuleIndex = Session.get "current module index"
   

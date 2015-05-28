@@ -13,8 +13,13 @@ Router.map ()->
     }
     layoutTemplate: 'layout'
     onBeforeAction: ()->
-      if Meteor.user() and (!Meteor.user().profile or !Meteor.user().profile.curriculumId)
+      Session.set "current transition", "slideWindowRight"
+      if Meteor.user() and not Meteor.user().profile
+        Meteor.users.update {_id: Meteor.user()._id}, {$set: {"profile": {} }}
         Router.go "selectCurriculum"
+      else if Meteor.user() and not Meteor.user().profile.curriculumId
+        Router.go "selectCurriculum"
+
       if Meteor.user() and !Meteor.user().profile.chapters_complete
         Meteor.users.update {_id: Meteor.user()._id}, {$set:{"profile.chapters_complete": []}}
       else
@@ -25,10 +30,13 @@ Router.map ()->
             console.log "SETTING the mediaUrl", result
             Session.set "media url", result
       this.next()
+
     data: ()->
       if this.ready() and Meteor.user()
         curr = Curriculum.findOne({_id: Meteor.user().profile.curriculumId})
         if curr
+          console.log "This is the curriculum to be used: ", curr
+          console.log Curriculum
           Session.set "current chapter", null
           Session.set "current lesson", null
           Session.set "current module index", null
@@ -48,6 +56,14 @@ Router.map ()->
     yieldTemplates: {
       'selectCurriculumFooter': {to:"footer"}
     }
+    onBeforeAction: ()->
+      console.log "This is he curriculum object: ", Curriculum
+      console.log Curriculum.find({}).count({})
+      console.log Lessons.find({}).count({})
+      console.log Lessons
+      Session.set "current transition", "opacity"
+      Meteor.subscribe "curriculums"
+      this.next()
   }
 
   ###
@@ -61,6 +77,9 @@ Router.map ()->
     yieldTemplates: {
       'moduleFooter': {to:"footer"}
     }
+    onBeforeAction: ()->
+      Session.set "current transition", "slideWindowRight"
+      this.next()
     data: () ->
       if this.ready()
         lesson = Lessons.findOne {nh_id: this.params.nh_id}

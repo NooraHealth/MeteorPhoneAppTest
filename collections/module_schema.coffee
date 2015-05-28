@@ -79,28 +79,24 @@ ModuleSchema = new SimpleSchema
 Modules.attachSchema ModuleSchema
 
 Modules.helpers {
-  #imgSrc: ()->
-    #return getMediaUrl()+ @.image
-
-  audioSrc: ()->
-    return getMediaUrl() + @.audio
+  imgSrc: ()->
+    return Session.get "media url"+ @.image
 
   incorrectAnswerAudio: ()->
-    return getMediaUrl() + @.incorrect_audio
+    return Session.get "media url" + @.incorrect_audio
 
   correctAnswerAudio: ()->
-    return getMediaUrl() + @.correct_audio
+    return Session.get "media url" + @.correct_audio
   
   videoSrc: ()->
-    return getMediaUrl() + this.video
+    return Session.get "media url"  + @.video
 
   isCorrectAnswer: (response)->
-    
     return response in @.correct_answer
 
   getOptionObjects: ()->
     module = @
-    newArr = ({option: option, optionImgSrc: getMediaUrl() + option, nh_id: module.nh_id, i: i} for option, i in @.options)
+    newArr = ({option: option, optionImgSrc: Session.get "media url" + option, nh_id: module.nh_id, i: i} for option, i in @.options)
     return newArr
 
   option: (i)->

@@ -20,13 +20,13 @@ coffeescript@1.0.6
 dburles:collection-helpers@1.0.3
 ddp@1.1.0
 deps@1.0.7
-edgee:slingshot@0.6.2
+edgee:slingshot@0.7.1
 ejson@1.0.6
 email@1.0.6
 facebook@1.2.0
 fastclick@1.0.3
 fourseven:scss@2.1.1
-gadicohen:famous-views@0.1.32
+gadicohen:famous-views@0.2.2
 geojson-utils@1.0.3
 google@1.1.5
 html-tools@1.0.4
@@ -84,8 +84,8 @@ tracker@1.0.7
 ui@1.0.6
 underscore@1.0.3
 url@1.0.4
-useraccounts:core@1.9.1
-useraccounts:materialize@1.9.1
+useraccounts:core@1.10.0
+useraccounts:materialize@1.10.0
 webapp@1.2.0
 webapp-hashing@1.0.3
-wolves:bourbon@1.0.0
+wolves:bourbon@1.2.0
