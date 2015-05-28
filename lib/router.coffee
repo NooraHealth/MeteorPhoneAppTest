@@ -35,8 +35,6 @@ Router.map ()->
       if this.ready() and Meteor.user()
         curr = Curriculum.findOne({_id: Meteor.user().profile.curriculumId})
         if curr
-          console.log "This is the curriculum to be used: ", curr
-          console.log Curriculum
           Session.set "current chapter", null
           Session.set "current lesson", null
           Session.set "current module index", null
@@ -45,7 +43,6 @@ Router.map ()->
           Session.set "current sections", null
           chapters =  curr.getLessonDocuments()
           Session.set "chapters sequence", chapters
-          Session.set "media url", "Something"
           return {chapters: chapters}
   }
 
@@ -57,10 +54,6 @@ Router.map ()->
       'selectCurriculumFooter': {to:"footer"}
     }
     onBeforeAction: ()->
-      console.log "This is he curriculum object: ", Curriculum
-      console.log Curriculum.find({}).count({})
-      console.log Lessons.find({}).count({})
-      console.log Lessons
       Session.set "current transition", "opacity"
       Meteor.subscribe "curriculums"
       this.next()

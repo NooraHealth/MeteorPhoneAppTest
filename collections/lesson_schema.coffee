@@ -51,6 +51,11 @@ LessonSchema = new SimpleSchema
 Lessons.attachSchema LessonSchema
 
 Lessons.helpers {
+  imgSrc: ()->
+    console.log getMediaUrl()
+    console.log getMediaUrl() + @.image
+    url =getMediaUrl()
+    return url + @.image
 
   getSublessonDocuments: ()->
     if !this.has_sublessons
@@ -91,5 +96,6 @@ Lessons.helpers {
 
 
 }
-
+getMediaUrl = ()->
+  return Session.get "media url"
 
