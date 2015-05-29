@@ -1,4 +1,12 @@
 Meteor.methods {
+  loadContent: ()->
+    curriculumId = Meteor.user().curriculumId
+    curr = Curriculum.find({_id: curriculumId})
+    lessons = curr.getLessonDocuments()
+    for lesson in lessons
+      loadLesson lesson
+
+
   mediaUrl: ()->
     if process.env.METEOR_ENV == 'production'
       return "https://noorahealthcontent.s3-us-west-1.amazonaws.com/"
