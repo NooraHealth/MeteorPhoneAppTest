@@ -101,6 +101,10 @@ Custom NH components
   background:green;
 }
 
+.fullScreen {
+  height: 100%;
+  width: 100%;
+}
 .uploadOption {
   height: 50px;
   text-align: center;
@@ -111,6 +115,7 @@ Custom NH components
 .bottom {
   bottom: 0;
 }
+
 #addModuleModal {
   height: 100%;
   width: 80%;
