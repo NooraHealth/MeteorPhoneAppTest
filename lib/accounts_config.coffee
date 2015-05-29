@@ -74,17 +74,18 @@ AccountsTemplates.configure {
       },
     }
 }
+
 AccountsTemplates.addField {
   _id: "attempts",
   type: "hidden",
 }
 
-AccountsTemplates.addField {
-  _id: 'condition'
-  required: true
-  type: 'text'
-  displayName: 'Condition'
-}
+#AccountsTemplates.addField {
+  #_id: 'condition'
+  #required: true
+  #type: 'text'
+  #displayName: 'Condition'
+#}
 
 AccountsTemplates.configureRoute 'ensureSignedIn', {
   template: 'entry'

@@ -1,5 +1,7 @@
 Accounts.onCreateUser (options, user)->
-  user.profile = options.profile
+  console.log options
+  console.log user
+  user.profile = options.profile or {}
   user.profile['chapters_complete'] = []
   return user
 
