@@ -15,27 +15,27 @@ Router.map ()->
     onBeforeAction: ()->
       if !Meteor.user()
         this.next()
-
-      Session.set "current transition", "slideWindowRight"
-      if not Meteor.user().profile
-        Meteor.users.update {_id: Meteor.user()._id}, {$set: {"profile": {} }}
-        Router.go "selectCurriculum"
-      else if not Meteor.user().profile.curriculumId
-        Router.go "selectCurriculum"
-
-      if Meteor.isCordova and not Meteor.user().profile.content_loaded
-        console.log "cordova!"
-
-      if not Meteor.user().profile.chapters_complete
-        Meteor.users.update {_id: Meteor.user()._id}, {$set:{"profile.chapters_complete": []}}
       else
-        Meteor.call "mediaUrl", (err, result) ->
-          if err
-            console.log "error retrieving mediaURL: ", err
-          else
-            console.log "SETTING the mediaUrl", result
-            Session.set "media url", result
-      this.next()
+        Session.set "current transition", "slideWindowRight"
+        if not Meteor.user().profile
+          Meteor.users.update {_id: Meteor.user()._id}, {$set: {"profile": {} }}
+          Router.go "selectCurriculum"
+        else if not Meteor.user().profile.curriculumId
+          Router.go "selectCurriculum"
+
+        if Meteor.isCordova and not Meteor.user().profile.content_loaded
+          console.log "cordova!"
+
+        if not Meteor.user().profile.chapters_complete
+          Meteor.users.update {_id: Meteor.user()._id}, {$set:{"profile.chapters_complete": []}}
+        else
+          Meteor.call "mediaUrl", (err, result) ->
+            if err
+              console.log "error retrieving mediaURL: ", err
+            else
+              console.log "SETTING the mediaUrl", result
+              Session.set "media url", result
+        this.next()
 
     data: ()->
       if this.ready() and Meteor.user()
@@ -104,3 +104,8 @@ Router.map ()->
         console.log "Yey called refresh"
   }
 
+
+Router.configure {
+  progressSpinner:false
+
+}

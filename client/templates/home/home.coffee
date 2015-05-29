@@ -11,6 +11,9 @@ Template.chapterThumbnail.events {
 Template.home.onRendered ()->
   cards = FView.byId "cardLayout"
   width = Session.get "chapter card width"
+  if !Meteor.user()
+    return
+
   cardsComplete = Meteor.user().profile.chapters_complete.length
   chapters = Session.get "chapters sequence"
   if cardsComplete < chapters.length
