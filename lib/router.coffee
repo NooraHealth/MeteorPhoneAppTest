@@ -13,14 +13,20 @@ Router.map ()->
     }
     layoutTemplate: 'layout'
     onBeforeAction: ()->
+      if !Meteor.user()
+        this.next()
+
       Session.set "current transition", "slideWindowRight"
-      if Meteor.user() and not Meteor.user().profile
+      if not Meteor.user().profile
         Meteor.users.update {_id: Meteor.user()._id}, {$set: {"profile": {} }}
         Router.go "selectCurriculum"
-      else if Meteor.user() and not Meteor.user().profile.curriculumId
+      else if not Meteor.user().profile.curriculumId
         Router.go "selectCurriculum"
 
-      if Meteor.user() and !Meteor.user().profile.chapters_complete
+      if Meteor.isCordova and not Meteor.user().profile.content_loaded
+        console.log "cordova!"
+
+      if not Meteor.user().profile.chapters_complete
         Meteor.users.update {_id: Meteor.user()._id}, {$set:{"profile.chapters_complete": []}}
       else
         Meteor.call "mediaUrl", (err, result) ->
