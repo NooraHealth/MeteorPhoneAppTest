@@ -1,11 +1,4 @@
 Meteor.methods {
-  loadContent: ()->
-    curriculumId = Meteor.user().curriculumId
-    curr = Curriculum.find({_id: curriculumId})
-    lessons = curr.getLessonDocuments()
-    for lesson in lessons
-      loadLesson lesson
-
 
   mediaUrl: ()->
     if process.env.METEOR_ENV == 'production'
@@ -31,3 +24,4 @@ Meteor.methods {
     Lessons.insert lesson for lesson in LESSONS
     Modules.insert module for module in MODULES
 }
+
