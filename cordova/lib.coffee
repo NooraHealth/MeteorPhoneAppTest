@@ -16,7 +16,7 @@ loadModule = (module)->
   audioSrc = module.audioSrc()
   incorrectAnswerAudio = module.incorrectAnswerAudio()
   correctAnswerAudio = module.correctAnswerAudio()
-  optionUrls = (url for optionImgSrc in module.getOptionObjects())
+  optionUrls = (option.optionImgSrc for option in module.getOptionObjects())
   console.log "These are the optionUrls: ", optionUrls
   console.log imageUrl
   console.log audioSrc

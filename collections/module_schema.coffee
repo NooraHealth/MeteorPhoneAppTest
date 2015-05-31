@@ -81,6 +81,8 @@ Modules.helpers {
 
   getOptionObjects: ()->
     module = @
+    if not @.options
+      return []
     newArr = ({option: option, optionImgSrc: getMediaUrl() + option, nh_id: module.nh_id, i: i} for option, i in @.options)
     return newArr
 
