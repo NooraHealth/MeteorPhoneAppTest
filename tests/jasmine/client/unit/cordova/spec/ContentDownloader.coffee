@@ -32,7 +32,19 @@ describe "ContentDownloader", ()->
     expect('NooraHealthContent/Image/actgoalsO5Q1' in urls).toBeTruthy()
     expect('NooraHealthContent/Image/actgoalsO5Q2' in urls).toBeTruthy()
     expect('NooraHealthContent/Image/actgoalsO5Q3' in urls).toBeTruthy()
+
+    lesson2 = Lessons.findOne {nh_id: 'testlesson2'}
+    urls2 = downloader.retrieveContentUrls lesson2
+
+    console.log urls2
+    expect(urls2.length).toEqual 3
+    
    
   it "should return an error when given invalid arguments", ()->
     expect(()-> downloader.retrieveContentUrls()).toThrow()
     expect(()-> downloader.retrieveContentUrls("a string")).toThrow()
+
+  it 'should have a function called downloadFiles', ()->
+    expect(downloader.downloadFiles).toBeDefined()
+
+

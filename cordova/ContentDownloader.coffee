@@ -25,8 +25,6 @@ class @ContentDownloader
       urls.push lesson.imgSrc()
 
     for module in modules
-      console.log module
-      console.log @
       urls.merge(@.moduleUrls(module))
     
     return urls
@@ -44,8 +42,7 @@ class @ContentDownloader
       urls.push module.incorrectAnswerAudio()
     if module.correct_audio
       urls.push module.correctAnswerAudio()
-    if module.options
+    if module.options and ( module.type == 'MULTIPLE_CHOICE' or module.type == 'GOAL_CHOICE')
       urls.push option.optionImgSrc for option in module.getOptionObjects()
-
     return urls
 

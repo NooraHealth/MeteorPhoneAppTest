@@ -52,7 +52,7 @@ class CreateTestData
     Lessons.insert {
       'title':'testlesson2',
       'nh_id':'testlesson2',
-      'image':'NooraHealthContent/Image/actgoalsO2Q2.png',
+      'image':'NooraHealthContent/Image/actgoalsO2Q2',
       'modules':[id3, id4]
     }
 
