@@ -1,4 +1,8 @@
 Meteor.methods {
+  clearMongo: ()->
+    Curriculum.remove({})
+    Lessons.remove({})
+    Modules.remove({})
 
   mediaUrl: ()->
     if process.env.METEOR_ENV == 'production'

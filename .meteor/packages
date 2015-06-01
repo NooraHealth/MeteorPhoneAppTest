@@ -27,3 +27,6 @@ edgee:slingshot
 service-configuration
 autopublish
 multiply:iron-router-progress
+sanjo:jasmine
+velocity:html-reporter
+velocity:console-reporter

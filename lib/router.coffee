@@ -25,7 +25,9 @@ Router.map ()->
 
         if Meteor.isCordova and not Meteor.user().profile.content_loaded
           console.log "cordova!"
-          Meteor.loadContent()
+          downloader = new ContentDownloader()
+
+          #Meteor.loadContent()
 
         if not Meteor.user().profile.chapters_complete
           Meteor.users.update {_id: Meteor.user()._id}, {$set:{"profile.chapters_complete": []}}

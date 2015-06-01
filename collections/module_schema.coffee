@@ -17,9 +17,6 @@ ModuleSchema = new SimpleSchema
     optional:true
   type:
     type:String
-  next_module:
-    type:String
-    optional:true
   title:
     type:String
     optional:true
@@ -115,4 +112,10 @@ Modules.helpers {
     
 }
 getMediaUrl = ()->
-  return Session.get "media url"
+  if Meteor.isClient
+    if Session.get "media url"
+      return Session.get "media url"
+    else
+      return ""
+  if Meteor.isServer or Meteor.isCordova
+    return Meteor.call "mediaUrl"
