@@ -5,10 +5,13 @@ describe "ContentDownloader", ()->
     testCurriculum = Curriculum.findOne {title: 'TestCurriculum'}
     downloader = new ContentDownloader(testCurriculum)
     dataCreator = new CreateTestData()
-    dataCreator.reset()
+    dataCreator.setUp()
 
     console.log "Getting the lesson count: "
     console.log Lessons.find({nh_id: 'testlesson1'}).count()
+
+  afterAll ()->
+    dataCreator.tearDown()
   
   it "should exist", ()->
     expect(downloader).toBeDefined()
@@ -19,19 +22,19 @@ describe "ContentDownloader", ()->
     urls = downloader.retrieveContentUrls(lesson)
 
     expect(urls.length).toEqual 13
-    expect('NooraHealthContent/Image/actgoalsO6Q1' in urls).toBeTruthy()
-    expect('NooraHealthContent/Image/actgoalsO1Q1' in urls).toBeTruthy()
-    expect('NooraHealthContent/Image/actgoalsO1Q2' in urls).toBeTruthy()
-    expect('NooraHealthContent/Image/actgoalsO1Q3' in urls).toBeTruthy()
-    expect('NooraHealthContent/Image/actgoalsO3Q1' in urls).toBeTruthy()
-    expect('NooraHealthContent/Image/actgoalsO3Q2' in urls).toBeTruthy()
-    expect('NooraHealthContent/Image/actgoalsO3Q3' in urls).toBeTruthy()
-    expect('NooraHealthContent/Image/actgoalsO4Q1' in urls).toBeTruthy()
-    expect('NooraHealthContent/Image/actgoalsO4Q2' in urls).toBeTruthy()
-    expect('NooraHealthContent/Image/actgoalsO4Q3' in urls).toBeTruthy()
-    expect('NooraHealthContent/Image/actgoalsO5Q1' in urls).toBeTruthy()
-    expect('NooraHealthContent/Image/actgoalsO5Q2' in urls).toBeTruthy()
-    expect('NooraHealthContent/Image/actgoalsO5Q3' in urls).toBeTruthy()
+    expect('NooraHealthContent/Image/actgoalsO6Q1.png' in urls).toBeTruthy()
+    expect('NooraHealthContent/Image/actgoalsO1Q1.png' in urls).toBeTruthy()
+    expect('NooraHealthContent/Image/actgoalsO1Q2.png' in urls).toBeTruthy()
+    expect('NooraHealthContent/Image/actgoalsO1Q3.png' in urls).toBeTruthy()
+    expect('NooraHealthContent/Image/actgoalsO3Q1.png' in urls).toBeTruthy()
+    expect('NooraHealthContent/Image/actgoalsO3Q2.png' in urls).toBeTruthy()
+    expect('NooraHealthContent/Image/actgoalsO3Q3.png' in urls).toBeTruthy()
+    expect('NooraHealthContent/Image/actgoalsO4Q1.png' in urls).toBeTruthy()
+    expect('NooraHealthContent/Image/actgoalsO4Q2.png' in urls).toBeTruthy()
+    expect('NooraHealthContent/Image/actgoalsO4Q3.png' in urls).toBeTruthy()
+    expect('NooraHealthContent/Image/actgoalsO5Q1.png' in urls).toBeTruthy()
+    expect('NooraHealthContent/Image/actgoalsO5Q2.png' in urls).toBeTruthy()
+    expect('NooraHealthContent/Image/actgoalsO5Q3.png' in urls).toBeTruthy()
 
     lesson2 = Lessons.findOne {nh_id: 'testlesson2'}
     urls2 = downloader.retrieveContentUrls lesson2
