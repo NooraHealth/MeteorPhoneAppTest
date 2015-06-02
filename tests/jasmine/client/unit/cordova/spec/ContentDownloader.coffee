@@ -20,7 +20,6 @@ describe "ContentDownloader", ()->
   it "should return the correct url array when retrieveContentUrls is called", ()->
     id = dataCreator.lessonId(0)
     lesson = Lessons.findOne {_id: id}
-    console.log "Lesson have .pong?", lesson
     urls = downloader.retrieveContentUrls(lesson)
 
     expect(urls.length).toEqual 13
@@ -43,7 +42,6 @@ describe "ContentDownloader", ()->
     lesson2 = Lessons.findOne {_id:id2}
     urls2 = downloader.retrieveContentUrls lesson2
 
-    console.log urls2
     expect(urls2.length).toEqual 3
     
    
