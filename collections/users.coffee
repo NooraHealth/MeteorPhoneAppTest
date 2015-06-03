@@ -5,8 +5,8 @@ Meteor.users.helpers {
   getCurriculum: ()->
     return Curriculum.findOne {_id: @.profile.curriculumId}
 
-  setCurriculum: (curriculum)->
-    @.profile.curriculumId = curriculum._id
+  setCurriculum: (id)->
+    @.profile.curriculumId = id
     @
 
   setContentAsLoaded: ()->
