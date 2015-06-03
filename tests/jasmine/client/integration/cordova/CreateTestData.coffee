@@ -6,7 +6,6 @@ class CreateTestData
     @.curriculums = []
     @.title = 'Test Curriculum'
     @.lessonTitles = ['lesson1title', 'lesson2title']
-    console.log @
   
   setUp: ()->
 
@@ -72,7 +71,6 @@ class CreateTestData
     return @.lessons[i]
 
   tearDown: ()->
-    console.log "Tearing down the test data"
     for id in @.modules
       Modules.remove {_id: id}
 

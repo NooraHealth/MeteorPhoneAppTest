@@ -16,20 +16,13 @@ Router.map ()->
       if !Meteor.user()
         this.next()
       else
-        Session.set "current transition", "slideWindowRight"
-        if not Meteor.user().profile
-          Meteor.users.update {_id: Meteor.user()._id}, {$set: {"profile": {} }}
-          Router.go "selectCurriculum"
-        else if not Meteor.user().profile.curriculumId
+        if not Meteor.user().curriculumIsSet()
           Router.go "selectCurriculum"
 
-        if Meteor.isCordova and not Meteor.user().profile.content_loaded
+        if Meteor.isCordova and not Meteor.user().contentLoaded()
           console.log "cordova!"
-          downloader = new ContentDownloader('')
-          Meteor.loadContent()
-
-        if not Meteor.user().profile.chapters_complete
-          Meteor.users.update {_id: Meteor.user()._id}, {$set:{"profile.chapters_complete": []}}
+          downloader = new ContentDownloader(Meteor.user().getCurriculum())
+          downloader.loadContent()
         else
           Meteor.call "mediaUrl", (err, result) ->
             if err

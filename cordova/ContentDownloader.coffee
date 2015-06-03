@@ -1,6 +1,7 @@
 Array::merge = (other) -> Array::push.apply @, other
 
 class @ContentDownloader
+
   constructor: (@curriculum)->
 
   downloadFiles: (urls)->

@@ -31,8 +31,6 @@ Lessons.attachSchema LessonSchema
 
 Lessons.helpers {
   imgSrc: ()->
-    console.log getMediaUrl()
-    console.log getMediaUrl() + @.image
     url =getMediaUrl()
     return url + @.image
 
