@@ -102,9 +102,8 @@ Custom NH components
 }
 
 .fullScreen {
-  height: 80%;
+  height: 90%;
   width: 100%;
-  padding: 50px;
 }
 
 .uploadOption {
@@ -127,6 +126,7 @@ Custom NH components
 }
 .scrollBox {
   overflow-y:scroll;
+  padding: 50px !important;
 }
 .file-input {
   margin-right: 10px;
