@@ -7,10 +7,10 @@ Template.selectCurriculum.onRendered ()->
   fview = FView.from this
   #fview.node._object.hide()
   surface = FView.byId("selectConditionSurface").surface
-  console.log surface
-  surface.setProperties {
-    color: 'black'
-  }
+
+  #surface.setProperties {
+    #color: 'black'
+  #}
   surface.on "deploy", ()->
     console.log "deployed"
     console.log $("select")

@@ -1,6 +1,9 @@
 Meteor.users.helpers {
   curriculumIsSet: ()->
-    return @.profile.curriculumId?
+    if not @.profile or not @.profile.curriculumId
+      return false
+    curriculum = Curriculum.findOne {_id: @.profile.curriculumId}
+    return curriculum?
 
   getCurriculum: ()->
     return Curriculum.findOne {_id: @.profile.curriculumId}
