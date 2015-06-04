@@ -9,7 +9,7 @@ Meteor.users.helpers {
     return Curriculum.findOne {_id: @.profile.curriculumId}
 
   setCurriculum: (id)->
-    @.profile.curriculumId = id
+    Meteor.users.update {_id: @._id}, { $set: {"profile.curriculumId": id}}
     @
 
   setContentAsLoaded: ()->
