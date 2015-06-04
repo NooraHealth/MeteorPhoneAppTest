@@ -16,6 +16,7 @@ Router.map ()->
       if !Meteor.user()
         this.next()
       else
+        console.log "ROUTE to HOME PAGE"
         Session.set "current transition", "slideWindowRight"
         if not Meteor.user().profile
           Meteor.users.update {_id: Meteor.user()._id}, {$set: {"profile": {} }}
