@@ -19,19 +19,21 @@ Router.map ()->
         console.log "ROUTING TO HOME"
         if not Meteor.user().curriculumIsSet()
           Router.go "selectCurriculum"
-
+        console.log "Not going to get curriculum"
         if Meteor.isCordova and not Meteor.user().contentLoaded()
           console.log "cordova!"
           downloader = new ContentDownloader(Meteor.user().getCurriculum())
           downloader.loadContent()
         else
           mediaUrl = Meteor.call "mediaUrl"
+          console.log "Just set the media url"
           Session.set "media url", mediaUrl
         this.next()
 
     data: ()->
       if this.ready() and Meteor.user()
         curr = Curriculum.findOne({_id: Meteor.user().profile.curriculumId})
+        console.log "This si the curriculum"
         if curr
           Session.set "current chapter", null
           Session.set "current lesson", null

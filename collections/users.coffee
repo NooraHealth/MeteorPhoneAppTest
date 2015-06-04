@@ -21,4 +21,8 @@ Meteor.users.helpers {
 
   getCompletedChapters: ()->
     return @.profile.chapters_complete
+  
+  hasCompletedChapter: (_id)->
+    chaptersComplete = @.getCompletedChapters()
+    return _id in chaptersComplete
 }

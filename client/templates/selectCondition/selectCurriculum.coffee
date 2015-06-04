@@ -1,5 +1,9 @@
 Template.selectCurriculum.helpers {
   curriculums: ()->
+    console.log Curriculum.find({})
+    cursor = Curriculum.find({})
+    cursor.forEach (el)->
+      console.log el
     return Curriculum.find({})
 }
 

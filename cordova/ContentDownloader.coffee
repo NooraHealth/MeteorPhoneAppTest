@@ -5,20 +5,20 @@ class @ContentDownloader
   constructor: (@curriculum)->
 
   downloadFiles: (urls)->
-    for url in urls
-      ft = new FileTransfer()
-      uri = encodeURI url
-      endURL = FileEntry.toURL()
-      onSuccess = (entry)->
-        console.log "SUCCESS: ", entry
-      onError = (error)->
-        console.log "error downloading: ", error
-      ft.download {
-        uri,
-        endURL,
-        onSuccess,
-        onError
-      }
+    #for url in urls
+      #ft = new FileTransfer()
+      #uri = encodeURI url
+      #endURL = FileEntry.toURL()
+      #onSuccess = (entry)->
+        #console.log "SUCCESS: ", entry
+      #onError = (error)->
+        #console.log "error downloading: ", error
+      #ft.download {
+        #uri,
+        #endURL,
+        #onSuccess,
+        #onError
+      #}
 
   loadContent: ()->
     lessons = curriculum.getLessonDocuments()
