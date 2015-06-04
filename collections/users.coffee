@@ -12,8 +12,8 @@ Meteor.users.helpers {
     Meteor.users.update {_id: @._id}, { $set: {"profile.curriculumId": id}}
     @
 
-  setContentAsLoaded: ()->
-    @.profile.content_loaded = true
+  setContentAsLoaded: (loaded)->
+    Meteor.users.update {_id: @._id}, { $set: {"profile.content_loaded": loaded}}
     @
 
   contentLoaded: ()->

@@ -16,6 +16,7 @@ Router.map ()->
       if !Meteor.user()
         this.next()
       else
+        console.log "ROUTING TO HOME"
         if not Meteor.user().curriculumIsSet()
           Router.go "selectCurriculum"
 
