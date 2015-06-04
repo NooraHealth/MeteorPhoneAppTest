@@ -24,12 +24,8 @@ Router.map ()->
           downloader = new ContentDownloader(Meteor.user().getCurriculum())
           downloader.loadContent()
         else
-          Meteor.call "mediaUrl", (err, result) ->
-            if err
-              console.log "error retrieving mediaURL: ", err
-            else
-              console.log "SETTING the mediaUrl", result
-              Session.set "media url", result
+          mediaUrl = Meteor.call "mediaUrl"
+          Session.set "media url", mediaUrl
         this.next()
 
     data: ()->
