@@ -9,23 +9,28 @@ class @ContentDownloader
     console.log "FileTransfer: ", FileTransfer
     console.log "FileEntry: ", FileEntry
     for url in urls
-      ft = new FileTransfer()
-      console.log "FT: ", ft
-      uri = encodeURI url
-      console.log "URI: ", uri
-      endURL = FileEntry.toURL()
-      console.log "endURL:" , endURL
-      onSuccess = (entry)->
-        console.log "SUCCESS: ", entry
-      onError = (error)->
-        console.log "error downloading: ", error
-      console.log "About to download"
-      ft.download {
-        uri,
-        endURL,
-        onSuccess,
-        onError
-      }
+      window.requestFileSystem LocalFileSystem.PERSISTENT, 0, (fs)->
+        directories = url.directories()
+        console.log "Here are the URL obj directories: ", directories
+        fs.root.getDirectory "NooraHealthContent/Images/", {create: true, exclusive: false}, (dirEntry)->
+          console.log "Got the dir entry: ", dirEntry
+          file = dirEntry.getFile "image1.png", {create: true, exclusive: false}, (fileEntry)->
+            uri = encodeURI url.endpointPath()
+            console.log "URI endpointPath: ", uri
+            targetPath = fileEntry.toURL()
+            ft = new FileTransfer()
+            console.log "endURL:" , targetPath
+            onSuccess = (entry)->
+              console.log "SUCCESS: ", entry
+            onError = (error)->
+              console.log "error downloading: ", error
+            console.log "About to download"
+            ft.download {
+              uri,
+              targetPath,
+              onSuccess,
+              onError
+            }
 
   loadContent: ()->
     console.log "This is the curriculum: ", @.curriculum
@@ -39,9 +44,13 @@ class @ContentDownloader
     console.log urls.length
     console.log urls[2]
     console.log "MEDIA ENDPOINT: ", @.mediaEndpoint
-    endURLS = (@.mediaEndpoint.concat(url) for url in urls)
+    endURLS = (new URL(url, @.mediaEndpoint) for url in urls)
     console.log "END URLS: ", endURLS
     @.downloadFiles endURLS
+
+  parseUrl: (url)->
+    parsed = {directory: "", filename:"" }
+    
         
   retrieveContentUrls: (lesson)->
     console.log "---------------- Content URLS ---------------- "
@@ -74,4 +83,17 @@ class @ContentDownloader
     if module.options and ( module.type == 'MULTIPLE_CHOICE' or module.type == 'GOAL_CHOICE')
       urls.push option.optionImgSrc for option in module.getOptionObjects()
     return urls
+
+
+class URL
+  constructor: (@urlString, @endpoint)->
+    pieces = urlString.split('/')
+    @.pieces = pieces
+    console.log "Here are the pieces of the url ", pieces
+  directories: ()->
+    return @.pieces.splice(@.pieces.length - 2, 1)
+  file: ()->
+    return @.pieces[@.pieces.length - 1]
+  endpointPath: ()->
+    return @.endpoint.concat @.urlString
 
