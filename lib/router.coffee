@@ -22,12 +22,17 @@ Router.map ()->
         console.log "Not going to get curriculum"
         if Meteor.isCordova and not Meteor.user().contentLoaded()
           console.log "cordova!"
-          downloader = new ContentDownloader(Meteor.user().getCurriculum())
-          downloader.loadContent()
+          console.log Meteor.user()
+          console.log "The user curriculum: ", Meteor.user().getCurriculum()
+          mediaUrl = Meteor.call "mediaUrl", (err, mediaUrl)->
+            console.log "Just set the media url", mediaUrl
+            downloader = new ContentDownloader(Meteor.user().getCurriculum(), mediaUrl)
+            downloader.loadContent()
         else
           mediaUrl = Meteor.call "mediaUrl"
-          console.log "Just set the media url"
+          console.log "Just set the media url", mediaUrl
           Session.set "media url", mediaUrl
+
         this.next()
 
     data: ()->

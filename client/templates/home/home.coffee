@@ -9,8 +9,6 @@ Template.chapterThumbnail.events {
 }
 
 Template.home.onRendered ()->
-
-  console.log "RENDERED"
   if not Meteor.user()
     return
   cards = FView.byId "cardLayout"

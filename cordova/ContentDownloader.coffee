@@ -2,32 +2,47 @@ Array::merge = (other) -> Array::push.apply @, other
 
 class @ContentDownloader
 
-  constructor: (@curriculum)->
+  constructor: (@curriculum, @mediaEndpoint)->
 
   downloadFiles: (urls)->
-    #for url in urls
-      #ft = new FileTransfer()
-      #uri = encodeURI url
-      #endURL = FileEntry.toURL()
-      #onSuccess = (entry)->
-        #console.log "SUCCESS: ", entry
-      #onError = (error)->
-        #console.log "error downloading: ", error
-      #ft.download {
-        #uri,
-        #endURL,
-        #onSuccess,
-        #onError
-      #}
+    console.log "GONNA DOWNLOAD THE FILES", urls
+    console.log "FileTransfer: ", FileTransfer
+    console.log "FileEntry: ", FileEntry
+    for url in urls
+      ft = new FileTransfer()
+      console.log "FT: ", ft
+      uri = encodeURI url
+      console.log "URI: ", uri
+      endURL = FileEntry.toURL()
+      console.log "endURL:" , endURL
+      onSuccess = (entry)->
+        console.log "SUCCESS: ", entry
+      onError = (error)->
+        console.log "error downloading: ", error
+      console.log "About to download"
+      ft.download {
+        uri,
+        endURL,
+        onSuccess,
+        onError
+      }
 
   loadContent: ()->
-    lessons = curriculum.getLessonDocuments()
+    console.log "This is the curriculum: ", @.curriculum
+    lessons = @.curriculum.getLessonDocuments()
     urls = []
     for lesson in lessons
-      urls.merge(retrieveContentUrls lesson)
+      urls.merge(@.retrieveContentUrls(lesson))
 
-    downloadFiles urls
-      
+    console.log "HERE ARE ALL THE URLS: ", urls
+    console.log typeof urls
+    console.log urls.length
+    console.log urls[2]
+    console.log "MEDIA ENDPOINT: ", @.mediaEndpoint
+    endURLS = (@.mediaEndpoint.concat(url) for url in urls)
+    console.log "END URLS: ", endURLS
+    @.downloadFiles endURLS
+        
   retrieveContentUrls: (lesson)->
     console.log "---------------- Content URLS ---------------- "
     if not lesson? or not lesson.getModulesSequence?

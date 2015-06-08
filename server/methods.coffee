@@ -5,6 +5,7 @@ Meteor.methods {
     Modules.remove({})
 
   mediaUrl: ()->
+    console.log "Getting media url"
     if process.env.METEOR_ENV == 'production'
       return "https://noorahealthcontent.s3-us-west-1.amazonaws.com/"
     else
