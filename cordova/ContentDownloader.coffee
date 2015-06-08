@@ -5,55 +5,58 @@ class @ContentDownloader
   constructor: (@curriculum, @mediaEndpoint)->
 
   downloadFiles: (urls)->
-    console.log "GONNA DOWNLOAD THE FILES", urls
-    console.log "FileTransfer: ", FileTransfer
-    console.log "FileEntry: ", FileEntry
+    onError = (err)->
+      console.log "ERROR: ", err
+      console.log err
+
+    downloadFile = (targetPath, url)->
+
+    onFileEntrySuccess = (url)->
+      return (fileEntry)->
+        console.log "FileEntru"
+        uri = encodeURI url.endpointPath()
+        console.log "URI endpointPath: ", uri
+        #targetPath = dirEntry.toURL().concat(url.getFile())
+        targetPath = fileEntry.toURL()
+        console.log "targetPath:" , targetPath
+        #ft = new FileTransfer()
+        #onTransferSuccess = (entry)->
+          #console.log "SUCCESS: ", entry
+        #onTransferError = (error)->
+          #console.log "error downloading: ", error
+        #console.log "About to download"
+        #ft.download {
+          #uri,
+          #targetPath,
+          #onTransferSuccess,
+          #onTransferError
+        #}
+
+
+    onDirEntrySuccess = (url)->
+      return (dirEntry)->
+        console.log "Dir entry success"
+        console.log dirEntry
+        console.log dirEntry.toURL()
+        dirEntry.getFile "image1.png", {create: true, exclusive: false}, onFileEntrySuccess(url), onError
+
+
     for url in urls
       window.requestFileSystem LocalFileSystem.PERSISTENT, 0, (fs)->
-        directories = url.directories()
-        console.log "Here are the URL obj directories: ", directories
-        fs.root.getDirectory "NooraHealthContent/Images/", {create: true, exclusive: false}, (dirEntry)->
-          console.log "Got the dir entry: ", dirEntry
-          file = dirEntry.getFile "image1.png", {create: true, exclusive: false}, (fileEntry)->
-            uri = encodeURI url.endpointPath()
-            console.log "URI endpointPath: ", uri
-            targetPath = fileEntry.toURL()
-            ft = new FileTransfer()
-            console.log "endURL:" , targetPath
-            onSuccess = (entry)->
-              console.log "SUCCESS: ", entry
-            onError = (error)->
-              console.log "error downloading: ", error
-            console.log "About to download"
-            ft.download {
-              uri,
-              targetPath,
-              onSuccess,
-              onError
-            }
+        console.log "REQUESTED file system"
+        onSuccess = onDirEntrySuccess(url)
+        fs.root.getDirectory "NooraHealthContent/", {create: true, exclusive: false},onSuccess, onError
 
   loadContent: ()->
-    console.log "This is the curriculum: ", @.curriculum
     lessons = @.curriculum.getLessonDocuments()
     urls = []
     for lesson in lessons
       urls.merge(@.retrieveContentUrls(lesson))
 
-    console.log "HERE ARE ALL THE URLS: ", urls
-    console.log typeof urls
-    console.log urls.length
-    console.log urls[2]
-    console.log "MEDIA ENDPOINT: ", @.mediaEndpoint
     endURLS = (new URL(url, @.mediaEndpoint) for url in urls)
-    console.log "END URLS: ", endURLS
     @.downloadFiles endURLS
-
-  parseUrl: (url)->
-    parsed = {directory: "", filename:"" }
-    
         
   retrieveContentUrls: (lesson)->
-    console.log "---------------- Content URLS ---------------- "
     if not lesson? or not lesson.getModulesSequence?
       throw Meteor.Error "retrieveContentUrls argument must be a Lesson document"
 
@@ -89,7 +92,6 @@ class URL
   constructor: (@urlString, @endpoint)->
     pieces = urlString.split('/')
     @.pieces = pieces
-    console.log "Here are the pieces of the url ", pieces
   directories: ()->
     return @.pieces.splice(@.pieces.length - 2, 1)
   file: ()->
