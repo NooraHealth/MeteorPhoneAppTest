@@ -73,14 +73,17 @@ describe "ParsedUrl", ()->
     expect(new ParsedUrl('string', 'string').file).toBeDefined()
   it 'should have a function called endpointPath', ()->
     expect(new ParsedUrl('string', 'string').endpointPath).toBeDefined()
-  it 'should give correct parsed directories for 2 dirs deep', ()->
+  it 'should give correct parsed directories and file for 2 dirs deep', ()->
     url = new ParsedUrl('NooraHealthContent/Image/file.txt', 'localhost:3000')
     directories= url.directories()
     expect(directories[0]).toEqual('NooraHealthContent')
     expect(directories[1]).toEqual('Image')
     expect(directories.length).toEqual 2
 
-  it 'should give correct parsed directories for 4 dir deep', ()->
+    file = url.file()
+    expect(file).toEqual('file.txt')
+
+  it 'should give correct parsed directories and file for 4 dir deep', ()->
     url = new ParsedUrl('NooraHealthContent/Image/Dir/file.txt', 'localhost:3000')
     directories= url.directories()
     expect(directories[0] == 'NooraHealthContent').toBeTruthy()
@@ -88,17 +91,32 @@ describe "ParsedUrl", ()->
     expect(directories[2] == 'Dir').toBeTruthy()
     expect(directories.length).toEqual 3
 
-  it 'should give correct parsed directories for 1 dirs deep', ()->
+    file = url.file()
+    expect(file).toEqual('file.txt')
+
+  it 'should give correct parsed directories and file for 1 dirs deep', ()->
     url = new ParsedUrl('Dir/file.txt', 'localhost:3000')
     directories= url.directories()
     expect(directories[0]).toEqual('Dir')
     expect(directories.length).toEqual 1
 
-  it 'should give correct parsed directories for 0 dirs deep', ()->
-    url = new ParsedUrl('file.txt', 'localhost:3000')
+    file = url.file()
+    expect(file).toEqual('file.txt')
+
+  it 'should give correct parsed directories and file for 0 dirs deep', ()->
+    url = new ParsedUrl('file.txt', 'localhost:3000/')
     directories= url.directories()
     expect(directories[0]).toBeUndefined()
     expect(directories.length).toEqual 0
+
+    file = url.file()
+    expect(file).toEqual('file.txt')
+    
+  it 'should return the corrent endpoint path', ()->
+    url = new ParsedUrl('file.txt', 'localhost:3000/')
+    endpointPath  = url.endpointPath()
+    expect(endpointPath).toEqual('localhost:3000/file.txt')
+
 
 class CreateTestData
 
