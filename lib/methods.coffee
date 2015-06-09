@@ -1,12 +1,12 @@
 Meteor.methods {
-  clearMongo: ()->
-    Curriculum.remove({})
-    Lessons.remove({})
-    Modules.remove({})
 
   mediaUrl: ()->
     console.log "Getting media url"
-    if process.env.METEOR_ENV == 'production'
+    if Meteor.isCordova
+      console.log "This is a cordova"
+      console.log "I am about to return the location of the local content"
+
+    else if process.env.METEOR_ENV == 'production'
       return "https://noorahealthcontent.s3-us-west-1.amazonaws.com/"
     else
       return 'https://noorahealth-development.s3-us-west-1.amazonaws.com/'

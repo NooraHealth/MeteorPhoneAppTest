@@ -117,5 +117,5 @@ getMediaUrl = ()->
       return Session.get "media url"
     else
       return ""
-  if Meteor.isServer or Meteor.isCordova
+  if Meteor.isServer
     return Meteor.call "mediaUrl"

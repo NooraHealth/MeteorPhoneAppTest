@@ -29,13 +29,12 @@ class @ContentDownloader
       return (fileEntry)->
         endpnt = url.endpointPath()
         console.log "endpt: ", endpnt
-        #uri = encodeURI(endpnt)
-        uri = encodeURI("https://noorahealth-development.s3-us-west-1.amazonaws.com/NooraHealthContent/Image/activityv.png")
-        #targetPath = dirEntry.toParsedUrl().concat(url.getFile())
+        uri = encodeURI(endpnt)
         targetPath = fileEntry.toURL()
         ft = new FileTransfer()
         onTransferSuccess = (entry)->
           console.log "SUCCESS: ", entry
+          console.log entry
         onTransferError = (error)->
           console.log "error downloading: ", error
           console.log error
