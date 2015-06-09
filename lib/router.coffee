@@ -27,7 +27,17 @@ Router.map ()->
           mediaUrl = Meteor.call "mediaUrl", (err, mediaUrl)->
             console.log "Just set the media url", mediaUrl
             downloader = new ContentDownloader(Meteor.user().getCurriculum(), mediaUrl)
-            downloader.loadContent()
+            onSuccess = (entry)->
+              console.log ""
+              console.log "Promise was successful! in callback"
+              console.log entry
+              console.log ""
+            onError = (err)->
+              console.log ""
+              console.log "Promised FAILED"
+              console.log err
+              console.log ""
+            downloader.loadContent(onSuccess, onError)
         else
           mediaUrl = Meteor.call "mediaUrl"
           console.log "Just set the media url", mediaUrl

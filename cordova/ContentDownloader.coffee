@@ -19,11 +19,14 @@ class @ContentDownloader
   constructor: (@curriculum, @mediaEndpoint)->
 
   downloadFiles: (urls)->
+    deferred = Q.defer()
+    numToLoad = urls.length
+    numRecieved = 0
+
     onError = (err)->
       console.log "ERROR: ", err
       console.log err
-
-    downloadFile = (targetPath, url)->
+      deferred.reject(err)
 
     onFileEntrySuccess = (url)->
       return (fileEntry)->
@@ -35,9 +38,14 @@ class @ContentDownloader
         onTransferSuccess = (entry)->
           console.log "SUCCESS: ", entry
           console.log entry
+          numRecieved++
+          if numRecieved == numToLoad
+            deferred.resolve(entry)
+
         onTransferError = (error)->
           console.log "error downloading: ", error
           console.log error
+          deferred.reject()
 
         #download the file from the endpoint and save to target path on mobile device
         ft.download(uri, targetPath, onTransferSuccess, onTransferError )
@@ -63,14 +71,20 @@ class @ContentDownloader
           remainingDirs = directories.splice(1)
           fs.root.getDirectory firstDir, {create: true, exclusive: false}, onDirEntrySuccess(url,remainingDirs), onError
 
-  loadContent: ()->
+    return deferred.promise
+
+  loadContent: (onSuccess, onError)->
     lessons = @.curriculum.getLessonDocuments()
     urls = []
     for lesson in lessons
       urls.merge(@.retrieveContentUrls(lesson))
 
     endURLS = (new ParsedUrl(url, @.mediaEndpoint) for url in urls)
-    @.downloadFiles endURLS
+    promise = @.downloadFiles endURLS
+    promise.then ()->
+      onSuccess()
+    promise.fail ()->
+      onError()
         
   retrieveContentUrls: (lesson)->
     if not lesson? or not lesson.getModulesSequence?
