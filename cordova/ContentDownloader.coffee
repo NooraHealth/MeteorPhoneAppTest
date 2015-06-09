@@ -29,8 +29,8 @@ class @ContentDownloader
       return (fileEntry)->
         endpnt = url.endpointPath()
         console.log "endpt: ", endpnt
-        uri = encodeURI(endpnt)
-        #uri = encodeURI("https://noorahealth-development.s3-west-1.amazonaws.com/NooraHealthContent/Image/activityv.png")
+        #uri = encodeURI(endpnt)
+        uri = encodeURI("https://noorahealth-development.s3-us-west-1.amazonaws.com/NooraHealthContent/Image/activityv.png")
         #targetPath = dirEntry.toParsedUrl().concat(url.getFile())
         targetPath = fileEntry.toURL()
         ft = new FileTransfer()
