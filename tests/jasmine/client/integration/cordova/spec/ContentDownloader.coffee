@@ -112,7 +112,7 @@ describe "ParsedUrl", ()->
     file = url.file()
     expect(file).toEqual('file.txt')
     
-  it 'should return the corrent endpoint path', ()->
+  it 'should return the correct endpoint path', ()->
     url = new ParsedUrl('file.txt', 'localhost:3000/')
     endpointPath  = url.endpointPath()
     expect(endpointPath).toEqual('localhost:3000/file.txt')

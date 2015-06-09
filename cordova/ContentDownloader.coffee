@@ -27,20 +27,20 @@ class @ContentDownloader
 
     onFileEntrySuccess = (url)->
       return (fileEntry)->
-        console.log "FileEntru"
-        #uri = encodeURI(url.endpointPath())
-        uri = encodeURI("https://noorahealth-development.s3-west-1.amazonaws.com/NooraHealthContent/Image/activityv.png")
-        console.log "URI endpointPath: ", uri
+        endpnt = url.endpointPath()
+        console.log "endpt: ", endpnt
+        uri = encodeURI(endpnt)
+        #uri = encodeURI("https://noorahealth-development.s3-west-1.amazonaws.com/NooraHealthContent/Image/activityv.png")
         #targetPath = dirEntry.toParsedUrl().concat(url.getFile())
         targetPath = fileEntry.toURL()
-        console.log "targetPath:" , targetPath
         ft = new FileTransfer()
         onTransferSuccess = (entry)->
           console.log "SUCCESS: ", entry
         onTransferError = (error)->
           console.log "error downloading: ", error
-        console.log "About to download"
-        console.log typeof uri
+          console.log error
+
+        #download the file from the endpoint and save to target path on mobile device
         ft.download(uri, targetPath, onTransferSuccess, onTransferError )
 
 
@@ -48,18 +48,21 @@ class @ContentDownloader
       return (dirEntry)->
         console.log dirEntry.toURL()
         if directories.length == 0
-          dirEntry.getFile "image1.png", {create: true, exclusive: false}, onFileEntrySuccess(url), onError
+          file = url.file()
+          console.log "File: ", file
+          dirEntry.getFile file, {create: true, exclusive: false}, onFileEntrySuccess(url), onError
         else
-          remainingDirs = directories.splice(0)
-          console.log "Remaining getDirectory: ", remainingDirs
-          dirEntry.getDirectory nextDirectories[0], {create: true, exclusive: false}, onDirEntrySuccess(url, remainingDirs), onError
+          dir = directories[0] + '/'
+          remainingDirs = directories.splice(1)
+          dirEntry.getDirectory dir, {create: true, exclusive: false}, onDirEntrySuccess(url, remainingDirs), onError
 
 
-    for url in urls
-      window.requestFileSystem LocalFileSystem.PERSISTENT, 0, (fs)->
-        directories = url.directories()
-        console.log "HERE ARE THE DIRECTORIES: ", directories
-        fs.root.getDirectory directories[0], {create: true, exclusive: false}, onDirEntrySuccess(url,directories.splice(0)), onError
+    window.requestFileSystem LocalFileSystem.PERSISTENT, 0, (fs)->
+      for url in urls
+          directories = url.directories()
+          firstDir = directories[0] + '/'
+          remainingDirs = directories.splice(1)
+          fs.root.getDirectory firstDir, {create: true, exclusive: false}, onDirEntrySuccess(url,remainingDirs), onError
 
   loadContent: ()->
     lessons = @.curriculum.getLessonDocuments()
