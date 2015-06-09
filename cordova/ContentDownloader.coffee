@@ -24,27 +24,21 @@ class @ContentDownloader
     numRecieved = 0
 
     onError = (err)->
-      console.log "ERROR: ", err
-      console.log err
       deferred.reject(err)
 
     onFileEntrySuccess = (url)->
       return (fileEntry)->
+        ft = new FileTransfer()
         endpnt = url.endpointPath()
-        console.log "endpt: ", endpnt
         uri = encodeURI(endpnt)
         targetPath = fileEntry.toURL()
-        ft = new FileTransfer()
+
         onTransferSuccess = (entry)->
-          console.log "SUCCESS: ", entry
-          console.log entry
           numRecieved++
           if numRecieved == numToLoad
             deferred.resolve(entry)
 
         onTransferError = (error)->
-          console.log "error downloading: ", error
-          console.log error
           deferred.reject()
 
         #download the file from the endpoint and save to target path on mobile device
@@ -56,7 +50,6 @@ class @ContentDownloader
         console.log dirEntry.toURL()
         if directories.length == 0
           file = url.file()
-          console.log "File: ", file
           dirEntry.getFile file, {create: true, exclusive: false}, onFileEntrySuccess(url), onError
         else
           dir = directories[0] + '/'
@@ -81,10 +74,10 @@ class @ContentDownloader
 
     endURLS = (new ParsedUrl(url, @.mediaEndpoint) for url in urls)
     promise = @.downloadFiles endURLS
-    promise.then ()->
-      onSuccess()
-    promise.fail ()->
-      onError()
+    promise.then (entry)->
+      onSuccess(entry)
+    promise.fail (err)->
+      onError(err)
         
   retrieveContentUrls: (lesson)->
     if not lesson? or not lesson.getModulesSequence?
