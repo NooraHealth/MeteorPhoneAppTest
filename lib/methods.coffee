@@ -1,4 +1,11 @@
 Meteor.methods {
+  updateUser: (query)->
+    if !Meteor.user()
+      return
+  
+    console.log "Updating the user"
+    console.log query
+    Meteor.users.update {_id: this.userId}, query
 
   localStorageLocation: ()->
     console.log "Getting the local storage locationelse "

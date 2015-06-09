@@ -9,11 +9,13 @@ Meteor.users.helpers {
     return Curriculum.findOne {_id: @.profile.curriculumId}
 
   setCurriculum: (id)->
-    Meteor.users.update {_id: @._id}, { $set: {"profile.curriculumId": id}}
+    query = { $set: {"profile.curriculumId": id}}
+    Meteor.call "updateUser", query
     @
 
   setContentAsLoaded: (loaded)->
-    Meteor.users.update {_id: @._id}, { $set: {"profile.content_loaded": loaded}}
+    query = { $set: {"profile.content_loaded": loaded}}
+    Meteor.call "updateUser", query
     @
 
   contentLoaded: ()->
