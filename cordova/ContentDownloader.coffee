@@ -1,5 +1,19 @@
 Array::merge = (other) -> Array::push.apply @, other
 
+class @ParsedUrl
+  constructor: (@urlString, @endpoint)->
+    pieces = urlString.split('/')
+    @.pieces = pieces
+  directories: ()->
+    index = @.pieces.length - 1
+    dirs = @.pieces.splice(0, index)
+    return dirs
+  file: ()->
+    return @.pieces[@.pieces.length - 1]
+  endpointPath: ()->
+    return @.endpoint.concat @.urlString
+
+
 class @ContentDownloader
 
   constructor: (@curriculum, @mediaEndpoint)->
@@ -14,38 +28,38 @@ class @ContentDownloader
     onFileEntrySuccess = (url)->
       return (fileEntry)->
         console.log "FileEntru"
-        uri = encodeURI url.endpointPath()
+        #uri = encodeURI(url.endpointPath())
+        uri = encodeURI("https://noorahealth-development.s3-west-1.amazonaws.com/NooraHealthContent/Image/activityv.png")
         console.log "URI endpointPath: ", uri
-        #targetPath = dirEntry.toURL().concat(url.getFile())
+        #targetPath = dirEntry.toParsedUrl().concat(url.getFile())
         targetPath = fileEntry.toURL()
         console.log "targetPath:" , targetPath
-        #ft = new FileTransfer()
-        #onTransferSuccess = (entry)->
-          #console.log "SUCCESS: ", entry
-        #onTransferError = (error)->
-          #console.log "error downloading: ", error
-        #console.log "About to download"
-        #ft.download {
-          #uri,
-          #targetPath,
-          #onTransferSuccess,
-          #onTransferError
-        #}
+        ft = new FileTransfer()
+        onTransferSuccess = (entry)->
+          console.log "SUCCESS: ", entry
+        onTransferError = (error)->
+          console.log "error downloading: ", error
+        console.log "About to download"
+        console.log typeof uri
+        ft.download(uri, targetPath, onTransferSuccess, onTransferError )
 
 
-    onDirEntrySuccess = (url)->
+    onDirEntrySuccess = (url, directories)->
       return (dirEntry)->
-        console.log "Dir entry success"
-        console.log dirEntry
         console.log dirEntry.toURL()
-        dirEntry.getFile "image1.png", {create: true, exclusive: false}, onFileEntrySuccess(url), onError
+        if directories.length == 0
+          dirEntry.getFile "image1.png", {create: true, exclusive: false}, onFileEntrySuccess(url), onError
+        else
+          remainingDirs = directories.splice(0)
+          console.log "Remaining getDirectory: ", remainingDirs
+          dirEntry.getDirectory nextDirectories[0], {create: true, exclusive: false}, onDirEntrySuccess(url, remainingDirs), onError
 
 
     for url in urls
       window.requestFileSystem LocalFileSystem.PERSISTENT, 0, (fs)->
-        console.log "REQUESTED file system"
-        onSuccess = onDirEntrySuccess(url)
-        fs.root.getDirectory "NooraHealthContent/", {create: true, exclusive: false},onSuccess, onError
+        directories = url.directories()
+        console.log "HERE ARE THE DIRECTORIES: ", directories
+        fs.root.getDirectory directories[0], {create: true, exclusive: false}, onDirEntrySuccess(url,directories.splice(0)), onError
 
   loadContent: ()->
     lessons = @.curriculum.getLessonDocuments()
@@ -53,7 +67,7 @@ class @ContentDownloader
     for lesson in lessons
       urls.merge(@.retrieveContentUrls(lesson))
 
-    endURLS = (new URL(url, @.mediaEndpoint) for url in urls)
+    endURLS = (new ParsedUrl(url, @.mediaEndpoint) for url in urls)
     @.downloadFiles endURLS
         
   retrieveContentUrls: (lesson)->
@@ -87,15 +101,4 @@ class @ContentDownloader
       urls.push option.optionImgSrc for option in module.getOptionObjects()
     return urls
 
-
-class URL
-  constructor: (@urlString, @endpoint)->
-    pieces = urlString.split('/')
-    @.pieces = pieces
-  directories: ()->
-    return @.pieces.splice(@.pieces.length - 2, 1)
-  file: ()->
-    return @.pieces[@.pieces.length - 1]
-  endpointPath: ()->
-    return @.endpoint.concat @.urlString
 
