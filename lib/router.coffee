@@ -28,9 +28,6 @@ Router.map ()->
             onSuccess = (entry)->
               Meteor.user().setContentAsLoaded true
 
-              window.requestFileSystem LocalFileSystem.PERSISTENT, 0, (fs)->
-                console.log "Requested the local file system: ", fs
-              
             onError = (err)->
               alert "There was an error downloading your content, please log in and try again: ", err
               Meteor.user().setContentAsLoaded false
@@ -41,7 +38,7 @@ Router.map ()->
             setCordovaContentSrc()
           else Meteor.call "contentEndpoint", (err, src)->
             console.log "Just set the content src", src
-            Session.set "content endpoint", src
+            Session.set "content src", src
 
         this.next()
 
@@ -68,7 +65,6 @@ Router.map ()->
       'selectCurriculumFooter': {to:"footer"}
     }
     onBeforeAction: ()->
-      console.log "SET CURRICULUM ROUTE"
       Session.set "current transition", "opacity"
       Meteor.subscribe "curriculums"
       this.next()
@@ -118,3 +114,19 @@ Router.configure {
   progressSpinner:false
 
 }
+
+setCordovaContentSrc = ()->
+  window.requestFileSystem LocalFileSystem.PERSISTENT, 0, (fs)->
+    console.log "Requested the local file system: ", fs
+    root = fs.root.toURL()
+    reader = fs.root.createReader()
+    success = (entries)->
+      console.log 'success'
+      console.log entries
+    fail = (err)->
+      console.log 'err'
+      console.log err
+    reader.readEntries success, fail
+    console.log "Setting the content src to ", root
+    Session.set "content src", root
+              

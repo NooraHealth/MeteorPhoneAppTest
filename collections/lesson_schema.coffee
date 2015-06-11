@@ -31,7 +31,10 @@ Lessons.attachSchema LessonSchema
 
 Lessons.helpers {
   imgSrc: ()->
-    url =getMediaUrl()
+    url = Meteor.getContentSrc()
+    console.log "Content src: ", url
+    console.log "url + @.image"
+    console.log url + @.image
     return url + @.image
 
   getSublessonDocuments: ()->
@@ -72,12 +75,4 @@ Lessons.helpers {
 
 }
 
-getMediaUrl = ()->
-  if Meteor.isClient
-    if Session.get "content endpoint"
-      return Session.get "content endpoint"
-    else
-      return ""
-  if Meteor.isServer or Meteor.isCordova
-    return Meteor.call "contentEndpoint"
 

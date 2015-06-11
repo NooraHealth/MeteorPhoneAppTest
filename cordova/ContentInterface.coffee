@@ -1,5 +1,6 @@
 Array::merge = (other) -> Array::push.apply @, other
 
+
 class @ParsedUrl
   constructor: (@urlString, @endpoint)->
     pieces = urlString.split('/')
@@ -42,6 +43,7 @@ class @ContentInterface
 
         onTransferSuccess = (entry)->
           console.log "TRANSFER SUCCESS"
+          console.log entry
           numRecieved++
           if numRecieved == numToLoad
             deferred.resolve(entry)
