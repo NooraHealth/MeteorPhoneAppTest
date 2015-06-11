@@ -14,9 +14,10 @@ class @ParsedUrl
     return @.endpoint.concat @.urlString
 
 
-class @ContentDownloader
+class @ContentInterface
 
-  constructor: (@curriculum, @mediaEndpoint)->
+  constructor: (@curriculum, @contentEndpoint)->
+    console.log "Consutricting and this is the endp: ", @.contentEndpoint
 
   downloadFiles: (urls)->
     deferred = Q.defer()
@@ -24,6 +25,8 @@ class @ContentDownloader
     numRecieved = 0
 
     onError = (err)->
+      console.log "ON ERR"
+      console.log err
       deferred.reject(err)
 
     onFileEntrySuccess = (url)->
@@ -33,28 +36,36 @@ class @ContentDownloader
         uri = encodeURI(endpnt)
         targetPath = fileEntry.toURL()
 
+        #ft.onProgress (event)->
+          #console.log "PROGREsS"
+          #console.log event
+
         onTransferSuccess = (entry)->
+          console.log "TRANSFER SUCCESS"
           numRecieved++
           if numRecieved == numToLoad
             deferred.resolve(entry)
 
         onTransferError = (error)->
+          console.log "TRANSFER ERROR"
           deferred.reject()
 
         #download the file from the endpoint and save to target path on mobile device
-        ft.download(uri, targetPath, onTransferSuccess, onTransferError )
+        ft.download(uri, targetPath, onTransferSuccess, onTransferError)
 
 
     onDirEntrySuccess = (url, directories)->
       return (dirEntry)->
-        console.log dirEntry.toURL()
         if directories.length == 0
+          console.log dirEntry.toURL()
           file = url.file()
           dirEntry.getFile file, {create: true, exclusive: false}, onFileEntrySuccess(url), onError
         else
+          console.log "2"
+          console.log dirEntry.toURL()
           dir = directories[0] + '/'
           remainingDirs = directories.splice(1)
-          dirEntry.getDirectory dir, {create: true, exclusive: false}, onDirEntrySuccess(url, remainingDirs), onError
+          dirEntry.getDirectory dir, {create: true, exclusive: false}, onDirEntrySuccess(url, remainingDirs),onError
 
 
     window.requestFileSystem LocalFileSystem.PERSISTENT, 0, (fs)->
@@ -72,14 +83,18 @@ class @ContentDownloader
     for lesson in lessons
       urls.merge(@.retrieveContentUrls(lesson))
 
-    endURLS = (new ParsedUrl(url, @.mediaEndpoint) for url in urls)
+    endURLS = (new ParsedUrl(url, @.contentEndpoint) for url in urls)
     promise = @.downloadFiles endURLS
     promise.then (entry)->
+      console.log "PROMISE SUCCESSFUL"
       onSuccess(entry)
     promise.fail (err)->
+      console.log "PROMISE REJECTED"
+      console.log err
       onError(err)
         
   retrieveContentUrls: (lesson)->
+    console.log "RETRIEVING CONTENT URLS"
     if not lesson? or not lesson.getModulesSequence?
       throw Meteor.Error "retrieveContentUrls argument must be a Lesson document"
 

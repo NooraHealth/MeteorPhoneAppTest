@@ -1,7 +1,7 @@
 if Meteor.isCordova
   return
 
-describe "ContentDownloader", ()->
+describe "ContentInterface", ()->
 
   dataCreator =undefined
   downloader = undefined
@@ -11,7 +11,7 @@ describe "ContentDownloader", ()->
     testCurriculum = Curriculum.findOne {title: dataCreator.curriculumTitle()}
     dataCreator.setUp()
 
-    downloader = new ContentDownloader(testCurriculum)
+    downloader = new ContentInterface(testCurriculum)
 
   afterAll ()->
     dataCreator.tearDown()
@@ -19,7 +19,7 @@ describe "ContentDownloader", ()->
   it "should exist", ()->
     expect(dataCreator).toBeDefined()
     expect(downloader).toBeDefined()
-    expect(ContentDownloader).toBeDefined()
+    expect(ContentInterface).toBeDefined()
 
   it "should return the correct url array when retrieveContentUrls is called", ()->
     id = dataCreator.lessonId(0)

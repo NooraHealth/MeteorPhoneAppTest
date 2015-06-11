@@ -16,35 +16,38 @@ Router.map ()->
       if !Meteor.user()
         this.next()
       else
-        console.log "ROUTING TO HOME"
+
         if not Meteor.user().curriculumIsSet()
           Router.go "selectCurriculum"
-        console.log "Not going to get curriculum"
+
         if Meteor.isCordova and not Meteor.user().contentLoaded()
-          console.log "cordova!"
-          console.log Meteor.user()
-          console.log "The user curriculum: ", Meteor.user().getCurriculum()
-          mediaUrl = Meteor.call "mediaUrl", (err, mediaUrl)->
-            console.log "Just set the media url", mediaUrl
-            downloader = new ContentDownloader(Meteor.user().getCurriculum(), mediaUrl)
+
+          Meteor.call 'contentEndpoint', (err, endpoint)->
+            console.log "METEOR USER CURRICULUM", Meteor.user().getCurriculum()
+            downloader = new ContentInterface(Meteor.user().getCurriculum(), endpoint)
             onSuccess = (entry)->
               Meteor.user().setContentAsLoaded true
+
+              window.requestFileSystem LocalFileSystem.PERSISTENT, 0, (fs)->
+                console.log "Requested the local file system: ", fs
+              
             onError = (err)->
               alert "There was an error downloading your content, please log in and try again: ", err
               Meteor.user().setContentAsLoaded false
-
+              Meteor.logout()
             downloader.loadContent(onSuccess, onError)
         else
-          mediaUrl = Meteor.call "mediaUrl"
-          console.log "Just set the media url", mediaUrl
-          Session.set "media url", mediaUrl
+          if Meteor.isCordova
+            setCordovaContentSrc()
+          else Meteor.call "contentEndpoint", (err, src)->
+            console.log "Just set the content src", src
+            Session.set "content endpoint", src
 
         this.next()
 
     data: ()->
       if this.ready() and Meteor.user()
         curr = Curriculum.findOne({_id: Meteor.user().profile.curriculumId})
-        console.log "This si the curriculum"
         if curr
           Session.set "current chapter", null
           Session.set "current lesson", null
@@ -65,6 +68,7 @@ Router.map ()->
       'selectCurriculumFooter': {to:"footer"}
     }
     onBeforeAction: ()->
+      console.log "SET CURRICULUM ROUTE"
       Session.set "current transition", "opacity"
       Meteor.subscribe "curriculums"
       this.next()

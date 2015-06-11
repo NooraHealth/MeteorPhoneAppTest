@@ -74,10 +74,10 @@ Lessons.helpers {
 
 getMediaUrl = ()->
   if Meteor.isClient
-    if Session.get "media url"
-      return Session.get "media url"
+    if Session.get "content endpoint"
+      return Session.get "content endpoint"
     else
       return ""
   if Meteor.isServer or Meteor.isCordova
-    return Meteor.call "mediaUrl"
+    return Meteor.call "contentEndpoint"
 
