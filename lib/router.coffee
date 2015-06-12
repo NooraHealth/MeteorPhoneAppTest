@@ -60,7 +60,7 @@ Router.map ()->
 
   this.route '/selectCurriculum', {
     path: '/selectCurriculum'
-    yieldTemplates: 'layout'
+    layoutTemplate: 'layout'
     name: 'selectCurriculum'
     yieldTemplates: {
       'selectCurriculumFooter': {to:"footer"}
