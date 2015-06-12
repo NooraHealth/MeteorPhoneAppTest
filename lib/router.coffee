@@ -33,6 +33,7 @@ Router.map ()->
               Meteor.user().setContentAsLoaded false
               Meteor.logout()
             downloader.loadContent(onSuccess, onError)
+            Router.go "loading"
 
         else
           if !Meteor.isCordova
@@ -57,14 +58,14 @@ Router.map ()->
           return {chapters: chapters}
   }
 
-  this.route '/selectcurriculum', {
-    path: '/selectcurriculum'
-    layouttemplate: 'layout'
-    name: 'selectcurriculum'
-    yieldtemplates: {
-      'selectcurriculumfooter': {to:"footer"}
+  this.route '/selectCurriculum', {
+    path: '/selectCurriculum'
+    yieldTemplates: 'layout'
+    name: 'selectCurriculum'
+    yieldTemplates: {
+      'selectCurriculumFooter': {to:"footer"}
     }
-    onbeforeaction: ()->
+    onBeforeAction: ()->
       Session.set "current transition", "opacity"
       Meteor.subscribe "curriculums"
       this.next()
@@ -75,13 +76,13 @@ Router.map ()->
   ###
   this.route '/modules/:nh_id', {
     path: '/modules/:nh_id'
-    layouttemplate: 'layout'
+    layoutTemplate: 'layout'
     name: 'modulessequence'
     template: "module"
-    yieldtemplates: {
+    yieldTemplates: {
       'modulefooter': {to:"footer"}
     }
-    onbeforeaction: ()->
+    onBeforeAction: ()->
       Session.set "current transition", "slidewindowright"
       this.next()
     data: () ->
@@ -109,9 +110,15 @@ Router.map ()->
         console.log "Yey called refresh"
   }
 
+  #this.route '/loading', {
+    #path: '/loading'
+    #name: 'loading'
+    
+  #}
+
 
 Router.configure {
   progressSpinner:false
-
+  #loadingTemplate:'loading'
 }
 
