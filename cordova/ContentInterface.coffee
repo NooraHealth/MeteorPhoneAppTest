@@ -37,9 +37,9 @@ class @ContentInterface
         uri = encodeURI(endpnt)
         targetPath = fileEntry.toURL()
 
-        #ft.onProgress (event)->
-          #console.log "PROGREsS"
-          #console.log event
+        ft.onProgress (event)->
+          console.log "PROGREsS"
+          console.log event
 
         onTransferSuccess = (entry)->
           console.log "TRANSFER SUCCESS"
