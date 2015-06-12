@@ -118,15 +118,3 @@ Router.configure {
 setCordovaContentSrc = ()->
   window.requestFileSystem LocalFileSystem.PERSISTENT, 0, (fs)->
     console.log "Requested the local file system: ", fs
-    root = fs.root.toURL()
-    reader = fs.root.createReader()
-    success = (entries)->
-      console.log 'success'
-      console.log entries
-    fail = (err)->
-      console.log 'err'
-      console.log err
-    reader.readEntries success, fail
-    console.log "Setting the content src to ", root
-    Session.set "content src", root
-              
