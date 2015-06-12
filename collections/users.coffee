@@ -19,7 +19,8 @@ Meteor.users.helpers {
     @
 
   contentLoaded: ()->
-    return @.profile.content_loaded
+    return false
+    #return @.profile.content_loaded
 
   getCompletedChapters: ()->
     return @.profile.chapters_complete

@@ -17,13 +17,15 @@ Router.map ()->
         this.next()
       else
 
+        console.log " -------------- HOME ROUTE ------------ "
         if not Meteor.user().curriculumIsSet()
+          console.log "--------curriculum is set -----------"
           Router.go "selectCurriculum"
 
         if Meteor.isCordova and not Meteor.user().contentLoaded()
-
+          console.log "IN ROUTER CORDOVA"
           Meteor.call 'contentEndpoint', (err, endpoint)->
-            console.log "METEOR USER CURRICULUM", Meteor.user().getCurriculum()
+            console.log "Meteor USER CURRICULUM", Meteor.user().getCurriculum()
             downloader = new ContentInterface(Meteor.user().getCurriculum(), endpoint)
             onSuccess = (entry)->
               Meteor.user().setContentAsLoaded true
@@ -33,12 +35,12 @@ Router.map ()->
               Meteor.user().setContentAsLoaded false
               Meteor.logout()
             downloader.loadContent(onSuccess, onError)
+
         else
-          if Meteor.isCordova
-            setCordovaContentSrc()
-          else Meteor.call "contentEndpoint", (err, src)->
-            console.log "Just set the content src", src
-            Session.set "content src", src
+          if !Meteor.isCordova
+            Meteor.call "contentEndpoint", (err, src)->
+              console.log "just set the content src", src
+              Session.set "content src", src
 
         this.next()
 
@@ -57,38 +59,38 @@ Router.map ()->
           return {chapters: chapters}
   }
 
-  this.route '/selectCurriculum', {
-    path: '/selectCurriculum'
-    layoutTemplate: 'layout'
-    name: 'selectCurriculum'
-    yieldTemplates: {
-      'selectCurriculumFooter': {to:"footer"}
+  this.route '/selectcurriculum', {
+    path: '/selectcurriculum'
+    layouttemplate: 'layout'
+    name: 'selectcurriculum'
+    yieldtemplates: {
+      'selectcurriculumfooter': {to:"footer"}
     }
-    onBeforeAction: ()->
+    onbeforeaction: ()->
       Session.set "current transition", "opacity"
       Meteor.subscribe "curriculums"
       this.next()
   }
 
   ###
-  # Module Sequence
+  # module sequence
   ###
   this.route '/modules/:nh_id', {
     path: '/modules/:nh_id'
-    layoutTemplate: 'layout'
-    name: 'ModulesSequence'
+    layouttemplate: 'layout'
+    name: 'modulessequence'
     template: "module"
-    yieldTemplates: {
-      'moduleFooter': {to:"footer"}
+    yieldtemplates: {
+      'modulefooter': {to:"footer"}
     }
-    onBeforeAction: ()->
-      Session.set "current transition", "slideWindowRight"
+    onbeforeaction: ()->
+      Session.set "current transition", "slidewindowright"
       this.next()
     data: () ->
       if this.ready()
-        lesson = Lessons.findOne {nh_id: this.params.nh_id}
+        lesson = lessons.findOne {nh_id: this.params.nh_id}
         Session.set "current lesson", lesson
-        modules = lesson.getModulesSequence()
+        modules = lesson.getmodulessequence()
         Session.set "modules sequence", modules
         Session.set "current module index",0
         Session.set "correctly answered", []
@@ -100,12 +102,12 @@ Router.map ()->
 
 
   ###
-  # Refresh the content
+  # refresh the content
   ###
   this.route '/refreshcontent', {
     path: '/refreshcontent'
     data: ()->
-      Meteor.call "refreshContent", ()->
+      Meteor.call "refreshcontent", ()->
         console.log "Yey called refresh"
   }
 
@@ -115,6 +117,3 @@ Router.configure {
 
 }
 
-setCordovaContentSrc = ()->
-  window.requestFileSystem LocalFileSystem.PERSISTENT, 0, (fs)->
-    console.log "Requested the local file system: ", fs
