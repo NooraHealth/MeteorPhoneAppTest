@@ -37,7 +37,9 @@ class @ContentInterface
         uri = encodeURI(endpnt)
         targetPath = fileEntry.toURL()
 
-        ft.onProgress (event)->
+        console.log "THis is the file transfer object"
+        console.log ft
+        ft.onprogress= (event)->
           console.log "PROGREsS"
           console.log event
 
@@ -59,12 +61,9 @@ class @ContentInterface
     onDirEntrySuccess = (url, directories)->
       return (dirEntry)->
         if directories.length == 0
-          console.log dirEntry.toURL()
           file = url.file()
           dirEntry.getFile file, {create: true, exclusive: false}, onFileEntrySuccess(url), onError
         else
-          console.log "2"
-          console.log dirEntry.toURL()
           dir = directories[0] + '/'
           remainingDirs = directories.splice(1)
           dirEntry.getDirectory dir, {create: true, exclusive: false}, onDirEntrySuccess(url, remainingDirs),onError

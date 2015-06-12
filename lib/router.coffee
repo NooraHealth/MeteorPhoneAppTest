@@ -17,9 +17,7 @@ Router.map ()->
         this.next()
       else
 
-        console.log " -------------- HOME ROUTE ------------ "
         if not Meteor.user().curriculumIsSet()
-          console.log "--------curriculum is set -----------"
           Router.go "selectCurriculum"
 
         if Meteor.isCordova and not Meteor.user().contentLoaded()
