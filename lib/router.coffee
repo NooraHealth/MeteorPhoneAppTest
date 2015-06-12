@@ -23,7 +23,6 @@ Router.map ()->
         if Meteor.isCordova and not Meteor.user().contentLoaded()
 
           Meteor.call 'contentEndpoint', (err, endpoint)->
-            console.log "METEOR USER CURRICULUM", Meteor.user().getCurriculum()
             downloader = new ContentInterface(Meteor.user().getCurriculum(), endpoint)
             onSuccess = (entry)->
               Meteor.user().setContentAsLoaded true
@@ -37,7 +36,6 @@ Router.map ()->
           if Meteor.isCordova
             setCordovaContentSrc()
           else Meteor.call "contentEndpoint", (err, src)->
-            console.log "Just set the content src", src
             Session.set "content src", src
 
         this.next()
