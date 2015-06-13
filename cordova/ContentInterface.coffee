@@ -1,6 +1,5 @@
 Array::merge = (other) -> Array::push.apply @, other
 
-
 class @ParsedUrl
   constructor: (@urlString, @endpoint)->
     pieces = urlString.split('/')

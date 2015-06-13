@@ -1,4 +1,7 @@
 Template.selectCurriculum.helpers {
+  getId: ()->
+    return this._id
+
   curriculums: ()->
     return Curriculum.find({})
 }

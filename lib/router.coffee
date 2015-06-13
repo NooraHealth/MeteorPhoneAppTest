@@ -13,37 +13,38 @@ Router.map ()->
     }
     layoutTemplate: 'layout'
     onBeforeAction: ()->
+      console.log "HOME route"
       if !Meteor.user()
         this.next()
-      else
+      else if not Meteor.user().curriculumIsSet()
+        console.log "ABout to go to Select curriculum"
+        Router.go "selectCurriculum"
 
-        if not Meteor.user().curriculumIsSet()
-          Router.go "selectCurriculum"
+      else if Meteor.isCordova and not Meteor.user().contentLoaded()
+        console.log "IN ROUTER CORDOVA"
+        Meteor.call 'contentEndpoint', (err, endpoint)->
+          console.log "Meteor USER CURRICULUM", Meteor.user().getCurriculum()
+          downloader = new ContentInterface(Meteor.user().getCurriculum(), endpoint)
+          onSuccess = (entry)->
+            Meteor.user().setContentAsLoaded true
 
-        if Meteor.isCordova and not Meteor.user().contentLoaded()
-          console.log "IN ROUTER CORDOVA"
-          Meteor.call 'contentEndpoint', (err, endpoint)->
-            console.log "Meteor USER CURRICULUM", Meteor.user().getCurriculum()
-            downloader = new ContentInterface(Meteor.user().getCurriculum(), endpoint)
-            onSuccess = (entry)->
-              Meteor.user().setContentAsLoaded true
+          onError = (err)->
+            alert "There was an error downloading your content, please log in and try again: ", err
+            Meteor.user().setContentAsLoaded false
+            Meteor.logout()
+          downloader.loadContent(onSuccess, onError)
+          Router.go "loading"
 
-            onError = (err)->
-              alert "There was an error downloading your content, please log in and try again: ", err
-              Meteor.user().setContentAsLoaded false
-              Meteor.logout()
-            downloader.loadContent(onSuccess, onError)
-            Router.go "loading"
+      else if !Meteor.isCordova
+        Meteor.call "contentEndpoint", (err, src)->
+          console.log "just set the content src", src
+          Session.set "content src", src
 
-        else
-          if !Meteor.isCordova
-            Meteor.call "contentEndpoint", (err, src)->
-              console.log "just set the content src", src
-              Session.set "content src", src
-
-        this.next()
+      console.log "heading to nect"
+      this.next()
 
     data: ()->
+      console.log "The data"
       if this.ready() and Meteor.user()
         curr = Curriculum.findOne({_id: Meteor.user().profile.curriculumId})
         if curr
@@ -119,6 +120,6 @@ Router.map ()->
 
 Router.configure {
   progressSpinner:false
-  #loadingTemplate:'loading'
+  loadingTemplate:'loading'
 }
 
