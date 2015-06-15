@@ -15,6 +15,13 @@
             #{$property}: $value;
   }
 }
+body > .inner {
+  display: none;
+}
+ 
+body.pg-loaded > .inner {
+  display: block;
+}
 
 body.pg-loading {
   overflow: hidden;

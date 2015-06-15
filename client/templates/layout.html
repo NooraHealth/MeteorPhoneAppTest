@@ -7,7 +7,9 @@
     {{/Surface}}
 
     {{#RenderController target="content" transition="slideWindowRight" id="renderController"}}
-      {{>yield}}
+      <div class="inner">
+        {{>yield}}
+      </div>
     {{/RenderController}}
     
     {{#Surface target="footer" class="white"}}
