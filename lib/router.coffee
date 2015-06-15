@@ -12,6 +12,7 @@ Router.map ()->
       'footer': {to:"footer"}
     }
     layoutTemplate: 'layout'
+
     onBeforeAction: ()->
       console.log "HOME route"
       if !Meteor.user()
@@ -68,7 +69,6 @@ Router.map ()->
     }
     onBeforeAction: ()->
       Session.set "current transition", "opacity"
-      Meteor.subscribe "curriculums"
       this.next()
   }
 
@@ -114,12 +114,15 @@ Router.map ()->
   this.route '/loading', {
     path: '/loading'
     name: 'loading'
+    layoutTemplate: 'layout'
+    yieldTemplates: {
+      'footer': {to: 'footer'}
+    }
     
   }
 
 
 Router.configure {
   progressSpinner:false
-  loadingTemplate:'loading'
 }
 

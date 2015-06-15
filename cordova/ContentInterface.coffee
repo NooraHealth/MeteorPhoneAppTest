@@ -37,13 +37,13 @@ class @ContentInterface
         targetPath = fileEntry.toURL()
 
         ft.onprogress = (event)->
-          total Session.get "total bytes to download"
+          total = Session.get "total bytes"
           if !total
             total = event.total
-            Session.set "total bytes to download", total
+            Session.set "total bytes", total
 
           bytesLoaded = event.loaded
-          Session.set "file download progress", loaded/total
+          Session.set "bytes downloaded", bytesLoaded
 
         onTransferSuccess = (entry)->
           console.log "TRANSFER SUCCESS"
