@@ -21,13 +21,15 @@ Router.map ()->
         console.log "ABout to go to Select curriculum"
         Router.go "selectCurriculum"
 
-      else if Meteor.isCordova and not Meteor.user().contentLoaded()
+      else if Meteor.isCordova and not Meteor.user().contentLoaded() and not Session.get "content loaded"
         console.log "IN ROUTER CORDOVA"
         Meteor.call 'contentEndpoint', (err, endpoint)->
           console.log "Meteor USER CURRICULUM", Meteor.user().getCurriculum()
           downloader = new ContentInterface(Meteor.user().getCurriculum(), endpoint)
           onSuccess = (entry)->
             Meteor.user().setContentAsLoaded true
+            Session.set "content loaded", true
+            Router.go "home"
 
           onError = (err)->
             alert "There was an error downloading your content, please log in and try again: ", err

@@ -36,14 +36,14 @@ class @ContentInterface
         uri = encodeURI(endpnt)
         targetPath = fileEntry.toURL()
 
-        ft.onprogress = (event)->
-          total = Session.get "total bytes"
-          if !total
-            total = event.total
-            Session.set "total bytes", total
-
-          bytesLoaded = event.loaded
-          Session.set "bytes downloaded", bytesLoaded
+        #ft.onprogress = (event)->
+          #total = Session.get "total bytes"
+          #if !total
+            #total = event.total
+            #Session.set "total bytes", total
+          #t
+          #bytesLoaded = event.loaded
+          #Session.set "bytes downloaded", bytesLoaded
 
         onTransferSuccess = (entry)->
           console.log "TRANSFER SUCCESS"
