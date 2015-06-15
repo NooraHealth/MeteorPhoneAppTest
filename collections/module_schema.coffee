@@ -59,28 +59,34 @@ Modules.attachSchema ModuleSchema
 
 Modules.helpers {
   imgSrc: ()->
-    return getMediaUrl()+ @.image
+    url = Meteor.getContentSrc()
+    return url+ @.image
 
   audioSrc: ()->
-    return getMediaUrl() + @.audio
+    url = Meteor.getContentSrc()
+    return url + @.audio
 
   incorrectAnswerAudio: ()->
-    return getMediaUrl() + @.incorrect_audio
+    url = Meteor.getContentSrc()
+    return url + @.incorrect_audio
 
   correctAnswerAudio: ()->
-    return getMediaUrl() + @.correct_audio
+    url = Meteor.getContentSrc()
+    return url + @.correct_audio
   
   videoSrc: ()->
-    return getMediaUrl()  + @.video
+    url = Meteor.getContentSrc()
+    return url  + @.video
 
   isCorrectAnswer: (response)->
     return response in @.correct_answer
 
   getOptionObjects: ()->
+    url = Meteor.getContentSrc()
     module = @
     if not @.options
       return []
-    newArr = ({option: option, optionImgSrc: getMediaUrl() + option, nh_id: module.nh_id, i: i} for option, i in @.options)
+    newArr = ({option: option, optionImgSrc: url + option, nh_id: module.nh_id, i: i} for option, i in @.options)
     return newArr
 
   option: (i)->
@@ -111,11 +117,3 @@ Modules.helpers {
     return Modules.findOne {nh_id: @.next_module}
     
 }
-getMediaUrl = ()->
-  if Meteor.isClient
-    if Session.get "media url"
-      return Session.get "media url"
-    else
-      return ""
-  if Meteor.isServer
-    return Meteor.call "mediaUrl"
