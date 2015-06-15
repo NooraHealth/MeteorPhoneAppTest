@@ -1,12 +1,4 @@
 Meteor.methods {
-<<<<<<< HEAD
-  
-  cordovaContentSrc: ()->
-    if !Meteor.user()
-      return
-=======
-
->>>>>>> local-server
   updateUser: (query)->
     if !Meteor.user()
       return
