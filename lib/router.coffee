@@ -12,17 +12,13 @@ Router.map ()->
       'footer': {to:"footer"}
     }
     layoutTemplate: 'layout'
-
     onBeforeAction: ()->
-      console.log "HOME route"
       if !Meteor.user()
         this.next()
       else if not Meteor.user().curriculumIsSet()
-        console.log "ABout to go to Select curriculum"
         Router.go "selectCurriculum"
 
       else if Meteor.isCordova and not Meteor.user().contentLoaded() and not Session.get "content loaded"
-        console.log "IN ROUTER CORDOVA"
         Meteor.call 'contentEndpoint', (err, endpoint)->
           console.log "Meteor USER CURRICULUM", Meteor.user().getCurriculum()
           downloader = new ContentInterface(Meteor.user().getCurriculum(), endpoint)
@@ -31,23 +27,6 @@ Router.map ()->
             Session.set "content loaded", true
             Router.go "home"
 
-<<<<<<< HEAD
-          Meteor.call 'contentEndpoint', (err, endpoint)->
-            downloader = new ContentInterface(Meteor.user().getCurriculum(), endpoint)
-            onSuccess = (entry)->
-              Meteor.user().setContentAsLoaded true
-
-            onError = (err)->
-              alert "There was an error downloading your content, please log in and try again: ", err
-              Meteor.user().setContentAsLoaded false
-              Meteor.logout()
-            downloader.loadContent(onSuccess, onError)
-        else
-          if Meteor.isCordova
-            setCordovaContentSrc()
-          else Meteor.call "contentEndpoint", (err, src)->
-            Session.set "content src", src
-=======
           onError = (err)->
             alert "There was an error downloading your content, please log in and try again: ", err
             Meteor.user().setContentAsLoaded false
@@ -57,11 +36,8 @@ Router.map ()->
 
       else if !Meteor.isCordova
         Meteor.call "contentEndpoint", (err, src)->
-          console.log "just set the content src", src
           Session.set "content src", src
->>>>>>> local-server
 
-      console.log "heading to nect"
       this.next()
 
     data: ()->
