@@ -25,7 +25,7 @@ Router.map ()->
           onSuccess = (entry)->
             Meteor.user().setContentAsLoaded true
             Session.set "content loaded", true
-            Session.set( "content src", 'http://127.0.0.1:8080/');
+            Session.set( "content src", 'http://127.0.0.1:8080/')
             Router.go "home"
 
           onError = (err)->
@@ -76,19 +76,19 @@ Router.map ()->
   this.route '/modules/:nh_id', {
     path: '/modules/:nh_id'
     layoutTemplate: 'layout'
-    name: 'modulessequence'
+    name: 'ModulesSequence'
     template: "module"
     yieldTemplates: {
-      'modulefooter': {to:"footer"}
+      'moduleFooter': {to:"footer"}
     }
     onBeforeAction: ()->
-      Session.set "current transition", "slidewindowright"
+      Session.set "current transition", "slideWindowRight"
       this.next()
     data: () ->
       if this.ready()
-        lesson = lessons.findOne {nh_id: this.params.nh_id}
+        lesson = Lessons.findOne {nh_id: this.params.nh_id}
         Session.set "current lesson", lesson
-        modules = lesson.getmodulessequence()
+        modules = lesson.getModulesSequence()
         Session.set "modules sequence", modules
         Session.set "current module index",0
         Session.set "correctly answered", []
