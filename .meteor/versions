@@ -58,14 +58,17 @@ minifiers@1.1.5
 minimongo@1.0.8
 mobile-status-bar@1.0.3
 mongo@1.1.0
+mquandalle:bower@1.4.1
 mrt:q@1.0.1
 multiply:iron-router-progress@1.0.1
 npm-bcrypt@0.7.8_2
+npm-container@1.0.0
 oauth@1.1.4
 oauth2@1.1.3
 observe-sequence@1.0.6
 ordered-dict@1.0.3
 package-version-parser@3.0.3
+pcel:loading@1.0.3
 pierreeric:cssc@1.0.4
 practicalmeteor:chai@1.9.2_3
 practicalmeteor:loglevel@1.1.0_3

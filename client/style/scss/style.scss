@@ -93,6 +93,17 @@ td {
 Custom NH components 
 
 --------------------------------*/
+.loading-message {
+  color: #fff;
+  font-size: 25px;
+  font-weight: 300;
+  font-family: sans-serif;
+}
+
+.sk-spinner-rotating-plane.sk-spinner {
+  background-color: #fff;
+}
+
 .module-footer {
   display: block;
 }

@@ -12,16 +12,26 @@ Router.map ()->
       'footer': {to:"footer"}
     }
     layoutTemplate: 'layout'
+
     onBeforeAction: ()->
+      console.log "HOME route"
       if !Meteor.user()
         this.next()
-      else
+      else if not Meteor.user().curriculumIsSet()
+        console.log "ABout to go to Select curriculum"
+        Router.go "selectCurriculum"
 
-        if not Meteor.user().curriculumIsSet()
-          Router.go "selectCurriculum"
+      else if Meteor.isCordova and not Meteor.user().contentLoaded() and not Session.get "content loaded"
+        console.log "IN ROUTER CORDOVA"
+        Meteor.call 'contentEndpoint', (err, endpoint)->
+          console.log "Meteor USER CURRICULUM", Meteor.user().getCurriculum()
+          downloader = new ContentInterface(Meteor.user().getCurriculum(), endpoint)
+          onSuccess = (entry)->
+            Meteor.user().setContentAsLoaded true
+            Session.set "content loaded", true
+            Router.go "home"
 
-        if Meteor.isCordova and not Meteor.user().contentLoaded()
-
+<<<<<<< HEAD
           Meteor.call 'contentEndpoint', (err, endpoint)->
             downloader = new ContentInterface(Meteor.user().getCurriculum(), endpoint)
             onSuccess = (entry)->
@@ -37,10 +47,25 @@ Router.map ()->
             setCordovaContentSrc()
           else Meteor.call "contentEndpoint", (err, src)->
             Session.set "content src", src
+=======
+          onError = (err)->
+            alert "There was an error downloading your content, please log in and try again: ", err
+            Meteor.user().setContentAsLoaded false
+            Meteor.logout()
+          downloader.loadContent(onSuccess, onError)
+          Router.go "loading"
 
-        this.next()
+      else if !Meteor.isCordova
+        Meteor.call "contentEndpoint", (err, src)->
+          console.log "just set the content src", src
+          Session.set "content src", src
+>>>>>>> local-server
+
+      console.log "heading to nect"
+      this.next()
 
     data: ()->
+      console.log "The data"
       if this.ready() and Meteor.user()
         curr = Curriculum.findOne({_id: Meteor.user().profile.curriculumId})
         if curr
@@ -64,29 +89,28 @@ Router.map ()->
     }
     onBeforeAction: ()->
       Session.set "current transition", "opacity"
-      Meteor.subscribe "curriculums"
       this.next()
   }
 
   ###
-  # Module Sequence
+  # module sequence
   ###
   this.route '/modules/:nh_id', {
     path: '/modules/:nh_id'
     layoutTemplate: 'layout'
-    name: 'ModulesSequence'
+    name: 'modulessequence'
     template: "module"
     yieldTemplates: {
-      'moduleFooter': {to:"footer"}
+      'modulefooter': {to:"footer"}
     }
     onBeforeAction: ()->
-      Session.set "current transition", "slideWindowRight"
+      Session.set "current transition", "slidewindowright"
       this.next()
     data: () ->
       if this.ready()
-        lesson = Lessons.findOne {nh_id: this.params.nh_id}
+        lesson = lessons.findOne {nh_id: this.params.nh_id}
         Session.set "current lesson", lesson
-        modules = lesson.getModulesSequence()
+        modules = lesson.getmodulessequence()
         Session.set "modules sequence", modules
         Session.set "current module index",0
         Session.set "correctly answered", []
@@ -98,33 +122,23 @@ Router.map ()->
 
 
   ###
-  # Refresh the content
+  # refresh the content
   ###
   this.route '/refreshcontent', {
     path: '/refreshcontent'
     data: ()->
-      Meteor.call "refreshContent", ()->
+      Meteor.call "refreshcontent", ()->
         console.log "Yey called refresh"
+  }
+
+  this.route '/loading', {
+    path: '/loading'
+    name: 'loading'
+    
   }
 
 
 Router.configure {
   progressSpinner:false
-
 }
 
-setCordovaContentSrc = ()->
-  window.requestFileSystem LocalFileSystem.PERSISTENT, 0, (fs)->
-    console.log "Requested the local file system: ", fs
-    root = fs.root.toURL()
-    reader = fs.root.createReader()
-    success = (entries)->
-      console.log 'success'
-      console.log entries
-    fail = (err)->
-      console.log 'err'
-      console.log err
-    reader.readEntries success, fail
-    console.log "Setting the content src to ", root
-    Session.set "content src", root
-              

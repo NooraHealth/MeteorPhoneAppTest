@@ -30,3 +30,8 @@ multiply:iron-router-progress
 sanjo:jasmine
 velocity:console-reporter
 velocity:html-reporter
+pcel:loading
+
+
+npm-container
+mquandalle:bower

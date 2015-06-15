@@ -1,6 +1,5 @@
 Array::merge = (other) -> Array::push.apply @, other
 
-
 class @ParsedUrl
   constructor: (@urlString, @endpoint)->
     pieces = urlString.split('/')
@@ -37,9 +36,14 @@ class @ContentInterface
         uri = encodeURI(endpnt)
         targetPath = fileEntry.toURL()
 
-        #ft.onProgress (event)->
-          #console.log "PROGREsS"
-          #console.log event
+        #ft.onprogress = (event)->
+          #total = Session.get "total bytes"
+          #if !total
+            #total = event.total
+            #Session.set "total bytes", total
+          #t
+          #bytesLoaded = event.loaded
+          #Session.set "bytes downloaded", bytesLoaded
 
         onTransferSuccess = (entry)->
           console.log "TRANSFER SUCCESS"
@@ -59,12 +63,9 @@ class @ContentInterface
     onDirEntrySuccess = (url, directories)->
       return (dirEntry)->
         if directories.length == 0
-          console.log dirEntry.toURL()
           file = url.file()
           dirEntry.getFile file, {create: true, exclusive: false}, onFileEntrySuccess(url), onError
         else
-          console.log "2"
-          console.log dirEntry.toURL()
           dir = directories[0] + '/'
           remainingDirs = directories.splice(1)
           dirEntry.getDirectory dir, {create: true, exclusive: false}, onDirEntrySuccess(url, remainingDirs),onError
