@@ -36,6 +36,7 @@ Router.map ()->
 
       else if !Meteor.isCordova
         Meteor.call "contentEndpoint", (err, src)->
+          console.log "Setting the src to ", src
           Session.set "content src", src
 
       this.next()

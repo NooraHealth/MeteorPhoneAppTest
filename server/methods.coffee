@@ -1,6 +1,7 @@
 Meteor.methods {
 
   contentEndpoint: ()->
+    console.log "Getting the content endpoint"
     if process.env.METEOR_ENV == 'production'
       return "https://noorahealthcontent.s3-us-west-1.amazonaws.com/"
     else
