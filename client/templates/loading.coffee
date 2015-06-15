@@ -10,7 +10,7 @@ Template.loading.helpers {
 
 
 message = '<p class="loading-message">'+"Welcome to Noora Health"+'</p>'
-spinner = '<div class="sk-spinner sk-spinner-rotating-plane"></div>'
+spinner = '<div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>'
 
 Template.loading.onRendered ()->
   if !Session.get "loading splash"
@@ -19,7 +19,6 @@ Template.loading.onRendered ()->
     this.loading = Meteor.pleaseWait {
 
       logo: 'NHlogo.png',
-      backgroundColor: '#03A9F4',
       loadingHtml: message + spinner
     }
     Session.set 'loading splash', true

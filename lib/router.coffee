@@ -114,10 +114,6 @@ Router.map ()->
   this.route '/loading', {
     path: '/loading'
     name: 'loading'
-    layoutTemplate: 'layout'
-    yieldTemplates: {
-      'footer': {to: 'footer'}
-    }
     
   }
 
