@@ -22,12 +22,17 @@ class @ContentInterface
   downloadFiles: (urls)->
     deferred = Q.defer()
     numToLoad = urls.length
+    console.log "urls: ", urls
+    console.log urls
     numRecieved = 0
 
-    onError = (err)->
-      console.log "ON ERR"
-      console.log err
-      deferred.reject(err)
+    onError = (url)->
+      console.log "Creating the on error function"
+      return (err)->
+        console.log "ON ERR"
+        console.log "Error for : ", url
+        console.log err
+        deferred.reject(err)
 
     onFileEntrySuccess = (url)->
       return (fileEntry)->
@@ -36,19 +41,20 @@ class @ContentInterface
         uri = encodeURI(endpnt)
         targetPath = fileEntry.toURL()
 
-        #ft.onprogress = (event)->
-          #total = Session.get "total bytes"
-          #if !total
-            #total = event.total
-            #Session.set "total bytes", total
-          #t
-          #bytesLoaded = event.loaded
-          #Session.set "bytes downloaded", bytesLoaded
+        ft.onprogress = (event)->
+          console.log "PROGRESS"
+          total = Session.get "total bytes"
+          if !total
+            total = event.total
+            Session.set "total bytes", total
+          bytesLoaded = event.loaded
+          Session.set "bytes downloaded", bytesLoaded
 
         onTransferSuccess = (entry)->
           console.log "TRANSFER SUCCESS"
           console.log entry
           numRecieved++
+          console.log "Num recieved/numToLoad: "+ numRecieved + "/"+ numToLoad
           if numRecieved == numToLoad
             deferred.resolve(entry)
 
@@ -64,19 +70,19 @@ class @ContentInterface
       return (dirEntry)->
         if directories.length == 0
           file = url.file()
-          dirEntry.getFile file, {create: true, exclusive: false}, onFileEntrySuccess(url), onError
+          dirEntry.getFile file, {create: true, exclusive: false}, onFileEntrySuccess(url), onError(file)
         else
           dir = directories[0] + '/'
           remainingDirs = directories.splice(1)
-          dirEntry.getDirectory dir, {create: true, exclusive: false}, onDirEntrySuccess(url, remainingDirs),onError
+          dirEntry.getDirectory dir, {create: true, exclusive: false}, onDirEntrySuccess(url, remainingDirs), onError(dir)
 
 
     window.requestFileSystem LocalFileSystem.PERSISTENT, 0, (fs)->
       for url in urls
-          directories = url.directories()
-          firstDir = directories[0] + '/'
-          remainingDirs = directories.splice(1)
-          fs.root.getDirectory firstDir, {create: true, exclusive: false}, onDirEntrySuccess(url,remainingDirs), onError
+        directories = url.directories()
+        firstDir = directories[0] + '/'
+        remainingDirs = directories.splice(1)
+        fs.root.getDirectory firstDir, {create: true, exclusive: false}, onDirEntrySuccess(url,remainingDirs), onError
 
     return deferred.promise
 

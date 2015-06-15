@@ -25,6 +25,7 @@ Router.map ()->
           onSuccess = (entry)->
             Meteor.user().setContentAsLoaded true
             Session.set "content loaded", true
+            Session.set( "content src", '127.0.0.1:8080/');
             Router.go "home"
 
           onError = (err)->

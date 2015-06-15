@@ -32,6 +32,7 @@ Lessons.attachSchema LessonSchema
 Lessons.helpers {
   imgSrc: ()->
     url = Meteor.getContentSrc()
+    console.log "Setting the lesson src to: ", url + @.image
     return url + @.image
 
   getSublessonDocuments: ()->
