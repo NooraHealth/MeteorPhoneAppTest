@@ -1,0 +1,20 @@
+{
+  "name": "NooraPhoneApp",
+  "version": "0.0.1",
+  "homepage": "https://github.com/noorahealth/noora-phone-app",
+  "authors": [
+    "lucyrichards <lucyannerichards@gmail.com>"
+  ],
+  "description": "Noora Health's online healthcare curriculum",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "please-wait":"~0.0.5"
+  }
+}

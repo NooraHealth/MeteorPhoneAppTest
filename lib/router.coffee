@@ -111,11 +111,11 @@ Router.map ()->
         console.log "Yey called refresh"
   }
 
-  #this.route '/loading', {
-    #path: '/loading'
-    #name: 'loading'
+  this.route '/loading', {
+    path: '/loading'
+    name: 'loading'
     
-  #}
+  }
 
 
 Router.configure {
