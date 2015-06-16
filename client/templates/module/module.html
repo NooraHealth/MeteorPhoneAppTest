@@ -1,9 +1,6 @@
 <template name="module">
 
 {{#each rearrangedModules}}
-<div class="valign-wrapper module row">
-  <div class="valign module-wrapper col l4 offset-l4 m6 offset-m3">
-
   {{#if isVideoModule}}
   
     {{>Surface id=nh_id class="white padded"  origin="[.5, .5]" align="[.5, .5]" template="videoModule" modifier="StateModifier"}}
@@ -32,39 +29,8 @@
   {{#if dummyModule}}
     {{>Surface template="slideModule"}}
   {{/if}}
-  
-  </div>
-</div>
 
 {{/each}}
-
-<!--{{#with firstModule}}-->
-  <!--{{#if isVideoModule}}-->
-  
-    <!--{{>Surface id=getId class="white padded"  origin="[.5, .5]" align="[.5, .5]" template="videoModule" modifier="StateModifier"}}-->
-  <!--{{/if}}-->
-
-  <!--{{#if isSlideModule}}-->
-    <!--{{>Surface id=getId class="white padded"  origin="[.5, .5]" align="[.5, .5]" template="slideModule" modifier="StateModifier" transition="opacity"}}-->
-  <!--{{/if}}-->
-
-  <!--{{#if isMultipleChoiceModule}}-->
-    <!--{{>Surface id=getId class="white padded"  origin="[.5, .5]" align="[.5, .5]" template="multipleChoiceModule" modifier="StateModifier"}}-->
-  <!--{{/if}}-->
-
-  <!--{{#if isGoalChoiceModule}}-->
-    <!--{{>Surface id=getId class="white padded"  origin="[.5, .5]" align="[.5, .5]" template="multipleChoiceModule" modifier="StateModifier"}}-->
-  <!--{{/if}}-->
-
-  <!--{{#if isBinaryModule}}-->
-    <!--[>{{>binaryChoiceModule}}<]-->
-    <!--{{>Surface id=getId class="white padded"  origin="[.5, .5]" align="[.5, .5]" template="binaryChoiceModule" modifier="StateModifier" transition="opacity"}}-->
-  <!--{{/if}}-->
-
-  <!--{{#if isScenarioModule}}-->
-    <!--{{>Surface id=getId class="white padded"  origin="[.5, .5]" align="[.5, .5]" template="scenarioModule" modifier="StateModifier"}}-->
-  <!--{{/if}} -->
-<!--{{/with}}-->
 
 </template>
 
