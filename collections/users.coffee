@@ -23,7 +23,8 @@ Meteor.users.helpers {
     #return @.profile.content_loaded
 
   getCompletedChapters: ()->
-    return @.profile.chapters_complete
+    chaptersInCurr = @.getCurriculum().lessons.length
+    return (chapter for chapter in @.profile.chapters_complete when chapter in chaptersInCurr)
   
   hasCompletedChapter: (_id)->
     chaptersComplete = @.getCompletedChapters()

@@ -1,6 +1,9 @@
 <template name="module">
 
 {{#each rearrangedModules}}
+<div class="valign-wrapper module row">
+  <div class="valign module-wrapper col l4 offset-l4 m6 offset-m3">
+
   {{#if isVideoModule}}
   
     {{>Surface id=nh_id class="white padded"  origin="[.5, .5]" align="[.5, .5]" template="videoModule" modifier="StateModifier"}}
@@ -30,6 +33,9 @@
     {{>Surface template="slideModule"}}
   {{/if}}
   
+  </div>
+</div>
+
 {{/each}}
 
 <!--{{#with firstModule}}-->
