@@ -2,14 +2,6 @@
 # MODULES SEQUENCE HELPERS
 ###
 
-Template.slide.helpers
-
-  outerWrapperClasses: ()->
-    return "valign-wrapper module row"
-
-  innerWrapperClasses: ()->
-    return "valign module-wrapper col l4 offset-l4 m6 offset-m3"
-
 Template.module.helpers
 
   rearrangedModules: ()->
@@ -32,6 +24,7 @@ Template.module.helpers
       return @.modules[Session.get "current module index"]
 
 Template.module.onRendered ()->
+  console.log "Rendering"
   fview = FView.from this
   fview.node._object.hide()
 
