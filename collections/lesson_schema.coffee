@@ -6,9 +6,6 @@
 ###
 
 LessonSchema = new SimpleSchema
-  short_title:
-    type: String
-    optional: true
   title:
     type:String
   description:
@@ -18,31 +15,13 @@ LessonSchema = new SimpleSchema
     type: String
     #regEx:  /^([/]?\w+)+[.]png/
     optional:true
-  imageUrl:
-    type:String
-    optional:true
   tags:
     type:[String]
     minCount:0
     optional:true
-  has_sublessons:
-    type:String
-    defaultValue: "false"
-  lessons:
-    type:[String]
-    optional:true
-    #custom: ()->
-#      if this.field('has_sublessons').value == "true"
-        #return "required"
   modules:
     type: [String]
     optional:true
-  first_module:
-    type:String
-    optional:true
-#    custom: ()->
-      #if this.field('has_sublessons').value == "true"
-        #return "required"
   nh_id:
     type:String
     optional: true
@@ -52,9 +31,8 @@ Lessons.attachSchema LessonSchema
 
 Lessons.helpers {
   imgSrc: ()->
-    console.log getMediaUrl()
-    console.log getMediaUrl() + @.image
-    url =getMediaUrl()
+    url = Meteor.getContentSrc()
+    console.log "Setting the lesson src to: ", url + @.image
     return url + @.image
 
   getSublessonDocuments: ()->
@@ -70,8 +48,6 @@ Lessons.helpers {
     return lessonDocuments
 
   getModulesSequence: ()->
-    if !this.first_module
-      Meteor.Error "This lesson does not have any modules"
     if this.modules
       moduleDocs = (Modules.findOne {_id: moduleId} for moduleId in @.modules)
       return moduleDocs
@@ -97,9 +73,4 @@ Lessons.helpers {
 
 }
 
-getMediaUrl = ()->
-  if Meteor.isClient
-    return Session.get "media url"
-  if Meteor.isServer or Meteor.isCordova
-    return Meteor.call "mediaUrl"
 

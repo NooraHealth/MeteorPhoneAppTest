@@ -1,0 +1,6 @@
+To deploy beta testing ios app: 
+
+Run on iOS device
+Project > Archive > export > Ad Hoc Development
+-diawi.com
+

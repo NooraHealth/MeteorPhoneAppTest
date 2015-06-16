@@ -15,31 +15,34 @@ Router.map ()->
     onBeforeAction: ()->
       if !Meteor.user()
         this.next()
-      else
-        console.log "ROUTE to HOME PAGE"
-        Session.set "current transition", "slideWindowRight"
-        if not Meteor.user().profile
-          Meteor.users.update {_id: Meteor.user()._id}, {$set: {"profile": {} }}
-          Router.go "selectCurriculum"
-        else if not Meteor.user().profile.curriculumId
-          Router.go "selectCurriculum"
+      else if not Meteor.user().curriculumIsSet()
+        Router.go "selectCurriculum"
+      else if Meteor.isCordova and not Meteor.user().contentLoaded() and not Session.get "content loaded"
+        Meteor.call 'contentEndpoint', (err, endpoint)->
+          console.log "Meteor USER CURRICULUM", Meteor.user().getCurriculum()
+          downloader = new ContentInterface(Meteor.user().getCurriculum(), endpoint)
+          onSuccess = (entry)->
+            Meteor.user().setContentAsLoaded true
+            Session.set "content loaded", true
+            Session.set( "content src", 'http://127.0.0.1:8080/')
+            Router.go "home"
 
-        if Meteor.isCordova and not Meteor.user().profile.content_loaded
-          console.log "cordova!"
-          Meteor.loadContent()
+          onError = (err)->
+            alert "There was an error downloading your content, please log in and try again: ", err
+            Meteor.user().setContentAsLoaded false
+            Meteor.logout()
+          downloader.loadContent(onSuccess, onError)
+          Router.go "loading"
 
-        if not Meteor.user().profile.chapters_complete
-          Meteor.users.update {_id: Meteor.user()._id}, {$set:{"profile.chapters_complete": []}}
-        else
-          Meteor.call "mediaUrl", (err, result) ->
-            if err
-              console.log "error retrieving mediaURL: ", err
-            else
-              console.log "SETTING the mediaUrl", result
-              Session.set "media url", result
-        this.next()
+      else if !Meteor.isCordova
+        Meteor.call "contentEndpoint", (err, src)->
+          console.log "Setting the src to ", src
+          Session.set "content src", src
+
+      this.next()
 
     data: ()->
+      console.log "The data"
       if this.ready() and Meteor.user()
         curr = Curriculum.findOne({_id: Meteor.user().profile.curriculumId})
         if curr
@@ -63,12 +66,11 @@ Router.map ()->
     }
     onBeforeAction: ()->
       Session.set "current transition", "opacity"
-      Meteor.subscribe "curriculums"
       this.next()
   }
 
   ###
-  # Module Sequence
+  # module sequence
   ###
   this.route '/modules/:nh_id', {
     path: '/modules/:nh_id'
@@ -97,7 +99,7 @@ Router.map ()->
 
 
   ###
-  # Refresh the content
+  # refresh the content
   ###
   this.route '/refreshcontent', {
     path: '/refreshcontent'
@@ -106,8 +108,14 @@ Router.map ()->
         console.log "Yey called refresh"
   }
 
+  this.route '/loading', {
+    path: '/loading'
+    name: 'loading'
+    
+  }
+
 
 Router.configure {
   progressSpinner:false
-
 }
+

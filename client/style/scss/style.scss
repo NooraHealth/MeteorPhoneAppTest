@@ -1,6 +1,6 @@
-/*@import '.meteor/local/build/programs/server/assets/packages/wolves_bourbon/bourbon/_bourbon';*/
+@import '.meteor/local/build/programs/server/assets/packages/wolves_bourbon/bourbon/_bourbon';
 
-@import '_bourbon';
+/*@import '_bourbon';*/
 
 @import '_variables'; 
 
@@ -15,7 +15,7 @@ Primary style
 -------------------------------- */
 
 *, *::after, *::before {
-  @include box-sizing(border-box);
+  box-sizing: border-box;
 }
 
 *::after, *::before {
@@ -93,6 +93,17 @@ td {
 Custom NH components 
 
 --------------------------------*/
+.loading-message {
+  color: #fff;
+  font-size: 25px;
+  font-weight: 300;
+  font-family: sans-serif;
+}
+
+.sk-spinner-rotating-plane.sk-spinner {
+  background-color: #fff;
+}
+
 .module-footer {
   display: block;
 }
@@ -102,9 +113,10 @@ Custom NH components
 }
 
 .fullScreen {
-  height: 100%;
+  height: 90%;
   width: 100%;
 }
+
 .uploadOption {
   height: 50px;
   text-align: center;
@@ -125,6 +137,7 @@ Custom NH components
 }
 .scrollBox {
   overflow-y:scroll;
+  padding: 50px !important;
 }
 .file-input {
   margin-right: 10px;

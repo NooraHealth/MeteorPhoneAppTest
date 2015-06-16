@@ -9,19 +9,21 @@ Template.chapterThumbnail.events {
 }
 
 Template.home.onRendered ()->
+  if not Meteor.user()
+    return
   cards = FView.byId "cardLayout"
   width = Session.get "chapter card width"
-  if !Meteor.user()
-    return
 
-  cardsComplete = Meteor.user().profile.chapters_complete.length
+  cardsComplete = Meteor.user().getCompletedChapters().length
+  console.log "CARDS COMPLETE", cardsComplete
+
   chapters = Session.get "chapters sequence"
   if cardsComplete < chapters.length
     cards.modifier.setTransform Transform.translate(-1 * width * cardsComplete ,0, 0), {duration: 2000, curve: "easeIn"}
 
 Template.chapterThumbnail.onRendered ()->
   fview = FView.from this
-  chaptersComplete = Meteor.user().profile.chapters_complete
+  chaptersComplete = Meteor.user().getCompletedChapters()
   chapters = Session.get "chapters sequence"
   console.log "Chapters sequence: ", chapters
   if chaptersComplete.length == chapters.length
@@ -41,7 +43,7 @@ Template.chapterThumbnail.onRendered ()->
   if fview.id == currentChapterId
     fview.modifier.setTransform Transform.scale(1.15, 1.15, 1.15), {duration: 1000, curve: "easeIn"}
 
-  if fview.id == currentChapterId or completedChapter(fview.id)
+  if fview.id == currentChapterId or Meteor.user().hasCompletedChapter(fview.id)
     
     fview.modifier.setOpacity 1, {duration:500, curve: "easeIn"}
     surface.setProperties {zIndex: 10}
@@ -72,7 +74,4 @@ Template.chapterThumbnail.onRendered ()->
     ##return "https://noorahealth-development.s3-west-1.amazonaws.com/" + @.image
 
 #}
-completedChapter = (nh_id)->
-  chaptersComplete = Meteor.user().profile.chapters_complete
-  return nh_id in chaptersComplete
 
