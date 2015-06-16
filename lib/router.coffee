@@ -105,7 +105,7 @@ Router.map ()->
   this.route '/refreshcontent', {
     path: '/refreshcontent'
     data: ()->
-      Meteor.call "refreshcontent", ()->
+      Meteor.call "refreshContent", ()->
         console.log "Yey called refresh"
   }
 
