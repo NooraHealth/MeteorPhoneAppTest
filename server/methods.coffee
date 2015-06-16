@@ -2,9 +2,9 @@ Meteor.methods {
 
   refreshContent: ()->
     console.log "Refresghing the content on the server"
-    #Curriculum.remove({})
-    #Lessons.remove({})
-    #Modules.remove({})
+    Curriculum.remove({})
+    Lessons.remove({})
+    Modules.remove({})
 
     Curriculum.insert curriculum for curriculum in CURRICULUM
     Lessons.insert lesson for lesson in LESSONS

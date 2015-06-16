@@ -42,6 +42,9 @@ ModuleSchema = new SimpleSchema
   correct_audio:
     type:String
     optional:true
+  next_module:
+    type: String
+    optional:true
   
   #VIDEO MODULE
   video:
@@ -58,6 +61,9 @@ ModuleSchema = new SimpleSchema
 Modules.attachSchema ModuleSchema
 
 Modules.helpers {
+  isLastModule: ()->
+    return @.next_module == -1
+
   imgSrc: ()->
     url = Meteor.getContentSrc()
     return url+ @.image

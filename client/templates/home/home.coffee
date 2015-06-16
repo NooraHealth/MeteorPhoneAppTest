@@ -43,7 +43,7 @@ Template.chapterThumbnail.onRendered ()->
   if fview.id == currentChapterId
     fview.modifier.setTransform Transform.scale(1.15, 1.15, 1.15), {duration: 1000, curve: "easeIn"}
 
-  if fview.id == currentChapterId or Meteor.user().hasCompletedChapter(fview.id)
+  if fview.id == currentChapterId or true # Meteor.user().hasCompletedChapter(fview.id)
     
     fview.modifier.setOpacity 1, {duration:500, curve: "easeIn"}
     surface.setProperties {zIndex: 10}
