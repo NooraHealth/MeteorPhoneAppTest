@@ -15,9 +15,13 @@ Router.map ()->
     onBeforeAction: ()->
       console.log "THis is this in home route: "
       console.log this
+      console.log "Meteor loging in? "
+      console.log Meteor.loggingIn()
       console.log "This is the Meteor.user()"
       console.log Meteor.user()
-      if !Meteor.user()
+      if Meteor.loggingIn()
+        return
+      else if !Meteor.user()
         this.next()
       else if not Meteor.user().curriculumIsSet()
         Router.go "selectCurriculum"
