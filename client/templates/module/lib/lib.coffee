@@ -107,6 +107,17 @@ this.handleSuccessfulAttempt = (module, time_to_complete)->
     else
       console.log "Just inserted this CORRECT attempt into the DB: ", Attempts.findOne {_id: _id}
 
+
+this.nextBtnShouldHide = ()->
+  currentModule = this.getCurrentModule()
+  console.log "This is the current module"
+  console.log currentModule
+  if currentModule.type == "VIDEO" or currentModule.type == "SLIDE"
+    console.log "was video"
+    return false
+  else
+    console.log "NOT VIDEO"
+    return true
 ###
 # Plays the audio associated with the answer
 #

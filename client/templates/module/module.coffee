@@ -33,4 +33,6 @@ Template.module.onRendered ()->
     nh_id = Session.get("modules sequence")[moduleIndex].nh_id
     surface = FView.byId nh_id
     fview.node._object.show surface
+    console.log "setting next button"
+    Session.set "next button is hidden", nextBtnShouldHide()
 

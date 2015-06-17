@@ -13,12 +13,6 @@ Router.map ()->
     }
     layoutTemplate: 'layout'
     onBeforeAction: ()->
-      console.log "THis is this in home route: "
-      console.log this
-      console.log "Meteor loging in? "
-      console.log Meteor.loggingIn()
-      console.log "This is the Meteor.user()"
-      console.log Meteor.user()
       if Meteor.loggingIn()
         return
       else if !Meteor.user()
@@ -99,7 +93,7 @@ Router.map ()->
         Session.set "current module index",0
         Session.set "correctly answered", []
         Session.set "incorrectly answered", []
-        Session.set "next button is hidden", false
+        #Session.set "next button is hidden", nextBtnShouldHide()
         return {modules:  modules  }
         
   }

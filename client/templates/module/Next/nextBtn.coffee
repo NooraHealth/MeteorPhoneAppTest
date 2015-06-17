@@ -1,6 +1,5 @@
 Template.nextBtn.events
   "click #nextbtn": ()->
-    Session.set "next button is hidden", true
     index = Session.get "current module index"
     currLesson = Session.get "current lesson"
     modulesSequence = Session.get "modules sequence"
