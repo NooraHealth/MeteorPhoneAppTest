@@ -3,7 +3,7 @@ Template.home.helpers {
   displayTrophy: ()->
     return Session.get "display trophy"
 }
-Template.chapterThumbnail.events {
+Template.lessonThumbnail.events {
   "click .card": (event, template) ->
     fview = FView.from(template)
 }
@@ -12,26 +12,27 @@ Template.home.onRendered ()->
   if not Meteor.user()
     return
   cards = FView.byId "cardLayout"
-  width = Session.get "chapter card width"
+  width = Session.get "lesson card width"
 
-  cardsComplete = Meteor.user().getCompletedChapters().length
-  console.log "CARDS COMPLETE", cardsComplete
+  lessonsComplete = Meteor.user().getCompletedLessons().length
+  console.log "CARDS COMPLETE",lessonsComplete
+  lessons = Session.get "lessons sequence"
+  if lessonsComplete < lessons.length
+    cards.modifier.setTransform Transform.translate(-1 * width * lessonsComplete ,0, 0), {duration: 2000, curve: "easeIn"}
 
-  chapters = Session.get "chapters sequence"
-  if cardsComplete < chapters.length
-    cards.modifier.setTransform Transform.translate(-1 * width * cardsComplete ,0, 0), {duration: 2000, curve: "easeIn"}
-
-Template.chapterThumbnail.onRendered ()->
+Template.lessonThumbnail.onRendered ()->
   fview = FView.from this
-  chaptersComplete = Meteor.user().getCompletedChapters()
-  chapters = Session.get "chapters sequence"
-  console.log "Chapters sequence: ", chapters
-  if chaptersComplete.length == chapters.length
-    currentChapterId = ""
-  else if chaptersComplete.length>0
-    currentChapterId= chapters[chaptersComplete.length].nh_id
+  lessonsComplete = Meteor.user().getCompletedLessons()
+  console.log "Completed lessons: ", lessonsComplete
+  console.log lessonsComplete
+  lessons = Session.get "lessons sequence"
+  console.log "Lessons sequence: ", lessons
+  if lessonsComplete.length == lessons.length
+    currentlessonId = ""
+  else if lessonsComplete.length>0
+    currentlessonId= lessons[lessonsComplete.length].nh_id
   else
-    currentChapterId = chapters[0].nh_id
+    currentlessonId = lessons[0].nh_id
 
   fview.id = this.data.nh_id
 
@@ -40,17 +41,17 @@ Template.chapterThumbnail.onRendered ()->
   fview.modifier.setAlign [.5, .5]
   
   surface = fview.surface or fview.view
-  if fview.id == currentChapterId
+  if fview.id == currentlessonId
     fview.modifier.setTransform Transform.scale(1.15, 1.15, 1.15), {duration: 1000, curve: "easeIn"}
 
-  if fview.id == currentChapterId or true # Meteor.user().hasCompletedChapter(fview.id)
+  if fview.id == currentlessonId or Meteor.user().hasCompletedLesson(fview.id)
     
     fview.modifier.setOpacity 1, {duration:500, curve: "easeIn"}
     surface.setProperties {zIndex: 10}
 
     surface.on "mouseout", ()->
       fview.modifier.halt()
-      if fview.id== currentChapterId
+      if fview.id== currentlessonId
         fview.modifier.setTransform Transform.scale(1.15, 1.15, 1.15), {duration: 500, curve: "easeIn"}
       else
         fview.modifier.setTransform Transform.scale(1, 1, 1), {duration: 500, curve: "easeIn"}
@@ -66,7 +67,7 @@ Template.chapterThumbnail.onRendered ()->
   else
     fview.modifier.setOpacity .5
 
-#Template.chapterThumbnail.helpers {
+#Template.lessonThumbnail.helpers {
   #imageSource: ()->
     #mediaUrl = Session.get "media url"
     #console.log "getting the image src", mediaUrl + @.image

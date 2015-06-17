@@ -10,7 +10,8 @@ Template.nextBtn.events
     module = undefined
 
     if correctlyAnswered.length == modulesSequence.length
-      chapterComplete()
+      Meteor.user().updateLessonsComplete(currLesson)
+      Router.go "home"
       return
 
     if currentModule.type == "VIDEO" or currentModule.type == "SLIDE"
@@ -54,14 +55,3 @@ resetTemplate = ()->
     $(btn).removeClass "incorrectly_selected"
     $(btn).removeClass "selected"
 
-
-chapterComplete = () ->
-
-  chaptersComplete = Meteor.user().profile.chapters_complete
-  currLesson = Session.get "current lesson"
-  if currLesson.nh_id not in chaptersComplete
-    Meteor.users.update {_id: Meteor.user()._id}, {$push: {"profile.chapters_complete": currLesson.nh_id}}, (err) ->
-      console.log err
-
-  stopAllAudio()
-  Router.go "home"

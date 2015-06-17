@@ -18,15 +18,26 @@ Meteor.users.helpers {
     Meteor.call "updateUser", query
     @
 
-  contentLoaded: ()->
-    return false
-    #return @.profile.content_loaded
+  updateLessonsComplete: (lesson)->
+    lessonsComplete = @.getCompletedLessons()
+    if lesson.nh_id not in lessonsComplete
+      query = {$push: {"profile.lessons_complete": lesson.nh_id}}
+      Meteor.call "updateUser", query
+    @
 
-  getCompletedChapters: ()->
-    chaptersInCurr = @.getCurriculum().lessons.length
-    return (chapter for chapter in @.profile.chapters_complete when chapter in chaptersInCurr)
+  contentLoaded: ()->
+    return @.profile.content_loaded
+
+  getCompletedLessons: ()->
+    curriculum = @.getCurriculum().lessons
+    usersCompletedLessons = @.profile.lessons_complete
+    for lesson in usersCompletedLessons
+      console.log "Is lesson in users completed lessons? ", lesson
+      console.log usersCompletedLessons
+
+    return (lesson for lesson in usersCompletedLessons when lesson in curriculum)
   
-  hasCompletedChapter: (_id)->
-    chaptersComplete = @.getCompletedChapters()
-    return _id in chaptersComplete
+  hasCompletedLesson: (_id)->
+    lessonsComplete = @.getCompletedLessons()
+    return _id in lessonsComplete
 }

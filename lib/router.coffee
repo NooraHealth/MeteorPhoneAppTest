@@ -2,7 +2,7 @@ Router.map ()->
   
   ###
   # Home
-  # Displays all chapters in curriculum
+  # Displays all lessons in curriculum
   ###
   this.route '/', {
     path: '/'
@@ -47,15 +47,14 @@ Router.map ()->
       if this.ready() and Meteor.user()
         curr = Curriculum.findOne({_id: Meteor.user().profile.curriculumId})
         if curr
-          Session.set "current chapter", null
           Session.set "current lesson", null
           Session.set "current module index", null
           Session.set "module sequence", null
           Session.set "sections map", {}
           Session.set "current sections", null
-          chapters =  curr.getLessonDocuments()
-          Session.set "chapters sequence", chapters
-          return {chapters: chapters}
+          lessons =  curr.getLessonDocuments()
+          Session.set "lessons sequence", lessons
+          return {lessons: lessons}
   }
 
   this.route '/selectCurriculum', {
@@ -66,7 +65,6 @@ Router.map ()->
       'selectCurriculumFooter': {to:"footer"}
     }
     onBeforeAction: ()->
-      Session.set "current transition", "opacity"
       this.next()
   }
 
@@ -87,7 +85,6 @@ Router.map ()->
     onBeforeAction: ()->
       if Meteor.loggingIn()
         return
-      Session.set "current transition", "slideWindowRight"
       this.next()
     data: () ->
       console.log @.params.nh_id
