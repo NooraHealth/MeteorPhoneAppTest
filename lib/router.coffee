@@ -81,12 +81,23 @@ Router.map ()->
     yieldTemplates: {
       'moduleFooter': {to:"footer"}
     }
+    #waitOn: ()->
+      #Meteor.subscribe "lessons"
+      #Meteor.subscribe "modules"
     onBeforeAction: ()->
+      if Meteor.loggingIn()
+        return
       Session.set "current transition", "slideWindowRight"
       this.next()
     data: () ->
+      console.log @.params.nh_id
+      console.log "ABOVE"
+      console.log Lessons.findOne {nh_id: this.params.nh_id}
+      console.log Lessons.find({}).count()
       if this.ready()
+        console.log "READY"
         lesson = Lessons.findOne {nh_id: this.params.nh_id}
+        console.log lesson
         Session.set "current lesson", lesson
         modules = lesson.getModulesSequence()
         Session.set "modules sequence", modules
