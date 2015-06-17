@@ -13,13 +13,16 @@ Router.map ()->
     }
     layoutTemplate: 'layout'
     onBeforeAction: ()->
+      console.log "THis is this in home route: "
+      console.log this
+      console.log "This is the Meteor.user()"
+      console.log Meteor.user()
       if !Meteor.user()
         this.next()
       else if not Meteor.user().curriculumIsSet()
         Router.go "selectCurriculum"
       else if Meteor.isCordova and not Meteor.user().contentLoaded() and not Session.get "content loaded"
         Meteor.call 'contentEndpoint', (err, endpoint)->
-          console.log "Meteor USER CURRICULUM", Meteor.user().getCurriculum()
           downloader = new ContentInterface(Meteor.user().getCurriculum(), endpoint)
           onSuccess = (entry)->
             Meteor.user().setContentAsLoaded true
