@@ -34,7 +34,8 @@ Template.nextBtn.events
       resetTemplate()
       playAudio 'question', Session.get("modules sequence")[moduleIndex]
     else
-      chapterComplete()
+      Meteor.user().updateLessonsComplete(currLesson)
+      Router.go "home"
 
 Template.nextBtn.helpers
   isLastModule: ()->
