@@ -3,7 +3,7 @@ Template.selectCurriculum.helpers {
     return this._id
 
   curriculums: ()->
-    return Curriculum.find({})
+    return Curriculum.find({title:{$ne: "Start a New Curriculum"}})
 }
 
 Template.selectCurriculum.onRendered ()->
