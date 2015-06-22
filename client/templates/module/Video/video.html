@@ -2,9 +2,14 @@
 <div class="valign-wrapper module">
   <div class="valign module-wrapper">
     <div class="center-align">
-      <video src="{{videoSrc}}" class="inherit video-responsive" controls autoplay>
-        Your browser does not support the video tag. Please logout and use another browser.
-      </video>
+      {{#if isEmbedded}}
+       <p>Is embedded!</p>
+        <!--<iframe title="{{title}}" width="480" height="390" src="{{src}}" frameborder="0" allowfullscreen></iframe>-->
+      {{else}}
+        <video src="{{videoSrc}}" class="inherit video-responsive" controls autoplay>
+          Your browser does not support the video tag. Please logout and use another browser.
+        </video>
+      {{/if}}
     </div>
 
     <div class="flow-text grey-text text-darken-2 center-align">

@@ -1,3 +1,6 @@
+String::startsWith ?= (s) -> @[...s.length] is s
+String::endsWith   ?= (s) -> s is '' or @[-s.length..] is s
+
 ###
 # Module
 #
@@ -61,6 +64,12 @@ ModuleSchema = new SimpleSchema
 Modules.attachSchema ModuleSchema
 
 Modules.helpers {
+  isEmbedded: ()->
+    if this.vide
+      return false
+    else
+      return this.video_url.startsWith "http"
+
   isLastModule: ()->
     return @.next_module == -1
 
