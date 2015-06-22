@@ -8,7 +8,6 @@ this.stopAllAudio = ()->
     audioElem.pause()
 
 this.handleResponse = (response)->
-  console.log "handling response"
   moduleSequence = Session.get "modules sequence"
   currentModuleIndex = Session.get "current module index"
   module = moduleSequence[currentModuleIndex]

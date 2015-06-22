@@ -31,10 +31,6 @@ Meteor.users.helpers {
   getCompletedLessons: ()->
     curriculum = @.getCurriculum().lessons
     usersCompletedLessons = @.profile.lessons_complete
-    for lesson in usersCompletedLessons
-      console.log "Is lesson in users completed lessons? ", lesson
-      console.log usersCompletedLessons
-
     return (lesson for lesson in usersCompletedLessons when lesson in curriculum)
   
   hasCompletedLesson: (_id)->

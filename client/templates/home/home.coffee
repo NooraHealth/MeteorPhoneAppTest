@@ -17,16 +17,20 @@ Template.home.onRendered ()->
   lessonsComplete = Meteor.user().getCompletedLessons().length
   console.log "CARDS COMPLETE",lessonsComplete
   lessons = Session.get "lessons sequence"
+  scrollView = FView.byId("cardLayout").view
+  console.log "This is the scrollview"
+  console.log scrollView
+  
   #if lessonsComplete < lessons.length
     #cards.modifier.setTransform Transform.translate(-1 * width * lessonsComplete ,0, 0), {duration: 2000, curve: "easeIn"}
+  if lessonsComplete < lessons.length
+    scrollView.setPosition width * lessonsComplete
+    #cards.modifier.setTransform Transform.translate(0, -1 * width * lessonsComplete ,0), {duration: 2000, curve: "easeIn"}
 
 Template.lessonThumbnail.onRendered ()->
   fview = FView.from this
   lessonsComplete = Meteor.user().getCompletedLessons()
-  console.log "Completed lessons: ", lessonsComplete
-  console.log lessonsComplete
   lessons = Session.get "lessons sequence"
-  console.log "Lessons sequence: ", lessons
   if lessonsComplete.length == lessons.length
     currentlessonId = ""
   else if lessonsComplete.length>0
@@ -61,7 +65,6 @@ Template.lessonThumbnail.onRendered ()->
       fview.modifier.setTransform Transform.scale(1.25, 1.25, 1.25), {duration: 500, curve: "easeIn"}
 
     surface.on "click", ()->
-      console.log "going to the modules page"
       Router.go "ModulesSequence", {nh_id: fview.id}
   
   else
