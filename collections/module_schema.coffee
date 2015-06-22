@@ -1,6 +1,7 @@
 String::startsWith ?= (s) -> @[...s.length] is s
 String::endsWith   ?= (s) -> s is '' or @[-s.length..] is s
 
+NUM_OBJECTS_PER_ROW = 3
 ###
 # Module
 #
@@ -99,13 +100,22 @@ Modules.helpers {
   isCorrectAnswer: (response)->
     return response in @.correct_answer
 
-  getOptionObjects: ()->
+  rowOfOptions: (index)->
     url = Meteor.getContentSrc()
     module = @
     if not @.options
       return []
-    newArr = ({option: option, optionImgSrc: url + option, nh_id: module.nh_id, i: i} for option, i in @.options)
-    return newArr
+    isCorrect = (option)=>
+      console.log "This is the option investigating correctness"
+      console.log option
+      console.log @.correct_answer
+      return option in @.correct_answer
+    startIndex = index * NUM_OBJECTS_PER_ROW
+    endIndex = startIndex + NUM_OBJECTS_PER_ROW
+    newArr = ({option: option, optionImgSrc: url + option, nh_id: module.nh_id, i: i, correct: isCorrect(option)} for option, i in @.options when i >= startIndex and i < endIndex)
+    console.log "Heres the new array:"
+    console.log newArr
+    return {options: newArr}
 
   option: (i)->
     return @.options[i]
