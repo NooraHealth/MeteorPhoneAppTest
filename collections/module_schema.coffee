@@ -64,6 +64,9 @@ ModuleSchema = new SimpleSchema
 Modules.attachSchema ModuleSchema
 
 Modules.helpers {
+  videoUrl: ()->
+    return this.video_url
+
   isEmbedded: ()->
     if this.vide
       return false
