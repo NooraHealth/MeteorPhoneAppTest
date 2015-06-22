@@ -69,7 +69,7 @@ Modules.helpers {
     return this.video_url
 
   isEmbedded: ()->
-    if this.vide
+    if this.video or !this.video_url
       return false
     else
       return this.video_url.startsWith "http"
@@ -106,9 +106,6 @@ Modules.helpers {
     if not @.options
       return []
     isCorrect = (option)=>
-      console.log "This is the option investigating correctness"
-      console.log option
-      console.log @.correct_answer
       return option in @.correct_answer
     startIndex = index * NUM_OBJECTS_PER_ROW
     endIndex = startIndex + NUM_OBJECTS_PER_ROW

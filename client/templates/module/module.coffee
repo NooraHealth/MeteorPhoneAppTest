@@ -27,6 +27,13 @@ Template.module.onRendered ()->
   console.log "Rendering"
   fview = FView.from this
   fview.node._object.hide()
+  console.log fview
+  for module in fview.children
+    console.log "This is the module"
+    console.log module
+    console.log module.modifier
+    if module.modifier
+      module.modifier.setSize [1000, 600]
 
   this.autorun ()->
     moduleIndex = Session.get "current module index"

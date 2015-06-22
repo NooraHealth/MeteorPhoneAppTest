@@ -29,6 +29,8 @@ Template.home.onRendered ()->
 
 Template.lessonThumbnail.onRendered ()->
   fview = FView.from this
+  console.log "FVIEW: "
+  console.log fview
   lessonsComplete = Meteor.user().getCompletedLessons()
   lessons = Session.get "lessons sequence"
   if lessonsComplete.length == lessons.length
