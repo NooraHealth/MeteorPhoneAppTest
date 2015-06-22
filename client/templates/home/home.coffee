@@ -17,8 +17,8 @@ Template.home.onRendered ()->
   lessonsComplete = Meteor.user().getCompletedLessons().length
   console.log "CARDS COMPLETE",lessonsComplete
   lessons = Session.get "lessons sequence"
-  if lessonsComplete < lessons.length
-    cards.modifier.setTransform Transform.translate(-1 * width * lessonsComplete ,0, 0), {duration: 2000, curve: "easeIn"}
+  #if lessonsComplete < lessons.length
+    #cards.modifier.setTransform Transform.translate(-1 * width * lessonsComplete ,0, 0), {duration: 2000, curve: "easeIn"}
 
 Template.lessonThumbnail.onRendered ()->
   fview = FView.from this
