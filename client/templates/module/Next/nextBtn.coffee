@@ -10,7 +10,7 @@ Template.nextBtn.events
     module = undefined
 
     #if correctlyAnswered.length == modulesSequence.length
-    if isLastModule()
+    if allModulesComplete()
       Meteor.user().updateLessonsComplete(currLesson)
       Router.go "home"
       return
@@ -38,9 +38,11 @@ Template.nextBtn.events
       Meteor.user().updateLessonsComplete(currLesson)
       Router.go "home"
 
+    Session.set "next button is hidden", nextBtnShouldHide()
+
 Template.nextBtn.helpers
-  isLastModule: ()->
-    return isLastModule()
+  allModulesComplete: ()->
+    return allModulesComplete()
 
   isHidden: ()->
     return Session.get "next button is hidden"

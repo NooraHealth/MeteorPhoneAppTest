@@ -1,4 +1,4 @@
-this.isLastModule = ()->
+this.allModulesComplete = ()->
   numModules = (Session.get "modules sequence").length
   numCorrect = (Session.get "correctly answered").length
   currentModule = getCurrentModule()
@@ -119,10 +119,9 @@ this.nextBtnShouldHide = ()->
   console.log "This is the current module"
   console.log currentModule
   if currentModule.type == "VIDEO" or currentModule.type == "SLIDE"
-    console.log "was video"
     return false
   else
-    console.log "NOT VIDEO"
+    #return Session.get "next button is hidden"
     return true
 ###
 # Plays the audio associated with the answer
