@@ -13,22 +13,22 @@ Template.home.onRendered ()->
     return
   #if lessonsComplete < lessons.length
     #cards.modifier.setTransform Transform.translate(-1 * width * lessonsComplete ,0, 0), {duration: 2000, curve: "easeIn"}
-  #layout.blazeView.onViewReady ()->
+  #scrollview.blazeView.onViewReady ()->
   lessonsComplete = Meteor.user().getCompletedLessons().length
   lessons = Session.get "lessons sequence"
   width = Session.get "lesson card width"
-  layout = FView.byId "cardLayout"
-  console.log layout
-  console.log layout.properties
+  scrollview = FView.byId "scrollview"
+  console.log scrollview
+  console.log scrollview.properties
   if lessonsComplete < lessons.length
-    layout.view.setPosition width * (lessonsComplete - 1)
-    layout.modifier.setTransform Transform.translate(-1 * width ,0, 0), {duration: 2000, curve: "easeIn"}
+    scrollview.view.setPosition width * (lessonsComplete - 1)
+    scrollview.modifier.setTransform Transform.translate(-1 * width ,0, 0), {duration: 2000, curve: "easeIn"}
 
 Template.lessonThumbnail.onRendered ()->
 
   lessonsComplete = Meteor.user().getCompletedLessons().length
-  #if layout.view.getCurrentIndex() < lessonsComplete
-    #layout.view.goToNextPage()
+  #if scrollview.view.getCurrentIndex() < lessonsComplete
+    #scrollview.view.goToNextPage()
 
   fview = FView.from this
 
