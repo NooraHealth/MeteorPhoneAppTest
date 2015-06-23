@@ -11,8 +11,7 @@ Template.module.helpers
     rearrangedModules.push {nh_id: "dummyModule", type:"dummy"}
     rearrangedModules.push firstModule
     console.log "REARRAd=nh_id NGED: ", rearrangedModules
-    #return rearrangedModules
-    return modules
+    return rearrangedModules
   
   dummyModule: ()->
     return @.type == "dummy"
@@ -30,11 +29,11 @@ Template.module.onRendered ()->
   fview.node._object.hide()
   console.log fview
   for module in fview.children
-      console.log "This is the module"
-      console.log module
-      console.log module.modifier
-      if module.modifier
-        module.modifier.setSize [1000, 600]
+    console.log "This is the module"
+    console.log module
+    console.log module.modifier
+    if module.modifier
+      module.modifier.setSize [1000, 600]
 
   this.autorun ()->
     moduleIndex = Session.get "current module index"
