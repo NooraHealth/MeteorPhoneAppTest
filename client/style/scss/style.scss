@@ -158,6 +158,10 @@ Custom NH components
     height:100%;
   }
 }
+.response {
+  width: 48%;
+}
+
 .module {
   height:100%;
 }
@@ -168,11 +172,17 @@ Custom NH components
 }
 
 .module-image {
-  width: 400px;
+  width: 100%;
 }
 
 .padded {
   padding: 40px;
+}
+.padding-bottom {
+  padding-bottom: 10px
+}
+.padding-top {
+  padding-top: 10px
 }
 .overlay {
   position: absolute;
