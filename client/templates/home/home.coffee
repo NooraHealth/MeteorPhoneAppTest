@@ -11,32 +11,32 @@ Template.lessonThumbnail.events {
 Template.home.onRendered ()->
   if not Meteor.user()
     return
-  cards = FView.byId "cardLayout"
-  width = Session.get "lesson card width"
-
-  lessonsComplete = Meteor.user().getCompletedLessons().length
-  console.log "CARDS COMPLETE",lessonsComplete
-  lessons = Session.get "lessons sequence"
-  scrollView = FView.byId("cardLayout").view
-  console.log "This is the scrollview"
-  console.log scrollView
-  
   #if lessonsComplete < lessons.length
     #cards.modifier.setTransform Transform.translate(-1 * width * lessonsComplete ,0, 0), {duration: 2000, curve: "easeIn"}
+  #layout.blazeView.onViewReady ()->
+  lessonsComplete = Meteor.user().getCompletedLessons().length
+  lessons = Session.get "lessons sequence"
+  width = Session.get "lesson card width"
+  layout = FView.byId "cardLayout"
+  console.log layout
+  console.log layout.properties
   if lessonsComplete < lessons.length
-    scrollView.setPosition width * lessonsComplete
-    #cards.modifier.setTransform Transform.translate(0, -1 * width * lessonsComplete ,0), {duration: 2000, curve: "easeIn"}
+    layout.view.setPosition width * (lessonsComplete - 1)
+    layout.modifier.setTransform Transform.translate(-1 * width ,0, 0), {duration: 2000, curve: "easeIn"}
 
 Template.lessonThumbnail.onRendered ()->
+
+  lessonsComplete = Meteor.user().getCompletedLessons().length
+  #if layout.view.getCurrentIndex() < lessonsComplete
+    #layout.view.goToNextPage()
+
   fview = FView.from this
-  console.log "FVIEW: "
-  console.log fview
-  lessonsComplete = Meteor.user().getCompletedLessons()
+
   lessons = Session.get "lessons sequence"
-  if lessonsComplete.length == lessons.length
+  if lessonsComplete== lessons.length
     currentlessonId = ""
-  else if lessonsComplete.length>0
-    currentlessonId= lessons[lessonsComplete.length].nh_id
+  else if lessonsComplete>0
+    currentlessonId= lessons[lessonsComplete].nh_id
   else
     currentlessonId = lessons[0].nh_id
 
