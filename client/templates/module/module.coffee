@@ -28,12 +28,12 @@ Template.module.onRendered ()->
   fview = FView.from this
   fview.node._object.hide()
   console.log fview
+  Session.set "next button is hidden", nextBtnShouldHide()
 
   this.autorun ()->
     moduleIndex = Session.get "current module index"
     nh_id = Session.get("modules sequence")[moduleIndex].nh_id
     surface = FView.byId nh_id
     fview.node._object.show surface
-    console.log "setting next button"
     #Session.set "next button is hidden", nextBtnShouldHide()
 

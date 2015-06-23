@@ -110,8 +110,6 @@ Modules.helpers {
     startIndex = index * NUM_OBJECTS_PER_ROW
     endIndex = startIndex + NUM_OBJECTS_PER_ROW
     newArr = ({option: option, optionImgSrc: url + option, nh_id: module.nh_id, i: i, correct: isCorrect(option)} for option, i in @.options when i >= startIndex and i < endIndex)
-    console.log "Heres the new array:"
-    console.log newArr
     return {options: newArr}
 
   option: (i)->

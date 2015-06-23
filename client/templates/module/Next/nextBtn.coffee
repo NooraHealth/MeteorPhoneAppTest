@@ -1,5 +1,6 @@
 Template.nextBtn.events
   "click #nextbtn": ()->
+    console.log "NEXT BUTTON"
     index = Session.get "current module index"
     currLesson = Session.get "current lesson"
     modulesSequence = Session.get "modules sequence"

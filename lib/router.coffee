@@ -108,7 +108,6 @@ Router.map ()->
         Session.set "current module index",0
         Session.set "correctly answered", []
         Session.set "incorrectly answered", []
-        #Session.set "next button is hidden", nextBtnShouldHide()
         return {modules:  modules  }
         
   }
