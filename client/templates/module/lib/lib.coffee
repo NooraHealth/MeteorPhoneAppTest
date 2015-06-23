@@ -1,7 +1,14 @@
 this.isLastModule = ()->
   numModules = (Session.get "modules sequence").length
   numCorrect = (Session.get "correctly answered").length
-  return numCorrect == numModules
+  currentModule = getCurrentModule()
+  if isAQuestion(currentModule)
+    return numCorrect == numModules
+  else
+    return numCorrect == numModules - 1
+
+this.isAQuestion = (module)->
+  return module.type == "SCENARIO" or module.type=="BINARY" or module.type=="MULTIPLE_CHOICE" or module.type == "GOAL_CHOICE"
 
 this.stopAllAudio = ()->
   for audioElem in $("audio")

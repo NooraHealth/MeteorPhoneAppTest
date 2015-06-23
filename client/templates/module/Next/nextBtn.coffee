@@ -9,12 +9,13 @@ Template.nextBtn.events
     
     module = undefined
 
-    if correctlyAnswered.length == modulesSequence.length
+    #if correctlyAnswered.length == modulesSequence.length
+    if isLastModule()
       Meteor.user().updateLessonsComplete(currLesson)
       Router.go "home"
       return
 
-    if currentModule.type == "VIDEO" or currentModule.type == "SLIDE"
+    if !isAQuestion(currentModule)
       correctlyAnswered.push index
       Session.set "correctly answered", correctlyAnswered
    
@@ -46,10 +47,9 @@ Template.nextBtn.helpers
 
 hasAllCorrectAnswers = ()->
   incorrectlyAnswered = Session.get "incorrectly answered"
-  return incorrectlyAnswered.length <= 0
-
-isAQuestion = (module)->
-  return module.type == "SCENARIO" or module.type=="BINARY" or module.type=="MULTIPLE_CHOICE" or module.type == "GOAL_CHOICE"
+  correctlyAnswered = Session.get "correctly answered"
+  modulesSequence = Session.get "modules sequence"
+  return incorrectlyAnswered.length <= 0 and (correctlyAnswered.length == modulesSequence.length)
 
 isLastModuleInSeries = ()->
   index = Session.get "current module index"
