@@ -13,6 +13,7 @@ Router.map ()->
     }
     layoutTemplate: 'layout'
     onBeforeAction: ()->
+
       if Meteor.loggingIn()
         return
       else if !Meteor.user()
@@ -40,7 +41,9 @@ Router.map ()->
           console.log "Setting the src to ", src
           Session.set "content src", src
 
+      Session.set "current transition", "slideWindowLeft"
       this.next()
+
 
     data: ()->
       console.log "The data"
@@ -55,6 +58,9 @@ Router.map ()->
           lessons =  curr.getLessonDocuments()
           Session.set "lessons sequence", lessons
           return {lessons: lessons}
+
+    onAfterAction: ()->
+      Session.set "current transition", "slideWindowLeft"
   }
 
   this.route '/selectCurriculum', {
@@ -85,6 +91,7 @@ Router.map ()->
     onBeforeAction: ()->
       if Meteor.loggingIn()
         return
+      Session.set "current transition", "slideWindowLeft"
       this.next()
     data: () ->
       console.log @.params.nh_id
@@ -115,7 +122,7 @@ Router.map ()->
     data: ()->
       Meteor.call "refreshContent", ()->
         console.log "Yey called refresh"
-  }
+    }
 
   this.route '/loading', {
     path: '/loading'
