@@ -1,7 +1,7 @@
 <template name="nextBtn">
 <a class="center-align blue rounded blue-text text-lighten-3 flow-text btn-flat waves-effect waves-light 
   {{#if isHidden}}  slide-down {{/if}} next large valign-wrapper next-module-btn" id="nextbtn" name="next">
-  {{#if isLastModule}}
+  {{#if allModulesComplete}}
     FINISH
   {{else}}
     NEXT
