@@ -18,9 +18,9 @@ Template.nextBtn.events
       correctlyAnswered.push index
       Session.set "correctly answered", correctlyAnswered
    
-    if index+1 < modulesSequence.length
+    if isLastModuleInSeries()
       moduleIndex = 0
-      if correctlyAnswered.length + incorrectlyAnswered.length == modulesSequence.length
+      if hasAttemptedAllModules()
         moduleIndex = incorrectlyAnswered[0]
       else
         moduleIndex = ++index
@@ -28,7 +28,7 @@ Template.nextBtn.events
       resetTemplate()
       playAudio 'question', Session.get("modules sequence")[moduleIndex]
 
-    else if incorrectlyAnswered.length > 0
+    else if !hasAllCorrectAnswers()
       moduleIndex = incorrectlyAnswered[0]
       Session.set "current module index", moduleIndex
       resetTemplate()
@@ -43,6 +43,24 @@ Template.nextBtn.helpers
 
   isHidden: ()->
     return Session.get "next button is hidden"
+
+hasAllCorrectAnswers = ()->
+  incorrectlyAnswered = Session.get "incorrectly answered"
+  return incorrectlyAnswered.length <= 0
+
+isAQuestion = (module)->
+  return module.type == "SCENARIO" or module.type=="BINARY" or module.type=="MULTIPLE_CHOICE" or module.type == "GOAL_CHOICE"
+
+isLastModuleInSeries = ()->
+  index = Session.get "current module index"
+  modulesSequence = Session.get "modules sequence"
+  return index+1 < modulesSequence.length
+
+hasAttemptedAllModules = ()->
+  modulesSequence = Session.get "modules sequence"
+  incorrectlyAnswered = Session.get "incorrectly answered"
+  correctlyAnswered = Session.get "correctly answered"
+  return correctlyAnswered.length + incorrectlyAnswered.length == modulesSequence.length
 
 resetTemplate = ()->
   stopAllAudio()

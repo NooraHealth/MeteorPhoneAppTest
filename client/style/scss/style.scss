@@ -173,6 +173,11 @@ Custom NH components
 
 .module-image {
   height: 50vh;
+  max-width: 100%;
+}
+.binary-image {
+  @extend .module-image;
+  width:100%;
 }
 
 .padded {
@@ -410,6 +415,7 @@ Custom NH components
 .image-choice {
   width: 100%;
   cursor: pointer;
+  height: 20vh;
 }
 
 .correctly_selected {

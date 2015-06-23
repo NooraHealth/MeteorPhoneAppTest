@@ -50,7 +50,7 @@ Template.lessonThumbnail.onRendered ()->
   if fview.id == currentlessonId
     fview.modifier.setTransform Transform.scale(1.15, 1.15, 1.15), {duration: 1000, curve: "easeIn"}
 
-  if fview.id == currentlessonId or Meteor.user().hasCompletedLesson(fview.id)
+  if fview.id == currentlessonId or true #Meteor.user().hasCompletedLesson(fview.id)
     
     fview.modifier.setOpacity 1, {duration:500, curve: "easeIn"}
     surface.setProperties {zIndex: 10}
