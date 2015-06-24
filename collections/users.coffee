@@ -7,8 +7,15 @@ Meteor.users.helpers {
     return Curriculum.findOne {_id: @.profile.curriculumId}
 
   setCurriculum: (id)->
-    query = { $set: {"profile.curriculumId": id}}
-    Meteor.call "updateUser", query
+    oldCurriculum = @.profile.curriculumId
+    if @.profile.curriculumId == id
+      return
+    else
+      query = { $set: {"profile.curriculumId": id}}
+      Meteor.call "updateUser", query
+      #after setting the curriculum, indicate that the
+      #new content will need to be loaded
+      @.setContentAsLoaded(false)
     @
 
   setContentAsLoaded: (loaded)->

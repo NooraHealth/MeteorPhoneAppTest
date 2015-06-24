@@ -1,5 +1,12 @@
 
 Template.home.helpers {
+  getDirection: ()->
+    if Meteor.Device.isPhone()
+      console.log "Returning 1"
+      return 1
+    else
+      return 0
+
   displayTrophy: ()->
     return Session.get "display trophy"
 }
@@ -17,12 +24,17 @@ Template.home.onRendered ()->
   lessonsComplete = Meteor.user().getCompletedLessons().length
   lessons = Session.get "lessons sequence"
   width = Session.get "lesson card width"
+  height = Session.get "lesson card height"
+  
   scrollview = FView.byId "scrollview"
   console.log scrollview
   console.log scrollview.properties
   if lessonsComplete < lessons.length
     scrollview.view.setPosition width * (lessonsComplete - 1)
-    scrollview.modifier.setTransform Transform.translate(-1 * width ,0, 0), {duration: 2000, curve: "easeIn"}
+    if Meteor.Device.isPhone()
+      #scrollview.modifier.setTransform Transform.translate(0, -.5 * height, 0), {duration: 2000, curve: "easeIn"}
+    else
+      scrollview.modifier.setTransform Transform.translate(-1 * width ,0, 0), {duration: 2000, curve: "easeIn"}
 
 Template.lessonThumbnail.onRendered ()->
 
@@ -40,7 +52,9 @@ Template.lessonThumbnail.onRendered ()->
 
   fview.id = this.data.nh_id
 
-  fview.modifier.setSize [400, 400]
+  height = Session.get "lesson card height"
+  width = Session.get "lesson card width"
+  fview.modifier.setSize [width, height]
   fview.modifier.setOrigin [.5, .5]
   fview.modifier.setAlign [.5, .5]
   
@@ -51,7 +65,7 @@ Template.lessonThumbnail.onRendered ()->
   if fview.id == currentlessonId or Meteor.user().hasCompletedLesson(fview.id)
     
     fview.modifier.setOpacity 1, {duration:500, curve: "easeIn"}
-    surface.setProperties {zIndex: 10}
+    surface.setProperties {zIndex: 10, padding: '10px';}
 
     surface.on "mouseout", ()->
       fview.modifier.halt()

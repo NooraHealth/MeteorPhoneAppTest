@@ -41,6 +41,9 @@ Template.nextBtn.events
     Session.set "next button is hidden", nextBtnShouldHide()
 
 Template.nextBtn.helpers
+  notPhone: ()->
+    return !Meteor.Device.isPhone()
+
   allModulesComplete: ()->
     return allModulesComplete()
 

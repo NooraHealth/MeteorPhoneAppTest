@@ -1,10 +1,12 @@
 <template name="nextBtn">
 <a class="center-align blue rounded blue-text text-lighten-3 flow-text btn-flat waves-effect waves-light 
-  {{#if isHidden}}  slide-down {{/if}} next large valign-wrapper next-module-btn" id="nextbtn" name="next">
-  {{#if allModulesComplete}}
-    FINISH
-  {{else}}
-    NEXT
+{{#if isHidden}}  slide-down {{/if}} next {{#if notPhone}}large{{/if}} valign-wrapper next-module-btn" id="nextbtn" name="next">
+  {{#if notPhone}}
+    {{#if allModulesComplete}}
+      FINISH
+    {{else}}
+      NEXT
+    {{/if}}
   {{/if}}
     <i class="mdi-navigation-arrow-forward medium"></i>
   </a>

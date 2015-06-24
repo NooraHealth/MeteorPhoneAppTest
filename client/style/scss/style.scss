@@ -507,11 +507,10 @@ video {
 
 .chapter-card {
   padding: $padding-S;
-  margin: 30px;
   height: 100%;
-  /*@media (min-width: 600px) {*/
-    /*height: 425px;  */
-  /*}*/
+  @media (min-width: 600px) {
+    margin: 10px;
+  }
 }
 
 /*@media (max-width: 768px) {*/

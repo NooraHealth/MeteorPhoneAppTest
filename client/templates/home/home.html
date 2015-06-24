@@ -1,5 +1,5 @@
 <template name="home">
-  {{#Scrollview direction="0"  id="scrollview" modifier="StateModifier" paginated="true"}}
+  {{#Scrollview direction=getDirection  id="scrollview" modifier="StateModifier" paginated="true"}}
     {{#famousEach lessons}}
       {{>Surface template="lessonThumbnail" modifier="StateModifier"}}
     {{/famousEach}}

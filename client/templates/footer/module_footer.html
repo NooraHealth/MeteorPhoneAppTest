@@ -1,6 +1,6 @@
 <template name="moduleFooter">
 <div class=" bottom row valign-wrapper">
-  <div class="col s4 m4 l4" id="audioDiv">
+  <div class="col m4 l4" id="audioDiv">
     {{#with firstModule}}
         <audio src="{{audioSrc}}" name="audio{{nh_id}}" class="question" autoplay></audio>
     {{/with}}
@@ -9,7 +9,7 @@
     {{/each}}
   </div>
 
-  <div class="col s4 m4 l4 center-align valign">
+  <div class="col m4 l4 center-align valign">
     <!--<a class="waves-effect" name="previous" style="display:inline"><i class="mdi-navigation-chevron-left small"></i></a>-->
     <div class="dotstyle dotstyle-scaleup"> 
       <ul class="">
@@ -26,7 +26,7 @@
     <!--<a class="waves-effect" name="next" style="display:inline"><i class="mdi-navigation-chevron-right small"></i></a>-->
   </div> 
   
-  <div class="col s4 m4 l4 valign-wrapper right-align">
+  <div class="row l4 valign-wrapper right-align">
     {{>nextBtn class=""}}
   </div>
 </div>
