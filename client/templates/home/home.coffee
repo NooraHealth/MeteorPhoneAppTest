@@ -45,7 +45,7 @@ Template.lessonThumbnail.onRendered ()->
   fview = FView.from this
 
   lessons = Session.get "lessons sequence"
-  if lessonsComplete== lessons.length
+  if lessonsComplete == lessons.length
     currentlessonId = ""
   else
     currentlessonId= lessons[lessonsComplete].nh_id
@@ -88,4 +88,7 @@ Template.lessonThumbnail.helpers
   isCurrentLesson: ()->
     lessons = Session.get "lessons sequence"
     lessonsComplete = Meteor.user().getCompletedLessons().length
-    return @.nh_id == lessons[lessonsComplete].nh_id
+    if lessons.length == lessonsComplete
+      return false
+    else
+      return @.nh_id == lessons[lessonsComplete].nh_id
