@@ -1,7 +1,5 @@
 Meteor.users.helpers {
   curriculumIsSet: ()->
-    if not @.profile or not @.profile.curriculumId
-      return false
     curriculum = Curriculum.findOne {_id: @.profile.curriculumId}
     return curriculum?
 
@@ -19,8 +17,12 @@ Meteor.users.helpers {
     @
 
   updateLessonsComplete: (lesson)->
+    console.log ""
+    console.log "UPDATING THELESSONS SOMEPLETE"
+    console.log ""
     lessonsComplete = @.getCompletedLessons()
     if lesson.nh_id not in lessonsComplete
+      console.log "PUshing the lesson to the user"
       query = {$push: {"profile.lessons_complete": lesson.nh_id}}
       Meteor.call "updateUser", query
     @

@@ -10,7 +10,6 @@ AttemptSchema = new SimpleSchema
     type:String
   responses:
     type:[String]
-    minCount:1
     optional:true
   passed:
     type: Boolean

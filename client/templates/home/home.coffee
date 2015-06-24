@@ -35,10 +35,8 @@ Template.lessonThumbnail.onRendered ()->
   lessons = Session.get "lessons sequence"
   if lessonsComplete== lessons.length
     currentlessonId = ""
-  else if lessonsComplete>0
-    currentlessonId= lessons[lessonsComplete].nh_id
   else
-    currentlessonId = lessons[0].nh_id
+    currentlessonId= lessons[lessonsComplete].nh_id
 
   fview.id = this.data.nh_id
 
@@ -50,7 +48,7 @@ Template.lessonThumbnail.onRendered ()->
   if fview.id == currentlessonId
     fview.modifier.setTransform Transform.scale(1.15, 1.15, 1.15), {duration: 1000, curve: "easeIn"}
 
-  if fview.id == currentlessonId or true #Meteor.user().hasCompletedLesson(fview.id)
+  if fview.id == currentlessonId or Meteor.user().hasCompletedLesson(fview.id)
     
     fview.modifier.setOpacity 1, {duration:500, curve: "easeIn"}
     surface.setProperties {zIndex: 10}
@@ -72,12 +70,8 @@ Template.lessonThumbnail.onRendered ()->
   else
     fview.modifier.setOpacity .5
 
-#Template.lessonThumbnail.helpers {
-  #imageSource: ()->
-    #mediaUrl = Session.get "media url"
-    #console.log "getting the image src", mediaUrl + @.image
-    #return mediaUrl + @.image
-    ##return "https://noorahealth-development.s3-west-1.amazonaws.com/" + @.image
-
-#}
-
+Template.lessonThumbnail.helpers
+  isCurrentLesson: ()->
+    lessons = Session.get "lessons sequence"
+    lessonsComplete = Meteor.user().getCompletedLessons().length
+    return @.nh_id == lessons[lessonsComplete].nh_id

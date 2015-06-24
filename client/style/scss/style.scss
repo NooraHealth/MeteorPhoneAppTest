@@ -176,8 +176,8 @@ Custom NH components
   max-width: 100%;
 }
 .binary-image {
-  @extend .module-image;
-  width:100%;
+  height:40vh;
+  max-width:100%;
 }
 
 .padded {
