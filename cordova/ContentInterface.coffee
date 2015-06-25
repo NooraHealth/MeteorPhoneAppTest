@@ -135,7 +135,7 @@ class @ContentInterface
     if module.correct_audio
       urls.push module.correctAnswerAudio()
     if module.options and ( module.type == 'MULTIPLE_CHOICE' or module.type == 'GOAL_CHOICE')
-      urls.push option.optionImgSrc for option in module.getOptionObjects()
+      urls.push option.optionImgSrc for option in module.getOptions 0, 6
     return urls
 
 

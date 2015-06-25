@@ -93,10 +93,13 @@ Template.lessonThumbnail.helpers
   isCurrentLesson: ()->
     lessons = Session.get "lessons sequence"
     lessonsComplete = Meteor.user().getCompletedLessons().length
+    console.log "Lessons complete: ", lessonsComplete
     if lessons.length == lessonsComplete
       return false
     else
       if !lessons[lessonsComplete]
+        console.log "Not lessons complete"
         return false
       else
+        console.log "Getting the lesson at the index"
         return @.nh_id == lessons[lessonsComplete].nh_id
