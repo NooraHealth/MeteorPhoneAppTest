@@ -36,6 +36,7 @@ Template.home.onRendered ()->
   if Meteor.Device.isPhone()
     scrollview.modifier.setAlign [.5, .5]
   else
+    console.log "Is phone!"
     scrollview.modifier.setAlign [.25, .5]
     
   if lessonsComplete < lessons.length
@@ -44,8 +45,6 @@ Template.home.onRendered ()->
 Template.lessonThumbnail.onRendered ()->
 
   lessonsComplete = Meteor.user().getCompletedLessons().length
-  #if scrollview.view.getCurrentIndex() < lessonsComplete
-    #scrollview.view.goToNextPage()
 
   fview = FView.from this
 
@@ -59,9 +58,6 @@ Template.lessonThumbnail.onRendered ()->
 
   height = Session.get "lesson card height"
   width = Session.get "lesson card width"
-  #fview.modifier.setSize [width, height]
-  #fview.modifier.setOrigin [.5, .5]
-  #fview.modifier.setAlign [.5, .5]
   
   surface = fview.surface or fview.view
   if fview.id == currentlessonId
@@ -93,7 +89,6 @@ Template.lessonThumbnail.helpers
   isCurrentLesson: ()->
     lessons = Session.get "lessons sequence"
     lessonsComplete = Meteor.user().getCompletedLessons().length
-    console.log "Lessons complete: ", lessonsComplete
     if lessons.length == lessonsComplete
       return false
     else
