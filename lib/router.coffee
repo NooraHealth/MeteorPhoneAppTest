@@ -22,7 +22,6 @@ Router.map ()->
         Router.go "selectCurriculum"
       else if Meteor.isCordova and not Meteor.user().contentLoaded() and not Session.get "content loaded"
         Meteor.call 'contentEndpoint', (err, endpoint)->
-          console.log "Calling content endpoint about to download content"
           downloader = new ContentInterface(Meteor.user().getCurriculum(), endpoint)
           onSuccess = (entry)->
             console.log "Success downloading content: ", entry
@@ -43,7 +42,6 @@ Router.map ()->
 
       else if !Meteor.isCordova
         Meteor.call "contentEndpoint", (err, src)->
-          console.log "Setting the src to ", src
           Session.set "content src", src
 
       Session.set "current transition", "slideWindowLeft"
@@ -51,7 +49,6 @@ Router.map ()->
 
 
     data: ()->
-      console.log "The data"
       if this.ready() and Meteor.user()
         curr = Curriculum.findOne({_id: Meteor.user().profile.curriculumId})
         if curr
@@ -102,7 +99,6 @@ Router.map ()->
       if this.ready()
         lesson = Lessons.findOne {nh_id: this.params.nh_id}
         Session.set "current lesson", lesson
-        console.log "about to get the module's sequence in Route to Modules: ", lesson
         console.log lesson
         modules = lesson.getModulesSequence()
         Session.set "modules sequence", modules

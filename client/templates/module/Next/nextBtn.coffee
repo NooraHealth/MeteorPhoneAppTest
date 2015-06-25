@@ -41,14 +41,27 @@ Template.nextBtn.events
     Session.set "next button is hidden", nextBtnShouldHide()
 
 Template.nextBtn.helpers
-  notPhone: ()->
-    return !Meteor.Device.isPhone()
+  commonClasses: ()->
+    return "next next-module-btn"
+
+  phone: ()->
+    return Meteor.Device.isPhone()
 
   allModulesComplete: ()->
     return allModulesComplete()
 
   isHidden: ()->
     return Session.get "next button is hidden"
+
+Template.phoneNextBtn.helpers
+  id: ()->
+    return nextBtnId()
+
+Template.browserNextBtn.helpers
+  id: ()->
+    return nextBtnId()
+  
+
 
 hasAllCorrectAnswers = ()->
   incorrectlyAnswered = Session.get "incorrectly answered"
@@ -78,4 +91,5 @@ resetTemplate = ()->
     $(btn).removeClass "correctly_selected"
     $(btn).removeClass "incorrectly_selected"
     $(btn).removeClass "selected"
-
+nextBtnId = ()->
+  return "nextbtn"

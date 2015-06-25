@@ -61,14 +61,18 @@ tile {
   position: fixed;
   z-index: 2;
 
-  &.brand-tile {
-    & img {
-      top: 20;
+  &.round-tile {
+    & .next {
       margin-left: 10px;
       max-width: 60px;
-      background-color: #FFFFFF;
       padding: 10px;
       border-radius: 30px;
+      background-color: blue;
+    }
+    & .logo {
+      @extend .next;
+      background-color: #FFFFFF;
+      top: 20;
     }
   }
 }
