@@ -96,4 +96,7 @@ Template.lessonThumbnail.helpers
     if lessons.length == lessonsComplete
       return false
     else
-      return @.nh_id == lessons[lessonsComplete].nh_id
+      if !lessons[lessonsComplete]
+        return false
+      else
+        return @.nh_id == lessons[lessonsComplete].nh_id
