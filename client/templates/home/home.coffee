@@ -9,6 +9,10 @@ Template.home.helpers {
 
   displayTrophy: ()->
     return Session.get "display trophy"
+  getSize:()->
+    width = Session.get "lesson card width"
+    height = Session.get "lesson card height"
+    return [height, width]
 }
 Template.lessonThumbnail.events {
   "click .card": (event, template) ->
@@ -29,12 +33,14 @@ Template.home.onRendered ()->
   scrollview = FView.byId "scrollview"
   console.log scrollview
   console.log scrollview.properties
+  scrollview.modifier.setOrigin [.5, .5]
+  scrollview.modifier.setAlign [.25, .25]
   if lessonsComplete < lessons.length
     scrollview.view.setPosition width * (lessonsComplete - 1)
-    if Meteor.Device.isPhone()
-      #scrollview.modifier.setTransform Transform.translate(0, -.5 * height, 0), {duration: 2000, curve: "easeIn"}
-    else
-      scrollview.modifier.setTransform Transform.translate(-1 * width ,0, 0), {duration: 2000, curve: "easeIn"}
+  if Meteor.Device.isPhone()
+    #scrollview.modifier.setTransform Transform.translate(0, -.5 * height, 0), {duration: 2000, curve: "easeIn"}
+  else
+    #scrollview.modifier.setTransform Transform.translate(-1 * width ,0, 0), {duration: 2000, curve: "easeIn"}
 
 Template.lessonThumbnail.onRendered ()->
 
@@ -54,9 +60,9 @@ Template.lessonThumbnail.onRendered ()->
 
   height = Session.get "lesson card height"
   width = Session.get "lesson card width"
-  fview.modifier.setSize [width, height]
-  fview.modifier.setOrigin [.5, .5]
-  fview.modifier.setAlign [.5, .5]
+  #fview.modifier.setSize [width, height]
+  #fview.modifier.setOrigin [.5, .5]
+  #fview.modifier.setAlign [.5, .5]
   
   surface = fview.surface or fview.view
   if fview.id == currentlessonId

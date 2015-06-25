@@ -24,9 +24,6 @@ Meteor.users.helpers {
     @
 
   updateLessonsComplete: (lesson)->
-    console.log ""
-    console.log "UPDATING THELESSONS SOMEPLETE"
-    console.log ""
     lessonsComplete = @.getCompletedLessons()
     if lesson.nh_id not in lessonsComplete
       console.log "PUshing the lesson to the user"
