@@ -32,6 +32,7 @@ Meteor.users.helpers {
     @
 
   contentLoaded: ()->
+    console.log "Is content Loaded: ", @.profile.content_loaded
     return @.profile.content_loaded
 
   getCompletedLessons: ()->

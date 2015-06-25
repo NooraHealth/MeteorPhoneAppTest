@@ -42,7 +42,6 @@ class @ContentInterface
         targetPath = fileEntry.toURL()
 
         ft.onprogress = (event)->
-          console.log "PROGRESS"
           total = Session.get "total bytes"
           if !total
             total = event.total
@@ -60,7 +59,7 @@ class @ContentInterface
 
         onTransferError = (error)->
           console.log "TRANSFER ERROR"
-          deferred.reject()
+          deferred.reject(error)
 
         #download the file from the endpoint and save to target path on mobile device
         ft.download(uri, targetPath, onTransferSuccess, onTransferError)
@@ -104,18 +103,23 @@ class @ContentInterface
         
   retrieveContentUrls: (lesson)->
     console.log "RETRIEVING CONTENT URLS"
-    if not lesson? or not lesson.getModulesSequence?
-      throw Meteor.Error "retrieveContentUrls argument must be a Lesson document"
+    try
+      if not lesson? or not lesson.getModulesSequence?
+        throw Meteor.Error "retrieveContentUrls argument must be a Lesson document"
 
-    modules = lesson.getModulesSequence()
-    urls = []
-    if lesson.image
-      urls.push lesson.imgSrc()
+      modules = lesson.getModulesSequence()
+      urls = []
+      if lesson.image
+        urls.push lesson.imgSrc()
 
-    for module in modules
-      urls.merge(@.moduleUrls(module))
-    
-    return urls
+      for module in modules
+        urls.merge(@.moduleUrls(module))
+    catch err
+      console.log "Error caught in retrieve content urls: "
+      console.log err
+      throw Meteor.error "error retrieving content urls:", err
+    finally
+      return urls
 
 
   moduleUrls: (module)->

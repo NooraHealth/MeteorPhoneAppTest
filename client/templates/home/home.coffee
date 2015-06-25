@@ -26,17 +26,12 @@ Template.lessonThumbnail.events {
 Template.home.onRendered ()->
   if not Meteor.user()
     return
-  #if lessonsComplete < lessons.length
-    #cards.modifier.setTransform Transform.translate(-1 * width * lessonsComplete ,0, 0), {duration: 2000, curve: "easeIn"}
-  #scrollview.blazeView.onViewReady ()->
   lessonsComplete = Meteor.user().getCompletedLessons().length
   lessons = Session.get "lessons sequence"
   width = Session.get "lesson card width"
   height = Session.get "lesson card height"
-  
   scrollview = FView.byId "scrollview"
-  console.log scrollview
-  console.log scrollview.properties
+
   scrollview.modifier.setOrigin [.5, .5]
   if Meteor.Device.isPhone()
     scrollview.modifier.setAlign [.5, .5]
@@ -45,10 +40,6 @@ Template.home.onRendered ()->
     
   if lessonsComplete < lessons.length
     scrollview.view.setPosition width * (lessonsComplete - 1)
-  if Meteor.Device.isPhone()
-    #scrollview.modifier.setTransform Transform.translate(0, -.5 * height, 0), {duration: 2000, curve: "easeIn"}
-  else
-    #scrollview.modifier.setTransform Transform.translate(-1 * width ,0, 0), {duration: 2000, curve: "easeIn"}
 
 Template.lessonThumbnail.onRendered ()->
 

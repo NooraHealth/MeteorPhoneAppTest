@@ -22,19 +22,24 @@ Router.map ()->
         Router.go "selectCurriculum"
       else if Meteor.isCordova and not Meteor.user().contentLoaded() and not Session.get "content loaded"
         Meteor.call 'contentEndpoint', (err, endpoint)->
+          console.log "Calling content endpoint about to download content"
           downloader = new ContentInterface(Meteor.user().getCurriculum(), endpoint)
           onSuccess = (entry)->
+            console.log "Success downloading content: ", entry
             Meteor.user().setContentAsLoaded true
             Session.set "content loaded", true
             Session.set( "content src", 'http://127.0.0.1:8080/')
             Router.go "home"
 
           onError = (err)->
+            console.log "Error downloading content: ", err
+            console.log err
             alert "There was an error downloading your content, please log in and try again: ", err
             Meteor.user().setContentAsLoaded false
             Meteor.logout()
-          downloader.loadContent(onSuccess, onError)
+          console.log "The router should go to Loading"
           Router.go "loading"
+          downloader.loadContent(onSuccess, onError)
 
       else if !Meteor.isCordova
         Meteor.call "contentEndpoint", (err, src)->
@@ -94,15 +99,11 @@ Router.map ()->
       Session.set "current transition", "slideWindowLeft"
       this.next()
     data: () ->
-      console.log @.params.nh_id
-      console.log "ABOVE"
-      console.log Lessons.findOne {nh_id: this.params.nh_id}
-      console.log Lessons.find({}).count()
       if this.ready()
-        console.log "READY"
         lesson = Lessons.findOne {nh_id: this.params.nh_id}
-        console.log lesson
         Session.set "current lesson", lesson
+        console.log "about to get the module's sequence in Route to Modules: ", lesson
+        console.log lesson
         modules = lesson.getModulesSequence()
         Session.set "modules sequence", modules
         Session.set "current module index",0
@@ -119,8 +120,7 @@ Router.map ()->
   this.route '/refreshcontent', {
     path: '/refreshcontent'
     data: ()->
-      Meteor.call "refreshContent", ()->
-        console.log "Yey called refresh"
+      Meteor.call "refreshContent"
     }
 
   this.route '/loading', {
