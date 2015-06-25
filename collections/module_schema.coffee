@@ -100,16 +100,16 @@ Modules.helpers {
   isCorrectAnswer: (response)->
     return response in @.correct_answer
 
-  rowOfOptions: (index)->
+  getOptions: (start, end)->
     url = Meteor.getContentSrc()
     module = @
     if not @.options
       return []
+
     isCorrect = (option)=>
       return option in @.correct_answer
-    startIndex = index * NUM_OBJECTS_PER_ROW
-    endIndex = startIndex + NUM_OBJECTS_PER_ROW
-    newArr = ({option: option, optionImgSrc: url + option, nh_id: module.nh_id, i: i, correct: isCorrect(option)} for option, i in @.options when i >= startIndex and i < endIndex)
+
+    newArr = ({option: option, optionImgSrc: url + option, nh_id: module.nh_id, i: i, correct: isCorrect(option)} for option, i in @.options when i >= start and i < end)
     return {options: newArr}
 
   option: (i)->

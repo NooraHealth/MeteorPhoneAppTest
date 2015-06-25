@@ -33,6 +33,14 @@ Template.multipleChoiceModule.events
     showNextModuleBtn(module)
 
 Template.multipleChoiceModule.helpers
+  secondRow: ()->
+    console.log "SECOND ROW"
+    console.log @.getOptions 3,6
+    return @.getOptions 3, 6
+  firstRow: ()->
+    console.log "FIRST ROW"
+    console.log @.getOptions 0,3
+    return @.getOptions 0, 3
   module: ()->
     return @
 
