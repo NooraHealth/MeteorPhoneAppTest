@@ -47,17 +47,17 @@ Template.nextBtn.helpers
   phone: ()->
     return Meteor.Device.isPhone()
 
-  allModulesComplete: ()->
-    return allModulesComplete()
-
-  isHidden: ()->
-    return Session.get "next button is hidden"
 
 Template.phoneNextBtn.helpers
   id: ()->
     return nextBtnId()
 
 Template.browserNextBtn.helpers
+  allModulesComplete: ()->
+    return allModulesComplete()
+
+  isHidden: ()->
+    return Session.get "next button is hidden"
   id: ()->
     return nextBtnId()
   
