@@ -22,17 +22,12 @@ class @ContentInterface
   downloadFiles: (urls)->
     deferred = Q.defer()
     numToLoad = urls.length
-    console.log "urls: ", urls
-    console.log urls
     numRecieved = 0
 
-    onError = (url)->
-      console.log "Creating the on error function"
-      return (err)->
-        console.log "ON ERR"
-        console.log "Error for : ", url
-        console.log err
-        deferred.reject(err)
+    onError = (err)->
+      console.log "ON ERR"
+      console.log err
+      deferred.reject(err)
 
     onFileEntrySuccess = (url)->
       return (fileEntry)->
@@ -42,11 +37,11 @@ class @ContentInterface
         targetPath = fileEntry.toURL()
 
         ft.onprogress = (event)->
-          console.log "PROGRESS"
           total = Session.get "total bytes"
           if !total
             total = event.total
             Session.set "total bytes", total
+          t
           bytesLoaded = event.loaded
           Session.set "bytes downloaded", bytesLoaded
 
@@ -54,7 +49,6 @@ class @ContentInterface
           console.log "TRANSFER SUCCESS"
           console.log entry
           numRecieved++
-          console.log "Num recieved/numToLoad: "+ numRecieved + "/"+ numToLoad
           if numRecieved == numToLoad
             deferred.resolve(entry)
 
@@ -70,19 +64,19 @@ class @ContentInterface
       return (dirEntry)->
         if directories.length == 0
           file = url.file()
-          dirEntry.getFile file, {create: true, exclusive: false}, onFileEntrySuccess(url), onError(file)
+          dirEntry.getFile file, {create: true, exclusive: false}, onFileEntrySuccess(url), onError
         else
           dir = directories[0] + '/'
           remainingDirs = directories.splice(1)
-          dirEntry.getDirectory dir, {create: true, exclusive: false}, onDirEntrySuccess(url, remainingDirs), onError(dir)
+          dirEntry.getDirectory dir, {create: true, exclusive: false}, onDirEntrySuccess(url, remainingDirs),onError
 
 
     window.requestFileSystem LocalFileSystem.PERSISTENT, 0, (fs)->
       for url in urls
-        directories = url.directories()
-        firstDir = directories[0] + '/'
-        remainingDirs = directories.splice(1)
-        fs.root.getDirectory firstDir, {create: true, exclusive: false}, onDirEntrySuccess(url,remainingDirs), onError
+          directories = url.directories()
+          firstDir = directories[0] + '/'
+          remainingDirs = directories.splice(1)
+          fs.root.getDirectory firstDir, {create: true, exclusive: false}, onDirEntrySuccess(url,remainingDirs), onError
 
     return deferred.promise
 
@@ -120,18 +114,28 @@ class @ContentInterface
 
   moduleUrls: (module)->
     urls = []
+    console.log "ModuleURLS: "
+    console.log module
     if module.image
+      console.log "pushing the image"
       urls.push module.imgSrc()
     if module.video
+      console.log "pushing the video"
       urls.push module.videoSrc()
     if module.audio
+      console.log "pushing the audio"
       urls.push module.audioSrc()
     if module.incorrect_audio
+      console.log "pushing the incorrect+audio"
       urls.push module.incorrectAnswerAudio()
     if module.correct_audio
+      console.log "pushing the correct+audio"
       urls.push module.correctAnswerAudio()
     if module.options and ( module.type == 'MULTIPLE_CHOICE' or module.type == 'GOAL_CHOICE')
-      urls.push option.optionImgSrc for option in module.getOptionObjects()
+      console.log "pushing the options"
+      urls.push option.optionImgSrc for option in module.getOptions 0, 6
+    console.log "End of module, no errors here"
+
     return urls
 
 

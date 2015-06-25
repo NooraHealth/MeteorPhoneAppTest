@@ -1,6 +1,6 @@
 
 
-message = '<p class="loading-message">'+"Welcome to Noora Health"+'</p>'
+message = '<p class="loading-message">'+"Welcome to Noora Health"+'</p><p><em>Your curriculum is loading</em></p>'
 spinner = '<div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>'
 
 Template.loading.onRendered ()->

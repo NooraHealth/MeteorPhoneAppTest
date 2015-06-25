@@ -1,4 +1,9 @@
 Template.multipleChoiceModule.events
+  firstRow: ()->
+    return @.getOptions 0, 3
+  secondRow: ()->
+    return @.getOptions 3, 6
+
   "click .image-choice": (event, template)->
     numCorrect = $("img[class~=correct]").length
     numSelected = $("img[class~=selected]").length

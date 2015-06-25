@@ -32,6 +32,7 @@ if (Meteor.isClient) {
                //the ip is the active network connection
                //if no wifi or no cell, "127.0.0.1" will be returned.
               console.log("server is started: <a href='" + url + "' target='_blank'>" + url + "</a>");
+              Session.set( "content src");
                //httpd.getLocalPath(function(path) {
                  //console.log("localPath: " + path);
                //});

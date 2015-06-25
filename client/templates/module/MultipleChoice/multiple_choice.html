@@ -6,10 +6,10 @@
     <div >
       <div class="card-content">
         <div class="flow-text grey-text text-darken-2">{{question}}</div>
-          {{#with rowOfOptions 0}}
+          {{#with firstRow}}
             {{>rowOfOptions}}
           {{/with}}
-          {{#with rowOfOptions 1}}
+          {{#with secondRow}}
             {{>rowOfOptions}}
           {{/with}}
         </div>

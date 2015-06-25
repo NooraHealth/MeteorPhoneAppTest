@@ -1,3 +1,5 @@
+_l = (s) ->
+  console.log s
 
 Meteor.filePrefix = (file)->
   #Store file into a directory by the user's username.
