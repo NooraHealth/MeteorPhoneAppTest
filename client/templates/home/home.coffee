@@ -9,6 +9,10 @@ Template.home.helpers {
 
   displayTrophy: ()->
     return Session.get "display trophy"
+  getScrollSize: ()->
+    height = Session.get "lesson card height"
+    return ['true', height]
+
   getSize:()->
     width = Session.get "lesson card width"
     height = Session.get "lesson card height"
@@ -34,7 +38,11 @@ Template.home.onRendered ()->
   console.log scrollview
   console.log scrollview.properties
   scrollview.modifier.setOrigin [.5, .5]
-  scrollview.modifier.setAlign [.25, .25]
+  if Meteor.Device.isPhone()
+    scrollview.modifier.setAlign [.5, .5]
+  else
+    scrollview.modifier.setAlign [.25, .5]
+    
   if lessonsComplete < lessons.length
     scrollview.view.setPosition width * (lessonsComplete - 1)
   if Meteor.Device.isPhone()
