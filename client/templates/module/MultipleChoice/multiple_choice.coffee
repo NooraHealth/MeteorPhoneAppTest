@@ -1,7 +1,10 @@
 Template.multipleChoiceModule.events
   firstRow: ()->
+    console.log "Here are the options for the multiple choice"
+    console.log @.getOptions 0,3
     return @.getOptions 0, 3
   secondRow: ()->
+    console.log @.getOptions 3, 6
     return @.getOptions 3, 6
 
   "click .image-choice": (event, template)->
