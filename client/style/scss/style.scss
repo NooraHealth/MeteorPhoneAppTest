@@ -97,6 +97,17 @@ td {
 Custom NH components 
 
 --------------------------------*/
+.embedded-video {
+  @media(min-width: 600px) {
+    width: 660px;
+    height: 480px;
+  }
+  @media(max-width: 668px) {
+    height: 200px;
+    width: 320px;
+  }
+}
+
 .padding {
   padding: 50px;
 }
@@ -208,7 +219,12 @@ Custom NH components
 }
 
 .module-image {
-  height: 50vh;
+  @media(max-width:600px) {
+    height: 35vh;
+  }
+  @media(min-width: 600px){
+    height: 50vh;
+  }
   max-width: 100%;
 }
 .binary-image {
@@ -217,7 +233,12 @@ Custom NH components
 }
 
 .padded {
-  padding: 40px;
+  @media (max-width: 600px) {
+    padding: 10px;
+  }
+  @media (min-width: 600px){
+    padding: 40px;
+  }
 }
 .padding-bottom {
   padding-bottom: 10px
@@ -325,6 +346,10 @@ Custom NH components
 
 .no-border {
   border: none;
+}
+
+.scenario-btn {
+  margin: 4px;
 }
 
 .binary-btn, .scenario-btn {
