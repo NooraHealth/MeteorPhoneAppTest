@@ -40,7 +40,10 @@ Template.home.onRendered ()->
     scrollview.modifier.setAlign [.25, .5]
     
   if lessonsComplete < lessons.length
-    scrollview.view.setPosition width * (lessonsComplete - 1)
+    if Meteor.Device.isPhone()
+      scrollview.view.setPosition width * (lessonsComplete)
+    else
+      scrollview.view.setPosition width * (lessonsComplete - 1)
 
 Template.lessonThumbnail.onRendered ()->
 
