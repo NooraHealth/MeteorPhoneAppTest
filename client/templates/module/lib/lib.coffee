@@ -22,17 +22,26 @@ this.handleResponse = (response)->
   hideIncorrectResponses(module)
   
   if isCorrectResponse(event.target)
-    Materialize.toast "<i class='mdi-navigation-check medium'></i>", 5000, "left valign green rounded"
+    displayToast "correct"
     playAudio "correct", module
     handleSuccessfulAttempt(module, 0)
     updateModuleNav "correct"
   else
-    Materialize.toast "<i class='mdi-navigation-close medium'></i>", 5000, "left valign red rounded"
+    displayToast "incorrect"
     playAudio "incorrect", module
     handleFailedAttempt module, [$(event.target).attr "value"], 0
     updateModuleNav "incorrect"
 
   showNextModuleBtn()
+
+this.displayToast = (type)->
+  if Meteor.Device.isPhone()
+    #do something with toast on phone
+  else
+    color = if type == "correct" then "green" else "red"
+    classes =color.concat(" ", "left valign rounded")
+    console.log "here is color",classes
+    Materialize.toast "<i class='mdi-navigation-close medium'></i>", 5000, classes
 
 this.hideIncorrectResponses = ()->
   responseBtns =  $(".response")
