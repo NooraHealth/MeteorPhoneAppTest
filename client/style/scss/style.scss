@@ -101,6 +101,18 @@ Custom NH components
   padding: 50px;
 }
 
+.next-btn-tile {
+  @include transition(all, 1s);
+  background-color: $light-blue-2;
+  height: 40px;
+  width: 40px;
+  border-radius: 20px;
+  color: #ffffff !important;
+  position: absolute;
+  right:20px;
+  bottom: 15px;
+}
+
 .loading-message {
   color: #fff;
   font-size: 25px;
