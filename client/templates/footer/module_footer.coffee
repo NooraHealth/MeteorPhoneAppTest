@@ -1,6 +1,4 @@
 Template.moduleFooter.helpers
-  #audioSrc: ()->
-    #return Session.get "media url" + @.audio
 
   restOfDocs: ()->
     rest = (module for module, index in @.modules when index != 0)
@@ -40,6 +38,16 @@ Template.moduleFooter.onRendered ()->
   surface = fview.view or fview.surface
   surface.setProperties {zIndex: 12}
 
+  this.autorun ()->
+    moduleSequence = Session.get "modules sequence"
+    currentModuleIndex = Session.get "current module index"
+    
+    if currentModuleIndex?
+      currentActiveNav = $(".module-navigation-bar").find("li[name="+ currentModuleIndex+"]")
+      currentlyActive = $(".module-navigation-bar").find(".current")[0]
+      if currentlyActive?
+        currentlyActive.removeClass "current"
+      currentActiveNav.addClass "current"
 #Template.moduleFooter.events
   #'click .module_nav': (event, template) ->
     #currentIndex = Session.get "current module index"
@@ -59,16 +67,6 @@ Template.moduleFooter.onRendered ()->
   #'click [name=previous]': (event, template)->
     #goToPreviousModule(event, template)
  
-Tracker.autorun ()->
-  moduleSequence = Session.get "modules sequence"
-  currentModuleIndex = Session.get "current module index"
-  
-  if currentModuleIndex?
-    currentActiveNav = $(".module-navigation-bar").find("li[name="+ currentModuleIndex+"]")
-    currentlyActive = $(".module-navigation-bar").find(".current")[0]
-    if currentlyActive?
-      currentlyActive.removeClass "current"
-    currentActiveNav.addClass "current"
 
 
 

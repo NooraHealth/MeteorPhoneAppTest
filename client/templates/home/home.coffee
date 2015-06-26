@@ -2,13 +2,13 @@
 Template.home.helpers {
   getDirection: ()->
     if Meteor.Device.isPhone()
-      console.log "Returning 1"
       return 1
     else
       return 0
 
   displayTrophy: ()->
     return Session.get "display trophy"
+
   getScrollSize: ()->
     height = Session.get "lesson card height"
     return ['true', height]
