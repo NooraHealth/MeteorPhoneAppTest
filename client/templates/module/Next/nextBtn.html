@@ -8,14 +8,14 @@
 
 <template name="phoneNextBtn">
 <tile class="round-tile">
-  <a id="{{id}}" class="next"> 
+  <a id="{{id}}" class="{{commonClasses}} {{#if isHidden}} slide-down {{/if}}"> 
     <i class="mdi-navigation-arrow-forward medium"></i>
   </a>
 </tile>
 </template>
 
 <template name="browserNextBtn">
-<a class="next next-module-btn center-align blue rounded blue-text text-lighten-3 flow-text btn-flat waves-effect waves-light {{#if isHidden}} slide-down {{/if}} large valign-wrapper " id="{{id}}" name="next">
+<a class=" {{commonClasses}} next-module-btn center-align blue rounded blue-text text-lighten-3 flow-text btn-flat waves-effect waves-light {{#if isHidden}} slide-down {{/if}} large valign-wrapper " id="{{id}}" >
   {{#if allModulesComplete}}
     FINISH
   {{else}}
