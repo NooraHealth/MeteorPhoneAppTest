@@ -36,6 +36,7 @@ this.handleResponse = (response)->
 
 this.displayToast = (type)->
   if Meteor.Device.isPhone()
+
     #do something with toast on phone
   else
     color = if type == "correct" then "green" else "red"
