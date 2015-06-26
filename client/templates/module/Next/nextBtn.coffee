@@ -38,6 +38,8 @@ Template.nextBtn.events
       Meteor.user().updateLessonsComplete(currLesson)
       Router.go "home"
 
+    Session.set "success toast is visible", false
+    Session.set "fail toast is visible", false
     Session.set "next button is hidden", nextBtnShouldHide()
 
 Template.nextBtn.helpers

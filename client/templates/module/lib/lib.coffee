@@ -36,8 +36,10 @@ this.handleResponse = (response)->
 
 this.displayToast = (type)->
   if Meteor.Device.isPhone()
-
-    #do something with toast on phone
+    if type=="correct"
+      Session.set "success toast is visible", true
+    else
+      Session.set "fail toast is visible", true
   else
     color = if type == "correct" then "green" else "red"
     classes =color.concat(" ", "left valign rounded")

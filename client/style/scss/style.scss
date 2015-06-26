@@ -182,6 +182,26 @@ Custom NH components
   height:100%;
 }
 
+.img-with-toasts-wrapper {
+  position: relative;
+  & > .inner-toasts-wrapper {
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    position: absolute;
+    & > .toast-overlay {
+      @include transition(all, 2s);
+      width:0%;
+      margin-right: auto;
+      margin-left:auto;
+    } 
+    & > .expand-toast {
+      width: 30%;
+    }
+  }
+}
+
 .module-wrapper {
   text-align:center;
   width: 100%;
