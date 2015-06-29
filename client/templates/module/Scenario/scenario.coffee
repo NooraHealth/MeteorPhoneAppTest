@@ -12,4 +12,8 @@ Template.scenarioModule.helpers
 Template.scenarioModule.events
   'click .response': (event, template)->
     response = $(event.target).val()
-    handleResponse response
+    if buttonDisabled event.target
+      return
+    else
+      handleResponse response
+    event.stopPropagation()

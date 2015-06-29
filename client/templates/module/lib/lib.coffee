@@ -14,6 +14,9 @@ this.stopAllAudio = ()->
   for audioElem in $("audio")
     audioElem.pause()
 
+this.buttonDisabled = (btn)->
+  return $(btn).hasClass('faded') or $(btn).hasClass('expanded')
+
 this.handleResponse = (response)->
   moduleSequence = Session.get "modules sequence"
   currentModuleIndex = Session.get "current module index"
@@ -51,9 +54,11 @@ this.hideIncorrectResponses = ()->
   for btn in responseBtns
     if not $(btn).hasClass "correct"
       $(btn).addClass "faded"
+      
     else
-      $(btn).addClass "disabled"
+      $(btn).addClass "z-depth-2"
       $(btn).addClass "expanded"
+    $(btn).unbind "click"
 
 this.updateModuleNav = (responseStatus)->
   moduleIndex = Session.get "current module index"

@@ -1,5 +1,10 @@
 
 Template.binaryChoiceModule.events
   'click .response': (event, template)->
-    response = $(event.target).val()
-    handleResponse response
+    if buttonDisabled event.target
+      return
+    else
+      response = $(event.target).val()
+      handleResponse response
+    event.stopPropagation()
+
