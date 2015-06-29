@@ -36,7 +36,6 @@ Template.home.onRendered ()->
   if Meteor.Device.isPhone()
     scrollview.modifier.setAlign [.5, .5]
   else
-    console.log "Is phone!"
     scrollview.modifier.setAlign [.25, .5]
     
   if lessonsComplete < lessons.length
@@ -64,7 +63,7 @@ Template.lessonThumbnail.onRendered ()->
   
   surface = fview.surface or fview.view
   if fview.id == currentlessonId
-    fview.modifier.setTransform Transform.scale(1.15, 1.15, 1.15), {duration: 1000, curve: "easeIn"}
+    fview.modifier.setTransform Transform.scale(1.15, 1.15, 1), {duration: 1000, curve: "easeIn"}
 
   if fview.id == currentlessonId or Meteor.user().hasCompletedLesson(fview.id)
     
@@ -74,13 +73,13 @@ Template.lessonThumbnail.onRendered ()->
     surface.on "mouseout", ()->
       fview.modifier.halt()
       if fview.id== currentlessonId
-        fview.modifier.setTransform Transform.scale(1.15, 1.15, 1.15), {duration: 500, curve: "easeIn"}
+        fview.modifier.setTransform Transform.scale(1.15, 1.15, 1), {duration: 500, curve: "easeIn"}
       else
         fview.modifier.setTransform Transform.scale(1, 1, 1), {duration: 500, curve: "easeIn"}
     
     surface.on "mouseover", ()->
       fview.modifier.halt()
-      fview.modifier.setTransform Transform.scale(1.25, 1.25, 1.25), {duration: 500, curve: "easeIn"}
+      fview.modifier.setTransform Transform.scale(1.20, 1.20, 1), {duration: 500, curve: "easeIn"}
 
     surface.on "click", ()->
       Router.go "ModulesSequence", {nh_id: fview.id}
