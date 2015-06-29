@@ -205,12 +205,13 @@ Custom NH components
     top: 0;
     position: absolute;
     & > .toast-overlay {
-      @include transition(all, 2s);
+      @include transition(all, 0s);
       width:0%;
       margin-right: auto;
       margin-left:auto;
     } 
     & > .expand-toast {
+      @include transition(all, 2s);
       width: 50%;
     }
   }
