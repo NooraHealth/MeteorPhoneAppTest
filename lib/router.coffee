@@ -38,8 +38,7 @@ Router.map ()->
             Meteor.logout()
           console.log "The router should go to Loading"
           downloader.loadContent(onSuccess, onError)
-          Router.go "loading"
-
+        Router.go "loading"
 
       else if !Meteor.isCordova
         Meteor.call "contentEndpoint", (err, src)->

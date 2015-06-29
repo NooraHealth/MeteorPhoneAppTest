@@ -24,17 +24,17 @@ class @ContentInterface
   downloadFiles: (urls)->
     deferred = Q.defer()
     numToLoad = urls.length
-    console.log "urls: ", urls
-    console.log urls
     numRecieved = 0
-
+    urlsToTryAgain = []
     onError = (url)->
-      console.log "Creating the on error function"
       return (err)->
-        console.log "ON ERR"
-        console.log "Error for : ", url
+        console.log "ERROR "
         console.log err
-        deferred.reject(err)
+        if err.code == 3
+          console.log "The error"
+          urlsToTryAgain.push url
+        else
+          deferred.reject(err)
 
     onFileEntrySuccess = (url)->
       return (fileEntry)->
@@ -57,7 +57,12 @@ class @ContentInterface
           numRecieved++
           console.log "Num recieved/numToLoad: "+ numRecieved + "/"+ numToLoad
           if numRecieved == numToLoad
-            deferred.resolve(entry)
+            if urlsToTryAgain.length > 0
+              console.log "-------------DOWNLOADING FILES AGAIN!!----------------"
+              console.log urlsToTryAgain.length
+              downloadFiles urlsToTryAgain
+            else
+              deferred.resolve(entry)
 
         onTransferError = (error)->
           console.log "TRANSFER ERROR"
@@ -80,15 +85,15 @@ class @ContentInterface
 
     window.requestFileSystem LocalFileSystem.PERSISTENT, 0, (fs)->
       for url in urls
-        console.log "about to resolve local file system url"
-        console.log fs
-        console.log fs.root
-        console.log fs.root.nativeURL
         directories = url.directories()
         #TODO: this should be done in the object
         firstDir = directories[0] + '/'
         remainingDirs = directories.splice(1)
-        fs.root.getDirectory firstDir, {create: true, exclusive: false}, onDirEntrySuccess(url,remainingDirs), onError
+        fs.root.getDirectory firstDir, {create: true, exclusive: false}, onDirEntrySuccess(url,remainingDirs), onError(url)
+    , (err)->
+      console.log "ERROR requesting local filesystem: "
+      console.log err
+      promise.reject err
 
     return deferred.promise
 
