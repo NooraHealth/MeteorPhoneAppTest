@@ -78,8 +78,10 @@ Template.lessonThumbnail.onRendered ()->
         fview.modifier.setTransform Transform.scale(1, 1, 1), {duration: 500, curve: "easeIn"}
     
     surface.on "mouseover", ()->
-      fview.modifier.halt()
-      fview.modifier.setTransform Transform.scale(1.20, 1.20, 1), {duration: 500, curve: "easeIn"}
+      if fview.id== currentlessonId
+        fview.modifier.setTransform Transform.scale(1.20, 1.20, 1), {duration: 500, curve: "easeIn"}
+      else
+        fview.modifier.setTransform Transform.scale(1.1, 1.1, 1), {duration: 500, curve: "easeIn"}
 
     surface.on "click", ()->
       Router.go "ModulesSequence", {nh_id: fview.id}
