@@ -91,7 +91,11 @@ Template.lessonThumbnail.onRendered ()->
 Template.lessonThumbnail.helpers
   isCurrentLesson: ()->
     lessons = Session.get "lessons sequence"
+    console.log "in isCurrentLesson in home.coffee"
+    console.log "lessons should be an array:"
+    console.log lessons
     lessonsComplete = Meteor.user().getCompletedLessons().length
+    console.log "step 1 in home.coffee, lessonscomplete should be number", lessonsComplete
     if lessons.length == lessonsComplete
       return false
     else

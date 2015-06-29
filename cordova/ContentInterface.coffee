@@ -10,6 +10,8 @@ class @ParsedUrl
     return dirs
   file: ()->
     return @.pieces[@.pieces.length - 1]
+  localFilePath: ()->
+    return @urlString
   endpointPath: ()->
     return @.endpoint.concat @.urlString
 
@@ -78,7 +80,12 @@ class @ContentInterface
 
     window.requestFileSystem LocalFileSystem.PERSISTENT, 0, (fs)->
       for url in urls
+        console.log "about to resolve local file system url"
+        console.log fs
+        console.log fs.root
+        console.log fs.root.nativeURL
         directories = url.directories()
+        #TODO: this should be done in the object
         firstDir = directories[0] + '/'
         remainingDirs = directories.splice(1)
         fs.root.getDirectory firstDir, {create: true, exclusive: false}, onDirEntrySuccess(url,remainingDirs), onError
@@ -92,6 +99,7 @@ class @ContentInterface
       urls.merge(@.retrieveContentUrls(lesson))
 
     endURLS = (new ParsedUrl(url, @.contentEndpoint) for url in urls)
+    
     promise = @.downloadFiles endURLS
     promise.then (entry)->
       console.log "PROMISE SUCCESSFUL"
@@ -100,6 +108,9 @@ class @ContentInterface
       console.log "PROMISE REJECTED"
       console.log err
       onError(err)
+  
+  fileExistsOnFilesystem: (url)->
+
         
   retrieveContentUrls: (lesson)->
     console.log "RETRIEVING CONTENT URLS"

@@ -33,11 +33,19 @@ Meteor.users.helpers {
 
   contentLoaded: ()->
     console.log "Is content Loaded: ", @.profile.content_loaded
-    return @.profile.content_loaded
+    return false
+    #return @.profile.content_loaded
 
   getCompletedLessons: ()->
-    curriculum = @.getCurriculum().lessons
+    curr = @.getCurriculum()
+    if !curr
+      return []
+    curriculum = curr.lessons
+    if !curriculum
+      return []
     usersCompletedLessons = @.profile.lessons_complete
+    if !usersCompletedLessons
+      return []
     return (lesson for lesson in usersCompletedLessons when lesson in curriculum)
   
   hasCompletedLesson: (_id)->
