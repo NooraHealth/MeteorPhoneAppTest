@@ -32,7 +32,7 @@ class @ContentInterface
       if dirEntry
         dirEntry.removeRecursively(()->
           console.log "Successfully removed"
-          deferred.resolve()
+          deferred.resolve() 
         , (err)->
             console.log "Error removing directory"
             console.log err
@@ -45,7 +45,7 @@ class @ContentInterface
       deferred.reject err
 
     window.requestFileSystem LocalFileSystem.PERSISTENT, 0, (fs)->
-      fs.root.getDirectory '/NooraHealthContent/', {create: false, exclusive: false}, removeDir, onError()
+      fs.root.getDirectory '/NooraHealthContent/', {create: false, exclusive: false}, removeDir, onError
 
     return deferred.promise
 
@@ -117,6 +117,7 @@ class @ContentInterface
         #TODO: this should be done in the object
         firstDir = directories[0] + '/'
         remainingDirs = directories.splice(1)
+
         fs.root.getDirectory firstDir, {create: true, exclusive: false}, onDirEntrySuccess(url,remainingDirs), onError(url)
         #path = "/"+url.localFilePath()
         #console.log "Directory: ", path

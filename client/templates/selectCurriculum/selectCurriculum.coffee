@@ -31,13 +31,10 @@ Template.selectCurriculumFooter.events {
         downloader = new ContentInterface(Meteor.user().getCurriculum(), endpoint)
         promise = downloader.clearContentDirectory()
         promise.then ()->
-          console.log "woohooo successfully deleted the dir and going home"
           Router.go 'home'
         promise.catch (err)->
-          console.log "ERROR deleteing directory: "
-          consoole.log err
           alert "There was an error selecting the new curriculum"
           console.log err
-    
+          Meteor.logout()
 
 }
