@@ -2,9 +2,6 @@ Array::merge = (other) -> Array::push.apply @, other
 
 class @ParsedUrl
   constructor: (@urlString, @endpoint)->
-    console.log "ParsedUrl initiated: "
-    console.log @urlString
-    console.log @endpoint
     pieces = urlString.split('/')
     @.pieces = pieces
   directories: ()->
@@ -39,6 +36,8 @@ class @ContentInterface
     onError = (err)->
       console.log "Error getting the directory to delete it"
       console.log err
+      if err.code == 1
+        deferred.resolve("The directory does not exist to delete")
       deferred.reject err
 
     window.requestFileSystem LocalFileSystem.PERSISTENT, 0, (fs)->
@@ -54,13 +53,10 @@ class @ContentInterface
 
     onError = (url)->
       return (err)->
-        console.log "Error finding file system: "
-        console.log err
         deferred.reject(err)
 
     onFileEntrySuccess = (url)->
       return (fileEntry)->
-        console.log "FIle entry success!"
         ft = new FileTransfer()
         endpnt = url.endpointPath()
         uri = encodeURI(endpnt)

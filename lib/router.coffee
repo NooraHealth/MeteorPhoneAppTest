@@ -22,6 +22,7 @@ Router.map ()->
         console.log "Going to the curriculum"
         Router.go "selectCurriculum"
       else if Meteor.isCordova and not Meteor.user().contentLoaded()# and not Session.get "content loaded"
+        console.log "----------- Downloading the content----------------------------"
         Meteor.call 'contentEndpoint', (err, endpoint)->
           downloader = new ContentInterface(Meteor.user().getCurriculum(), endpoint)
           onSuccess = (entry)->
@@ -123,6 +124,9 @@ Router.map ()->
   this.route '/loading', {
     path: '/loading'
     name: 'loading'
+    onBeforeAction: ()->
+      console.log "I am going to LOADing page!! "
+      this.next()
     
   }
 
