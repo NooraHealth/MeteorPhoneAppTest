@@ -44,10 +44,11 @@ this.displayToast = (type)->
     else
       Session.set "fail toast is visible", true
   else
-    color = if type == "correct" then "green" else "red"
-    classes =color.concat(" ", "left valign rounded")
-    console.log "here is color",classes
-    Materialize.toast "<i class='mdi-navigation-close medium'></i>", 5000, classes
+    classes = "left valign rounded"
+    if type=="correct"
+      Materialize.toast "<i class='mdi-navigation-check medium'></i>", 5000, classes+ " green"
+    else
+      Materialize.toast "<i class='mdi-navigation-close medium'></i>", 5000, classes+ " red"
 
 this.hideIncorrectResponses = ()->
   responseBtns =  $(".response")

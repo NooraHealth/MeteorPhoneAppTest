@@ -11,6 +11,9 @@ class @ParsedUrl
   file: ()->
     return @.pieces[@.pieces.length - 1]
   localFilePath: ()->
+    #directories = @.directories
+    #str = directories.join '/'
+    #console.log "Directory string: ", str
     return @urlString
   endpointPath: ()->
     return @.endpoint.concat @.urlString
@@ -21,23 +24,46 @@ class @ContentInterface
   constructor: (@curriculum, @contentEndpoint)->
     console.log "Consutricting and this is the endp: ", @.contentEndpoint
 
+  clearContentDirectory: ()->
+    deferred = Q.defer()
+    removeDir = (dirEntry)->
+      console.log "Got the dir entry and about to remove"
+      console.log dirEntry
+      if dirEntry
+        dirEntry.removeRecursively(()->
+          console.log "Successfully removed"
+          deferred.resolve()
+        , (err)->
+            console.log "Error removing directory"
+            console.log err
+            deferred.reject(err)
+        )
+
+    onError = (err)->
+      console.log "Error getting the directory to delete it"
+      console.log err
+      deferred.reject err
+
+    window.requestFileSystem LocalFileSystem.PERSISTENT, 0, (fs)->
+      fs.root.getDirectory '/NooraHealthContent/', {create: false, exclusive: false}, removeDir, onError()
+
+    return deferred.promise
+
   downloadFiles: (urls)->
     deferred = Q.defer()
     numToLoad = urls.length
     numRecieved = 0
     urlsToTryAgain = []
+
     onError = (url)->
       return (err)->
-        console.log "ERROR "
+        console.log "Error finding file system: "
         console.log err
-        if err.code == 3
-          console.log "The error"
-          urlsToTryAgain.push url
-        else
-          deferred.reject(err)
+        deferred.reject(err)
 
     onFileEntrySuccess = (url)->
       return (fileEntry)->
+        console.log "FIle entry success!"
         ft = new FileTransfer()
         endpnt = url.endpointPath()
         uri = encodeURI(endpnt)
@@ -57,16 +83,16 @@ class @ContentInterface
           numRecieved++
           console.log "Num recieved/numToLoad: "+ numRecieved + "/"+ numToLoad
           if numRecieved == numToLoad
-            if urlsToTryAgain.length > 0
-              console.log "-------------DOWNLOADING FILES AGAIN!!----------------"
-              console.log urlsToTryAgain.length
-              downloadFiles urlsToTryAgain
-            else
-              deferred.resolve(entry)
+            deferred.resolve(entry)
 
         onTransferError = (error)->
-          console.log "TRANSFER ERROR"
-          deferred.reject(error)
+          console.log "ERROR "
+          console.log error
+          if error.code == 3
+            #try to download the file again
+            ft.download(uri, targetPath, onTransferSuccess, onTransferError)
+          else
+            deferred.reject(error)
 
         #download the file from the endpoint and save to target path on mobile device
         ft.download(uri, targetPath, onTransferSuccess, onTransferError)
@@ -76,20 +102,25 @@ class @ContentInterface
       return (dirEntry)->
         if directories.length == 0
           file = url.file()
+          console.log "Getting the file"
           dirEntry.getFile file, {create: true, exclusive: false}, onFileEntrySuccess(url), onError(file)
         else
+          console.log "DIRECTORYYJ"
           dir = directories[0] + '/'
           remainingDirs = directories.splice(1)
           dirEntry.getDirectory dir, {create: true, exclusive: false}, onDirEntrySuccess(url, remainingDirs), onError(dir)
 
 
-    window.requestFileSystem LocalFileSystem.PERSISTENT, 0, (fs)->
+    window.requestFileSystem LocalFileSystem.PERSISTENT, 5*1024*1024, (fs)->
       for url in urls
         directories = url.directories()
         #TODO: this should be done in the object
         firstDir = directories[0] + '/'
         remainingDirs = directories.splice(1)
         fs.root.getDirectory firstDir, {create: true, exclusive: false}, onDirEntrySuccess(url,remainingDirs), onError(url)
+        #path = "/"+url.localFilePath()
+        #console.log "Directory: ", path
+        #fs.root.getFile path, {create: true, exclusive: false}, onFileEntrySuccess(url), onError(url)
     , (err)->
       console.log "ERROR requesting local filesystem: "
       console.log err
@@ -114,9 +145,6 @@ class @ContentInterface
       console.log err
       onError(err)
   
-  fileExistsOnFilesystem: (url)->
-
-        
   retrieveContentUrls: (lesson)->
     console.log "RETRIEVING CONTENT URLS"
     try

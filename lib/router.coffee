@@ -20,13 +20,14 @@ Router.map ()->
         this.next()
       else if not Meteor.user().curriculumIsSet()
         Router.go "selectCurriculum"
-      else if Meteor.isCordova and not Meteor.user().contentLoaded() and not Session.get "content loaded"
+      else if Meteor.isCordova and not Meteor.user().contentLoaded()# and not Session.get "content loaded"
+        console.log "ABOUT TO LOAD CONTENT!!!"
         Meteor.call 'contentEndpoint', (err, endpoint)->
           downloader = new ContentInterface(Meteor.user().getCurriculum(), endpoint)
           onSuccess = (entry)->
             console.log "Success downloading content: ", entry
             Meteor.user().setContentAsLoaded true
-            Session.set "content loaded", true
+            #Session.set "content loaded", true
             Session.set( "content src", 'http://127.0.0.1:8080/')
             Router.go "home"
 

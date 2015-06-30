@@ -3,6 +3,9 @@ Meteor.users.helpers {
     curriculum = Curriculum.findOne {_id: @.profile.curriculumId}
     return curriculum?
 
+  getCurriculumId: ()->
+    return @.profile.curriculumId
+
   getCurriculum: ()->
     return Curriculum.findOne {_id: @.profile.curriculumId}
 
@@ -33,8 +36,8 @@ Meteor.users.helpers {
 
   contentLoaded: ()->
     console.log "Is content Loaded: ", @.profile.content_loaded
-    return false
-    #return @.profile.content_loaded
+    #return false
+    return @.profile.content_loaded
 
   getCompletedLessons: ()->
     curr = @.getCurriculum()

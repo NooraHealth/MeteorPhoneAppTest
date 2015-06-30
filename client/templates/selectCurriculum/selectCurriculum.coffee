@@ -22,7 +22,22 @@ Template.selectCurriculumFooter.events {
   'click #submitCurriculumSelect':(event, template) ->
     console.log "clicked"
     curriculumId = $("input[name=curriculum]:checked").val()
-    Meteor.user().setCurriculum curriculumId
-    console.log curriculumId
-    Router.go "home"
+    oldId = Meteor.user().getCurriculumId()
+    if oldId == curriculumId
+      Router.go "home"
+    else
+      Meteor.user().setCurriculum curriculumId
+      Meteor.call 'contentEndpoint', (err, endpoint)->
+        downloader = new ContentInterface(Meteor.user().getCurriculum(), endpoint)
+        promise = downloader.clearContentDirectory()
+        promise.then ()->
+          console.log "woohooo successfully deleted the dir and going home"
+          Router.go 'home'
+        promise.catch (err)->
+          console.log "ERROR deleteing directory: "
+          consoole.log err
+          alert "There was an error selecting the new curriculum"
+          console.log err
+    
+
 }
