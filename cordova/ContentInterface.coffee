@@ -2,6 +2,9 @@ Array::merge = (other) -> Array::push.apply @, other
 
 class @ParsedUrl
   constructor: (@urlString, @endpoint)->
+    console.log "ParsedUrl initiated: "
+    console.log @urlString
+    console.log @endpoint
     pieces = urlString.split('/')
     @.pieces = pieces
   directories: ()->
@@ -10,11 +13,6 @@ class @ParsedUrl
     return dirs
   file: ()->
     return @.pieces[@.pieces.length - 1]
-  localFilePath: ()->
-    #directories = @.directories
-    #str = directories.join '/'
-    #console.log "Directory string: ", str
-    return @urlString
   endpointPath: ()->
     return @.endpoint.concat @.urlString
 
@@ -27,12 +25,11 @@ class @ContentInterface
   clearContentDirectory: ()->
     deferred = Q.defer()
     removeDir = (dirEntry)->
-      console.log "Got the dir entry and about to remove"
       console.log dirEntry
       if dirEntry
         dirEntry.removeRecursively(()->
           console.log "Successfully removed"
-          deferred.resolve() 
+          deferred.resolve()
         , (err)->
             console.log "Error removing directory"
             console.log err
@@ -105,7 +102,7 @@ class @ContentInterface
           console.log "Getting the file"
           dirEntry.getFile file, {create: true, exclusive: false}, onFileEntrySuccess(url), onError(file)
         else
-          console.log "DIRECTORYYJ"
+          console.log "DIRECTORY"
           dir = directories[0] + '/'
           remainingDirs = directories.splice(1)
           dirEntry.getDirectory dir, {create: true, exclusive: false}, onDirEntrySuccess(url, remainingDirs), onError(dir)
@@ -113,14 +110,17 @@ class @ContentInterface
 
     window.requestFileSystem LocalFileSystem.PERSISTENT, 5*1024*1024, (fs)->
       for url in urls
+        console.log "This is the url: ", url
+        console.log url
         directories = url.directories()
+        console.log "Directories: ", directories
         #TODO: this should be done in the object
         firstDir = directories[0] + '/'
         remainingDirs = directories.splice(1)
-
         fs.root.getDirectory firstDir, {create: true, exclusive: false}, onDirEntrySuccess(url,remainingDirs), onError(url)
         #path = "/"+url.localFilePath()
-        #console.log "Directory: ", path
+        #fullPath = fs.root.toURL() + path
+        #window.resolveLocalFileSystemURL fullPath, onFileEntrySuccess(url), onError(url)
         #fs.root.getFile path, {create: true, exclusive: false}, onFileEntrySuccess(url), onError(url)
     , (err)->
       console.log "ERROR requesting local filesystem: "
@@ -134,7 +134,9 @@ class @ContentInterface
     urls = []
     for lesson in lessons
       urls.merge(@.retrieveContentUrls(lesson))
-
+    
+    console.log "URLS: "
+    console.log urls
     endURLS = (new ParsedUrl(url, @.contentEndpoint) for url in urls)
     
     promise = @.downloadFiles endURLS
@@ -155,7 +157,7 @@ class @ContentInterface
       modules = lesson.getModulesSequence()
       urls = []
       if lesson.image
-        urls.push lesson.imgSrc()
+        urls.push lesson.image
 
       for module in modules
         urls.merge(@.moduleUrls(module))
@@ -170,17 +172,20 @@ class @ContentInterface
   moduleUrls: (module)->
     urls = []
     if module.image
-      urls.push module.imgSrc()
+      urls.push module.image
     if module.video
-      urls.push module.videoSrc()
+      urls.push module.video
     if module.audio
-      urls.push module.audioSrc()
+      urls.push module.audio
     if module.incorrect_audio
-      urls.push module.incorrectAnswerAudio()
+      urls.push module.incorrect_audio
     if module.correct_audio
-      urls.push module.correctAnswerAudio()
+      urls.push module.correct_audio
     if module.options and ( module.type == 'MULTIPLE_CHOICE' or module.type == 'GOAL_CHOICE')
-      urls.push option.optionImgSrc for option in module.getOptions 0, 6
+      urls.merge (option for option in module.options when option?)
+    console.log "urls of module: "
+    console.log module
+    console.log urls
     return urls
 
 

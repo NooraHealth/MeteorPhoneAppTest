@@ -1,4 +1,3 @@
-
 Meteor.filePrefix = (file)->
   #Store file into a directory by the user's username.
   if not file?
