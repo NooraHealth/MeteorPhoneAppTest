@@ -66,6 +66,7 @@ Modules.attachSchema ModuleSchema
 
 Modules.helpers {
   videoUrl: ()->
+    #return this.video_url + "?autoplay=1"
     return this.video_url
 
   isEmbedded: ()->

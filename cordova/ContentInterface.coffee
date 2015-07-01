@@ -90,15 +90,25 @@ class @ContentInterface
         #download the file from the endpoint and save to target path on mobile device
         ft.download(uri, targetPath, onTransferSuccess, onTransferError)
 
+    fileFound = ()->
+      console.log "FILE Found~"
+      numRecieved++
+      if numRecieved == numToLoad
+        deferred.resolve(entry)
+      
+    fileNotFound = (dirEntry, file, url)->
+      return (err)->
+        console.log "FILE NOT FOUND"
+        console.log err
+        dirEntry.getFile file, {create: true, exclusive: false}, onFileEntrySuccess(url), onError(file)
+
 
     onDirEntrySuccess = (url, directories)->
       return (dirEntry)->
         if directories.length == 0
           file = url.file()
-          console.log "Getting the file"
-          dirEntry.getFile file, {create: true, exclusive: false}, onFileEntrySuccess(url), onError(file)
+          dirEntry.getFile file, {create: false, exclusive: false}, fileFound, fileNotFound(dirEntry, file, url)
         else
-          console.log "DIRECTORY"
           dir = directories[0] + '/'
           remainingDirs = directories.splice(1)
           dirEntry.getDirectory dir, {create: true, exclusive: false}, onDirEntrySuccess(url, remainingDirs), onError(dir)
@@ -106,8 +116,6 @@ class @ContentInterface
 
     window.requestFileSystem LocalFileSystem.PERSISTENT, 5*1024*1024, (fs)->
       for url in urls
-        console.log "This is the url: ", url
-        console.log url
         directories = url.directories()
         console.log "Directories: ", directories
         #TODO: this should be done in the object

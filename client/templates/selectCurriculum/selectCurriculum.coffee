@@ -27,14 +27,14 @@ Template.selectCurriculumFooter.events {
       Router.go "home"
     else
       Meteor.user().setCurriculum curriculumId
-      Meteor.call 'contentEndpoint', (err, endpoint)->
-        downloader = new ContentInterface(Meteor.user().getCurriculum(), endpoint)
-        promise = downloader.clearContentDirectory()
-        promise.then ()->
-          Router.go 'home'
-        promise.catch (err)->
-          alert "There was an error selecting the new curriculum"
-          console.log err
-          Meteor.logout()
+      Router.go "home"
+      #Meteor.call 'contentEndpoint', (err, endpoint)->
+        #downloader = new ContentInterface(Meteor.user().getCurriculum(), endpoint)
+        #promise = downloader.clearContentDirectory()
+        #promise.then ()->
+          #Router.go 'home'
+        #promise.catch (err)->
+          #alert "There was an error selecting the new curriculum"
+          #Meteor.logout()
 
 }
