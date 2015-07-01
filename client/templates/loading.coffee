@@ -1,6 +1,6 @@
 
 
-message = '<p class="loading-message">'+"Welcome to Noora Health"+'</p><p class="white-text">This may take a while, your curriculum is loading</p>'
+message = '<p class="loading-message">'+"Welcome to Noora Health"+'</p><p class="white-text">This may take a while, your curriculum is loading</p><a onClick="Meteor.logout()">abort</a>'
 spinner = '<div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>'
 
 Template.loading.onRendered ()->
