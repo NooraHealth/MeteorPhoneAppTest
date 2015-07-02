@@ -1,10 +1,15 @@
 Template.moduleFooter.helpers
 
   restOfDocs: ()->
+    if !@.modules
+      return
+
     rest = (module for module, index in @.modules when index != 0)
     return rest
 
   firstModule: ()->
+    if !@.modules
+      return
     return @.modules[0]
   
   modules: ()->

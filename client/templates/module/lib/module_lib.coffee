@@ -2,6 +2,8 @@ this.allModulesComplete = ()->
   numModules = (Session.get "modules sequence").length
   numCorrect = (Session.get "correctly answered").length
   currentModule = getCurrentModule()
+  if !currentModule
+    return false
   if isAQuestion(currentModule)
     return numCorrect == numModules
   else
@@ -136,6 +138,8 @@ this.nextBtnShouldHide = ()->
   currentModule = this.getCurrentModule()
   console.log "This is the current module"
   console.log currentModule
+  if !currentModule
+    return
   if currentModule.type == "VIDEO" or currentModule.type == "SLIDE"
     return false
   else
@@ -236,4 +240,7 @@ this.goBackToChapterPage = ()->
 this.getCurrentModule = ()->
   moduleSequence = Session.get "modules sequence"
   currentIndex = Session.get "current module index"
+  if !moduleSequence or !currentIndex
+    return
+
   return moduleSequence[currentIndex]

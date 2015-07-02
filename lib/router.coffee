@@ -12,7 +12,18 @@ Router.map ()->
       'footer': {to:"footer"}
     }
     layoutTemplate: 'layout'
+    cache: true
+    waitOn: ()->
+      if !Meteor.user()
+        return
+      if Meteor.status().connected
+        console.log "Connected!"
+        return [
+          Meteor.subscribe("curriculum", Meteor.user().getCurriculumId()),
+          Meteor.subscribe("lessons", Meteor.user().getCurriculumId()),
+        ]
     onBeforeAction: ()->
+      console.log "Before action"
 
       if Meteor.loggingIn()
         return
@@ -47,6 +58,10 @@ Router.map ()->
           Session.set "content src", src
 
       Session.set "current transition", "slideWindowLeft"
+
+      #if Meteor.status().connected
+        #Meteor.subscribe "curriculum", Meteor.user().getCurriculumId(),
+        #Meteor.subscribe "lessons", Meteor.user().getCurriculumId(),
       this.next()
 
 
@@ -74,6 +89,9 @@ Router.map ()->
     yieldTemplates: {
       'selectCurriculumFooter': {to:"footer"}
     }
+    cache: true
+    waitOn:()->
+      return Meteor.subscribe("all_curriculums", this.params.nh_id)
     onBeforeAction: ()->
       this.next()
   }
@@ -89,25 +107,34 @@ Router.map ()->
     yieldTemplates: {
       'moduleFooter': {to:"footer"}
     }
-    #waitOn: ()->
-      #Meteor.subscribe "lessons"
-      #Meteor.subscribe "modules"
+    cache: true
+    waitOn: ()->
+      if !Meteor.user()
+        return
+      if Meteor.status().connected
+        console.log "Connected!"
+        return [
+          Meteor.subscribe("lessons", Meteor.user().getCurriculumId()),
+          Meteor.subscribe("curriculum", Meteor.user().getCurriculumId()),
+          Meteor.subscribe("modules", this.params.nh_id)
+        ]
+
     onBeforeAction: ()->
       if Meteor.loggingIn()
         return
       Session.set "current transition", "slideWindowLeft"
       this.next()
+
     data: () ->
-      if this.ready()
-        lesson = Lessons.findOne {nh_id: this.params.nh_id}
-        Session.set "current lesson", lesson
-        console.log lesson
-        modules = lesson.getModulesSequence()
-        Session.set "modules sequence", modules
-        Session.set "current module index",0
-        Session.set "correctly answered", []
-        Session.set "incorrectly answered", []
-        return {modules:  modules  }
+      lesson = Lessons.findOne {nh_id: this.params.nh_id}
+      Session.set "current lesson", lesson
+      console.log lesson
+      modules = lesson.getModulesSequence()
+      Session.set "modules sequence", modules
+      Session.set "current module index",0
+      Session.set "correctly answered", []
+      Session.set "incorrectly answered", []
+      return {modules:  modules  }
         
   }
 
@@ -125,13 +152,13 @@ Router.map ()->
     path: '/loading'
     name: 'loading'
     onBeforeAction: ()->
-      console.log "I am going to LOADing page!! "
       this.next()
     
   }
 
 
 Router.configure {
-  progressSpinner:false
+  progressSpinner:false,
+  #loadingTemplate: 'loading'
 }
 

@@ -25,6 +25,7 @@ CurriculumSchema = new SimpleSchema
 
 Curriculum.attachSchema CurriculumSchema
 
+
 Curriculum.helpers {
   getLessonDocuments: ()->
     

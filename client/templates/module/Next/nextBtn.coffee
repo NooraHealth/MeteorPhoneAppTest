@@ -11,6 +11,7 @@ Template.nextBtn.events
 
     #if correctlyAnswered.length == modulesSequence.length
     if allModulesComplete()
+      console.log "All modules complte"
       Meteor.user().updateLessonsComplete(currLesson)
       Router.go "home"
       return
