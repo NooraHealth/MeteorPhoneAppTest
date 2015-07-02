@@ -63,12 +63,14 @@ class @ContentInterface
         targetPath = fileEntry.toURL()
 
         ft.onprogress = (event)->
-          total = Session.get "total bytes"
-          if !total
-            total = event.total
-            Session.set "total bytes", total
-          bytesLoaded = event.loaded
-          Session.set "bytes downloaded", bytesLoaded
+          percent = numRecieved/numToLoad
+          Session.set "percent loaded", percent
+          #total = Session.get "total bytes"
+          #if !total
+            #total = event.total
+            #Session.set "total bytes", total
+          #bytesLoaded = event.loaded
+          #Session.set "bytes downloaded", bytesLoaded
 
         onTransferSuccess = (entry)->
           console.log "TRANSFER SUCCESS"
@@ -93,8 +95,10 @@ class @ContentInterface
     fileFound = ()->
       console.log "FILE Found~"
       numRecieved++
+      console.log numRecieved/numToLoad
+      console.log "Num recieved/numToLoad: "+ numRecieved + "/"+ numToLoad
       if numRecieved == numToLoad
-        deferred.resolve(entry)
+        deferred.resolve()
       
     fileNotFound = (dirEntry, file, url)->
       return (err)->

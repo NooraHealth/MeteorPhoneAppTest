@@ -14,14 +14,20 @@ Router.map ()->
     layoutTemplate: 'layout'
     cache: true
     waitOn: ()->
+      console.log "In the waiton"
       if !Meteor.user()
         return
+      console.log "Getting the meteor status:"
+      console.log Meteor.status()
       if Meteor.status().connected
         console.log "Connected!"
         return [
           Meteor.subscribe("curriculum", Meteor.user().getCurriculumId()),
           Meteor.subscribe("lessons", Meteor.user().getCurriculumId()),
         ]
+      else
+        console.log "NOT CONNECTED"
+        console.log Curriculum.find({}).count()
     onBeforeAction: ()->
       console.log "Before action"
 
@@ -29,7 +35,12 @@ Router.map ()->
         return
       else if !Meteor.user()
         this.next()
-      else if not Meteor.user().curriculumIsSet()
+
+      if Meteor.isCordova
+        console.log "Trying to initialize server"
+        initializeServer()
+      
+      if not Meteor.user().curriculumIsSet()
         console.log "Going to the curriculum"
         Router.go "selectCurriculum"
       else if Meteor.isCordova and not Meteor.user().contentLoaded()# and not Session.get "content loaded"
@@ -58,10 +69,6 @@ Router.map ()->
           Session.set "content src", src
 
       Session.set "current transition", "slideWindowLeft"
-
-      #if Meteor.status().connected
-        #Meteor.subscribe "curriculum", Meteor.user().getCurriculumId(),
-        #Meteor.subscribe "lessons", Meteor.user().getCurriculumId(),
       this.next()
 
 
@@ -91,7 +98,8 @@ Router.map ()->
     }
     cache: true
     waitOn:()->
-      return Meteor.subscribe("all_curriculums", this.params.nh_id)
+      if Meteor.status().connected
+        return Meteor.subscribe("all_curriculums", this.params.nh_id)
     onBeforeAction: ()->
       this.next()
   }

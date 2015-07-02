@@ -1,3 +1,6 @@
+Meteor.publish "users", ()->
+  return Meteor.users.find({})
+
 Meteor.publish "modules", (lessonId)->
   if !lessonId
     return []

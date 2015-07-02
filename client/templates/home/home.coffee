@@ -92,6 +92,8 @@ Template.lessonThumbnail.onRendered ()->
 Template.lessonThumbnail.helpers
   isCurrentLesson: ()->
     lessons = Session.get "lessons sequence"
+    if !Meteor.user()
+      return
     lessonsComplete = Meteor.user().getCompletedLessons()
     if !lessonsComplete
       return false
