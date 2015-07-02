@@ -97,17 +97,17 @@ this.isCorrectResponse = (response) ->
 # time_to_complete  the time to complete the module in ms
 ###
 this.handleFailedAttempt = (module, responses, time_to_complete) ->
-  Attempts.insert {
-    user: Meteor.user()._id
-    responses: responses
-    passed: false
-    date: new Date().getTime()
-    nh_id: module.nh_id
-  }, (error, _id) ->
-    if error
-      console.log "There was an error inserting the incorrect attempt into the database", error
-    else
-      console.log "Just inserted this incorrect attempt into the DB: ", Attempts.findOne {_id: _id}
+  #Attempts.insert {
+    #user: Meteor.user()._id
+    #responses: responses
+    #passed: false
+    #date: new Date().getTime()
+    #nh_id: module.nh_id
+  #}, (error, _id) ->
+    #if error
+      #console.log "There was an error inserting the incorrect attempt into the database", error
+    #else
+      #console.log "Just inserted this incorrect attempt into the DB: ", Attempts.findOne {_id: _id}
 
 
 ###
@@ -120,16 +120,16 @@ this.handleFailedAttempt = (module, responses, time_to_complete) ->
 # time_to_complete  time to complete the module in ms
 ###
 this.handleSuccessfulAttempt = (module, time_to_complete)->
-  Attempts.insert {
-    user: Meteor.user()._id
-    passed: true
-    date: new Date().getTime()
-    nh_id: module.nh_id
-  }, (error, _id) ->
-    if error
-      console.log "There was an error inserting the CORRECT attempt into the database"
-    else
-      console.log "Just inserted this CORRECT attempt into the DB: ", Attempts.findOne {_id: _id}
+  #Attempts.insert {
+    #user: Meteor.user()._id
+    #passed: true
+    #date: new Date().getTime()
+    #nh_id: module.nh_id
+  #}, (error, _id) ->
+    #if error
+      #console.log "There was an error inserting the CORRECT attempt into the database"
+    #else
+      #console.log "Just inserted this CORRECT attempt into the DB: ", Attempts.findOne {_id: _id}
 
 
 this.nextBtnShouldHide = ()->
@@ -232,9 +232,6 @@ this.showNextModuleBtn = (module) ->
 this.goBackToChapterPage = ()->
   currentChapter = Session.get "current chapter"
   Router.go "/chapter/"  + currentChapter.nh_id
-
-this.goToNextSection = ()->
-
 
 this.getCurrentModule = ()->
   moduleSequence = Session.get "modules sequence"
