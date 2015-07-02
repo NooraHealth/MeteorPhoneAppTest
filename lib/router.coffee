@@ -25,9 +25,6 @@ Router.map ()->
           Meteor.subscribe("curriculum", Meteor.user().getCurriculumId()),
           Meteor.subscribe("lessons", Meteor.user().getCurriculumId()),
         ]
-      else
-        console.log "NOT CONNECTED"
-        console.log Curriculum.find({}).count()
     onBeforeAction: ()->
       console.log "Before action"
 
