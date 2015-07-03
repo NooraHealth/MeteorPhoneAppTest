@@ -14,50 +14,39 @@ Router.map ()->
     layoutTemplate: 'layout'
     cache: true
     waitOn: ()->
-      console.log "In the waiton"
       if !Meteor.user()
         return
-      console.log "Getting the meteor status:"
-      console.log Meteor.status()
       if Meteor.status().connected
-        console.log "Connected!"
         return [
           Meteor.subscribe("curriculum", Meteor.user().getCurriculumId()),
           Meteor.subscribe("lessons", Meteor.user().getCurriculumId()),
         ]
     onBeforeAction: ()->
-      console.log "Before action"
-
+      console.log "in the before action" + Meteor.Client?
+      console.log Meteor.Client
       if Meteor.loggingIn()
         return
       else if !Meteor.user()
         this.next()
 
       if Meteor.isCordova
-        console.log "Trying to initialize server"
-        initializeServer()
+        Meteor.Client.restartLocalServer()
+        Session.set( "content src", 'http://127.0.0.1:8080/')
       
       if not Meteor.user().curriculumIsSet()
-        console.log "Going to the curriculum"
         Router.go "selectCurriculum"
       else if Meteor.isCordova and not Meteor.user().contentLoaded()# and not Session.get "content loaded"
-        console.log "----------- Downloading the content----------------------------"
         Meteor.call 'contentEndpoint', (err, endpoint)->
-          downloader = new ContentInterface(Meteor.user().getCurriculum(), endpoint)
+          downloader = new LocalContent(Meteor.user().getCurriculum(), endpoint)
           onSuccess = (entry)->
-            console.log "Success downloading content: ", entry
             Meteor.user().setContentAsLoaded true
             #Session.set "content loaded", true
-            Session.set( "content src", 'http://127.0.0.1:8080/')
             Router.go "home"
 
           onError = (err)->
-            console.log "Error downloading content: ", err
-            console.log err
             alert "There was an error downloading your content, please log in and try again: ", err
             Meteor.user().setContentAsLoaded false
             Meteor.logout()
-          console.log "The router should go to Loading"
           downloader.loadContent(onSuccess, onError)
         Router.go "loading"
 
@@ -117,7 +106,6 @@ Router.map ()->
       if !Meteor.user()
         return
       if Meteor.status().connected
-        console.log "Connected!"
         return [
           Meteor.subscribe("lessons", Meteor.user().getCurriculumId()),
           Meteor.subscribe("curriculum", Meteor.user().getCurriculumId()),
@@ -133,7 +121,6 @@ Router.map ()->
     data: () ->
       lesson = Lessons.findOne {nh_id: this.params.nh_id}
       Session.set "current lesson", lesson
-      console.log lesson
       modules = lesson.getModulesSequence()
       Session.set "modules sequence", modules
       Session.set "current module index",0

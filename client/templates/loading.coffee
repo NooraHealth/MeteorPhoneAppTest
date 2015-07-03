@@ -1,7 +1,7 @@
 
 
 message = '<p class="loading-message">'+"Welcome to Noora Health"+'</p><p class="white-text">This may take a while, your curriculum is loading</p>
-  <div class="progress">
+  <div class="progress bottom">
     <div id="progress" class="determinate" style="{{percent}}"></div>
   </div>'
 

@@ -20,14 +20,18 @@ Template.selectCurriculum.onRendered ()->
 
 Template.selectCurriculumFooter.events {
   'click #submitCurriculumSelect':(event, template) ->
-    console.log "clicked"
     curriculumId = $("input[name=curriculum]:checked").val()
     oldId = Meteor.user().getCurriculumId()
     if oldId == curriculumId
       Router.go "home"
     else
-      Meteor.user().setCurriculum curriculumId
-      Router.go "home"
+      if !Meteor.status().connected
+        alert "You are not connected to wifi, please connect to wifi to download your new curriculum"
+        return
+      else
+        console.log "Setting the user curriculum"
+        Meteor.user().setCurriculum curriculumId
+        Router.go "home"
       #Meteor.call 'contentEndpoint', (err, endpoint)->
         #downloader = new ContentInterface(Meteor.user().getCurriculum(), endpoint)
         #promise = downloader.clearContentDirectory()

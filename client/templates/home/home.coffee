@@ -45,7 +45,6 @@ Template.home.onRendered ()->
       scrollview.view.setPosition width * (lessonsComplete - 1)
 
 Template.lessonThumbnail.onRendered ()->
-
   lessonsComplete = Meteor.user().getCompletedLessons().length
 
   fview = FView.from this
@@ -91,6 +90,7 @@ Template.lessonThumbnail.onRendered ()->
 
 Template.lessonThumbnail.helpers
   isCurrentLesson: ()->
+
     lessons = Session.get "lessons sequence"
     if !Meteor.user()
       return
@@ -107,3 +107,4 @@ Template.lessonThumbnail.helpers
       else
         console.log "Getting the lesson at the index"
         return @.nh_id == lessons[numLessonsComplete].nh_id
+

@@ -16,6 +16,7 @@ Meteor.users.helpers {
     if @.profile.curriculumId == id
       return
     else
+      console.log "In set curriculum: and about to call update user"
       query = { $set: {"profile.curriculumId": id}}
       Meteor.call "updateUser", query
       #after setting the curriculum, indicate that the

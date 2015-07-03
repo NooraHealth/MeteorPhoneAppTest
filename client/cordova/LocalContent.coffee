@@ -14,10 +14,14 @@ class @ParsedUrl
     return @.endpoint.concat @.urlString
 
 
-class @ContentInterface
+class @LocalContent
 
   constructor: (@curriculum, @contentEndpoint)->
     console.log "Consutricting and this is the endp: ", @.contentEndpoint
+
+  @getLocalFilesSystem: (bytes, callback)->
+    window.requestFileSystem LocalFileSystem.PERSISTENT, bytes, (filesystem)->
+      callback(filesystem)
 
   clearContentDirectory: ()->
     deferred = Q.defer()
@@ -40,7 +44,7 @@ class @ContentInterface
         deferred.resolve("The directory does not exist to delete")
       deferred.reject err
 
-    window.requestFileSystem LocalFileSystem.PERSISTENT, 0, (fs)->
+    @.getLocalFilesSystem 0, (fs)->
       fs.root.getDirectory '/NooraHealthContent/', {create: false, exclusive: false}, removeDir, onError
 
     return deferred.promise
@@ -118,7 +122,7 @@ class @ContentInterface
           dirEntry.getDirectory dir, {create: true, exclusive: false}, onDirEntrySuccess(url, remainingDirs), onError(dir)
 
 
-    window.requestFileSystem LocalFileSystem.PERSISTENT, 5*1024*1024, (fs)->
+    @.getLocalFilesSystem 5*1024*1024, (fs)->
       for url in urls
         directories = url.directories()
         console.log "Directories: ", directories
