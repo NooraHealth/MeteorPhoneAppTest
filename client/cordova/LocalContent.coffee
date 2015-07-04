@@ -19,9 +19,13 @@ class @LocalContent
   constructor: (@curriculum, @contentEndpoint)->
     console.log "Consutricting and this is the endp: ", @.contentEndpoint
 
-  @getLocalFilesSystem: (bytes, callback)->
+  @getLocalFilesSystem: (bytes)->
+    deferred = Q.defer()
     window.requestFileSystem LocalFileSystem.PERSISTENT, bytes, (filesystem)->
-      callback(filesystem)
+      deferred.resolve filesystem
+    , (error)->
+      deferred.reject error
+    return deferred.promise
 
   clearContentDirectory: ()->
     deferred = Q.defer()
@@ -44,8 +48,14 @@ class @LocalContent
         deferred.resolve("The directory does not exist to delete")
       deferred.reject err
 
-    @.getLocalFilesSystem 0, (fs)->
-      fs.root.getDirectory '/NooraHealthContent/', {create: false, exclusive: false}, removeDir, onError
+    @.getLocalFilesSystem(0)
+    .then (fs)->
+      if error
+        deferred.reject error
+      else
+        fs.root.getDirectory '/NooraHealthContent/', {create: false, exclusive: false}, removeDir, onError
+    .fail (error)->
+      deferred.reject error
 
     return deferred.promise
 
@@ -122,7 +132,9 @@ class @LocalContent
           dirEntry.getDirectory dir, {create: true, exclusive: false}, onDirEntrySuccess(url, remainingDirs), onError(dir)
 
 
-    @.getLocalFilesSystem 5*1024*1024, (fs)->
+    @.getLocalFilesSystem 5*1024*1024
+    .then (fs)->
+      console.log "Got the local filesystem"
       for url in urls
         directories = url.directories()
         console.log "Directories: ", directories
@@ -130,11 +142,11 @@ class @LocalContent
         firstDir = directories[0] + '/'
         remainingDirs = directories.splice(1)
         fs.root.getDirectory firstDir, {create: true, exclusive: false}, onDirEntrySuccess(url,remainingDirs), onError(url)
-        #path = "/"+url.localFilePath()
-        #fullPath = fs.root.toURL() + path
-        #window.resolveLocalFileSystemURL fullPath, onFileEntrySuccess(url), onError(url)
-        #fs.root.getFile path, {create: true, exclusive: false}, onFileEntrySuccess(url), onError(url)
-    , (err)->
+      #path = "/"+url.localFilePath()
+      #fullPath = fs.root.toURL() + path
+      #window.resolveLocalFileSystemURL fullPath, onFileEntrySuccess(url), onError(url)
+      #fs.root.getFile path, {create: true, exclusive: false}, onFileEntrySuccess(url), onError(url)
+    .fail (err)->
       console.log "ERROR requesting local filesystem: "
       console.log err
       promise.reject err
@@ -147,8 +159,6 @@ class @LocalContent
     for lesson in lessons
       urls.merge(@.retrieveContentUrls(lesson))
     
-    console.log "URLS: "
-    console.log urls
     endURLS = (new ParsedUrl(url, @.contentEndpoint) for url in urls)
     
     promise = @.downloadFiles endURLS

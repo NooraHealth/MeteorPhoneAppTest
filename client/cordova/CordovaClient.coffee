@@ -1,41 +1,39 @@
 
-class @CordovaClient
+class @CordovaClient extends Base
   
   #in a new cordova client, first initialize the server
   constructor: ()->
-    console.log "Initializing the cordova client"
-    self.localContent = new LocalContent()
-    self.localServer = new LocalServer(httpd)
-    self.localServer.startLocalServer()
+    super()
+    console.log "Cordova"
+    console.log @
+    @.tag = "CordovaClient"
+    @log @.tag, "DEBUG", "construction of the cordova client"
+    @.localServer = LocalServer.get()
+    @.localServer.startLocalServer()
     .then (url)=>
-      self.contentEndpoint = url
-      console.log "Setting the content endpoint: "
-      console.log url
+      @.contentEndpoint = url
       Session.set( "content src",url)
-
     .fail (err)=>
       console.log "CordovaClient: Error starting the local server" + err
   
   contentEndpoint: ()=>
-    console.log "CordovaClient: retrieving the content endpoint: "+self.contentEndpoint
-    return self.contentEndpoint
+    return @.contentEndpoint
 
   getContentEndpoint: ()=>
     deferred = Q.defer()
 
-    self.localServer.getLocalServerUrl()
-      .then (url)=>
-        deferred.resolve url
-      .fail (err)=>
-        deferred.reject err
+    @.localServer.getLocalServerUrl()
+    .then (url)=>
+      deferred.resolve url
+    .fail (err)=>
+      deferred.reject err
 
     return deferred.promise
 
   checkIfServerIsUp: ()=>
-    return self.localServer.checkIfServerIsUp()
+    return @.localServer.checkIfServerIsUp()
 
   restartLocalServer: ()=>
-    console.log "Restarting the local server"
-    
-    return self.localServer.startLocalServer()
+    @log @.tag, "DEBUG", "This is the local server"
+    return @.localServer.startLocalServer()
     

@@ -1,7 +1,5 @@
 Meteor.users.helpers {
   curriculumIsSet: ()->
-    console.log "Getting whether the curriculum is set: "
-    console.log Curriculum.find({}).count()
     curriculum = Curriculum.findOne {_id: @.profile.curriculumId}
     return curriculum?
 

@@ -22,16 +22,15 @@ Router.map ()->
           Meteor.subscribe("lessons", Meteor.user().getCurriculumId()),
         ]
     onBeforeAction: ()->
-      console.log "in the before action" + Meteor.Client?
-      console.log Meteor.Client
       if Meteor.loggingIn()
         return
       else if !Meteor.user()
         this.next()
 
       if Meteor.isCordova
+        console.log "Meteor.client"
+        console.log Meteor.Client
         Meteor.Client.restartLocalServer().then (url)->
-          console.log "Server up at ", url
           Session.set "content src", url
       
       if not Meteor.user().curriculumIsSet()

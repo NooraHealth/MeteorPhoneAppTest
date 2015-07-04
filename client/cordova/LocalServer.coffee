@@ -3,94 +3,92 @@
 #####
 
 class @LocalServer
-  self = @
+  instance = null
+  @get: ()->
+    instance ?= new Instance()
+    console.log "Creating a new instance"
+    return instance
 
-  constructor: (@httpd)=>
-    #@.httpd = @.getHttpd()
-    console.log "httpd"
-    console.log @.httpd
-    self = @
-    @.url = null
-    console.log self
+  class Instance extends Base
+    constructor: ()->
+      super()
+      @.tag = "LocalServer"
+      @.httpd = @.getHttpd()
+      @.url = null
 
-  getHttpd: ()=>
-    return if cordova && cordova.plugins && cordova.plugins.CorHttpd then cordova.plugins.CorHttpd else null
+    getHttpd: ()=>
+      return if cordova && cordova.plugins && cordova.plugins.CorHttpd then cordova.plugins.CorHttpd else null
 
-  getLocalServerUrl: ()=>
-    deferred = Q.defer()
+    getLocalServerUrl: ()=>
+      deferred = Q.defer()
 
-    if !self.httpd
-      deferred.reject "Cordova httpd not ready/available"
-    if self.url
-      deferred.resolve self.url
-    else
-      self.httpd.getURL((url)=>
-        self.url = url
-        deferred.resolve url
-      )
-
-    return deferred.promise
-
-  checkIfServerIsUp: ()=>
-    deferred = Q.defer()
-    console.log "in checkIftheServerISUp"
-
-    self.getLocalServerUrl()
-    .then ( url ) =>
-      console.log "Got the local server url"
-      console.log url
-      if url and url.length > 0
-        console.log "Got the local serverURL"
-        deferred.resolve url
+      if !@.httpd
+        deferred.reject "Cordova httpd not ready/available"
+      if @.url
+        deferred.resolve @.url
       else
-        deferred.resolve false
-    .fail ( err ) =>
-      deferred.reject err
+        @.httpd.getURL((url)=>
+          @.url = url
+          deferred.resolve url
+        )
 
-    return deferred.promise
+      return deferred.promise
 
-  startLocalServer: ()=>
-    console.log "About to start the server"
-    console.log self.httpd?
-    deferred = Q.defer()
+    checkIfServerIsUp: ()=>
+      @.log @.tag, "LOG", "checking if the server is up"
+      deferred = Q.defer()
 
-    if self.httpd
-      console.log "There was a self.httpd"
-      self.checkIfServerIsUp()
+      @.getLocalServerUrl()
       .then ( url ) =>
-        if url
+        if url and url.length > 0
           deferred.resolve url
         else
-          LocalContent.getLocalFilesSystem 0,  (fs)=>
-            path = fs.root.nativeURL.replace "file://", ""
-            self.startServerAtRoot( path )
-              .then ( url )=>
-                console.log "Got the url!! "
-                console.log url
-                deferred.resolve url
-              .fail ( error ) =>
-                deferred.reject error
-      .fail (err)=>
+          deferred.resolve false
+      .fail ( err ) =>
         deferred.reject err
-    else
-      deferred.reject "Httpd not availble/ready"
-    return deferred.promise
 
-  startServerAtRoot: ( wwwroot )=>
-    deferred = Q.defer()
+      return deferred.promise
 
-    self.httpd.startServer {
-      'wwwroot': wwwroot
-      'port':8080
-      'localhost_only':true
-    }, (url)=>
-      self.url = url
-      console.log "Server started at root: ", url
-      deferred.resolve url
-    , (err)=>
-      console.log "Failed to start server: " + err
-      console.log err
-      deferred.reject err
+    startLocalServer: ()=>
+      @.log @.tag, "LOG", "checking if the server is up"
+      deferred = Q.defer()
 
-    return deferred.promise
+      if @.httpd
+        @.checkIfServerIsUp()
+        .then ( url ) =>
+          if url
+            deferred.resolve url
+          else
+            LocalContent.getLocalFilesSystem(0)
+            .then (fs)=>
+              console.log "Got the filesystem"
+              path = fs.root.nativeURL.replace "file://", ""
+              @.startServerAtRoot( path )
+            .then ( url )=>
+              console.log "got the url now"
+              deferred.resolve url
+        .fail (err)=>
+          deferred.reject err
+      else
+        deferred.reject "Httpd not availble/ready"
+      return deferred.promise
+
+    startServerAtRoot: ( wwwroot )=>
+      console.log "Starting the server at the root", wwwroot
+      deferred = Q.defer()
+
+      @.httpd.startServer {
+        'wwwroot': wwwroot
+        'port':8080
+        'localhost_only':true
+      }, (url)=>
+        @.url = url
+        console.log "Server started at root: ", url
+        deferred.resolve url
+      , (err)=>
+        console.log "Failed to start server: " + err
+        console.log err
+        deferred.reject err
+
+      return deferred.promise
 
