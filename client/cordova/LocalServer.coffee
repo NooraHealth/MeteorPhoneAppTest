@@ -6,7 +6,6 @@ class @LocalServer
   instance = null
   @get: ()->
     instance ?= new Instance()
-    console.log "Creating a new instance"
     return instance
 
   class Instance extends Base
@@ -41,6 +40,7 @@ class @LocalServer
       @.getLocalServerUrl()
       .then ( url ) =>
         if url and url.length > 0
+          @.log @.tag, "LOG", "Server is up at " + url
           deferred.resolve url
         else
           deferred.resolve false
@@ -50,7 +50,7 @@ class @LocalServer
       return deferred.promise
 
     startLocalServer: ()=>
-      @.log @.tag, "LOG", "checking if the server is up"
+      @.log @.tag, "LOG", "Starting the local server"
       deferred = Q.defer()
 
       if @.httpd
@@ -61,11 +61,11 @@ class @LocalServer
           else
             LocalContent.getLocalFilesSystem(0)
             .then (fs)=>
-              console.log "Got the filesystem"
+              @.log @.tag, "DEBUG", "Got the filesystem", fs
               path = fs.root.nativeURL.replace "file://", ""
               @.startServerAtRoot( path )
             .then ( url )=>
-              console.log "got the url now"
+              @.log @.tag, "DEBUG", "Got the server url", url
               deferred.resolve url
         .fail (err)=>
           deferred.reject err
@@ -74,7 +74,7 @@ class @LocalServer
       return deferred.promise
 
     startServerAtRoot: ( wwwroot )=>
-      console.log "Starting the server at the root", wwwroot
+      @.log @.tag, "LOG", "Starting the server at the root" +  wwwroot
       deferred = Q.defer()
 
       @.httpd.startServer {
@@ -83,11 +83,10 @@ class @LocalServer
         'localhost_only':true
       }, (url)=>
         @.url = url
-        console.log "Server started at root: ", url
+        @.log @.tag, "LOG", "Server started at "+ wwwroot
         deferred.resolve url
       , (err)=>
-        console.log "Failed to start server: " + err
-        console.log err
+        @.log @.tag, "ERROR", "Failed to start server: " + err
         deferred.reject err
 
       return deferred.promise

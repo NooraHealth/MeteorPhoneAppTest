@@ -1,6 +1,5 @@
 class @Base
   constructor: ()->
-    console.log "Being called"
 
   @extend: (obj) ->
     for key, value of obj when key not in moduleKeywords
@@ -13,10 +12,11 @@ class @Base
       @::[key] = value
     obj.included?.apply(@)
     @
-  log: (tag, type, messages...)->
+
+  log: (tag, type,message, objects...)->
     a = null
     tag ?= ""
-    if type=="DEBUG"
+    if type=="DEBUG" or type=="ERROR"
       a = console.debug
     if type=="WARN"
       a = console.warn
@@ -27,8 +27,6 @@ class @Base
     else
       a = console.log
 
-    console.log "This is the function: "
-    console.log a
-    for message in messages
-      str = tag.concat( ": " ).concat( message )
-      a str
+    a type.concat( " " + tag+ " " + " : " +message)
+    for obj in objects
+      a obj
