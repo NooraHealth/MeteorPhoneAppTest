@@ -1,4 +1,5 @@
 Meteor.startup ()->
+
   console.log "Subscribing to all"
   Meteor.subscribe "users"
   Meteor.subscribe "all_curriculums"
@@ -11,7 +12,7 @@ Meteor.startup ()->
   console.log "This is the httpd in the startup: "
   console.log httpd
   if Meteor.isCordova
-    Meteor.Client = new CordovaClient()
+    Meteor.Client = new CordovaClient(httpd)
   else
     #Meteor.Client = BrowserClient
 

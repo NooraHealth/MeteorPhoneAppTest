@@ -30,8 +30,9 @@ Router.map ()->
         this.next()
 
       if Meteor.isCordova
-        Meteor.Client.restartLocalServer()
-        Session.set( "content src", 'http://127.0.0.1:8080/')
+        Meteor.Client.restartLocalServer().then (url)->
+          console.log "Server up at ", url
+          Session.set "content src", url
       
       if not Meteor.user().curriculumIsSet()
         Router.go "selectCurriculum"
