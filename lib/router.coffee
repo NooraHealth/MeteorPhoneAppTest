@@ -95,9 +95,11 @@ Router.map ()->
     }
     cache: true
     waitOn:()->
+      console.log "in the waiton for the select curriculum"
       if Meteor.status().connected
         return Meteor.subscribe("all_curriculums", this.params.nh_id)
     onBeforeAction: ()->
+      console.log "In the before action for the selectcurriculum"
       this.next()
   }
 

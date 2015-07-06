@@ -12,10 +12,12 @@ Meteor.users.helpers {
     return Curriculum.findOne {_id: @.profile.curriculumId}
 
   setCurriculum: (id)->
+    console.log "Setting the curriculum in the Meteor.users"
     oldCurriculum = @.profile.curriculumId
     if @.profile.curriculumId == id
       return
     else
+      console.log "Setting!"
       query = { $set: {"profile.curriculumId": id}}
       Meteor.call "updateUser", query
       #after setting the curriculum, indicate that the

@@ -24,9 +24,12 @@ Template.selectCurriculumFooter.events {
     curriculumId = $("input[name=curriculum]:checked").val()
     oldId = Meteor.user().getCurriculumId()
     if oldId == curriculumId
+      console.log "Select curriculums started"
+      console.log "going home"
       Router.go "home"
     else
       Meteor.user().setCurriculum curriculumId
+      console.log "Just set the curriculum, going home"
       Router.go "home"
       #Meteor.call 'contentEndpoint', (err, endpoint)->
         #downloader = new ContentInterface(Meteor.user().getCurriculum(), endpoint)
