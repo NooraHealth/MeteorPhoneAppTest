@@ -4,75 +4,69 @@ class @ParsedUrl
   constructor: (@urlString, @endpoint)->
     pieces = urlString.split('/')
     @.pieces = pieces
-  directories: ()=>
+  directories: ()->
     index = @.pieces.length - 1
     dirs = @.pieces.splice(0, index)
     return dirs
-  file: ()=>
+  file: ()->
     return @.pieces[@.pieces.length - 1]
-  endpointPath: ()=>
+  endpointPath: ()->
     return @.endpoint.concat @.urlString
 
 
-class @LocalContent extends Base
+class @LocalContent
 
   constructor: (@curriculum, @contentEndpoint)->
-    @.tag = "LocalContent"
-    super()
+    console.log "Consutricting and this is the endp: ", @.contentEndpoint
 
-  @getLocalFilesSystem: (bytes)=>
-    deferred = Q.defer()
-    window.requestFileSystem LocalFileSystem.PERSISTENT, bytes, (filesystem)=>
-      deferred.resolve filesystem
-    , (error)=>
-      deferred.reject error
-    return deferred.promise
+  @getLocalFilesSystem: (bytes, callback)->
+    window.requestFileSystem LocalFileSystem.PERSISTENT, bytes, (filesystem)->
+      callback(filesystem)
 
-  clearContentDirectory: ()=>
+  clearContentDirectory: ()->
     deferred = Q.defer()
-    removeDir = (dirEntry)=>
+    removeDir = (dirEntry)->
+      console.log dirEntry
       if dirEntry
-        dirEntry.removeRecursively(()=>
+        dirEntry.removeRecursively(()->
+          console.log "Successfully removed"
           deferred.resolve()
-        , (err)=>
+        , (err)->
+            console.log "Error removing directory"
+            console.log err
             deferred.reject(err)
         )
 
-    onError = (err)=>
+    onError = (err)->
+      console.log "Error getting the directory to delete it"
+      console.log err
       if err.code == 1
         deferred.resolve("The directory does not exist to delete")
       deferred.reject err
 
-    @.getLocalFilesSystem(0)
-    .then (fs)=>
-      if error
-        deferred.reject error
-      else
-        fs.root.getDirectory '/NooraHealthContent/', {create: false, exclusive: false}, removeDir, onError
-    .fail (error)=>
-      deferred.reject error
+    @.getLocalFilesSystem 0, (fs)->
+      fs.root.getDirectory '/NooraHealthContent/', {create: false, exclusive: false}, removeDir, onError
 
     return deferred.promise
 
-  downloadFiles: (urls)=>
-    @.log @.tag, "LOG", "In the download files"
+  downloadFiles: (urls)->
     deferred = Q.defer()
     numToLoad = urls.length
     numRecieved = 0
     urlsToTryAgain = []
 
-    onError = (url)=>
-      return (err)=>
+    onError = (url)->
+      return (err)->
         deferred.reject(err)
 
-    onFileEntrySuccess = (url)=>
-      return (fileEntry)=>
+    onFileEntrySuccess = (url)->
+      return (fileEntry)->
         ft = new FileTransfer()
         endpnt = url.endpointPath()
         uri = encodeURI(endpnt)
         targetPath = fileEntry.toURL()
 
-        ft.onprogress = (event)=>
+        ft.onprogress = (event)->
           percent = numRecieved/numToLoad
           Session.set "percent loaded", percent
           #total = Session.get "total bytes"
@@ -82,14 +76,17 @@ class @LocalContent extends Base
           #bytesLoaded = event.loaded
           #Session.set "bytes downloaded", bytesLoaded
 
-        onTransferSuccess = (entry)=>
-          @.log @.tag, "LOG", "Transfer success!" , entry, numRecieved + "/"+ numToLoad
+        onTransferSuccess = (entry)->
+          console.log "TRANSFER SUCCESS"
+          console.log entry
           numRecieved++
+          console.log "Num recieved/numToLoad: "+ numRecieved + "/"+ numToLoad
           if numRecieved == numToLoad
             deferred.resolve(entry)
 
-        onTransferError = (error)=>
-          @.log @.tag, "ERROR", "Trensfer Error! " , error
+        onTransferError = (error)->
+          console.log "ERROR "
+          console.log error
           if error.code == 3
             #try to download the file again
             ft.download(uri, targetPath, onTransferSuccess, onTransferError)
@@ -99,19 +96,23 @@ class @LocalContent extends Base
         #download the file from the endpoint and save to target path on mobile device
         ft.download(uri, targetPath, onTransferSuccess, onTransferError)
 
-    fileFound = ()=>
+    fileFound = ()->
+      console.log "FILE Found~"
       numRecieved++
-      @.log @.tag, "LOG", "File Found ", numRecieved/numToLoad
+      console.log numRecieved/numToLoad
+      console.log "Num recieved/numToLoad: "+ numRecieved + "/"+ numToLoad
       if numRecieved == numToLoad
         deferred.resolve()
       
-    fileNotFound = (dirEntry, file, url)=>
-      return (err)=>
-        @.log @.tag, "LOG", "File not Found, about to download fresh"
+    fileNotFound = (dirEntry, file, url)->
+      return (err)->
+        console.log "FILE NOT FOUND"
+        console.log err
         dirEntry.getFile file, {create: true, exclusive: false}, onFileEntrySuccess(url), onError(file)
 
-    onDirEntrySuccess = (url, directories)=>
-      return (dirEntry)=>
+
+    onDirEntrySuccess = (url, directories)->
+      return (dirEntry)->
         if directories.length == 0
           file = url.file()
           dirEntry.getFile file, {create: false, exclusive: false}, fileFound, fileNotFound(dirEntry, file, url)
@@ -121,42 +122,46 @@ class @LocalContent extends Base
           dirEntry.getDirectory dir, {create: true, exclusive: false}, onDirEntrySuccess(url, remainingDirs), onError(dir)
 
 
-    @.log @.tag, "DEBUG", "About to get the local filesystem"
-    LocalContent.getLocalFilesSystem(0)
-    .then (fs)=>
-      @.log @.tag, "LOG", "Got the local filesystem", fs
+    @.getLocalFilesSystem 5*1024*1024, (fs)->
       for url in urls
         directories = url.directories()
+        console.log "Directories: ", directories
         #TODO: this should be done in the object
         firstDir = directories[0] + '/'
         remainingDirs = directories.splice(1)
         fs.root.getDirectory firstDir, {create: true, exclusive: false}, onDirEntrySuccess(url,remainingDirs), onError(url)
-      #path = "/"+url.localFilePath()
-      #fullPath = fs.root.toURL() + path
-      #window.resolveLocalFileSystemURL fullPath, onFileEntrySuccess(url), onError(url)
-      #fs.root.getFile path, {create: true, exclusive: false}, onFileEntrySuccess(url), onError(url)
-    .fail (err)=>
-      @.log @.tag, "ERROR", "Error requesting the local filesystem", err
+        #path = "/"+url.localFilePath()
+        #fullPath = fs.root.toURL() + path
+        #window.resolveLocalFileSystemURL fullPath, onFileEntrySuccess(url), onError(url)
+        #fs.root.getFile path, {create: true, exclusive: false}, onFileEntrySuccess(url), onError(url)
+    , (err)->
+      console.log "ERROR requesting local filesystem: "
+      console.log err
       promise.reject err
 
     return deferred.promise
 
-  loadContent: (onSuccess, onError)=>
+  loadContent: (onSuccess, onError)->
     lessons = @.curriculum.getLessonDocuments()
     urls = []
     for lesson in lessons
       urls.merge(@.retrieveContentUrls(lesson))
     
+    console.log "URLS: "
+    console.log urls
     endURLS = (new ParsedUrl(url, @.contentEndpoint) for url in urls)
     
-    @.log @.tag, "DEBUG", "About to call download files"
-    @.downloadFiles endURLS
-    .then (entry)=>
+    promise = @.downloadFiles endURLS
+    promise.then (entry)->
+      console.log "PROMISE SUCCESSFUL"
       onSuccess(entry)
-    .fail (err)=>
+    promise.fail (err)->
+      console.log "PROMISE REJECTED"
+      console.log err
       onError(err)
   
-  retrieveContentUrls: (lesson)=>
+  retrieveContentUrls: (lesson)->
+    console.log "RETRIEVING CONTENT URLS"
     try
       if not lesson? or not lesson.getModulesSequence?
         throw Meteor.Error "retrieveContentUrls argument must be a Lesson document"
@@ -169,12 +174,14 @@ class @LocalContent extends Base
       for module in modules
         urls.merge(@.moduleUrls(module))
     catch err
+      console.log "Error caught in retrieve content urls: "
+      console.log err
       throw Meteor.error "error retrieving content urls:", err
     finally
       return urls
 
 
-  moduleUrls: (module)=>
+  moduleUrls: (module)->
     urls = []
     if module.image
       urls.push module.image
@@ -188,6 +195,9 @@ class @LocalContent extends Base
       urls.push module.correct_audio
     if module.options and ( module.type == 'MULTIPLE_CHOICE' or module.type == 'GOAL_CHOICE')
       urls.merge (option for option in module.options when option?)
+    console.log "urls of module: "
+    console.log module
+    console.log urls
     return urls
 
 
