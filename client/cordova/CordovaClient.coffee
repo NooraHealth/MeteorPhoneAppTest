@@ -11,13 +11,13 @@ class @CordovaClient extends Base
     @.localServer = LocalServer.get()
     @.localServer.startLocalServer()
     .then (url)=>
-      @.contentEndpoint = url
+      @.contentSrc = url
       Session.set( "content src",url)
     .fail (err)=>
       console.log "CordovaClient: Error starting the local server" + err
   
-  contentEndpoint: ()=>
-    return @.contentEndpoint
+  contentSrc: ()=>
+    return @.contentSrc
 
   getContentEndpoint: ()=>
     deferred = Q.defer()

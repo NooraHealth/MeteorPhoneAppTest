@@ -40,7 +40,7 @@ class @LocalServer
       @.getLocalServerUrl()
       .then ( url ) =>
         if url and url.length > 0
-          @.log @.tag, "LOG", "Server is up at " + url
+          @.log @.tag, "LOG", "Server is already up at " + url
           deferred.resolve url
         else
           deferred.resolve false
@@ -57,6 +57,7 @@ class @LocalServer
         @.checkIfServerIsUp()
         .then ( url ) =>
           if url
+            @.log @.tag, "DEBUG", "Server was already up", url
             deferred.resolve url
           else
             LocalContent.getLocalFilesSystem(0)

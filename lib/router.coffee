@@ -29,9 +29,12 @@ Router.map ()->
 
       if Meteor.isCordova
         console.log "Meteor.client"
+        console.log "Setting the content src outside of the callback"
+        Session.set "content src", "http://127.0.0.1:8080/"
         console.log Meteor.Client
         Meteor.Client.restartLocalServer().then (url)->
-          Session.set "content src", url
+          console.log "Restarted the local server and got URL"
+          console.log url
       
       if not Meteor.user().curriculumIsSet()
         Router.go "selectCurriculum"
