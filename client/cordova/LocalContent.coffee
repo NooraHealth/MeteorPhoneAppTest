@@ -19,9 +19,14 @@ class @LocalContent
   constructor: (@curriculum, @contentEndpoint)->
     console.log "Consutricting and this is the endp: ", @.contentEndpoint
 
-  @getLocalFilesSystem: (bytes, callback)->
+  @getLocalFilesSystem: (bytes)->
+    deferred = Q.defer()
     window.requestFileSystem LocalFileSystem.PERSISTENT, bytes, (filesystem)->
-      callback(filesystem)
+      deferred.resolve filesystem
+    , (err)->
+      deferred.reject err
+
+    return deferred.promise
 
   clearContentDirectory: ()->
     deferred = Q.defer()
@@ -44,8 +49,11 @@ class @LocalContent
         deferred.resolve("The directory does not exist to delete")
       deferred.reject err
 
-    @.getLocalFilesSystem 0, (fs)->
+    LocalContent.getLocalFilesSystem(0)
+    .then (fs)=>
       fs.root.getDirectory '/NooraHealthContent/', {create: false, exclusive: false}, removeDir, onError
+    .fail (err)=>
+      deferred.reject err
 
     return deferred.promise
 
@@ -122,7 +130,8 @@ class @LocalContent
           dirEntry.getDirectory dir, {create: true, exclusive: false}, onDirEntrySuccess(url, remainingDirs), onError(dir)
 
 
-    @.getLocalFilesSystem 5*1024*1024, (fs)->
+    LocalContent.getLocalFilesSystem( 5*1024*1024 )
+    .then (fs)=>
       for url in urls
         directories = url.directories()
         console.log "Directories: ", directories
@@ -134,7 +143,7 @@ class @LocalContent
         #fullPath = fs.root.toURL() + path
         #window.resolveLocalFileSystemURL fullPath, onFileEntrySuccess(url), onError(url)
         #fs.root.getFile path, {create: true, exclusive: false}, onFileEntrySuccess(url), onError(url)
-    , (err)->
+    .fail (err)->
       console.log "ERROR requesting local filesystem: "
       console.log err
       promise.reject err
