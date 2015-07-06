@@ -64,7 +64,7 @@ Router.map ()->
         if curr
           Session.set "current lesson", null
           Session.set "current module index", null
-          Session.set "module sequence", null
+          Session.set "modules sequence", null
           Session.set "sections map", {}
           Session.set "current sections", null
           lessons =  curr.getLessonDocuments()

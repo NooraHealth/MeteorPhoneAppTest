@@ -56,7 +56,6 @@ Lessons.helpers {
     if this.modules
       moduleDocs = (Modules.findOne {_id: moduleId} for moduleId in @.modules)
       return moduleDocs
-
     else
       modules = []
 

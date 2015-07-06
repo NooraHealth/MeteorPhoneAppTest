@@ -152,6 +152,8 @@ this.nextBtnShouldHide = ()->
 # module    The module to play the answer audio for
 ###
 this.playAudio = (type, module)->
+  if !module
+    return
   nh_id = module.nh_id
   console.log "playing the audio ", module
   console.log "type: ", type

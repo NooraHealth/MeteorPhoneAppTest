@@ -7,7 +7,7 @@ Template.nextBtn.events
     correctlyAnswered = Session.get "correctly answered"
     currentModule = modulesSequence[index]
     
-    module = undefined
+    module = null
 
     #if correctlyAnswered.length == modulesSequence.length
     if allModulesComplete()
@@ -81,6 +81,9 @@ hasAllCorrectAnswers = ()->
 isLastModuleInSeries = ()->
   index = Session.get "current module index"
   modulesSequence = Session.get "modules sequence"
+  console.log "this is the modules sequence"
+  console.log moduleSequence
+  console.log "This is the index:", index
   return index+1 < modulesSequence.length
 
 hasAttemptedAllModules = ()->
