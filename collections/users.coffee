@@ -1,7 +1,7 @@
 Meteor.users.helpers {
   curriculumIsSet: ()->
+    console.log "is the curriculum set?"
     curriculum = Curriculum.findOne {_id: @.profile.curriculumId}
-    console.log "Is the curriculum set, ", curriculum?
     return curriculum?
 
   getCurriculumId: ()->

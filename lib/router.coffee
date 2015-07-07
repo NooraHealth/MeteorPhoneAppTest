@@ -32,20 +32,23 @@ Router.map ()->
         this.next()
       else if !Meteor.user()
         this.next()
+
+      if not Meteor.user().curriculumIsSet()
+        console.log "curriculum is not set"
+        Router.go "selectCurriculum"
+
       if Meteor.isCordova
         Session.set( "content src", 'http://127.0.0.1:8080/')
         console.log "Trying to initialize server"
         #initializeServer()
-      else if Meteor.isCordova and not Meteor.user().contentLoaded()# and not Session.get "content loaded"
+      if Meteor.isCordova and not Meteor.user().contentLoaded()# and not Session.get "content loaded"
         console.log "----------- Downloading the content----------------------------"
-        this.render "loading"
         Meteor.call 'contentEndpoint', (err, endpoint)=>
           downloader = new ContentInterface(Meteor.user().getCurriculum(), endpoint)
           onSuccess = (entry)=>
             console.log "Success downloading content: ", entry
             Meteor.user().setContentAsLoaded true
-            #Session.set "content loaded", true
-            this.render "home"
+            Router.go "home"
 
           onError = (err)->
             console.log "Error downloading content: ", err
@@ -53,6 +56,7 @@ Router.map ()->
             alert "There was an error downloading your content, please log in and try again: ", err
             Meteor.user().setContentAsLoaded false
             Meteor.logout()
+        Router.go "loading"
       else if !Meteor.isCordova
         Meteor.call "contentEndpoint", (err, src)->
           Session.set "content src", src
