@@ -28,9 +28,7 @@ this.handleResponse = (response)->
   moduleSequence = Session.get "modules sequence"
   currentModuleIndex = Session.get "current module index"
   module = moduleSequence[currentModuleIndex]
-  console.log "handling response!!!"
   id = module._id
-  console.log "ID!:", id
 
   if module.type != "MULTIPLE_CHOICE"
     hideIncorrectResponses(module)
@@ -96,12 +94,8 @@ this.updateModuleNav = (responseStatus)->
     Session.set "incorrectly answered", incorrectlyAnswered
 
 this.isCorrectResponse = (response, module) ->
-  console.log "Getting whether this is a correct reponse"
-  console.log module
   if module.type == "MULTIPLE_CHOICE"
-    console.log "This is the corrector response for isCorrectRespnse mc"
     numPossibleCorrect = module.correct_answer.length
-    
     #fade out all the containers of the incorrect options
     [responses, numIncorrect] = expandCorrectOptions(module)
 
@@ -225,8 +219,10 @@ this.playAudio = (type, id)->
   elem = $('#toplay')
   elem.attr('src',  src)
   console.log elem
-  elem[0].currentTime = 0
-  elem[0].play()
+  elem[0].addEventListener "canplay", ()->
+    elem[0].currentTime = 0
+    elem[0].play()
+  , true
 #
 ###
 # Stop all module media and prepare to show the next module
