@@ -1,6 +1,7 @@
 <template name="moduleFooter">
 <div class="bottom row valign-wrapper">
   <div class="col m4 l4" id="audioDiv">
+    <audio id="toplay"></audio>
     {{#with firstModule}}
         <audio src="{{audioSrc}}" name="audio{{nh_id}}" class="question" autoplay></audio>
     {{/with}}

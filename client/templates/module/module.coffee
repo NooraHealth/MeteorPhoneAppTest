@@ -21,7 +21,6 @@ Template.module.helpers
       return @.modules[Session.get "current module index"]
 
 Template.module.rendered =  ()->
-  console.log "Rendering"
   fview = FView.from this
   fview.node._object.hide()
   hidden =  nextBtnShouldHide()

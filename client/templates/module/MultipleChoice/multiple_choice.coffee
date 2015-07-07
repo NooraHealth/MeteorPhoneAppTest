@@ -1,35 +1,23 @@
 Template.multipleChoiceModule.events
   "click .image-choice": (event, template)->
-    numCorrect = $("img[class~=correct]").length
-    numSelected = $("img[class~=selected]").length
-    if numSelected >= numCorrect
-      $(event.target).removeClass "selected"
-      return
-    else
-      $(event.target).toggleClass "selected"
+    #console.log "Image clicked!"
+    #answers =  Template.currentData().correct_answer
+    #if answers
+      #numCorrect = answers.length
+    #else
+      #numCorrect = 0
+    #numSelected = $("img[class~=selected]").length
+    #if numSelected >= numCorrect
+      #$(event.target).removeClass "selected"
+      #return
+    #else
+    $(event.target).toggleClass "selected"
 
   "click [name^=submit_multiple_choice]": (event, template)->
     module = template.data
-    nh_id = module.nh_id
-    numPossibleCorrect = module.correct_answer.length
-    
-    #fade out all the containers of the incorrect options
-    [responses, numIncorrect] = expandCorrectOptions(module)
-
-    #Fade out the submit btn
+    id = module._id
     $(event.target).fadeTo(500, .75).addClass "disabled"
-
-    #play the audio depending on whether the user answered correctly or not
-    if numIncorrect > 0
-      playAudio("incorrect", module)
-      console.log "Responses: ", responses
-      handleFailedAttempt(module, responses )
-      updateModuleNav "incorrect"
-    else
-      playAudio("correct", module)
-      handleSuccessfulAttempt(module)
-      updateModuleNav "correct"
-
+    handleResponse()
     showNextModuleBtn(module)
 
 Template.multipleChoiceModule.helpers
@@ -44,33 +32,4 @@ Template.multipleChoiceModule.helpers
   module: ()->
     return @
 
-###
-# HELPER FUNCTIONS
-###
-
-expandCorrectOptions = (module) ->
-    nh_id = module.nh_id
-    options = $("img[name=option#{nh_id}]")
-    responses = []
-    numIncorrect = 0
-    for option in options
-      
-      if $(option).hasClass "selected"
-        responses.push $(option).attr "name"
-
-      if not $(option).hasClass "correct"
-        $(option).addClass "faded"
-      
-      else
-        $(option).addClass "expanded"
-        
-        if not $(option).hasClass "selected"
-          numIncorrect++
-          $(option).addClass "incorrectly_selected"
-
-        else
-         $(option).removeClass "selected"
-         $(option).addClass "correctly_selected"
-
-    return [responses, numIncorrect]
 

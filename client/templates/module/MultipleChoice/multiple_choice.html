@@ -1,7 +1,7 @@
 <template name="multipleChoiceModule">
 
-<!--<audio src="{{audioSrc}}" name="audio{{nh_id}}" class="question" autoplay></audio>-->
-<div class="valign-wrapper module row">
+<!--<audio src="{{audioSrc}}" name="audio{{_id}}" class="question" autoplay></audio>-->
+<div id="{{_id}}" class="valign-wrapper module row">
   <div class="valign module-wrapper col m8 offset-m2 l8 offset-l2">
     <div >
       <div class="card-content">
@@ -16,13 +16,13 @@
       </div>
 
       <div class="card-action center-align">
-        <a name="submit_multiple_choice{{nh_id}}" class="response mc_submit_btn btn blue waves-effect waves-blue white-text">SUBMIT</a>
+        <a name="submit_multiple_choice{{_id}}" class="response mc_submit_btn btn blue waves-effect waves-blue white-text">SUBMIT</a>
       </div> 
     </div>
   </div>
 
-  <audio name="audio{{nh_id}}" class="correct" src="{{correctAnswerAudio}}"></audio>
-  <audio name="audio{{nh_id}}" class="incorrect" src="{{incorrectAnswerAudio}}"></audio>
+  <audio name="audio{{_id}}" class="correct" src="{{correctAnswerAudio}}"></audio>
+  <audio name="audio{{_id}}" class="incorrect" src="{{incorrectAnswerAudio}}"></audio>
 </template>
 
 <template name="rowOfOptions">
@@ -30,7 +30,7 @@
   {{#each options}}
     <div class="col l4 m4 s4">
       <!--[> IMG <]-->
-      <img name="option{{nh_id}}" alt="{{i}}" src="{{optionImgSrc}}" class="response image-choice {{#if correct }} correct {{/if}}" />
+      <img name="option" alt="{{i}}" src="{{optionImgSrc}}" class="response image-choice {{#if correct }} correct {{/if}}" />
     </div>
   {{/each}}
   </div>

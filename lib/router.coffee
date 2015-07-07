@@ -43,6 +43,7 @@ Router.map ()->
         #initializeServer()
 
       if Meteor.isCordova and not Meteor.user().contentLoaded()# and not Session.get "content loaded"
+        Router.go "loading"
         Meteor.call 'contentEndpoint', (err, endpoint)=>
           console.log "----------- Downloading the content----------------------------"
           console.log "About to make downloader"
@@ -59,7 +60,6 @@ Router.map ()->
             Meteor.user().setContentAsLoaded false
             Meteor.logout()
           downloader.loadContent onSuccess, onError
-        Router.go "loading"
       else if !Meteor.isCordova
         Meteor.call "contentEndpoint", (err, src)->
           Session.set "content src", src
