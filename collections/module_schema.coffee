@@ -84,6 +84,8 @@ Modules.helpers {
 
   audioSrc: ()->
     url = Meteor.getContentSrc()
+    if !@.audio
+      return ""
     return url + @.audio
 
   incorrectAnswerAudio: ()->

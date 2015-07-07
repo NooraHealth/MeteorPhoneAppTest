@@ -26,11 +26,14 @@ Template.lessonThumbnail.events {
 Template.home.onRendered ()->
   if not Meteor.user()
     return
+  console.log "In the onRendered for home template"
   lessonsComplete = Meteor.user().getCompletedLessons().length
   lessons = Session.get "lessons sequence"
   width = Session.get "lesson card width"
   height = Session.get "lesson card height"
   scrollview = FView.byId "scrollview"
+  if !lessons
+    return
 
   scrollview.modifier.setOrigin [.5, .5]
   if Meteor.Device.isPhone()
@@ -51,6 +54,8 @@ Template.lessonThumbnail.onRendered ()->
   fview = FView.from this
 
   lessons = Session.get "lessons sequence"
+  if !lessons
+    return
   if lessonsComplete == lessons.length
     currentlessonId = ""
   else

@@ -1,12 +1,17 @@
 this.allModulesComplete = ()->
   numModules = (Session.get "modules sequence").length
   numCorrect = (Session.get "correctly answered").length
+  console.log "Checking whether all modules complete"
+  console.log numCorrect
+  console.log numModules
   currentModule = getCurrentModule()
   if !currentModule
     return false
   if isAQuestion(currentModule)
+    console.log "Is a questions!"
     return numCorrect == numModules
   else
+    console.log "Not a questions"
     return numCorrect == numModules - 1
 
 this.isAQuestion = (module)->
@@ -163,17 +168,18 @@ this.playAudio = (type, module)->
     elem.currentTime = 0
     elem.pause()
 
-  #remove the elem from the DOM because pausing doesnt work for some
-  #reason
   if type== "correct"
     elem =  $("audio[name=audio#{nh_id}][class=correct]")[0]
-    elem.currentTime = 0
-    elem.play()
   else
     elem =  $("audio[name=audio#{nh_id}][class=incorrect]")[0]
-    elem.currentTime = 0
-    elem.play()
-
+  if elem
+    console.log "The next thing will be the elem"
+    console.log elem
+    console.log "This is the elem"
+    console.log elem?
+    #elem.currentTime = 0
+    #elem.play()
+#
 ###
 # Stop all module media and prepare to show the next module
 #

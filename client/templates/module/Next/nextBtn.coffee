@@ -8,34 +8,42 @@ Template.nextBtn.events
     currentModule = modulesSequence[index]
     
     module = undefined
-
+    console.log "1"
     #if correctlyAnswered.length == modulesSequence.length
     if allModulesComplete()
+      console.log "2"
       console.log "All modules complte"
       Meteor.user().updateLessonsComplete(currLesson)
       Router.go "home"
       return
 
     if !isAQuestion(currentModule)
+      console.log "3"
       correctlyAnswered.push index
       Session.set "correctly answered", correctlyAnswered
    
     if isLastModuleInSeries()
+      console.log "3"
       moduleIndex = 0
       if hasAttemptedAllModules()
+        console.log "4"
         moduleIndex = incorrectlyAnswered[0]
       else
+        console.log "5"
         moduleIndex = ++index
       Session.set "current module index", moduleIndex
       resetTemplate()
+      console.log "6"
       playAudio 'question', Session.get("modules sequence")[moduleIndex]
 
     else if !hasAllCorrectAnswers()
+      console.log "7"
       moduleIndex = incorrectlyAnswered[0]
       Session.set "current module index", moduleIndex
       resetTemplate()
       playAudio 'question', Session.get("modules sequence")[moduleIndex]
     else
+      console.log "8"
       Meteor.user().updateLessonsComplete(currLesson)
       Router.go "home"
 

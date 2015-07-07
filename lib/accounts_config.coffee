@@ -41,13 +41,6 @@ AccountsTemplates.configure {
     homeRoutePath: '/',
     redirectTimeout: 4000,
 
-    # Hooks
-    #onLogoutHook: myLogoutFunc,
-    onSubmitHook: (error, action, final) ->
-      user = Meteor.user()
-      if !error
-        Router.go "/"
-    
     # Texts
     texts: {
 
@@ -79,6 +72,12 @@ AccountsTemplates.addField {
   _id: "attempts",
   type: "hidden",
 }
+Accounts.onLogin (options)->
+  console.log "ON LOGIN HOOK!"
+  if not Meteor.user().curriculumIsSet()
+    Router.go "selectCurriculum"
+  else
+    Router.go "home"
 
 #AccountsTemplates.addField {
   #_id: 'condition'

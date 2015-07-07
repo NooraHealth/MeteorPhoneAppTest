@@ -10,6 +10,7 @@ Template.moduleFooter.helpers
   firstModule: ()->
     if !@.modules
       return
+    module = @.modules[0]
     return @.modules[0]
   
   modules: ()->
@@ -38,7 +39,7 @@ Template.footer.onRendered ()->
   surface = fview.view or fview.surface
   surface.setProperties {zIndex: 12}
 
-Template.moduleFooter.onRendered ()->
+Template.moduleFooter.rendered= ()->
   fview = FView.from this
   surface = fview.view or fview.surface
   surface.setProperties {zIndex: 12}

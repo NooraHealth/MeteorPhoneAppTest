@@ -22,10 +22,8 @@ class @ContentInterface
   clearContentDirectory: ()->
     deferred = Q.defer()
     removeDir = (dirEntry)->
-      console.log dirEntry
       if dirEntry
         dirEntry.removeRecursively(()->
-          console.log "Successfully removed"
           deferred.resolve()
         , (err)->
             console.log "Error removing directory"
@@ -93,17 +91,13 @@ class @ContentInterface
         ft.download(uri, targetPath, onTransferSuccess, onTransferError)
 
     fileFound = ()->
-      console.log "FILE Found~"
       numRecieved++
-      console.log numRecieved/numToLoad
       console.log "Num recieved/numToLoad: "+ numRecieved + "/"+ numToLoad
       if numRecieved == numToLoad
         deferred.resolve()
       
     fileNotFound = (dirEntry, file, url)->
       return (err)->
-        console.log "FILE NOT FOUND"
-        console.log err
         dirEntry.getFile file, {create: true, exclusive: false}, onFileEntrySuccess(url), onError(file)
 
 
@@ -121,7 +115,6 @@ class @ContentInterface
     window.requestFileSystem LocalFileSystem.PERSISTENT, 5*1024*1024, (fs)->
       for url in urls
         directories = url.directories()
-        console.log "Directories: ", directories
         #TODO: this should be done in the object
         firstDir = directories[0] + '/'
         remainingDirs = directories.splice(1)

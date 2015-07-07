@@ -20,12 +20,12 @@ Template.module.helpers
     if @
       return @.modules[Session.get "current module index"]
 
-Template.module.onRendered ()->
+Template.module.rendered =  ()->
   console.log "Rendering"
   fview = FView.from this
   fview.node._object.hide()
-  console.log fview
-  Session.set "next button is hidden", nextBtnShouldHide()
+  hidden =  nextBtnShouldHide()
+  Session.set "next button is hidden", hidden
 
   this.autorun ()->
     moduleIndex = Session.get "current module index"

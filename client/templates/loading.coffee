@@ -1,6 +1,6 @@
 
 
-message = '<p class="loading-message">'+"Welcome to Noora Health"+'</p><p class="white-text">This may take a while, your curriculum is loading</p>
+message = '<p class="loading-message">'+"Welcome to Noora Health"+'</p><p class="white-text">This may take a while, your curriculum is loading</p><p><a onClick="Meteor.logout()">Abort</a></p>
   <div class="progress">
     <div id="progress" class="determinate" style="{{percent}}"></div>
   </div>'
@@ -11,7 +11,7 @@ Template.loading.helpers
   percent: ()->
     return Session.get "percent loaded"
 
-Template.loading.onRendered ()->
+Template.loading.rendered = ()->
   console.log "In please wait return callback"
   this.loading = Meteor.pleaseWait {
     logo: 'NHlogo.png',
