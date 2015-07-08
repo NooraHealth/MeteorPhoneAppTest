@@ -218,7 +218,6 @@ this.playAudio = (type, id)->
     src=""
   elem = $('#toplay')
   elem.attr('src',  src)
-  console.log elem
   elem[0].addEventListener "canplay", ()->
     elem[0].currentTime = 0
     elem[0].play()
