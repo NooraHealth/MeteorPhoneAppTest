@@ -8,9 +8,9 @@ Template.module.helpers
     modules = (module for module in @.modules)
     firstModule = modules[0]
     rearrangedModules = modules.splice(1)
-    rearrangedModules.push {nh_id: "dummyModule", type:"dummy"}
+    rearrangedModules.push {_id: "dummyModule", type:"dummy"}
     rearrangedModules.push firstModule
-    console.log "REARRAd=nh_id NGED: ", rearrangedModules
+    console.log "REARRAd=_id NGED: ", rearrangedModules
     return rearrangedModules
   
   dummyModule: ()->
@@ -28,8 +28,8 @@ Template.module.rendered =  ()->
 
   this.autorun ()->
     moduleIndex = Session.get "current module index"
-    nh_id = Session.get("modules sequence")[moduleIndex].nh_id
-    surface = FView.byId nh_id
+    _id = Session.get("modules sequence")[moduleIndex]._id
+    surface = FView.byId _id
     fview.node._object.show surface
     #Session.set "next button is hidden", nextBtnShouldHide()
 

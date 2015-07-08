@@ -97,7 +97,7 @@ Router.map ()->
     waitOn:()->
       console.log "in the waiton for the select curriculum"
       if Meteor.status().connected
-        return Meteor.subscribe("all_curriculums", this.params.nh_id)
+        return Meteor.subscribe("all_curriculums")
     onBeforeAction: ()->
       console.log "In the before action for the selectcurriculum"
       this.next()
@@ -106,8 +106,8 @@ Router.map ()->
   ###
   # module sequence
   ###
-  this.route '/modules/:nh_id', {
-    path: '/modules/:nh_id'
+  this.route '/modules/:_id', {
+    path: '/modules/:_id'
     layoutTemplate: 'layout'
     name: 'ModulesSequence'
     template: "module"
@@ -123,11 +123,11 @@ Router.map ()->
         return [
           Meteor.subscribe("lessons", Meteor.user().getCurriculumId()),
           Meteor.subscribe("curriculum", Meteor.user().getCurriculumId()),
-          Meteor.subscribe("modules", this.params.nh_id)
+          Meteor.subscribe("modules", this.params._id)
         ]
 
     data: () ->
-      lesson = Lessons.findOne {nh_id: this.params.nh_id}
+      lesson = Lessons.findOne {_id: this.params._id}
       Session.set "current lesson", lesson
       console.log lesson
       modules = lesson.getModulesSequence()

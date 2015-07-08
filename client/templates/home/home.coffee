@@ -59,9 +59,9 @@ Template.lessonThumbnail.onRendered ()->
   if lessonsComplete == lessons.length
     currentlessonId = ""
   else
-    currentlessonId= lessons[lessonsComplete].nh_id
+    currentlessonId= lessons[lessonsComplete]._id
 
-  fview.id = this.data.nh_id
+  fview.id = this.data._id
 
   height = Session.get "lesson card height"
   width = Session.get "lesson card width"
@@ -89,7 +89,7 @@ Template.lessonThumbnail.onRendered ()->
         fview.modifier.setTransform Transform.scale(1.1, 1.1, 1), {duration: 500, curve: "easeIn"}
 
     surface.on "click", ()->
-      Router.go "ModulesSequence", {nh_id: fview.id}
+      Router.go "ModulesSequence", {_id: fview.id}
   
   else
     fview.modifier.setOpacity .5
@@ -111,4 +111,4 @@ Template.lessonThumbnail.helpers
         return false
       else
         console.log "Getting the lesson at the index"
-        return @.nh_id == lessons[numLessonsComplete].nh_id
+        return @._id == lessons[numLessonsComplete]._id
