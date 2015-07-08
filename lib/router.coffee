@@ -108,7 +108,7 @@ Router.map ()->
   ###
   this.route '/modules/:_id', {
     path: '/modules/:_id'
-    layoutTemplate: 'layout'
+    layoutTemplate: 'module_layout'
     name: 'ModulesSequence'
     template: "module"
     yieldTemplates: {

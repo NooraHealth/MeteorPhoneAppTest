@@ -11,7 +11,7 @@ Template.module.helpers
     rearrangedModules.push {_id: "dummyModule", type:"dummy"}
     rearrangedModules.push firstModule
     console.log "REARRAd=_id NGED: ", rearrangedModules
-    return rearrangedModules
+    return modules
   
   dummyModule: ()->
     return @.type == "dummy"
@@ -22,7 +22,7 @@ Template.module.helpers
 
 Template.module.rendered =  ()->
   fview = FView.from this
-  fview.node._object.hide()
+  #fview.node._object.hide()
   hidden =  nextBtnShouldHide()
   Session.set "next button is hidden", hidden
 
@@ -30,6 +30,6 @@ Template.module.rendered =  ()->
     moduleIndex = Session.get "current module index"
     _id = Session.get("modules sequence")[moduleIndex]._id
     surface = FView.byId _id
-    fview.node._object.show surface
+    #fview.node._object.show surface
     #Session.set "next button is hidden", nextBtnShouldHide()
 
