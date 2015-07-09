@@ -12,6 +12,20 @@ FView.ready ()->
   this.Scroller = famous.views.Scroller
   this.EventHandler = famous.core.EventHandler
   this.SpringTransition = famous.transitions.SpringTransition
+
+  #events
+  this.MouseSync = famous.inputs.MouseSync
+  this.TouchSync = famous.inputs.ScrollSync
+  this.GenericSync = famous.inputs.GenericSync
+  console.log TouchSync()
+  console.log MouseSync()
+
+  this.GenericSync.register([
+      'mouse' : MouseSync,
+      'touch' : TouchSync
+  ])
+  this.MouseAndTouchSync = new GenericSync(['mouse','touch'])
+
   famous.polyfills
   famous.core.famous
   console.log famous

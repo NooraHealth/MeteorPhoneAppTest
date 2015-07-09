@@ -60,7 +60,31 @@ class ModuleSurface
     @.size = [600, 400]
     @.html = @.templateToHtml()
     @.surface = @.buildSurface()
+    @.sync = new GenericSync(['mouse','touch'])
 
+    #pipe all touch and mouse events to the surface
+    @.sync.pipe @.surface
+    console.log @.surface
+    @.surface.pipe @.sync
+    @.surface._eventOutput.subscribe @.sync
+    @.registerFamousEvents()
+
+  registerFamousEvents: ()=>
+    @.surface.on "click", (event)->
+      console.log "SURFACE was clicked, no sync"
+    @.sync.on "click", (event)->
+      console.log "Multiple choice is click"
+    @.surface.on "end", (event)->
+      console.log "Multiple choice is end"
+
+    @.surface.on "update", (event)->
+      console.log "Multiple choice is updated"
+
+    @.sync.on "start", (event)->
+      console.log "Multiple choice is clicked/touched"
+      console.log event
+      if $(event.target).hasClass ".image-choice"
+        console.log "This was an image choice class"
   getSurface: ()=>
     return @.surface
 
@@ -128,17 +152,25 @@ class SurfaceFactory
 
     #return surface
       
+###
+# Slide Surface
+###
 class @SlideSurface extends ModuleSurface
   constructor: (@module)->
     super(Template.slideModule, @.module)
 
+###
+# Binary Choice Surface
+###
 class @BinarySurface extends ModuleSurface
   constructor: (@module)->
     super(Template.binaryChoiceModule, @.module)
     @.registerFamousEvents()
 
   registerFamousEvents: ()=>
-    @.surface.on "click", (event)->
+    console.log "Synce"
+    console.log @.sync
+    @.sync.on "click", (event)->
       console.log "BinarySurface clicked!"
       console.log event
       if buttonDisabled event.target
@@ -147,14 +179,27 @@ class @BinarySurface extends ModuleSurface
         response = $(event.target).val()
         handleResponse response
 
+###
+# Multiple Choice Surface
+###
 class @MultipleChoiceSurface extends ModuleSurface
   constructor: (@module)->
     super(Template.multipleChoiceModule, @.module)
+    console.log "synce"
+    console.log @.sync
 
+
+
+###
+# Scenario Surface
+###
 class @ScenarioSurface extends ModuleSurface
   constructor: (@module)->
     super(Template.scenarioModule, @.module)
 
+###
+# Video Surface
+###
 class @VideoSurface extends ModuleSurface
   constructor: (@module)->
     super(Template.videoModule, @.module)
