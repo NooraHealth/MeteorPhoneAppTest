@@ -40,6 +40,12 @@ Template.nextBtn.events
     Session.set "fail toast is visible", false
     Session.set "next button is hidden", nextBtnShouldHide()
 
+
+    fview = FView.byId "footer"
+    surface = fview.view or fview.surface
+    eventOutput = surface._eventOutput
+    eventOutput.emit 'showModule', id
+
 Template.nextBtn.helpers
   phone: ()->
     return Meteor.Device.isPhone()

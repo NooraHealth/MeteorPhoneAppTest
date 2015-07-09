@@ -39,7 +39,7 @@ Template.footer.onRendered ()->
   surface = fview.view or fview.surface
   surface.setProperties {zIndex: 12}
 
-Template.moduleFooter.rendered= ()->
+Template.moduleFooter.onRendered ()->
   fview = FView.from this
   surface = fview.view or fview.surface
   surface.setProperties {zIndex: 12}
