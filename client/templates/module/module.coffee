@@ -12,7 +12,6 @@ Template.module.helpers
     rearrangedModules.push firstModule
     return rearrangedModules
 
-  
   dummyModule: ()->
     return @.type == "dummy"
 
@@ -28,7 +27,6 @@ Template.module.rendered =  ()->
   lightbox = FView.byId "lightbox"
   eventInput = new EventHandler()
   EventHandler.setInputHandler lightbox, eventInput
-  console.log lightbox
   
   #get the next btn's view and event handler
   nextBtnFview = FView.byId "footer"
@@ -46,10 +44,37 @@ Template.module.rendered =  ()->
 
   #create the surfaces
   modules = Template.currentData().modules
-
-  module = modules[0]
-  surface = new Surface {
-    content: Blaze.toHTMLWithData(Template.slideModule, module)
-    size: [100,100]
-  }
+  module = new ModuleView modules[0]
+  surface = module.buildModuleSurface()
+  console.log "ModuleTemplate surface"
+  console.log surface
   lightbox.node._object.show surface
+
+class ModuleView
+  
+  constructor: (@module)->
+
+  buildModuleSurface: ()=>
+    console.log @.module
+    type = @.module.type
+    html = ""
+
+    toHtml = (template, data)=>
+      @.html =  Blaze.toHTMLWithData(template, data)
+
+    switch type
+      when "SLIDE" then toHtml Template.slideModule, @.module
+      when "MULTIPLE_CHOICE" then toHTML(Template.multipleChoiceModule, @.module)
+      when "BINARY" then toHTML(Template.binaryChoiceModule, @.module)
+      when "VIDEO" then toHTML(Template.videoModule, @.module)
+      when "SCENARIO" then toHTML(Template.scenarioModule, @.module)
+      else console.log "module type is not within the module types allowed"
+
+    surface = new Surface {
+      content: @.html
+      size: [400,400]
+    }
+
+    return surface
+      
+

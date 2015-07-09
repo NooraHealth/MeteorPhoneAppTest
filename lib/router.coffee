@@ -14,20 +14,15 @@ Router.map ()->
     layoutTemplate: 'layout'
     cache: true
     waitOn: ()->
-      console.log "In the waiton"
       if !Meteor.user()
         return []
-      console.log "Getting the meteor status:"
-      console.log Meteor.status()
       if Meteor.status().connected
-        console.log "Connected!"
         return [
           Meteor.subscribe("curriculum", Meteor.user().getCurriculumId()),
           Meteor.subscribe("lessons", Meteor.user().getCurriculumId()),
         ]
 
     onBeforeAction: ()->
-      console.log "Before action"
       if Meteor.loggingIn()
         this.next()
       else if !Meteor.user()
@@ -63,15 +58,12 @@ Router.map ()->
         Meteor.call "contentEndpoint", (err, src)->
           Session.set "content src", src
 
-      console.log "about to call this.next and render"
-      console.log this
       this.next()
 
     data: ()->
       if this.ready() and Meteor.user()
         curr = Curriculum.findOne({_id: Meteor.user().profile.curriculumId})
         if curr
-          console.log "Getting the data"
           Session.set "current lesson", null
           Session.set "current module index", null
           Session.set "module sequence", null
@@ -79,7 +71,6 @@ Router.map ()->
           Session.set "current sections", null
           lessons =  curr.getLessonDocuments()
           Session.set "lessons sequence", lessons
-          console.log "Lessons: ", lessons.length
           return {lessons: lessons}
 
     onAfterAction: ()->
@@ -95,11 +86,9 @@ Router.map ()->
     }
     cache: true
     waitOn:()->
-      console.log "in the waiton for the select curriculum"
       if Meteor.status().connected
         return Meteor.subscribe("all_curriculums")
     onBeforeAction: ()->
-      console.log "In the before action for the selectcurriculum"
       this.next()
   }
 
@@ -119,7 +108,6 @@ Router.map ()->
       if !Meteor.user()
         return
       if Meteor.status().connected
-        console.log "Connected!"
         return [
           Meteor.subscribe("lessons", Meteor.user().getCurriculumId()),
           Meteor.subscribe("curriculum", Meteor.user().getCurriculumId()),
@@ -129,7 +117,6 @@ Router.map ()->
     data: () ->
       lesson = Lessons.findOne {_id: this.params._id}
       Session.set "current lesson", lesson
-      console.log lesson
       modules = lesson.getModulesSequence()
       Session.set "modules sequence", modules
       Session.set "current module index",0

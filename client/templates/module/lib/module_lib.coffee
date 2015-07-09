@@ -1,17 +1,12 @@
 this.allModulesComplete = ()->
   numModules = (Session.get "modules sequence").length
   numCorrect = (Session.get "correctly answered").length
-  console.log "Checking whether all modules complete"
-  console.log numCorrect
-  console.log numModules
   currentModule = getCurrentModule()
   if !currentModule
     return false
   if isAQuestion(currentModule)
-    console.log "Is a questions!"
     return numCorrect == numModules
   else
-    console.log "Not a questions"
     return numCorrect == numModules - 1
 
 this.isAQuestion = (module)->
@@ -180,8 +175,6 @@ this.handleSuccessfulAttempt = (module, time_to_complete)->
 
 this.nextBtnShouldHide = ()->
   currentModule = this.getCurrentModule()
-  console.log "This is the current module"
-  console.log currentModule
   if !currentModule
     return
   if currentModule.type == "VIDEO" or currentModule.type == "SLIDE"
@@ -205,7 +198,6 @@ this.playAudio = (type, id)->
     #elem.currentTime = 0
     #elem.pause()
 
-  console.log module
   if type == "question"
     src = module.audioSrc()
   else if type == "correct"
