@@ -44,7 +44,7 @@ Template.nextBtn.events
     fview = FView.byId "footer"
     surface = fview.view or fview.surface
     eventOutput = surface._eventOutput
-    eventOutput.emit 'showModule', id
+    eventOutput.emit 'showModule', moduleIndex
 
 Template.nextBtn.helpers
   phone: ()->
@@ -66,18 +66,7 @@ Template.browserNextBtn.helpers
     return isHidden()
 
   id: ()->
-    console.log "Getting the next btn id"
     return nextBtnId()
-
-Template.nextBtn.onRendered ()->
-  #get the lightbox and subscribe it to the next btn events
-  lightbox = FView.byId "lightbox"
-  console.log lightbox
-  fview = FView.from(this)
-  surface = fview.view or fview.surface
-  nextBtnEventHandler = surface._eventOutput
-  console.log surface
-
 
 isHidden = ()->
   return Session.get "next button is hidden"

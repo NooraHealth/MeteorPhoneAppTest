@@ -19,7 +19,8 @@ Template.module.helpers
     if @
       return @.modules[Session.get "current module index"]
 
-Template.module.rendered =  ()->
+Template.module.rendered =  ()=>
+  @.moduleSurfaces = []
   #fview.node._object.hide()
   hidden =  nextBtnShouldHide()
   Session.set "next button is hidden", hidden
@@ -36,45 +37,101 @@ Template.module.rendered =  ()->
   #subscribe the lightbox to the next btn footer's events
   eventInput.subscribe nextBtnEventOutput
 
-  #eventInput.on "showModule", (id)->
-    #console.log "Showing the module"
-    #surface = FView.byId id
-    #lightbox.node._object.show surface
+  modules = Template.currentData().modules
+  @.moduleView = new ModuleView modules
 
+  eventInput.on "showModule", (index)=>
+    @.moduleView.show index
 
   #create the surfaces
-  modules = Template.currentData().modules
-  module = new ModuleView modules[0]
-  surface = module.buildModuleSurface()
-  console.log "ModuleTemplate surface"
-  console.log surface
-  lightbox.node._object.show surface
+  @.moduleView.show 0
 
 class ModuleView
-  
-  constructor: (@module)->
+  constructor: (@modules)->
+    @.lightbox = FView.byId("lightbox").node._object
 
-  buildModuleSurface: ()=>
-    console.log @.module
-    type = @.module.type
-    html = ""
+  show: (index)=>
+    surface = new SurfaceFactory(@.modules[index]).getSurface()
+    #surface = moduleView.buildModuleSurface()
+    @.lightbox.show surface
 
-    toHtml = (template, data)=>
-      @.html =  Blaze.toHTMLWithData(template, data)
+class ModuleSurface
+  constructor: (@template, @module)->
+    @.size = [600, 400]
+    @.html = @.templateToHtml()
+    @.surface = @.buildSurface()
 
-    switch type
-      when "SLIDE" then toHtml Template.slideModule, @.module
-      when "MULTIPLE_CHOICE" then toHTML(Template.multipleChoiceModule, @.module)
-      when "BINARY" then toHTML(Template.binaryChoiceModule, @.module)
-      when "VIDEO" then toHTML(Template.videoModule, @.module)
-      when "SCENARIO" then toHTML(Template.scenarioModule, @.module)
-      else console.log "module type is not within the module types allowed"
+  getSurface: ()=>
+    return @.surface
 
-    surface = new Surface {
+  buildSurface: ()=>
+    return new Surface {
+      size: @.size
       content: @.html
-      size: [400,400]
     }
 
-    return surface
+  templateToHtml: ()=>
+    return Blaze.toHTMLWithData @.template, @.module
+
+class SurfaceFactory
+  constructor: (@module)->
+    @.surfaceView = @.getModuleSurface module
+
+  getSurface: ()=>
+    return @.surfaceView.getSurface()
+  
+  getSurfaceView: ()=>
+    return @.surfaceView
+
+  getModuleSurface: ()=>
+    type = @.module.type
+
+    switch type
+      when "SLIDE" then return new SlideSurface @.module
+      #when "MULTIPLE_CHOICE" then @.toHtml(Template.multipleChoiceModule, @.module)
+      when "BINARY" then return new BinarySurface @.module
+      #when "VIDEO" then @.toHtml(Template.videoModule, @.module)
+      #when "SCENARIO" then @.toHtml(Template.scenarioModule, @.module)
+      else console.log "module type is not within the module types allowed"
+    
+
+  #buildModuleSurface: ()=>
+    #console.log @.module
+    #type = @.module.type
+    #html = ""
+
+    #@.toHtml = (template, data)=>
+      #@.html =  Blaze.toHTMLWithData(template, data)
+
+    #switch type
+      #when "SLIDE" then @.toHtml Template.slideModule, @.module
+      #when "MULTIPLE_CHOICE" then @.toHtml(Template.multipleChoiceModule, @.module)
+      #when "BINARY" then @.toHtml(Template.binaryChoiceModule, @.module)
+      #when "VIDEO" then @.toHtml(Template.videoModule, @.module)
+      #when "SCENARIO" then @.toHtml(Template.scenarioModule, @.module)
+      #else console.log "module type is not within the module types allowed"
+
+    #surface = new Surface {
+      #content: @.html
+      #size: [400,400]
+    #}
+
+    #surface.on {
+      #"click": (one, two)->
+        #console.log "TEMPLATE CLICKED"
+        #console.log one
+        #console.log two
+
+      #"mouseover": (one,two)=>
+        #console.log "MOUSEOVER"
+      #}
+
+    #return surface
       
 
+
+class @SlideSurface extends ModuleSurface
+  constructor: (@module)->
+    super(Template.slideModule, @.module)
+    console.log "This is after building my surface"
+    console.log @

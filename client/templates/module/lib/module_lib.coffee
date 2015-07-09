@@ -1,3 +1,4 @@
+
 this.allModulesComplete = ()->
   numModules = (Session.get "modules sequence").length
   numCorrect = (Session.get "correctly answered").length
