@@ -1,23 +1,3 @@
-###
-# MODULES SEQUENCE HELPERS
-###
-
-Template.module.helpers
-
-  rearrangedModules: ()->
-    modules = (module for module in @.modules)
-    firstModule = modules[0]
-    rearrangedModules = modules.splice(1)
-    rearrangedModules.push {_id: "dummyModule", type:"dummy"}
-    rearrangedModules.push firstModule
-    return rearrangedModules
-
-  dummyModule: ()->
-    return @.type == "dummy"
-
-  currentModule: ()->
-    if @
-      return @.modules[Session.get "current module index"]
 
 Template.module.rendered =  ()=>
   @.moduleSurfaces = []
@@ -38,7 +18,7 @@ Template.module.rendered =  ()=>
   eventInput.subscribe nextBtnEventOutput
 
   modules = Template.currentData().modules
-  @.moduleView = new ModuleView modules
+  @.moduleView = new ModuleView(modules)
 
   eventInput.on "showModule", (index)=>
     @.moduleView.show index
@@ -46,7 +26,16 @@ Template.module.rendered =  ()=>
   #create the surfaces
   @.moduleView.show 0
 
+class BaseView extends Base
+
+  toggleClass: (target, klass)->
+    if !target.classList.contains klass
+      target.classList.add klass
+    else
+      target.classList.remove klass
+
 class ModuleView
+
   constructor: (@modules)->
     @.lightbox = FView.byId("lightbox").node._object
 
@@ -55,7 +44,7 @@ class ModuleView
     #surface = moduleView.buildModuleSurface()
     @.lightbox.show surface
 
-class ModuleSurface
+class ModuleSurface extends BaseView
   constructor: (@template, @module)->
     @.size = [600, 400]
     @.html = @.templateToHtml()
@@ -197,6 +186,7 @@ class @BinarySurface extends ModuleSurface
 # Multiple Choice Surface
 ###
 class @MultipleChoiceSurface extends ModuleSurface
+
   constructor: (@module)->
     super(Template.multipleChoiceModule, @.module)
     console.log "synce"
@@ -205,10 +195,20 @@ class @MultipleChoiceSurface extends ModuleSurface
   handleClick: (event)=>
     console.log "Click Event!"
     console.log event
-    console.log event.target.classList.contains("image-choice")
-    if event.target.classList.contains "input-choice"
-      target.toggleClass "selected"
+    @.toggleClass event.target, "selected"
 
+  handleImageChoiceSelected: (event)=>
+    answers = @.module.correct_answer
+    if answers
+      numCorrect = answers.length
+    else
+      numCorrect = 0
+
+    classes = event.target.classList
+    if classes.contains "selected"
+      classes.remove
+
+    event.target.classList.add "selected"
 
   handleInputUpdate: (event)=>
     console.log "Update Event!"
