@@ -14,17 +14,18 @@ FView.ready ()->
   this.SpringTransition = famous.transitions.SpringTransition
 
   #events
-  this.MouseSync = famous.inputs.MouseSync
-  this.TouchSync = famous.inputs.ScrollSync
+  console.log famous.inputs
+  this.MSync = famous.inputs.MouseSync
+  this.SSync= famous.inputs.ScrollSync
+  this.TSync= famous.inputs.TouchSync
   this.GenericSync = famous.inputs.GenericSync
-  console.log TouchSync()
-  console.log MouseSync()
 
+  console.log MSync == TSync
   this.GenericSync.register([
-      'mouse' : MouseSync,
-      'touch' : TouchSync
+      #'mouse' : MSync
+      'touch' : TSync
+      'scroll': SSync
   ])
-  this.MouseAndTouchSync = new GenericSync(['mouse','touch'])
 
   famous.polyfills
   famous.core.famous

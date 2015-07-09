@@ -60,31 +60,43 @@ class ModuleSurface
     @.size = [600, 400]
     @.html = @.templateToHtml()
     @.surface = @.buildSurface()
-    @.sync = new GenericSync(['mouse','touch'])
+    #@.mouseSync = new MSync()
+    #@.sync = new GenericSync(['scroll', 'touch'])
+    ##@.sync.addSync 'touch'
+    #console.log @.sync
 
-    #pipe all touch and mouse events to the surface
-    @.sync.pipe @.surface
-    console.log @.surface
-    @.surface.pipe @.sync
-    @.surface._eventOutput.subscribe @.sync
+    #@.surface.pipe(@.mouseSync)
+    ##pipe all touch and mouse events to the surface
+    #@.surface.pipe @.sync
+    #@.surface.pipe @.mouseSync
     @.registerFamousEvents()
 
+  handleClick: (event)=>
+    console.log "Click Event!"
+
+  handleInputUpdate: (event)=>
+    console.log "Update Event!"
+
+  handleInputEnd: (event)=>
+    console.log "End Event!"
+
   registerFamousEvents: ()=>
-    @.surface.on "click", (event)->
-      console.log "SURFACE was clicked, no sync"
-    @.sync.on "click", (event)->
-      console.log "Multiple choice is click"
-    @.surface.on "end", (event)->
-      console.log "Multiple choice is end"
+    @.surface.on "click", (event)=>
+      @.handleClick(event)
+    #@.mouseSync.on "start", (event)=>
+      #@.handleClick event
+    #@.mouseSync.on "end", (event)=>
+      #@.handleInputEnd event
+    #@.mouseSync.on "update", (event)=>
+      #@.handleInputUpdate event
 
-    @.surface.on "update", (event)->
-      console.log "Multiple choice is updated"
+    #@.sync.on "start", (event)=>
+      #@.handleClick event
+    #@.sync.on "end", (event)=>
+      #@.handleInputEnd event
+    #@.sync.on "update", (event)=>
+      #@.handleInputUpdate event
 
-    @.sync.on "start", (event)->
-      console.log "Multiple choice is clicked/touched"
-      console.log event
-      if $(event.target).hasClass ".image-choice"
-        console.log "This was an image choice class"
   getSurface: ()=>
     return @.surface
 
@@ -167,17 +179,19 @@ class @BinarySurface extends ModuleSurface
     super(Template.binaryChoiceModule, @.module)
     @.registerFamousEvents()
 
-  registerFamousEvents: ()=>
-    console.log "Synce"
-    console.log @.sync
-    @.sync.on "click", (event)->
-      console.log "BinarySurface clicked!"
-      console.log event
-      if buttonDisabled event.target
-        return
-      else
-        response = $(event.target).val()
-        handleResponse response
+  handleClick: (event)=>
+    console.log "Click Event!"
+    if buttonDisabled event.target
+      return
+    else
+      response = $(event.target).val()
+      handleResponse response
+
+  handleInputUpdate: (event)=>
+    console.log "Update Event!"
+
+  handleInputEnd: (event)=>
+    console.log "End Event!"
 
 ###
 # Multiple Choice Surface
@@ -188,6 +202,19 @@ class @MultipleChoiceSurface extends ModuleSurface
     console.log "synce"
     console.log @.sync
 
+  handleClick: (event)=>
+    console.log "Click Event!"
+    console.log event
+    console.log event.target.classList.contains("image-choice")
+    if event.target.classList.contains "input-choice"
+      target.toggleClass "selected"
+
+
+  handleInputUpdate: (event)=>
+    console.log "Update Event!"
+
+  handleInputEnd: (event)=>
+    console.log "End Event!"
 
 
 ###
