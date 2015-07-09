@@ -10,8 +10,8 @@ Template.module.helpers
     rearrangedModules = modules.splice(1)
     rearrangedModules.push {_id: "dummyModule", type:"dummy"}
     rearrangedModules.push firstModule
-    console.log "REARRAd=_id NGED: ", rearrangedModules
-    return modules
+    return rearrangedModules
+
   
   dummyModule: ()->
     return @.type == "dummy"
@@ -38,16 +38,18 @@ Template.module.rendered =  ()->
   #subscribe the lightbox to the next btn footer's events
   eventInput.subscribe nextBtnEventOutput
 
-  eventInput.on "showModule", (id)->
-    moduleIndex = Session.get "current module index"
-    _id = Session.get("modules sequence")[moduleIndex]._id
-    console.log "This is the id", id
-    console.log _id
-    surface = FView.byId _id
-    console.log "This is the surface to show"
-    console.log surface
-    lightbox.node._object.show surface
+  #eventInput.on "showModule", (id)->
+    #console.log "Showing the module"
+    #surface = FView.byId id
+    #lightbox.node._object.show surface
 
-  this.autorun ()->
-    #Session.set "next button is hidden", nextBtnShouldHide()
 
+  #create the surfaces
+  modules = Template.currentData().modules
+
+  module = modules[0]
+  surface = new Surface {
+    content: Blaze.toHTMLWithData(Template.slideModule, module)
+    size: [100,100]
+  }
+  lightbox.node._object.show surface

@@ -11,6 +11,7 @@ Template.multipleChoiceModule.events
       #$(event.target).removeClass "selected"
       #return
     #else
+    console.log "Clicked a Multiple choice!"
     $(event.target).toggleClass "selected"
 
   "click [name^=submit_multiple_choice]": (event, template)->
@@ -22,12 +23,8 @@ Template.multipleChoiceModule.events
 
 Template.multipleChoiceModule.helpers
   secondRow: ()->
-    console.log "SECOND ROW"
-    console.log @.getOptions 3,6
     return @.getOptions 3, 6
   firstRow: ()->
-    console.log "FIRST ROW"
-    console.log @.getOptions 0,3
     return @.getOptions 0, 3
   module: ()->
     return @

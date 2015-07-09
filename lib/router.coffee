@@ -34,12 +34,10 @@ Router.map ()->
         this.next()
 
       if not Meteor.user().curriculumIsSet()
-        console.log "curriculum is not set"
         Router.go "selectCurriculum"
 
       if Meteor.isCordova
         Session.set( "content src", 'http://127.0.0.1:8080/')
-        console.log "Trying to initialize server"
         #initializeServer()
 
       if Meteor.isCordova and not Meteor.user().contentLoaded()# and not Session.get "content loaded"
@@ -60,11 +58,13 @@ Router.map ()->
             Meteor.user().setContentAsLoaded false
             Meteor.logout()
           downloader.loadContent onSuccess, onError
+
       else if !Meteor.isCordova
         Meteor.call "contentEndpoint", (err, src)->
           Session.set "content src", src
 
       console.log "about to call this.next and render"
+      console.log this
       this.next()
 
     data: ()->

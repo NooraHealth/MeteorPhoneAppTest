@@ -28,11 +28,11 @@
       {{>nav}}
     {{/Surface}}
 
-    {{#RenderController target="content" id="lightbox"}}
+    {{#Lightbox target="content" id="lightbox"}}
       <div class="inner">
         {{>yield}}
       </div>
-    {{/RenderController}}
+    {{/Lightbox}}
     
     {{#Surface target="footer" class="white" id="footer"}}
       {{>yield region="footer"}}

@@ -18,15 +18,10 @@ Template.home.helpers {
     height = Session.get "lesson card height"
     return [height, width]
 }
-Template.lessonThumbnail.events {
-  "click .card": (event, template) ->
-    fview = FView.from(template)
-}
 
 Template.home.onRendered ()->
   if not Meteor.user()
     return
-  console.log "In the onRendered for home template"
   lessonsComplete = Meteor.user().getCompletedLessons().length
   lessons = Session.get "lessons sequence"
   width = Session.get "lesson card width"
@@ -107,8 +102,6 @@ Template.lessonThumbnail.helpers
       return false
     else
       if !lessons[numLessonsComplete]
-        console.log "Not lessons complete"
         return false
       else
-        console.log "Getting the lesson at the index"
         return @._id == lessons[numLessonsComplete]._id
