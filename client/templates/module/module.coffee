@@ -88,10 +88,10 @@ class SurfaceFactory
 
     switch type
       when "SLIDE" then return new SlideSurface @.module
-      #when "MULTIPLE_CHOICE" then @.toHtml(Template.multipleChoiceModule, @.module)
+      when "MULTIPLE_CHOICE" then return new MultipleChoiceSurface @.module
       when "BINARY" then return new BinarySurface @.module
-      #when "VIDEO" then @.toHtml(Template.videoModule, @.module)
-      #when "SCENARIO" then @.toHtml(Template.scenarioModule, @.module)
+      when "VIDEO" then return new VideoSurface @.module
+      when "SCENARIO" then return new ScenarioSurface @.module
       else console.log "module type is not within the module types allowed"
     
 
@@ -128,10 +128,29 @@ class SurfaceFactory
 
     #return surface
       
-
-
 class @SlideSurface extends ModuleSurface
   constructor: (@module)->
     super(Template.slideModule, @.module)
-    console.log "This is after building my surface"
-    console.log @
+
+class @BinarySurface extends ModuleSurface
+  constructor: (@module)->
+    super(Template.binaryChoiceModule, @.module)
+    @.registerFamousEvents()
+
+  registerFamousEvents: ()=>
+    @.surface.on "click", (event)->
+      console.log "BinarySurface clicked!"
+      console.log event
+      if buttonDisabled event.target
+        return
+      else
+        response = $(event.target).val()
+        handleResponse response
+
+class @MultipleChoiceSurface extends ModuleSurface
+  constructor: (@module)->
+    super(Template.multipleChoiceModule, @.module)
+
+class @ScenarioSurface extends ModuleSurface
+  constructor: (@module)->
+    super(Template.scenarioModule, @.module)
