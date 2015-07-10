@@ -31,15 +31,10 @@ Template.nextBtn.events
       Router.go "home"
       return
 
-    resetTemplate()
-    id = modulesSequence[moduleIndex]._id
-    playAudio 'question', id
-
     Session.set "current module index", moduleIndex
     Session.set "success toast is visible", false
     Session.set "fail toast is visible", false
     Session.set "next button is hidden", nextBtnShouldHide()
-
 
     fview = FView.byId "footer"
     surface = fview.view or fview.surface
@@ -91,14 +86,3 @@ hasAttemptedAllModules = ()->
   correctlyAnswered = Session.get "correctly answered"
   return correctlyAnswered.length + incorrectlyAnswered.length == modulesSequence.length
 
-resetTemplate = ()->
-  stopAllAudio()
-
-  responseBtns = $(".response")
-  for btn in responseBtns
-    $(btn).removeClass "disabled"
-    $(btn).removeClass "faded"
-    $(btn).removeClass "expanded"
-    $(btn).removeClass "correctly_selected"
-    $(btn).removeClass "incorrectly_selected"
-    $(btn).removeClass "selected"

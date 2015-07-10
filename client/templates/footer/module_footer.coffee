@@ -6,12 +6,6 @@ Template.moduleFooter.helpers
 
     rest = (module for module, index in @.modules when index != 0)
     return rest
-
-  firstModule: ()->
-    if !@.modules
-      return
-    module = @.modules[0]
-    return @.modules[0]
   
   modules: ()->
     modules = Session.get "modules sequence"

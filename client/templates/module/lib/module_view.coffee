@@ -10,12 +10,9 @@ class @ModuleView
     @.lightbox.show surface
 
   @handleResponse: (moduleSurface, event)=>
-    console.log "ModuleView is handling the reponse"
     module = moduleSurface.getModule()
-    console.log module
 
     if module.type == "MULTIPLE_CHOICE"
-      console.log "Handling MC response"
       @.handleMCResponse(module)
     else
       @.handleSingleChoiceResponse module, event
@@ -33,20 +30,21 @@ class @ModuleView
       @.handleIncorrectResponse module
 
   @handleMCResponse: (module)->
-    console.log "Going to call all correct responses"
     if @.allCorrectResponses module
       @.handleCorrectResponse module
     else
       @.handleIncorrectResponse module
 
   @stopAllAudio : ()->
-    for audioElem in $("audio")
-      audioElem.pause()
+    elem = $("#toplay")
+    if elem[0]
+      elem[0].pause()
 
   @playAudio : (type, module)->
-    if type == "question"
-      src = module.audioSrc()
-    else if type == "correct"
+    @.stopAllAudio()
+    #if type == "question"
+      #src = module.audioSrc()
+    if type == "correct"
       src = module.correctAnswerAudio()
     else if type == "incorrect"
       src = module.incorrectAnswerAudio()
@@ -115,7 +113,6 @@ class @ModuleView
       Session.set "incorrectly answered", incorrectlyAnswered
 
   @allCorrectResponses: (module)->
-    console.log "Getting the correct responses!"
     #fade out all the containers of the incorrect options
     [responses, numIncorrect] = @.expandCorrectOptions(module)
 
@@ -130,8 +127,6 @@ class @ModuleView
   @expandCorrectOptions: (module) ->
       id = module._id
       options = $("#"+id).find("img[name=option]")
-      console.log "Here are the options"
-      console.log options
       responses = []
       numIncorrect = 0
       for option in options
