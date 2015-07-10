@@ -20,8 +20,7 @@ class @ModuleView
     else
       @.handleSingleChoiceResponse module, response
 
-    showNextModuleBtn()
-    #NextModuleBtn.show()
+    NextModuleBtn.show()
 
   @handleSingleChoiceResponse: (module, response)=>
     @.hideIncorrectResponses(module)
