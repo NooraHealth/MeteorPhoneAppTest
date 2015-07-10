@@ -13,8 +13,7 @@ class @BinarySurface extends ModuleSurface
     if buttonDisabled event.target
       return
     else
-      response = $(event.target).val()
-      handleResponse response
+      ModuleView.handleResponse @, event
 
   handleInputUpdate: (event)=>
     console.log "Update Event!"

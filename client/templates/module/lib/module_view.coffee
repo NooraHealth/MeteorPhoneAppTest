@@ -9,7 +9,7 @@ class @ModuleView
     #surface = moduleView.buildModuleSurface()
     @.lightbox.show surface
 
-  @handleResponse: (moduleSurface, response)=>
+  @handleResponse: (moduleSurface, event)=>
     console.log "ModuleView is handling the reponse"
     module = moduleSurface.getModule()
     console.log module
@@ -18,14 +18,14 @@ class @ModuleView
       console.log "Handling MC response"
       @.handleMCResponse(module)
     else
-      @.handleSingleChoiceResponse module, response
+      @.handleSingleChoiceResponse module, event
 
     NextModuleBtn.show()
 
-  @handleSingleChoiceResponse: (module, response)=>
+  @handleSingleChoiceResponse: (module, event)=>
     @.hideIncorrectResponses(module)
     
-    if @.isCorrectResponse(module, response)
+    if @.isCorrectResponse(module, event)
       @.displayToast "correct"
       @.handleCorrectResponse module
     else
@@ -124,8 +124,8 @@ class @ModuleView
     else
       return true
 
-  @isCorrectResponse: ( module, response ) ->
-    return $(response).hasClass "correct"
+  @isCorrectResponse: ( module, event ) ->
+    return event.target.classList.contains "correct"
 
   @expandCorrectOptions: (module) ->
       id = module._id
