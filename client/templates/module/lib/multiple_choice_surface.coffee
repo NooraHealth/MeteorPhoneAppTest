@@ -11,13 +11,16 @@ class @MultipleChoiceSurface extends ModuleSurface
   handleClick: (event)=>
     console.log "Click Event!"
     console.log event
+    if event.target.classList.contains "disabled"
+      return
+
     if event.target.classList.contains "image-choice"
       @.handleImageChoiceSelected(event)
     if event.target.name == 'submit_multiple_choice'
       @.handleMultipleChoiceResponseSubmitted(event)
 
   handleMultipleChoiceResponseSubmitted: (event)->
-    ModuleView.handleResponse(@, null)
+    ModuleView.handleResponse(@, event)
 
   handleImageChoiceSelected: (event)=>
     answers = @.module.correct_answer

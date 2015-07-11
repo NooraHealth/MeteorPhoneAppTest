@@ -6,7 +6,19 @@ Template.module.rendered =  ()=>
   Session.set "next button is hidden", hidden
   #lightbox controller
   lightbox = FView.byId "lightbox"
+
+  modules = Template.currentData().modules
+  @.moduleView = new ModuleView(modules)
+
   eventInput = new EventHandler()
+  subscribeLightboxToFooterEvents( lightbox, eventInput )
+  eventInput.on "showModule", ( index )=>
+    @.moduleView.show index
+
+  #create the surfaces
+  @.moduleView.show 0
+
+subscribeLightboxToFooterEvents = ( lightbox, eventInput )->
   EventHandler.setInputHandler lightbox, eventInput
   
   #get the next btn's view and event handler
@@ -16,13 +28,4 @@ Template.module.rendered =  ()=>
 
   #subscribe the lightbox to the next btn footer's events
   eventInput.subscribe nextBtnEventOutput
-
-  modules = Template.currentData().modules
-  @.moduleView = new ModuleView(modules)
-
-  eventInput.on "showModule", (index)=>
-    @.moduleView.show index
-
-  #create the surfaces
-  @.moduleView.show 0
 

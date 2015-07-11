@@ -8,11 +8,11 @@ Template.scenarioModule.helpers
     return MEDIA_URL + "VascularContent/Images/emergency.png"
 
 
-Template.scenarioModule.events
-  'click .response': (event, template)->
-    if buttonDisabled event.target
-      return
-    else
-      response = $(event.target).val()
-      handleResponse response
-    event.stopPropagation()
+#Template.scenarioModule.events
+  #'click .response': (event, template)->
+    #if buttonDisabled event.target
+      #return
+    #else
+      #response = $(event.target).val()
+      #handleResponse response
+    #event.stopPropagation()

@@ -13,9 +13,12 @@ class @ModuleView
     module = moduleSurface.getModule()
 
     if module.type == "MULTIPLE_CHOICE"
-      @.handleMCResponse(module)
+      @.handleMCResponse module, event
     else
       @.handleSingleChoiceResponse module, event
+
+    if event
+      event.target.classList.add "disabled"
 
     NextModuleBtn.show()
 
@@ -29,11 +32,15 @@ class @ModuleView
       @.displayToast "incorrect"
       @.handleIncorrectResponse module
 
-  @handleMCResponse: (module)->
+  @handleMCResponse: (module, event)->
     if @.allCorrectResponses module
       @.handleCorrectResponse module
     else
       @.handleIncorrectResponse module
+
+    if event
+      event.target.classList.add "faded"
+
 
   @stopAllAudio : ()->
     elem = $("#toplay")

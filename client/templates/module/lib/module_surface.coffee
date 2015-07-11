@@ -1,7 +1,7 @@
 
 class @ModuleSurface
   constructor: (@template, @module)->
-    @.size = [600, 400]
+    @.size ?= [600, undefined]
     @.html = @.templateToHtml()
     @.surface = @.buildSurface()
     @.registerFamousEvents()
