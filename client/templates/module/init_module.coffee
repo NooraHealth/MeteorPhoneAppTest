@@ -6,6 +6,24 @@ Template.module.rendered =  ()=>
   Session.set "next button is hidden", hidden
   #lightbox controller
   lightbox = FView.byId "lightbox"
+  console.log "LIGHTBOX"
+  console.log lightbox
+  #t = Transform.translate(-600, 0, 0), {duration: 1000, curve: "easeIn"}
+  #o = Transform.translate(600, 0, 0), {duration: 1000, curve: "easeOut"}
+
+  console.log SpringTransition()
+  console.log new SpringTransition()
+  lightbox.view.setOptions {
+    #inTransform: Transform.translate 600, 0, 0
+    #showOrigin: [.5,.5]
+    #inTransform: Transform.scale(1.1, 1.1, 1)
+    inTransition: {duration: 2000, curve: 'easeIn'}
+    outTransition: {duration: 2000, curve: 'easeOut'}
+    inAlign: [3,.5]
+    outAlign: [-3, .5]
+    showAlign: [.5,.5]
+    overlap: true
+  }
 
   modules = Template.currentData().modules
   @.moduleView = new ModuleView(modules)

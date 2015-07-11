@@ -4,10 +4,11 @@ class @ModuleView
   constructor: (@modules)->
     @.lightbox = FView.byId("lightbox").node._object
 
-  show: (index)=>
+  hide: (index, transition)=>
+  show: (index, transition)=>
     surface = new SurfaceFactory(@.modules[index]).getSurface()
     #surface = moduleView.buildModuleSurface()
-    @.lightbox.show surface
+    @.lightbox.show surface, transition
 
   @handleResponse: (moduleSurface, event)=>
     module = moduleSurface.getModule()

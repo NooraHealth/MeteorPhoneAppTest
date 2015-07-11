@@ -1,8 +1,6 @@
 
 class @SurfaceFactory
   constructor: (@module)->
-    console.log "Surface factory module, should be a doc"
-    console.log @.module
     @.surfaceView = @.getModuleSurface module
 
   getSurface: ()=>

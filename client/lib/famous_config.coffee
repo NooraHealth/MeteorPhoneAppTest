@@ -12,7 +12,10 @@ FView.ready ()->
   this.Scroller = famous.views.Scroller
   this.EventHandler = famous.core.EventHandler
   this.SpringTransition = famous.transitions.SpringTransition
+  console.log SpringTransition
+  console.log famous.transitions
 
+  console.log Transform
   #events
   console.log famous.inputs
   this.MSync = famous.inputs.MouseSync
