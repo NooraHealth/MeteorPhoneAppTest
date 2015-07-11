@@ -4,7 +4,7 @@
 ###
 class @ScenarioSurface extends ModuleSurface
   constructor: (@module)->
-    @.size = [1000, undefined]
+    @.size = [800, 600]
     super(Template.scenarioModule, @.module)
 
   handleClick: (event)=>

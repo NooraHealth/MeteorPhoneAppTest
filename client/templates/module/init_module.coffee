@@ -13,14 +13,15 @@ Template.module.rendered =  ()=>
 
   console.log SpringTransition()
   console.log new SpringTransition()
+  transition = {duration: 1000, curve: "easeIn"}
   lightbox.view.setOptions {
     #inTransform: Transform.translate 600, 0, 0
     #showOrigin: [.5,.5]
     #inTransform: Transform.scale(1.1, 1.1, 1)
-    inTransition: {duration: 2000, curve: 'easeIn'}
-    outTransition: {duration: 2000, curve: 'easeOut'}
-    inAlign: [3,.5]
-    outAlign: [-3, .5]
+    inTransition: {duration: 1500, curve: 'easeIn'}
+    #outTransition: {duration: 1500, curve: 'easeOut'}
+    inAlign: [2,.5]
+    outAlign: [-2, .5]
     showAlign: [.5,.5]
     overlap: true
   }

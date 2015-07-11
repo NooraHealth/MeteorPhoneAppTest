@@ -1,7 +1,7 @@
 
 class @ModuleSurface
   constructor: (@template, @module)->
-    @.size ?= [600, undefined]
+    @.size ?= [700, 600]
     @.html = @.templateToHtml()
     @.surface = @.buildSurface()
     @.registerFamousEvents()
@@ -36,9 +36,14 @@ class @ModuleSurface
     return @.surface
 
   buildSurface: ()=>
+    id = @.module._id
+    console.log id
     return new Surface {
       size: @.size
       content: @.html
+      classes: ['white',
+      'card', 'valign-wrapper', 'module'
+      ]
     }
 
   templateToHtml: ()=>
