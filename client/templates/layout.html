@@ -6,39 +6,17 @@
       {{>nav}}
     {{/Surface}}
 
-    {{#RenderController target="content" transition=getTransition id="renderController"}}
+    {{#Lightbox target="content" id="lightbox"}}
       <div class="inner">
         {{>yield}}
       </div>
-    {{/RenderController}}
-    
-    {{#Surface target="footer" class="white"}}
-      {{>yield region="footer"}}
-    {{/Surface}}
-
-  {{/HeaderFooterLayout}}
-{{/famousContext}}
-</template>
-
-<template name="module_layout">
-
-{{#famousContext id="mainCtx"}}
-  {{#HeaderFooterLayout size="[undefined, undefined]" headerSize="50" footerSize="45"}}
-    {{#Surface target="header" class="red" }}
-      {{>nav}}
-    {{/Surface}}
-
-
-    <div class="white card">
-    {{#Lightbox target="content" id="lightbox"}}
-      {{>yield}}
     {{/Lightbox}}
-    </div>
     
-    {{#Surface target="footer" class="white" id="footer"}}
+    {{#Surface id="footer" target="footer" class="white"}}
       {{>yield region="footer"}}
     {{/Surface}}
 
   {{/HeaderFooterLayout}}
 {{/famousContext}}
 </template>
+
