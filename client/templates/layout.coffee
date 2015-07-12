@@ -1,14 +1,15 @@
-Template.module_layout.helpers
-  firstModule: ()->
-    console.log "Getting the firstmodule"
-    console.log @.modules
-    if !@.modules
-      return
-    module = @.modules[0]
-    console.log "returning first module"
-    return @.modules[0]
+Template.layout.onRendered ()->
+  console.log "Settig the options"
+  lightbox = FView.byId "lightbox"
+  lightbox.view.setOptions {
+      #inTransform: Transform.translate 600, 0, 0
+      #showOrigin: [.5,.5]
+      #inTransform: Transform.scale(1.1, 1.1, 1)
+      inTransition: {duration: 1500, curve: 'easeIn'}
+      outTransition: {duration: 1500, curve: 'easeOut'}
+      inAlign: [2,.5]
+      outAlign: [-2, .5]
+      showAlign: [.5,.5]
+      overlap: true
+    }
 
-Template.layout.helpers {
-  getTransition: ()->
-    return Session.get "current transition"
-}
