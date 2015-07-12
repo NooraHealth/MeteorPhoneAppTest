@@ -35,25 +35,33 @@ Template.home.onRendered ()->
       #showAlign: [.5,.5]
       #overlap: true
     #}
-  lessonsComplete = Meteor.user().getCompletedLessons().length
-  lessons = Session.get "lessons sequence"
-  width = Session.get "lesson card width"
-  height = Session.get "lesson card height"
-  scrollview = FView.byId "scrollview"
-  if !lessons
-    return
+  scrollView = new LessonsView(Template.currentData().lessons)
+  lightbox = FView.byId "lightbox"
+  lightbox.view.show scrollView
+  for lesson, i in Template.currentData().lessons
+    scrollView.addThumbnail i
 
-  scrollview.modifier.setOrigin [.5, .5]
-  if Meteor.Device.isPhone()
-    scrollview.modifier.setAlign [.5, .5]
-  else
-    scrollview.modifier.setAlign [.25, .5]
+  console.log scrollView
+
+  #lessonsComplete = Meteor.user().getCompletedLessons().length
+  #lessons = Session.get "lessons sequence"
+  #width = Session.get "lesson card width"
+  #height = Session.get "lesson card height"
+  #scrollview = FView.byId "scrollview"
+  #if !lessons
+    #return
+
+  #scrollview.modifier.setOrigin [.5, .5]
+  #if Meteor.Device.isPhone()
+    #scrollview.modifier.setAlign [.5, .5]
+  #else
+    #scrollview.modifier.setAlign [.25, .5]
     
-  if lessonsComplete < lessons.length
-    if Meteor.Device.isPhone()
-      scrollview.view.setPosition width * (lessonsComplete)
-    else
-      scrollview.view.setPosition width * (lessonsComplete - 1)
+  #if lessonsComplete < lessons.length
+    #if Meteor.Device.isPhone()
+      #scrollview.view.setPosition width * (lessonsComplete)
+    #else
+      #scrollview.view.setPosition width * (lessonsComplete - 1)
 
 Template.lessonThumbnail.onRendered ()->
 

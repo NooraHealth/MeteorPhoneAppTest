@@ -5,10 +5,7 @@ class @ModuleSurface
     @.html = @.templateToHtml()
     @.surface = @.buildSurface()
     @.registerFamousEvents()
-
-  getModule: ()=>
-    return @.module
-
+    
   handleClick: (event)=>
 
   handleInputUpdate: (event)=>
@@ -34,6 +31,8 @@ class @ModuleSurface
 
   getSurface: ()=>
     return @.surface
+  getModule: ()=>
+    return @.module
 
   buildSurface: ()=>
     id = @.module._id

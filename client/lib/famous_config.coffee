@@ -9,6 +9,7 @@ FView.ready ()->
   this.Transform = famous.core.Transform
   this.Surface = famous.core.Surface
   this.Lightbox = famous.views.Lightbox
+  this.Scrollview = famous.views.Scrollview
   this.Scroller = famous.views.Scroller
   this.EventHandler = famous.core.EventHandler
   this.SpringTransition = famous.transitions.SpringTransition
