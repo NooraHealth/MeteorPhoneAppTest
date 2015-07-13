@@ -19,10 +19,16 @@ class @LessonThumbnail
     return width
 
   buildSurface: ()->
-    return new Surface {
+    state = new StateModifier({
+      align: [.5,.5]
+      origin: [.5,.5]
+    })
+    @.node = new RenderNode(state)
+    surface = new Surface {
       size: @.size
       content: @.html
     }
+    return surface
 
   templateToHtml: ()->
     return Blaze.toHTMLWithData @.template, @.lesson

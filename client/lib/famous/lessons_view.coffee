@@ -16,12 +16,16 @@ class @LessonsView
     else
       return 0
 
+  goToNextPage: (i)->
+    @.scroll.goToNextPage i
+
   goToPage: (i)->
     @.scroll.goToPage i
 
   buildScrollview: ()->
     height = LessonThumbnail.getHeight()
     direction = @.direction()
+
     scroll = new Scrollview {
       direction: direction
       size: [true, height]
@@ -30,7 +34,7 @@ class @LessonsView
     console.log scroll
 
     scroll.on "deploy", ()=>
-      console.log "jscrollview deployed"
+      console.log "----------jscrollview deployed---------------"
       @.goToPage 5
     return scroll
 

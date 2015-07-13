@@ -36,7 +36,7 @@ Template.home.onRendered ()->
   for lesson, i in lessons
     getTimeout(i)()
 
-  scrollView.goToPage 3
+  scrollView.goToNextPage()
   console.log scrollView
   #lessonsComplete = Meteor.user().getCompletedLessons().length
   #lessons = Session.get "lessons sequence"
