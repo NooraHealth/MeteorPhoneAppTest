@@ -3,10 +3,18 @@ class @LessonsView
     [@.node, @.scroll, @.modifier] = @.buildScrollview()
     @.surfaces = []
     @.scroll.sequenceFrom(@.surfaces)
+    @.currentLesson = @.getCurrentLessonIndex()
     #@.parent.add @.scroll
 
   getRenderable: ()->
     return @.node
+
+  getCurrentLessonIndex: ()->
+    lessonsComplete = Meteor.user().getCompletedLessons().length
+    if lessonsComplete < @.lessons.length
+      return lessonsComplete
+    else
+      return 0
 
   direction: ()->
     if Meteor.Device.isPhone()
@@ -22,12 +30,11 @@ class @LessonsView
 
   buildScrollview: ()->
     height = LessonThumbnail.getHeight()
-    width = LessonThumbnail.getWidth() * @.lessons.length
+    width = LessonThumbnail.getWidth() * (@.lessons.length+1)
     direction = @.direction()
 
     modifier = new StateModifier {
-      origin: [.5,.5]
-      align: [.5,.5]
+      align: [.5,.75]
     }
 
     node = new RenderNode modifier

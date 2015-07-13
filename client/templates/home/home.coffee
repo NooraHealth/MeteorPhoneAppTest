@@ -34,7 +34,8 @@ Template.home.onRendered ()->
     , 500*(i+1)
 
   for lesson, i in lessons
-    getTimeout(i)()
+    scrollView.addThumbnail i
+    #getTimeout(i)()
 
   #scrollView.goToNextPage()
   console.log scrollView

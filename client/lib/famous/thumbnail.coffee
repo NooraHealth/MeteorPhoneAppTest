@@ -55,8 +55,9 @@ class @LessonThumbnail
     targetOrigin = [.5, .5]
     
     state = new StateModifier({
-      size: [400, 400]
     })
+    
+    #state.setTransform Transform.scale(.25,.25,.25)
 
     node = new RenderNode()
     state = state
