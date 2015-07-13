@@ -31,7 +31,7 @@ Template.home.onRendered ()->
   getTimeout = (i)->
     return Timer.setTimeout () =>
       scrollView.addThumbnail i
-    , 1000*i
+    , 500*(i+1)
 
   for lesson, i in lessons
     getTimeout(i)()

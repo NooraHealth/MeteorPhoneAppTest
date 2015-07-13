@@ -1,12 +1,12 @@
 class @LessonsView
   constructor: (@parent, @lessons)->
-    @.scroll = @.buildScrollview()
+    [@.node, @.scroll, @.modifier] = @.buildScrollview()
     @.surfaces = []
     @.scroll.sequenceFrom(@.surfaces)
     #@.parent.add @.scroll
 
   getRenderable: ()->
-    return @.scroll
+    return @.node
 
   direction: ()->
     if Meteor.Device.isPhone()
@@ -22,15 +22,23 @@ class @LessonsView
 
   buildScrollview: ()->
     height = LessonThumbnail.getHeight()
+    width = LessonThumbnail.getWidth()
     direction = @.direction()
 
-    scroll = new Scrollview {
-      direction: direction
-      size: [true, height]
-      paginated: true
+    modifier = new StateModifier {
+      align: [.25,.5]
+      origin: [.5,.5]
     }
 
-    return scroll
+    node = new RenderNode modifier
+    scroll = new Scrollview {
+      direction: direction
+      size: [width, height]
+      paginated: true
+    }
+    node.add(scroll)
+
+    return [node, scroll, modifier]
 
   addThumbnail: (index)->
     lesson = @.lessons[index]

@@ -9,7 +9,7 @@ class @LessonThumbnail
     @.size = [width, height]
     @.template = Template.lessonThumbnail
     @.html = @.templateToHtml()
-    @.surface = @.buildSurface()
+    [@.node, @.surface, @.state] = @.buildSurface()
 
     @.registerEvents()
 
@@ -50,14 +50,16 @@ class @LessonThumbnail
     return width
 
   buildSurface: ()->
+    targetSize = [400, 400]
+    targetAlign = [.25, .5]
+    targetOrigin = [.5, .5]
+    
     state = new StateModifier({
-      align: [.25,.5]
-      origin: [.5,.5]
       size: [400, 400]
     })
 
-    @.node = new RenderNode()
-    @.state = state
+    node = new RenderNode()
+    state = state
 
     surface = new Surface {
       size: @.size
@@ -68,10 +70,10 @@ class @LessonThumbnail
       }
     }
 
-    @.node.add(state).add(surface)
+    node.add(state).add(surface)
     #surface.pipe state
     surface.pipe state
-    return surface
+    return [node, surface, state]
 
   templateToHtml: ()->
     return Blaze.toHTMLWithData @.template, @.lesson
