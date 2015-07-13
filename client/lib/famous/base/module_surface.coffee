@@ -15,6 +15,9 @@ class @ModuleSurface
   registerFamousEvents: ()=>
     @.surface.on "click", (event)=>
       @.handleClick(event)
+    @.surface.on "deploy", ()=>
+      console.log "I have been deployed"
+      ModuleView.playAudio "question", @.module
     #@.mouseSync.on "start", (event)=>
       #@.handleClick event
     #@.mouseSync.on "end", (event)=>
@@ -46,6 +49,7 @@ class @ModuleSurface
     }
 
   templateToHtml: ()=>
-    audio = "<audio id='toplay' src="+@.module.audioSrc()+" autoplay></audio>"
+    id = @.module._id
+    audio = "<audio id='toplay#{id}'></audio>"
     return audio + Blaze.toHTMLWithData(@.template, @.module)
 
