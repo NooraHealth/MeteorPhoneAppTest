@@ -22,12 +22,12 @@ class @LessonsView
 
   buildScrollview: ()->
     height = LessonThumbnail.getHeight()
-    width = LessonThumbnail.getWidth()
+    width = LessonThumbnail.getWidth() * @.lessons.length
     direction = @.direction()
 
     modifier = new StateModifier {
-      align: [.25,.5]
       origin: [.5,.5]
+      align: [.5,.5]
     }
 
     node = new RenderNode modifier
