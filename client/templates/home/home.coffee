@@ -38,8 +38,15 @@ Template.home.onRendered ()->
   scrollView = new LessonsView(Template.currentData().lessons)
   lightbox = FView.byId "lightbox"
   lightbox.view.show scrollView
-  for lesson, i in Template.currentData().lessons
-    scrollView.addThumbnail i
+  lessons = Template.currentData().lessons
+  getTimeout = (i)->
+    return Timer.setTimeout () =>
+      scrollView.addThumbnail i
+    , 1000
+
+  for lesson, i in lessons
+    getTimeout(i)()
+
 
   console.log scrollView
 

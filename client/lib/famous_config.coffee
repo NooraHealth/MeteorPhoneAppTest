@@ -13,6 +13,7 @@ FView.ready ()->
   this.Scroller = famous.views.Scroller
   this.EventHandler = famous.core.EventHandler
   this.SpringTransition = famous.transitions.SpringTransition
+  this.Timer = famous.utilities.Timer
   console.log SpringTransition
   console.log famous.transitions
 

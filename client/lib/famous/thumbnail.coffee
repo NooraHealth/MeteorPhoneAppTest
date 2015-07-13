@@ -5,6 +5,8 @@ class @LessonThumbnail
   width = 400
   constructor: (@lesson)->
     @.size = [width, height]
+    @.template = Template.lessonThumbnail
+    @.html = @.templateToHtml()
     @.surface = @.buildSurface()
 
   getSurface: ()->
@@ -19,5 +21,8 @@ class @LessonThumbnail
   buildSurface: ()->
     return new Surface {
       size: @.size
-      content: "<p>cONTENTKL</p>"
+      content: @.html
     }
+
+  templateToHtml: ()->
+    return Blaze.toHTMLWithData @.template, @.lesson
