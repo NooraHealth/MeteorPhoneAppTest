@@ -2,9 +2,7 @@ class @LessonsView
   constructor: (@parent, @lessons)->
     @.scroll = @.buildScrollview()
     @.surfaces = []
-    console.log @.scroll
     @.scroll.sequenceFrom(@.surfaces)
-    console.log @.parent
     #@.parent.add @.scroll
 
   getRenderable: ()->
@@ -31,17 +29,15 @@ class @LessonsView
       size: [true, height]
       paginated: true
     }
-    console.log scroll
 
-    scroll.on "deploy", ()=>
-      console.log "----------jscrollview deployed---------------"
-      @.goToPage 5
     return scroll
 
   addThumbnail: (index)->
     lesson = @.lessons[index]
-    thumb = new LessonThumbnail(lesson).getSurface()
-    thumb.pipe @.scroll
-    @.surfaces.push thumb
+    thumb = new LessonThumbnail(lesson)
+    surface = thumb.getSurface()
+    node = thumb.getNode()
+    surface.pipe @.scroll
+    @.surfaces.push node
 
 

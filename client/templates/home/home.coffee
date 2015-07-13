@@ -28,15 +28,16 @@ Template.home.onRendered ()->
   lightbox.view.show scrollView.getRenderable()
   lessons = Template.currentData().lessons
 
-  getTimeout = (i)->
-    return Timer.setTimeout () =>
-      scrollView.addThumbnail i
-    , 1000
+  scrollView.addThumbnail 0
+  #getTimeout = (i)->
+    #return Timer.setTimeout () =>
+      #scrollView.addThumbnail i
+    #, 1000
 
-  for lesson, i in lessons
-    getTimeout(i)()
+  #for lesson, i in lessons
+    #getTimeout(i)()
 
-  scrollView.goToNextPage()
+  #scrollView.goToNextPage()
   console.log scrollView
   #lessonsComplete = Meteor.user().getCompletedLessons().length
   #lessons = Session.get "lessons sequence"

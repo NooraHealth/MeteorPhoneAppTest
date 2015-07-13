@@ -12,6 +12,7 @@ FView.ready ()->
   this.Scrollview = famous.views.Scrollview
   this.Scroller = famous.views.Scroller
   this.EventHandler = famous.core.EventHandler
+  this.Modifier = famous.core.Modifier
   this.SpringTransition = famous.transitions.SpringTransition
   this.Timer = famous.utilities.Timer
   this.RenderNode = famous.core.RenderNode

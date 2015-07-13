@@ -4,11 +4,13 @@ class @LessonThumbnail
   height = 400
   width = 400
   constructor: (@lesson)->
+    @.node = {}
+    @.modifer = {}
     @.size = [width, height]
     @.template = Template.lessonThumbnail
     @.html = @.templateToHtml()
     @.surface = @.buildSurface()
-    @.modifier = @.node._object
+
     @.registerEvents()
 
   isCurrentLesson: ()->
@@ -16,24 +18,27 @@ class @LessonThumbnail
 
   registerEvents: ()->
     surface = @.surface
-    currentlessonId = ""
-    console.log @.node
 
     surface.on "mouseout", ()=>
-      @.modifier.halt()
+      @.state.halt()
       if @.isCurrentLesson()
-        @.modifier.setTransform Transform.scale(1.15, 1.15, 1), {duration: 500, curve: "easeIn"}
+        @.state.setTransform Transform.scale(1.15, 1.15, 1), {duration: 500, curve: "easeIn"}
       else
-        @.modifier.setTransform Transform.scale(1, 1, 1), {duration: 500, curve: "easeIn"}
+        @.state.setTransform Transform.scale(1, 1, 1), {duration: 500, curve: "easeIn"}
     
     surface.on "mouseover", ()=>
+      console.log "mouseover"
+      console.log @.state
       if @.isCurrentLesson()
-        @.modifier.setTransform Transform.scale(1.20, 1.20, 1), {duration: 500, curve: "easeIn"}
+        @.state.setTransform Transform.scale(1.20, 1.20, 1), {duration: 500, curve: "easeIn"}
       else
-        @.modifier.setTransform Transform.scale(1.1, 1.1, 1), {duration: 500, curve: "easeIn"}
+        @.state.setTransform Transform.scale(1.1, 1.1, 1), {duration: 500, curve: "easeIn"}
 
     surface.on "click", ()=>
       Router.go "ModulesSequence", {_id: @.lesson._id}
+
+  getNode: ()->
+    return @.node
 
   getSurface: ()->
     return @.surface
@@ -48,12 +53,25 @@ class @LessonThumbnail
     state = new StateModifier({
       align: [.5,.5]
       origin: [.5,.5]
+      opacity: .5
+      size: [400, 400]
     })
-    @.node = new RenderNode(state)
+
+    @.node = new RenderNode()
+    @.state = state
+
     surface = new Surface {
       size: @.size
       content: @.html
+      properties: {
+        padding: '10px'
+        zIndex: 10
+      }
     }
+
+    @.node.add(state).add(surface)
+    #surface.pipe state
+    surface.pipe state
     return surface
 
   templateToHtml: ()->
