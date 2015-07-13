@@ -1,9 +1,14 @@
 class @LessonsView
-  constructor: (@lessons)->
+  constructor: (@parent, @lessons)->
     @.scroll = @.buildScrollview()
     @.surfaces = []
     console.log @.scroll
-    @.scroll.view.sequenceFrom(@.surfaces)
+    @.scroll.sequenceFrom(@.surfaces)
+    console.log @.parent
+    #@.parent.add @.scroll
+
+  getRenderable: ()->
+    return @.scroll
 
   direction: ()->
     if Meteor.Device.isPhone()
@@ -11,24 +16,28 @@ class @LessonsView
     else
       return 0
 
+  goToPage: (i)->
+    @.scroll.goToPage i
+
   buildScrollview: ()->
     height = LessonThumbnail.getHeight()
-    scroll = FView.byId "scroll"
     direction = @.direction()
-    scroll.view._optionsManager.setOptions {
+    scroll = new Scrollview {
       direction: direction
-      size: [undefined, height]
+      size: [true, height]
       paginated: true
     }
+    console.log scroll
+
+    scroll.on "deploy", ()=>
+      console.log "jscrollview deployed"
+      @.goToPage 5
     return scroll
 
   addThumbnail: (index)->
-    console.log "Adding this lesson:", index
     lesson = @.lessons[index]
-    console.log lesson
     thumb = new LessonThumbnail(lesson).getSurface()
-    console.log lesson
-    thumb.pipe @.scroll.view
+    thumb.pipe @.scroll
     @.surfaces.push thumb
 
 
