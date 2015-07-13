@@ -8,6 +8,32 @@ class @LessonThumbnail
     @.template = Template.lessonThumbnail
     @.html = @.templateToHtml()
     @.surface = @.buildSurface()
+    @.modifier = @.node._object
+    @.registerEvents()
+
+  isCurrentLesson: ()->
+    return false
+
+  registerEvents: ()->
+    surface = @.surface
+    currentlessonId = ""
+    console.log @.node
+
+    surface.on "mouseout", ()=>
+      @.modifier.halt()
+      if @.isCurrentLesson()
+        @.modifier.setTransform Transform.scale(1.15, 1.15, 1), {duration: 500, curve: "easeIn"}
+      else
+        @.modifier.setTransform Transform.scale(1, 1, 1), {duration: 500, curve: "easeIn"}
+    
+    surface.on "mouseover", ()=>
+      if @.isCurrentLesson()
+        @.modifier.setTransform Transform.scale(1.20, 1.20, 1), {duration: 500, curve: "easeIn"}
+      else
+        @.modifier.setTransform Transform.scale(1.1, 1.1, 1), {duration: 500, curve: "easeIn"}
+
+    surface.on "click", ()=>
+      Router.go "ModulesSequence", {_id: @.lesson._id}
 
   getSurface: ()->
     return @.surface
