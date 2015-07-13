@@ -28,14 +28,13 @@ Template.home.onRendered ()->
   lightbox.view.show scrollView.getRenderable()
   lessons = Template.currentData().lessons
 
-  scrollView.addThumbnail 0
-  #getTimeout = (i)->
-    #return Timer.setTimeout () =>
-      #scrollView.addThumbnail i
-    #, 1000
+  getTimeout = (i)->
+    return Timer.setTimeout () =>
+      scrollView.addThumbnail i
+    , 1000*i
 
-  #for lesson, i in lessons
-    #getTimeout(i)()
+  for lesson, i in lessons
+    getTimeout(i)()
 
   #scrollView.goToNextPage()
   console.log scrollView

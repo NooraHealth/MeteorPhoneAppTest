@@ -51,9 +51,8 @@ class @LessonThumbnail
 
   buildSurface: ()->
     state = new StateModifier({
-      align: [.5,.5]
+      align: [.25,.5]
       origin: [.5,.5]
-      opacity: .5
       size: [400, 400]
     })
 
