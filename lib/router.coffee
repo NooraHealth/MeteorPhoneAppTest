@@ -31,10 +31,6 @@ Router.map ()->
       if not Meteor.user().curriculumIsSet()
         Router.go "selectCurriculum"
 
-      if Meteor.isCordova
-        Session.set( "content src", 'http://127.0.0.1:8080/')
-        #initializeServer()
-
       if Meteor.isCordova and not Meteor.user().contentLoaded()# and not Session.get "content loaded"
         Router.go "loading"
         Meteor.call 'contentEndpoint', (err, endpoint)=>
@@ -53,10 +49,6 @@ Router.map ()->
             Meteor.user().setContentAsLoaded false
             Meteor.logout()
           downloader.loadContent onSuccess, onError
-
-      else if !Meteor.isCordova
-        Meteor.call "contentEndpoint", (err, src)->
-          Session.set "content src", src
 
       if this.next
         this.next()
