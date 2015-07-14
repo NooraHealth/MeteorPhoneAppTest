@@ -58,7 +58,8 @@ Router.map ()->
         Meteor.call "contentEndpoint", (err, src)->
           Session.set "content src", src
 
-      this.next()
+      if this.next
+        this.next()
 
     data: ()->
       if this.ready() and Meteor.user()

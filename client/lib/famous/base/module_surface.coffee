@@ -17,7 +17,8 @@ class @ModuleSurface
       @.handleClick(event)
     @.surface.on "deploy", ()=>
       console.log "I have been deployed"
-      ModuleView.playAudio "question", @.module
+      if @.module.audioSrc()
+        ModuleView.playAudio "question", @.module
     #@.mouseSync.on "start", (event)=>
       #@.handleClick event
     #@.mouseSync.on "end", (event)=>
@@ -43,13 +44,15 @@ class @ModuleSurface
     return new Surface {
       size: @.size
       content: @.html
-      classes: ['white',
-      'card', 'valign-wrapper', 'module'
-      ]
+      classes: ['white', 'card', 'valign-wrapper', 'module']
     }
 
   templateToHtml: ()=>
     id = @.module._id
-    audio = "<audio id='toplay#{id}'></audio>"
+    src = @.module.audioSrc()
+    console.log src
+    console.log "Audio src"
+    audio = "<audio id='toplay#{id}' src="+src+"></audio>"
+    console.log audio
     return audio + Blaze.toHTMLWithData(@.template, @.module)
 

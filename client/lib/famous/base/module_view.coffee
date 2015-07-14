@@ -65,9 +65,9 @@ class @ModuleView
     elem.attr('src',  src)
     console.log "about to play the audio"
     console.log elem
-    console.log module
-    console.log type
-    elem[0].addEventListener "canplay", ()->
+
+    elem[0].addEventListener "canplay", ()=>
+      console.log "Can Play the audio now!!"
       elem[0].currentTime = 0
       elem[0].play()
     , true

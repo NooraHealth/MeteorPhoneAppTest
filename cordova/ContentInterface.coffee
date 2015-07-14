@@ -1,4 +1,3 @@
-Array::merge = (other) -> Array::push.apply @, other
 
 class @ParsedUrl
   constructor: (@urlString, @endpoint)->
@@ -162,6 +161,8 @@ class @ContentInterface
 
       for module in modules
         urls.merge(@.moduleUrls(module))
+      console.log "Final urls: "
+      console.log urls
     catch err
       console.log "Error caught in retrieve content urls: "
       console.log err

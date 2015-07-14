@@ -11,8 +11,7 @@ Template.loading.helpers
   percent: ()->
     return Session.get "percent loaded"
 
-Template.loading.rendered = ()->
-  console.log "In please wait return callback"
+Template.loading.onRendered ()->
   this.loading = Meteor.pleaseWait {
     logo: 'NHlogo.png',
     loadingHtml: message + spinner
