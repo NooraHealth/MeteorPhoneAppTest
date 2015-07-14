@@ -52,7 +52,9 @@ class @ModuleSurface
     src = @.module.audioSrc()
     console.log src
     console.log "Audio src"
-    audio = "<audio id='toplay#{id}' src="+src+"></audio>"
+    audio = "<audio id='toplay#{id}' src="+src+" preload='auto'></audio>"
     console.log audio
     return audio + Blaze.toHTMLWithData(@.template, @.module)
+
+
 
