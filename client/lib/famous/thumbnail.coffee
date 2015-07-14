@@ -27,8 +27,6 @@ class @LessonThumbnail
         @.state.setTransform Transform.scale(1, 1, 1), {duration: 500, curve: "easeIn"}
     
     surface.on "mouseover", ()=>
-      console.log "mouseover"
-      console.log @.state
       if @.isCurrentLesson()
         @.state.setTransform Transform.scale(1.20, 1.20, 1), {duration: 500, curve: "easeIn"}
       else

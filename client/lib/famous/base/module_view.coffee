@@ -48,29 +48,55 @@ class @ModuleView
       if elem[0]
         elem[0].pause()
 
+  @stopAudio: (audio)->
+    for elem in audio
+      if elem[0]
+        elem[0].pause()
+      else if elem.pause
+        elem.pause()
+
   @playAudio : (type, module)->
-    #@.stopAllAudio()
-    if type == "question"
-      src = module.audioSrc()
-      console.log "Was question, setting type to "
-      console.log src
-    else if type == "correct"
-      src = module.correctAnswerAudio()
-    else if type == "incorrect"
-      src = module.incorrectAnswerAudio()
-    else
-      src=""
-
-    elem = $('#toplay'+module._id)
-    elem.attr('src',  src)
-    console.log "about to play the audio"
-    console.log elem
-
-    elem[0].addEventListener "canplay", ()=>
-      console.log "Can Play the audio now!!"
+    play = (elem)->
       elem[0].currentTime = 0
       elem[0].play()
-    , true
+
+    elem = $('#toplay'+module._id)
+    if type=="question"
+      @.stopAllAudio()
+      if elem[0].paused
+        play elem
+      return
+    #else if type=="correct"
+      #toPlay  = $('#correcttoplay'+module._id)
+      #toStop = questionAudio
+    #else if type=="incorrect"
+      #elem = $('#incorrecttoplay'+module._id)
+      #toStop = questionAudio
+      #console.log "Stopping the questionaudio"
+      #console.log questionAudio
+
+    else
+    #@.stopAudio toStop
+
+      #if type == "question"
+        #src = module.audioSrc()
+      if type == "correct"
+        src = module.correctAnswerAudio()
+      else if type == "incorrect"
+        src = module.incorrectAnswerAudio()
+      else
+        src=""
+
+      if elem.attr("src") != src
+        elem.attr('src',  src)
+
+      play= ()->
+        elem[0].currentTime = 0
+        elem[0].play()
+        
+      elem[0].addEventListener "canplay", ()=>
+        play()
+      , true
 
   @handleCorrectResponse: (module)->
     @.playAudio "correct", module
