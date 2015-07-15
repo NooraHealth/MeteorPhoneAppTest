@@ -1,47 +1,63 @@
 Template.nextBtn.events
   "click #nextbtn": ()->
     index = Session.get "current module index"
-    currLesson = Session.get "current lesson"
     modulesSequence = Session.get "modules sequence"
-    incorrectlyAnswered = Session.get "incorrectly answered"
-    correctlyAnswered = Session.get "correctly answered"
     currentModule = modulesSequence[index]
     
     #if correctlyAnswered.length == modulesSequence.length
     if allModulesComplete()
-      Meteor.user().updateLessonsComplete(currLesson)
-      Router.go "home"
+      endSequence()
       return
 
     if !isAQuestion(currentModule)
-      correctlyAnswered.push index
-      Session.set "correctly answered", correctlyAnswered
+      recordModuleAsCorrectlyAnswered()
    
     if isLastModuleInSeries()
-      moduleIndex = 0
+      nextModule = 0
       if hasAttemptedAllModules()
-        moduleIndex = incorrectlyAnswered[0]
+        nextModule = nextIncorrectModule()
       else
-        moduleIndex = ++index
+        nextModule = ++index
 
     else if !hasAllCorrectAnswers()
-      moduleIndex = incorrectlyAnswered[0]
+      nextModule = nextIncorrectModule()
     else
-      Meteor.user().updateLessonsComplete(currLesson)
-      Router.go "home"
+      endSequence()
       return
 
-    Session.set "current module index", moduleIndex
+    ModuleView.stopAllAudio()
+    console.log "next module index"
+    console.log nextModule
+
+    Session.set "current module index", nextModule
     Session.set "success toast is visible", false
     Session.set "fail toast is visible", false
     Session.set "next button is hidden", nextBtnShouldHide()
 
-    ModuleView.stopAllAudio()
+    emitShowModuleEvent(nextModule)
 
-    fview = FView.byId "footer"
-    surface = fview.view or fview.surface
-    eventOutput = surface._eventOutput
-    eventOutput.emit 'showModule', moduleIndex
+emitShowModuleEvent= (module)->
+  fview = FView.byId "footer"
+  surface = fview.view or fview.surface
+  eventOutput = surface._eventOutput
+  eventOutput.emit 'showModule', module
+
+recordModuleAsCorrectlyAnswered = ()->
+  index = Session.get "current module index"
+  correctlyAnswered = Session.get "correctly answered"
+  correctlyAnswered.push index
+  Session.set "correctly answered", correctlyAnswered
+
+nextIncorrectModule = ()->
+  incorrectlyAnswered = Session.get "incorrectly answered"
+  return incorrectlyAnswered[0]
+
+endSequence = ()->
+  currLesson = Session.get "current lesson"
+  Meteor.user().updateLessonsComplete(currLesson)
+  ModuleView.stopAllAudio()
+  Router.go "home"
+
 
 Template.nextBtn.helpers
   phone: ()->

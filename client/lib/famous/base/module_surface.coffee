@@ -48,14 +48,7 @@ class @ModuleSurface
     }
 
   templateToHtml: ()=>
-    id = @.module._id
-    correct = @.module.correctAnswerAudio()
-    incorrect = @.module.incorrectAnswerAudio()
-    #audio = "<audio id='correcttoplay#{id}' src="+correct+" preload='auto'></audio>" +
-        #"<audio id='incorrecttoplay#{id}' src="+incorrect+" preload='auto'></audio>"
-    audio = ""
-    console.log audio
-    return audio + Blaze.toHTMLWithData(@.template, @.module)
+    return Blaze.toHTMLWithData(@.template, @.module)
 
 
 
