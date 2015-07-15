@@ -36,8 +36,7 @@ Template.nextBtn.events
     Session.set "fail toast is visible", false
     Session.set "next button is hidden", nextBtnShouldHide()
 
-    audio = $("nav").find("audio")
-    ModuleView.stopAudio audio
+    ModuleView.stopAllAudio()
 
     fview = FView.byId "footer"
     surface = fview.view or fview.surface

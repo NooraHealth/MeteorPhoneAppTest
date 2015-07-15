@@ -47,6 +47,8 @@ class @ModuleView
     for elem in audio
       if elem[0]
         elem[0].pause()
+      else if elem.pause
+        elem.pause()
 
   @stopAudio: (audio)->
     for elem in audio
@@ -62,8 +64,15 @@ class @ModuleView
 
     elem = $('#toplay'+module._id)
     if type=="question"
-      @.stopAllAudio()
+      #@.stopAllAudio()
+      src = module.audioSrc()
       if elem[0].paused
+        console.log elem.attr("src")
+        console.log src
+        if elem.attr("src") != src
+          elem.attr('src',  src)
+          console.log "Just changed the src"
+          console.log elem
         play elem
       return
     #else if type=="correct"
@@ -87,16 +96,25 @@ class @ModuleView
       else
         src=""
 
+      console.log "About to pause audio"
+      if !elem[0].paused
+        elem[0].pause()
       if elem.attr("src") != src
         elem.attr('src',  src)
+      console.log "Elem"
+      console.log elem
 
+      console.log "About toplay the elem"
       play= ()->
         elem[0].currentTime = 0
         elem[0].play()
         
       elem[0].addEventListener "canplay", ()=>
+        console.log "Can play event fired"
         play()
       , true
+
+      play()
 
   @handleCorrectResponse: (module)->
     @.playAudio "correct", module
