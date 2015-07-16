@@ -23,11 +23,17 @@ Router.map ()->
         ]
 
     onBeforeAction: ()->
+      console.log "In the on Before action"
       if Meteor.loggingIn()
+        console.log "1 on Before"
         this.next()
       else if !Meteor.user()
         this.next()
 
+      if Meteor.isCordova
+        console.log "about to initialize the server"
+        initializeServer()
+        
       if not Meteor.user().curriculumIsSet()
         Router.go "selectCurriculum"
 

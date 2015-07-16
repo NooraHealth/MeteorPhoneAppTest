@@ -23,10 +23,13 @@ Template.home.onRendered ()->
   if not Meteor.user()
     return
 
+  if not Template.currentData()
+    return
+
   lightbox = FView.byId "lightbox"
-  scrollView = new LessonsView(lightbox.view, Template.currentData().lessons)
-  lightbox.view.show scrollView.getRenderable()
   lessons = Template.currentData().lessons
+  scrollView = new LessonsView(lightbox.view, lessons)
+  lightbox.view.show scrollView.getRenderable()
 
   getTimeout = (i)->
     return Timer.setTimeout () =>
