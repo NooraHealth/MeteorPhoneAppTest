@@ -1,5 +1,4 @@
 Meteor.startup ()->
-
   if Meteor.isCordova
     console.log "In the meteor startup and about to initialize the server"
     Meteor.subscribe "users"

@@ -23,15 +23,14 @@ Router.map ()->
         ]
 
     onBeforeAction: ()->
-      console.log "In the on Before action"
+      console.log "In the onBeforeAction in the home route"
       if Meteor.loggingIn()
-        console.log "1 on Before"
         this.next()
       else if !Meteor.user()
         this.next()
 
       if Meteor.isCordova
-        console.log "about to initialize the server"
+        console.log "Meteor is cordova and I'm about to initialize the server"
         initializeServer()
         
       if not Meteor.user().curriculumIsSet()
@@ -57,7 +56,6 @@ Router.map ()->
           downloader.loadContent onSuccess, onError
 
       if this.next
-        console.log "About to call this.next"
         this.next()
 
     data: ()->
