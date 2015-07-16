@@ -63,7 +63,6 @@ Modules.attachSchema ModuleSchema
 
 Modules.helpers {
   videoUrl: ()->
-    #return this.video_url + "?autoplay=1"
     return this.video_url
 
   isEmbedded: ()->
@@ -72,55 +71,42 @@ Modules.helpers {
     else
       return this.video_url.startsWith "http"
 
-  isLastModule: ()->
-    return @.next_module == -1
+  #questionAudio: ()->
+    #url = Meteor.getContentSrc()
+    #if !@.audio
+      #return ""
+    #return url + @.audio
 
-  imgSrc: ()->
-    url = Meteor.getContentSrc()
-    return url+ @.image
+  #incorrectAnswerAudio: ()->
+    #url = Meteor.getContentSrc()
+    #return url + @.incorrect_audio
 
-  questionAudio: ()->
-    url = Meteor.getContentSrc()
-    if !@.audio
-      return ""
-    return url + @.audio
-
-  audioSrc: ()->
-    url = Meteor.getContentSrc()
-    if !@.audio
-      return ""
-    return url + @.audio
-
-  incorrectAnswerAudio: ()->
-    url = Meteor.getContentSrc()
-    return url + @.incorrect_audio
-
-  correctAnswerAudio: ()->
-    url = Meteor.getContentSrc()
-    return url + @.correct_audio
+  #correctAnswerAudio: ()->
+    #url = Meteor.getContentSrc()
+    #return url + @.correct_audio
   
-  videoSrc: ()->
-    url = Meteor.getContentSrc()
-    return url  + @.video
+  #videoSrc: ()->
+    #url = Meteor.getContentSrc()
+    #return url  + @.video
 
   isCorrectAnswer: (response)->
     return response in @.correct_answer
 
-  getOptions: (start, end)->
-    url = Meteor.getContentSrc()
-    module = @
+  #getOptions: (start, end)->
+    #url = Meteor.getContentSrc()
+    #module = @
 
-    if not @.options
-      return []
+    #if not @.options
+      #return []
 
-    isCorrect = (option)=>
-      return option in @.correct_answer
+    #isCorrect = (option)=>
+      #return option in @.correct_answer
 
-    newArr = ({option: option, optionImgSrc: url + option, nh_id: module.nh_id, i: i, correct: isCorrect(option)} for option, i in @.options when i >= start and i < end)
-    return {options: newArr}
+    #newArr = ({option: option, optionImgSrc: url + option, nh_id: module.nh_id, i: i, correct: isCorrect(option)} for option, i in @.options when i >= start and i < end)
+    #return {options: newArr}
 
-  option: (i)->
-    return @.options[i]
+  #option: (i)->
+    #return @.options[i]
 
   isVideoModule: ()->
     return @.type == "VIDEO"

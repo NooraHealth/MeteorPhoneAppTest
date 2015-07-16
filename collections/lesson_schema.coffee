@@ -36,11 +36,6 @@ LessonSchema = new SimpleSchema
 Lessons.attachSchema LessonSchema
 
 Lessons.helpers {
-  imgSrc: ()->
-    url = Meteor.getContentSrc()
-    console.log "This is the content src: "
-    console.log url
-    return url + @.image
 
   getSublessonDocuments: ()->
     if !this.has_sublessons

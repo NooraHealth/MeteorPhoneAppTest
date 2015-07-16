@@ -1,8 +1,8 @@
 Template.multipleChoiceModule.helpers
   secondRow: ()->
-    return @.getOptions 3, 6
+    return MultipleChoiceSurface.getOptions @, 3, 6
   firstRow: ()->
-    return @.getOptions 0, 3
+    return MultipleChoiceSurface.getOptions @, 0, 3
   module: ()->
     return @
 

@@ -29,10 +29,20 @@ class @MultipleChoiceSurface extends ModuleSurface
     
     event.target.classList.toggle "selected"
 
-  handleInputUpdate: (event)=>
-    console.log "Update Event!"
+  @getOptions: ( module, start, end )->
+    url = Meteor.NooraClient.getContentSrc()
 
-  handleInputEnd: (event)=>
-    console.log "End Event!"
+    if not module.options
+      return []
+
+    isCorrect = ( option )=>
+      return option in module.correct_answer
+
+    newArr = ({option: option, optionImgSrc: url + option, nh_id: module.nh_id, i: i, correct: isCorrect(option)} for option, i in module.options when i >= start and i < end)
+    return {options: newArr}
+
+  @option: ( module, i )->
+    return module.options[i]
+
 
 

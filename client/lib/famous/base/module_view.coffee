@@ -41,7 +41,6 @@ class @ModuleView
     if event
       event.target.classList.add "faded"
 
-
   @stopAllAudio : ()->
     audio = $("audio")
     for elem in audio
@@ -65,7 +64,7 @@ class @ModuleView
     elem = $('#toplay'+module._id)
     if type=="question"
       #@.stopAllAudio()
-      src = module.audioSrc()
+      src = ModuleSurface.audioSrc(module)
       if elem[0].paused
         console.log elem.attr("src")
         console.log src
@@ -88,11 +87,11 @@ class @ModuleView
     #@.stopAudio toStop
 
       #if type == "question"
-        #src = module.audioSrc()
+        #src = ModuleSurface.audioSrc(module)
       if type == "correct"
-        src = module.correctAnswerAudio()
+        src = ModuleSurface.correctAnswerAudio(module)
       else if type == "incorrect"
-        src = module.incorrectAnswerAudio()
+        src = ModuleSurface.incorrectAnswerAudio(module)
       else
         src=""
 
@@ -101,16 +100,12 @@ class @ModuleView
         elem[0].pause()
       if elem.attr("src") != src
         elem.attr('src',  src)
-      console.log "Elem"
-      console.log elem
 
-      console.log "About toplay the elem"
       play= ()->
         elem[0].currentTime = 0
         elem[0].play()
         
       elem[0].addEventListener "canplay", ()=>
-        console.log "Can play event fired"
         play()
       , true
 

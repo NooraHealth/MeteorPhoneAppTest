@@ -1,6 +1,6 @@
 Template.imgWithToasts.helpers
   imgSrc: ()->
-    return Template.parentData().imgSrc()
+    return ModuleSurface.imgSrc Template.parentData()
   successToastIsVisible: ()->
     return Session.get "success toast is visible"
   failToastIsVisible: ()->

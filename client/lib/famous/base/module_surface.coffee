@@ -17,7 +17,7 @@ class @ModuleSurface
       @.handleClick(event)
     @.surface.on "deploy", ()=>
       console.log "I have been deployed"
-      if @.module.audioSrc()
+      if ModuleSurface.audioSrc(@.module)
         ModuleView.playAudio "question", @.module
     #@.mouseSync.on "start", (event)=>
       #@.handleClick event
@@ -35,6 +35,7 @@ class @ModuleSurface
 
   getSurface: ()=>
     return @.surface
+
   getModule: ()=>
     return @.module
 
@@ -50,5 +51,24 @@ class @ModuleSurface
   templateToHtml: ()=>
     return Blaze.toHTMLWithData(@.template, @.module)
 
+  @imgSrc: (module)->
+    url = Meteor.NooraClient.getContentSrc()
+    return url + module.image
 
+  @videoSrc: (module)->
+    url = Meteor.NooraClient.getContentSrc()
+    return url + module.video
+      
+  @audioSrc: (module)->
+    console.log Meteor.NooraClient
+    url = Meteor.NooraClient.getContentSrc()
+    return url + module.audio
+
+  @correctAnswerAudio: (module)->
+    url = Meteor.NooraClient.getContentSrc()
+    return url + module.correct_audio
+
+  @incorrectAnswerAudio: (module)->
+    url = Meteor.NooraClient.getContentSrc()
+    return url + module.incorrect_audio
 
