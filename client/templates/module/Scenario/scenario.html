@@ -1,37 +1,31 @@
 <template name="scenarioModule">
   
-<div class="valign-wrapper module row">
-  <div class="valign module-wrapper col m10 offset-m1 l10 offset-l1">
+  <div class="valign module-wrapper">
     <div class="row center-align">
       <div class="center-align">
-        <img src="{{imgSrc}}" class="module-image">
+        {{>imgWithToasts class="module-image"}}
       </div>
     </div>
   
-    <div class="row center-align padded">
+    <div class="row center-align">
       <div class="card-content flow-text">
         {{question}}
       </div>
     </div>
 
     <div class="row center-align">
-      <div class="card-action">
         <a  class="response btn waves-effect waves-light white-text green scenario-btn {{#if isCorrectAnswer 'Normal' }} correct {{/if}}" value="{{option 0}}">
           <i class="mdi-action-home"></i> NORMAL
         </a>
                 
         <a class="response btn waves-effect waves-light white-text yellow darken-3 scenario-btn {{#if isCorrectAnswer 'CallDoc' }} correct {{/if}}" value="{{option 1}}">
-          <i class="mdi-action-settings-phone"></i> CALL DOCTOR
+          <i class="mdi-action-settings-phone"></i> CALL {{#if isPhone }} DR {{else}} DOCTOR {{/if}}
         </a>
 
         <a class="response btn waves-effect waves-light white-text red scenario-btn {{#if isCorrectAnswer 'Call911' }} correct {{/if}}" value="{{option 2}}">
           <i class="mdi-maps-local-hospital"></i> CALL 911
         </a>
-      </div>
     </div>
   </div>
-</div>
-<audio name="audio{{nh_id}}" class="correct" src="{{correctAnswerAudio}}"></audio>
-<audio name="audio{{nh_id}}" class="incorrect" src="{{incorrectAnswerAudio}}"></audio>
 
 </template>

@@ -1,14 +1,4 @@
-AccountsTemplates.configureRoute "signIn", {
-  name: 'signIn',
-  path:'/signIn',
-  redirect: ()->
-    if Meteor.user().profile.condition
-      Router.go 'home'
-    else
-      Router.go 'selectCurriculum'
-      
-  template: 'entry',
-}
+
 
 AccountsTemplates.configure {
     confirmPassword: true,
@@ -41,13 +31,11 @@ AccountsTemplates.configure {
     homeRoutePath: '/',
     redirectTimeout: 4000,
 
-    # Hooks
-    #onLogoutHook: myLogoutFunc,
-    onSubmitHook: (error, action, final) ->
-      user = Meteor.user()
-      if !error
-        Router.go "/"
-    
+    onSubmitHook: (error, state)->
+      if !error and state=='signUp'
+        console.log "IIn on submit"
+        Router.go "/selectCurriculum"
+
     # Texts
     texts: {
 
@@ -90,7 +78,5 @@ AccountsTemplates.addField {
 AccountsTemplates.configureRoute 'ensureSignedIn', {
   template: 'entry'
 }
-
-
 
 Router.plugin "ensureSignedIn"

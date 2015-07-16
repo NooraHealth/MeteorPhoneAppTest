@@ -63,6 +63,7 @@ Modules.attachSchema ModuleSchema
 
 Modules.helpers {
   videoUrl: ()->
+    #return this.video_url + "?autoplay=1"
     return this.video_url
 
   isEmbedded: ()->
@@ -78,8 +79,16 @@ Modules.helpers {
     url = Meteor.getContentSrc()
     return url+ @.image
 
+  questionAudio: ()->
+    url = Meteor.getContentSrc()
+    if !@.audio
+      return ""
+    return url + @.audio
+
   audioSrc: ()->
     url = Meteor.getContentSrc()
+    if !@.audio
+      return ""
     return url + @.audio
 
   incorrectAnswerAudio: ()->

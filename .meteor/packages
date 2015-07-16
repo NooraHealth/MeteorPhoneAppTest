@@ -23,7 +23,6 @@ gadicohen:famous-views
 raix:famono
 edgee:slingshot
 service-configuration
-autopublish
 multiply:iron-router-progress
 sanjo:jasmine
 velocity:console-reporter
@@ -31,3 +30,5 @@ velocity:html-reporter
 pcel:loading
 
 
+mystor:device-detection
+ground:db

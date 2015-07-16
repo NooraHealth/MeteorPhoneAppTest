@@ -12,41 +12,49 @@ Router.map ()->
       'footer': {to:"footer"}
     }
     layoutTemplate: 'layout'
-    onBeforeAction: ()->
+    cache: true
+    waitOn: ()->
+      if !Meteor.user()
+        return []
+      if Meteor.status().connected
+        return [
+          Meteor.subscribe("curriculum", Meteor.user().getCurriculumId()),
+          Meteor.subscribe("lessons", Meteor.user().getCurriculumId()),
+        ]
 
+    onBeforeAction: ()->
       if Meteor.loggingIn()
-        return
+        this.next()
       else if !Meteor.user()
         this.next()
-      else if not Meteor.user().curriculumIsSet()
+
+      if not Meteor.user().curriculumIsSet()
         Router.go "selectCurriculum"
-      else if Meteor.isCordova and not Meteor.user().contentLoaded() and not Session.get "content loaded"
-        Meteor.call 'contentEndpoint', (err, endpoint)->
+
+      if Meteor.isCordova and not Meteor.user().contentLoaded()# and not Session.get "content loaded"
+        Router.go "loading"
+        Meteor.call 'contentEndpoint', (err, endpoint)=>
+          console.log "----------- Downloading the content----------------------------"
+          console.log "About to make downloader"
           downloader = new ContentInterface(Meteor.user().getCurriculum(), endpoint)
-          onSuccess = (entry)->
+          onSuccess = (entry)=>
+            console.log "Success downloading content: ", entry
             Meteor.user().setContentAsLoaded true
-            Session.set "content loaded", true
-            Session.set( "content src", 'http://127.0.0.1:8080/')
             Router.go "home"
 
           onError = (err)->
+            console.log "Error downloading content: ", err
+            console.log err
             alert "There was an error downloading your content, please log in and try again: ", err
             Meteor.user().setContentAsLoaded false
             Meteor.logout()
-          downloader.loadContent(onSuccess, onError)
-          Router.go "loading"
+          downloader.loadContent onSuccess, onError
 
-      else if !Meteor.isCordova
-        Meteor.call "contentEndpoint", (err, src)->
-          console.log "Setting the src to ", src
-          Session.set "content src", src
-
-      Session.set "current transition", "slideWindowLeft"
-      this.next()
-
+      if this.next
+        console.log "About to call this.next"
+        this.next()
 
     data: ()->
-      console.log "The data"
       if this.ready() and Meteor.user()
         curr = Curriculum.findOne({_id: Meteor.user().profile.curriculumId})
         if curr
@@ -70,45 +78,43 @@ Router.map ()->
     yieldTemplates: {
       'selectCurriculumFooter': {to:"footer"}
     }
-    onBeforeAction: ()->
-      this.next()
+    cache: true
+    waitOn:()->
+      if Meteor.status().connected
+        return Meteor.subscribe("all_curriculums")
   }
 
   ###
   # module sequence
   ###
-  this.route '/modules/:nh_id', {
-    path: '/modules/:nh_id'
+  this.route '/modules/:_id', {
+    path: '/modules/:_id'
     layoutTemplate: 'layout'
     name: 'ModulesSequence'
     template: "module"
     yieldTemplates: {
       'moduleFooter': {to:"footer"}
     }
-    #waitOn: ()->
-      #Meteor.subscribe "lessons"
-      #Meteor.subscribe "modules"
-    onBeforeAction: ()->
-      if Meteor.loggingIn()
+    cache: true
+    waitOn: ()->
+      if !Meteor.user()
         return
-      Session.set "current transition", "slideWindowLeft"
-      this.next()
+      if Meteor.status().connected
+        return [
+          Meteor.subscribe("lessons", Meteor.user().getCurriculumId()),
+          Meteor.subscribe("curriculum", Meteor.user().getCurriculumId()),
+          Meteor.subscribe("modules", this.params._id)
+        ]
+
     data: () ->
-      console.log @.params.nh_id
-      console.log "ABOVE"
-      console.log Lessons.findOne {nh_id: this.params.nh_id}
-      console.log Lessons.find({}).count()
-      if this.ready()
-        console.log "READY"
-        lesson = Lessons.findOne {nh_id: this.params.nh_id}
-        console.log lesson
-        Session.set "current lesson", lesson
-        modules = lesson.getModulesSequence()
-        Session.set "modules sequence", modules
-        Session.set "current module index",0
-        Session.set "correctly answered", []
-        Session.set "incorrectly answered", []
-        return {modules:  modules  }
+      lesson = Lessons.findOne {_id: this.params._id}
+      Session.set "current lesson", lesson
+      modules = lesson.getModulesSequence()
+      Session.set "modules sequence", modules
+      Session.set "current module index",0
+      Session.set "correctly answered", []
+      Session.set "incorrectly answered", []
+      return {modules:  modules  }
         
   }
 
@@ -119,18 +125,17 @@ Router.map ()->
   this.route '/refreshcontent', {
     path: '/refreshcontent'
     data: ()->
-      Meteor.call "refreshContent", ()->
-        console.log "Yey called refresh"
+      Meteor.call "refreshContent"
     }
 
   this.route '/loading', {
     path: '/loading'
     name: 'loading'
-    
   }
 
 
 Router.configure {
-  progressSpinner:false
+  progressSpinner:false,
+  #loadingTemplate: 'loading'
 }
 

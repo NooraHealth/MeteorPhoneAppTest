@@ -61,14 +61,18 @@ tile {
   position: fixed;
   z-index: 2;
 
-  &.brand-tile {
-    & img {
-      top: 20;
+  &.round-tile {
+    & .next {
       margin-left: 10px;
       max-width: 60px;
-      background-color: #FFFFFF;
       padding: 10px;
       border-radius: 30px;
+      background-color: blue;
+    }
+    & .logo {
+      @extend .next;
+      background-color: #FFFFFF;
+      top: 20;
     }
   }
 }
@@ -93,10 +97,36 @@ td {
 Custom NH components 
 
 --------------------------------*/
+.embedded-video {
+  @media(min-width: 600px) {
+    width: 660px;
+    height: 480px;
+  }
+  @media(max-width: 668px) {
+    height: 200px;
+    width: 320px;
+  }
+}
+
 .padding {
   padding: 50px;
 }
 
+.next-btn-tile {
+  @include transition(all, 1s);
+  background-color: $light-blue-2;
+  height: 40px;
+  width: 40px;
+  border-radius: 20px;
+  color: #ffffff !important;
+  position: absolute;
+  right:20px;
+  bottom: 15px;
+}
+
+.padding-lg {
+  padding: 30px;
+}
 .loading-message {
   color: #fff;
   font-size: 25px;
@@ -129,7 +159,7 @@ Custom NH components
 }
 
 .bottom {
-  bottom: 0;
+  bottom: 0 !important;
 }
 
 #addModuleModal {
@@ -166,23 +196,58 @@ Custom NH components
   height:100%;
 }
 
+.img-with-toasts-wrapper {
+  position: relative;
+  & > .inner-toasts-wrapper {
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    position: absolute;
+    & > .toast-overlay {
+      @include transition(all, 0s);
+      width:0%;
+      margin-right: auto;
+      margin-left:auto;
+    } 
+    & > .expand-toast {
+      @include transition(all, 2s);
+      width: 50%;
+    }
+  }
+}
+
 .module-wrapper {
   text-align:center;
   width: 100%;
 }
 
 .module-image {
-  height: 50vh;
+  @media(max-width:600px) {
+    height: 35vh;
+  }
+  @media(min-width: 600px){
+    height: 50vh;
+  }
   max-width: 100%;
 }
 .binary-image {
   height:40vh;
-  max-width:100%;
 }
 
 .padded {
-  padding: 40px;
+  @media (max-width: 600px) {
+    padding: 10px;
+  }
+  @media (min-width: 600px){
+    padding: 40px;
+  }
 }
+
+.padding-sm {
+  padding: 5x;
+}
+
 .padding-bottom {
   padding-bottom: 10px
 }
@@ -289,6 +354,10 @@ Custom NH components
 
 .no-border {
   border: none;
+}
+
+.scenario-btn {
+  margin: 4px;
 }
 
 .binary-btn, .scenario-btn {
@@ -415,7 +484,7 @@ Custom NH components
 .image-choice {
   width: 100%;
   cursor: pointer;
-  height: 20vh;
+  height: 17vh;
 }
 
 .correctly_selected {
@@ -507,11 +576,10 @@ video {
 
 .chapter-card {
   padding: $padding-S;
-  margin: 30px;
   height: 100%;
-  /*@media (min-width: 600px) {*/
-    /*height: 425px;  */
-  /*}*/
+  @media (min-width: 600px) {
+    margin: 10px;
+  }
 }
 
 /*@media (max-width: 768px) {*/

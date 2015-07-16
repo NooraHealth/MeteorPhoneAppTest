@@ -1,11 +1,10 @@
 <template name="videoModule">
-<div class="valign-wrapper module">
   <div class="valign module-wrapper">
-    <div class="center-align">
+    <div class="center-align ">
       {{#if isEmbedded}}
-        <iframe title="{{title}}" width="480" height="390" src="{{videoUrl}}" frameborder="0" allowfullscreen></iframe>
+        <iframe title="{{title}}" class="embedded-video" src="{{video_url}}?start={{start}}&end={{end}}" frameborder="0" allowfullscreen></iframe>
       {{else}}
-        <video src="{{videoSrc}}" class="inherit video-responsive" controls autoplay>
+        <video src="{{videoSrc}}" class="inherit" controls autoplay>
           Your browser does not support the video tag. Please logout and use another browser.
         </video>
       {{/if}}
@@ -15,6 +14,5 @@
       {{title}}
     </div>
   </div>
-</div>
 
 </template>

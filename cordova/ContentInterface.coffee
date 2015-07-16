@@ -19,15 +19,39 @@ class @ContentInterface
   constructor: (@curriculum, @contentEndpoint)->
     console.log "Consutricting and this is the endp: ", @.contentEndpoint
 
+  clearContentDirectory: ()->
+    deferred = Q.defer()
+    removeDir = (dirEntry)->
+      if dirEntry
+        dirEntry.removeRecursively(()->
+          deferred.resolve()
+        , (err)->
+            console.log "Error removing directory"
+            console.log err
+            deferred.reject(err)
+        )
+
+    onError = (err)->
+      console.log "Error getting the directory to delete it"
+      console.log err
+      if err.code == 1
+        deferred.resolve("The directory does not exist to delete")
+      deferred.reject err
+
+    window.requestFileSystem LocalFileSystem.PERSISTENT, 0, (fs)->
+      fs.root.getDirectory '/NooraHealthContent/', {create: false, exclusive: false}, removeDir, onError
+
+    return deferred.promise
+
   downloadFiles: (urls)->
     deferred = Q.defer()
     numToLoad = urls.length
     numRecieved = 0
+    urlsToTryAgain = []
 
-    onError = (err)->
-      console.log "ON ERR"
-      console.log err
-      deferred.reject(err)
+    onError = (url)->
+      return (err)->
+        deferred.reject(err)
 
     onFileEntrySuccess = (url)->
       return (fileEntry)->
@@ -37,13 +61,14 @@ class @ContentInterface
         targetPath = fileEntry.toURL()
 
         ft.onprogress = (event)->
-          total = Session.get "total bytes"
-          if !total
-            total = event.total
-            Session.set "total bytes", total
-          t
-          bytesLoaded = event.loaded
-          Session.set "bytes downloaded", bytesLoaded
+          percent = numRecieved/numToLoad
+          Session.set "percent loaded", percent
+          #total = Session.get "total bytes"
+          #if !total
+            #total = event.total
+            #Session.set "total bytes", total
+          #bytesLoaded = event.loaded
+          #Session.set "bytes downloaded", bytesLoaded
 
         onTransferSuccess = (entry)->
           console.log "TRANSFER SUCCESS"
@@ -53,30 +78,54 @@ class @ContentInterface
             deferred.resolve(entry)
 
         onTransferError = (error)->
-          console.log "TRANSFER ERROR"
-          deferred.reject()
+          console.log "ERROR "
+          console.log error
+          if error.code == 3
+            #try to download the file again
+            ft.download(uri, targetPath, onTransferSuccess, onTransferError)
+          else
+            deferred.reject(error)
 
         #download the file from the endpoint and save to target path on mobile device
         ft.download(uri, targetPath, onTransferSuccess, onTransferError)
+
+    fileFound = ()->
+      numRecieved++
+      console.log "Num recieved/numToLoad: "+ numRecieved + "/"+ numToLoad
+      if numRecieved == numToLoad
+        deferred.resolve()
+      
+    fileNotFound = (dirEntry, file, url)->
+      return (err)->
+        dirEntry.getFile file, {create: true, exclusive: false}, onFileEntrySuccess(url), onError(file)
 
 
     onDirEntrySuccess = (url, directories)->
       return (dirEntry)->
         if directories.length == 0
           file = url.file()
-          dirEntry.getFile file, {create: true, exclusive: false}, onFileEntrySuccess(url), onError
+          dirEntry.getFile file, {create: false, exclusive: false}, fileFound, fileNotFound(dirEntry, file, url)
         else
           dir = directories[0] + '/'
           remainingDirs = directories.splice(1)
           dirEntry.getDirectory dir, {create: true, exclusive: false}, onDirEntrySuccess(url, remainingDirs),onError
 
 
-    window.requestFileSystem LocalFileSystem.PERSISTENT, 0, (fs)->
+    window.requestFileSystem LocalFileSystem.PERSISTENT, 5*1024*1024, (fs)->
       for url in urls
-          directories = url.directories()
-          firstDir = directories[0] + '/'
-          remainingDirs = directories.splice(1)
-          fs.root.getDirectory firstDir, {create: true, exclusive: false}, onDirEntrySuccess(url,remainingDirs), onError
+        directories = url.directories()
+        #TODO: this should be done in the object
+        firstDir = directories[0] + '/'
+        remainingDirs = directories.splice(1)
+        fs.root.getDirectory firstDir, {create: true, exclusive: false}, onDirEntrySuccess(url,remainingDirs), onError(url)
+        #path = "/"+url.localFilePath()
+        #fullPath = fs.root.toURL() + path
+        #window.resolveLocalFileSystemURL fullPath, onFileEntrySuccess(url), onError(url)
+        #fs.root.getFile path, {create: true, exclusive: false}, onFileEntrySuccess(url), onError(url)
+    , (err)->
+      console.log "ERROR requesting local filesystem: "
+      console.log err
+      promise.reject err
 
     return deferred.promise
 
@@ -85,8 +134,9 @@ class @ContentInterface
     urls = []
     for lesson in lessons
       urls.merge(@.retrieveContentUrls(lesson))
-
+    
     endURLS = (new ParsedUrl(url, @.contentEndpoint) for url in urls)
+    
     promise = @.downloadFiles endURLS
     promise.then (entry)->
       console.log "PROMISE SUCCESSFUL"
@@ -95,21 +145,26 @@ class @ContentInterface
       console.log "PROMISE REJECTED"
       console.log err
       onError(err)
-        
+  
   retrieveContentUrls: (lesson)->
     console.log "RETRIEVING CONTENT URLS"
-    if not lesson? or not lesson.getModulesSequence?
-      throw Meteor.Error "retrieveContentUrls argument must be a Lesson document"
+    try
+      if not lesson? or not lesson.getModulesSequence?
+        throw Meteor.Error "retrieveContentUrls argument must be a Lesson document"
 
-    modules = lesson.getModulesSequence()
-    urls = []
-    if lesson.image
-      urls.push lesson.imgSrc()
+      modules = lesson.getModulesSequence()
+      urls = []
+      if lesson.image
+        urls.push lesson.image
 
-    for module in modules
-      urls.merge(@.moduleUrls(module))
-    
-    return urls
+      for module in modules
+        urls.merge(@.moduleUrls(module))
+    catch err
+      console.log "Error caught in retrieve content urls: "
+      console.log err
+      throw Meteor.error "error retrieving content urls:", err
+    finally
+      return urls
 
 
   moduleUrls: (module)->
@@ -117,25 +172,17 @@ class @ContentInterface
     console.log "ModuleURLS: "
     console.log module
     if module.image
-      console.log "pushing the image"
-      urls.push module.imgSrc()
+      urls.push module.image
     if module.video
-      console.log "pushing the video"
-      urls.push module.videoSrc()
+      urls.push module.video
     if module.audio
-      console.log "pushing the audio"
-      urls.push module.audioSrc()
+      urls.push module.audio
     if module.incorrect_audio
-      console.log "pushing the incorrect+audio"
-      urls.push module.incorrectAnswerAudio()
+      urls.push module.incorrect_audio
     if module.correct_audio
-      console.log "pushing the correct+audio"
-      urls.push module.correctAnswerAudio()
+      urls.push module.correct_audio
     if module.options and ( module.type == 'MULTIPLE_CHOICE' or module.type == 'GOAL_CHOICE')
-      console.log "pushing the options"
-      urls.push option.optionImgSrc for option in module.getOptions 0, 6
-    console.log "End of module, no errors here"
-
+      urls.merge (option for option in module.options when option?)
     return urls
 
 

@@ -6,16 +6,17 @@
       {{>nav}}
     {{/Surface}}
 
-    {{#RenderController target="content" transition=getTransition id="renderController"}}
+    {{#Lightbox target="content" id="lightbox"}}
       <div class="inner">
         {{>yield}}
       </div>
-    {{/RenderController}}
+    {{/Lightbox}}
     
-    {{#Surface target="footer" class="white"}}
+    {{#Surface id="footer" target="footer" class="white"}}
       {{>yield region="footer"}}
     {{/Surface}}
 
   {{/HeaderFooterLayout}}
 {{/famousContext}}
 </template>
+

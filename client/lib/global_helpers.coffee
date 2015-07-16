@@ -1,5 +1,8 @@
 #FView.registerView "ContainerSurface", famous.views.ContainerSurface
 
+Template.registerHelper 'isPhone', ()->
+  return Meteor.Device.isPhone()
+
 Template.registerHelper 'isLastModule', () ->
   index = Session.get "current module index"
   sequence = Session.get "module sequence"
