@@ -13,56 +13,57 @@ Router.map ()->
     }
     layoutTemplate: 'layout'
     cache: true
-    waitOn: ()->
-      if !Meteor.user()
-        return []
-      if Meteor.status().connected
-        return [
-          Meteor.subscribe("curriculum", Meteor.user().getCurriculumId()),
-          Meteor.subscribe("lessons", Meteor.user().getCurriculumId()),
-        ]
+    #waitOn: ()->
+      #if !Meteor.user()
+        #return []
+      #if Meteor.status().connected
+        #return [
+          #Meteor.subscribe("curriculum", Meteor.user().getCurriculumId()),
+          #Meteor.subscribe("lessons", Meteor.user().getCurriculumId()),
+        #]
 
     onBeforeAction: ()->
       console.log "In the on Before action"
       if Meteor.loggingIn()
         console.log "1 on Before"
         this.next()
-      else if !Meteor.user()
-        this.next()
+      #else if !Meteor.user()
+        #this.next()
 
       if Meteor.isCordova
         console.log "about to initialize the server"
         initializeServer()
         
-      if not Meteor.user().curriculumIsSet()
-        Router.go "selectCurriculum"
+      #if not Meteor.user().curriculumIsSet()
+        #Router.go "selectCurriculum"
 
-      if Meteor.isCordova and not Meteor.user().contentLoaded()# and not Session.get "content loaded"
-        Router.go "loading"
-        Meteor.call 'contentEndpoint', (err, endpoint)=>
-          console.log "----------- Downloading the content----------------------------"
-          console.log "About to make downloader"
-          downloader = new ContentInterface(Meteor.user().getCurriculum(), endpoint)
-          onSuccess = (entry)=>
-            console.log "Success downloading content: ", entry
-            Meteor.user().setContentAsLoaded true
-            Router.go "home"
+      #if Meteor.isCordova and not Meteor.user().contentLoaded()# and not Session.get "content loaded"
+        #Router.go "loading"
+        #Meteor.call 'contentEndpoint', (err, endpoint)=>
+          #console.log "----------- Downloading the content----------------------------"
+          #console.log "About to make downloader"
+          #downloader = new ContentInterface(Meteor.user().getCurriculum(), endpoint)
+          #onSuccess = (entry)=>
+            #console.log "Success downloading content: ", entry
+            #Meteor.user().setContentAsLoaded true
+            #Router.go "home"
 
-          onError = (err)->
-            console.log "Error downloading content: ", err
-            console.log err
-            alert "There was an error downloading your content, please log in and try again: ", err
-            Meteor.user().setContentAsLoaded false
-            Meteor.logout()
-          downloader.loadContent onSuccess, onError
+          #onError = (err)->
+            #console.log "Error downloading content: ", err
+            #console.log err
+            #alert "There was an error downloading your content, please log in and try again: ", err
+            #Meteor.user().setContentAsLoaded false
+            #Meteor.logout()
+          #downloader.loadContent onSuccess, onError
 
       if this.next
         console.log "About to call this.next"
         this.next()
 
     data: ()->
-      if this.ready() and Meteor.user()
-        curr = Curriculum.findOne({_id: Meteor.user().profile.curriculumId})
+      if this.ready()# and Meteor.user()
+        #curr = Curriculum.findOne({_id: Meteor.user().profile.curriculumId})
+        curr = Curriculum.findOne({title: "Diabetes 2"})
         if curr
           Session.set "current lesson", null
           Session.set "current module index", null
@@ -85,9 +86,9 @@ Router.map ()->
       'selectCurriculumFooter': {to:"footer"}
     }
     cache: true
-    waitOn:()->
-      if Meteor.status().connected
-        return Meteor.subscribe("all_curriculums")
+    #waitOn:()->
+      #if Meteor.status().connected
+        #return Meteor.subscribe("all_curriculums")
   }
 
   ###
@@ -102,15 +103,15 @@ Router.map ()->
       'moduleFooter': {to:"footer"}
     }
     cache: true
-    waitOn: ()->
-      if !Meteor.user()
-        return
-      if Meteor.status().connected
-        return [
-          Meteor.subscribe("lessons", Meteor.user().getCurriculumId()),
-          Meteor.subscribe("curriculum", Meteor.user().getCurriculumId()),
-          Meteor.subscribe("modules", this.params._id)
-        ]
+    #waitOn: ()->
+      ##if !Meteor.user()
+        ##return
+      #if Meteor.status().connected
+        #return [
+          #Meteor.subscribe("lessons", Meteor.user().getCurriculumId()),
+          #Meteor.subscribe("curriculum", Meteor.user().getCurriculumId()),
+          #Meteor.subscribe("modules", this.params._id)
+        #]
 
     data: () ->
       lesson = Lessons.findOne {_id: this.params._id}
