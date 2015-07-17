@@ -9,7 +9,7 @@ class @BinarySurface extends ModuleSurface
 
   handleClick: (event)=>
     console.log "Click Event!"
-    if buttonDisabled event.target
+    if ModuleSurface.buttonDisabled event.target
       return
     else
       ModuleView.handleResponse @, event

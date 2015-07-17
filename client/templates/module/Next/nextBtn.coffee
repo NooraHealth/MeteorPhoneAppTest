@@ -9,7 +9,7 @@ Template.nextBtn.events
       endSequence()
       return
 
-    if !isAQuestion(currentModule)
+    if !ModuleSurface.isAQuestion(currentModule)
       recordModuleAsCorrectlyAnswered()
    
     if isLastModuleInSeries()

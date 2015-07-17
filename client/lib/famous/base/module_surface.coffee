@@ -72,3 +72,10 @@ class @ModuleSurface
     url = Meteor.NooraClient.getContentSrc()
     return url + module.incorrect_audio
 
+  @isAQuestion: (module)->
+    return module.type == "SCENARIO" or module.type=="BINARY" or module.type=="MULTIPLE_CHOICE" or module.type == "GOAL_CHOICE"
+
+  @buttonDisabled: (btn)->
+    return $(btn).hasClass('faded') or $(btn).hasClass('expanded')
+
+

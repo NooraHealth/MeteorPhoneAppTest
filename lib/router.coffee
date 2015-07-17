@@ -56,6 +56,7 @@ Router.map ()->
           downloader.loadContent onSuccess, onError
 
       if this.next
+        console.log "Calling this.next()"
         this.next()
 
     data: ()->

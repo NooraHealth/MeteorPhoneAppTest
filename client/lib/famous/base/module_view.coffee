@@ -113,12 +113,11 @@ class @ModuleView
 
   @handleCorrectResponse: (module)->
     @.playAudio "correct", module
-    handleSuccessfulAttempt(module, 0)
-    updateModuleNav "correct"
+    @.updateModuleNav "correct"
 
   @handleIncorrectResponse: (module)->
     @.playAudio "incorrect", module
-    updateModuleNav "incorrect"
+    @.updateModuleNav "incorrect"
 
   @displayToast : (type)->
     if Meteor.Device.isPhone()
