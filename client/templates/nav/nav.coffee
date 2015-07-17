@@ -3,7 +3,6 @@ Template.nav.helpers
    return MEDIA_URL + "VascularContent/Images/NooraLogo.png"
 
  moduleDocs: ()->
-  console.log "Current data in the nav"
   #console.log Template.currentData()
   #modules = Template.currentData().modules
   obj = Session.get "modules sequence"

@@ -5,7 +5,7 @@ Meteor.startup ()->
     Meteor.subscribe "all_curriculums"
     Meteor.subscribe "all_modules"
     Meteor.subscribe "all_lessons"
-    #this.initializeServer()
+    #initializeServer()
     Meteor.NooraClient = new CordovaClient()
   else
     Meteor.NooraClient = new BrowserClient()

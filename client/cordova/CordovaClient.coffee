@@ -8,11 +8,13 @@ class @CordovaClient extends Base
     @.localServer = LocalServer.get()
     @.localServer.startLocalServer()
     .then (url)=>
+      console.log url
       @.contentSrc = url
     .fail (err)=>
       console.log "CordovaClient: Error starting the local server" + err
   
   getContentSrc: ()=>
+    #return 'http://127.0.0.1:8080/'
     return @.contentSrc
 
   getContentEndpoint: ()=>
@@ -30,6 +32,6 @@ class @CordovaClient extends Base
     return @.localServer.checkIfServerIsUp()
 
   restartLocalServer: ()=>
-    console.log @.tag+ "DEBUG"+ "This is the local server"
+    console.log @.tag+ "DEBUG"+ "Cordova Client is about to restart your server"
     return @.localServer.startLocalServer()
     

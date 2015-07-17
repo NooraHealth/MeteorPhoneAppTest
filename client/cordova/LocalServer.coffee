@@ -72,6 +72,7 @@ class @LocalServer
           deferred.reject err
       else
         deferred.reject "Httpd not availble/ready"
+
       return deferred.promise
 
     startServerAtRoot: ( wwwroot )=>
