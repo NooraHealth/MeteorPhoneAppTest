@@ -34,13 +34,13 @@ class @LocalServer
       return deferred.promise
 
     checkIfServerIsUp: ()=>
-      @.log @.tag, "LOG", "checking if the server is up"
+      console.log @.tag + "LOG: " + "checking if the server is up"
       deferred = Q.defer()
 
       @.getLocalServerUrl()
       .then ( url ) =>
         if url and url.length > 0
-          @.log @.tag, "LOG", "Server is already up at " + url
+          console.log @.tag + "LOG: "+ "Server is already up at " + url
           deferred.resolve url
         else
           deferred.resolve false
@@ -50,23 +50,23 @@ class @LocalServer
       return deferred.promise
 
     startLocalServer: ()=>
-      @.log @.tag, "LOG", "Starting the local server"
+      console.log @.tag +  "LOG"+ "Starting the local server"
       deferred = Q.defer()
 
       if @.httpd
         @.checkIfServerIsUp()
         .then ( url ) =>
           if url
-            @.log @.tag, "DEBUG", "Server was already up", url
+            console.log @.tag+ "DEBUG"+ "Server was already up"+ url
             deferred.resolve url
           else
             LocalContent.getLocalFilesSystem(0)
             .then (fs)=>
-              @.log @.tag, "DEBUG", "Got the filesystem", fs
+              console.log @.tag+ "DEBUG"+ "Got the filesystem"+ fs
               path = fs.root.nativeURL.replace "file://", ""
               @.startServerAtRoot( path )
             .then ( url )=>
-              @.log @.tag, "DEBUG", "Got the server url", url
+              console.log @.tag+ "DEBUG"+ "Got the server url"+ url
               deferred.resolve url
         .fail (err)=>
           deferred.reject err
@@ -75,7 +75,7 @@ class @LocalServer
       return deferred.promise
 
     startServerAtRoot: ( wwwroot )=>
-      @.log @.tag, "LOG", "Starting the server at the root" +  wwwroot
+      console.log @.tag+ "LOG"+ "Starting the server at the root" +  wwwroot
       deferred = Q.defer()
 
       @.httpd.startServer {
@@ -84,10 +84,10 @@ class @LocalServer
         'localhost_only':true
       }, (url)=>
         @.url = url
-        @.log @.tag, "LOG", "Server started at "+ wwwroot
+        console.log @.tag+ "LOG"+ "Server started at "+ wwwroot
         deferred.resolve url
       , (err)=>
-        @.log @.tag, "ERROR", "Failed to start server: " + err
+        console.log @.tag+ "ERROR"+ "Failed to start server: " + err
         deferred.reject err
 
       return deferred.promise

@@ -26,14 +26,12 @@ Router.map ()->
       console.log "In the onBeforeAction in the home route"
       if Meteor.loggingIn()
         this.next()
-      else if !Meteor.user()
+
+      if !Meteor.user()
         this.next()
 
-      if Meteor.isCordova
-        console.log "Meteor is cordova and I'm about to initialize the server"
-        initializeServer()
-        
       if not Meteor.user().curriculumIsSet()
+        console.log "Going to select curriculum"
         Router.go "selectCurriculum"
 
       if Meteor.isCordova and not Meteor.user().contentLoaded()# and not Session.get "content loaded"
