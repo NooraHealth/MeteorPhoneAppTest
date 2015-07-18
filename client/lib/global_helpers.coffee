@@ -69,7 +69,4 @@ Template.registerHelper 'audioSrc', ()->
     return ""
   ModuleSurface.audioSrc(@)
 
-  
-
-
 

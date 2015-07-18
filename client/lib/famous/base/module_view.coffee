@@ -20,7 +20,7 @@ class @ModuleView
     if event
       event.target.classList.add "disabled"
 
-    NextModuleBtn.show()
+    NextModuleBtn.get().show()
 
   @handleSingleChoiceResponse: (module, event)=>
     @.hideIncorrectResponses(module)
@@ -199,4 +199,3 @@ class @ModuleView
           $(option).addClass "correctly_selected"
 
       return [responses, numIncorrect]
-

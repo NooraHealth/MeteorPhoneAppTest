@@ -2,7 +2,7 @@
 Template.module.rendered =  ()=>
   @.moduleSurfaces = []
   #fview.node._object.hide()
-  hidden =  nextBtnShouldHide()
+  hidden =  NextModuleBtn.get().shouldHide()
   Session.set "next button is hidden", hidden
   #lightbox controller
   lightbox = FView.byId "lightbox"
