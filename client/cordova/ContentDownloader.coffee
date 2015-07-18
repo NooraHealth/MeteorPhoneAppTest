@@ -14,10 +14,23 @@ class @ParsedUrl
     return @.endpoint.concat @.urlString
 
 
-class @LocalContent
+class @ContentDownloader
+  constructor: (@curriculum)->
+    
+  initialize: ()->
+    deferred = Q.defer()
+    Meteor.call "contentEndpoint", (err, endpt)=>
+      if err
+        console.log "Error retrieving the content endpoint"
+        console.log err
+        deferred.reject err
+      else
+        @.contentEndpoint = endpt
+        console.log "Consutricting and this is the endp: ", @.contentEndpoint
+        deferred.resolve @
 
-  constructor: (@curriculum, @contentEndpoint)->
-    console.log "Consutricting and this is the endp: ", @.contentEndpoint
+    return deferred.promise
+
 
   @getLocalFilesSystem: (bytes)->
     deferred = Q.defer()
@@ -31,7 +44,6 @@ class @LocalContent
   clearContentDirectory: ()->
     deferred = Q.defer()
     removeDir = (dirEntry)->
-      console.log dirEntry
       if dirEntry
         dirEntry.removeRecursively(()->
           console.log "Successfully removed"
@@ -49,7 +61,7 @@ class @LocalContent
         deferred.resolve("The directory does not exist to delete")
       deferred.reject err
 
-    LocalContent.getLocalFilesSystem(0)
+    ContentDownloader.getLocalFilesSystem(0)
     .then (fs)=>
       fs.root.getDirectory '/NooraHealthContent/', {create: false, exclusive: false}, removeDir, onError
     .fail (err)=>
@@ -85,16 +97,12 @@ class @LocalContent
           #Session.set "bytes downloaded", bytesLoaded
 
         onTransferSuccess = (entry)->
-          console.log "TRANSFER SUCCESS"
-          console.log entry
           numRecieved++
           console.log "Num recieved/numToLoad: "+ numRecieved + "/"+ numToLoad
           if numRecieved == numToLoad
             deferred.resolve(entry)
 
         onTransferError = (error)->
-          console.log "ERROR "
-          console.log error
           if error.code == 3
             #try to download the file again
             ft.download(uri, targetPath, onTransferSuccess, onTransferError)
@@ -105,7 +113,6 @@ class @LocalContent
         ft.download(uri, targetPath, onTransferSuccess, onTransferError)
 
     fileFound = ()->
-      console.log "FILE Found~"
       numRecieved++
       console.log numRecieved/numToLoad
       console.log "Num recieved/numToLoad: "+ numRecieved + "/"+ numToLoad
@@ -114,7 +121,6 @@ class @LocalContent
       
     fileNotFound = (dirEntry, file, url)->
       return (err)->
-        console.log "FILE NOT FOUND"
         console.log err
         dirEntry.getFile file, {create: true, exclusive: false}, onFileEntrySuccess(url), onError(file)
 
@@ -130,11 +136,10 @@ class @LocalContent
           dirEntry.getDirectory dir, {create: true, exclusive: false}, onDirEntrySuccess(url, remainingDirs), onError(dir)
 
 
-    LocalContent.getLocalFilesSystem( 5*1024*1024 )
+    ContentDownloader.getLocalFilesSystem( 5*1024*1024 )
     .then (fs)=>
       for url in urls
         directories = url.directories()
-        console.log "Directories: ", directories
         #TODO: this should be done in the object
         firstDir = directories[0] + '/'
         remainingDirs = directories.splice(1)
@@ -151,13 +156,12 @@ class @LocalContent
     return deferred.promise
 
   loadContent: (onSuccess, onError)->
+    console.log "ContentDownloader is about to load your content"
     lessons = @.curriculum.getLessonDocuments()
     urls = []
     for lesson in lessons
       urls.merge(@.retrieveContentUrls(lesson))
     
-    console.log "URLS: "
-    console.log urls
     endURLS = (new ParsedUrl(url, @.contentEndpoint) for url in urls)
     
     promise = @.downloadFiles endURLS
@@ -170,7 +174,6 @@ class @LocalContent
       onError(err)
   
   retrieveContentUrls: (lesson)->
-    console.log "RETRIEVING CONTENT URLS"
     try
       if not lesson? or not lesson.getModulesSequence?
         throw Meteor.Error "retrieveContentUrls argument must be a Lesson document"
@@ -204,9 +207,6 @@ class @LocalContent
       urls.push module.correct_audio
     if module.options and ( module.type == 'MULTIPLE_CHOICE' or module.type == 'GOAL_CHOICE')
       urls.merge (option for option in module.options when option?)
-    console.log "urls of module: "
-    console.log module
-    console.log urls
     return urls
 
 

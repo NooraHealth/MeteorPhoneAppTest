@@ -14,9 +14,13 @@ class @LocalServer
       @.tag = "LocalServer"
       @.httpd = @.getHttpd()
       @.url = null
+      @.wwwroot= ""
 
     getHttpd: ()=>
       return if cordova && cordova.plugins && cordova.plugins.CorHttpd then cordova.plugins.CorHttpd else null
+
+    getWwwRoot: ()=>
+      return @.wwwroot
 
     getLocalServerUrl: ()=>
       deferred = Q.defer()
@@ -60,7 +64,7 @@ class @LocalServer
             console.log @.tag+ "DEBUG"+ "Server was already up"+ url
             deferred.resolve url
           else
-            LocalContent.getLocalFilesSystem(0)
+            ContentDownloader.getLocalFilesSystem(0)
             .then (fs)=>
               console.log @.tag+ "DEBUG"+ "Got the filesystem"+ fs
               path = fs.root.nativeURL.replace "file://", ""
@@ -78,6 +82,7 @@ class @LocalServer
     startServerAtRoot: ( wwwroot )=>
       console.log @.tag+ "LOG"+ "Starting the server at the root" +  wwwroot
       deferred = Q.defer()
+      @.wwwroot = wwwroot
 
       @.httpd.startServer {
         'wwwroot': wwwroot

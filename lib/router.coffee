@@ -53,11 +53,13 @@ Router.map ()->
 
       if Meteor.isCordova and not Meteor.user().contentLoaded()# and not Session.get "content loaded"
         Router.go "loading"
-        Meteor.call 'contentEndpoint', (err, endpoint)=>
-          console.log "----------- Downloading the content----------------------------"
-          console.log "About to make downloader"
-          downloader = new ContentInterface(Meteor.user().getCurriculum(), endpoint)
-          onSuccess = (entry)=>
+
+        downloader = new ContentDownloader(Meteor.user().getCurriculum())
+        downloader.initialize()
+        .then (downloader)->
+          console.log "About to ask the downloader to load the content"
+          console.log downloader
+          onSuccess = (entry)->
             console.log "Success downloading content: ", entry
             Meteor.user().setContentAsLoaded true
             Router.go "home"
@@ -68,7 +70,11 @@ Router.map ()->
             alert "There was an error downloading your content, please log in and try again: ", err
             Meteor.user().setContentAsLoaded false
             Meteor.logout()
-          downloader.loadContent onSuccess, onError
+          downloader.loadContent(onSuccess, onError)
+        .fail (err)->
+          console.log "Error initializing content downloader"
+          console.log err
+          alert "There was an error downloading your content!"
 
       if this.next
         console.log "Calling this.next()"
