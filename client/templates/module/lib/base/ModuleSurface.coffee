@@ -16,8 +16,8 @@ class @ModuleSurface
     @.surface.on "click", (event)=>
       @.handleClick(event)
     @.surface.on "deploy", ()=>
-      console.log "I have been deployed"
       if ModuleSurface.audioSrc(@.module)
+        console.log "About to play the audio of the question"
         ModuleView.playAudio "question", @.module
     #@.mouseSync.on "start", (event)=>
       #@.handleClick event
@@ -39,9 +39,15 @@ class @ModuleSurface
   getModule: ()=>
     return @.module
 
+  reset: ()=>
+    newSurface = @.buildSurface()
+    console.log "Reseting the surface"
+    console.log @.surface
+    @.surface = newSurface
+    @.registerFamousEvents()
+
   buildSurface: ()=>
     id = @.module._id
-    console.log id
     return new Surface {
       size: @.size
       content: @.html
@@ -60,7 +66,6 @@ class @ModuleSurface
     return url + module.video
       
   @audioSrc: (module)->
-    console.log Meteor.NooraClient
     url = Meteor.NooraClient.getContentSrc()
     return url + module.audio
 

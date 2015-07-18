@@ -30,23 +30,6 @@ Router.map ()->
       if !Meteor.user()
         this.next()
 
-      #if Meteor.isCordova
-        #Meteor.NooraClient.checkIfServerIsUp()
-        #.then (url)=>
-          #if url
-            #console.log "The server is running at " + url
-          #else
-            #Meteor.NooraClient.restartLocalServer()
-            #.then (url)=>
-              #console.log "After restarting server"
-              #console.log url
-              #if url
-                #console.log "Restarted the server: now running at: ", url
-        #.fail (err)->
-          #alert "There was an error reaching your content on the device"
-          #console.log "Error starting local server"
-          #console.log err
-
       if not Meteor.user().curriculumIsSet()
         console.log "Going to select curriculum"
         Router.go "selectCurriculum"

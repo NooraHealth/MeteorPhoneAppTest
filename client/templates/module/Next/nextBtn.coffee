@@ -8,7 +8,3 @@ Template.nextBtn.helpers
   isHidden: NextModuleBtn.get().isHidden
 
   id: NextModuleBtn.get().getId
-
-
-
-

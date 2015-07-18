@@ -1,4 +1,5 @@
 
+
 class @NextModuleBtn
   instance = null
   @get: ()=>
@@ -29,4 +30,5 @@ class @NextModuleBtn
     isHidden: ()=>
       return Session.get "next button is hidden"
       
+
 

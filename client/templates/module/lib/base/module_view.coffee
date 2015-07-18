@@ -2,12 +2,6 @@
 class @ModuleView
 
   constructor: (@modules)->
-    @.lightbox = FView.byId("lightbox").node._object
-
-  show: (index)=>
-    surface = new SurfaceFactory(@.modules[index]).getSurface()
-    #surface = moduleView.buildModuleSurface()
-    @.lightbox.show surface
 
   @handleResponse: (moduleSurface, event)=>
     module = moduleSurface.getModule()
@@ -43,11 +37,7 @@ class @ModuleView
 
   @stopAllAudio : ()->
     audio = $("audio")
-    for elem in audio
-      if elem[0]
-        elem[0].pause()
-      else if elem.pause
-        elem.pause()
+    @.stopAudio audio
 
   @stopAudio: (audio)->
     for elem in audio
@@ -57,7 +47,11 @@ class @ModuleView
         elem.pause()
 
   @playAudio : (type, module)->
+    console.log "PLaying the audion trace"
+    console.trace()
     play = (elem)->
+      console.log "Playing elem"
+      console.log elem
       elem[0].currentTime = 0
       elem[0].play()
 
@@ -66,12 +60,8 @@ class @ModuleView
       #@.stopAllAudio()
       src = ModuleSurface.audioSrc(module)
       if elem[0].paused
-        console.log elem.attr("src")
-        console.log src
         if elem.attr("src") != src
           elem.attr('src',  src)
-          console.log "Just changed the src"
-          console.log elem
         play elem
       return
     #else if type=="correct"
@@ -95,21 +85,16 @@ class @ModuleView
       else
         src=""
 
-      console.log "About to pause audio"
       if !elem[0].paused
         elem[0].pause()
       if elem.attr("src") != src
         elem.attr('src',  src)
 
-      play= ()->
-        elem[0].currentTime = 0
-        elem[0].play()
-        
       elem[0].addEventListener "canplay", ()=>
-        play()
+        play(elem)
       , true
 
-      play()
+      play(elem)
 
   @handleCorrectResponse: (module)->
     @.playAudio "correct", module

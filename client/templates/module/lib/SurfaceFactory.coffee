@@ -3,9 +3,6 @@ class @SurfaceFactory
   constructor: (@module)->
     @.surfaceView = @.getModuleSurface module
 
-  getSurface: ()=>
-    return @.surfaceView.getSurface()
-  
   getSurfaceView: ()=>
     return @.surfaceView
 

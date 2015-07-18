@@ -1,10 +1,59 @@
 class @ModuleSequence
   instance = null
-  @get: (modules)->
-    instance ?= new PrivateClass(modules)
+
+  @get: ()=>
+    instance ?= new PrivateClass()
 
   class PrivateClass
-    constructor: (@modules)->
+
+    currentShow = null
+    constructor: ()->
+      @.viewId = "lightbox"
+
+      if not FView.byId(@.viewId)?
+        @.lightbox = null
+        return
+      else
+        @.lightbox = @.getRenderable()
+      @
+
+    getRenderable: ()=>
+      if @.lightbox
+        return @.lightbox
+
+      view = FView.byId(@.viewId)
+      if view
+        node = view.node
+        if node
+          return node._object
+      else
+        return false
+
+    setModules: (modules)->
+      console.log "setting the modules"
+      @.modules = modules
+      @.surfaces = []
+      for module in @.modules
+        surface = new SurfaceFactory(module).getModuleSurface()
+        @.surfaces.push surface
+
+      @.currentShow = null
+      @
+      
+    show: (index)=>
+      #surface = moduleView.buildModuleSurface()
+      surface = @.surfaces[index]
+      lightbox = @.getRenderable()
+      console.log lightbox
+      if @.currentShow
+        lightbox.hide()
+        console.log @.currentShow
+        @.currentShow.reset()
+
+      if lightbox
+        lightbox.show surface.getSurface()
+        @.currentShow = surface
+      @
 
     hasAllCorrectAnswers: ()=>
       incorrectlyAnswered = Session.get "incorrectly answered"
@@ -28,6 +77,7 @@ class @ModuleSequence
       correctlyAnswered = Session.get "correctly answered"
       correctlyAnswered.push index
       Session.set "correctly answered", correctlyAnswered
+      @
 
     nextIncorrectModule: ()=>
       incorrectlyAnswered = Session.get "incorrectly answered"
@@ -38,6 +88,7 @@ class @ModuleSequence
       Meteor.user().updateLessonsComplete(currLesson)
       ModuleView.stopAllAudio()
       Router.go "home"
+      @
 
     allModulesComplete: ()=>
       numModules = (Session.get "modules sequence").length
@@ -50,10 +101,13 @@ class @ModuleSequence
       else
         return numCorrect == numModules - 1
 
-    currentModuleIndex: ()->
+    currentModuleIndex: ()=>
         return Session.get "current module index"
 
-    gotToNextModule: ()->
+    gotToNextModule: ()=>
+      console.log ""
+      console.log "---------------------Goingt ot he next module!!---------------- "
+      console.log ""
       index = @.currentModuleIndex()
       currentModule = @.getCurrentModule()
       #if correctlyAnswered.length == modulesSequence.length
@@ -61,7 +115,6 @@ class @ModuleSequence
         @.endSequence()
         return
       
-      console.log "This is the current Module"
       if !ModuleSurface.isAQuestion(currentModule)
         @.recordModuleAsCorrectlyAnswered()
     
@@ -91,16 +144,13 @@ class @ModuleSequence
       surface = fview.view or fview.surface
       eventOutput = surface._eventOutput
       eventOutput.emit 'showModule', module
+      @
 
-    getCurrentModule: ()->
+    getCurrentModule: ()=>
       moduleSequence = Session.get "modules sequence"
       currentIndex = Session.get "current module index"
-      console.log Session.get "modules sequence"
-      console.log Session.get "current module index"
       if !moduleSequence? or !currentIndex?
         return
 
-      console.log "Here is the module I'm returning"
-      console.log moduleSequence[currentIndex]
       return moduleSequence[currentIndex]
 

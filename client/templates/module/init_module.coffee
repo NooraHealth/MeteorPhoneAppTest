@@ -2,6 +2,7 @@
 Template.module.rendered =  ()=>
   @.moduleSurfaces = []
   #fview.node._object.hide()
+  console.log "Getting whether this is hidden"
   hidden =  NextModuleBtn.get().shouldHide()
   Session.set "next button is hidden", hidden
   #lightbox controller
@@ -16,15 +17,18 @@ Template.module.rendered =  ()=>
   transition = {duration: 1000, curve: "easeIn"}
 
   modules = Template.currentData().modules
-  @.moduleView = new ModuleView(modules)
+  console.log ModuleSequence
+  @.sequence = ModuleSequence.get().setModules(modules)
 
   eventInput = new EventHandler()
   subscribeLightboxToFooterEvents( lightbox, eventInput )
   eventInput.on "showModule", ( index )=>
-    @.moduleView.show index
+    console.log "Here is the index to show"
+    console.log index
+    @.sequence.show index
 
   #create the surfaces
-  @.moduleView.show 0
+  @.sequence.show 0
 
 subscribeLightboxToFooterEvents = ( lightbox, eventInput )->
   EventHandler.setInputHandler lightbox, eventInput
