@@ -5,6 +5,7 @@ class @ModuleSurface
     @.html = @.templateToHtml()
     @.surface = @.buildSurface()
     @.registerFamousEvents()
+    @.deployed = false
     
   handleClick: (event)=>
 
@@ -16,7 +17,11 @@ class @ModuleSurface
     @.surface.on "click", (event)=>
       @.handleClick(event)
     @.surface.on "deploy", ()=>
+      if @.deployed
+        return
+
       if ModuleSurface.audioSrc(@.module)
+        @.deployed = true
         console.log "About to play the audio of the question"
         ModuleView.playAudio "question", @.module
     #@.mouseSync.on "start", (event)=>
@@ -33,6 +38,17 @@ class @ModuleSurface
     #@.sync.on "update", (event)=>
       #@.handleInputUpdate event
 
+  isDeployed: ()=>
+    return @.deployed
+
+  equals: (surface)=>
+    if not @.module or @.surface.module
+      return false
+    if @.module._id == surface.module._id
+      return true
+    else
+      return false
+
   getSurface: ()=>
     return @.surface
 
@@ -45,6 +61,7 @@ class @ModuleSurface
     console.log @.surface
     @.surface = newSurface
     @.registerFamousEvents()
+    @.deployed = false
 
   buildSurface: ()=>
     id = @.module._id

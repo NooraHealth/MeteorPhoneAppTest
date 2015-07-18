@@ -45,9 +45,14 @@ class @ModuleSequence
       surface = @.surfaces[index]
       lightbox = @.getRenderable()
       console.log lightbox
+
+      if @.currentShow and surface
+        if @.currentShow.equals surface
+          console.log "The current shows equaled each other!"
+          return
+
       if @.currentShow
-        lightbox.hide()
-        console.log @.currentShow
+        #lightbox.hide()
         @.currentShow.reset()
 
       if lightbox
