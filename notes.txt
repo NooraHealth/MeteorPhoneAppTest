@@ -4,3 +4,8 @@ Run on iOS device
 Project > Archive > export > Ad Hoc Development
 -diawi.com
 
+Notes on next version of Famo.us for use in app
+
+
+
+

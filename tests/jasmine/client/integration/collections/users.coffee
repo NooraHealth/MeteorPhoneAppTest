@@ -1,3 +1,5 @@
+if Meteor.isCordova
+  return
 describe "Users collection", ()->
   user = undefined
   beforeAll ()->

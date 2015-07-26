@@ -12,7 +12,8 @@ Meteor.methods {
 
   contentEndpoint: ()->
     if process.env.METEOR_ENV == 'production'
-      return "http://noorahealthcontent.s3-us-west-1.amazonaws.com/"
+      return "http://d1loll817ogoo0.cloudfront.net/"
+      #return "http://noorahealthcontent.s3-us-west-1.amazonaws.com/"
     else
       return 'http://noorahealth-development.s3-us-west-1.amazonaws.com/'
 
