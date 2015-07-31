@@ -22,7 +22,6 @@ class @ModuleSurface
 
       if ModuleSurface.audioSrc(@.module)
         @.deployed = true
-        console.log "About to play the audio of the question"
         ModuleView.playAudio "question", @.module
     #@.mouseSync.on "start", (event)=>
       #@.handleClick event
@@ -57,8 +56,6 @@ class @ModuleSurface
 
   reset: ()=>
     newSurface = @.buildSurface()
-    console.log "Reseting the surface"
-    console.log @.surface
     @.surface = newSurface
     @.registerFamousEvents()
     @.deployed = false

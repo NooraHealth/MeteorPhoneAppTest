@@ -26,7 +26,6 @@ class @ContentDownloader
         deferred.reject err
       else
         @.contentEndpoint = endpt
-        console.log "Consutricting and this is the endp: ", @.contentEndpoint
         deferred.resolve @
 
     return deferred.promise
@@ -46,17 +45,12 @@ class @ContentDownloader
     removeDir = (dirEntry)->
       if dirEntry
         dirEntry.removeRecursively(()->
-          console.log "Successfully removed"
           deferred.resolve()
         , (err)->
-            console.log "Error removing directory"
-            console.log err
             deferred.reject(err)
         )
 
     onError = (err)->
-      console.log "Error getting the directory to delete it"
-      console.log err
       if err.code == 1
         deferred.resolve("The directory does not exist to delete")
       deferred.reject err
@@ -98,7 +92,6 @@ class @ContentDownloader
 
         onTransferSuccess = (entry)->
           numRecieved++
-          console.log "Num recieved/numToLoad: "+ numRecieved + "/"+ numToLoad
           if numRecieved == numToLoad
             deferred.resolve(entry)
 
@@ -114,14 +107,11 @@ class @ContentDownloader
 
     fileFound = ()->
       numRecieved++
-      console.log numRecieved/numToLoad
-      console.log "Num recieved/numToLoad: "+ numRecieved + "/"+ numToLoad
       if numRecieved == numToLoad
         deferred.resolve()
       
     fileNotFound = (dirEntry, file, url)->
       return (err)->
-        console.log err
         dirEntry.getFile file, {create: true, exclusive: false}, onFileEntrySuccess(url), onError(file)
 
 
@@ -156,7 +146,6 @@ class @ContentDownloader
     return deferred.promise
 
   loadContent: (onSuccess, onError)->
-    console.log "ContentDownloader is about to load your content"
     lessons = @.curriculum.getLessonDocuments()
     urls = []
     for lesson in lessons
@@ -166,10 +155,8 @@ class @ContentDownloader
     
     promise = @.downloadFiles endURLS
     promise.then (entry)->
-      console.log "PROMISE SUCCESSFUL"
       onSuccess(entry)
     promise.fail (err)->
-      console.log "PROMISE REJECTED"
       console.log err
       onError(err)
   
@@ -186,7 +173,6 @@ class @ContentDownloader
       for module in modules
         urls.merge(@.moduleUrls(module))
     catch err
-      console.log "Error caught in retrieve content urls: "
       console.log err
       throw Meteor.error "error retrieving content urls:", err
     finally

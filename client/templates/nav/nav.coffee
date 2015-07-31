@@ -8,7 +8,6 @@ Template.nav.helpers
   obj = Session.get "modules sequence"
   if !obj
     return ""
-  console.log obj
   getModuleDoc = (module)->
     return Modules.findOne({_id: module._id})
 

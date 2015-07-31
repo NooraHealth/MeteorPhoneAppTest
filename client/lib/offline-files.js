@@ -10,11 +10,7 @@ var httpUrl = null;
 var httpd = null;
 
 this.initializeServer = function() {
-  console.log("INITIALIZING SERVER");
   this.startServer = function(wwwroot) {
-    console.log('starting server at ' + wwwroot);
-    console.log("Is there httpd?"+ httpd);
-    console.log(httpd);
     if (httpd) {
         //check whether server is already running
       httpd.getURL(function(url) {
@@ -49,13 +45,9 @@ this.initializeServer = function() {
   };
 
   httpd = (cordova && cordova.plugins && cordova.plugins.CorHttpd) ? cordova.plugins.CorHttpd : null;
-  console.log("Initializing the server");
   if (httpd) {
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
-      console.log('fileSystem');
-      console.log(fileSystem);
       var path = fileSystem.root.nativeURL.replace("file://", "");
-      console.log(path);
       this.startServer(path);
     });
   }

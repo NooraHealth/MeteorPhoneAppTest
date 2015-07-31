@@ -22,7 +22,6 @@ Template.loading.onRendered ()->
 
 
 Template.loading.onDestroyed ()->
-  console.log "Destroying the loading page"
   if this.loading
     this.loading.finish()
 

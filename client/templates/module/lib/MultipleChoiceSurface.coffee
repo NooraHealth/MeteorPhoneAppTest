@@ -9,8 +9,6 @@ class @MultipleChoiceSurface extends ModuleSurface
     @.responses = []
 
   handleClick: (event)=>
-    console.log "Click Event!"
-    console.log event
     if event.target.classList.contains "disabled"
       return
 

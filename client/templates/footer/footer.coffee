@@ -4,7 +4,6 @@ Template.footer.events {
     Session.set "condition", condition
 }
 Tracker.autorun ()->
-  console.log "getting the autorun"
   if(Session.get "condition") == "1"
     MEDIA_URL = "http://grass-roots-science.info/"
   else

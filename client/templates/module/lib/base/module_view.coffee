@@ -47,11 +47,7 @@ class @ModuleView
         elem.pause()
 
   @playAudio : (type, module)->
-    console.log "PLaying the audion trace"
-    console.trace()
     play = (elem)->
-      console.log "Playing elem"
-      console.log elem
       elem[0].currentTime = 0
       elem[0].play()
 

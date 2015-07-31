@@ -247,7 +247,6 @@
   pleaseWait = (options = {}) ->
     new PleaseWait(options)
 
-  console.log "building pleasewait"
   Meteor.pleaseWait = pleaseWait
   return pleaseWait
 )()

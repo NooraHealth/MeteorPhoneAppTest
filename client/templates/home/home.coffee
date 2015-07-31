@@ -41,7 +41,6 @@ Template.home.onRendered ()->
     #getTimeout(i)()
 
   #scrollView.goToNextPage()
-  console.log scrollView
   #lessonsComplete = Meteor.user().getCompletedLessons().length
   #lessons = Session.get "lessons sequence"
   #width = Session.get "lesson card width"

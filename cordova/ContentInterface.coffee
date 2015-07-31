@@ -17,7 +17,6 @@ class @ParsedUrl
 class @ContentInterface
 
   constructor: (@curriculum, @contentEndpoint)->
-    console.log "Consutricting and this is the endp: ", @.contentEndpoint
 
   clearContentDirectory: ()->
     deferred = Q.defer()
@@ -26,14 +25,11 @@ class @ContentInterface
         dirEntry.removeRecursively(()->
           deferred.resolve()
         , (err)->
-            console.log "Error removing directory"
             console.log err
             deferred.reject(err)
         )
 
     onError = (err)->
-      console.log "Error getting the directory to delete it"
-      console.log err
       if err.code == 1
         deferred.resolve("The directory does not exist to delete")
       deferred.reject err
@@ -71,14 +67,11 @@ class @ContentInterface
           #Session.set "bytes downloaded", bytesLoaded
 
         onTransferSuccess = (entry)->
-          console.log "TRANSFER SUCCESS"
-          console.log entry
           numRecieved++
           if numRecieved == numToLoad
             deferred.resolve(entry)
 
         onTransferError = (error)->
-          console.log "ERROR "
           console.log error
           if error.code == 3
             #try to download the file again
@@ -91,7 +84,6 @@ class @ContentInterface
 
     fileFound = ()->
       numRecieved++
-      console.log "Num recieved/numToLoad: "+ numRecieved + "/"+ numToLoad
       if numRecieved == numToLoad
         deferred.resolve()
       
@@ -123,7 +115,6 @@ class @ContentInterface
         #window.resolveLocalFileSystemURL fullPath, onFileEntrySuccess(url), onError(url)
         #fs.root.getFile path, {create: true, exclusive: false}, onFileEntrySuccess(url), onError(url)
     , (err)->
-      console.log "ERROR requesting local filesystem: "
       console.log err
       promise.reject err
 
@@ -139,15 +130,12 @@ class @ContentInterface
     
     promise = @.downloadFiles endURLS
     promise.then (entry)->
-      console.log "PROMISE SUCCESSFUL"
       onSuccess(entry)
     promise.fail (err)->
-      console.log "PROMISE REJECTED"
       console.log err
       onError(err)
   
   retrieveContentUrls: (lesson)->
-    console.log "RETRIEVING CONTENT URLS"
     try
       if not lesson? or not lesson.getModulesSequence?
         throw Meteor.Error "retrieveContentUrls argument must be a Lesson document"
@@ -160,7 +148,6 @@ class @ContentInterface
       for module in modules
         urls.merge(@.moduleUrls(module))
     catch err
-      console.log "Error caught in retrieve content urls: "
       console.log err
       throw Meteor.error "error retrieving content urls:", err
     finally
@@ -169,7 +156,6 @@ class @ContentInterface
 
   moduleUrls: (module)->
     urls = []
-    console.log "ModuleURLS: "
     console.log module
     if module.image
       urls.push module.image

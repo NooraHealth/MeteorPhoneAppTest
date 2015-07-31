@@ -1,5 +1,4 @@
 Template.layout.onRendered ()->
-  console.log "Settig the options"
   lightbox = FView.byId "lightbox"
   lightbox.view.setOptions {
       #inTransform: Transform.translate 600, 0, 0

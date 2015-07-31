@@ -30,7 +30,6 @@ class @ModuleSequence
         return false
 
     setModules: (modules)->
-      console.log "setting the modules"
       @.modules = modules
       @.surfaces = []
       for module in @.modules
@@ -44,11 +43,9 @@ class @ModuleSequence
       #surface = moduleView.buildModuleSurface()
       surface = @.surfaces[index]
       lightbox = @.getRenderable()
-      console.log lightbox
 
       if @.currentShow and surface
         if @.currentShow.equals surface
-          console.log "The current shows equaled each other!"
           return
 
       if @.currentShow
@@ -110,9 +107,6 @@ class @ModuleSequence
         return Session.get "current module index"
 
     gotToNextModule: ()=>
-      console.log ""
-      console.log "---------------------Goingt ot he next module!!---------------- "
-      console.log ""
       index = @.currentModuleIndex()
       currentModule = @.getCurrentModule()
       #if correctlyAnswered.length == modulesSequence.length
