@@ -29,7 +29,7 @@ body {
   min-height: 50px;
 
   a {
-    color: lighten($primary-blue, 10%);
+    color: lighten($primary-blue, 30%);
     text-decoration: none;
     
     &:hover {
@@ -53,28 +53,34 @@ footer {
     color: $dark-blue-1;
   }
 }
-nav {
+
+.nav {
   background-color: $primary-blue;
+  width: 100%;
+  color: #fff;
 }
 
-tile {
-  position: fixed;
-  z-index: 2;
-
-  &.round-tile {
-    & .next {
-      margin-left: 10px;
-      max-width: 60px;
-      padding: 10px;
-      border-radius: 30px;
-      background-color: blue;
-    }
-    & .logo {
-      @extend .next;
-      background-color: #FFFFFF;
-      top: 20;
-    }
+.nav-menu {
+  & ul {
+    margin: 5px; 
   }
+
+  & ul li {
+    display: inline;
+    margin: 10px;
+    font-size: 15px;
+  }
+
+  & i {
+    vertical-align: middle;
+  }
+
+}
+
+.round-tile {
+  border-radius: 30px;
+  background-color: #FFFFFF;
+  padding: 8px;
 }
 
 td {
