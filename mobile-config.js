@@ -8,13 +8,13 @@ App.info({
 
 App.icons({
   // iOS
-  'iphone': 'public/icons/icon-60x60.png',
-  'ipad': 'public/icons/icon-76x76.png',
+  //'iphone': 'public/icons/icon-60x60.png',
+  //'ipad': 'public/icons/icon-76x76.png',
 
-  // Android
-  'android_ldpi': 'public/icons/icon-36x36.png',
-  'android_mdpi': 'public/icons/icon-48x48.png',
-  'android_xhdpi': 'public/icons/icon-96x96.png'
+  //// Android
+  //'android_ldpi': 'public/icons/icon-36x36.png',
+  //'android_mdpi': 'public/icons/icon-48x48.png',
+  //'android_xhdpi': 'public/icons/icon-96x96.png'
 });
 
 App.launchScreens({

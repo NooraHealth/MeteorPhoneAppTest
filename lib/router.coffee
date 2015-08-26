@@ -27,16 +27,17 @@ Router.map ()->
       if Meteor.loggingIn()
         this.next()
       else if !Meteor.user()
+        console.log "There was not a user!"
         this.next()
 
-      if Meteor.isCordova
+      else if Meteor.isCordova
         console.log "Meteor is cordova and I'm about to initialize the server"
         initializeServer()
         
-      if not Meteor.user().curriculumIsSet()
+      else if not Meteor.user().curriculumIsSet()
         Router.go "selectCurriculum"
 
-      if Meteor.isCordova and not Meteor.user().contentLoaded()# and not Session.get "content loaded"
+      else if Meteor.isCordova and not Meteor.user().contentLoaded()
         Router.go "loading"
         Meteor.call 'contentEndpoint', (err, endpoint)=>
           console.log "----------- Downloading the content----------------------------"
@@ -53,6 +54,7 @@ Router.map ()->
             alert "There was an error downloading your content, please log in and try again: ", err
             Meteor.user().setContentAsLoaded false
             Meteor.logout()
+
           downloader.loadContent onSuccess, onError
 
       if this.next
@@ -121,7 +123,6 @@ Router.map ()->
       return {modules:  modules  }
         
   }
-
 
   ###
   # refresh the content

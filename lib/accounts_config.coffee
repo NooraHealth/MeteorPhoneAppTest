@@ -33,7 +33,6 @@ AccountsTemplates.configure {
 
     onSubmitHook: (error, state)->
       if !error and state=='signUp'
-        console.log "IIn on submit"
         Router.go "/selectCurriculum"
 
     # Texts
@@ -68,15 +67,8 @@ AccountsTemplates.addField {
   type: "hidden",
 }
 
-#AccountsTemplates.addField {
-  #_id: 'condition'
-  #required: true
-  #type: 'text'
-  #displayName: 'Condition'
-#}
-
 AccountsTemplates.configureRoute 'ensureSignedIn', {
   template: 'entry'
 }
 
-#Router.plugin "ensureSignedIn"
+Router.plugin "ensureSignedIn"
