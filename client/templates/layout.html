@@ -1,22 +1,5 @@
 <template name="layout">
+  {{>nav}}
 
-{{#famousContext id="mainCtx"}}
-  {{#HeaderFooterLayout size="[undefined, undefined]" headerSize="50" footerSize="45"}}
-    {{#Surface target="header" class="red" }}
-      {{>nav}}
-    {{/Surface}}
-
-    {{#Lightbox target="content" id="lightbox"}}
-      <div class="inner">
-        {{>yield}}
-      </div>
-    {{/Lightbox}}
-    
-    {{#Surface id="footer" target="footer" class="white"}}
-      {{>yield region="footer"}}
-    {{/Surface}}
-
-  {{/HeaderFooterLayout}}
-{{/famousContext}}
 </template>
 

@@ -9,3 +9,13 @@ Meteor.startup ()->
   else
     Meteor.call "contentEndpoint", (err, src)->
       Session.set "content src", src
+
+  console.log famous
+  this.FamousEngine = famous.core.FamousEngine
+  this.Camera = famous.components.Camera
+  this.Node = famous.core.Node
+  this.DOMElement = famous.domRenderables.DOMElement
+
+  FamousEngine.init()
+
+  this.Scene = new Scene.get()

@@ -19,12 +19,12 @@ ddp@1.1.0
 deps@1.0.7
 dispatch:kernel@0.0.6
 dispatch:request-animation-frame@0.0.1
-edgee:slingshot@0.7.1
 ejson@1.0.6
 email@1.0.6
 fastclick@1.0.3
 fourseven:scss@2.1.1
-gadicohen:famous-views@0.2.2
+gadicohen:famous@0.7.1
+gadicohen:modules@0.1.0
 geojson-utils@1.0.3
 ground:db@0.3.10
 ground:dictionary@0.2.1
@@ -46,7 +46,6 @@ iron:location@1.0.9
 iron:middleware-stack@1.0.9
 iron:router@1.0.9
 iron:url@1.0.9
-jag:pince@0.0.6
 jquery@1.11.3_2
 json@1.0.3
 launch-screen@1.0.2
@@ -69,11 +68,9 @@ observe-sequence@1.0.6
 ordered-dict@1.0.3
 package-version-parser@3.0.3
 pcel:loading@1.0.3
-pierreeric:cssc@1.0.4
 practicalmeteor:chai@1.9.2_3
 practicalmeteor:loglevel@1.1.0_3
 raix:eventemitter@0.1.2
-raix:famono@0.9.27
 raix:onetimeout@1.0.3
 raix:stubfence@1.0.1
 random@1.0.3
@@ -87,7 +84,6 @@ sanjo:karma@1.5.1
 sanjo:long-running-child-process@1.0.3
 sanjo:meteor-files-helpers@1.1.0_6
 sanjo:meteor-version@1.0.0
-sdecima:javascript-detect-element-resize@0.5.3
 service-configuration@1.0.4
 session@1.1.0
 sha@1.0.3

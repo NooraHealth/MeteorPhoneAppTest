@@ -19,9 +19,6 @@ accounts-ui
 materialize:materialize
 useraccounts:materialize
 accounts-password
-gadicohen:famous-views
-raix:famono
-edgee:slingshot
 service-configuration
 multiply:iron-router-progress
 sanjo:jasmine
@@ -32,3 +29,4 @@ pcel:loading
 
 mystor:device-detection
 ground:db
+gadicohen:famous

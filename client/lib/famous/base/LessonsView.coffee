@@ -1,10 +1,27 @@
+
 class @LessonsView
-  constructor: (@parent, @lessons)->
-    [@.node, @.scroll, @.modifier] = @.buildScrollview()
-    @.surfaces = []
-    @.scroll.sequenceFrom(@.surfaces)
-    @.currentLesson = @.getCurrentLessonIndex()
-    #@.parent.add @.scroll
+  constructor: ()->
+    @[name] = method for name, method of Node.prototype
+    Node.apply @
+    @.setOrigin .5, .5, .5
+     .setMountPoint .5, .5, .5
+     .setAlign .5, .5, .5
+
+    @.thumbnails = []
+    @.setLessons [{title: "SampleLesson"}]
+    console.log "Setting the lessons"
+
+  setLessons: (lessons)->
+    console.log lessons
+    for lesson in lessons
+      console.log "Adding alesson"
+      @.addThumbnail lesson
+
+  addThumbnail: (lesson)->
+    thumb = new LessonThumbnail(lesson)
+    console.log thumb
+    @.addChild thumb
+    @.thumbnails.push thumb
 
   getRenderable: ()->
     return @.node
@@ -46,13 +63,3 @@ class @LessonsView
     node.add(scroll)
 
     return [node, scroll, modifier]
-
-  addThumbnail: (index)->
-    lesson = @.lessons[index]
-    thumb = new LessonThumbnail(lesson)
-    surface = thumb.getSurface()
-    node = thumb.getNode()
-    surface.pipe @.scroll
-    @.surfaces.push node
-
-

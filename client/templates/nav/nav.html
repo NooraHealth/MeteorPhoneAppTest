@@ -1,9 +1,4 @@
 <template name="nav">
-
-<!--<div class="btn-floating" style="top: 45px; left: 45px">-->
-  <!--<a href="{{pathFor 'home'}}"><img class="circle" alt="Noora Health" src="/NHlogo.png"  style="max-width: 40px"/></a>-->
-  <!--</div>-->
-
   <tile class="round-tile">
     <a href="{{pathFor 'home'}}"><img class="logo z-depth-2" alt="Noora Health" src="/NHlogo.png"/></a>
   </tile>
@@ -19,8 +14,6 @@
     </div>
     {{#each moduleDocs}}
       <audio id="toplay{{_id}}" src="{{audioSrc}}" preload="auto"></audio>
-      <!--<audio id="correcttoplay{{_id}}" src="{{correctAnswerAudio}}" preload="auto"></audio>-->
-      <!--<audio id="incorrecttoplay{{_id}}" src="{{incorrectAnswerAudio}}" preload="auto"></audio>-->
     {{/each}}
 
   </nav>
