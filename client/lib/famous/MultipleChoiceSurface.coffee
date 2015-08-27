@@ -5,7 +5,7 @@
 class @MultipleChoiceSurface extends ModuleSurface
 
   constructor: (@module)->
-    super(Template.multipleChoiceModule, @.module)
+    super( @.module )
     @.responses = []
 
   handleClick: (event)=>

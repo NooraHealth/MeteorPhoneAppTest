@@ -1,13 +1,27 @@
 
-class @ModuleView
+class @ModulesView extends Node
 
   constructor: (@modules)->
-    @.lightbox = FView.byId("lightbox").node._object
+    console.log Node
+    @[name] = method for name, method of Node.prototype
+    Node.apply @
 
-  show: (index)=>
-    surface = new SurfaceFactory(@.modules[index]).getSurface()
-    #surface = moduleView.buildModuleSurface()
-    @.lightbox.show surface
+    #all the rendered module surfaces
+    @.surfaces = []
+
+  start: ()->
+    @.currentModule = 0
+    @.showModule @.currentModule
+
+  setModules: (modules)->
+    @.modules = modules
+    for module, index in modules
+      surface = SurfaceFactory.get().getModuleSurface(module)
+      console.log "Module surface"
+      console.log surface
+      @.surfaces.push surface
+      @.addChild surface
+      surface.hide()
 
   @handleResponse: (moduleSurface, event)=>
     module = moduleSurface.getModule()

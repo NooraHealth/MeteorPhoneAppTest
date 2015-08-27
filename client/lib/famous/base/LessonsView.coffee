@@ -1,11 +1,13 @@
 
-class @LessonsView
+class @LessonsView extends Node
   constructor: ()->
     @[name] = method for name, method of Node.prototype
     Node.apply @
 
     @.STEP = .03
     @.THUMBNAILS_PER_ROW = 3
+
+    alignTransitionable = new Transitionable 0
 
     @.setOrigin .5, .5, .5
      .setMountPoint .5, .5, .5

@@ -7,21 +7,7 @@ Router.map ()->
   this.route '/', {
     path: '/'
     name: 'home'
-    template: 'home'
-    yieldTemplates: {
-      'footer': {to:"footer"}
-    }
-    layoutTemplate: 'layout'
     cache: true
-    waitOn: ()->
-      if !Meteor.user()
-        return []
-      if Meteor.status().connected
-        return [
-          Meteor.subscribe("curriculum", Meteor.user().getCurriculumId()),
-          Meteor.subscribe("lessons", Meteor.user().getCurriculumId()),
-        ]
-
     onBeforeAction: ()->
       console.log "In the onBeforeAction in the home route"
       if Meteor.loggingIn()
@@ -87,43 +73,6 @@ Router.map ()->
       'selectCurriculumFooter': {to:"footer"}
     }
     cache: true
-    waitOn:()->
-      if Meteor.status().connected
-        return Meteor.subscribe("all_curriculums")
-  }
-
-  ###
-  # module sequence
-  ###
-  this.route '/modules/:_id', {
-    path: '/modules/:_id'
-    layoutTemplate: 'layout'
-    name: 'ModulesSequence'
-    template: "module"
-    yieldTemplates: {
-      'moduleFooter': {to:"footer"}
-    }
-    cache: true
-    waitOn: ()->
-      if !Meteor.user()
-        return
-      if Meteor.status().connected
-        return [
-          Meteor.subscribe("lessons", Meteor.user().getCurriculumId()),
-          Meteor.subscribe("curriculum", Meteor.user().getCurriculumId()),
-          Meteor.subscribe("modules", this.params._id)
-        ]
-
-    data: () ->
-      lesson = Lessons.findOne {_id: this.params._id}
-      Session.set "current lesson", lesson
-      modules = lesson.getModulesSequence()
-      Session.set "modules sequence", modules
-      Session.set "current module index",0
-      Session.set "correctly answered", []
-      Session.set "incorrectly answered", []
-      return {modules:  modules  }
-        
   }
 
   ###

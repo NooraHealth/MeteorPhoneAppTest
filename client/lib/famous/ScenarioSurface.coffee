@@ -5,7 +5,7 @@
 class @ScenarioSurface extends ModuleSurface
   constructor: (@module)->
     @.size = [800, 600]
-    super(Template.scenarioModule, @.module)
+    super( @.module )
 
   handleClick: (event)=>
     if event.target.classList.contains "disabled"

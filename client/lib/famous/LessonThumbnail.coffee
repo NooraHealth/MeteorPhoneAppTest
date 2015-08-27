@@ -26,12 +26,13 @@ class @LessonThumbnail extends Node
             <img src='#{imgSrc}' class='thumbnail' />
           </div>
           <div class='card-content'>
-            <p>#{title}</p>
+            <p class='center-align grey-text text-darken-2'>#{title}</p>
           </div>
         </div>
         "
     }
     
+    @.addUIEvent "click"
     #@.registerEvents()
 
   moveToPosition: (col, row, numCols, numRows)->
@@ -40,33 +41,11 @@ class @LessonThumbnail extends Node
     console.log xAlign
     console.log yAlign
     @.setAlign xAlign, yAlign, .5
+
+  onReceive: (e, payload) ->
+    if e == 'click'
+      scene = Scene.get()
+      scene.showModules @.lesson
+
     
-
-  isCurrentLesson: ()->
-    return false
-
-  registerEvents: ()->
-    #surface = @.surface
-
-    #surface.on "mouseout", ()=>
-      #@.state.halt()
-      #if @.isCurrentLesson()
-        #@.state.setTransform Transform.scale(1.15, 1.15, 1), {duration: 500, curve: "easeIn"}
-      #else
-        #@.state.setTransform Transform.scale(1, 1, 1), {duration: 500, curve: "easeIn"}
-    
-    #surface.on "mouseover", ()=>
-      #if @.isCurrentLesson()
-        #@.state.setTransform Transform.scale(1.20, 1.20, 1), {duration: 500, curve: "easeIn"}
-      #else
-        #@.state.setTransform Transform.scale(1.1, 1.1, 1), {duration: 500, curve: "easeIn"}
-
-    #surface.on "click", ()=>
-      #Router.go "ModulesSequence", {_id: @.lesson._id}
-
-  @getHeight: ()->
-    return @.HEIGHT
-
-  @getWidth: ()->
-    return @.WIDTH
 

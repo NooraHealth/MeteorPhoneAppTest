@@ -5,7 +5,7 @@
 ###
 class @BinarySurface extends ModuleSurface
   constructor: (@module)->
-    super(Template.binaryChoiceModule, @.module)
+    super( @.module )
 
   handleClick: (event)=>
     console.log "Click Event!"

@@ -1,11 +1,16 @@
 
-class @ModuleSurface
-  constructor: (@template, @module)->
+class @ModuleSurface extends Node
+  constructor: ( @module )->
+    @[name] = method for name, method of Node.prototype
+    Node.apply @
+
     @.size ?= [700, 600]
-    @.html = @.templateToHtml()
-    @.surface = @.buildSurface()
-    @.registerFamousEvents()
-    
+    @.setOrigin .5, .5, .5
+     .setAlign .5, .5, .5
+     .setMountPoint .5, .5, .5
+     .setSizeMode Node.ABSOLUTE_SIZE, Node.ABSOLUTE_SIZE, Node.RELATIVE_SIZE
+     .setAbsoluteSize 700, 600
+
   handleClick: (event)=>
 
   handleInputUpdate: (event)=>
