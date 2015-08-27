@@ -22,6 +22,10 @@ Primary style
   content: '';
 }
 
+html, body {
+  overflow: hidden;
+}
+
 body {
   color: $primary-font-color;
   background: $light-blue-1;
@@ -36,21 +40,6 @@ body {
       color: $primary-blue;
       text-decoration: none;
     }
-  }
-}
-
-footer {
-  background-color: $white;
-  color: $muted;
-  position: fixed;
-  left: 0;
-  bottom:0;
-  padding: $padding-S;
-  width:100%;
-
-  & .breadcrumb {
-    background-color: $primary-blue;
-    color: $dark-blue-1;
   }
 }
 
@@ -83,9 +72,8 @@ footer {
   padding: 8px;
 }
 
-.thumbnail {
-  /*width: 100%;*/
-  /*height: 100%;*/
+.full-width {
+  width: 100%;
 }
 
 td {

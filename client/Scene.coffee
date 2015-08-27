@@ -19,6 +19,16 @@ class @Scene
 
       @.header = new Header()
       @.root.addChild @.header
+
+      @.root.addComponent {
+        onSizeChange: (x, y, z)=>
+          @.pageSize = {
+            x: x
+            y: y
+            z: z
+          }
+          console.log "Set page size: ", @.pageSize
+      }
       @
 
     goToLessonsPage: ()->
@@ -34,9 +44,7 @@ class @Scene
       @
 
     showModules: (lesson)->
-      console.log "about to show the modules of ", lesson
       modules = lesson.getModulesSequence()
-      console.log modules
       @.modulesView.setModules modules
       @.lessonsView.hide()
       @.modulesView.show()
@@ -46,7 +54,9 @@ class @Scene
       @
 
     getContentSrc: ()->
-      console.log @.src
       return @.src
 
+    getPageSize: ()->
+      console.log "Returning the page size"
+      return @.pageSize
 

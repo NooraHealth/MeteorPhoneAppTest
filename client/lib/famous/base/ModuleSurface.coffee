@@ -1,6 +1,6 @@
 
 class @ModuleSurface extends Node
-  constructor: ( @module )->
+  constructor: ( @module, @index)->
     @[name] = method for name, method of Node.prototype
     Node.apply @
 
@@ -8,53 +8,40 @@ class @ModuleSurface extends Node
     @.setOrigin .5, .5, .5
      .setAlign .5, .5, .5
      .setMountPoint .5, .5, .5
-     .setSizeMode Node.ABSOLUTE_SIZE, Node.ABSOLUTE_SIZE, Node.RELATIVE_SIZE
-     .setAbsoluteSize 700, 600
+     .setSizeMode Node.RELATIVE_SIZE, Node.RELATIVE_SIZE, Node.RELATIVE_SIZE
+     .setProportionalSize .8, .8, 1
+     #.setAbsoluteSize 700, 600, 0
+     .setPosition 0, 0, @.index
 
-  handleClick: (event)=>
+    @.positionTransitionable = new Transitionable 1
+    FamousEngine.requestUpdate(@)
 
-  handleInputUpdate: (event)=>
-
-  handleInputEnd: (event)=>
-
-  registerFamousEvents: ()=>
-    @.surface.on "click", (event)=>
-      @.handleClick(event)
-    @.surface.on "deploy", ()=>
-      console.log "I have been deployed"
-      if @.module.audioSrc()
-        ModuleView.playAudio "question", @.module
-    #@.mouseSync.on "start", (event)=>
-      #@.handleClick event
-    #@.mouseSync.on "end", (event)=>
-      #@.handleInputEnd event
-    #@.mouseSync.on "update", (event)=>
-      #@.handleInputUpdate event
-
-    #@.sync.on "start", (event)=>
-      #@.handleClick event
-    #@.sync.on "end", (event)=>
-      #@.handleInputEnd event
-    #@.sync.on "update", (event)=>
-      #@.handleInputUpdate event
-
-  getSurface: ()=>
-    return @.surface
-
-  getModule: ()=>
-    return @.module
-
-  buildSurface: ()=>
-    id = @.module._id
-    console.log id
-    return new Surface {
-      size: @.size
-      content: @.html
-      classes: ['white', 'card', 'valign-wrapper', 'module']
+    @.domElement = new DOMElement @, {
+      properties:
+        "background-color": "green"
     }
 
-  templateToHtml: ()=>
-    return Blaze.toHTMLWithData(@.template, @.module)
+  onUpdate: ()->
+    console.log "Updating the position"
+    pageWidth = Scene.get().getPageSize().x
+    @.setPosition @.positionTransitionable.get() * pageWidth, 0, 0
+    console.log @.getPosition()
+
+  moveOffstage: ()->
+    console.log "About to move offstage"
+    console.log @
+    @.positionTransitionable.halt()
+    @.positionTransitionable.to 1, 'easeOut', 500, ()-> console.log "Moved offstage"
+    @.hide()
+    @.requestUpdate(@)
+
+  moveOnstage: ()->
+    console.log "About to move onstage"
+    console.log @
+    @.positionTransitionable.halt()
+    @.positionTransitionable.to 0, 'easeIn', 500, ()-> console.log "Moved onstage"
+    @.requestUpdate(@)
+
 
 
 

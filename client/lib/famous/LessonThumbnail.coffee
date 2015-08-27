@@ -38,8 +38,6 @@ class @LessonThumbnail extends Node
   moveToPosition: (col, row, numCols, numRows)->
     xAlign = col / numCols
     yAlign = row / numRows
-    console.log xAlign
-    console.log yAlign
     @.setAlign xAlign, yAlign, .5
 
   onReceive: (e, payload) ->

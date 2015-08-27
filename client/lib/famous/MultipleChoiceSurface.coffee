@@ -4,9 +4,13 @@
 ###
 class @MultipleChoiceSurface extends ModuleSurface
 
-  constructor: (@module)->
-    super( @.module )
+  constructor: ( @module, index )->
+    super( @.module , index )
     @.responses = []
+
+    #@.domElement = new DOMElement @, {
+      #content: "<p>I am multiple choice</p>"
+    #}
 
   handleClick: (event)=>
     console.log "Click Event!"

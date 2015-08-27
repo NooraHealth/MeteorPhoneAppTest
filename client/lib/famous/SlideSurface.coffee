@@ -3,5 +3,9 @@
 # Slide Surface
 ###
 class @SlideSurface extends ModuleSurface
-  constructor: (@module)->
-    super( @.module )
+  constructor: ->
+    super( @.module , index )
+
+    #@.domElement = new DOMElement @, {
+      #content: "<p>I am slide choice</p>"
+    #}

@@ -15,23 +15,20 @@ class @ModulesView extends Node
     @.showModule index
 
   showModule: (index)->
-    console.log "Going to show module", index
-    console.log @.currentIndex
     if @.currentIndex? and @.surfaces[@.currentIndex]
-      console.log "HIDEING"
-      console.log @.surfaces[@.currentIndex]
-      @.surfaces[@.currentIndex].hide()
+      @.surfaces[@.currentIndex].moveOffstage()
     if @.surfaces[index]
-      console.log "Showing ", @.surfaces[index]
-      @.surfaces[index].show()
+      console.log "Calling move onstage"
+      @.surfaces[index].moveOnstage()
       @.currentIndex = index
+      return
     else
       Scene.get().goToLessonsPage()
 
   setModules: (modules)->
     @.modules = modules
     for module, index in modules
-      surface = SurfaceFactory.get().getModuleSurface(module)
+      surface = SurfaceFactory.get().getModuleSurface(module, index)
       @.surfaces.push surface
       @.addChild surface
 

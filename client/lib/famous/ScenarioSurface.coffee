@@ -3,9 +3,13 @@
 # Scenario Surface
 ###
 class @ScenarioSurface extends ModuleSurface
-  constructor: (@module)->
+  constructor: (@module, index)->
     @.size = [800, 600]
-    super( @.module )
+    super( @.module , index, @.size)
+    
+    #@.domElement = new DOMElement @, {
+      #content: "<p>I am scenario choice</p>"
+    #}
 
   handleClick: (event)=>
     if event.target.classList.contains "disabled"
