@@ -21,6 +21,13 @@ class @Scene
       @.root.addChild @.header
       @
 
+    goToLessonsPage: ()->
+      @.modulesView.hide()
+      @.lessonsView.show()
+
+    goToNextModule: ()->
+      @.modulesView.goToNextModule()
+
     setLessons: (lessons)->
       @.lessons = lessons
       @.lessonsView.setLessons lessons

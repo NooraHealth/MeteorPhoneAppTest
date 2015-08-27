@@ -15,3 +15,6 @@ class @VideoSurface extends ModuleSurface
       
     }
 
+  hide: ()->
+    Node.hide.call @
+    console.log "called the node hide"

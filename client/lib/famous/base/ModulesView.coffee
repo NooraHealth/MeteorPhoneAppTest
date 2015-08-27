@@ -2,26 +2,41 @@
 class @ModulesView extends Node
 
   constructor: (@modules)->
-    console.log Node
     @[name] = method for name, method of Node.prototype
     Node.apply @
 
     #all the rendered module surfaces
     @.surfaces = []
+    @.next = new NextBtn()
+    @.addChild @.next
 
-  start: ()->
-    @.currentModule = 0
-    @.showModule @.currentModule
+  goToNextModule: ()->
+    index = @.currentIndex + 1
+    @.showModule index
+
+  showModule: (index)->
+    console.log "Going to show module", index
+    console.log @.currentIndex
+    if @.currentIndex? and @.surfaces[@.currentIndex]
+      console.log "HIDEING"
+      console.log @.surfaces[@.currentIndex]
+      @.surfaces[@.currentIndex].hide()
+    if @.surfaces[index]
+      console.log "Showing ", @.surfaces[index]
+      @.surfaces[index].show()
+      @.currentIndex = index
+    else
+      Scene.get().goToLessonsPage()
 
   setModules: (modules)->
     @.modules = modules
     for module, index in modules
       surface = SurfaceFactory.get().getModuleSurface(module)
-      console.log "Module surface"
-      console.log surface
       @.surfaces.push surface
       @.addChild surface
-      surface.hide()
+
+    @.currentIndex = 0
+    @.showModule 0
 
   @handleResponse: (moduleSurface, event)=>
     module = moduleSurface.getModule()
