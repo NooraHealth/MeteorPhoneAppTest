@@ -7,10 +7,10 @@ class @VideoSurface extends ModuleSurface
     super @.module, index
 
     videoSrc = @.module.videoSrc()
-    #@.domElement = new DOMElement @, {
-      #properties:
-        #height: "100%"
+    @.domElement = new DOMElement @, {
+      properties:
+        height: "100%"
 
-      #content: "<video src='#{videoSrc}' class='inherit' controls autoplay> Your browser does not support this video tag, please logout and use another browser </video>"
+      content: "<video src='#{videoSrc}' class='inherit' controls autoplay> Your browser does not support this video tag, please logout and use another browser </video>"
       
-    #}
+    }

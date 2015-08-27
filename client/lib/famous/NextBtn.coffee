@@ -5,7 +5,7 @@ class @NextBtn extends Node
 
     @.setOrigin .5, .5, .5
      .setMountPoint 1, 1, 0
-     .setAlign .8, .9, .5
+     .setAlign .9, .9, .5
      .setSizeMode "absolute", "absolute", "absolute"
      .setAbsoluteSize 80, 30, 0
 

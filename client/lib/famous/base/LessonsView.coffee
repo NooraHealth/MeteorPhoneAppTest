@@ -18,6 +18,24 @@ class @LessonsView extends Node
     @.thumbnails = []
     @.lessons = []
 
+    @.positionTransitionable = new Transitionable 1
+    @.requestUpdate()
+
+  onUpdate: ()->
+    pageWidth = Scene.get().getPageSize().x
+    @.setPosition @.positionTransitionable.get() * pageWidth, 0, 0
+
+  moveOffstage: ()->
+    @.positionTransitionable.halt()
+    @.positionTransitionable.to 1, 'easeOut', 500, ()-> console.log "Lessons Moved OFF"
+    @.hide()
+    @.requestUpdateOnNextTick(@)
+
+  moveOnstage: ()->
+    @.positionTransitionable.halt()
+    @.positionTransitionable.to 0, 'easeIn', 500, ()-> console.log "lessons Moved ON"
+    @.requestUpdateOnNextTick(@)
+
   setLessons: (lessons)->
     @.lessons = lessons
     @.thumbnails = []

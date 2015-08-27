@@ -8,6 +8,16 @@ class @Scene
       @.famousScene = FamousEngine.createScene "body"
 
       @.root = @.famousScene.addChild()
+      @.pageSize =
+        x: 0
+        y: 0
+        z: 0
+      @.root.addComponent
+        onSizeChange: (x, y, z)=>
+          @.pageSize =
+            x: x
+            y: y
+            z: z
 
       @.camera = new Camera @.famousScene
       @.camera.setDepth 1000
@@ -20,23 +30,17 @@ class @Scene
       @.header = new Header()
       @.root.addChild @.header
 
-      @.root.addComponent {
-        onSizeChange: (x, y, z)=>
-          @.pageSize = {
-            x: x
-            y: y
-            z: z
-          }
-          console.log "Set page size: ", @.pageSize
-      }
+      @.goToLessonsPage()
       @
 
     goToLessonsPage: ()->
-      @.modulesView.hide()
-      @.lessonsView.show()
+      @.modulesView.moveOffstage()
+      @.lessonsView.moveOnstage()
+      @
 
     goToNextModule: ()->
       @.modulesView.goToNextModule()
+      @
 
     setLessons: (lessons)->
       @.lessons = lessons
@@ -44,10 +48,17 @@ class @Scene
       @
 
     showModules: (lesson)->
+      console.log "about to show mdoules"
       modules = lesson.getModulesSequence()
       @.modulesView.setModules modules
-      @.lessonsView.hide()
-      @.modulesView.show()
+      @.goToModules()
+      @
+
+    goToModules: ()->
+      @.lessonsView.moveOffstage()
+      @.modulesView.moveOnstage()
+      @.modulesView.start()
+      @
 
     setContentSrc: (src)->
       @.src = src
@@ -57,6 +68,5 @@ class @Scene
       return @.src
 
     getPageSize: ()->
-      console.log "Returning the page size"
       return @.pageSize
 

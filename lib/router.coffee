@@ -9,15 +9,12 @@ Router.map ()->
     name: 'home'
     cache: true
     onBeforeAction: ()->
-      console.log "In the onBeforeAction in the home route"
       if Meteor.loggingIn()
         this.next()
       else if !Meteor.user()
-        console.log "There was not a user!"
         this.next()
 
       else if Meteor.isCordova
-        console.log "Meteor is cordova and I'm about to initialize the server"
         initializeServer()
         
       else if not Meteor.user().curriculumIsSet()

@@ -1,7 +1,5 @@
 Meteor.users.helpers {
   curriculumIsSet: ()->
-    console.log @
-    console.trace()
     curriculum = Curriculum.findOne {_id: @.profile.curriculumId}
     return curriculum?
 
@@ -12,12 +10,10 @@ Meteor.users.helpers {
     return Curriculum.findOne {_id: @.profile.curriculumId}
 
   setCurriculum: (id)->
-    console.log "Setting the curriculum in the Meteor.users"
     oldCurriculum = @.profile.curriculumId
     if @.profile.curriculumId == id
       return
     else
-      console.log "Setting!"
       query = { $set: {"profile.curriculumId": id}}
       Meteor.call "updateUser", query
       #after setting the curriculum, indicate that the
@@ -33,13 +29,11 @@ Meteor.users.helpers {
   updateLessonsComplete: (lesson)->
     lessonsComplete = @.getCompletedLessons()
     if lesson.nh_id not in lessonsComplete
-      console.log "PUshing the lesson to the user"
       query = {$push: {"profile.lessons_complete": lesson.nh_id}}
       Meteor.call "updateUser", query
     @
 
   contentLoaded: ()->
-    console.log "Is content Loaded: ", @.profile.content_loaded
     #return false
     return @.profile.content_loaded
 

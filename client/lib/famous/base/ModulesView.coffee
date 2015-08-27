@@ -10,6 +10,28 @@ class @ModulesView extends Node
     @.next = new NextBtn()
     @.addChild @.next
 
+    @.positionTransitionable = new Transitionable 1
+    @.requestUpdate()
+
+  onUpdate: ()->
+    pageWidth = Scene.get().getPageSize().x
+    @.setPosition @.positionTransitionable.get() * pageWidth, 0, 0
+
+  moveOffstage: ()->
+    console.log "Moving modules off stage"
+    console.trace()
+    @.positionTransitionable.halt()
+    @.positionTransitionable.to 1, 'easeOut', 500, ()-> console.log "Modules Moved OFF"
+    @.hide()
+    @.requestUpdateOnNextTick(@)
+
+  moveOnstage: ()->
+    console.log "Moving modules on stage"
+    console.trace()
+    @.positionTransitionable.halt()
+    @.positionTransitionable.to 0, 'easeIn', 500, ()-> console.log "Modules Moved ON"
+    @.requestUpdateOnNextTick(@)
+
   goToNextModule: ()->
     index = @.currentIndex + 1
     @.showModule index
@@ -19,11 +41,15 @@ class @ModulesView extends Node
       @.surfaces[@.currentIndex].moveOffstage()
     if @.surfaces[index]
       console.log "Calling move onstage"
+      console.log @.positionTransitionable
       @.surfaces[index].moveOnstage()
       @.currentIndex = index
       return
     else
       Scene.get().goToLessonsPage()
+
+  start: ()->
+    @.showModule 0
 
   setModules: (modules)->
     @.modules = modules
@@ -31,9 +57,6 @@ class @ModulesView extends Node
       surface = SurfaceFactory.get().getModuleSurface(module, index)
       @.surfaces.push surface
       @.addChild surface
-
-    @.currentIndex = 0
-    @.showModule 0
 
   @handleResponse: (moduleSurface, event)=>
     module = moduleSurface.getModule()
