@@ -5,7 +5,6 @@ class @Scene
 
   class PrivateScene
     constructor: ()->
-      console.log "constructing a scene"
       @.famousScene = FamousEngine.createScene "body"
 
       @.root = @.famousScene.addChild()
@@ -18,8 +17,19 @@ class @Scene
 
       @.header = new Header()
       @.root.addChild @.header
+      @
 
     setLessons: (lessons)->
       @.lessons = lessons
       @.lessonsView.setLessons lessons
+      @
+
+    setContentSrc: (src)->
+      @.src = src
+      @
+
+    getContentSrc: ()->
+      console.log @.src
+      return @.src
+
 

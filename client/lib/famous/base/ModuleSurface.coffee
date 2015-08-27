@@ -35,6 +35,7 @@ class @ModuleSurface
 
   getSurface: ()=>
     return @.surface
+
   getModule: ()=>
     return @.module
 

@@ -1,28 +1,46 @@
 
 class @LessonThumbnail extends Node
-  HEIGHT = 400
-  WIDTH = 400
 
-  constructor: (@lesson)->
+  constructor: (@lesson, @index)->
     @[name] = method for name, method of Node.prototype
     Node.apply @
 
+    @.WIDTH = WIDTH = 250
+    @.HEIGHT = HEIGHT = 250
+
     @.setOrigin .5, .5, .5
      .setAlign .5, .5, .5
-     .setMountPoint .5, .5, .5
-     .setSizeMode "absolute", "absolute", "absolute"
-     .setAbsoluteSize @.WIDTH, @.HEIGHT
+     .setMountPoint 0, 0, 0
+     .setSizeMode "relative", "relative", "absolute"
 
-    console.log "Setting the domelement"
+    imgSrc = Scene.get().getContentSrc() + lesson.image
+    title = lesson.title
     @.domElement = new DOMElement @, {
-      properties: {
-        background: "white"
-      }
-      content: "<p>LESSON"+ @.lesson.title+ "</p>"
+      properties:
+        margin: "0px 30px 0px 30px"
+
+      content:
+        "
+        <div class='card'>
+          <div class='card-image'>
+            <img src='#{imgSrc}' class='thumbnail' />
+          </div>
+          <div class='card-content'>
+            <p>#{title}</p>
+          </div>
+        </div>
+        "
     }
-    console.log @
     
     #@.registerEvents()
+
+  moveToPosition: (col, row, numCols, numRows)->
+    xAlign = col / numCols
+    yAlign = row / numRows
+    console.log xAlign
+    console.log yAlign
+    @.setAlign xAlign, yAlign, .5
+    
 
   isCurrentLesson: ()->
     return false
@@ -52,32 +70,3 @@ class @LessonThumbnail extends Node
   @getWidth: ()->
     return @.WIDTH
 
-  buildSurface: ()->
-    targetSize = [400, 400]
-    targetAlign = [.25, .5]
-    targetOrigin = [.5, .5]
-    
-    state = new StateModifier({
-    })
-    
-    #state.setTransform Transform.scale(.25,.25,.25)
-
-    node = new RenderNode()
-    state = state
-
-    surface = new Surface {
-      size: @.size
-      content: @.html
-      properties: {
-        padding: '10px'
-        zIndex: 10
-      }
-    }
-
-    node.add(state).add(surface)
-    #surface.pipe state
-    surface.pipe state
-    return [node, surface, state]
-
-  templateToHtml: ()->
-    return Blaze.toHTMLWithData @.template, @.lesson

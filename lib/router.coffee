@@ -71,6 +71,8 @@ Router.map ()->
           Session.set "current sections", null
           lessons =  curr.getLessonDocuments()
           Session.set "lessons sequence", lessons
+          scene = Scene.get()
+          scene.setLessons lessons
           return {lessons: lessons}
 
     onAfterAction: ()->

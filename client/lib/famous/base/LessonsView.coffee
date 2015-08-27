@@ -3,25 +3,37 @@ class @LessonsView
   constructor: ()->
     @[name] = method for name, method of Node.prototype
     Node.apply @
+
+    @.STEP = .03
+    @.THUMBNAILS_PER_ROW = 3
+
     @.setOrigin .5, .5, .5
      .setMountPoint .5, .5, .5
      .setAlign .5, .5, .5
+     .setSizeMode Node.RELATIVE_SIZE, Node.RELATIVE_SIZE, Node.RELATIVE_SIZE
+     .setProportionalSize .8, .8, 1
 
     @.thumbnails = []
-    @.setLessons [{title: "SampleLesson"}]
-    console.log "Setting the lessons"
+    @.lessons = []
 
   setLessons: (lessons)->
-    console.log lessons
-    for lesson in lessons
-      console.log "Adding alesson"
+    @.lessons = lessons
+    @.thumbnails = []
+    for lesson, index in lessons
       @.addThumbnail lesson
 
   addThumbnail: (lesson)->
     thumb = new LessonThumbnail(lesson)
-    console.log thumb
     @.addChild thumb
-    @.thumbnails.push thumb
+    index = ( @.thumbnails.push thumb ) - 1
+    proportion = ( 1 - @.STEP * @.THUMBNAILS_PER_ROW ) / @.THUMBNAILS_PER_ROW
+    thumb.setProportionalSize proportion, proportion
+
+    col = index %% @.THUMBNAILS_PER_ROW
+    row = Math.floor(index / @.THUMBNAILS_PER_ROW)
+    numCols = @.THUMBNAILS_PER_ROW
+    numRows = Math.ceil(@.thumbnails.length / @.THUMBNAILS_PER_ROW)
+    thumb.moveToPosition col, row, numCols, numRows
 
   getRenderable: ()->
     return @.node

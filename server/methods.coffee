@@ -11,10 +11,10 @@ Meteor.methods {
     Modules.insert module for module in MODULES
 
   contentEndpoint: ()->
-    if process.env.METEOR_ENV == 'production'
-      return "http://noorahealthcontent.s3-us-west-1.amazonaws.com/"
-    else
-      return 'http://noorahealth-development.s3-us-west-1.amazonaws.com/'
+    #if process.env.METEOR_ENV == 'production'
+      #return "http://noorahealthcontent.s3-us-west-1.amazonaws.com/"
+    #else
+    return 'http://noorahealthcontent.noorahealth.org'
 
   isProduction: ()->
     return process.env.METEOR_ENV == 'production'
