@@ -19,21 +19,26 @@ class @LessonsView extends Node
     @.lessons = []
 
     @.positionTransitionable = new Transitionable 1
-    @.requestUpdate()
+    @.requestUpdateOnNextTick()
 
   onUpdate: ()->
     pageWidth = Scene.get().getPageSize().x
     @.setPosition @.positionTransitionable.get() * pageWidth, 0, 0
 
   moveOffstage: ()->
+    console.log "LESSON: moveOffstage called"
+    console.trace()
     @.positionTransitionable.halt()
     @.positionTransitionable.to 1, 'easeOut', 500, ()-> console.log "Lessons Moved OFF"
     @.hide()
     @.requestUpdateOnNextTick(@)
 
   moveOnstage: ()->
+    console.log "LESSON: moveON called"
+    console.trace()
     @.positionTransitionable.halt()
     @.positionTransitionable.to 0, 'easeIn', 500, ()-> console.log "lessons Moved ON"
+    @.show()
     @.requestUpdateOnNextTick(@)
 
   setLessons: (lessons)->

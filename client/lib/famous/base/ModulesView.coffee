@@ -5,31 +5,37 @@ class @ModulesView extends Node
     @[name] = method for name, method of Node.prototype
     Node.apply @
 
+    @.setOrigin .5, .5, .5
+     .setAlign .5, .4, .5
+     .setMountPoint .5, .5, .5
+     #.setSizeMode Node.ABSOLUTE_SIZE, Node.ABSOLUTE_SIZE, Node.ABSOLUTE_SIZE
+     .setSizeMode Node.RELATIVE_SIZE, Node.RELATIVE_SIZE, Node.RELATIVE_SIZE
+     .setProportionalSize .8, .7, 1
+     #.setAbsoluteSize 600, 500, 0
+     .setPosition 0, 0, 0
+
     #all the rendered module surfaces
     @.surfaces = []
     @.next = new NextBtn()
     @.addChild @.next
 
     @.positionTransitionable = new Transitionable 1
-    @.requestUpdate()
+    @.requestUpdateOnNextTick()
 
   onUpdate: ()->
     pageWidth = Scene.get().getPageSize().x
     @.setPosition @.positionTransitionable.get() * pageWidth, 0, 0
 
   moveOffstage: ()->
-    console.log "Moving modules off stage"
-    console.trace()
     @.positionTransitionable.halt()
     @.positionTransitionable.to 1, 'easeOut', 500, ()-> console.log "Modules Moved OFF"
     @.hide()
     @.requestUpdateOnNextTick(@)
 
   moveOnstage: ()->
-    console.log "Moving modules on stage"
-    console.trace()
     @.positionTransitionable.halt()
     @.positionTransitionable.to 0, 'easeIn', 500, ()-> console.log "Modules Moved ON"
+    @.show()
     @.requestUpdateOnNextTick(@)
 
   goToNextModule: ()->
@@ -40,8 +46,6 @@ class @ModulesView extends Node
     if @.currentIndex? and @.surfaces[@.currentIndex]
       @.surfaces[@.currentIndex].moveOffstage()
     if @.surfaces[index]
-      console.log "Calling move onstage"
-      console.log @.positionTransitionable
       @.surfaces[index].moveOnstage()
       @.currentIndex = index
       return
@@ -254,4 +258,35 @@ class @ModulesView extends Node
           $(option).addClass "correctly_selected"
 
       return [responses, numIncorrect]
+
+class NextBtn extends Node
+  constructor: ()->
+    @[name] = method for name, method of Node.prototype
+    Node.apply @
+
+    @.setOrigin .5, .5, .5
+     .setMountPoint 1, 1, 0
+     .setAlign 1, 1.2, .5
+     .setSizeMode "absolute", "absolute", "absolute"
+     .setAbsoluteSize 80, 30, 0
+
+    @.domElement = new DOMElement @, {
+      content: "
+      <a class='center-align next-module-btn blue rounded blue-text text-lighten-3 flow-text btn-flat waves-effect waves-light'>
+        NEXT <i class='mdi-navigation-arrow-forward medium'></i>
+      </a>"
+    }
+
+    console.log "I am the NExt btn"
+    console.log @
+    @.addUIEvent "click"
+
+  onUpdate: ()->
+    console.log "NEXT btn has been updated"
+    console.log @
+    console.log @.getPosition()
+
+  onReceive: (e, payload) ->
+    if e == 'click'
+      Scene.get().goToNextModule()
 

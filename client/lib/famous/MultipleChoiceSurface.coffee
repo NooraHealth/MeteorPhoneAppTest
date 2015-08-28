@@ -8,9 +8,9 @@ class @MultipleChoiceSurface extends ModuleSurface
     super( @.module , index )
     @.responses = []
 
-    #@.domElement = new DOMElement @, {
-      #content: "<p>I am multiple choice</p>"
-    #}
+    @.domElement = new DOMElement @, {
+      content: "<p>I am multiple choice</p>"
+    }
 
   handleClick: (event)=>
     console.log "Click Event!"
@@ -25,7 +25,7 @@ class @MultipleChoiceSurface extends ModuleSurface
 
   handleMultipleChoiceResponseSubmitted: (event)->
     ModuleView.handleResponse(@, event)
-
+      
   handleImageChoiceSelected: (event)=>
     answers = @.module.correct_answer
     if !answers

@@ -8,6 +8,8 @@ class @BinarySurface extends ModuleSurface
     super @.module, index
 
     console.log @
+    @.setSizeMode Node.RELATIVE_SIZE, Node.RELATIVE_SIZE, Node.RELATIVE_SIZE
+     .setProportionalSize .8, 1, 1
     #@.image = new ModuleImage(@.module)
     #@.noBtn = new NoButton()
     #@.yesBtn = new YesButton()

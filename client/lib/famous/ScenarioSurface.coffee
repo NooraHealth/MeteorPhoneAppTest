@@ -7,9 +7,9 @@ class @ScenarioSurface extends ModuleSurface
     @.size = [800, 600]
     super( @.module , index, @.size)
     
-    #@.domElement = new DOMElement @, {
-      #content: "<p>I am scenario choice</p>"
-    #}
+    @.domElement = new DOMElement @, {
+      content: "<p>I am scenario choice</p>"
+    }
 
   handleClick: (event)=>
     if event.target.classList.contains "disabled"
