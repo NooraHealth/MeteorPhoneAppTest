@@ -9,6 +9,11 @@ class @ModuleSurface extends Node
      .setMountPoint .5, .5, .5
      .setPosition 0, 0, @.index
 
+    @.domElement = new DOMElement @,
+      properties:
+        "background-color": "white"
+        "text-align": "center"
+
     @.positionTransitionable = new Transitionable 1
 
     @.requestUpdateOnNextTick(@)
