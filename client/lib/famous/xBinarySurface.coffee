@@ -48,6 +48,7 @@ class @BinarySurface extends ModuleSurface
         btn.respond response
       else
         btn.respond otherResponse
+      btn.disable()
 
   moveOffstage: ()->
     super
@@ -83,13 +84,12 @@ class YesButton extends ResponseButton
 
     @.setOrigin .5, .5, .5
      .setAlign .05, 1, .5
-     .setMountPoint 0, .5, .5
+     .setMountPoint 0, 1, .5
      .setSizeMode Node.RELATIVE_SIZE, Node.RELATIVE_SIZE, Node.ABSOLUTE_SIZE
-     .setProportionalSize .4, .2
+     .setProportionalSize .4, .075
 
-    @.domElement = new DOMElement @, {
-      content: "<a class='full-width btn green waves-light waves-effect white-text'>YES</a>"
-    }
+    @.domElement.addClass "green"
+    @.domElement.setContent @.value.toUpperCase()
 
 class NoButton extends ResponseButton
   constructor: (@value)->
@@ -97,12 +97,14 @@ class NoButton extends ResponseButton
 
     @.setOrigin .5, .5, .5
      .setAlign .95, 1, .5
-     .setMountPoint 1, .5, .5
+     .setMountPoint 1, 1, .5
      .setSizeMode Node.RELATIVE_SIZE, Node.RELATIVE_SIZE, Node.ABSOLUTE_SIZE
-     .setProportionalSize .4, .2
+     .setProportionalSize .4, .075
 
-    @.domElement = new DOMElement @, {
-      content: "<a class='full-width btn red waves-light waves-effect white-text'>NO</a>"
-    }
+    @.domElement.addClass "red"
+    @.domElement.setContent @.value.toUpperCase()
+    #@.domElement = new DOMElement @, {
+      #content: "<a class='full-width btn red waves-light waves-effect white-text'>NO</a>"
+    #}
 
 

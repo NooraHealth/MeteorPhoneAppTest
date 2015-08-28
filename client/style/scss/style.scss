@@ -515,13 +515,6 @@ Custom NH components
   }
 }
 
-.faded {
-  @include transition-delay(.3s);
-  @include transform(scale(.75));
-  @include transition(2s);
-  opacity: 0.5;
-}
-
 //CUSTOM CSS3 SLIDING PANELS
 .slide {
   & img {

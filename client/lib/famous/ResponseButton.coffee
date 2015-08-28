@@ -3,9 +3,32 @@ class @ResponseButton extends Node
     @[name] = method for name, method of Node.prototype
     Node.apply @
 
-    @.sizeTransitionable = new Transitionable .5
+    @.domElement = new DOMElement @,
+      tagName: "a"
+      properties:
+        "text-align": "center"
+        "border-radius": "10px"
+        "margin": "5px"
 
+    @.domElement.addClass "waves-light"
+    @.domElement.addClass "waves-effect"
+    @.domElement.addClass "white-text"
+    @.domElement.addClass "flow-text"
+
+    @.sizeTransitionable = new Transitionable .5
+    @.enable()
+
+  disable: ()=>
+    @.disabled = true
+    @.removeUIEvent "click"
+    if @.domElement
+      @.domElement.addClass "faded"
+
+  enable: ()=>
+    @.disabled = false
     @.addUIEvent "click"
+    if @.domElement
+      @.domElement.setProperty "opacity": ".5"
 
   onUpdate: ()=>
     x = .75 * @.sizeTransitionable.get() + .75
