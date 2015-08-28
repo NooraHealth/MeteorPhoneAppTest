@@ -13,10 +13,33 @@ class @BinarySurface extends ModuleSurface
     @.image = new ModuleImage(@.module)
     @.noBtn = new NoButton()
     @.yesBtn = new YesButton()
+    @.audio = new Audio(Scene.get().getContentSrc() + @.module.audio, @.module._id)
 
     @.addChild @.image
+    @.addChild @.audio
     @.addChild @.noBtn
     @.addChild @.yesBtn
+
+  onResponseRecieved: (response)->
+    console.log "Response!"
+    console.log response
+    console.log @.module.correct_answer
+    if response in @.module.correct_answer
+      @.audio.setSrc Scene.get().getContentSrc() + @.module.correct_audio
+    else
+      @.audio.setSrc Scene.get().getContentSrc() + @.module.incorrect_audio
+
+    @.audio.play()
+
+  moveOffstage: ()->
+    super
+    console.log "About to try to pause the audio"
+    @.audio.pause()
+
+  moveOnstage: ()->
+    super
+    console.log "About to try to play the audio"
+    @.audio.play()
 
 class ModuleImage extends Node
   constructor: (@module)->
@@ -49,6 +72,12 @@ class YesButton extends Node
       content: "<a class='full-width btn green waves-light waves-effect white-text'>YES</a>"
     }
 
+    @.addUIEvent "click"
+
+  onReceive: (e, payload)->
+    if e == 'click'
+      @.getParent().onResponseRecieved "Yes"
+
 class NoButton extends Node
   constructor: ()->
     @[name] = method for name, method of Node.prototype
@@ -63,3 +92,9 @@ class NoButton extends Node
     @.domElement = new DOMElement @, {
       content: "<a class='full-width btn red waves-light waves-effect white-text'>NO</a>"
     }
+
+    @.addUIEvent "click"
+
+  onReceive: (e, payload)->
+    if e == 'click'
+      @.getParent().onResponseRecieved "No"
