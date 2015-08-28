@@ -26,7 +26,7 @@ class @ModuleSurface extends Node
     @.positionTransitionable.halt()
     @.positionTransitionable.to 1, 'easeOut', 500, ()=> console.log "Moved offstage", @
     @.hide()
-    @.requestUpdate(@)
+    @.requestUpdateOnNextTick(@)
 
   moveOnstage: ()=>
     @.positionTransitionable.halt()

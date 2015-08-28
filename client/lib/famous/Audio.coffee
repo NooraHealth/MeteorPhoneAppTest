@@ -6,18 +6,34 @@ class @Audio extends Node
     @.setOrigin .5, .5, .5
      .setAlign 0, 0, 0
      .setMountPoint 0, 0, 0
+     .setSizeMode Node.RELATIVE_SIZE, Node.RELATIVE_SIZE
+     .setProportionalSize 1, .1
 
-    @.domElement = new DOMElement @
+    @.domElement = new DOMElement @ ,
+      tagName: "audio"
+      content: "Your browser does not support this audio file"
+
     @.setSrc @.src
 
   setSrc: (src)=>
     @.src = src
-    @.domElement.setContent "<audio id='#{@.id}' src='#{@.src}' controls> Your browser does not support this audio file.</audio>"
+    @.domElement.setAttribute "id", @.id
+    @.domElement.setAttribute "src", src
+    audio = @.getAudioElement()
 
-  play: ()->
-    console.log "About to play"
-    console.log $("##{@.id}")[0]
-    $("##{@.id}")[0].play()
+  getAudioElement: ()=>
+    return $("##{@.id}")[0]
+  
+  play: ()=>
+    @.domElement.setAttribute "controls", true
+    audio = @.getAudioElement()
+    console.log audio
+    console.log audio.readyState
+    if audio.readyState == 4
+      audio.play()
+    else
+      @.playWhenReady = true
 
   pause: ()->
-    $("##{@.id}")[0].pause()
+    @.domElement.setAttribute "controls", false
+    @.getAudioElement().pause()

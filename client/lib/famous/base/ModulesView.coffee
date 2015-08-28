@@ -289,4 +289,7 @@ class NextBtn extends Node
   onReceive: (e, payload) ->
     if e == 'click'
       Scene.get().goToNextModule()
+      console.log e
+      console.log payload
+      payload.stopPropagation()
 

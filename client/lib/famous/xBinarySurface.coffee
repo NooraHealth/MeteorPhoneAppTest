@@ -11,30 +11,50 @@ class @BinarySurface extends ModuleSurface
      .setProportionalSize .8, 1, 1
 
     @.image = new ModuleImage(@.module)
-    @.noBtn = new NoButton()
-    @.yesBtn = new YesButton()
+    @.noBtn = new NoButton("No")
+    @.yesBtn = new YesButton("Yes")
     @.audio = new Audio(Scene.get().getContentSrc() + @.module.audio, @.module._id)
+    @.correctAudio = new Audio(Scene.get().getContentSrc() + @.module.correct_audio, @.module._id + "correct")
+    @.incorrectAudio = new Audio(Scene.get().getContentSrc() + @.module.incorrect_audio, @.module._id + "incorrect")
 
     @.addChild @.image
     @.addChild @.audio
+    @.addChild @.incorrectAudio
+    @.addChild @.correctAudio
     @.addChild @.noBtn
     @.addChild @.yesBtn
 
-  onResponseRecieved: (response)->
-    console.log "Response!"
-    console.log response
-    console.log @.module.correct_answer
-    if response in @.module.correct_answer
-      @.audio.setSrc Scene.get().getContentSrc() + @.module.correct_audio
-    else
-      @.audio.setSrc Scene.get().getContentSrc() + @.module.incorrect_audio
+    @.buttons = [ @.noBtn, @.yesBtn ]
 
-    @.audio.play()
+  onReceive: ( e, payload )->
+    button = payload.node
+    console.log "in onReceive"
+    console.log button
+    @.audio.pause()
+    if button.value in @.module.correct_answer
+      src = @.module.correct_audio
+      @.notifyButtons button, "CORRECT", "INCORRECT"
+      @.correctAudio.play()
+    else
+      src = @.module.incorrect_audio
+      @.notifyButtons button, "INCORRECT", "CORRECT"
+      @.incorrectAudio.play()
+
+  notifyButtons: (button, response, otherResponse)=>
+    for btn in @.buttons
+      console.log btn
+      console.log button
+      if btn == button
+        btn.respond response
+      else
+        btn.respond otherResponse
 
   moveOffstage: ()->
     super
     console.log "About to try to pause the audio"
     @.audio.pause()
+    @.correctAudio.pause()
+    @.incorrectAudio.pause()
 
   moveOnstage: ()->
     super
@@ -57,10 +77,9 @@ class ModuleImage extends Node
       content: "<img src='#{img}' class='binary-image'></img>"
     }
 
-class YesButton extends Node
-  constructor: ()->
-    @[name] = method for name, method of Node.prototype
-    Node.apply @
+class YesButton extends ResponseButton
+  constructor: (@value)->
+    super @.value
 
     @.setOrigin .5, .5, .5
      .setAlign .05, 1, .5
@@ -72,16 +91,9 @@ class YesButton extends Node
       content: "<a class='full-width btn green waves-light waves-effect white-text'>YES</a>"
     }
 
-    @.addUIEvent "click"
-
-  onReceive: (e, payload)->
-    if e == 'click'
-      @.getParent().onResponseRecieved "Yes"
-
-class NoButton extends Node
-  constructor: ()->
-    @[name] = method for name, method of Node.prototype
-    Node.apply @
+class NoButton extends ResponseButton
+  constructor: (@value)->
+    super @.value
 
     @.setOrigin .5, .5, .5
      .setAlign .95, 1, .5
@@ -93,8 +105,4 @@ class NoButton extends Node
       content: "<a class='full-width btn red waves-light waves-effect white-text'>NO</a>"
     }
 
-    @.addUIEvent "click"
 
-  onReceive: (e, payload)->
-    if e == 'click'
-      @.getParent().onResponseRecieved "No"
