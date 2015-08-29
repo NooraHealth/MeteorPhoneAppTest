@@ -9,7 +9,6 @@ insecure
 underscore
 coffeescript
 aldeed:collection2
-iron:router
 dburles:collection-helpers
 mrt:q
 fourseven:scss
@@ -20,7 +19,6 @@ materialize:materialize
 useraccounts:materialize
 accounts-password
 service-configuration
-multiply:iron-router-progress
 sanjo:jasmine
 velocity:console-reporter
 velocity:html-reporter
@@ -30,3 +28,5 @@ pcel:loading
 mystor:device-detection
 ground:db
 gadicohen:famous
+useraccounts:flow-routing
+kadira:flow-router

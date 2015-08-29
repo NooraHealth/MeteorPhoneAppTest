@@ -3,6 +3,7 @@ class @Header
     @[name] = method for name, method of Node.prototype
     Node.apply @
 
+    pageSize = Scene.get().getPageSize()
     @.setOrigin .5, .5, 0
      .setMountPoint 0, 0, 0
      .setAlign 0, 0, 0
@@ -21,6 +22,22 @@ class @Header
     @.menu = new Menu()
     @.addChild @.menu
 
+    @.curriculumMenu = new CurriculumMenu()
+    @.addChild @.curriculumMenu
+
+  onReceive: ( e, payload )->
+    target = payload.node
+    if e == "click"
+      if target == @.curriulumMenu
+        @.curriculumMenu.toggle()
+      if target == @.logo
+        Scene.get().goToLessonsPage()
+
+  openCurriculumMenu: ()=>
+    @.curriculumMenu.open()
+    @
+  
+
 class Logo
   constructor: ()->
     @[name] = method for name, method of Node.prototype
@@ -35,6 +52,8 @@ class Logo
     @.domElement = new DOMElement @, {
       content: "<a href='/'><img class='round-tile z-depth-2' alt='Noora Health' src='NHlogo.png'/></a>"
     }
+
+    @.addUIEvent "click"
 
 class Menu
 
@@ -55,8 +74,9 @@ class Menu
       content:
         "<div class='nav-menu'>
           <ul class='valign'>
-            <li><a href='/selectCurriculum'>Select Curriculum</a></li>
-            <li><a onClick='Meteor.logout()'><i class='mdi-action-exit-to-app small'></i></a>
-            </ul>
-          </div>"
+            <li><a>Select Curriculum</a></li>
+          </ul>
+        </div>"
     }
+
+    @.addUIEvent "click"

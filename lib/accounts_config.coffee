@@ -71,4 +71,3 @@ AccountsTemplates.configureRoute 'ensureSignedIn', {
   template: 'entry'
 }
 
-Router.plugin "ensureSignedIn"

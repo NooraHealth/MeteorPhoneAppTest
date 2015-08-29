@@ -1,94 +1,37 @@
-Router.map ()->
-  
-  ###
-  # Home
-  # Displays all lessons in curriculum
-  ###
-  this.route '/', {
-    path: '/'
-    name: 'home'
-    cache: true
-    onBeforeAction: ()->
-      if Meteor.loggingIn()
-        this.next()
-      else if !Meteor.user()
-        this.next()
+###
+# Home
+# Displays all lessons in curriculum
+###
+FlowRouter.route '/',
+  action: ()->
+    console.log "IN THE FLOW ROUTER"
+    if Meteor.isCordova
+      initializeServer()
 
-      else if Meteor.isCordova
-        initializeServer()
-        
-      else if not Meteor.user().curriculumIsSet()
-        Router.go "selectCurriculum"
+    if Meteor.isCordova and not Meteor.user().contentLoaded()
+      Meteor.call 'contentEndpoint', (err, endpoint)=>
+        console.log "----------- Downloading the content----------------------------"
+        console.log "About to make downloader"
+        downloader = new ContentInterface(Meteor.user().getCurriculum(), endpoint)
+        onSuccess = (entry)=>
+          console.log "Success downloading content: ", entry
+          Meteor.user().setContentAsLoaded true
+          Router.go "home"
 
-      else if Meteor.isCordova and not Meteor.user().contentLoaded()
-        Router.go "loading"
-        Meteor.call 'contentEndpoint', (err, endpoint)=>
-          console.log "----------- Downloading the content----------------------------"
-          console.log "About to make downloader"
-          downloader = new ContentInterface(Meteor.user().getCurriculum(), endpoint)
-          onSuccess = (entry)=>
-            console.log "Success downloading content: ", entry
-            Meteor.user().setContentAsLoaded true
-            Router.go "home"
+        onError = (err)->
+          console.log "Error downloading content: ", err
+          console.log err
+          alert "There was an error downloading your content, please log in and try again: ", err
+          Meteor.user().setContentAsLoaded false
+          Meteor.logout()
 
-          onError = (err)->
-            console.log "Error downloading content: ", err
-            console.log err
-            alert "There was an error downloading your content, please log in and try again: ", err
-            Meteor.user().setContentAsLoaded false
-            Meteor.logout()
-
-          downloader.loadContent onSuccess, onError
-
-      if this.next
-        this.next()
-
-    data: ()->
-      if this.ready() and Meteor.user()
-        curr = Curriculum.findOne({_id: Meteor.user().profile.curriculumId})
-        if curr
-          Session.set "current lesson", null
-          Session.set "current module index", null
-          Session.set "module sequence", null
-          Session.set "sections map", {}
-          Session.set "current sections", null
-          lessons =  curr.getLessonDocuments()
-          Session.set "lessons sequence", lessons
-          scene = Scene.get()
-          scene.setLessons lessons
-          return {lessons: lessons}
-
-    onAfterAction: ()->
-      Session.set "current transition", "slideWindowLeft"
-  }
-
-  this.route '/selectCurriculum', {
-    path: '/selectCurriculum'
-    layoutTemplate: 'layout'
-    name: 'selectCurriculum'
-    yieldTemplates: {
-      'selectCurriculumFooter': {to:"footer"}
-    }
-    cache: true
-  }
-
-  ###
-  # refresh the content
-  ###
-  this.route '/refreshcontent', {
-    path: '/refreshcontent'
-    data: ()->
-      Meteor.call "refreshContent"
-    }
-
-  this.route '/loading', {
-    path: '/loading'
-    name: 'loading'
-  }
-
-
-Router.configure {
-  progressSpinner:false,
-  #loadingTemplate: 'loading'
-}
+        downloader.loadContent onSuccess, onError
+    
+    if Session.get "curriculum_id"
+      curriculum = Curriculum.findOne({_id: Session.get("curriculum_id")})
+      lessons =  curriculum.getLessonDocuments()
+      Scene.get().setLessons lessons
+      Scene.get().goToLessonsPage()
+    else
+      Scene.get().openCurriculumMenu()
 

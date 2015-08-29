@@ -264,11 +264,13 @@ class NextBtn extends Node
     @[name] = method for name, method of Node.prototype
     Node.apply @
 
+    x = Scene.get().getPageSize().x
+    y = Scene.get().getPageSize().y
     @.setOrigin .5, .5, .5
      .setMountPoint 1, 1, 0
-     .setAlign 1, 1.2, .5
      .setSizeMode "absolute", "absolute", "absolute"
      .setAbsoluteSize 80, 30, 0
+     .setPosition x, y - 10, 0
 
     @.domElement = new DOMElement @, {
       content: "
@@ -277,19 +279,10 @@ class NextBtn extends Node
       </a>"
     }
 
-    console.log "I am the NExt btn"
-    console.log @
     @.addUIEvent "click"
-
-  onUpdate: ()->
-    console.log "NEXT btn has been updated"
-    console.log @
-    console.log @.getPosition()
 
   onReceive: (e, payload) ->
     if e == 'click'
       Scene.get().goToNextModule()
-      console.log e
-      console.log payload
       payload.stopPropagation()
 

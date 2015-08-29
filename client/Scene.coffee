@@ -1,10 +1,13 @@
 class @Scene
   @get: ()->
-    @.scene ?= new PrivateScene()
+    if !@.scene
+      @.scene = new PrivateScene()
+      @.scene.init()
     return @.scene
 
   class PrivateScene
     constructor: ()->
+    init: ()->
       @.famousScene = FamousEngine.createScene "body"
 
       @.root = @.famousScene.addChild()
@@ -12,8 +15,10 @@ class @Scene
         x: 0
         y: 0
         z: 0
+
       @.root.addComponent
         onSizeChange: (x, y, z)=>
+          console.log "SIZE CHANGE"
           @.pageSize =
             x: x
             y: y
@@ -33,6 +38,8 @@ class @Scene
       @.goToLessonsPage()
       @
 
+    subscribe: ( obj, func, callback )->
+
     goToLessonsPage: ()->
       @.modulesView.moveOffstage()
       @.lessonsView.moveOnstage()
@@ -40,6 +47,10 @@ class @Scene
 
     goToNextModule: ()->
       @.modulesView.goToNextModule()
+      @
+
+    openCurriculumMenu: ()->
+      @.header.openCurriculumMenu()
       @
 
     setLessons: (lessons)->
@@ -68,5 +79,7 @@ class @Scene
       return @.src
 
     getPageSize: ()->
+      console.log "This is the page size"
+      console.log @.pageSize
       return @.pageSize
 

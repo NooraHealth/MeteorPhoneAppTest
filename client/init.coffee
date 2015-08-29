@@ -1,4 +1,9 @@
+FlowRouter.wait()
+
 Meteor.startup ()->
+
+  console.log "calling FlowRouter.wait()"
+
   this.FamousEngine = famous.core.FamousEngine
   this.Camera = famous.components.Camera
   this.Node = famous.core.Node
@@ -16,3 +21,5 @@ Meteor.startup ()->
     scene.setContentSrc 'http://127.0.0.1:8080/'
   else
     scene.setContentSrc 'http://noorahealthcontent.noorahealth.org/'
+
+  FlowRouter.initialize()
