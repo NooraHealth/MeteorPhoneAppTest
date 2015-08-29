@@ -15,7 +15,6 @@ class @Scene
         x: 0
         y: 0
         z: 0
-
       @.root.addComponent
         onSizeChange: (x, y, z)=>
           console.log "SIZE CHANGE"
@@ -77,9 +76,11 @@ class @Scene
       @.src = src
       @
 
-    getContentSrc: ()->
-      return @.src
+    getContentSrc: (filePath)->
+      return @.src + escape(filePath)
 
     getPageSize: ()->
       return @.pageSize
+
+
 

@@ -270,7 +270,7 @@ class NextBtn extends Node
      .setMountPoint 1, 1, 0
      .setSizeMode "absolute", "absolute", "absolute"
      .setAbsoluteSize 80, 30, 0
-     .setPosition x, y - 10, 0
+     .setPosition x, -y + 10, 0
 
     @.domElement = new DOMElement @, {
       content: "

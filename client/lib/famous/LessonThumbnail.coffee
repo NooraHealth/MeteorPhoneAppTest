@@ -13,7 +13,7 @@ class @LessonThumbnail extends Node
      .setMountPoint 0, 0, 0
      .setSizeMode "relative", "relative", "absolute"
 
-    imgSrc = Scene.get().getContentSrc() + lesson.image
+    imgSrc = Scene.get().getContentSrc( lesson.image )
     title = lesson.title
     @.domElement = new DOMElement @, {
       properties:

@@ -19,15 +19,12 @@ class @Header
     @.logo = new Logo()
     @.addChild @.logo
 
-    @.menu = new Menu()
-    @.addChild @.menu
-
     @.curriculumMenu = new CurriculumMenu()
     @.addChild @.curriculumMenu
 
     @.addUIEvent "click"
 
-  onReceive: ( e, payload )->
+  onReceive: ( e, payload )=>
     target = payload.node
     console.log "Click target"
     console.log target
@@ -37,7 +34,7 @@ class @Header
         @.curriculumMenu.toggle()
 
       if target == @.logo
-        Scene.get().goToLessonsPage()
+        @.curriculumMenu.toggle()
 
       if target instanceof ListItem
         console.log target.getCurrId()

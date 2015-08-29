@@ -13,9 +13,9 @@ class @BinarySurface extends ModuleSurface
     @.image = new ModuleImage(@.module)
     @.noBtn = new NoButton("No")
     @.yesBtn = new YesButton("Yes")
-    @.audio = new Audio(Scene.get().getContentSrc() + @.module.audio, @.module._id)
-    @.correctAudio = new Audio(Scene.get().getContentSrc() + @.module.correct_audio, @.module._id + "correct")
-    @.incorrectAudio = new Audio(Scene.get().getContentSrc() + @.module.incorrect_audio, @.module._id + "incorrect")
+    @.audio = new Audio(Scene.get().getContentSrc( @.module.audio ), @.module._id)
+    @.correctAudio = new Audio(Scene.get().getContentSrc( @.module.correct_audio ), @.module._id + "correct")
+    @.incorrectAudio = new Audio(Scene.get().getContentSrc( @.module.incorrect_audio ), @.module._id + "incorrect")
 
     @.addChild @.image
     @.addChild @.audio
@@ -28,8 +28,6 @@ class @BinarySurface extends ModuleSurface
 
   onReceive: ( e, payload )->
     button = payload.node
-    console.log "in onReceive"
-    console.log button
     @.audio.pause()
     if button.value in @.module.correct_answer
       src = @.module.correct_audio
@@ -42,8 +40,6 @@ class @BinarySurface extends ModuleSurface
 
   notifyButtons: (button, response, otherResponse)=>
     for btn in @.buttons
-      console.log btn
-      console.log button
       if btn == button
         btn.respond response
       else
@@ -52,14 +48,12 @@ class @BinarySurface extends ModuleSurface
 
   moveOffstage: ()->
     super
-    console.log "About to try to pause the audio"
     @.audio.pause()
     @.correctAudio.pause()
     @.incorrectAudio.pause()
 
   moveOnstage: ()->
     super
-    console.log "About to try to play the audio"
     @.audio.play()
 
 class ModuleImage extends Node
@@ -73,7 +67,7 @@ class ModuleImage extends Node
      .setSizeMode Node.RELATIVE_SIZE, Node.RELATIVE_SIZE, Node.RELATIVE_SIZE
      .setProportionalSize 1, .8
 
-    img = Scene.get().getContentSrc() + @.module.image
+    img = Scene.get().getContentSrc( @.module.image )
     @.domElement = new DOMElement @, {
       content: "<img src='#{img}' class='binary-image'></img>"
     }

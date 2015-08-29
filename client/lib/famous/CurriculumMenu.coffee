@@ -8,12 +8,13 @@ class @CurriculumMenu extends Node
     @.CLOSED = 0
 
     @.curriculums = Curriculum.find({title:{$ne: "Start a New Curriculum"}})
+    @.items = []
     console.log "Curriculums"
     console.log @.curriculums
 
     @.setOrigin .5, .5, .5
      .setMountPoint 1, 1, .5
-     .setAlign 1, 1
+     .setAlign 1, 0
      .setSizeMode Node.ABSOLUTE_SIZE, Node.ABSOLUTE_SIZE
      .setAbsoluteSize 300, 900
 
@@ -21,19 +22,25 @@ class @CurriculumMenu extends Node
 
     index = 0
     @.curriculums.forEach (curr)=>
-      @.addChild(new ListItem(curr , index * 50))
+      item = new ListItem(curr , index * 50)
+      @.addChild item
+      @.items.push item
       index++
 
     @.positionTransitionable = new Transitionable 0
 
   onUpdate: ()->
-    @.setPosition 0, @.positionTransitionable.get() * 600 - 100, 0
+    @.setPosition 0, @.positionTransitionable.get() * 500, 0
 
   open: ()->
-    console.log "Going to open the menu"
+    #for item in @.items
+      #item.open()
+    console.log "OPening the curriculum enu"
     @.slideMenuTo @.OPEN
 
   close: ()->
+    #for item in @.items
+      #item.close()
     @.slideMenuTo @.CLOSED
 
   toggle: ()->
@@ -45,11 +52,12 @@ class @CurriculumMenu extends Node
     @.slideMenuTo target
 
   slideMenuTo: ( target )->
-    @.positionTransitionable.to target, "easeOut", 1000, ()-> console.log "Curriculum Menu toggled"
+    @.positionTransitionable.to target, "easeOut", 2000, ()-> console.log "Curriculum Menu toggled"
+    @.requestUpdate @
 
 class @ListItem extends Node
 
-  constructor: (@curriculum, offset)->
+  constructor: (@curriculum, @offset)->
     @[name] = method for name, method of Node.prototype
     Node.apply @
 
@@ -59,7 +67,7 @@ class @ListItem extends Node
      .setSizeMode Node.RELATIVE_SIZE, Node.ABSOLUTE_SIZE
      .setProportionalSize .8
      .setAbsoluteSize 0, 40
-     .setPosition 0, offset, 0
+     .setPosition 0, @.offset, 0
 
     title = @.curriculum.title
     @.domElement = new DOMElement @,
@@ -71,6 +79,19 @@ class @ListItem extends Node
     @.domElement.addClass "waves-effect"
     @.domElement.addClass "waves-light"
     @.addUIEvent "click"
+
+    @.offsetTransitionable = new Transitionable 1
+
+  onUpdate: ()=>
+    @.setPosition 0, @.offsetTransitionable * @.offset, 0
+
+  open: ()=>
+    @.offsetTransitionable.to 1, "easeIn", 1000
+    @.requestUpdate @
+
+  close: ()=>
+    @.offsetTransitionable.to 0, "easeIn", 1000
+    @.requestUpdate @
 
   getCurrId: ()=>
     console.log "Returning id of my curriculum"
