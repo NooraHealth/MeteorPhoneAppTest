@@ -38,9 +38,16 @@ class @Scene
       @.goToLessonsPage()
       @
 
-    subscribe: ( obj, func, callback )->
+    setCurriculum: (curriculum)->
+      console.log "The curriculum is this"
+      console.log curriculum
+      @.curriculum = curriculum
+      @.lessons = @.curriculum.getLessonDocuments()
+      @.lessonsView.setLessons @.lessons
+      @
 
     goToLessonsPage: ()->
+      console.log "Going to the lessons page"
       @.modulesView.moveOffstage()
       @.lessonsView.moveOnstage()
       @
@@ -51,11 +58,6 @@ class @Scene
 
     openCurriculumMenu: ()->
       @.header.openCurriculumMenu()
-      @
-
-    setLessons: (lessons)->
-      @.lessons = lessons
-      @.lessonsView.setLessons lessons
       @
 
     showModules: (lesson)->
@@ -79,7 +81,5 @@ class @Scene
       return @.src
 
     getPageSize: ()->
-      console.log "This is the page size"
-      console.log @.pageSize
       return @.pageSize
 

@@ -15,7 +15,7 @@ class @CurriculumMenu extends Node
      .setMountPoint 1, 1, .5
      .setAlign 1, 1
      .setSizeMode Node.ABSOLUTE_SIZE, Node.ABSOLUTE_SIZE
-     .setAbsoluteSize 400, 800
+     .setAbsoluteSize 300, 900
 
     @.domElement = new DOMElement @
 
@@ -27,14 +27,14 @@ class @CurriculumMenu extends Node
     @.positionTransitionable = new Transitionable 0
 
   onUpdate: ()->
-    @.setPosition 0, @.positionTransitionable.get() * 500, 0
+    @.setPosition 0, @.positionTransitionable.get() * 600 - 100, 0
 
   open: ()->
+    console.log "Going to open the menu"
     @.slideMenuTo @.OPEN
 
-  onReceive: ( e, payload )->
-    curriculum = payload.node
-    Session.set "curriculum_id", curriculum.id
+  close: ()->
+    @.slideMenuTo @.CLOSED
 
   toggle: ()->
     if @.positionTransitionable.get() == @.OPEN
@@ -47,7 +47,7 @@ class @CurriculumMenu extends Node
   slideMenuTo: ( target )->
     @.positionTransitionable.to target, "easeOut", 1000, ()-> console.log "Curriculum Menu toggled"
 
-class ListItem extends Node
+class @ListItem extends Node
 
   constructor: (@curriculum, offset)->
     @[name] = method for name, method of Node.prototype
@@ -68,6 +68,12 @@ class ListItem extends Node
 
     @.domElement.addClass "btn"
     @.domElement.addClass "green"
+    @.domElement.addClass "waves-effect"
+    @.domElement.addClass "waves-light"
     @.addUIEvent "click"
 
+  getCurrId: ()=>
+    console.log "Returning id of my curriculum"
+    console.log @.curriculum
+    return @.curriculum._id
 

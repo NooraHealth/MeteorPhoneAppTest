@@ -25,13 +25,26 @@ class @Header
     @.curriculumMenu = new CurriculumMenu()
     @.addChild @.curriculumMenu
 
+    @.addUIEvent "click"
+
   onReceive: ( e, payload )->
     target = payload.node
+    console.log "Click target"
+    console.log target
     if e == "click"
-      if target == @.curriulumMenu
+      console.log "as click"
+      if target == @.menu
         @.curriculumMenu.toggle()
+
       if target == @.logo
         Scene.get().goToLessonsPage()
+
+      if target instanceof ListItem
+        console.log target.getCurrId()
+        doc = Curriculum.findOne { _id: target.getCurrId() }
+        Scene.get().setCurriculum doc
+        Scene.get().goToLessonsPage()
+        @.curriculumMenu.close()
 
   openCurriculumMenu: ()=>
     @.curriculumMenu.open()
@@ -47,7 +60,7 @@ class Logo
      .setMountPoint 0, 0, 0
      .setAlign .03, .05, .5
      .setSizeMode "absolute", "absolute", "absolute"
-     .setAbsoluteSize 30, 30, 10
+     .setAbsoluteSize 100, 30, 10
 
     @.domElement = new DOMElement @, {
       content: "<a href='/'><img class='round-tile z-depth-2' alt='Noora Health' src='NHlogo.png'/></a>"
@@ -61,22 +74,21 @@ class Menu
     @[name] = method for name, method of Node.prototype
     Node.apply @
 
-    @.setOrigin 1, .5, .5
-     .setMountPoint .5, .5, 0
+    @.setOrigin .5, .5, .5
+     .setMountPoint 1, .5, 0
      .setAlign 1, .5, 0
-     .setSizeMode "relative", "relative"
-     .setProportionalSize .5, 1
+     .setSizeMode "absolute", "absolute"
+     .setAbsoluteSize 40, 30
+     .setPosition 0, 100, 0
 
     @.domElement = new DOMElement @, {
-      attributes:
-        class: "valign-wrapper"
-
-      content:
-        "<div class='nav-menu'>
-          <ul class='valign'>
-            <li><a>Select Curriculum</a></li>
-          </ul>
-        </div>"
+      tagName: "a"
+      content: "SELECT CURRICULUM"
+      properties:
+        cursor: "pointer"
+        "background-color": "blue"
     }
 
     @.addUIEvent "click"
+
+
