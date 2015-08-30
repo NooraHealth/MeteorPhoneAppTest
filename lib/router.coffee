@@ -26,11 +26,4 @@ FlowRouter.route '/',
           Meteor.logout()
 
         downloader.loadContent onSuccess, onError
-    
-    if Session.get "curriculum_id"
-      curriculum = Curriculum.findOne({_id: Session.get("curriculum_id")})
-      Scene.get().setCurriculum curriculum
-      Scene.get().goToLessonsPage()
-    else
-      Scene.get().openCurriculumMenu()
 

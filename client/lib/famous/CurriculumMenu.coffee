@@ -7,19 +7,27 @@ class @CurriculumMenu extends Node
     @.OPEN = 1
     @.CLOSED = 0
 
-    @.curriculums = Curriculum.find({title:{$ne: "Start a New Curriculum"}})
     @.items = []
-    console.log "Curriculums"
-    console.log @.curriculums
 
     @.setOrigin .5, .5, .5
      .setMountPoint 1, 1, .5
      .setAlign 1, 0
      .setSizeMode Node.ABSOLUTE_SIZE, Node.ABSOLUTE_SIZE
      .setAbsoluteSize 300, 900
+     .setPosition 0, 0, 0
 
     @.domElement = new DOMElement @
 
+    @.curriculums = Curriculum.find({title:{$ne: "Start a New Curriculum"}})
+    @.fillCurriculumList()
+    @.positionTransitionable = new Transitionable 0
+
+  setCurriculums: ( curriculums )->
+    @.curriculms = curriculums
+    @.removeAllItems()
+    @.fillCurriculumList()
+
+  fillCurriculumList: ()->
     index = 0
     @.curriculums.forEach (curr)=>
       item = new ListItem(curr , index * 50)
@@ -27,23 +35,23 @@ class @CurriculumMenu extends Node
       @.items.push item
       index++
 
-    @.positionTransitionable = new Transitionable 0
+  removeAllItems: ()->
+    for child in @.getChildren
+      @.removeChild child
 
   onUpdate: ()->
     @.setPosition 0, @.positionTransitionable.get() * 500, 0
 
-  open: ()->
-    #for item in @.items
-      #item.open()
-    console.log "OPening the curriculum enu"
+  open: ()=>
+    console.log "on open"
+    console.log @
+    console.log @.curriculums
     @.slideMenuTo @.OPEN
 
-  close: ()->
-    #for item in @.items
-      #item.close()
+  close: ()=>
     @.slideMenuTo @.CLOSED
 
-  toggle: ()->
+  toggle: ()=>
     if @.positionTransitionable.get() == @.OPEN
       target = @.CLOSED
     else
@@ -51,9 +59,10 @@ class @CurriculumMenu extends Node
 
     @.slideMenuTo target
 
-  slideMenuTo: ( target )->
+  slideMenuTo: ( target )=>
+    @.positionTransitionable.halt()
     @.positionTransitionable.to target, "easeOut", 2000, ()-> console.log "Curriculum Menu toggled"
-    @.requestUpdate @
+    @.requestUpdateOnNextTick @
 
 class @ListItem extends Node
 
@@ -67,7 +76,7 @@ class @ListItem extends Node
      .setSizeMode Node.RELATIVE_SIZE, Node.ABSOLUTE_SIZE
      .setProportionalSize .8
      .setAbsoluteSize 0, 40
-     .setPosition 0, @.offset, 0
+     .setPosition 0, @.offset, 10
 
     title = @.curriculum.title
     @.domElement = new DOMElement @,
@@ -78,23 +87,12 @@ class @ListItem extends Node
     @.domElement.addClass "green"
     @.domElement.addClass "waves-effect"
     @.domElement.addClass "waves-light"
+
+    console.log "Making a list item"
+    console.log @
+
     @.addUIEvent "click"
 
-    @.offsetTransitionable = new Transitionable 1
-
-  onUpdate: ()=>
-    @.setPosition 0, @.offsetTransitionable * @.offset, 0
-
-  open: ()=>
-    @.offsetTransitionable.to 1, "easeIn", 1000
-    @.requestUpdate @
-
-  close: ()=>
-    @.offsetTransitionable.to 0, "easeIn", 1000
-    @.requestUpdate @
-
   getCurrId: ()=>
-    console.log "Returning id of my curriculum"
-    console.log @.curriculum
     return @.curriculum._id
 

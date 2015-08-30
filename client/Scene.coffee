@@ -2,8 +2,12 @@ class @Scene
   @get: ()->
     if !@.scene
       @.scene = new PrivateScene()
-      @.scene.init()
     return @.scene
+
+  @init: ()->
+    scene = Scene.get()
+    scene.init()
+    return scene
 
   class PrivateScene
     constructor: ()->
@@ -38,8 +42,6 @@ class @Scene
       @
 
     setCurriculum: (curriculum)->
-      console.log "The curriculum is this"
-      console.log curriculum
       @.curriculum = curriculum
       @.lessons = @.curriculum.getLessonDocuments()
       @.lessonsView.setLessons @.lessons

@@ -50,10 +50,10 @@ class @LessonsView extends Node
     proportion = ( 1 - @.STEP * @.THUMBNAILS_PER_ROW ) / @.THUMBNAILS_PER_ROW
     thumb.setProportionalSize proportion, proportion
 
-    col = index %% @.THUMBNAILS_PER_ROW
-    row = Math.floor(index / @.THUMBNAILS_PER_ROW)
-    numCols = @.THUMBNAILS_PER_ROW
-    numRows = Math.ceil(@.thumbnails.length / @.THUMBNAILS_PER_ROW)
+    col = Utilities.getCol index, @.THUMBNAILS_PER_ROW
+    row = Utilities.getRow index, @.THUMBNAILS_PER_ROW
+    numCols =  @.THUMBNAILS_PER_ROW
+    numRows = Utilities.getNumRows @.thumbnails.length, @.THUMBNAILS_PER_ROW
     thumb.moveToPosition col, row, numCols, numRows
 
   getRenderable: ()->

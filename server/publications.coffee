@@ -1,6 +1,14 @@
 Meteor.publish "users", ()->
   return Meteor.users.find({})
 
+Meteor.publish "all", ()->
+  return [
+    Meteor.users.find({}),
+    Curriculum.find({}),
+    Modules.find({}),
+    Lessons.find({}),
+  ]
+
 Meteor.publish "modules", (lessonId)->
   if !lessonId
     return []

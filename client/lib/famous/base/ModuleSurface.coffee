@@ -24,13 +24,13 @@ class @ModuleSurface extends Node
 
   moveOffstage: ()=>
     @.positionTransitionable.halt()
-    @.positionTransitionable.to 1, 'easeOut', 500, ()=> console.log "Moved offstage", @
+    @.positionTransitionable.to 1, 'easeOut', 500
     @.hide()
     @.requestUpdateOnNextTick(@)
 
   moveOnstage: ()=>
     @.positionTransitionable.halt()
-    @.positionTransitionable.to 0, 'easeIn', 500, ()=> console.log "Moved onstage", @
+    @.positionTransitionable.to 0, 'easeIn', 500
     @.show()
     @.requestUpdate(@)
 

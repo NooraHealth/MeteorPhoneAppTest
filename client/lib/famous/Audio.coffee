@@ -27,8 +27,6 @@ class @Audio extends Node
   play: ()=>
     @.domElement.setAttribute "controls", true
     audio = @.getAudioElement()
-    console.log audio
-    console.log audio.readyState
     if audio.readyState == 4
       audio.play()
     else
