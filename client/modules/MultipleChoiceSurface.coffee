@@ -6,8 +6,10 @@ class @MultipleChoiceSurface extends ModuleSurface
 
   constructor: ( @module, index )->
     super( @.module , index )
+
     @.responses = []
     @.choices = []
+    @.correctChoices = []
 
     @.SIZE = [ 700, 500, 1 ]
     @.setSizeMode Node.ABSOLUTE_SIZE, Node.ABSOLUTE_SIZE, Node.ABSOLUTE_SIZE
@@ -16,29 +18,31 @@ class @MultipleChoiceSurface extends ModuleSurface
     @.CHOICES_PER_ROW = 3
     @.COLUMNS = 2
     @.MARGIN = 30
-    @.EDGE_MARGIN = 30
+    @.EDGE_MARGIN = 20
     @.TITLE_HEIGHT = 60
-    @.SUBMIT_HEIGHT = 60
+    @.SUBMIT_HEIGHT = 50
 
-    @.domElement = new DOMElement @,
-      
+    @.domElement = new DOMElement @
     @.domElement.addClass "card"
 
-    title = new TitleBar @.module.question, { x: 700, y: @.TITLE_HEIGHT }
+    title = new TitleBar( @.module.question, { x: 700, y: @.TITLE_HEIGHT } )
+    submit = new SubmitButton { x: 700, y: @.SUBMIT_HEIGHT }
+
     @.addChild title
+    @.addChild submit
 
     for src, index in @.module.options
       choice = new Choice( Scene.get().getContentSrc(src) )
       @.locate choice, index, @.module.options.length
       @.addChild choice
       @.choices.push choice
+      if src in @.module.correct_answer
+        @.correctChoices.push choice
 
   choicesBoxSize: ()=>
     return [ @.SIZE[0], ( @.SIZE[1] - @.TITLE_HEIGHT - @.SUBMIT_HEIGHT)]
 
   locate: ( choice, index, totalChoices )->
-    console.log totalChoices
-    console.log @.choicesBoxSize()
 
     numRows = Utilities.getNumRows totalChoices, @.CHOICES_PER_ROW
 
@@ -61,34 +65,23 @@ class @MultipleChoiceSurface extends ModuleSurface
 
     choice.setPosition x, y + @.TITLE_HEIGHT
 
-  handleClick: (event)=>
-    if event.target.classList.contains "disabled"
-      return
+  onReceive: ( e, payload )=>
+    if e == 'click'
+      if payload.node instanceof SubmitButton
+        @.presentCorrectResponses()
 
-    if event.target.classList.contains "image-choice"
-      @.handleImageChoiceSelected(event)
-    if event.target.name == 'submit_multiple_choice'
-      @.handleMultipleChoiceResponseSubmitted(event)
+      if payload.node instanceof Choice
+        @.responses.push payload.node
+        console.log "Current responses", @.responses
 
-  handleMultipleChoiceResponseSubmitted: (event)->
-    ModuleView.handleResponse(@, event)
-      
-  handleImageChoiceSelected: (event)=>
-    answers = @.module.correct_answer
-    if !answers
-      answers = []
-    
-    event.target.classList.toggle "selected"
-
-  handleInputUpdate: (event)=>
-    console.log "Update Event!"
-
-  handleInputEnd: (event)=>
-    console.log "End Event!"
-
+  presentCorrectResponses: ()->
+    for choice in @.correctChoices
+      choice.expand()
+      if choice in @.responses
+        choice.markAsCorrect()
 
 class Choice extends Node
-  constructor: (@src, @position)->
+  constructor: ( @src, @position )->
     @[name] = method for name, method of Node.prototype
     Node.apply @
 
@@ -99,6 +92,21 @@ class Choice extends Node
      
     @.domElement = new DOMElement @,
       content: "<img src='#{src}' class='image-choice'></img>"
+    @.domElement.addClass "align-center"
+    
+    @.addUIEvent "click"
+
+  onReceive: ( e, payload )=>
+    if e == 'click'
+      Utilities.toggleClass @.domElement, "selected"
+
+  expand: ()->
+    console.log "Scaling"
+    @.setScale 1.1, 1.1, 1
+
+  markAsCorrect: ()->
+    @.domElement.removeClass "selected"
+    @.domElement.addClass "correctly-selected"
 
 class TitleBar extends Node
   constructor: ( @title, @size )->
@@ -118,4 +126,19 @@ class TitleBar extends Node
     @.domElement.addClass "flow-text"
     @.domElement.addClass "grey-text"
     @.domElement.addClass "text-darken-2"
+
+class SubmitButton extends ResponseButton
+  constructor: ( @size )->
+    super
+
+    @.setOrigin .5, .5, .5
+     .setAlign 0, 1, .5
+     .setMountPoint 0, 1, .5
+     .setSizeMode Node.ABSOLUTE_SIZE, Node.ABSOLUTE_SIZE
+     .setAbsoluteSize @.size.x, @.size.y
+
+     @.domElement.setContent "SUBMIT"
+     @.domElement.addClass "blue"
+
+     @.addUIEvent "click"
 

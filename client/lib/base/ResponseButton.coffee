@@ -3,20 +3,24 @@ class @ResponseButton extends Node
     @[name] = method for name, method of Node.prototype
     Node.apply @
 
-    @.domElement = new DOMElement @,
+    @.domElement = ResponseButton.getButtonDomElement(@)
+
+    @.sizeTransitionable = new Transitionable .5
+    @.enable()
+
+  @getButtonDomElement: ( node )->
+    elem = new DOMElement node,
       tagName: "a"
       properties:
         "text-align": "center"
         "border-radius": "10px"
-        "margin": "5px"
 
-    @.domElement.addClass "waves-light"
-    @.domElement.addClass "waves-effect"
-    @.domElement.addClass "white-text"
-    @.domElement.addClass "flow-text"
-
-    @.sizeTransitionable = new Transitionable .5
-    @.enable()
+    elem.addClass "waves-light"
+    elem.addClass "waves-effect"
+    elem.addClass "white-text"
+    elem.addClass "flow-text"
+    elem.addClass "btn"
+    return elem
 
   disable: ()=>
     @.disabled = true

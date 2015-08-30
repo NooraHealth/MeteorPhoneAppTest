@@ -481,14 +481,12 @@ Custom NH components
 }
 
 .image-choice {
-  width: 100%;
+  width: 90%;
   cursor: pointer;
   height: 17vh;
 }
 
-.correctly_selected {
-  @include transition-delay(.3s);
-  @include transition(scale, 1s);
+.correctly-selected {
   border: 4px solid $success;
 }
 
