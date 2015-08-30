@@ -1,9 +1,8 @@
 
-class @ModulesView extends Node
+class @ModulesView extends BaseNode
 
-  constructor: (@modules)->
-    @[name] = method for name, method of Node.prototype
-    Node.apply @
+  constructor: ()->
+    super
 
     @.setOrigin .5, .5, .5
      .setAlign .5, .4, .5
@@ -16,8 +15,6 @@ class @ModulesView extends Node
 
     #all the rendered module surfaces
     @.surfaces = []
-    @.next = new NextBtn()
-    @.addChild @.next
 
     @.positionTransitionable = new Transitionable 1
     @.requestUpdateOnNextTick()
@@ -28,13 +25,13 @@ class @ModulesView extends Node
 
   moveOffstage: ()->
     @.positionTransitionable.halt()
-    @.positionTransitionable.to 1, 'easeOut', 500, ()-> console.log "Modules Moved OFF"
+    @.positionTransitionable.to 1, 'easeOut', 500
     @.hide()
     @.requestUpdateOnNextTick(@)
 
   moveOnstage: ()->
     @.positionTransitionable.halt()
-    @.positionTransitionable.to 0, 'easeIn', 500, ()-> console.log "Modules Moved ON"
+    @.positionTransitionable.to 0, 'easeIn', 500
     @.show()
     @.requestUpdateOnNextTick(@)
 
@@ -57,10 +54,15 @@ class @ModulesView extends Node
 
   setModules: (modules)->
     @.modules = modules
+    @.removeAllChildren()
+
+    @.next = new NextBtn()
+    @.addChild @.next
     for module, index in modules
       surface = SurfaceFactory.get().getModuleSurface(module, index)
       @.surfaces.push surface
       @.addChild surface
+
 
   @handleResponse: (moduleSurface, event)=>
     module = moduleSurface.getModule()
@@ -263,22 +265,20 @@ class NextBtn extends Node
   constructor: ()->
     @[name] = method for name, method of Node.prototype
     Node.apply @
+    console.log "Building a NextBtn"
 
     x = Scene.get().getPageSize().x
     y = Scene.get().getPageSize().y
+
     @.setOrigin .5, .5, .5
-     .setMountPoint 1, 1, 0
+     .setMountPoint 1, 1, .5
+     .setAlign 1, 1, .5
      .setSizeMode "absolute", "absolute", "absolute"
-     .setAbsoluteSize 80, 30, 0
-     .setPosition x, -y + 10, 0
+     .setAbsoluteSize 200, 50, 0
+     .setPosition 40, 100, 20
 
-    @.domElement = new DOMElement @, {
-      content: "
-      <a class='center-align next-module-btn blue rounded blue-text text-lighten-3 flow-text btn-flat waves-effect waves-light'>
-        NEXT <i class='mdi-navigation-arrow-forward medium'></i>
-      </a>"
-    }
-
+    @.domElement = ResponseButton.getButtonDomElement(@)
+    @.domElement.setContent "NEXT <i class='mdi-navigation-arrow-forward medium'/>"
     @.addUIEvent "click"
 
   onReceive: (e, payload) ->

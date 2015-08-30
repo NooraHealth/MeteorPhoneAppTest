@@ -1,4 +1,4 @@
-class @CurriculumMenu extends Node
+class @CurriculumMenu extends BaseNode
 
   constructor: ()->
     @[name] = method for name, method of Node.prototype
@@ -24,7 +24,7 @@ class @CurriculumMenu extends Node
 
   setCurriculums: ( curriculums )->
     @.curriculms = curriculums
-    @.removeAllItems()
+    @.removeAllChildren()
     @.fillCurriculumList()
 
   fillCurriculumList: ()->
@@ -35,17 +35,10 @@ class @CurriculumMenu extends Node
       @.items.push item
       index++
 
-  removeAllItems: ()->
-    for child in @.getChildren
-      @.removeChild child
-
   onUpdate: ()->
     @.setPosition 0, @.positionTransitionable.get() * 500, 0
 
   open: ()=>
-    console.log "on open"
-    console.log @
-    console.log @.curriculums
     @.slideMenuTo @.OPEN
 
   close: ()=>
@@ -61,7 +54,7 @@ class @CurriculumMenu extends Node
 
   slideMenuTo: ( target )=>
     @.positionTransitionable.halt()
-    @.positionTransitionable.to target, "easeOut", 2000, ()-> console.log "Curriculum Menu toggled"
+    @.positionTransitionable.to target, "easeOut", 2000
     @.requestUpdateOnNextTick @
 
 class @ListItem extends Node
@@ -87,9 +80,6 @@ class @ListItem extends Node
     @.domElement.addClass "green"
     @.domElement.addClass "waves-effect"
     @.domElement.addClass "waves-light"
-
-    console.log "Making a list item"
-    console.log @
 
     @.addUIEvent "click"
 

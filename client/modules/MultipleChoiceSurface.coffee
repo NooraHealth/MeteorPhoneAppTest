@@ -25,11 +25,12 @@ class @MultipleChoiceSurface extends ModuleSurface
     @.domElement = new DOMElement @
     @.domElement.addClass "card"
 
-    title = new TitleBar( @.module.question, { x: 700, y: @.TITLE_HEIGHT } )
-    submit = new SubmitButton { x: 700, y: @.SUBMIT_HEIGHT }
+    @.title = new TitleBar( @.module.question, { x: 700, y: @.TITLE_HEIGHT } )
+    @.submit = new SubmitButton { x: 700, y: @.SUBMIT_HEIGHT }
 
-    @.addChild title
-    @.addChild submit
+    @.addChild @.image
+    @.addChild @.title
+    @.addChild @.submit
 
     for src, index in @.module.options
       choice = new Choice( Scene.get().getContentSrc(src) )
@@ -69,6 +70,7 @@ class @MultipleChoiceSurface extends ModuleSurface
     target = payload.node
     if e == 'click'
       if target instanceof SubmitButton
+        @.audio.pause()
         @.presentCorrectResponses()
 
       if target instanceof Choice
@@ -78,19 +80,22 @@ class @MultipleChoiceSurface extends ModuleSurface
           @.responses.push target
 
   presentCorrectResponses: ()->
-    console.log @.responses
-    console.log @.correctChoices
-
+    audio = null
     for choice in @.correctChoices
       choice.expand()
       if choice in @.responses
         choice.markAsCorrect()
       else
+        audio = @.incorrectAudio
         choice.markAsIncorrect()
 
     for response in @.responses
       if response not in @.correctChoices
+        audio = @.incorrectAudio
         response.markAsIncorrect()
+
+    audio ?= @.correctAudio
+    audio.play()
 
 class Choice extends Node
   constructor: ( @src, @position )->

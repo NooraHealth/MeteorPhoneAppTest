@@ -1,8 +1,7 @@
 
-class @ModuleSurface extends Node
+class @ModuleSurface extends BaseNode
   constructor: ( @module, @index)->
-    @[name] = method for name, method of Node.prototype
-    Node.apply @
+    super
 
     @.setOrigin .5, .5, .5
      .setAlign .5, .5, .5
@@ -11,11 +10,20 @@ class @ModuleSurface extends Node
 
     @.domElement = new DOMElement @,
       properties:
-        "background-color": "white"
         "text-align": "center"
 
-    @.positionTransitionable = new Transitionable 1
+    if @.module.audio
+      @.audio = new Audio(Scene.get().getContentSrc( @.module.audio ), @.module._id)
+    if @.module.correct_audio
+      @.correctAudio = new Audio(Scene.get().getContentSrc( @.module.correct_audio ), @.module._id + "correct")
+    if @.module.incorrect_audio
+      @.incorrectAudio = new Audio(Scene.get().getContentSrc( @.module.incorrect_audio ), @.module._id + "incorrect")
 
+    @.addChild @.audio
+    @.addChild @.incorrectAudio
+    @.addChild @.correctAudio
+
+    @.positionTransitionable = new Transitionable 1
     @.requestUpdateOnNextTick(@)
 
   onUpdate: ()=>
@@ -26,11 +34,21 @@ class @ModuleSurface extends Node
     @.positionTransitionable.halt()
     @.positionTransitionable.to 1, 'easeOut', 500
     @.hide()
+    if @.audio
+      @.audio.pause()
+    if @.correctAudio
+      @.correctAudio.pause()
+    if @.incorrectAudio
+      @.incorrectAudio.pause()
+
     @.requestUpdateOnNextTick(@)
 
   moveOnstage: ()=>
     @.positionTransitionable.halt()
     @.positionTransitionable.to 0, 'easeIn', 500
     @.show()
+    if @.audio
+      @.audio.play()
+
     @.requestUpdate(@)
 

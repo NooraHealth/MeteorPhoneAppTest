@@ -10,17 +10,13 @@ class @BinarySurface extends ModuleSurface
     @.setSizeMode Node.RELATIVE_SIZE, Node.RELATIVE_SIZE, Node.RELATIVE_SIZE
      .setProportionalSize .8, 1, 1
 
+    @.domElement.addClass "card"
+
     @.image = new ModuleImage(@.module)
     @.noBtn = new NoButton("No")
     @.yesBtn = new YesButton("Yes")
-    @.audio = new Audio(Scene.get().getContentSrc( @.module.audio ), @.module._id)
-    @.correctAudio = new Audio(Scene.get().getContentSrc( @.module.correct_audio ), @.module._id + "correct")
-    @.incorrectAudio = new Audio(Scene.get().getContentSrc( @.module.incorrect_audio ), @.module._id + "incorrect")
 
     @.addChild @.image
-    @.addChild @.audio
-    @.addChild @.incorrectAudio
-    @.addChild @.correctAudio
     @.addChild @.noBtn
     @.addChild @.yesBtn
 
@@ -45,16 +41,6 @@ class @BinarySurface extends ModuleSurface
       else
         btn.respond otherResponse
       btn.disable()
-
-  moveOffstage: ()->
-    super
-    @.audio.pause()
-    @.correctAudio.pause()
-    @.incorrectAudio.pause()
-
-  moveOnstage: ()->
-    super
-    @.audio.play()
 
 class ModuleImage extends Node
   constructor: (@module)->

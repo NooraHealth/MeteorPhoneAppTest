@@ -1,8 +1,7 @@
 
-class @LessonsView extends Node
+class @LessonsView extends BaseNode
   constructor: ()->
-    @[name] = method for name, method of Node.prototype
-    Node.apply @
+    super
 
     @.STEP = .03
     @.THUMBNAILS_PER_ROW = 3
@@ -38,6 +37,7 @@ class @LessonsView extends Node
     @.requestUpdateOnNextTick(@)
 
   setLessons: (lessons)->
+    @.removeAllChildren()
     @.lessons = lessons
     @.thumbnails = []
     for lesson, index in lessons
