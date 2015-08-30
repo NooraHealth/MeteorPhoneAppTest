@@ -12,13 +12,13 @@ class @ResponseButton extends Node
     elem = new DOMElement node,
       tagName: "a"
       properties:
-        "text-align": "center"
-        "border-radius": "10px"
+        "border-radius": "5px"
 
     elem.addClass "waves-light"
     elem.addClass "waves-effect"
     elem.addClass "white-text"
     elem.addClass "flow-text"
+    elem.addClass "center-align"
     elem.addClass "btn"
     return elem
 

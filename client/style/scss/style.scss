@@ -494,23 +494,8 @@ Custom NH components
   border: 4px solid $primary-blue;
 }
 
-.incorrectly_selected {
-  @include transition-delay(.3s);
-  @include transition(scale, 1s);
+.incorrectly-selected {
   border: 4px solid $danger;
-}
-
-
-.expanded {
-  @include transition-delay(.3s);
-  @include transition(scale, 2s);
-
-  @media(min-width: 600px) {
-    @include transform(scale(1.1)); 
-  }
-  @media(max-width: 600px) {
-    @include transform(scale(1.2)); 
-  }
 }
 
 //CUSTOM CSS3 SLIDING PANELS

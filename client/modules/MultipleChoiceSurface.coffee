@@ -66,19 +66,31 @@ class @MultipleChoiceSurface extends ModuleSurface
     choice.setPosition x, y + @.TITLE_HEIGHT
 
   onReceive: ( e, payload )=>
+    target = payload.node
     if e == 'click'
-      if payload.node instanceof SubmitButton
+      if target instanceof SubmitButton
         @.presentCorrectResponses()
 
-      if payload.node instanceof Choice
-        @.responses.push payload.node
-        console.log "Current responses", @.responses
+      if target instanceof Choice
+        if target in @.responses
+          @.responses = @.responses.filter (choice)-> choice isnt target
+        else
+          @.responses.push target
 
   presentCorrectResponses: ()->
+    console.log @.responses
+    console.log @.correctChoices
+
     for choice in @.correctChoices
       choice.expand()
       if choice in @.responses
         choice.markAsCorrect()
+      else
+        choice.markAsIncorrect()
+
+    for response in @.responses
+      if response not in @.correctChoices
+        response.markAsIncorrect()
 
 class Choice extends Node
   constructor: ( @src, @position )->
@@ -100,12 +112,20 @@ class Choice extends Node
     if e == 'click'
       Utilities.toggleClass @.domElement, "selected"
 
-  expand: ()->
-    console.log "Scaling"
-    @.setScale 1.1, 1.1, 1
+  expand: ()=>
+    scale = new Scale @
+    scale.set 1.2, 1.2, 1, { curve: "easeOut", duration: 1000 }
 
-  markAsCorrect: ()->
-    @.domElement.removeClass "selected"
+  markAsIncorrect: ()=>
+    console.log "Marking as incorrect"
+    if @.domElement.hasClass "selected"
+      @.domElement.removeClass "selected"
+    @.domElement.addClass "incorrectly-selected"
+
+  markAsCorrect: ()=>
+    console.log "Marking as correct"
+    if @.domElement.hasClass "selected"
+      @.domElement.removeClass "selected"
     @.domElement.addClass "correctly-selected"
 
 class TitleBar extends Node
