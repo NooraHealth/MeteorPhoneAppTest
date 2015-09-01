@@ -1,8 +1,10 @@
 class @BaseNode extends Node
   constructor: ()->
-    @[name] = method for name, method of Node.prototype
+    @.extend Node.prototype
     Node.apply @
-    console.log "BASE NODE"
+
+  extend: ( mixin )->
+    @[name] = method for name, method of mixin
 
   toggleClass: ( domElement, klass )->
     if domElement.hasClass klass
