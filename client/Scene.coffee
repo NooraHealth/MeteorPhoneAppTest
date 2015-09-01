@@ -79,7 +79,13 @@ class @Scene
       @
 
     getContentSrc: (filePath)->
-      return @.src + escape(filePath)
+      #encoding the m-dash in urls must be done manually
+      escaped = encodeURIComponent(filePath)
+      correctMdash = '%E2%80%94'
+      incorrectMdash = /%E2%80%93/
+      if escaped.match incorrectMdash
+        escaped = escaped.replace incorrectMdash, correctMdash
+      return @.src + escaped
 
     getPageSize: ()->
       return @.pageSize
