@@ -12,11 +12,16 @@ class @VideoSurface extends ModuleSurface
 
     videoSrc = @.module.videoSrc()
     id = @.module._id
+    if @.module.isEmbedded()
+      content = "
+        <iframe title='#{@.module.title}' class='embedded-video' src='#{@.module.video_url}?start=#{@.module.start}}&end=#{@.module.end}' frameborder='0' allowfullscreen></iframe>
+        "
+    else
+      content = "<video id='#{id}' src='#{videoSrc}'  controls> Your browser does not support this video tag, please logout and use another browser </video>"
     @.domElement = new DOMElement @, {
       properties:
         height: "100%"
-      content: "<video id='#{id}' src='#{videoSrc}'  controls> Your browser does not support this video tag, please logout and use another browser </video>"
-      
+      content: content
     }
 
   moveOnstage: ()=>

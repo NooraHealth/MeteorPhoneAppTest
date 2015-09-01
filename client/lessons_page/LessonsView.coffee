@@ -37,7 +37,9 @@ class @LessonsView extends BaseNode
     @.requestUpdateOnNextTick(@)
 
   setLessons: (lessons)->
-    @.removeAllChildren()
+    for thumb in @.thumbnails
+      @.removeChild @.thumbnails
+
     @.lessons = lessons
     @.thumbnails = []
     for lesson, index in lessons

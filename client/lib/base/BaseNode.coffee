@@ -2,7 +2,8 @@ class @BaseNode extends Node
   constructor: ()->
     @[name] = method for name, method of Node.prototype
     Node.apply @
+    console.log "BASE NODE"
 
-  removeAllChildren: ()->
-    for child in @.getChildren()
-      @.removeChild child
+  removeNodes: (nodes)->
+    for node in nodes
+      @.removeChild node

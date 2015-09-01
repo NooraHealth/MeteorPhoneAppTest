@@ -3,9 +3,21 @@
 # Slide Surface
 ###
 class @SlideSurface extends ModuleSurface
-  constructor: ->
+  constructor: ( @module, index )->
     super( @.module , index )
 
+    src = Scene.get().getContentSrc @.module.image
     @.domElement = new DOMElement @, {
-      content: "<p>I am slide choice</p>"
+      content: "
+        <div class='valign-wrapper module-wrapper'>
+          <div class='center-align'>
+            <img class='valign module-image' src='#{src}'
+          </div>
+          <div class='flow-text grey-text text-darken-2 center-align'>
+             #{@.module.title} 
+          </div>
+        </div>
+        "
     }
+
+    @.domElement.addClass "card"

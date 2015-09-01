@@ -15,6 +15,7 @@ class @ModulesView extends BaseNode
 
     #all the rendered module surfaces
     @.surfaces = []
+    @._addNextBtn()
 
     @.positionTransitionable = new Transitionable 1
     @.requestUpdateOnNextTick()
@@ -52,12 +53,21 @@ class @ModulesView extends BaseNode
   start: ()->
     @.showModule 0
 
-  setModules: (modules)->
-    @.modules = modules
-    @.removeAllChildren()
+  _removeNextBtn: ()->
+    if @.next
+      @.removeChild @.next
 
+  _addNextBtn: ()->
     @.next = new NextBtn()
     @.addChild @.next
+
+  setModules: (modules)->
+    @._modules = modules
+    @._removeNextBtn()
+    @._addNextBtn()
+    for surface in @.surfaces
+      bool = @.removeChild surface
+
     for module, index in modules
       surface = SurfaceFactory.get().getModuleSurface(module, index)
       @.surfaces.push surface
