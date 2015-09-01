@@ -3,18 +3,18 @@
 # Video Surface
 ###
 class @VideoSurface extends ModuleSurface
-  constructor: ( @module, index )->
-    super @.module, index
+  constructor: ( @_module, index )->
+    super @._module, index
 
     @.setSizeMode Node.RELATIVE_SIZE, Node.RELATIVE_SIZE, Node.RELATIVE_SIZE
      .setProportionalSize 1, 1, 1
      #.setAbsoluteSize 700, 500, 0
 
-    videoSrc = @.module.videoSrc()
-    id = @.module._id
-    if @.module.isEmbedded()
+    videoSrc = @._module.videoSrc()
+    id = @._module._id
+    if @._module.isEmbedded()
       content = "
-        <iframe title='#{@.module.title}' class='embedded-video' src='#{@.module.video_url}?start=#{@.module.start}}&end=#{@.module.end}' frameborder='0' allowfullscreen></iframe>
+        <iframe id='#{id}' title='#{@._module.title}' class='embedded-video ytplayer' src='#{@._module.video_url}?start=#{@._module.start}}&end=#{@._module.end}' frameborder='0' allowfullscreen></iframe>
         "
     else
       content = "<video id='#{id}' src='#{videoSrc}'  controls> Your browser does not support this video tag, please logout and use another browser </video>"
@@ -27,7 +27,17 @@ class @VideoSurface extends ModuleSurface
   moveOnstage: ()=>
     super
 
+  getVideoElem: ()->
+    return $("#" + @._module._id)[0]
   moveOffstage: ()=>
-    $("#" + @.module._id)[0].pause()
+    video = @.getVideoElem()
+    console.log video
+    if video and video.pause
+      video.pause()
+    else if video and video.pauseVideo
+      console.log "PAUSE VIDEO"
+      video.pauseVideo()
+    else
+      video.setAttribute "src", ""
     super
 
