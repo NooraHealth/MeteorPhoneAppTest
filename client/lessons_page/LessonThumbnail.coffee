@@ -5,13 +5,9 @@ class @LessonThumbnail extends Node
     @[name] = method for name, method of Node.prototype
     Node.apply @
 
-    @.WIDTH = WIDTH = 250
-    @.HEIGHT = HEIGHT = 250
-
     @.setOrigin .5, .5, .5
-     .setAlign .5, .5, .5
-     .setMountPoint 0, 0, 0
-     .setSizeMode "relative", "relative", "absolute"
+     .setAlign 0, 0, .5
+     .setMountPoint 0, 0, .5
 
     imgSrc = Scene.get().getContentSrc( lesson.image )
     title = lesson.title
@@ -21,24 +17,18 @@ class @LessonThumbnail extends Node
 
       content:
         "
-        <div class='card'>
-          <div class='card-image'>
-            <img src='#{imgSrc}' class='thumbnail' />
-          </div>
-          <div class='card-content'>
-            <p class='center-align grey-text text-darken-2'>#{title}</p>
-          </div>
+        <div class='card-image thumbnail-wrapper'>
+          <img src='#{imgSrc}' class='thumbnail' />
+        </div>
+        <div class='card-content'>
+          <p class='center-align grey-text text-darken-2'>#{title}</p>
         </div>
         "
     }
+    @.domElement.addClass "card"
     
     @.addUIEvent "click"
     #@.registerEvents()
-
-  moveToPosition: (col, row, numCols, numRows)->
-    xAlign = col / numCols
-    yAlign = row / numRows
-    @.setAlign xAlign, yAlign, .5
 
   onReceive: (e, payload) ->
     if e == 'click'

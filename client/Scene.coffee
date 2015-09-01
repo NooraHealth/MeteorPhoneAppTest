@@ -21,7 +21,6 @@ class @Scene
         z: 0
       @.root.addComponent
         onSizeChange: (x, y, z)=>
-          console.log "SIZE CHANGE"
           @.pageSize =
             x: x
             y: y

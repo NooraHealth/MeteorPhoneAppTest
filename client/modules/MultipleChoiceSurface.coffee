@@ -32,6 +32,7 @@ class @MultipleChoiceSurface extends ModuleSurface
     @.addChild @.title
     @.addChild @.submit
 
+    @._grid = new Grid @.module.options.length, @.CHOICES_PER_ROW, @.SIZE, @.MARGIN, @.EDGE_MARGIN
     for src, index in @.module.options
       choice = new Choice( Scene.get().getContentSrc(src) )
       @.locate choice, index, @.module.options.length
@@ -45,10 +46,10 @@ class @MultipleChoiceSurface extends ModuleSurface
 
   locate: ( choice, index, totalChoices )->
 
-    numRows = Utilities.getNumRows totalChoices, @.CHOICES_PER_ROW
+    numRows = @._grid.getNumRows()
 
-    horizontalSpace = Utilities.getAvailableSpace @.CHOICES_PER_ROW, @.MARGIN, @.EDGE_MARGIN, @.choicesBoxSize()[0]
-    verticalSpace = Utilities.getAvailableSpace numRows, @.MARGIN, @.EDGE_MARGIN, @.choicesBoxSize()[1]
+    horizontalSpace = @._grid.getAvailableSpace Grid.X
+    verticalSpace = @._grid.getAvailableSpace Grid.Y
 
     xDimension = horizontalSpace / @.CHOICES_PER_ROW
     yDimension = verticalSpace / numRows
@@ -58,13 +59,12 @@ class @MultipleChoiceSurface extends ModuleSurface
     choice.setSizeMode "absolute", "absolute", "absolute"
     choice.setAbsoluteSize xDimension, yDimension, 1
 
-    row = Utilities.getRow index, @.CHOICES_PER_ROW
-    col = Utilities.getCol index, @.CHOICES_PER_ROW
+    row = @._grid.getRow index
+    col = @._grid.getCol index
 
-    x = Utilities.getPosition col, xDimension, @.MARGIN, @.EDGE_MARGIN
-    y = Utilities.getPosition row, yDimension, @.MARGIN, @.EDGE_MARGIN
+    location = @._grid.location row, col, [ xDimension, yDimension ]
 
-    choice.setPosition x, y + @.TITLE_HEIGHT
+    choice.setPosition location.x, location.y + @.TITLE_HEIGHT
 
   onReceive: ( e, payload )=>
     target = payload.node
@@ -97,7 +97,7 @@ class @MultipleChoiceSurface extends ModuleSurface
     audio ?= @.correctAudio
     audio.play()
 
-class Choice extends Node
+class Choice extends BaseNode
   constructor: ( @src, @position )->
     @[name] = method for name, method of Node.prototype
     Node.apply @
@@ -115,7 +115,7 @@ class Choice extends Node
 
   onReceive: ( e, payload )=>
     if e == 'click'
-      Utilities.toggleClass @.domElement, "selected"
+      @.toggleClass @.domElement, "selected"
 
   expand: ()=>
     scale = new Scale @

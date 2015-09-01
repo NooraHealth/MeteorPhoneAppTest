@@ -6,13 +6,14 @@ class @LessonsView extends BaseNode
     @.STEP = .03
     @.THUMBNAILS_PER_ROW = 3
 
-    alignTransitionable = new Transitionable 0
-
+    console.log "SIZE: ", @.SIZE
     @.setOrigin .5, .5, .5
      .setMountPoint .5, .5, .5
      .setAlign .5, .5, .5
+     #.setSizeMode Node.ABSOLUTE_SIZE, Node.ABSOLUTE_SIZE, Node.RELATIVE_SIZE
      .setSizeMode Node.RELATIVE_SIZE, Node.RELATIVE_SIZE, Node.RELATIVE_SIZE
      .setProportionalSize .8, .8, 1
+     #.setAbsoluteSize @.SIZE[0], @.SIZE[1], 0
 
     @.thumbnails = []
     @.lessons = []
@@ -37,6 +38,11 @@ class @LessonsView extends BaseNode
     @.requestUpdateOnNextTick(@)
 
   setLessons: (lessons)->
+    proportion = [.9, .8]
+    pageSize = Scene.get().getPageSize()
+    @.SIZE = [ proportion[0] * pageSize.x, proportion[1] * pageSize.y ]
+    @._grid = new Grid lessons.length, @.THUMBNAILS_PER_ROW, @.SIZE, 10, 0
+
     for thumb in @.thumbnails
       @.removeChild @.thumbnails
 
@@ -49,14 +55,24 @@ class @LessonsView extends BaseNode
     thumb = new LessonThumbnail(lesson)
     @.addChild thumb
     index = ( @.thumbnails.push thumb ) - 1
-    proportion = ( 1 - @.STEP * @.THUMBNAILS_PER_ROW ) / @.THUMBNAILS_PER_ROW
-    thumb.setProportionalSize proportion, proportion
 
-    col = Utilities.getCol index, @.THUMBNAILS_PER_ROW
-    row = Utilities.getRow index, @.THUMBNAILS_PER_ROW
-    numCols =  @.THUMBNAILS_PER_ROW
-    numRows = Utilities.getNumRows @.thumbnails.length, @.THUMBNAILS_PER_ROW
-    thumb.moveToPosition col, row, numCols, numRows
+    numRows = @._grid.getNumRows()
+    horizontalSpace = @._grid.getAvailableSpace Grid.X
+    verticalSpace = @._grid.getAvailableSpace Grid.Y
+
+    xDimension = horizontalSpace / @.THUMBNAILS_PER_ROW
+    yDimension = verticalSpace / @.THUMBNAILS_PER_ROW
+
+    thumb.setSizeMode Node.ABSOLUTE_SIZE, Node.ABSOLUTE_SIZE
+    thumb.setAbsoluteSize xDimension, yDimension, 1
+
+    row = @._grid.getRow index
+    col = @._grid.getCol index
+    location = @._grid.location row, col, [ xDimension, yDimension ]
+    console.log "LOCATION"
+    console.log location
+
+    thumb.setPosition location.x, location.y, 0
 
   getRenderable: ()->
     return @.node
