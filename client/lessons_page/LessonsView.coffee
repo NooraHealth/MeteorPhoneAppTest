@@ -4,15 +4,16 @@ class @LessonsView extends BaseNode
     super
 
     @.STEP = .03
-    @.THUMBNAILS_PER_ROW = 3
+    @.THUMBNAILS_PER_ROW = 2
+    @.MARGIN = 15
+    @.EDGE_MARGIN = 0
 
-    console.log "SIZE: ", @.SIZE
     @.setOrigin .5, .5, .5
      .setMountPoint .5, .5, .5
      .setAlign .5, .5, .5
      #.setSizeMode Node.ABSOLUTE_SIZE, Node.ABSOLUTE_SIZE, Node.RELATIVE_SIZE
      .setSizeMode Node.RELATIVE_SIZE, Node.RELATIVE_SIZE, Node.RELATIVE_SIZE
-     .setProportionalSize .8, .8, 1
+     .setProportionalSize .8,.9, 1
      #.setAbsoluteSize @.SIZE[0], @.SIZE[1], 0
 
     @.thumbnails = []
@@ -38,10 +39,8 @@ class @LessonsView extends BaseNode
     @.requestUpdateOnNextTick(@)
 
   setLessons: (lessons)->
-    proportion = [.9, .8]
-    pageSize = Scene.get().getPageSize()
-    @.SIZE = [ proportion[0] * pageSize.x, proportion[1] * pageSize.y ]
-    @._grid = new Grid lessons.length, @.THUMBNAILS_PER_ROW, @.SIZE, 10, 0
+    @.SIZE = @.getSize()
+    @._grid = new Grid lessons.length, @.THUMBNAILS_PER_ROW, @.SIZE, @.MARGIN, @.EDGE_MARGIN
 
     for thumb in @.thumbnails
       @.removeChild @.thumbnails

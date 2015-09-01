@@ -21,7 +21,7 @@ class @LessonThumbnail extends Node
           <img src='#{imgSrc}' class='thumbnail' />
         </div>
         <div class='card-content'>
-          <p class='center-align grey-text text-darken-2'>#{title}</p>
+          <p class='flow-text center-align grey-text text-darken-2'>#{title}</p>
         </div>
         "
     }
