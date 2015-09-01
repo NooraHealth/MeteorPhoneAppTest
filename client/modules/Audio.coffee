@@ -4,8 +4,8 @@ class @Audio extends Node
     Node.apply @
 
     @.setOrigin .5, .5, .5
-     .setAlign 0, 0, 0
-     .setMountPoint 0, 0, 0
+     .setAlign 0, 1, 0
+     .setMountPoint 0, 1, 0
      .setSizeMode Node.RELATIVE_SIZE, Node.RELATIVE_SIZE
      .setProportionalSize 1, .1
 
@@ -27,11 +27,13 @@ class @Audio extends Node
   play: ()=>
     @.domElement.setAttribute "controls", true
     audio = @.getAudioElement()
-    if audio.readyState == 4
+    if audio and audio.readyState == 4
       audio.play()
     else
       @.playWhenReady = true
 
   pause: ()->
     @.domElement.setAttribute "controls", false
-    @.getAudioElement().pause()
+    audio = @.getAudioElement()
+    if audio and audio.pause
+      audio.pause()
