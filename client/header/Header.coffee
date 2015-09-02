@@ -1,7 +1,6 @@
-class @Header
+class @Header extends BaseNode
   constructor: ()->
-    @[name] = method for name, method of Node.prototype
-    Node.apply @
+    super
 
     pageSize = Scene.get().getPageSize()
     @.setOrigin .5, .5, 0

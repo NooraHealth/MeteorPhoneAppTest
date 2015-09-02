@@ -1,8 +1,7 @@
 class @CurriculumMenu extends BaseNode
 
   constructor: ()->
-    @[name] = method for name, method of Node.prototype
-    Node.apply @
+    super
 
     @.OPEN = 1
     @.CLOSED = 0
