@@ -6,8 +6,7 @@ class @ScenarioSurface extends ModuleSurface
   constructor: (@module, index)->
     @.size = [800, 600]
     super( @.module , index)
-    @.extend BasicQuestion.prototype
-    BasicQuestion.apply @
+    @.extend BasicQuestion
 
     @.TITLE_HEIGHT = 60
     

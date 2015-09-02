@@ -6,8 +6,7 @@
 class @BinarySurface extends ModuleSurface
   constructor: ( @module, index )->
     super @.module, index
-    @.extend BasicQuestion.prototype
-    BasicQuestion.apply @
+    @.extend BasicQuestion
 
     @.TITLE_HEIGHT = 60
 

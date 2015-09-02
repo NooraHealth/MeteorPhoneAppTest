@@ -36,6 +36,7 @@ class @CurriculumMenu extends BaseNode
 
   onUpdate: ()->
     @.setPosition 0, @.positionTransitionable.get() * 500, 0
+    #@.setPosition 0, 1 * 500, 0
 
   open: ()=>
     @.slideMenuTo @.OPEN
