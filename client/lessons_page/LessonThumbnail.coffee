@@ -28,7 +28,6 @@ class @LessonThumbnail extends Node
     @.domElement.addClass "card"
     
     @.addUIEvent "click"
-    #@.registerEvents()
 
   onReceive: (e, payload) ->
     if e == 'click'

@@ -139,7 +139,7 @@ class SubmitButton extends ResponseButton
     super
 
     @.setOrigin .5, .5, .5
-     .setAlign 0, 1, .5
+     .setAlign 0, .95, .5
      .setMountPoint 0, 1, .5
      .setSizeMode Node.ABSOLUTE_SIZE, Node.ABSOLUTE_SIZE
      .setAbsoluteSize @.size.x, @.size.y

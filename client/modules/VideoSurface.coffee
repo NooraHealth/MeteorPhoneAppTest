@@ -29,6 +29,7 @@ class @VideoSurface extends ModuleSurface
 
   getVideoElem: ()->
     return $("#" + @._module._id)[0]
+
   moveOffstage: ()=>
     video = @.getVideoElem()
     console.log video

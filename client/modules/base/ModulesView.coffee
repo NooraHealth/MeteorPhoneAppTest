@@ -51,8 +51,12 @@ class @ModulesView extends BaseNode
       Scene.get().goToLessonsPage()
 
   start: ()->
-    if not @.currentModule
-    @.showModule 0
+    if not @.currentIndex
+      @.showModule 0
+    #TODO this is a very temporary solution,
+    #update this ASAP
+    else
+      @.showModule ++@.currentIndex
 
   _removeNextBtn: ()->
     if @.next
@@ -62,18 +66,20 @@ class @ModulesView extends BaseNode
     @.next = new NextBtn()
     @.addChild @.next
 
+  #TODO This is a very temporary solution until I can
+  #find a better workaround the famous removeChild bug
+  #for prototype purposes
   setModules: (modules)->
     @._modules = modules
-    @._removeNextBtn()
-    @._addNextBtn()
-    for surface in @.surfaces
-      bool = @.removeChild surface
+    #@._removeNextBtn()
+    #@._addNextBtn()
+    #for surface in @.surfaces
+      #bool = @.removeChild surface
 
     for module, index in modules
       surface = SurfaceFactory.get().getModuleSurface(module, index)
       @.surfaces.push surface
       @.addChild surface
-
 
 class NextBtn extends Node
   constructor: ()->
