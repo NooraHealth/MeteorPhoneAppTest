@@ -8,6 +8,7 @@ class @BinarySurface extends ModuleSurface
     super @.module, index
     @.extend BasicQuestion.prototype
     BasicQuestion.apply @
+
     @.TITLE_HEIGHT = 60
 
     @.setSizeMode Node.RELATIVE_SIZE, Node.RELATIVE_SIZE, Node.RELATIVE_SIZE

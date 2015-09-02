@@ -1,4 +1,4 @@
-class @BaseNode extends Node
+class @BaseNode
   constructor: ()->
     @.extend Node.prototype
     Node.apply @

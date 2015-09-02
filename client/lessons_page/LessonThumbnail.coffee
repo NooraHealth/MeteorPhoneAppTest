@@ -1,9 +1,8 @@
 
-class @LessonThumbnail extends Node
+class @LessonThumbnail extends BaseNode
 
   constructor: (@lesson, @index)->
-    @[name] = method for name, method of Node.prototype
-    Node.apply @
+    super
 
     @.setOrigin .5, .5, .5
      .setAlign 0, 0, .5
