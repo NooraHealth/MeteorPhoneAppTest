@@ -1,7 +1,6 @@
-class @Audio extends Node
+class @Audio extends BaseNode
   constructor: (@src, @id)->
-    @[name] = method for name, method of Node.prototype
-    Node.apply @
+    super
 
     @.setOrigin .5, .5, .5
      .setAlign 0, 1, 0

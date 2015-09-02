@@ -24,18 +24,15 @@ class @VideoSurface extends ModuleSurface
       content: content
     }
 
-  moveOnstage: ()=>
-    super
-
   getVideoElem: ()->
     return $("#" + @._module._id)[0]
+
   moveOffstage: ()=>
     video = @.getVideoElem()
     console.log video
     if video and video.pause
       video.pause()
     else if video and video.pauseVideo
-      console.log "PAUSE VIDEO"
       video.pauseVideo()
     else
       video.setAttribute "src", ""

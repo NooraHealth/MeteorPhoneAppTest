@@ -47,8 +47,6 @@ class @Scene
       @
 
     goToLessonsPage: ()->
-      console.log "Going to the lessons page"
-      @.modulesView.moveOffstage()
       @.lessonsView.moveOnstage()
       @
 
@@ -69,7 +67,6 @@ class @Scene
 
     goToModules: ()->
       @.lessonsView.moveOffstage()
-      @.modulesView.moveOnstage()
       @.modulesView.start()
       @
 

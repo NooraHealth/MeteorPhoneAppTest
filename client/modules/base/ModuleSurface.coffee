@@ -6,7 +6,6 @@ class @ModuleSurface extends BaseNode
     @.setOrigin .5, .5, .5
      .setAlign .5, .5, .5
      .setMountPoint .5, .5, .5
-     .setPosition 0, 0, @.index
 
     @.domElement = new DOMElement @,
       properties:
@@ -24,11 +23,14 @@ class @ModuleSurface extends BaseNode
     @.addChild @.correctAudio
 
     @.positionTransitionable = new Transitionable 1
-    @.requestUpdateOnNextTick(@)
+    @.setPosition()
 
-  onUpdate: ()=>
+  setPosition: ()=>
     pageWidth = Scene.get().getPageSize().x
     @.setPosition @.positionTransitionable.get() * pageWidth, 0, 0
+
+  onUpdate: ()=>
+    @.setPosition()
 
   moveOffstage: ()=>
     @.positionTransitionable.halt()
@@ -46,6 +48,7 @@ class @ModuleSurface extends BaseNode
   moveOnstage: ()=>
     @.positionTransitionable.halt()
     @.positionTransitionable.to 0, 'easeIn', 500
+    console.log @
     @.show()
     if @.audio
       @.audio.play()
