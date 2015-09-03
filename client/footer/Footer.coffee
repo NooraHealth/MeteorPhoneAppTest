@@ -15,7 +15,15 @@ class @Footer extends BaseNode
       }
     }
     @.next = new NextBtn()
+    @.goBack = new GoBackToHome()
+
     @.addChild @.next
+    @.addChild @.goBack
 
-    @.addUIEvent "click"
+  modulesMode: ()->
+    @.next.show()
+    @.goBack.show()
 
+  lessonsPageMode: ()->
+    @.next.hide()
+    @.goBack.hide()

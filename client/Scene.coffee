@@ -52,6 +52,7 @@ class @Scene
 
     goToLessonsPage: ()->
       @.lessonsView.moveOnstage()
+      @.footer.lessonsPageMode()
       @
 
     goToNextModule: ()->
@@ -71,6 +72,7 @@ class @Scene
 
     goToModules: ()->
       @.lessonsView.moveOffstage()
+      @.footer.modulesMode()
       @.modulesView.start()
       @
 
