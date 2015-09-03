@@ -1,8 +1,7 @@
 
-class @ModuleImage extends Node
+class @ModuleImage extends BaseNode
   constructor: (@module)->
-    @[name] = method for name, method of Node.prototype
-    Node.apply @
+    super
 
     @.setOrigin .5, .5, .5
      .setAlign .5, .5, .5

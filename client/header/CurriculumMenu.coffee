@@ -1,8 +1,7 @@
 class @CurriculumMenu extends BaseNode
 
   constructor: ()->
-    @[name] = method for name, method of Node.prototype
-    Node.apply @
+    super
 
     @.OPEN = 1
     @.CLOSED = 0
@@ -37,6 +36,7 @@ class @CurriculumMenu extends BaseNode
 
   onUpdate: ()->
     @.setPosition 0, @.positionTransitionable.get() * 500, 0
+    #@.setPosition 0, 1 * 500, 0
 
   open: ()=>
     @.slideMenuTo @.OPEN

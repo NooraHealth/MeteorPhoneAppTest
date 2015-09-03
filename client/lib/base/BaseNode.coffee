@@ -1,10 +1,10 @@
-class @BaseNode extends Node
+class @BaseNode
   constructor: ()->
-    @.extend Node.prototype
-    Node.apply @
+    @.extend Node
 
-  extend: ( mixin )->
-    @[name] = method for name, method of mixin
+  extend: ( mixin )=>
+    @[name] = method for name, method of mixin.prototype
+    mixin.apply @
 
   toggleClass: ( domElement, klass )->
     if domElement.hasClass klass

@@ -6,8 +6,8 @@ class @ScenarioSurface extends ModuleSurface
   constructor: (@module, index)->
     @.size = [800, 600]
     super( @.module , index)
-    @.extend BasicQuestion.prototype
-    BasicQuestion.apply @
+    @.extend BasicQuestion
+
     @.TITLE_HEIGHT = 60
     
     @.setSizeMode Node.RELATIVE_SIZE, Node.RELATIVE_SIZE, Node.RELATIVE_SIZE
@@ -23,8 +23,6 @@ class @ScenarioSurface extends ModuleSurface
 
     @.addChild @.image
     @.addChild @.title
-    console.log "TITLE"
-    console.log @.title
     @.addChild @.normal
     @.addChild @.callDoc
     @.addChild @.emergency

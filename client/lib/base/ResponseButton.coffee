@@ -1,7 +1,6 @@
-class @ResponseButton extends Node
+class @ResponseButton extends BaseNode
   constructor: (@value)->
-    @[name] = method for name, method of Node.prototype
-    Node.apply @
+    super
 
     @.domElement = ResponseButton.getButtonDomElement(@)
 

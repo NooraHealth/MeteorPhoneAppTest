@@ -1,7 +1,6 @@
-class @TitleBar extends Node
+class @TitleBar extends BaseNode
   constructor: ( @title, @size )->
-    @[name] = method for name, method of Node.prototype
-    Node.apply @
+    super
 
     @.setOrigin .5, .5, .5
      .setAlign 0, 0, .5
