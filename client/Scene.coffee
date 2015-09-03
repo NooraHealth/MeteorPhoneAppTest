@@ -35,7 +35,11 @@ class @Scene
       @.root.addChild @.modulesView
 
       @.header = new Header()
+      @.footer = new Footer()
+
       @.root.addChild @.header
+      @.root.addChild @.footer
+      #@.footer.hide()
 
       @.goToLessonsPage()
       @

@@ -10,11 +10,15 @@ class @LessonsView extends BaseNode
 
     @.setOrigin .5, .5, .5
      .setMountPoint .5, .5, .5
-     .setAlign .5, .5, .5
+     .setAlign .5, .5, .49
      #.setSizeMode Node.ABSOLUTE_SIZE, Node.ABSOLUTE_SIZE, Node.RELATIVE_SIZE
      .setSizeMode Node.RELATIVE_SIZE, Node.RELATIVE_SIZE, Node.RELATIVE_SIZE
-     .setProportionalSize .8,.9, 1
+     .setProportionalSize 1,.9, 1
      #.setAbsoluteSize @.SIZE[0], @.SIZE[1], 0
+    @.domElement = new DOMElement @, {
+      properties:
+        "overflow-y" : "scroll"
+    }
 
     @.thumbnails = []
     @.lessons = []

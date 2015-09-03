@@ -2,12 +2,12 @@ class @Header extends BaseNode
   constructor: ()->
     super
 
-    pageSize = Scene.get().getPageSize()
     @.setOrigin .5, .5, 0
      .setMountPoint 0, 0, 0
      .setAlign 0, 0, 0
-     .setSizeMode "relative", "relative"
+     .setSizeMode Node.RELATIVE_SIZE, Node.RELATIVE_SIZE
      .setProportionalSize 1, .075
+     .setAbsoluteSize 0, 60
 
     @.domElement = new DOMElement @, {
       attributes: {
@@ -25,8 +25,6 @@ class @Header extends BaseNode
 
   onReceive: ( e, payload )=>
     target = payload.node
-    console.log "Click target"
-    console.log target
     if e == "click"
       console.log "as click"
       if target == @.menu
@@ -41,6 +39,8 @@ class @Header extends BaseNode
         Scene.get().setCurriculum doc
         Scene.get().goToLessonsPage()
         @.curriculumMenu.close()
+
+    payload.stopPropagation()
 
   openCurriculumMenu: ()=>
     @.curriculumMenu.open()

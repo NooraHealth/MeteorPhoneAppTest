@@ -40,36 +40,9 @@ class @ModulesView extends BaseNode
     @._modules = []
 
   start: ()->
-    @._addNextBtn()
     @._currentIndex = 0
     @.showModule 0
 
-  _addNextBtn: ()->
-    @.next = new NextBtn()
-    @.addChild @.next
-
   setModules: (modules)->
     @._modules = modules
-
-class NextBtn extends BaseNode
-  constructor: ()->
-    super
-
-    console.log "Adding a next button"
-    console.trace()
-    @.setOrigin .5, .5, .5
-     .setMountPoint 1, 1, .5
-     .setAlign 1, 1, .5
-     .setSizeMode "absolute", "absolute", "absolute"
-     .setAbsoluteSize 200, 50, 0
-     .setPosition 40, 100, 20
-
-    @.domElement = ResponseButton.getButtonDomElement(@)
-    @.domElement.setContent "NEXT <i class='mdi-navigation-arrow-forward medium'/>"
-    @.addUIEvent "click"
-
-  onReceive: (e, payload) ->
-    if e == 'click'
-      Scene.get().goToNextModule()
-      payload.stopPropagation()
 
