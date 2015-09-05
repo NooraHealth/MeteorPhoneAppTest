@@ -12,12 +12,12 @@ FamousEngine.init()
 Meteor.subscribe "all", {
   onReady: ()->
     scene = Scene.init()
-    #if Meteor.isCordova
-      #scene.setContentSrc 'http://127.0.0.1:8080/'
-    #else
-      #scene.setContentSrc 'http://noorahealthcontent.noorahealth.org/'
-    scene.setContentSrc 'http://noorahealthcontent.noorahealth.org/'
-    scene.openCurriculumMenu()
+    console.log CordovaFileServer
+    if Meteor.isCordova
+      scene.setContentSrc CordovaFileServer.httpUrl
+    else
+      scene.setContentSrc 'http://noorahealthcontent.noorahealth.org/'
+    console.log "Is there a cordova file server?"
 }
 
 
