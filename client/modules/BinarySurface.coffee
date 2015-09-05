@@ -11,7 +11,7 @@ class @BinarySurface extends ModuleSurface
     @.TITLE_HEIGHT = 60
 
     @.setSizeMode Node.RELATIVE_SIZE, Node.RELATIVE_SIZE, Node.RELATIVE_SIZE
-     .setProportionalSize .8, 1, 1
+     .setProportionalSize .8, .8, 1
 
     @.domElement.addClass "card"
 

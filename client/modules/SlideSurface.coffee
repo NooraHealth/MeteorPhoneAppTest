@@ -6,6 +6,9 @@ class @SlideSurface extends ModuleSurface
   constructor: ( @module, index )->
     super( @.module , index )
 
+    @.setSizeMode Node.RELATIVE_SIZE, Node.RELATIVE_SIZE
+     .setProportionalSize .8, .7, 0
+
     src = Scene.get().getContentSrc @.module.image
     @.domElement = new DOMElement @, {
       content: "

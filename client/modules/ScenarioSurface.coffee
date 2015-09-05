@@ -4,19 +4,20 @@
 ###
 class @ScenarioSurface extends ModuleSurface
   constructor: (@module, index)->
-    @.size = [800, 600]
     super( @.module , index)
     @.extend BasicQuestion
 
     @.TITLE_HEIGHT = 60
+    @.SIZE = [800, 500]
+    @.setSizeMode Node.ABSOLUTE_SIZE, Node.ABSOLUTE_SIZE, Node.ABSOLUTE_SIZE
+     #.setProportionalSize .8, .8, 1
+     .setAbsoluteSize @.SIZE[0], @.SIZE[1]
     
-    @.setSizeMode Node.RELATIVE_SIZE, Node.RELATIVE_SIZE, Node.RELATIVE_SIZE
-     .setProportionalSize 1, 1, 1
-
     @.domElement.addClass "card"
 
     @.image = new ModuleImage(@.module)
-    @.title = new TitleBar(@.module.question, { x: @.size[0], y: @.TITLE_HEIGHT})
+
+    @.title = new TitleBar(@.module.question, { x: @.SIZE[0], y: @.TITLE_HEIGHT})
     @.normal = new NormalBtn("Normal")
     @.callDoc = new CallDocBtn("CallDoc")
     @.emergency = new EmergencyBtn("Call911")

@@ -31,6 +31,7 @@ class @Scene
 
       @.lessonsView = new LessonsView()
       @.modulesView = new ModulesView()
+
       @.root.addChild @.lessonsView
       @.root.addChild @.modulesView
 
@@ -51,6 +52,7 @@ class @Scene
       @
 
     goToLessonsPage: ()->
+      @.modulesView.removeAllChildren()
       @.lessonsView.moveOnstage()
       @.footer.lessonsPageMode()
       @

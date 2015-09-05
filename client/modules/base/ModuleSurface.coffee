@@ -7,9 +7,13 @@ class @ModuleSurface extends BaseNode
      .setAlign .5, .5, .5
      .setMountPoint .5, .5, .5
 
+    console.log "NEW MODULE SURFACE!"
+    console.log @
     @.domElement = new DOMElement @,
       properties:
         "text-align": "center"
+
+    @.domElement.setContent ""
 
     if @.module.audio
       @.audio = new Audio(Scene.get().getContentSrc( @.module.audio ), @.module._id)

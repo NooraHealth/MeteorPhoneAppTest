@@ -7,7 +7,8 @@ class @VideoSurface extends ModuleSurface
     super @._module, index
 
     @.setSizeMode Node.RELATIVE_SIZE, Node.RELATIVE_SIZE, Node.RELATIVE_SIZE
-     .setProportionalSize 1, 1, 1
+     .setProportionalSize .8, .8, 1
+     .setAlign .5, .6, .5
      #.setAbsoluteSize 700, 500, 0
 
     videoSrc = @._module.videoSrc()

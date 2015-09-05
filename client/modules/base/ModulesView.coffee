@@ -4,10 +4,10 @@ class @ModulesView extends BaseNode
   constructor: ()->
     super
     @.setOrigin .5, .5, .5
-     .setAlign .5, .4, .5
+     .setAlign .5, .3, .5
      .setMountPoint .5, .5, .5
-     .setSizeMode Node.ABSOLUTE_SIZE, Node.ABSOLUTE_SIZE, Node.ABSOLUTE_SIZE
-     .setAbsoluteSize 900, 600, 1
+     .setSizeMode Node.RELATIVE_SIZE, Node.RELATIVE_SIZE, Node.ABSOLUTE_SIZE
+     .setAbsoluteSize .8, 1, 1
 
     #all the rendered module surfaces
     @._currentSurface = null
