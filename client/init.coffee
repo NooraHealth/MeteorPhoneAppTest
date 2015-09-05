@@ -12,11 +12,11 @@ FamousEngine.init()
 Meteor.subscribe "all", {
   onReady: ()->
     scene = Scene.init()
-    console.log CordovaFileServer
-    if Meteor.isCordova
-      scene.setContentSrc CordovaFileServer.httpUrl
-    else
-      scene.setContentSrc 'http://noorahealthcontent.noorahealth.org/'
+    #console.log CordovaFileServer
+    #if Meteor.isCordova
+      #scene.setContentSrc CordovaFileServer.httpUrl
+    #else
+    scene.setContentSrc 'http://noorahealthcontent.noorahealth.org/'
     console.log "Is there a cordova file server?"
 }
 
