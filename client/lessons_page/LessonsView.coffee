@@ -32,13 +32,13 @@ class @LessonsView extends BaseNode
 
   moveOffstage: ()->
     @.positionTransitionable.halt()
-    @.positionTransitionable.to 1, 'easeOut', 500, ()-> console.log "Lessons Moved OFF"
+    @.positionTransitionable.to 1, 'easeOut', 500
     @.hide()
     @.requestUpdateOnNextTick(@)
 
   moveOnstage: ()->
     @.positionTransitionable.halt()
-    @.positionTransitionable.to 0, 'easeIn', 500, ()-> console.log "lessons Moved ON"
+    @.positionTransitionable.to 0, 'easeIn', 500
     @.show()
     @.requestUpdateOnNextTick(@)
 
@@ -72,8 +72,6 @@ class @LessonsView extends BaseNode
     row = @._grid.getRow index
     col = @._grid.getCol index
     location = @._grid.location row, col, [ xDimension, yDimension ]
-    console.log "LOCATION"
-    console.log location
 
     thumb.setPosition location.x, location.y, 0
 

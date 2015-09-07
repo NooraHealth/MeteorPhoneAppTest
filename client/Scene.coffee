@@ -52,7 +52,7 @@ class @Scene
       @
 
     goToLessonsPage: ()->
-      @.modulesView.removeAllChildren()
+      @.modulesView.hideCurrentSurface()
       @.lessonsView.moveOnstage()
       @.footer.lessonsPageMode()
       @

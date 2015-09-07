@@ -2,25 +2,41 @@
 ###
 # Slide Surface
 ###
-class @SlideSurface extends ModuleSurface
-  constructor: ( @module, index )->
-    super( @.module , index )
+class @SlideSurface
+  @get: ( module, parent )->
+    if not @.surface
+      @.surface = new PrivateSurface module
+      parent.addChild @.surface
+    else
+      @.surface.setModule module
 
-    @.setSizeMode Node.RELATIVE_SIZE, Node.RELATIVE_SIZE
-     .setProportionalSize .8, .7, 0
+    return @.surface
 
-    src = Scene.get().getContentSrc @.module.image
-    @.domElement = new DOMElement @, {
-      content: "
-        <div class='valign module-wrapper'>
-          <div class='center-align'>
-            <img class='module-image' src='#{src}'
+  class PrivateSurface extends ModuleSurface
+    constructor: ( @_module )->
+      super( @._module  )
+
+      @.setSizeMode Node.RELATIVE_SIZE, Node.RELATIVE_SIZE
+       .setProportionalSize .8, .7, 0
+
+      @.domElement = new DOMElement @, {}
+      @.domElement.addClass "card"
+      @.setContent()
+
+    setContent: ()->
+      src = Scene.get().getContentSrc @._module.image
+      @.domElement.setContent "
+          <div class='valign module-wrapper'>
+            <div class='center-align'>
+              <img class='module-image' src='#{src}'
+            </div>
+            <div class='flow-text grey-text text-darken-2 center-align'>
+              #{@._module.title} 
+            </div>
           </div>
-          <div class='flow-text grey-text text-darken-2 center-align'>
-             #{@.module.title} 
-          </div>
-        </div>
-        "
-    }
-
-    @.domElement.addClass "card"
+          "
+    setModule: ( module )->
+      @._module = module
+      super
+      @.setContent()
+      

@@ -14,23 +14,22 @@ class @ModulesView extends BaseNode
     @._currentIndex = 0
     @._modules = []
 
-
   goToNextModule: ()->
     @.showModule ++@._currentIndex
 
-  showModule: ( index )->
+  hideCurrentSurface: ()->
     if @._currentSurface
       @._currentSurface.moveOffstage()
-      @._currentSurface.removeAllChildren()
+
+  showModule: ( index )->
+    @.hideCurrentSurface()
     if @._modules[index]
-      surface = SurfaceFactory.get().getModuleSurface(@._modules[index], index)
-      @.addChild surface
+      surface = SurfaceFactory.get().getModuleSurface( @._modules[index], @ )
       surface.moveOnstage()
       @._currentSurface = surface
       @._currentIndex = index
       return
     else
-      @.removeAllChildren()
       @.reset()
       Scene.get().goToLessonsPage()
 

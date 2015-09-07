@@ -6,13 +6,14 @@ class @SurfaceFactory
 
   class PrivateFactory
     
-    getModuleSurface: (module, index)=>
+    getModuleSurface: ( module, parent)=>
       type = module.type
 
       switch type
-        when "SLIDE" then return new SlideSurface module, index
-        when "MULTIPLE_CHOICE" then return new MultipleChoiceSurface module, index
-        when "BINARY" then return new BinarySurface module, index
-        when "VIDEO" then return new VideoSurface module, index
-        when "SCENARIO" then return new ScenarioSurface module, index
+        when "SLIDE" then surface = SlideSurface.get module, parent
+        when "MULTIPLE_CHOICE" then surface = MultipleChoiceSurface.get module, parent
+        when "BINARY" then surface = BinarySurface.get module, parent
+        when "VIDEO" then surface = VideoSurface.get module, parent
+        when "SCENARIO" then surface = ScenarioSurface.get module, parent
         else console.log "module type is not within the module types allowed"
+
