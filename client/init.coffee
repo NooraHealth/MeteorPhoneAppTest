@@ -11,11 +11,12 @@ FamousEngine.init()
 
 Meteor.subscribe "all", {
   onReady: ()->
-    #console.log CordovaFileServer
-    #if Meteor.isCordova
-      #scene.setContentSrc CordovaFileServer.httpUrl
-    #else
-    Scene.get().setContentSrc 'http://noorahealthcontent.noorahealth.org/'
+    endpoint = 'http://noorahealthcontent.noorahealth.org/'
+    if Meteor.isCordova
+      Scene.get().setContentSrc CordovaFileServer.httpUrl
+    else
+      Scene.get().setContentSrc endpoint
+    Scene.get().setContentEndpoint endpoint
     FlowRouter.initialize()
 }
 
