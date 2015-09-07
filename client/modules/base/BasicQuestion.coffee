@@ -21,3 +21,14 @@ class @BasicQuestion
         btn.respond otherResponse
       btn.disable()
 
+  resetContent: ()->
+    if @.title
+      @.title.setTitle @._module.question
+    if @.image
+      @.image.setSrc @._module.image
+
+  setModule: ( module )->
+    @._module = module
+    @.resetContent()
+
+

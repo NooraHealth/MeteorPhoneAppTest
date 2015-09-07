@@ -12,6 +12,16 @@ class @BaseNode
     else
       domElement.addClass klass
 
-  removeNodes: (nodes)->
-    for node in nodes
-      @.removeChild node
+  #a temporary hackaround for the famous
+  #removeChild bug
+  removeAllChildren: ()=>
+    children = @.getChildren()
+    copies = []
+    for child in children
+      if child.removeAllChildren
+        child.removeAllChildren()
+      copies.push child
+
+    for child in copies
+      @.removeChild child
+

@@ -8,10 +8,14 @@ class @TitleBar extends BaseNode
      .setSizeMode Node.ABSOLUTE_SIZE, Node.ABSOLUTE_SIZE
      .setAbsoluteSize @.size.x, @.size.y
     
-    @.domElement = new DOMElement @,
-      content: "#{@.title}"
+    @.domElement = new DOMElement @
+    @.setTitle @.title
 
     @.domElement.addClass "card-content"
     @.domElement.addClass "flow-text"
     @.domElement.addClass "grey-text"
     @.domElement.addClass "text-darken-2"
+
+  setTitle: ( title )->
+    @.title = title
+    @.domElement.setContent "#{@.title}"

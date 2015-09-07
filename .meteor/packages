@@ -29,4 +29,6 @@ mystor:device-detection
 ground:db
 useraccounts:flow-routing
 kadira:flow-router
+natestrauser:cordova-file-server
+kadira:blaze-layout
 gadicohen:famous

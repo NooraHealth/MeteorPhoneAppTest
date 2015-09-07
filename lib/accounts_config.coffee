@@ -1,5 +1,4 @@
 
-
 AccountsTemplates.configure {
     confirmPassword: true,
     enablePasswordChange: true,
@@ -14,6 +13,9 @@ AccountsTemplates.configure {
     showLabels: true,
     showPlaceholders: true,
     defaultLayout: 'entry',
+    #defaultTemplate: 'entry',
+    defaultContentRegion: 'main',
+    defaultLayoutRegions: {},
 
     # Client-side Validation
     continuousValidation: false,
@@ -60,14 +62,5 @@ AccountsTemplates.configure {
         forgotPwd: "Recover Your Password"
       },
     }
-}
-
-AccountsTemplates.addField {
-  _id: "attempts",
-  type: "hidden",
-}
-
-AccountsTemplates.configureRoute 'ensureSignedIn', {
-  template: 'entry'
 }
 

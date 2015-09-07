@@ -10,11 +10,15 @@ class @LessonsView extends BaseNode
 
     @.setOrigin .5, .5, .5
      .setMountPoint .5, .5, .5
-     .setAlign .5, .5, .5
+     .setAlign .5, .5, .4
      #.setSizeMode Node.ABSOLUTE_SIZE, Node.ABSOLUTE_SIZE, Node.RELATIVE_SIZE
      .setSizeMode Node.RELATIVE_SIZE, Node.RELATIVE_SIZE, Node.RELATIVE_SIZE
-     .setProportionalSize .8,.9, 1
+     .setProportionalSize 1, .9, 1
      #.setAbsoluteSize @.SIZE[0], @.SIZE[1], 0
+    @.domElement = new DOMElement @, {
+      properties:
+        "overflow-y" : "scroll"
+    }
 
     @.thumbnails = []
     @.lessons = []
@@ -28,13 +32,13 @@ class @LessonsView extends BaseNode
 
   moveOffstage: ()->
     @.positionTransitionable.halt()
-    @.positionTransitionable.to 1, 'easeOut', 500, ()-> console.log "Lessons Moved OFF"
+    @.positionTransitionable.to 1, 'easeOut', 500
     @.hide()
     @.requestUpdateOnNextTick(@)
 
   moveOnstage: ()->
     @.positionTransitionable.halt()
-    @.positionTransitionable.to 0, 'easeIn', 500, ()-> console.log "lessons Moved ON"
+    @.positionTransitionable.to 0, 'easeIn', 500
     @.show()
     @.requestUpdateOnNextTick(@)
 
@@ -68,8 +72,6 @@ class @LessonsView extends BaseNode
     row = @._grid.getRow index
     col = @._grid.getCol index
     location = @._grid.location row, col, [ xDimension, yDimension ]
-    console.log "LOCATION"
-    console.log location
 
     thumb.setPosition location.x, location.y, 0
 

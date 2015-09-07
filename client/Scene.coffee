@@ -31,11 +31,16 @@ class @Scene
 
       @.lessonsView = new LessonsView()
       @.modulesView = new ModulesView()
+
       @.root.addChild @.lessonsView
       @.root.addChild @.modulesView
 
       @.header = new Header()
+      @.footer = new Footer()
+
       @.root.addChild @.header
+      @.root.addChild @.footer
+      #@.footer.hide()
 
       @.goToLessonsPage()
       @
@@ -47,9 +52,9 @@ class @Scene
       @
 
     goToLessonsPage: ()->
-      console.log "Going to the lessons page"
-      @.modulesView.moveOffstage()
+      @.modulesView.hideCurrentSurface()
       @.lessonsView.moveOnstage()
+      @.footer.lessonsPageMode()
       @
 
     goToNextModule: ()->
@@ -69,7 +74,7 @@ class @Scene
 
     goToModules: ()->
       @.lessonsView.moveOffstage()
-      @.modulesView.moveOnstage()
+      @.footer.modulesMode()
       @.modulesView.start()
       @
 
