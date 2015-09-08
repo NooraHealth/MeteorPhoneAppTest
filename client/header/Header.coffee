@@ -16,6 +16,9 @@ class @Header extends BaseNode
     }
 
     @.logo = new Logo()
+    @.menu = new Menu()
+
+    @.addChild @.menu
     @.addChild @.logo
 
     @.curriculumMenu = new CurriculumMenu()
@@ -71,19 +74,21 @@ class Menu
     Node.apply @
 
     @.setOrigin .5, .5, .5
-     .setMountPoint 1, .5, 0
-     .setAlign 1, .5, 0
+     .setMountPoint 0, .5, 0
+     .setAlign .15, .5, 0
      .setSizeMode "absolute", "absolute"
-     .setAbsoluteSize 40, 30
-     .setPosition 0, 100, 0
+     .setAbsoluteSize 300, 30
 
     @.domElement = new DOMElement @, {
       tagName: "a"
       content: "SELECT CURRICULUM"
       properties:
         cursor: "pointer"
-        "background-color": "blue"
     }
+
+    @.domElement.addClass "flow-text"
+    @.domElement.addClass "grey-text"
+    @.domElement.addClass "text-darken-2"
 
     @.addUIEvent "click"
 
