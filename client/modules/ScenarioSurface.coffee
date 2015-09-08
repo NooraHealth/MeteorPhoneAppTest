@@ -14,8 +14,8 @@ class @ScenarioSurface
 
   class PrivateSurface extends ModuleSurface
 
-    constructor: (@module)->
-      super( @.module )
+    constructor: (@_module)->
+      super( @._module )
       @.extend BasicQuestion
 
       @.TITLE_HEIGHT = 60
@@ -26,9 +26,9 @@ class @ScenarioSurface
       
       @.domElement.addClass "card"
 
-      @.image = new ModuleImage(@.module)
+      @.image = new ModuleImage(@._module)
 
-      @.title = new TitleBar(@.module.question, { x: @.SIZE[0], y: @.TITLE_HEIGHT})
+      @.title = new TitleBar(@._module.question, { x: @.SIZE[0], y: @.TITLE_HEIGHT})
       @.normal = new NormalBtn("Normal")
       @.callDoc = new CallDocBtn("CallDoc")
       @.emergency = new EmergencyBtn("Call911")

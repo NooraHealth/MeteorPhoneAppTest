@@ -5,7 +5,7 @@ class @ResponseButton extends BaseNode
     @.domElement = ResponseButton.getButtonDomElement(@)
 
     @.sizeTransitionable = new Transitionable .5
-    @.enable()
+    @.addUIEvent "click"
 
   @getButtonDomElement: ( node )->
     elem = new DOMElement node,
@@ -21,17 +21,8 @@ class @ResponseButton extends BaseNode
     elem.addClass "btn"
     return elem
 
-  disable: ()=>
-    @.disabled = true
-    @.removeUIEvent "click"
-    if @.domElement
-      @.domElement.addClass "faded"
-
-  enable: ()=>
-    @.disabled = false
-    @.addUIEvent "click"
-    if @.domElement
-      @.domElement.setProperty "opacity": ".5"
+  reset: ()->
+    @.sizeTransitionable.to .5
 
   onUpdate: ()=>
     x = .75 * @.sizeTransitionable.get() + .75

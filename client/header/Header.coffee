@@ -86,7 +86,6 @@ class Menu
         cursor: "pointer"
     }
 
-    @.domElement.addClass "flow-text"
     @.domElement.addClass "grey-text"
     @.domElement.addClass "text-darken-2"
 

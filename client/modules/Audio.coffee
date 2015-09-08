@@ -8,7 +8,7 @@ class @Audio extends BaseNode
      .setSizeMode Node.RELATIVE_SIZE, Node.RELATIVE_SIZE
      .setProportionalSize 1, .1
 
-    @.domElement = new DOMElement @ ,
+    @.domElement = new DOMElement @,
       tagName: "audio"
       content: "Your browser does not support this audio file"
 
@@ -16,10 +16,12 @@ class @Audio extends BaseNode
 
   setSrc: (src)=>
     @.src = src
+    #@.domElement.setContent "<audio src='#{src}' id='#{@.id}' controls> Your browser does not support this kind of audio file </audio>"
     @.domElement.setAttribute "id", @.id
     @.domElement.setAttribute "src", src
-    audio = @.getAudioElement()
-
+    console.log "Just set the src"
+    console.log @.domElement
+    
   getAudioElement: ()=>
     return $("##{@.id}")[0]
   

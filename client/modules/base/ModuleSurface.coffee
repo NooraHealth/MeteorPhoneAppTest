@@ -25,9 +25,8 @@ class @ModuleSurface extends BaseNode
     @.addChild @.correctAudio
 
     @.positionTransitionable = new Transitionable 1
-    @.setPosition()
 
-  resetAudio: ()->
+  resetAudio: ()=>
     if @.audio
       @.audio.setSrc @._module.audio
     if @.incorrectAudio
@@ -39,17 +38,20 @@ class @ModuleSurface extends BaseNode
     @._module = module
     @.resetAudio()
 
-  setPosition: ()=>
-    pageWidth = Scene.get().getPageSize().x
-    @.setPosition @.positionTransitionable.get() * pageWidth, 0, 0
-
   onUpdate: ()=>
-    @.setPosition()
+    console.log "updating"
+    pageWidth = Scene.get().getPageSize().x
+    console.log "pageWidth"
+    console.log pageWidth
+    console.log @.positionTransitionable.get()
+    @.setPosition @.positionTransitionable.get() * pageWidth, 0, 0
+    console.log "position"
+    console.log @.getPosition()
 
   moveOffstage: ()=>
+    console.log "MOVING OFFSTAGE"
     @.positionTransitionable.halt()
     @.positionTransitionable.to 1, 'easeOut', 500
-    @.hide()
     if @.audio
       @.audio.pause()
     if @.correctAudio
@@ -57,12 +59,12 @@ class @ModuleSurface extends BaseNode
     if @.incorrectAudio
       @.incorrectAudio.pause()
 
-    @.requestUpdateOnNextTick(@)
+    @.requestUpdate(@)
 
   moveOnstage: ()=>
+    console.log "MOVING ONSTAGE"
     @.positionTransitionable.halt()
     @.positionTransitionable.to 0, 'easeIn', 500
-    @.show()
     if @.audio
       @.audio.play()
 

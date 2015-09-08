@@ -4,7 +4,7 @@ class @BasicQuestion
     button = payload.node
     if @.audio
       @.audio.pause()
-    if button.value in @.module.correct_answer
+    if button.value in @._module.correct_answer
       @.notifyButtons button, "CORRECT", "INCORRECT"
       if @.correctAudio
         @.correctAudio.play()
@@ -19,13 +19,14 @@ class @BasicQuestion
         btn.respond response
       else
         btn.respond otherResponse
-      btn.disable()
 
   resetContent: ()->
     if @.title
       @.title.setTitle @._module.question
     if @.image
       @.image.setSrc @._module.image
+    for button in @.buttons
+      button.reset()
 
   setModule: ( module )->
     @._module = module
