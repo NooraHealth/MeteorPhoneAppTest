@@ -25,9 +25,7 @@ class @BasicQuestion
       @.title.setTitle @._module.question
     if @.image
       @.image.setSrc @._module.image
-
-  setModule: ( module )->
-    @._module = module
-    @.resetContent()
+    for button in @.buttons
+      button.reset()
 
 

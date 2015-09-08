@@ -44,6 +44,12 @@ class @ScenarioSurface
         button.setSizeMode Node.RELATIVE_SIZE, Node.RELATIVE_SIZE, Node.ABSOLUTE_SIZE
         button.setProportionalSize .27, .075
 
+    setModule: ()=>
+      console.log "Setting BinarySurface module"
+      super
+      @._module = module
+      @.resetContent()
+
   class NormalBtn extends ResponseButton
     constructor: (@value)->
       super @.value

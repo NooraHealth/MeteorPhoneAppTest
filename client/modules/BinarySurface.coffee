@@ -40,6 +40,12 @@ class @BinarySurface
         button.setSizeMode Node.RELATIVE_SIZE, Node.RELATIVE_SIZE, Node.ABSOLUTE_SIZE
         button.setProportionalSize .4, .075
 
+    setModule: ( module )=>
+      console.log "Setting BinarySurface module"
+      super
+      @._module = module
+      @.resetContent()
+
   class NoButton extends ResponseButton
     constructor: (@value)->
       super @.value

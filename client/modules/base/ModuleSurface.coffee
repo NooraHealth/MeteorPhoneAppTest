@@ -30,13 +30,14 @@ class @ModuleSurface extends BaseNode
 
   resetAudio: ()=>
     if @.audio
-      @.audio.setSrc @._module.audio
+      @.audio.setSrc Scene.get().getContentSrc @._module.audio
     if @.incorrectAudio
-      @.audio.setSrc @._module.incorrect_audio
+      @.audio.setSrc Scene.get().getContentSrc @._module.incorrect_audio
     if @.correctAudio
-      @.audio.setSrc @._module.correct_audio
+      @.audio.setSrc Scene.get().getContentSrc @._module.correct_audio
 
   setModule: ( module )->
+    console.log "Setting the module in the module surface"
     @._module = module
     @.resetAudio()
 
@@ -45,12 +46,10 @@ class @ModuleSurface extends BaseNode
     @.setPosition @.positionTransitionable.get() * pageWidth, 0, 0
 
   moveOffstage: ()=>
-    console.log "MOVING OFFSTAGE"
     @.positionTransitionable.halt()
     @.positionTransitionable.to 1, 'easeOut', 500
     if @.audio
       @.audio.hide()
-      console.log "HAIDING AND PAUSING THE AUDIO"
       @.audio.pause()
     if @.correctAudio
       @.correctAudio.hide()
@@ -62,10 +61,10 @@ class @ModuleSurface extends BaseNode
     @.requestUpdate(@)
 
   moveOnstage: ()=>
+    console.log "MOVING ONSTAGE"
     @.positionTransitionable.halt()
     @.positionTransitionable.to 0, 'easeIn', 500
-    console.log "Is there audio?"
-    console.log @.audio
+    console.log "ABOUT TO PLAY AUDIO"
     if @.audio
       @.audio.play()
     if @.correctAudio
