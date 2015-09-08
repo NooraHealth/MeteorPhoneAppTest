@@ -45,10 +45,12 @@ class @ModuleSurface extends BaseNode
     @.setPosition @.positionTransitionable.get() * pageWidth, 0, 0
 
   moveOffstage: ()=>
+    console.log "MOVING OFFSTAGE"
     @.positionTransitionable.halt()
     @.positionTransitionable.to 1, 'easeOut', 500
     if @.audio
       @.audio.hide()
+      console.log "HAIDING AND PAUSING THE AUDIO"
       @.audio.pause()
     if @.correctAudio
       @.correctAudio.hide()
@@ -60,9 +62,10 @@ class @ModuleSurface extends BaseNode
     @.requestUpdate(@)
 
   moveOnstage: ()=>
-    console.log "MOVING ONSTAGE"
     @.positionTransitionable.halt()
     @.positionTransitionable.to 0, 'easeIn', 500
+    console.log "Is there audio?"
+    console.log @.audio
     if @.audio
       @.audio.play()
     if @.correctAudio

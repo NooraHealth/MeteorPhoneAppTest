@@ -28,19 +28,32 @@ class @Audio extends BaseNode
     console.log "Just set the src"
     console.log @.domElement
     
+  onUpdate: ()=>
+    audio = @.getAudioElement()
+    if @.playWhenReady and audio
+      console.log "There was a play when ready!"
+      @.play()
+      @.playWhenReady = false
+
   getAudioElement: ()=>
     return $("##{@.id}")[0]
   
   play: ()=>
     @.domElement.setAttribute "controls", true
     audio = @.getAudioElement()
-    if audio and audio.readyState == 4
+    console.log "Audio"
+    console.log audio
+    if audio
+      console.log "READY STATE?"
+      console.log audio.readyState
+    if audio# and audio.readyState == 4
       audio.play()
     else
       @.playWhenReady = true
 
   pause: ()->
-    @.domElement.setAttribute "controls", false
     audio = @.getAudioElement()
+    console.log "Here is the pause audio"
+    console.log audio
     if audio and audio.pause
       audio.pause()

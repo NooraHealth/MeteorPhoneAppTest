@@ -60,6 +60,11 @@ class @ContentInterface
         uri = encodeURI(endpnt)
         targetPath = fileEntry.toURL()
 
+        markAsResolved = ( entry )->
+          numRecieved++
+          if numRecieved == numToLoad
+            deferred.resolve( entry )
+
         ft.onprogress = (event)->
           percent = numRecieved/numToLoad
           Session.set "percent loaded", percent
@@ -73,14 +78,14 @@ class @ContentInterface
         onTransferSuccess = (entry)->
           console.log "TRANSFER SUCCESS"
           console.log entry
-          numRecieved++
-          if numRecieved == numToLoad
-            deferred.resolve(entry)
+          markAsResolved entry
 
         onTransferError = (error)->
           console.log "ERROR "
           console.log error
-          if error.code == 3
+          if error.http_status == 404
+            markAsResolved()
+          else if error.code == 3
             #try to download the file again
             ft.download(uri, targetPath, onTransferSuccess, onTransferError)
           else
