@@ -1,5 +1,5 @@
 class @Audio extends BaseNode
-  constructor: (@src, @id)->
+  constructor: ( @src, @id )->
     super
 
     @.setOrigin .5, .5, .5
@@ -18,25 +18,31 @@ class @Audio extends BaseNode
       #tagName: "audio"
       #content: "Your browser does not support this audio file"
 
-    @.setSrc @.src
+    @.setSrc @.src, @.id
 
-  setSrc: (src)=>
-    console.log "SETTING THE SRC OF AUDIO"
-    console.log src
+  setSrc: ( src, id )=>
+    @.id = id
     @.src = src
     @.domElement.setContent "<audio class='full-width' src='#{src}' id='#{@.id}' controls> Your browser does not support this kind of audio file </audio>"
     #@.domElement.setAttribute "id", @.id
     #@.domElement.setAttribute "src", src
     elem = @.getAudioElement()
-    if elem
-      console.log "There was an elem"
-      elem.addEventListener "canplaythrough", ()->
-        console.log "The ELEM can PLAY!!!!!!!!!!!!!"
-        elem.currentTime = 0
+    console.log @.domElement
+    #if elem
+      #console.log ""
+      #console.log $(elem).attr "src"
+      #console.log src
+      #console.log ""
+      #console.log src == $(elem).attr "src"
+      #$(elem).addEventListener "canplay", ()->
+        #console.log "CAN PLAY EVENT FIRED"
 
   onUpdate: ()=>
     audio = @.getAudioElement()
-    if @.playWhenReady and audio
+    audioSrc = $(audio).attr "src"
+    if @.playWhenReady and audio and audio.readyState == 4 and audioSrc == @.src
+      console.log "ABOUT TO PLAY"
+      audio.currentTime = 0
       @.play()
       @.playWhenReady = false
 
@@ -46,9 +52,7 @@ class @Audio extends BaseNode
   play: ()=>
     @.domElement.setAttribute "controls", true
     audio = @.getAudioElement()
-    console.log "About to play this element"
-    console.log audio
-    if audio# and audio.readyState == 4
+    if audio
       audio.play()
     else
       @.playWhenReady = true
