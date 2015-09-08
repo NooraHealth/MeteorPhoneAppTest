@@ -127,6 +127,8 @@ class @Scene
 
     getPageSize: ()->
       return @.pageSize
-
+    
+    getFooter: ()->
+      return @.footer
 
 

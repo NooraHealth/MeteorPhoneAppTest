@@ -12,9 +12,9 @@ class @TitleBar extends BaseNode
     @.setTitle @.title
 
     @.domElement.addClass "card-content"
-    @.domElement.addClass "flow-text"
     @.domElement.addClass "grey-text"
     @.domElement.addClass "text-darken-2"
+    @.domElement.addClass "flow-text"
 
   setTitle: ( title )->
     @.title = title

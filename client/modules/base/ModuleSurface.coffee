@@ -13,6 +13,8 @@ class @ModuleSurface extends BaseNode
 
     @.domElement.setContent ""
 
+    #add the audio to the footer for better playability
+    footer = Scene.get().getFooter()
     if @._module.audio
       @.audio = new Audio(Scene.get().getContentSrc( @._module.audio ), @._module._id)
     if @._module.correct_audio
@@ -20,9 +22,9 @@ class @ModuleSurface extends BaseNode
     if @._module.incorrect_audio
       @.incorrectAudio = new Audio(Scene.get().getContentSrc( @._module.incorrect_audio ), @._module._id + "incorrect")
 
-    @.addChild @.audio
-    @.addChild @.incorrectAudio
-    @.addChild @.correctAudio
+    footer.addChild @.audio
+    footer.addChild @.incorrectAudio
+    footer.addChild @.correctAudio
 
     @.positionTransitionable = new Transitionable 1
 
@@ -39,14 +41,8 @@ class @ModuleSurface extends BaseNode
     @.resetAudio()
 
   onUpdate: ()=>
-    console.log "updating"
     pageWidth = Scene.get().getPageSize().x
-    console.log "pageWidth"
-    console.log pageWidth
-    console.log @.positionTransitionable.get()
     @.setPosition @.positionTransitionable.get() * pageWidth, 0, 0
-    console.log "position"
-    console.log @.getPosition()
 
   moveOffstage: ()=>
     console.log "MOVING OFFSTAGE"

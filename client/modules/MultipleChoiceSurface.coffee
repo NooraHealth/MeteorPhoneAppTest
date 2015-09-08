@@ -55,6 +55,7 @@ class @MultipleChoiceSurface
       for choice, i in @.choices
         newChoice = @._module.options[i]
         choice.setSrc Scene.get().getContentSrc( newChoice )
+        choice.reset()
 
     resetTitle: ()->
       @.title.setTitle @._module.question
@@ -137,7 +138,18 @@ class @MultipleChoiceSurface
       @.domElement.addClass "image-choice"
       @.setContent( @.src )
       
+      @.scale = new Scale @
+      @.scale.set 1, 1, 1
       @.addUIEvent "click"
+
+    reset: ()->
+      @.scale.set 1, 1, 1
+      if @.domElement.hasClass "selected"
+        @.domElement.removeClass "selected"
+      if @.domElement.hasClass "correctly-selected"
+        @.domElement.removeClass "correctly-selected"
+      if @.domElement.hasClass "incorrectly-selected"
+        @.domElement.removeClass "incorrectly-selected"
 
     setContent: ( src )=>
       @.domElement.setContent "<img class='image-choice' src='#{src}' />"
@@ -151,11 +163,9 @@ class @MultipleChoiceSurface
         @.toggleClass @.domElement, "selected"
 
     expand: ()=>
-      scale = new Scale @
-      scale.set 1.2, 1.2, 1, { curve: "easeOut", duration: 1000 }
+      @.scale.set 1.2, 1.2, 1, {curve: "easeIn", duration: 1000}
 
     markAsIncorrect: ()=>
-      console.log "Marking as incorrect"
       if @.domElement.hasClass "selected"
         @.domElement.removeClass "selected"
       @.domElement.addClass "incorrectly-selected"

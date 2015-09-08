@@ -21,7 +21,7 @@ class @BinarySurface
       @.TITLE_HEIGHT = 60
 
       @.setSizeMode Node.RELATIVE_SIZE, Node.RELATIVE_SIZE, Node.RELATIVE_SIZE
-      .setProportionalSize .8, .8, 1
+      .setProportionalSize .8, .7, 1
 
       @.domElement.addClass "card"
 
