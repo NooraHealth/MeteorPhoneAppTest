@@ -16,6 +16,8 @@ class @MultipleChoiceSurface
 
     constructor: ( @_module )->
       super( @._module  )
+      console.log "CREATINGTH S MC SURFACE"
+      console.log @._module
 
       @.responses = []
       @.choices = []
@@ -61,6 +63,8 @@ class @MultipleChoiceSurface
       @.title.setTitle @._module.question
 
     setModule: ( module )->
+      console.log "Setting this module:"
+      console.log module
       @._module = module
       super
       @.resetChoices()
@@ -95,7 +99,8 @@ class @MultipleChoiceSurface
       target = payload.node
       if e == 'click'
         if target instanceof SubmitButton
-          @.audio.pause()
+          if @.audio
+            @.audio.pause()
           @.presentCorrectResponses()
 
         if target instanceof Choice
@@ -120,7 +125,8 @@ class @MultipleChoiceSurface
           response.markAsIncorrect()
 
       audio ?= @.correctAudio
-      audio.play()
+      if audio
+        audio.play()
 
   class Choice extends BaseNode
     constructor: ( @src, @position )->

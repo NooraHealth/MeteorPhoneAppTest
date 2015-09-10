@@ -23,7 +23,7 @@ class @Audio extends BaseNode
   setSrc: ( src, id )=>
     @.id = id
     @.src = src
-    @.domElement.setContent "<audio class='full-width' src='#{src}' id='#{@.id}' controls> Your browser does not support this kind of audio file </audio>"
+    @.domElement.setContent "<audio class='full-width' src='#{src}' id='#{@.id}'> Your browser does not support this kind of audio file </audio>"
     #@.domElement.setAttribute "id", @.id
     #@.domElement.setAttribute "src", src
     elem = @.getAudioElement()
