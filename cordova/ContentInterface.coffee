@@ -53,6 +53,13 @@ class @ContentInterface
       return (err)->
         deferred.reject(err)
 
+    markAsResolved = ( entry )->
+      numRecieved++
+      console.log "RESOLVED: " + numRecieved + "/"+ numToLoad
+      if numRecieved == numToLoad
+        console.log "ALL FINISHED"
+        deferred.resolve( entry )
+
     onFileEntrySuccess = (url)->
       return (fileEntry)->
         ft = new FileTransfer()
@@ -60,10 +67,6 @@ class @ContentInterface
         uri = encodeURI(endpnt)
         targetPath = fileEntry.toURL()
 
-        markAsResolved = ( entry )->
-          numRecieved++
-          if numRecieved == numToLoad
-            deferred.resolve( entry )
 
         ft.onprogress = (event)->
           percent = numRecieved/numToLoad
@@ -75,11 +78,6 @@ class @ContentInterface
           #bytesLoaded = event.loaded
           #Session.set "bytes downloaded", bytesLoaded
 
-        onTransferSuccess = (entry)->
-          console.log "TRANSFER SUCCESS"
-          console.log entry
-          markAsResolved entry
-
         onTransferError = (error)->
           console.log "ERROR "
           console.log error
@@ -87,29 +85,22 @@ class @ContentInterface
             markAsResolved()
           else if error.code == 3
             #try to download the file again
-            ft.download(uri, targetPath, onTransferSuccess, onTransferError)
+            ft.download(uri, targetPath, markAsResolved, onTransferError)
           else
             deferred.reject(error)
 
         #download the file from the endpoint and save to target path on mobile device
-        ft.download(uri, targetPath, onTransferSuccess, onTransferError)
+        ft.download(uri, targetPath, markAsResolved, onTransferError)
 
-    fileFound = ()->
-      numRecieved++
-      console.log "Num recieved/numToLoad: "+ numRecieved + "/"+ numToLoad
-      if numRecieved == numToLoad
-        deferred.resolve()
-      
     fileNotFound = (dirEntry, file, url)->
       return (err)->
         dirEntry.getFile file, {create: true, exclusive: false}, onFileEntrySuccess(url), onError(file)
-
 
     onDirEntrySuccess = (url, directories)->
       return (dirEntry)->
         if directories.length == 0
           file = url.file()
-          dirEntry.getFile file, {create: false, exclusive: false}, fileFound, fileNotFound(dirEntry, file, url)
+          dirEntry.getFile file, {create: false, exclusive: false}, markAsResolved, fileNotFound(dirEntry, file, url)
         else
           dir = directories[0] + '/'
           remainingDirs = directories.splice(1)
@@ -135,6 +126,8 @@ class @ContentInterface
     return deferred.promise
 
   loadContent: (onSuccess, onError)->
+    console.log "This is the curriculum"
+    console.log @.curriculum
     lessons = @.curriculum.getLessonDocuments()
     urls = []
     for lesson in lessons
@@ -142,6 +135,8 @@ class @ContentInterface
     
     endURLS = (new ParsedUrl(url, @.contentEndpoint) for url in urls)
     
+    console.log "About to download files"
+    console.log endURLS
     promise = @.downloadFiles endURLS
     promise.then (entry)->
       console.log "PROMISE SUCCESSFUL"
@@ -174,8 +169,6 @@ class @ContentInterface
 
   moduleUrls: (module)->
     urls = []
-    console.log "ModuleURLS: "
-    console.log module
     if module.image
       urls.push module.image
     if module.video

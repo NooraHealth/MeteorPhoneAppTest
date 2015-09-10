@@ -40,7 +40,12 @@ class @Audio extends BaseNode
   onUpdate: ()=>
     audio = @.getAudioElement()
     audioSrc = $(audio).attr "src"
-    if @.playWhenReady and audio and audio.readyState == 4 and audioSrc == @.src
+    console.log audio
+    console.log $(audio)
+    if audio
+      console.log audio.readyState
+      console.log audioSrc == @.src
+    if @.playWhenReady and audio and audioSrc == @.src
       console.log "ABOUT TO PLAY"
       audio.currentTime = 0
       @.play()

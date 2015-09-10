@@ -66,14 +66,14 @@ class @Scene
         downloader = new ContentInterface curriculum, endpoint
         onSuccess = (entry)=>
           console.log "Success downloading content: ", entry
-          Meteor.user().setContentAsLoaded true
+          #Meteor.user().setContentAsLoaded true
           FlowRouter.go "/"
 
         onError = (err)->
           console.log "Error downloading content: ", err
           console.log err
           alert "There was an error downloading your content, please log in and try again: ", err
-          Meteor.user().setContentAsLoaded false
+          #Meteor.user().setContentAsLoaded false
           Meteor.logout()
 
         downloader.loadContent onSuccess, onError
@@ -118,11 +118,14 @@ class @Scene
 
     getContentSrc: (filePath)->
       #encoding the m-dash in urls must be done manually
+      console.log "3: getting the content src of path: ", filePath
       escaped = encodeURIComponent(filePath)
+      console.log "4: escaped ", escaped
       correctMdash = '%E2%80%94'
       incorrectMdash = /%E2%80%93/
       if escaped.match incorrectMdash
         escaped = escaped.replace incorrectMdash, correctMdash
+      console.log "5: returning: ", @.src + escaped
       return @.src + escaped
 
     getPageSize: ()->
