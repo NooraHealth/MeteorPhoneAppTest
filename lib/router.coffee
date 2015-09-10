@@ -13,7 +13,8 @@ FlowRouter.route '/',
     console.log "Routing to home"
     BlazeLayout.render "layout"
     scene = Scene.init()
-    scene.openCurriculumMenu()
+    if not scene.curriculumIsSet()
+      scene.openCurriculumMenu()
     
 FlowRouter.route "/loading",
   action: ()->

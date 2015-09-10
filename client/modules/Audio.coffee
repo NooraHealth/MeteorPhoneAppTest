@@ -3,8 +3,8 @@ class @Audio extends BaseNode
     super
 
     @.setOrigin .5, .5, .5
-     .setAlign .5, .5, .6
-     .setMountPoint .5, .5, .6
+     .setAlign .5, 0, .6
+     .setMountPoint .5, 0, .6
      .setSizeMode Node.RELATIVE_SIZE, Node.RELATIVE_SIZE
      .setProportionalSize .4, .1
 
@@ -27,6 +27,9 @@ class @Audio extends BaseNode
     #@.domElement.setAttribute "id", @.id
     #@.domElement.setAttribute "src", src
     elem = @.getAudioElement()
+    console.log "Here is the audio element"
+    console.log @.src
+    console.log elem
     #if elem
       #console.log ""
       #console.log $(elem).attr "src"
@@ -41,19 +44,14 @@ class @Audio extends BaseNode
     audioSrc = $(audio).attr "src"
     if @.playWhenReady and audio and audioSrc == @.src
       audio.currentTime = 0
-      @.play()
+      audio.play()
       @.playWhenReady = false
 
   getAudioElement: ()=>
     return $("##{@.id}")[0]
   
   play: ()=>
-    @.domElement.setAttribute "controls", true
-    audio = @.getAudioElement()
-    if audio
-      audio.play()
-    else
-      @.playWhenReady = true
+    @.playWhenReady = true
 
   pause: ()->
     audio = @.getAudioElement()

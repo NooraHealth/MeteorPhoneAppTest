@@ -132,5 +132,7 @@ class @Scene
     
     getFooter: ()->
       return @.footer
-
+    
+    curriculumIsSet: ()->
+      return @.curriculum?
 
