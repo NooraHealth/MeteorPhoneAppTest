@@ -69,7 +69,6 @@ class @ContentInterface
 
 
         ft.onprogress = (event)->
-          console.log "progress"
           percent = numRecieved/numToLoad
           Session.set "percent loaded", percent
           #total = Session.get "total bytes"

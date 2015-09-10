@@ -25,16 +25,19 @@ class @ResponseButton extends BaseNode
     @.sizeTransitionable.to .5
 
   onUpdate: ()=>
-    x = .5 * @.sizeTransitionable.get() + .75
-    y = .5 * @.sizeTransitionable.get() + .75
-    @.setScale x, y, 1
-
+    x = .4 * @.sizeTransitionable.get() + .8
+    y = .4 * @.sizeTransitionable.get() + .8
+    @.setScale x, y
+    
   respond: (type)=>
     @.sizeTransitionable.halt()
+    console.log @.getPosition()
+    console.log @.getOrigin()
+
     if type == "CORRECT"
-      @.sizeTransitionable.to 1, "easeIn", 1000, ()-> console.log "Scaled up"
+      @.sizeTransitionable.to 1, "easeIn", 500
     if type == "INCORRECT"
-      @.sizeTransitionable.to 0, "easeOut", 1000, ()-> console.log "Scaled down"
+      @.sizeTransitionable.to 0, "easeOut", 500
 
     @.requestUpdate @
       

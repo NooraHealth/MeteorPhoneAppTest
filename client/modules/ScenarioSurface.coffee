@@ -21,7 +21,6 @@ class @ScenarioSurface
       @.TITLE_HEIGHT = 60
       @.SIZE = [800, 500]
       @.setSizeMode Node.ABSOLUTE_SIZE, Node.ABSOLUTE_SIZE, Node.ABSOLUTE_SIZE
-      #.setProportionalSize .8, .8, 1
       .setAbsoluteSize @.SIZE[0], @.SIZE[1]
       
       @.domElement.addClass "card"

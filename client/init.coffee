@@ -9,10 +9,12 @@ this.Transitionable = famous.transitions.Transitionable
 
 FamousEngine.init()
 
+console.log "ABOUT TO SUBSCRIBE"
 Meteor.subscribe "all", {
   onReady: ()->
     #endpoint = 'http://noorahealthcontent.noorahealth.org/'
     endpoint = "http://noorahealthcontent.noorahealth.org.s3-website-us-west-1.amazonaws.com/"
+    console.log "SUBSCRIBED"
     if Meteor.isCordova
       Scene.get().setContentSrc CordovaFileServer.httpUrl
     else
