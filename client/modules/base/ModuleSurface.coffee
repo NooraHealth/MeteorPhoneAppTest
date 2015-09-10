@@ -21,7 +21,6 @@ class @ModuleSurface extends BaseNode
     @.positionTransitionable = new Transitionable 1
 
   addAudio: ( parent )=>
-    console.log "ADD audio 2"
     if @._module.audio
       @.audio = new Audio(Scene.get().getContentSrc( @._module.audio ), @._module._id)
     if @._module.correct_audio
@@ -29,16 +28,11 @@ class @ModuleSurface extends BaseNode
     if @._module.incorrect_audio
       @.incorrectAudio = new Audio(Scene.get().getContentSrc( @._module.incorrect_audio ), @._module._id + "incorrect")
 
-    console.log "the audios"
-    console.log @.audio
-    console.log @.incorrectAudio
-    console.log @.correctAudio
     parent.addChild @.audio
     parent.addChild @.incorrectAudio
     parent.addChild @.correctAudio
 
   removeAudio: ( parent )=>
-    console.log "Remove audio 1"
     if @.audio
       parent.removeChild @.audio
     if @.incorrectAudio

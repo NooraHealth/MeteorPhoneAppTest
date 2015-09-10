@@ -25,8 +25,8 @@ class @ResponseButton extends BaseNode
     @.sizeTransitionable.to .5
 
   onUpdate: ()=>
-    x = .75 * @.sizeTransitionable.get() + .75
-    y = .75 * @.sizeTransitionable.get() + .75
+    x = .75 * @.sizeTransitionable.get() + .65
+    y = .75 * @.sizeTransitionable.get() + .65
     @.setScale x, y, 1
 
   respond: (type)=>

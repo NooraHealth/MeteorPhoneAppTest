@@ -27,7 +27,6 @@ class @Audio extends BaseNode
     #@.domElement.setAttribute "id", @.id
     #@.domElement.setAttribute "src", src
     elem = @.getAudioElement()
-    console.log @.domElement
     #if elem
       #console.log ""
       #console.log $(elem).attr "src"
@@ -40,13 +39,7 @@ class @Audio extends BaseNode
   onUpdate: ()=>
     audio = @.getAudioElement()
     audioSrc = $(audio).attr "src"
-    console.log audio
-    console.log $(audio)
-    if audio
-      console.log audio.readyState
-      console.log audioSrc == @.src
     if @.playWhenReady and audio and audioSrc == @.src
-      console.log "ABOUT TO PLAY"
       audio.currentTime = 0
       @.play()
       @.playWhenReady = false
