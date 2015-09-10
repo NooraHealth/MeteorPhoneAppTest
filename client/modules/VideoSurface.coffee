@@ -47,16 +47,7 @@ class @VideoSurface
       return $("#" + @._module._id)[0]
 
     moveOffstage: ()=>
-      console.log ""
-      console.log ""
-      console.log "Moving the video offstage"
       video = @.getVideoElem()
-      console.log video
-      console.log video.pause
-      console.log video.pauseVideo
-      console.log ""
-      console.log ""
-      console.log ""
       if video and video.pause
         video.pause()
       else if video and video.pauseVideo
