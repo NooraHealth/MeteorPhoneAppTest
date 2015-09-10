@@ -47,12 +47,15 @@ class @LessonsView extends BaseNode
     @._grid = new Grid lessons.length, @.THUMBNAILS_PER_ROW, @.SIZE, @.MARGIN, @.EDGE_MARGIN
 
     for thumb in @.thumbnails
-      @.removeChild @.thumbnails
+      @.removeChild thumb
+    console.log "Removing all the lessons children"
+    console.log @.getChildren()
 
     @.lessons = lessons
     @.thumbnails = []
     for lesson, index in lessons
       @.addThumbnail lesson
+    console.log @.getChildren()
 
   addThumbnail: (lesson)->
     thumb = new LessonThumbnail(lesson)

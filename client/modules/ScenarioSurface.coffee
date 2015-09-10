@@ -44,7 +44,7 @@ class @ScenarioSurface
         button.setSizeMode Node.RELATIVE_SIZE, Node.RELATIVE_SIZE, Node.ABSOLUTE_SIZE
         button.setProportionalSize .27, .075
 
-    setModule: ()=>
+    setModule: ( module )=>
       console.log "Setting BinarySurface module"
       super
       @._module = module

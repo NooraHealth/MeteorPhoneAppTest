@@ -56,6 +56,8 @@ class @Scene
         @.downloadCurriculum curriculum
       @.curriculum = curriculum
       @.lessons = @.curriculum.getLessonDocuments()
+      console.log "Settng the lessons of lessonsVIew"
+      console.log @.lessons
       @.lessonsView.setLessons @.lessons
       @
     
@@ -118,14 +120,11 @@ class @Scene
 
     getContentSrc: (filePath)->
       #encoding the m-dash in urls must be done manually
-      console.log "3: getting the content src of path: ", filePath
       escaped = encodeURIComponent(filePath)
-      console.log "4: escaped ", escaped
       correctMdash = '%E2%80%94'
       incorrectMdash = /%E2%80%93/
       if escaped.match incorrectMdash
         escaped = escaped.replace incorrectMdash, correctMdash
-      console.log "5: returning: ", @.src + escaped
       return @.src + escaped
 
     getPageSize: ()->
