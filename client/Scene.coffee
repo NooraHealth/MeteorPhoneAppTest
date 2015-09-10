@@ -51,14 +51,20 @@ class @Scene
     alreadyInitialized: ()->
       return @._alreadyInitialized
 
-    setCurriculum: (curriculum)->
-      if Meteor.isCordova
-        @.downloadCurriculum curriculum
+    _setCurriculum: ( curriculum )->
+      console.log "In _setCurriculum"
       @.curriculum = curriculum
       @.lessons = @.curriculum.getLessonDocuments()
       console.log "Settng the lessons of lessonsVIew"
       console.log @.lessons
       @.lessonsView.setLessons @.lessons
+      @
+
+    setCurriculum: (curriculum)->
+      if Meteor.isCordova
+        @.downloadCurriculum curriculum
+      else
+        @._setCurriculum( curriculum )
       @
     
     downloadCurriculum: ( curriculum )->
@@ -69,6 +75,7 @@ class @Scene
         onSuccess = (entry)=>
           console.log "Success downloading content: ", entry
           #Meteor.user().setContentAsLoaded true
+          @._setCurriculum curriculum
           FlowRouter.go "/"
 
         onError = (err)->
