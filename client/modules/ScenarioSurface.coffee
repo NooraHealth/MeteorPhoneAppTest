@@ -26,12 +26,12 @@ class @ScenarioSurface
       
       @.domElement.addClass "card"
 
-      @.image = new ModuleImage(@._module)
+      @.image = new ModuleImage @._module.image
 
-      @.title = new TitleBar(@._module.question, { x: @.SIZE[0], y: @.TITLE_HEIGHT})
-      @.normal = new NormalBtn("Normal")
-      @.callDoc = new CallDocBtn("CallDoc")
-      @.emergency = new EmergencyBtn("Call911")
+      @.title = new TitleBar @._module.question, { x: @.SIZE[0], y: @.TITLE_HEIGHT}
+      @.normal = new NormalBtn "Normal"
+      @.callDoc = new CallDocBtn "CallDoc"
+      @.emergency = new EmergencyBtn "Call911"
 
       @.addChild @.image
       @.addChild @.title

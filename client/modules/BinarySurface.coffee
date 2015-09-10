@@ -41,7 +41,6 @@ class @BinarySurface
         button.setProportionalSize .4, .075
 
     setModule: ( module )=>
-      console.log "Setting BinarySurface module"
       super
       @._module = module
       @.resetContent()

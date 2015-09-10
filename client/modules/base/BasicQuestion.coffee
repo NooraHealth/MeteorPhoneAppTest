@@ -24,6 +24,7 @@ class @BasicQuestion
     if @.title
       @.title.setTitle @._module.question
     if @.image
+      console.log "Setting the image content"
       @.image.setSrc @._module.image
     for button in @.buttons
       button.reset()

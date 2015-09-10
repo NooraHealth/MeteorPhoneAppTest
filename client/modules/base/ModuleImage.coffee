@@ -15,5 +15,10 @@ class @ModuleImage extends BaseNode
     @.setSrc @.src
 
   setSrc: ( src )->
+    console.trace()
+    @.src = src
+    console.log "SETTING THE MODULE IMAGE SOURCE"
+    console.log src
     endpoint = Scene.get().getContentSrc src
+    console.log endpoint
     @.domElement.setContent "<img src='#{endpoint}' class='binary-image'></img>"

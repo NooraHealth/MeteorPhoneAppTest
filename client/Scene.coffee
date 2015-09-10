@@ -120,11 +120,13 @@ class @Scene
 
     getContentSrc: (filePath)->
       #encoding the m-dash in urls must be done manually
+      console.log "Getting the content src of ", filePath
       escaped = encodeURIComponent(filePath)
       correctMdash = '%E2%80%94'
       incorrectMdash = /%E2%80%93/
       if escaped.match incorrectMdash
         escaped = escaped.replace incorrectMdash, correctMdash
+      console.log "final escaped ", escaped
       return @.src + escaped
 
     getPageSize: ()->
