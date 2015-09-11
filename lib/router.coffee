@@ -6,11 +6,6 @@
 ###
 FlowRouter.route '/',
   action: ()->
-    console.log ""
-    console.log "FLOWROUTER ROUTING TO HOME!!!"
-    console.log ""
-
-    console.log "Routing to home"
     BlazeLayout.render "layout"
     scene = Scene.init()
     if not scene.curriculumIsSet()

@@ -50,23 +50,28 @@ class @MultipleChoiceSurface
         @.locate choice, index, @._module.options.length
         @.addChild choice
         @.choices.push choice
-        if src in @._module.correct_answer
-          @.correctChoices.push choice
+        @._markChoiceAsCorrect choice, src
 
     resetChoices: ()->
+      @.correctChoices = []
       for choice, i in @.choices
         newChoice = @._module.options[i]
         choice.setSrc Scene.get().getContentSrc( newChoice )
         choice.reset()
+        @._markChoiceAsCorrect choice, newChoice
+
+    _markChoiceAsCorrect: ( choice, src )->
+      if src in @._module.correct_answer
+        @.correctChoices.push choice
 
     resetTitle: ()->
       @.title.setTitle @._module.question
 
     setModule: ( module )->
-      console.log "Setting this module:"
-      console.log module
       @._module = module
       super
+      @.correctChoices = []
+      @.responses = []
       @.resetChoices()
       @.resetTitle()
 
@@ -111,6 +116,10 @@ class @MultipleChoiceSurface
 
     presentCorrectResponses: ()->
       audio = null
+      console.log "RESPONSES"
+      console.log @.responses
+      console.log @.correctChoices
+      console.log @._module.correct_answer
       for choice in @.correctChoices
         choice.expand()
         if choice in @.responses
@@ -122,7 +131,6 @@ class @MultipleChoiceSurface
       for response in @.responses
         if response not in @.correctChoices
           audio = @.incorrectAudio
-          response.markAsIncorrect()
 
       audio ?= @.correctAudio
       if audio
@@ -159,6 +167,9 @@ class @MultipleChoiceSurface
 
     setContent: ( src )=>
       @.domElement.setContent "<img class='image-choice' src='#{src}' />"
+
+    getSrc: ()->
+      return @.src
 
     setSrc: ( src )->
       @.src = src
