@@ -1,0 +1,8 @@
+<template name="sideMenu">
+  <ul class='list'>
+    <li class='item item-divider'> CURRICULUMS </li>
+    {{#each curriculums}}
+      <li class='item'><a id="{{_id}}"> {{title}} </a></li>
+    {{/each}}
+  </ul>
+</template>

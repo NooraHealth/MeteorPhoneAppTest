@@ -12,12 +12,9 @@ class @Scene
       return @._alreadyInitialized
 
     _setCurriculum: ( curriculum )->
-      console.log "In _setCurriculum"
       @.curriculum = curriculum
       @.lessons = @.curriculum.getLessonDocuments()
-      console.log "Settng the lessons of lessonsVIew"
-      console.log @.lessons
-      @.lessonsView.setLessons @.lessons
+      #@.lessonsView.setLessons @.lessons
       @
 
     setCurriculum: (curriculum)->
