@@ -1,0 +1,13 @@
+<template name="imgWithToasts">
+<div class="img-with-toasts-wrapper"> 
+  <img src="{{imgSrc}}" class="{{class}}">
+  {{#if isPhone}}
+    <div class="valign-wrapper center-align inner-toasts-wrapper">
+      <img src="yes.png" class="toast-overlay valign {{#if successToastIsVisible}} expand-toast {{/if}}">
+    </div>
+    <div class="valign-wrapper center-align inner-toasts-wrapper">
+      <img src="no.png" class="toast-overlay valign {{#if failToastIsVisible}} expand-toast {{/if}}">
+    </div>
+  {{/if}}
+</div>
+</template>

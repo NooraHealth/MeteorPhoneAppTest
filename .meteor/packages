@@ -27,8 +27,8 @@ pcel:loading
 
 mystor:device-detection
 ground:db
-useraccounts:flow-routing
-kadira:flow-router
 natestrauser:cordova-file-server
-kadira:blaze-layout
-gadicohen:famous
+meteoric:ionic-sass
+meteoric:ionicons-sass
+meteoric:ionic
+iron:layout

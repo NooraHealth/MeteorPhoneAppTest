@@ -12,13 +12,10 @@ Template.loading.helpers
     return Session.get "percent loaded"
 
 Template.loading.onRendered ()->
-  this.loading = window.pleaseWait {
+  this.loading = Meteor.pleaseWait {
     logo: 'NHlogo.png',
     loadingHtml: message + spinner
   }
-  console.log "This is the loadingthing"
-  console.log this.loading
-
   this.autorun ()->
     percent = Session.get "percent loaded"
     $("#progress").css("width", percent*100+"%")

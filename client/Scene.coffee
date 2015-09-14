@@ -15,38 +15,6 @@ class @Scene
       @._alreadyInitialized = false
 
     init: ()->
-      @.famousScene = FamousEngine.createScene "body"
-
-      @.root = @.famousScene.addChild()
-      @.pageSize =
-        x: 0
-        y: 0
-        z: 0
-      @.root.addComponent
-        onSizeChange: (x, y, z)=>
-          @.pageSize =
-            x: x
-            y: y
-            z: z
-
-      @.camera = new Camera @.famousScene
-      @.camera.setDepth 1000
-
-      @.lessonsView = new LessonsView()
-      @.modulesView = new ModulesView()
-
-      @.root.addChild @.lessonsView
-      @.root.addChild @.modulesView
-
-      @.header = new Header()
-      @.footer = new Footer()
-
-      @.root.addChild @.header
-      @.root.addChild @.footer
-
-      @.goToLessonsPage()
-      @._alreadyInitialized = true
-      @
 
     alreadyInitialized: ()->
       return @._alreadyInitialized

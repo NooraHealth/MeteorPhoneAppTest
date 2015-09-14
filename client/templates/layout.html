@@ -1,4 +1,9 @@
 <template name="layout">
-  {{> Template.dynamic template=main}}
+
+  {{#ionBody}}
+    {{>nav}}
+     {{>yield}}
+    {{>footer}}
+  {{/ionBody}}
 </template>
 
