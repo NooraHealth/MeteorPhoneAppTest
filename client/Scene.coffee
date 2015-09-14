@@ -4,17 +4,9 @@ class @Scene
       @.scene = new PrivateScene()
     return @.scene
 
-  @init: ()->
-    scene = Scene.get()
-    if not scene.alreadyInitialized()
-      scene.init()
-    return scene
-
   class PrivateScene
     constructor: ()->
       @._alreadyInitialized = false
-
-    init: ()->
 
     alreadyInitialized: ()->
       return @._alreadyInitialized
@@ -73,7 +65,7 @@ class @Scene
       @
 
     openCurriculumMenu: ()->
-      @.header.openCurriculumMenu()
+      #this is where will open the Ionic side menu
       @
 
     showModules: (lesson)->

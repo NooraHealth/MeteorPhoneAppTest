@@ -1,4 +1,5 @@
 
+
 AccountsTemplates.configure {
     confirmPassword: true,
     enablePasswordChange: true,
@@ -13,9 +14,6 @@ AccountsTemplates.configure {
     showLabels: true,
     showPlaceholders: true,
     defaultLayout: 'entry',
-    #defaultTemplate: 'entry',
-    defaultContentRegion: 'main',
-    defaultLayoutRegions: {},
 
     # Client-side Validation
     continuousValidation: false,
@@ -35,6 +33,7 @@ AccountsTemplates.configure {
 
     onSubmitHook: (error, state)->
       if !error and state=='signUp'
+        console.log "IIn on submit"
         Router.go "/selectCurriculum"
 
     # Texts
@@ -64,3 +63,20 @@ AccountsTemplates.configure {
     }
 }
 
+AccountsTemplates.addField {
+  _id: "attempts",
+  type: "hidden",
+}
+
+#AccountsTemplates.addField {
+  #_id: 'condition'
+  #required: true
+  #type: 'text'
+  #displayName: 'Condition'
+#}
+
+AccountsTemplates.configureRoute 'ensureSignedIn', {
+  template: 'entry'
+}
+
+#Router.plugin "ensureSignedIn"

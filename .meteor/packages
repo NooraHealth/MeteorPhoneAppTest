@@ -32,3 +32,5 @@ meteoric:ionic-sass
 meteoric:ionicons-sass
 meteoric:ionic
 iron:layout
+useraccounts:iron-routing
+iron:router

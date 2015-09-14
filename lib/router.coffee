@@ -59,21 +59,12 @@ Router.map ()->
         #this.next()
 
     data: ()->
-      scene = Scene.get().init()
+      console.log "Getting scene"
+      console.log Scene.get()
+      scene = Scene.get()
+      if not scene.curriculumIsSet()
+        scene.openCurriculumMenu()
 
-  }
-
-  this.route '/selectCurriculum', {
-    path: '/selectCurriculum'
-    layoutTemplate: 'layout'
-    name: 'selectCurriculum'
-    yieldTemplates: {
-      'selectCurriculumFooter': {to:"footer"}
-    }
-    cache: true
-    waitOn:()->
-      if Meteor.status().connected
-        return Meteor.subscribe("all_curriculums")
   }
 
   ###
@@ -109,16 +100,6 @@ Router.map ()->
       return {modules:  modules  }
         
   }
-
-
-  ###
-  # refresh the content
-  ###
-  this.route '/refreshcontent', {
-    path: '/refreshcontent'
-    data: ()->
-      Meteor.call "refreshContent"
-    }
 
   this.route '/loading', {
     path: '/loading'

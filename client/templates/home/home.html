@@ -1,7 +1,27 @@
 <template name="home">
-  <!--{{#Scrollview id="scroll" direction=0}}-->
-    <!--{{#famousEach lessons}}-->
-      <!--{{>Surface template="lessonThumbnail" class="padding-sm" size=getSize modifier="StateModifier"}}-->
-    <!--{{/famousEach}}-->
-  <!--{{/Scrollview}}-->
+  {{#contentFor "headerTitle"}}
+    <a href="{{pathFor 'home'}}"><img class="round-tile z-depth-2" alt="Noora Health" src="/NHlogo.png"/></a>
+  {{/contentFor }}
+
+  {{#contentFor "headerButtonRight"}}
+    <button class="button button-clear button-icon ion-navicon" data-ion-menu-toggle='right'></button>
+  {{/contentFor }}
+
+  {{#ionView}}
+    {{#ionContent}}
+    {{#ionSideMenuContainer}}
+      {{#ionSideMenus}}
+
+        {{#ionSideMenu side='right'}}
+          <p>Side Mnu</p> 
+        {{/ionSideMenu}}
+
+        {{#ionSideMenuContent}}
+          <p>CONTENTJk</p>
+        {{/ionSideMenuContent}}
+      {{/ionSideMenus}}
+     {{/ionSideMenuContainer}}
+    {{/ionContent}}
+  {{/ionView}}
+
 </template>

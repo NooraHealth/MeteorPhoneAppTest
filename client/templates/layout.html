@@ -1,9 +1,10 @@
 <template name="layout">
 
   {{#ionBody}}
-    {{>nav}}
-     {{>yield}}
-    {{>footer}}
+    {{>ionNavBar class='nav z-depth-1'}}
+    {{#ionNavView}}
+      {{>yield}}
+     {{/ionNavView}}
   {{/ionBody}}
 </template>
 
