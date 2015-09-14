@@ -4,6 +4,14 @@ Template.sideMenu.helpers
 
 Template.sideMenu.events
   'click .item': ( e )->
-    id = $(e.target).attr "id"
-    Scene.get().setCurriculum Curriculum.findOne {_id: id}
+    console.log e
+
+Template.listItem.events
+  'click': ( e , template )->
+    console.log Template.currentData()
+    console.log e
+    console.log template
+    data = Template.currentData()
+    Scene.get().setCurriculum Curriculum.findOne {_id: data._id}
+
 

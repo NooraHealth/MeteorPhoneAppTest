@@ -2,7 +2,11 @@
   <ul class='list'>
     <li class='item item-divider'> CURRICULUMS </li>
     {{#each curriculums}}
-      <li class='item'><a id="{{_id}}"> {{title}} </a></li>
+      {{>listItem}}
     {{/each}}
   </ul>
+</template>
+
+<template name='listItem'>
+  <li class='item'><a id="{{_id}}"> {{title}} </a></li>
 </template>

@@ -1,3 +1,10 @@
+<template name='rowOfLessonThumbnails'>
+  <div class='row'>
+    {{#each lessons}}
+      <div class='col'> {{>lessonThumbnail}} </div>
+    {{/each}}
+  </div>
+</template>
 <template name="lessonThumbnail">
   <a>
     <div class=" card {{#if isCurrentLesson}} z-depth-3 {{else}} z-depth-1 {{/if}} chapter-card" id="{{_id}}">

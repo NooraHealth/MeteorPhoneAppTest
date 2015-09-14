@@ -13,9 +13,13 @@ class @Scene
 
     _setCurriculum: ( curriculum )->
       @.curriculum = curriculum
+      console.log "SEtting curriculum", curriculum
       @.lessons = @.curriculum.getLessonDocuments()
       #@.lessonsView.setLessons @.lessons
       @
+
+    getLessons: ()->
+      return @.lessons
 
     setCurriculum: (curriculum)->
       if Meteor.isCordova

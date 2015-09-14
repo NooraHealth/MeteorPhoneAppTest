@@ -17,7 +17,9 @@
         {{/ionSideMenu}}
 
         {{#ionSideMenuContent}}
-          <p>CONTENTJk</p>
+          {{#each rows}}
+            {{>rowOfLessonThumbnails}}
+          {{/each}}
         {{/ionSideMenuContent}}
       {{/ionSideMenus}}
      {{/ionSideMenuContainer}}
