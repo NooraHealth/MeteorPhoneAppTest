@@ -1,20 +1,15 @@
 <template name='rowOfLessonThumbnails'>
   <div class='row'>
     {{#each lessons}}
-      <div class='col'> {{>lessonThumbnail}} </div>
+      <div class='col thumbnail-wrapper'> {{>lessonThumbnail}} </div>
     {{/each}}
   </div>
 </template>
 <template name="lessonThumbnail">
   <a>
-    <div class=" card {{#if isCurrentLesson}} z-depth-3 {{else}} z-depth-1 {{/if}} chapter-card" id="{{_id}}">
-      <div class="success-overlay center-align valign-wrapper hidden">
-        <div class="valign sticker green valign-wrapper center-align z-depth-2 valign-wrapper">
-          <i class="mdi-navigation-check large valign"></i>
-        </div>
-      </div>
-      <div class=" center-align card-image center-align chapter-card-image valign-wrapper"> 
-        <img src="{{imgSrc}}" class="valign"/>
+    <div class="card z-depth-3 lesson-thumbnail" id="{{_id}}">
+      <div class="card-image center-align thumbnail-image valign-wrapper"> 
+        <img src="{{imgSrc}}" class="valign fit-height"/>
       </div> 
       <div class="card-content">
         <p class="center-align flow-text grey-text text-darken-2">{{title}}</p>

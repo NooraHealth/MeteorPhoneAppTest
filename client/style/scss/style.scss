@@ -25,13 +25,14 @@ Primary style
 }
 
 html, body {
-  overflow: hidden;
+  overflow: scroll;
 }
 
 body {
-  .view {
+  .pane, .view {
     color: $primary-font-color;
     background: $light-blue-1;
+    overflow: scroll;
   }
 
   a {
@@ -80,11 +81,22 @@ body {
 }
 
 .thumbnail-wrapper {
-  height: 50%;
+  height: 300px;
+  margin: 15px;
+}
 
-  & .thumbnail {
-    height: 100%;
-  }
+.fit-height {
+  height: 100%;
+}
+
+.thumbnail-image {
+  height: 75%;
+}
+
+.lesson-thumbnail {
+  width: 75%;
+  height: 100%;
+  margin: auto;
 }
 
 td {
@@ -179,10 +191,7 @@ Custom NH components
 .margin-top {
   margin-top:20px;
 }
-.scrollBox {
-  overflow-y:scroll;
-  padding: 50px !important;
-}
+
 .file-input {
   margin-right: 10px;
   font-size:1em;
@@ -507,41 +516,6 @@ Custom NH components
 
 .incorrectly-selected {
   border: 4px solid $danger;
-}
-
-//CUSTOM CSS3 SLIDING PANELS
-.slide {
-  & img {
-    width: 100%;
-  }
-}
-
-.section-panel {
-  display: inline-block;
-  width: $panel-width-S;
-  background-color: $white;
-  
-  img {
-    width: $panel-width-XL;
-    padding: 5px;
-    vertical-align: middle;
-  }
-  span {
-    vertical-align: middle;
-  }
-}
-
-.lesson-panel {
-  background-color: $white;
-  color: #333;
-  border: 1px solid $border-color; 
-  margin-left: auto;
-  margin-right: auto;
-  padding: $padding-S;
-
-  img {
-    width: 100%;
-  }
 }
 
 .greyed-out {

@@ -1,6 +1,8 @@
 Template.home.helpers
-  rowsOfLessonThumbnails: ()->
+  rows: ()->
     lessons = Scene.get().getLessons()
+    if not lessons
+      return []
     numPerRow = 2
     numRows = Math.ceil lessons.length / numPerRow
     row = 0
@@ -8,7 +10,7 @@ Template.home.helpers
     while row < numRows
       index = numPerRow * row
       arr = lessons.slice index, index + numPerRow
-      rows.push arr
-    console.log "Here are the rows"
+      rows.push {lessons: arr}
+      row++
     return rows
 

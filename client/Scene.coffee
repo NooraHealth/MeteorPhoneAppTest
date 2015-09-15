@@ -6,20 +6,23 @@ class @Scene
 
   class PrivateScene
     constructor: ()->
-      @._alreadyInitialized = false
-
-    alreadyInitialized: ()->
-      return @._alreadyInitialized
+      @._lessons = []
 
     _setCurriculum: ( curriculum )->
       @.curriculum = curriculum
-      console.log "SEtting curriculum", curriculum
-      @.lessons = @.curriculum.getLessonDocuments()
-      #@.lessonsView.setLessons @.lessons
+      @._lessons = @.curriculum.getLessonDocuments()
+      Session.set "curriculum id", @.curriculum._id
       @
 
+    _getCurriculum: ()->
+      id = Session.get "curriculum id"
+      return Curriculum.findOne {_id: id}
+
     getLessons: ()->
-      return @.lessons
+      curriculum = @._getCurriculum()
+      if not curriculum
+        return []
+      return curriculum.getLessonDocuments()
 
     setCurriculum: (curriculum)->
       if Meteor.isCordova
@@ -30,14 +33,14 @@ class @Scene
     
     downloadCurriculum: ( curriculum )->
       if Meteor.isCordova
-        FlowRouter.go "/loading"
+        Router.go "/loading"
         endpoint = @.getContentEndpoint()
         downloader = new ContentInterface curriculum, endpoint
         onSuccess = (entry)=>
           console.log "Success downloading content: ", entry
           #Meteor.user().setContentAsLoaded true
           @._setCurriculum curriculum
-          FlowRouter.go "/"
+          Router.go "/"
 
         onError = (err)->
           console.log "Error downloading content: ", err
