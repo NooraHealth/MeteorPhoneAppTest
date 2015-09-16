@@ -59,9 +59,7 @@ class @Scene
       @
 
     goToLessonsPage: ()->
-      @.modulesView.hideCurrentSurface()
-      @.lessonsView.moveOnstage()
-      @.footer.lessonsPageMode()
+      Router.go "home"
       @
 
     goToNextModule: ()->
@@ -72,22 +70,15 @@ class @Scene
       #this is where will open the Ionic side menu
       @
 
-    showModules: (lesson)->
-      console.log "about to show mdoules"
-      modules = lesson.getModulesSequence()
-      @.modulesView.setModules modules
-      @.goToModules()
-      @
+    goToModules: ( lessonId )->
+      Session.set "current lesson", lessonId
+      doc = Lessons.findOne { _id: lessonId }
+      @._modulesView = new ModulesView doc
 
-    goToModules: ()->
-      @.lessonsView.moveOffstage()
-      @.footer.modulesMode()
-      @.modulesView.start()
-      @
+      Router.go 'modules.show', { _id: lessonId }
 
     setContentSrc: (src)->
       @.src = src
-      @
 
     getContentSrc: (filePath)->
       #encoding the m-dash in urls must be done manually
