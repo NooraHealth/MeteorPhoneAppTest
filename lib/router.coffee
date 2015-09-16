@@ -71,14 +71,16 @@ Router.map ()->
   # module sequence
   ###
   this.route '/modules/:_id', {
+    name: "modules.show"
     path: '/modules/:_id'
     layoutTemplate: 'layout'
-    name: 'ModulesSequence'
-    template: "module"
-    yieldTemplates: {
-      'moduleFooter': {to:"footer"}
-    }
+    template: "modulesSequence"
     cache: true
+    data: ()->
+      console.log "going to modules"
+      Session.set "current lesson id", @.params._id
+      modules = Scene.get().getModulesSequence()
+      return { modules: modules}
   }
 
   this.route '/loading', {

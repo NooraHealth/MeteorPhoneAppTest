@@ -71,11 +71,14 @@ class @Scene
       @
 
     goToModules: ( lessonId )->
-      Session.set "current lesson", lessonId
-      doc = Lessons.findOne { _id: lessonId }
-      @._modulesView = new ModulesView doc
+      @._modulesSequence = new ModulesSequence lessonId
+      @._modulesSequence.start()
 
-      Router.go 'modules.show', { _id: lessonId }
+    getModulesSequence: ()->
+      if @._modulesSequence?
+        return @._modulesSequence.getSequence()
+      else
+        return []
 
     setContentSrc: (src)->
       @.src = src

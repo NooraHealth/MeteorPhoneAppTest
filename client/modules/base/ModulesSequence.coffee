@@ -1,18 +1,12 @@
 
-class @ModulesView extends BaseNode
-
-  constructor: ()->
-    super
-    @.setOrigin .5, .5, .5
-     .setAlign .5, .3, .5
-     .setMountPoint .5, .5, .5
-     .setSizeMode Node.RELATIVE_SIZE, Node.RELATIVE_SIZE, Node.ABSOLUTE_SIZE
-     .setAbsoluteSize .8, 1, 1
-
-    #all the rendered module surfaces
-    @._currentSurface = null
+class @ModulesSequence
+  constructor: ( @_lessonId )->
+    @._lesson = Lessons.findOne { _id: @._lessonId }
+    @._modules = @._lesson.getModulesSequence()
     @._currentIndex = 0
-    @._modules = []
+
+  getSequence: ()->
+    return @._modules
 
   goToNextModule: ()->
     @.showModule ++@._currentIndex
@@ -40,7 +34,7 @@ class @ModulesView extends BaseNode
 
   start: ()->
     @._currentIndex = 0
-    @.showModule 0
+    Router.go "modules.show",  { _id: @._lessonId }
 
   setModules: (modules)->
     @._modules = modules
