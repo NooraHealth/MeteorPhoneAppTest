@@ -80,7 +80,9 @@ Router.map ()->
       console.log "going to modules"
       Session.set "current lesson id", @.params._id
       modules = Scene.get().getModulesSequence()
-      return { modules: modules}
+      console.log "Here are the modules"
+      console.log modules
+      return { modules: modules }
   }
 
   this.route '/loading', {

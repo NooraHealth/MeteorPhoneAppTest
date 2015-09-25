@@ -1,26 +1,46 @@
 <template name="modulesSequence">
   {{#ionBody}}
     {{>ionNavBar class='nav z-depth-1'}}
+
     {{#ionNavView}}
       {{#contentFor "headerTitle"}}
         <a href="{{pathFor 'home'}}"><img class="round-tile z-depth-2" alt="Noora Health" src="/NHlogo.png"/></a>
       {{/contentFor }}
 
       {{#contentFor "headerButtonRight"}}
-        <button class="right button button-clear button-icon ion-navicon" data-ion-menu-toggle='right'></button>
+        {{>ionNavBackButton path='home'}}
       {{/contentFor }}
 
-      {{#ionSlideBox}}
-        {{#each modules}}
+      {{#ionView}}
+        {{#ionContent}}
+          {{#ionSlideBox}}
+            {{#each modules}}
 
-          {{#ionSlide}}
-            <p>WOO HO SLIDE {{title}}</p>
-          {{/ionSlide}}
+              {{#ionSlide}}
 
-        {{/each}}
-      {{/ionSlideBox}}
-     {{/ionNavView}}
-    {{>moduleFooter}}
+                {{#if isBinaryChoice}}
+                  {{>binaryModule}}
+                {{/if}}
+                {{#if isSlideModule}}
+                  {{>slideModule}}
+                {{/if}}
+                {{#if isScenario }}]
+                  {{>scenarioModule}}
+                {{/if}}
+                {{#if isMultipleChoice }}
+                  {{> multipleChoiceModule }}
+                {{/if}}
+                {{#if isVideo }}
+                  {{> videoModule }}
+                {{/if}}
+
+              {{/ionSlide}}
+
+            {{/each}}
+          {{/ionSlideBox}}
+        {{/ionContent}}
+      {{/ionView}}
+    {{/ionNavView}}
   {{/ionBody}}
 </template>
 
