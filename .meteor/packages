@@ -4,7 +4,6 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-meteor-platform
 insecure
 underscore
 coffeescript
@@ -15,7 +14,6 @@ fourseven:scss
 wolves:bourbon
 http
 accounts-ui
-materialize:materialize
 useraccounts:materialize
 accounts-password
 service-configuration
@@ -34,3 +32,18 @@ meteoric:ionic
 iron:layout
 useraccounts:iron-routing
 iron:router
+standard-minifiers
+meteor-base
+mobile-experience
+mongo
+blaze-html-templates
+session
+jquery
+tracker
+logging
+reload
+random
+ejson
+spacebars
+check
+materialize:materialize@=0.97.0

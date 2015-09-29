@@ -6,6 +6,7 @@ Router.map ()->
   ###
   this.route '/', {
     path: '/'
+    name: "home"
     template: 'lessonsView'
     yieldTemplates: {
       'footer': {to:"footer"}
