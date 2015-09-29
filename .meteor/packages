@@ -14,7 +14,7 @@ fourseven:scss
 wolves:bourbon
 http
 accounts-ui
-materialize:materialize
+materialize:materialize@=0.97.0
 useraccounts:materialize
 accounts-password
 service-configuration
