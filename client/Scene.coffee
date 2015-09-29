@@ -66,6 +66,7 @@ class @Scene
       @
 
     goToNextModule: ()->
+      console.log "Scene is going to next module"
       @._modulesController.goToNextModule()
       @
 
@@ -74,7 +75,7 @@ class @Scene
       @
 
     goToModules: ( lessonId )->
-      @._modulesController = new ModulesSequence lessonId
+      @._modulesController = new ModulesController lessonId
       @._modulesController.start()
 
     getModulesSequence: ()->

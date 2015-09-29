@@ -1,5 +1,5 @@
 
-class @ModulesSequence
+class @DeprecatedModulesSequence
   constructor: ( @_lessonId )->
     @._lesson = Lessons.findOne { _id: @._lessonId }
     @._modules = @._lesson.getModulesSequence()
