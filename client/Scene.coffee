@@ -33,20 +33,19 @@ class @Scene
     
     downloadCurriculum: ( curriculum )->
       if Meteor.isCordova
-        Router.go "/loading"
+        Scene.get().goToLoadingScreen()
         endpoint = @.getContentEndpoint()
         downloader = new ContentInterface curriculum, endpoint
         onSuccess = (entry)=>
           console.log "Success downloading content: ", entry
           #Meteor.user().setContentAsLoaded true
           @._setCurriculum curriculum
-          Router.go "/"
+          Scene.get().goToLessonsPage()
 
         onError = (err)->
           console.log "Error downloading content: ", err
           console.log err
           alert "There was an error downloading your content, please log in and try again: ", err
-          #Meteor.user().setContentAsLoaded false
           Meteor.logout()
 
         downloader.loadContent onSuccess, onError
@@ -58,12 +57,16 @@ class @Scene
       @._contentEndpoint = endpoint
       @
 
+    goToLoadingScreen: ()->
+      Router.go "loading"
+      @
+
     goToLessonsPage: ()->
-      Router.go "home"
+      Router.go "/"
       @
 
     goToNextModule: ()->
-      @.modulesView.goToNextModule()
+      @._modulesController.goToNextModule()
       @
 
     openCurriculumMenu: ()->
@@ -71,12 +74,12 @@ class @Scene
       @
 
     goToModules: ( lessonId )->
-      @._modulesSequence = new ModulesSequence lessonId
-      @._modulesSequence.start()
+      @._modulesController = new ModulesSequence lessonId
+      @._modulesController.start()
 
     getModulesSequence: ()->
-      if @._modulesSequence?
-        return @._modulesSequence.getSequence()
+      if @._modulesController?
+        return @._modulesController.getSequence()
       else
         return []
 

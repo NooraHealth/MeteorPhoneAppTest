@@ -490,8 +490,10 @@ Custom NH components
   font-size: 20px;
   width: 150px;
   margin-left: 100px;
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
   /*width: 100%;*/
-
   &:hover {
     background-color: lighten($light-blue-2, 30%);
   }

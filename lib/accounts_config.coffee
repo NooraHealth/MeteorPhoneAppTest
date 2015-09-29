@@ -33,7 +33,6 @@ AccountsTemplates.configure {
 
     onSubmitHook: (error, state)->
       if !error and state=='signUp'
-        console.log "IIn on submit"
         Router.go "/selectCurriculum"
 
     # Texts

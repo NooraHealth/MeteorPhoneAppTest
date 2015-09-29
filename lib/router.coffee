@@ -6,8 +6,7 @@ Router.map ()->
   ###
   this.route '/', {
     path: '/'
-    name: 'home'
-    template: 'home'
+    template: 'lessonsView'
     yieldTemplates: {
       'footer': {to:"footer"}
     }
@@ -59,8 +58,6 @@ Router.map ()->
         #this.next()
 
     data: ()->
-      console.log "Getting scene"
-      console.log Scene.get()
       scene = Scene.get()
       if not scene.curriculumIsSet()
         scene.openCurriculumMenu()
@@ -74,14 +71,11 @@ Router.map ()->
     name: "modules.show"
     path: '/modules/:_id'
     layoutTemplate: 'layout'
-    template: "modulesSequence"
+    template: "ModulesSequence"
     cache: true
     data: ()->
-      console.log "going to modules"
       Session.set "current lesson id", @.params._id
       modules = Scene.get().getModulesSequence()
-      console.log "Here are the modules"
-      console.log modules
       return { modules: modules }
   }
 

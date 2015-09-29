@@ -4,7 +4,7 @@
 
     {{#ionNavView}}
       {{#contentFor "headerTitle"}}
-        <a href="{{pathFor 'home'}}"><img class="round-tile z-depth-2" alt="Noora Health" src="/NHlogo.png"/></a>
+        <a href="{{pathFor 'lessonsView'}}"><img class="round-tile z-depth-2" alt="Noora Health" src="/NHlogo.png"/></a>
       {{/contentFor }}
 
       {{#contentFor "headerButtonRight"}}
@@ -19,7 +19,7 @@
               {{#ionSlide}}
 
                 {{#if isBinaryChoice}}
-                  {{>binaryModule}}
+                  {{>binaryChoiceModule}}
                 {{/if}}
                 {{#if isSlideModule}}
                   {{>slideModule}}
@@ -37,7 +37,9 @@
               {{/ionSlide}}
 
             {{/each}}
+
           {{/ionSlideBox}}
+          {{>nextBtn}}
         {{/ionContent}}
       {{/ionView}}
     {{/ionNavView}}

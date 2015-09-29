@@ -1,4 +1,4 @@
-Template.home.helpers
+Template.lessonsView.helpers
   rows: ()->
     lessons = Scene.get().getLessons()
     if not lessons
