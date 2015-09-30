@@ -1,5 +1,4 @@
 
-
 ###
 # Binary Choice Surface
 ###
@@ -44,26 +43,3 @@ class @BinarySurface
       super
       @._module = module
       @.resetContent()
-
-  class NoButton extends ResponseButton
-    constructor: (@value)->
-      super @.value
-
-      @.setOrigin .5, .5, .5
-      .setAlign .05, .9, .5
-      .setMountPoint 0, 1, .5
-
-      @.domElement.addClass "green"
-      @.domElement.setContent @.value.toUpperCase()
-
-  class YesButton extends ResponseButton
-    constructor: (@value)->
-      super @.value
-
-      @.setOrigin .5, .5, .5
-      .setAlign .95, .9, .5
-      .setMountPoint 1, 1, .5
-
-      @.domElement.addClass "red"
-      @.domElement.setContent @.value.toUpperCase()
-

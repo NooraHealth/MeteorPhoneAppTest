@@ -7,12 +7,18 @@ class @ModulesController
     @._sequence = @._lesson.getModulesSequence()
 
   goToNextModule: ()->
-    console.log "Going to the next module"
+    @._index++
+    if @._index == @._sequence.length
+      Router.go "home"
+
+    @._currentModule = @._sequence[@._index]
     $(".ion-slide-box").slick("next")
 
   getSequence: ()->
     return @._sequence
 
   start: ()->
+    @._index = 0
+    @._currentModule = @._sequence[@._index]
     Router.go "modules.show", { "_id" : @._lesson._id }
 

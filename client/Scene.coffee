@@ -62,7 +62,7 @@ class @Scene
       @
 
     goToLessonsPage: ()->
-      Router.go "/"
+      Router.go "home"
       @
 
     goToNextModule: ()->

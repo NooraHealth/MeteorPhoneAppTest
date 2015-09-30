@@ -12,7 +12,7 @@ Template.loading.helpers
     return Session.get "percent loaded"
 
 Template.loading.onRendered ()->
-  this.loading = Meteor.pleaseWait {
+  this.loading = window.pleaseWait {
     logo: 'NHlogo.png',
     loadingHtml: message + spinner
   }
