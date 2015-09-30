@@ -16,7 +16,8 @@ class @OneAnswerQuestion
     getCorrectAnswerButton().addClass "move-up-and-expand"
 
     getIncorrectAnswerButtons().each ( btn )->
-      $(btn).addClass "
+      $(btn).addClass "fade-out"
+
   getCorrectAnswerButton: ()->
     return @.getModuleDiv().find(".correct")[0]
 
