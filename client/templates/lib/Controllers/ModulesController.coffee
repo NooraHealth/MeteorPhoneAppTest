@@ -18,7 +18,9 @@ class @ModulesController
     return @._sequence
 
   start: ()->
+    Router.go "modules.show", { "_id" : @._lesson._id }
     @._index = 0
     @._currentModule = @._sequence[@._index]
-    Router.go "modules.show", { "_id" : @._lesson._id }
+    @._moduleController = ModuleFactory.get @._currentModule
+    
 
