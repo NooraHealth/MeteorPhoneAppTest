@@ -80,7 +80,11 @@ class @ContentInterface
         onTransferError = (error)->
           console.log "ERROR "
           console.log error
-          if error.code == 3
+          if error["http_status"] == 404
+            numRecieved++
+            if numRecieved == numToLoad
+              deferred.resolve(entry)
+          else if error.code == 3
             #try to download the file again
             ft.download(uri, targetPath, onTransferSuccess, onTransferError)
           else
