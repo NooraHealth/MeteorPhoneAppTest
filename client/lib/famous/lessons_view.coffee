@@ -7,24 +7,23 @@ class @LessonsView
     return @.view
 
   class PrivateClass
-    constructor: (@parent, @lessons)->
-      @.thumbs = []
+    constructor: ( @parent )->
       @.surfaces = []
-
-    init: ()->
-      if @.initialized
-        return
 
       [@.node, @.scroll, @.modifier] = @.buildScrollview()
       @.scroll.sequenceFrom(@.surfaces)
+
+    init: ( lessons )->
+      @.lessons = lessons
+      @.thumbs = []
+      @.surfaces = []
 
       @.currentLesson = 0
       for lesson, i in @.lessons
         @.addThumbnail lesson, i
 
-      console.log "Sequence from"
-      console.log @.surfaces
-      @.initialized = true
+      @.scroll.sequenceFrom @.surfaces
+
       #@.parent.add @.scroll
 
     currentLessonId: ()=>
@@ -59,7 +58,7 @@ class @LessonsView
 
     buildScrollview: ()->
       height = LessonThumbnail.getHeight()
-      width = LessonThumbnail.getWidth() * (@.lessons.length+1)
+      width = LessonThumbnail.getWidth() * 20
       direction = @.direction()
 
       modifier = new StateModifier {
@@ -91,8 +90,6 @@ class @LessonsView
       node = thumb.getNode()
       surface.pipe @.scroll
       @.surfaces.push node
-      console.log "Pushing thumbs!"
-      console.log @.thumbs
       @.thumbs.push thumb
 
     shouldBeAvailableToClick: ( lesson )->

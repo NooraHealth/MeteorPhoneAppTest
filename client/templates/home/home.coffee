@@ -31,7 +31,7 @@ Template.home.onRendered ()->
   console.log "Template lessons@"
   console.log lessons
   scrollView = new LessonsView.get(lightbox.view, lessons)
-  scrollView.init()
+  scrollView.init( lessons )
   lightbox.view.show scrollView.getRenderable()
 
   #getTimeout = (i)->
