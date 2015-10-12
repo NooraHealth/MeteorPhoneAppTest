@@ -84,7 +84,7 @@ class @LessonsView
         console.log "Expanding"
         thumb.expand()
       else if not shouldBeAvailableToClick
-        thumb.state.setOpacity .75
+        thumb.state.setOpacity .65
 
       surface = thumb.getSurface()
       node = thumb.getNode()
