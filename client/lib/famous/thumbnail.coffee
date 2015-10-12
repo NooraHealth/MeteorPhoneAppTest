@@ -3,7 +3,7 @@ class @LessonThumbnail
 
   height = 400
   width = 400
-  constructor: (@lesson)->
+  constructor: ( @lesson, @shouldBeAvailableToClick )->
     @.node = {}
     @.modifer = {}
     @.size = [width, height]
@@ -11,10 +11,19 @@ class @LessonThumbnail
     @.html = @.templateToHtml()
     [@.node, @.surface, @.state] = @.buildSurface()
 
-    @.registerEvents()
+    if @.shouldBeAvailableToClick
+      @.registerEvents()
 
   isCurrentLesson: ()->
     return false
+
+  makeAvailableToClick: ()->
+    @.shouldBeAvailableToClick = true
+    @.state.setOpacity 1
+    @.registerEvents()
+
+  expand: ()->
+    @.state.setTransform Transform.scale(1.05, 1.05, 1), {duration: 500, curve: "easeIn"}
 
   registerEvents: ()->
     surface = @.surface
@@ -22,7 +31,7 @@ class @LessonThumbnail
     surface.on "mouseout", ()=>
       @.state.halt()
       if @.isCurrentLesson()
-        @.state.setTransform Transform.scale(1.15, 1.15, 1), {duration: 500, curve: "easeIn"}
+        @.expand()
       else
         @.state.setTransform Transform.scale(1, 1, 1), {duration: 500, curve: "easeIn"}
     
@@ -58,7 +67,7 @@ class @LessonThumbnail
     #state.setTransform Transform.scale(.25,.25,.25)
 
     node = new RenderNode()
-    state = state
+    @.state = state
 
     surface = new Surface {
       size: @.size

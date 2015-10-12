@@ -28,16 +28,18 @@ Template.home.onRendered ()->
 
   lightbox = FView.byId "lightbox"
   lessons = Template.currentData().lessons
-  scrollView = new LessonsView(lightbox.view, lessons)
+  console.log "Template lessons@"
+  console.log lessons
+  scrollView = new LessonsView.get(lightbox.view, lessons)
   lightbox.view.show scrollView.getRenderable()
 
-  getTimeout = (i)->
-    return Timer.setTimeout () =>
-      scrollView.addThumbnail i
-    , 500*(i+1)
+  #getTimeout = (i)->
+    #return Timer.setTimeout () =>
+      #scrollView.addThumbnail i
+    #, 500*(i+1)
 
-  for lesson, i in lessons
-    scrollView.addThumbnail i
+  #for lesson, i in lessons
+    #scrollView.addThumbnail i
     #getTimeout(i)()
 
   #scrollView.goToNextPage()
@@ -63,6 +65,7 @@ Template.home.onRendered ()->
       #scrollview.view.setPosition width * (lessonsComplete - 1)
 
 Template.lessonThumbnail.onRendered ()->
+  console.log "RENDERING THUMB!!dd!"
 
   lessonsComplete = Meteor.user().getCompletedLessons().length
 
@@ -82,10 +85,13 @@ Template.lessonThumbnail.onRendered ()->
   width = Session.get "lesson card width"
   
   surface = fview.surface or fview.view
+
+  fview.modifier.setOpacity .75
   if fview.id == currentlessonId
     fview.modifier.setTransform Transform.scale(1.15, 1.15, 1), {duration: 1000, curve: "easeIn"}
 
   if fview.id == currentlessonId or Meteor.user().hasCompletedLesson(fview.id)
+    console.log "It has been done or is in line to be done"
     
     fview.modifier.setOpacity 1, {duration:500, curve: "easeIn"}
     surface.setProperties {zIndex: 10, padding: '10px';}
@@ -111,17 +117,19 @@ Template.lessonThumbnail.onRendered ()->
 
 Template.lessonThumbnail.helpers
   isCurrentLesson: ()->
-    lessons = Session.get "lessons sequence"
-    if !Meteor.user()
-      return
-    lessonsComplete = Meteor.user().getCompletedLessons()
-    if !lessonsComplete
-      return false
-    numLessonsComplete = lessonsComplete.length
-    if lessons.length == numLessonsComplete
-      return false
-    else
-      if !lessons[numLessonsComplete]
-        return false
-      else
-        return @._id == lessons[numLessonsComplete]._id
+    return LessonsView.get().currentLessonId() == Template.currentData()._id
+
+    #lessons = Session.get "lessons sequence"
+    #if !Meteor.user()
+      #return
+    #lessonsComplete = Meteor.user().getCompletedLessons()
+    #if !lessonsComplete
+      #return false
+    #numLessonsComplete = lessonsComplete.length
+    #if lessons.length == numLessonsComplete
+      #return false
+    #else
+      #if !lessons[numLessonsComplete]
+        #return false
+      #else
+        #return @._id == lessons[numLessonsComplete]._id

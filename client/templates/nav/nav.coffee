@@ -3,13 +3,11 @@ Template.nav.helpers
    return MEDIA_URL + "VascularContent/Images/NooraLogo.png"
 
  moduleDocs: ()->
-  console.log "Current data in the nav"
   #console.log Template.currentData()
   #modules = Template.currentData().modules
   obj = Session.get "modules sequence"
   if !obj
     return ""
-  console.log obj
   getModuleDoc = (module)->
     return Modules.findOne({_id: module._id})
 
@@ -29,6 +27,7 @@ Template.nav.helpers
     #str += audio
   #console.log str
   #return str
+
 Template.nav.onRendered ()->
   fview = FView.from this
   surface = fview.view or fview.surface

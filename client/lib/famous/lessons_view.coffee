@@ -1,58 +1,101 @@
 class @LessonsView
-  constructor: (@parent, @lessons)->
-    [@.node, @.scroll, @.modifier] = @.buildScrollview()
-    @.surfaces = []
-    @.scroll.sequenceFrom(@.surfaces)
-    @.currentLesson = @.getCurrentLessonIndex()
-    #@.parent.add @.scroll
+  @get: ( parent, lessons )=>
+    console.log @.view
+    @.view ?= new PrivateClass parent, lessons
+    return @.view
 
-  getRenderable: ()->
-    return @.node
+  class PrivateClass
+    constructor: (@parent, @lessons)->
+      console.log "Making a new private class"
+      @.thumbs = []
+      @.surfaces = []
+      [@.node, @.scroll, @.modifier] = @.buildScrollview()
+      @.scroll.sequenceFrom(@.surfaces)
 
-  getCurrentLessonIndex: ()->
-    lessonsComplete = Meteor.user().getCompletedLessons().length
-    if lessonsComplete < @.lessons.length
-      return lessonsComplete
-    else
-      return 0
+      @.currentLesson = 0
+      for lesson, i in @.lessons
+        @.addThumbnail lesson, i
 
-  direction: ()->
-    if Meteor.Device.isPhone()
-      return 1
-    else
-      return 0
+      console.log "Sequence from"
+      console.log @.surfaces
+      #@.parent.add @.scroll
 
-  goToNextPage: (i)->
-    @.scroll.goToNextPage i
+    currentlessonId: ()->
+      return @.lessons[@.currentLesson]._id
 
-  goToPage: (i)->
-    @.scroll.goToPage i
+    getRenderable: ()->
+      return @.node
 
-  buildScrollview: ()->
-    height = LessonThumbnail.getHeight()
-    width = LessonThumbnail.getWidth() * (@.lessons.length+1)
-    direction = @.direction()
+    getCurrentLessonIndex: ()->
+      lessonsComplete = Meteor.user().getCompletedLessons().length
+      if lessonsComplete < @.lessons.length
+        return lessonsComplete
+      else
+        return 0
 
-    modifier = new StateModifier {
-      align: [.5,.75]
-    }
+    direction: ()->
+      if Meteor.Device.isPhone()
+        return 1
+      else
+        return 0
 
-    node = new RenderNode modifier
-    scroll = new Scrollview {
-      direction: direction
-      size: [width, height]
-      paginated: true
-    }
-    node.add(scroll)
+    goToNextPage: ()=>
+      @.goToPage @.currentLesson + 1
 
-    return [node, scroll, modifier]
+    goToPage: (i)=>
+      @.currentLesson = i
+      console.log @.thumbs
+      thumb = @.thumbs[@.currentLesson]
+      thumb.expand()
+      thumb.makeAvailableToClick()
+      @.scroll.goToPage i
 
-  addThumbnail: (index)->
-    lesson = @.lessons[index]
-    thumb = new LessonThumbnail(lesson)
-    surface = thumb.getSurface()
-    node = thumb.getNode()
-    surface.pipe @.scroll
-    @.surfaces.push node
+    buildScrollview: ()->
+      height = LessonThumbnail.getHeight()
+      width = LessonThumbnail.getWidth() * (@.lessons.length+1)
+      direction = @.direction()
+
+      modifier = new StateModifier {
+        align: [.5,.75]
+      }
+
+      node = new RenderNode modifier
+      scroll = new Scrollview {
+        direction: direction
+        size: [width, height]
+        paginated: true
+      }
+      node.add(scroll)
+
+      return [node, scroll, modifier]
+
+    addThumbnail: ( lesson, index )->
+      console.log "Adding thumbnail@indeindeindexxx"
+      shouldBeAvailableToClick = @.shouldBeAvailableToClick lesson
+      thumb = new LessonThumbnail lesson, shouldBeAvailableToClick
+
+      if index == @.currentLesson
+        console.log "Expanding"
+        thumb.expand()
+      else if not shouldBeAvailableToClick
+        thumb.state.setOpacity .75
+
+      surface = thumb.getSurface()
+      node = thumb.getNode()
+      surface.pipe @.scroll
+      @.surfaces.push node
+      console.log "Pushing thumbs!"
+      console.log @.thumbs
+      @.thumbs.push thumb
+
+    shouldBeAvailableToClick: ( lesson )->
+      completedLessons = Meteor.user().getCompletedLessons()
+      indexOf = @.lessons.indexOf lesson
+      if ( lesson in completedLessons ) or ( indexOf == @.currentLesson )
+        console.log "RETURNING TRUe"
+        return true
+      else
+        return false
+
 
 

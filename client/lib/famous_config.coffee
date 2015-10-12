@@ -17,18 +17,12 @@ FView.ready ()->
   this.Timer = famous.utilities.Timer
   this.RenderNode = famous.core.RenderNode
   this.StateModifier = famous.modifiers.StateModifier
-  console.log SpringTransition
-  console.log famous.transitions
-
-  console.log Transform
   #events
-  console.log famous.inputs
   this.MSync = famous.inputs.MouseSync
   this.SSync= famous.inputs.ScrollSync
   this.TSync= famous.inputs.TouchSync
   this.GenericSync = famous.inputs.GenericSync
 
-  console.log MSync == TSync
   this.GenericSync.register([
       #'mouse' : MSync
       'touch' : TSync
@@ -37,4 +31,3 @@ FView.ready ()->
 
   famous.polyfills
   famous.core.famous
-  console.log famous

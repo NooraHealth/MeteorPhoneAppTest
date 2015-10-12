@@ -23,15 +23,12 @@ Router.map ()->
         ]
 
     onBeforeAction: ()->
-      console.log "In the on Before action"
       if Meteor.loggingIn()
-        console.log "1 on Before"
         this.next()
       else if !Meteor.user()
         this.next()
 
       if Meteor.isCordova
-        console.log "about to initialize the server"
         initializeServer()
         
       if not Meteor.user().curriculumIsSet()
@@ -40,7 +37,6 @@ Router.map ()->
       if Meteor.isCordova and not Meteor.user().contentLoaded()# and not Session.get "content loaded"
         Router.go "loading"
         Meteor.call 'contentEndpoint', (err, endpoint)=>
-          console.log "----------- Downloading the content----------------------------"
           console.log "About to make downloader"
           downloader = new ContentInterface(Meteor.user().getCurriculum(), endpoint)
           onSuccess = (entry)=>
@@ -57,7 +53,6 @@ Router.map ()->
           downloader.loadContent onSuccess, onError
 
       if this.next
-        console.log "About to call this.next"
         this.next()
 
     data: ()->

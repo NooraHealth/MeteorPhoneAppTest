@@ -56,6 +56,7 @@ endSequence = ()->
   currLesson = Session.get "current lesson"
   Meteor.user().updateLessonsComplete(currLesson)
   ModuleView.stopAllAudio()
+  LessonsView.get().goToNextPage()
   Router.go "home"
 
 
