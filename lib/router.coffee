@@ -24,6 +24,7 @@ Router.map ()->
 
     onBeforeAction: ()->
       if Meteor.loggingIn()
+        console.log "Meteor is logging in"
         this.next()
       else if !Meteor.user()
         this.next()
@@ -35,6 +36,7 @@ Router.map ()->
         Router.go "selectCurriculum"
 
       if Meteor.isCordova and not Meteor.user().contentLoaded()# and not Session.get "content loaded"
+        console.log "Going to loading"
         Router.go "loading"
         Meteor.call 'contentEndpoint', (err, endpoint)=>
           console.log "About to make downloader"
@@ -53,6 +55,7 @@ Router.map ()->
           downloader.loadContent onSuccess, onError
 
       if this.next
+        console.log "Going to next"
         this.next()
 
     data: ()->

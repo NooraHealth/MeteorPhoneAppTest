@@ -32,6 +32,9 @@ AccountsTemplates.configure {
     redirectTimeout: 4000,
 
     onSubmitHook: (error, state)->
+      console.log "NEW submission!"
+      console.log error
+      console.log state
       if !error and state=='signUp'
         console.log "IIn on submit"
         Router.go "/selectCurriculum"
