@@ -1,14 +1,19 @@
 class @LessonsView
   @get: ( parent, lessons )=>
     console.log @.view
-    @.view ?= new PrivateClass parent, lessons
+    if not @.view
+      @.view = new PrivateClass parent, lessons
+    console.log @.view
     return @.view
 
   class PrivateClass
     constructor: (@parent, @lessons)->
-      console.log "Making a new private class"
       @.thumbs = []
       @.surfaces = []
+
+    init: ()->
+      if @.initialized
+        return
       [@.node, @.scroll, @.modifier] = @.buildScrollview()
       @.scroll.sequenceFrom(@.surfaces)
 
@@ -18,22 +23,23 @@ class @LessonsView
 
       console.log "Sequence from"
       console.log @.surfaces
+      @.initialized = true
       #@.parent.add @.scroll
 
-    currentlessonId: ()->
+    currentLessonId: ()=>
       return @.lessons[@.currentLesson]._id
 
-    getRenderable: ()->
+    getRenderable: ()=>
       return @.node
 
-    getCurrentLessonIndex: ()->
+    getCurrentLessonIndex: ()=>
       lessonsComplete = Meteor.user().getCompletedLessons().length
       if lessonsComplete < @.lessons.length
         return lessonsComplete
       else
         return 0
 
-    direction: ()->
+    direction: ()=>
       if Meteor.Device.isPhone()
         return 1
       else
