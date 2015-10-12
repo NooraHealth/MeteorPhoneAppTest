@@ -14,6 +14,7 @@ class @LessonsView
     init: ()->
       if @.initialized
         return
+
       [@.node, @.scroll, @.modifier] = @.buildScrollview()
       @.scroll.sequenceFrom(@.surfaces)
 
