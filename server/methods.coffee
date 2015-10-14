@@ -15,7 +15,7 @@ Meteor.methods {
       #return "http://noorahealthcontent.s3-us-west-1.amazonaws.com/"
       return "http://noorahealthcontent.noorahealth.org/"
     else
-      return 'http://noorahealth-development.s3-us-west-1.amazonaws.com/'
+      return "http://noorahealthcontent.noorahealth.org/"
 
   isProduction: ()->
     return process.env.METEOR_ENV == 'production'

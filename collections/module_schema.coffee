@@ -77,15 +77,21 @@ Modules.helpers {
 
   imgSrc: ()->
     url = Meteor.getContentSrc()
+    console.log "GOT THE CONTENT SRC"
+    console.log url
     return url+ @.image
 
   questionAudio: ()->
     url = Meteor.getContentSrc()
+    console.log "GOT THE CONTENT SRC"
+    console.log url
     if !@.audio
       return ""
     return url + @.audio
 
   audioSrc: ()->
+    console.log "GOT THE CONTENT SRC"
+    console.log url
     url = Meteor.getContentSrc()
     if !@.audio
       return ""
