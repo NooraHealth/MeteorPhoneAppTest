@@ -8,6 +8,8 @@
 
 @import '_layout';
 
+@import '_animations';
+
 /* -------------------------------- 
 
 Primary style
@@ -53,6 +55,7 @@ footer {
     color: $dark-blue-1;
   }
 }
+
 nav {
   background-color: $primary-blue;
 }
@@ -97,6 +100,7 @@ td {
 Custom NH components 
 
 --------------------------------*/
+
 .embedded-video {
   @media(min-width: 600px) {
     width: 660px;
@@ -205,15 +209,15 @@ Custom NH components
     top: 0;
     position: absolute;
     & > .toast-overlay {
-      @include transition(all, 0s);
-      width:0%;
+      /*@include animation(scale 1.0s ease);*/
+      @include animation-iteration-count(infinite);
+      @include animation-duration(2s);
+      @include animation-timing-function(ease);
+      @include animation-name(scale);
+      z-index: 10;
       margin-right: auto;
       margin-left:auto;
     } 
-    & > .expand-toast {
-      @include transition(all, 2s);
-      width: 50%;
-    }
   }
 }
 

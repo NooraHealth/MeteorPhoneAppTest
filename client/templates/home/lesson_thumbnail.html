@@ -1,12 +1,12 @@
 <template name="lessonThumbnail">
   <a>
     <div class=" card {{#if isCurrentLesson}} z-depth-3 {{else}} z-depth-1 {{/if}} chapter-card" id="{{_id}}">
-      <div class="success-overlay center-align valign-wrapper hidden">
-        <div class="valign sticker green valign-wrapper center-align z-depth-2 valign-wrapper">
-          <i class="mdi-navigation-check large valign"></i>
-        </div>
-      </div>
-      <div class=" center-align card-image center-align chapter-card-image valign-wrapper"> 
+      <div class="img-with-toasts-wrapper center-align card-image center-align chapter-card-image valign-wrapper"> 
+        {{#if isCurrentLesson}}
+          <div class="inner-toasts-wrapper">
+            <img src="play-button-overlay.png" class="valign toast-overlay"/>
+          </div>
+        {{/if}}
         <img src="{{imgSrc}}" class="valign"/>
       </div> 
       <div class="card-content">
