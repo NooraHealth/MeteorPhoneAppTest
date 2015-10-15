@@ -10,8 +10,6 @@ coffeescript
 aldeed:collection2
 dburles:collection-helpers
 mrt:q
-fourseven:scss
-wolves:bourbon
 http
 accounts-ui
 useraccounts:materialize
@@ -47,3 +45,4 @@ ejson
 spacebars
 check
 materialize:materialize@=0.97.0
+wolves:bourbon

@@ -1,5 +1,5 @@
 
-class @ModuleImage extends BaseNode
+class @ModuleImage
   constructor: (@src)->
     super
 
