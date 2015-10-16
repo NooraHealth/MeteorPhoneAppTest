@@ -1,6 +1,8 @@
 
 class @SurfaceFactory
   constructor: (@module)->
+    console.log @.module
+    console.trace()
     @.surfaceView = @.getModuleSurface module
 
   getSurface: ()=>
