@@ -3,6 +3,7 @@
 *.swo
 /server/startup.coffee
 .uploads/
+.DS_store
 
 public/
 mup.json

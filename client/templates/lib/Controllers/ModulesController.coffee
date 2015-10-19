@@ -1,9 +1,6 @@
 class @ModulesController
   constructor: ( lessonId )->
-    console.log "Making a modules sequence"
-    console.log lessonId
     @._lesson = Lessons.findOne { "_id" : lessonId }
-    console.log @._lesson
     @._sequence = @._lesson.getModulesSequence()
 
   goToNextModule: ()->
