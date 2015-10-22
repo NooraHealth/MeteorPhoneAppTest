@@ -30,17 +30,17 @@ html, body {
 
 body {
   .pane, .view {
-    color: $primary-font-color;
+    /*color: $primary-font-color;*/
     background: $light-blue-1;
     overflow: scroll;
   }
 
   a {
-    color: lighten($primary-blue, 30%);
+    /*color: lighten($primary-blue, 30%);*/
     text-decoration: none;
     
     &:hover {
-      color: $primary-blue;
+      /*color: $primary-blue;*/
       text-decoration: none;
     }
   }
@@ -216,7 +216,7 @@ Custom NH components
 }
 
 .module {
-  height:100%;
+  margin: 50px;
 }
 
 .img-with-toasts-wrapper {
@@ -250,12 +250,14 @@ Custom NH components
     height: 35vh;
   }
   @media(min-width: 600px){
-    height: 50vh;
+    margin: auto;
+    height: 60vh;
   }
   max-width: 100%;
 }
+
 .binary-image {
-  height:40vh;
+  height:55vh;
 }
 
 .padded {
@@ -468,6 +470,10 @@ Custom NH components
   background-color: $white;
 }
 
+.item {
+  font-size: 23px !important;
+}
+
 .navbar {
   background-color: $primary-blue;
 }
@@ -507,9 +513,10 @@ Custom NH components
 }
 
 .image-choice {
-  width: 90%;
   cursor: pointer;
-  height: 17vh;
+  width: 90%;
+  height: 22vh;
+  padding: 3px;
 }
 
 .correctly-selected {
@@ -536,233 +543,6 @@ Custom NH components
   -moz-opacity: 1;
 }
 
-/* -------------------------------- 
-
-Main components 
-
---------------------------------*/
-
 html, body {
   height: 100%;
-}
-
-.cd-panel {
-  position: fixed;
-  z-index:2;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  visibility: hidden;
-  @include transition(visibility 0s .6s);
-
-  &::after {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(#000, 0);
-    cursor: pointer;
-    @include transition(background .3s .3s);
-  }
-
-  &.is-visible {
-    visibility: visible;
-    @include transition(visibility 0s 0s);
-
-    &::after {
-      background: rgba(#000, .6);
-      @include transition(background .3s 0s);
-    }
-
-    .cd-panel-close::before {
-      @include animation(cd-close-1 .6s .3s);
-    }
-
-    .cd-panel-close::after {
-      @include animation(cd-close-2 .6s .3s);
-    }
-  }
-}
-
-@include keyframes(cd-close-1) {
-  0%, 50% {
-    @include transform(rotate(0));
-  }
-
-  100% {
-    @include transform(rotate(45deg));
-  }
-}
-
-@include keyframes(cd-close-2) {
-  0%, 50% {
-    @include transform(rotate(0));
-  }
-
-  100% {
-    @include transform(rotate(-45deg));
-  }
-}
-
-.cd-panel-header {
-  position: fixed;
-  padding-left: 15px;
-  width: $panel-width-S; // variables inside partials > _variables.scss
-  height: 50px;
-  line-height: 50px;
-  background: rgba($primary-blue, .96);
-  z-index: 2;
-  box-shadow: 0 1px 1px rgba(#000, .08);
-  @include transition(top .3s 0s);
-
-  h1 {
-    color: lighten($primary-font-color, 16%);
-    padding-left: 5%;
-  }
-
-  .from-right &, .from-left & {
-    top: -50px;
-  }
-
-  .from-right & {
-    right: 0;
-  }
-
-  .from-left & {
-    left: 0;
-  }
-
-  .is-visible & {
-    top: 0;
-    @include transition(top .3s .3s);
-  }
-
-  @include MQ(M) {
-    width: $panel-width-M;
-  }
-
-  @include MQ(L) {
-    width: $panel-width-L;
-  }
-}
-
-.cd-panel-close {
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 100%;
-  width: 60px;
-
-  display: inline-block;
-  overflow: hidden;
-  text-indent: 100%;
-  white-space: nowrap;
-
-  &::before, &::after {
-    position: absolute;
-    top: 22px;
-    left: 20px;
-    height: 3px;
-    width: 20px;
-    background-color: #333;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-  }
-
-  &::before {
-    @include transform(rotate(45deg));
-  }
-
-  &::after {
-    @include transform(rotate(-45deg));
-  }
-
-  .no-touch &:hover {
-    background-color: $primary-blue;
-
-    &::before, &::after {
-      background-color: $dark-blue-1;
-      @include transition-property(transform);
-      @include transition-duration(.3s);
-    }
-
-    &::before {
-      @include transform(rotate(220deg));
-    }
-
-    &::after {
-      @include transform(rotate(135deg));
-    }
-  }
-}
-
-.cd-panel-container {
-  position: fixed;
-  width: $panel-width-S;
-  height: 100%;
-  top: 0;
-  background: $white;
-  z-index: 1;
-  @include transition-property(transform);
-  @include transition-duration(.3s);
-  @include transition-delay(.3s);
-
-  .from-right & {
-    right: 0;
-    @include transform(translate3d(100%, 0, 0));
-  }
-
-  .from-left & {
-    left: 0;
-    @include transform(translate3d(-100%, 0, 0));
-  }
-
-  .is-visible & {
-    @include transform(translate3d(0, 0, 0));
-    @include transition-delay(0s);
-  }
-
-  @include MQ(M) {
-    width: $panel-width-M;
-  }
-
-  @include MQ(L) {
-    width: $panel-width-L;
-  }
-}
-
-.cd-panel-content {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  padding: 70px 5%;
-  overflow: auto;
-
-  a {
-    color: lighten($primary-font-color, 10%);
-    text-decoration: none;
-    
-    &:hover {
-      color: $primary-font-color;
-      text-decoration: none;
-    }
-  }
-
-  /* smooth scrolling on touch devices */
-  -webkit-overflow-scrolling: touch;
-
-  p, li {
-    color: $primary-blue;
-    line-height: 1.4;
-    margin: 2em 0;
-
-    &:first-of-type {
-      margin-top: 0;
-    }
-  }
-
 }

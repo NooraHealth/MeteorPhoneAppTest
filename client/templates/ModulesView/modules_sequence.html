@@ -14,29 +14,29 @@
       {{#ionView}}
         {{#ionContent}}
           {{#ionSlideBox}}
-            {{#each modules}}
+              {{#each modules}}
 
-              {{#ionSlide}}
+                {{#ionSlide}}
 
-                {{#if isBinaryChoice}}
-                  {{>binaryChoiceModule}}
-                {{/if}}
-                {{#if isSlideModule}}
-                  {{>slideModule}}
-                {{/if}}
-                {{#if isScenario }}]
-                  {{>scenarioModule}}
-                {{/if}}
-                {{#if isMultipleChoice }}
-                  {{> multipleChoiceModule }}
-                {{/if}}
-                {{#if isVideo }}
-                  {{> videoModule }}
-                {{/if}}
+                  {{#if isBinaryChoice}}
+                    {{>binaryChoiceModule}}
+                  {{/if}}
+                  {{#if isSlideModule}}
+                    {{>slideModule}}
+                  {{/if}}
+                  {{#if isScenario }}]
+                    {{>scenarioModule}}
+                  {{/if}}
+                  {{#if isMultipleChoice }}
+                    {{> multipleChoiceModule }}
+                  {{/if}}
+                  {{#if isVideo }}
+                    {{> videoModule }}
+                  {{/if}}
 
-              {{/ionSlide}}
+                {{/ionSlide}}
 
-            {{/each}}
+              {{/each}}
 
           {{/ionSlideBox}}
           {{>nextBtn}}

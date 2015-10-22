@@ -1,19 +1,15 @@
 <template name="scenarioModule">
   
-  <div class="valign module-wrapper">
-    <div class="row center-align">
-      <div class="center-align">
+  <div id="{{_id}}" class="card module">
+      <div class="item ">
         {{>imgWithToasts class="module-image"}}
       </div>
-    </div>
   
-    <div class="row center-align">
-      <div class="card-content flow-text">
+      <div class="item item-text flow-text grey-text text-darken-2">
         {{question}}
       </div>
-    </div>
 
-    <div class="row center-align">
+    <div class="item">
         <a  class="response btn waves-effect waves-light white-text green scenario-btn {{#if isCorrectAnswer 'Normal' }} correct {{/if}}" value="{{option 0}}">
           <i class="mdi-action-home"></i> NORMAL
         </a>
@@ -23,7 +19,7 @@
         </a>
 
         <a class="response btn waves-effect waves-light white-text red scenario-btn {{#if isCorrectAnswer 'Call911' }} correct {{/if}}" value="{{option 2}}">
-          <i class="mdi-maps-local-hospital"></i> CALL 911
+          <i class="mdi-maps-local-hospital"></i> CALL AMBULANCE
         </a>
     </div>
   </div>
