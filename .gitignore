@@ -4,6 +4,6 @@
 /server/startup.coffee
 .uploads/
 .DS_store
-
+settings.json
 public/
 mup.json

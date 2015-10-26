@@ -76,6 +76,9 @@ class @Scene
 
     goToModules: ( lessonId )->
       @._modulesController = new ModulesController lessonId
+      Router.go "modules.show", { "_id" : lessonId }
+
+    startModulesSequence: ()->
       @._modulesController.start()
 
     getModulesSequence: ()->

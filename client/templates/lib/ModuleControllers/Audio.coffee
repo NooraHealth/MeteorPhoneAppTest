@@ -7,13 +7,13 @@ class @Audio
   setSrc: ( src )=>
     audio = @.getAudioElement()
     audio.attr "src", src
+    console.log audio
     console.log @.getAudioElement()
-    audio.on "canplay", ()=>
+    audio.addEventListener "canplay", ()=>
       console.log "CAN PLAY"
       if @.playWhenReady
         @._play()
         @.playWhenReady = false
-
       @.readyToPlay = true
 
   getAudioElement: ()->
