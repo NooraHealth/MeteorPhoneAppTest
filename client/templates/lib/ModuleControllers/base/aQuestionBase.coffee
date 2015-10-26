@@ -8,10 +8,12 @@ class @QuestionBase
     console.log @.correctAudio
     console.log @.incorrectAudio
 
-  moveOnstage: ()->
+  begin: ()->
+    console.log "Begging the QUESTION"
+    console.log @.audio
     @.audio.playWhenReady()
 
-  moveOffstage: ()->
+  end: ()->
     @.audio.pause()
     @.correctAudio.pause()
     @.incorrectAudio.pause()

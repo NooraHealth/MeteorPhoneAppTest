@@ -19,6 +19,7 @@ class @ModulesController
     @._currentModule = @._sequence[@._index]
     console.log "Getting the modules controller"
     @._moduleController = ControllerFactory.get().getModuleController @._currentModule
+    @._moduleController.begin()
     console.log @._moduleController
     
 

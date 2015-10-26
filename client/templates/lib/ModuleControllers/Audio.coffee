@@ -1,35 +1,42 @@
 class @Audio
   constructor: ( @src, @id )->
-    @.readyToPlay = false
-    @.playWhenReady = false
+    @._readyToPlay = false
+    @._playWhenReady = false
     @.setSrc @.src
 
   setSrc: ( src )=>
     audio = @.getAudioElement()
-    audio.attr "src", src
+    console.log "AUDIO ELEMENT"
     console.log audio
-    console.log @.getAudioElement()
-    audio.on "canplay", ()=>
+    audio.src = src
+    audio.addEventListener "canplay", ()=>
       console.log "CAN PLAY"
-      if @.playWhenReady
+      console.log @._playWhenReady
+      if @._playWhenReady
         @._play()
-        @.playWhenReady = false
-      @.readyToPlay = true
+        @._playWhenReady = false
+      @._readyToPlay = true
 
   getAudioElement: ()->
-    return $(@.id)
+    return $(@.id)[0]
 
   _play: ()=>
+    console.log "PLAYING"
     audio = @.getAudioElement()
+    console.log audio
     if audio and audio.play
+      console.log "PLAYING IN ID"
       audio.currentTime = 0
       audio.play()
 
   playWhenReady: ()=>
-    if @.readyToPlay
+    console.log "Going to play when ready"
+    console.log "ready to play?", @._readyToPlay
+    console.log "play when ready?", @._playWhenReady
+    if @._readyToPlay
       @._play()
     else
-      @.playWhenReady = true
+      @._playWhenReady = true
 
   pause: ()->
     audio = @.getAudioElement()
