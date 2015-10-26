@@ -18,6 +18,8 @@ class @ModulesController
     Router.go "modules.show", { "_id" : @._lesson._id }
     @._index = 0
     @._currentModule = @._sequence[@._index]
-    @._moduleController = ModuleFactory.get @._currentModule
+    console.log "Getting the modules controller"
+    @._moduleController = ControllerFactory.get().getModuleController @._currentModule
+    console.log @._moduleController
     
 

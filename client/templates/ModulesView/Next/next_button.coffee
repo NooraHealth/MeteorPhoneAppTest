@@ -1,4 +1,3 @@
-Template.nextBtn.helpers
   
 Template.nextBtn.events
   "click": ()->

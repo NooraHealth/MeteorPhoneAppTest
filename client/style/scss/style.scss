@@ -383,9 +383,10 @@ Custom NH components
 
 .scenario-btn {
   margin: 4px;
+  width: 29%;
 }
 
-.binary-btn, .scenario-btn {
+.binary-btn {
   width: 200px;
   
   @media (max-width: 992px) {
