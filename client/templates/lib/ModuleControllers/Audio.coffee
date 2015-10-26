@@ -9,7 +9,7 @@ class @Audio
     audio.attr "src", src
     console.log audio
     console.log @.getAudioElement()
-    audio.addEventListener "canplay", ()=>
+    audio.on "canplay", ()=>
       console.log "CAN PLAY"
       if @.playWhenReady
         @._play()

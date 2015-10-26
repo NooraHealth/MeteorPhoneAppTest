@@ -79,12 +79,6 @@ Modules.helpers {
     url = Meteor.getContentSrc()
     return url+ @.image
 
-  questionAudio: ()->
-    url = Meteor.getContentSrc()
-    if !@.audio
-      return ""
-    return url + @.audio
-
   audioSrc: ()->
     url = Meteor.getContentSrc()
     if !@.audio
