@@ -313,13 +313,9 @@ Custom NH components
   color: black;
 }
 
-.move-up-and-expand {
+.expand {
   @include transition(all, 1s);
-  @include transform(scale(2));
-  position: absolute;
-  margin-top: -200px;
-  margin-left: auto;
-  margin-right: auto;
+  @include transform(scale(1.5));
 }
 
 .row {

@@ -66,9 +66,11 @@ class @Scene
       @
 
     goToNextModule: ()->
-      console.log "Scene is going to next module"
       @._modulesController.goToNextModule()
       @
+
+    modulesSequenceController: ()->
+      return @._modulesController
 
     openCurriculumMenu: ()->
       #this is where will open the Ionic side menu

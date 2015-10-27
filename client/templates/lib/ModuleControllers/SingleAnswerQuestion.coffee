@@ -3,26 +3,27 @@ class @SingleAnswerQuestion extends QuestionBase
   constructor: ( @_module )->
     super @._module
 
-  recieveResponse: ( buttonElement )->
-    if @.audio
-      @.audio.pause()
-    if buttonElement.val() in @._module.correct_answer
-      if @.correctAudio
-        @.correctAudio.play()
+  responseRecieved: ( target )->
+    response = $(target).attr "value"
+
+    console.log response
+    console.log @._module.correct_answer
+    console.log response in @._module.correct_answer
+    if response in @._module.correct_answer
+      console.log "It's there!"
+      if @.audio
+        @.audio.pause()
+
+      ding = $("#correct_soundeffect")[0]
+      ding.play()
+      ding.addEventListener "ended", ()=>
+        @.correctAudio.playWhenReady()
+
+      $(target).addClass "move-up-and-expand"
+      for btn in @.incorrectResponseButtons
+        $(btn).addClass "fade-out"
     else
-      if @.incorrectAudio
-        @.incorrectAudio.play()
-
-    getCorrectAnswerButton().addClass "move-up-and-expand"
-
-    getIncorrectAnswerButtons().each ( btn )->
-      $(btn).addClass "fade-out"
-
-  getCorrectAnswerButton: ()->
-    return @.getModuleDiv().find(".correct")[0]
-
-  getIncorrectAnswerButtons: ()->
-    return @.getModuleDiv().find ".incorrect"
+      $("#incorrect_soundeffect")[0].play()
 
   getModuleDiv: ()->
     return $("#" + @._module._id )

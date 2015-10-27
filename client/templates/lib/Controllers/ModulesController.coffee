@@ -10,6 +10,9 @@ class @ModulesController
     @._moduleController = ControllerFactory.get().getModuleController @._currentModule
     @._moduleController.begin()
 
+  notifyResponseRecieved: ( target )->
+    @._moduleController.responseRecieved target
+
   goToNextModule: ()->
     @._index++
     if @._index == @._sequence.length
