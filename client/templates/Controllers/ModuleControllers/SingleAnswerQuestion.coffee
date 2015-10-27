@@ -20,7 +20,8 @@ class @SingleAnswerQuestion extends QuestionBase
         @.correctAudio.playWhenReady()
 
       $(target).addClass "expanded"
-      for btn in @.incorrectResponseButtons
+      console.log @.incorrectResponseButtons()
+      for btn in @.incorrectResponseButtons()
         $(btn).addClass "faded"
     else
       $("#incorrect_soundeffect")[0].play()
