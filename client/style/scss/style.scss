@@ -1,6 +1,4 @@
 @import '.meteor/local/build/programs/server/assets/packages/wolves_bourbon/bourbon/_bourbon';
-@import '.meteor/local/build/programs/server/assets/packages/meteoric_ionic-sass/ionic';
-@import '.meteor/local/build/programs/server/assets/packages/meteoric_ionicons-sass/ionicons';
 
 /*@import '_bourbon';*/
 
@@ -9,6 +7,8 @@
 @import '_mixins';
 
 @import '_layout';
+
+@import '_animations';
 
 /* -------------------------------- 
 
@@ -24,83 +24,60 @@ Primary style
   content: '';
 }
 
-html, body {
-  overflow: scroll;
-}
-
 body {
-  .pane, .view {
-    /*color: $primary-font-color;*/
-    background: $light-blue-1;
-    overflow: scroll;
-  }
+  color: $primary-font-color;
+  background: $light-blue-1;
+  margin-bottom: $footer-height;
+  min-height: 50px;
 
   a {
-    /*color: lighten($primary-blue, 30%);*/
+    color: lighten($primary-blue, 10%);
     text-decoration: none;
     
     &:hover {
-      /*color: $primary-blue;*/
+      color: $primary-blue;
       text-decoration: none;
     }
   }
 }
 
-.nav {
+footer {
+  background-color: $white;
+  color: $muted;
+  position: fixed;
+  left: 0;
+  bottom:0;
+  padding: $padding-S;
+  width:100%;
+
+  & .breadcrumb {
+    background-color: $primary-blue;
+    color: $dark-blue-1;
+  }
+}
+
+nav {
   background-color: $primary-blue;
-  width: 100%;
-  color: #fff;
 }
 
-.right {
-  margin-left: auto;
-}
+tile {
+  position: fixed;
+  z-index: 2;
 
-.nav-menu {
-  & ul {
-    margin: 5px; 
+  &.round-tile {
+    & .next {
+      margin-left: 10px;
+      max-width: 60px;
+      padding: 10px;
+      border-radius: 30px;
+      background-color: blue;
+    }
+    & .logo {
+      @extend .next;
+      background-color: #FFFFFF;
+      top: 20;
+    }
   }
-
-  & ul li {
-    display: inline;
-    margin: 10px;
-    font-size: 15px;
-  }
-
-  & i {
-    vertical-align: middle;
-  }
-
-}
-
-.round-tile {
-  border-radius: 30px;
-  background-color: #FFFFFF;
-  padding: 8px;
-  margin: 10px;
-}
-
-.full-width {
-  width: 100%;
-}
-
-.thumbnail-wrapper {
-  height: 300px;
-  margin: 15px;
-}
-
-.fit-height {
-  height: 100%;
-}
-
-.thumbnail-image {
-  height: 75%;
-}
-
-.lesson-thumbnail {
-  width: 75%;
-  height: 100%;
-  margin: auto;
 }
 
 td {
@@ -123,6 +100,7 @@ td {
 Custom NH components 
 
 --------------------------------*/
+
 .embedded-video {
   @media(min-width: 600px) {
     width: 660px;
@@ -195,7 +173,10 @@ Custom NH components
 .margin-top {
   margin-top:20px;
 }
-
+.scrollBox {
+  overflow-y:scroll;
+  padding: 50px !important;
+}
 .file-input {
   margin-right: 10px;
   font-size:1em;
@@ -216,7 +197,7 @@ Custom NH components
 }
 
 .module {
-  margin: 50px;
+  height:100%;
 }
 
 .img-with-toasts-wrapper {
@@ -228,15 +209,15 @@ Custom NH components
     top: 0;
     position: absolute;
     & > .toast-overlay {
-      @include transition(all, 0s);
-      width:0%;
+      @include animation(scale 1.0s ease);
+      @include animation-iteration-count(infinite);
+      /*@include animation-duration(2s);*/
+      /*@include animation-timing-function(ease);*/
+      /*@include animation-name(scale);*/
+      z-index: 10;
       margin-right: auto;
       margin-left:auto;
     } 
-    & > .expand-toast {
-      @include transition(all, 2s);
-      width: 50%;
-    }
   }
 }
 
@@ -250,14 +231,12 @@ Custom NH components
     height: 35vh;
   }
   @media(min-width: 600px){
-    margin: auto;
-    height: 60vh;
+    height: 50vh;
   }
   max-width: 100%;
 }
-
 .binary-image {
-  height:55vh;
+  height:40vh;
 }
 
 .padded {
@@ -313,9 +292,13 @@ Custom NH components
   color: black;
 }
 
-.expand {
+.move-up-and-expand {
   @include transition(all, 1s);
-  @include transform(scale(1.5));
+  @include transform(scale(2));
+  position: absolute;
+  margin-top: -200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .row {
@@ -379,10 +362,9 @@ Custom NH components
 
 .scenario-btn {
   margin: 4px;
-  width: 29%;
 }
 
-.binary-btn {
+.binary-btn, .scenario-btn {
   width: 200px;
   
   @media (max-width: 992px) {
@@ -467,10 +449,6 @@ Custom NH components
   background-color: $white;
 }
 
-.item {
-  font-size: 23px !important;
-}
-
 .navbar {
   background-color: $primary-blue;
 }
@@ -493,10 +471,8 @@ Custom NH components
   font-size: 20px;
   width: 150px;
   margin-left: 100px;
-  position: absolute;
-  bottom: 5px;
-  right: 5px;
   /*width: 100%;*/
+
   &:hover {
     background-color: lighten($light-blue-2, 30%);
   }
@@ -510,13 +486,14 @@ Custom NH components
 }
 
 .image-choice {
+  width: 100%;
   cursor: pointer;
-  width: 90%;
-  height: 22vh;
-  padding: 3px;
+  height: 17vh;
 }
 
-.correctly-selected {
+.correctly_selected {
+  @include transition-delay(.3s);
+  @include transition(scale, 1s);
   border: 4px solid $success;
 }
 
@@ -524,8 +501,69 @@ Custom NH components
   border: 4px solid $primary-blue;
 }
 
-.incorrectly-selected {
+.incorrectly_selected {
+  @include transition-delay(.3s);
+  @include transition(scale, 1s);
   border: 4px solid $danger;
+}
+
+
+.expanded {
+  @include transition-delay(.3s);
+  @include transition(scale, 2s);
+
+  @media(min-width: 600px) {
+    @include transform(scale(1.1)); 
+  }
+  @media(max-width: 600px) {
+    @include transform(scale(1.2)); 
+  }
+}
+
+.faded {
+  @include transition-delay(.3s);
+  @include transform(scale(.75));
+  @include transition(2s);
+  opacity: 0.5;
+}
+
+//CUSTOM CSS3 SLIDING PANELS
+.slide {
+  & img {
+    width: 100%;
+  }
+}
+
+video {
+  width: 100%;
+}
+
+.section-panel {
+  display: inline-block;
+  width: $panel-width-S;
+  background-color: $white;
+  
+  img {
+    width: $panel-width-XL;
+    padding: 5px;
+    vertical-align: middle;
+  }
+  span {
+    vertical-align: middle;
+  }
+}
+
+.lesson-panel {
+  background-color: $white;
+  color: #333;
+  border: 1px solid $border-color; 
+  margin-left: auto;
+  margin-right: auto;
+  padding: $padding-S;
+
+  img {
+    width: 100%;
+  }
 }
 
 .greyed-out {
@@ -540,6 +578,269 @@ Custom NH components
   -moz-opacity: 1;
 }
 
+.chapter-card {
+  padding: $padding-S;
+  height: 100%;
+  @media (min-width: 600px) {
+    margin: 10px;
+  }
+}
+
+/*@media (max-width: 768px) {*/
+  /*.lesson-panel {*/
+    /*max-width: 500px;*/
+    /*font-size: 80%;*/
+  /*}*/
+/*}*/
+.chapter-card-image {
+  height: 75%;
+  img {
+    max-height:100%;
+    max-width: inherit !important;
+  }
+}
+
+/*@media (max-width: 992px) {*/
+  /*.chapter-card-image {*/
+    /*max-width: 400px;*/
+    /*margin-right: auto;*/
+    /*margin-left: auto;*/
+  /*}*/
+
+/*}*/
+/*@media (min-width: 768px) {*/
+  /*.lesson-panel {*/
+    /*max-width: 700px;*/
+  /*}*/
+/*}*/
+
+/* -------------------------------- 
+
+Main components 
+
+--------------------------------*/
+
 html, body {
   height: 100%;
+}
+
+.cd-panel {
+  position: fixed;
+  z-index:2;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  visibility: hidden;
+  @include transition(visibility 0s .6s);
+
+  &::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(#000, 0);
+    cursor: pointer;
+    @include transition(background .3s .3s);
+  }
+
+  &.is-visible {
+    visibility: visible;
+    @include transition(visibility 0s 0s);
+
+    &::after {
+      background: rgba(#000, .6);
+      @include transition(background .3s 0s);
+    }
+
+    .cd-panel-close::before {
+      @include animation(cd-close-1 .6s .3s);
+    }
+
+    .cd-panel-close::after {
+      @include animation(cd-close-2 .6s .3s);
+    }
+  }
+}
+
+@include keyframes(cd-close-1) {
+  0%, 50% {
+    @include transform(rotate(0));
+  }
+
+  100% {
+    @include transform(rotate(45deg));
+  }
+}
+
+@include keyframes(cd-close-2) {
+  0%, 50% {
+    @include transform(rotate(0));
+  }
+
+  100% {
+    @include transform(rotate(-45deg));
+  }
+}
+
+.cd-panel-header {
+  position: fixed;
+  padding-left: 15px;
+  width: $panel-width-S; // variables inside partials > _variables.scss
+  height: 50px;
+  line-height: 50px;
+  background: rgba($primary-blue, .96);
+  z-index: 2;
+  box-shadow: 0 1px 1px rgba(#000, .08);
+  @include transition(top .3s 0s);
+
+  h1 {
+    color: lighten($primary-font-color, 16%);
+    padding-left: 5%;
+  }
+
+  .from-right &, .from-left & {
+    top: -50px;
+  }
+
+  .from-right & {
+    right: 0;
+  }
+
+  .from-left & {
+    left: 0;
+  }
+
+  .is-visible & {
+    top: 0;
+    @include transition(top .3s .3s);
+  }
+
+  @include MQ(M) {
+    width: $panel-width-M;
+  }
+
+  @include MQ(L) {
+    width: $panel-width-L;
+  }
+}
+
+.cd-panel-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 60px;
+
+  display: inline-block;
+  overflow: hidden;
+  text-indent: 100%;
+  white-space: nowrap;
+
+  &::before, &::after {
+    position: absolute;
+    top: 22px;
+    left: 20px;
+    height: 3px;
+    width: 20px;
+    background-color: #333;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  &::before {
+    @include transform(rotate(45deg));
+  }
+
+  &::after {
+    @include transform(rotate(-45deg));
+  }
+
+  .no-touch &:hover {
+    background-color: $primary-blue;
+
+    &::before, &::after {
+      background-color: $dark-blue-1;
+      @include transition-property(transform);
+      @include transition-duration(.3s);
+    }
+
+    &::before {
+      @include transform(rotate(220deg));
+    }
+
+    &::after {
+      @include transform(rotate(135deg));
+    }
+  }
+}
+
+.cd-panel-container {
+  position: fixed;
+  width: $panel-width-S;
+  height: 100%;
+  top: 0;
+  background: $white;
+  z-index: 1;
+  @include transition-property(transform);
+  @include transition-duration(.3s);
+  @include transition-delay(.3s);
+
+  .from-right & {
+    right: 0;
+    @include transform(translate3d(100%, 0, 0));
+  }
+
+  .from-left & {
+    left: 0;
+    @include transform(translate3d(-100%, 0, 0));
+  }
+
+  .is-visible & {
+    @include transform(translate3d(0, 0, 0));
+    @include transition-delay(0s);
+  }
+
+  @include MQ(M) {
+    width: $panel-width-M;
+  }
+
+  @include MQ(L) {
+    width: $panel-width-L;
+  }
+}
+
+.cd-panel-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 70px 5%;
+  overflow: auto;
+
+  a {
+    color: lighten($primary-font-color, 10%);
+    text-decoration: none;
+    
+    &:hover {
+      color: $primary-font-color;
+      text-decoration: none;
+    }
+  }
+
+  /* smooth scrolling on touch devices */
+  -webkit-overflow-scrolling: touch;
+
+  p, li {
+    color: $primary-blue;
+    line-height: 1.4;
+    margin: 2em 0;
+
+    &:first-of-type {
+      margin-top: 0;
+    }
+  }
+
 }

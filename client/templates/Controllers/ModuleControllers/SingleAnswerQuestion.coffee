@@ -19,9 +19,9 @@ class @SingleAnswerQuestion extends QuestionBase
       ding.addEventListener "ended", ()=>
         @.correctAudio.playWhenReady()
 
-      $(target).addClass "move-up-and-expand"
+      $(target).addClass "expanded"
       for btn in @.incorrectResponseButtons
-        $(btn).addClass "fade-out"
+        $(btn).addClass "faded"
     else
       $("#incorrect_soundeffect")[0].play()
 
