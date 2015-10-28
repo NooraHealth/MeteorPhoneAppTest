@@ -6,25 +6,19 @@ class @SingleAnswerQuestion extends QuestionBase
   responseRecieved: ( target )->
     response = $(target).attr "value"
 
-    console.log response
-    console.log @._module.correct_answer
-    console.log response in @._module.correct_answer
     if response in @._module.correct_answer
       console.log "It's there!"
       if @.audio
         @.audio.pause()
 
-      ding = $("#correct_soundeffect")[0]
-      ding.play()
-      ding.addEventListener "ended", ()=>
-        @.correctAudio.playWhenReady()
+      Audio.playAudio "#correct_soundeffect", ()=> @.correctAudio.playWhenReady()
 
       $(target).addClass "expanded"
       console.log @.incorrectResponseButtons()
       for btn in @.incorrectResponseButtons()
         $(btn).addClass "faded"
     else
-      $("#incorrect_soundeffect")[0].play()
+      Audio.playAudio "#incorrect_soundeffect", null
 
   getModuleDiv: ()->
     return $("#" + @._module._id )

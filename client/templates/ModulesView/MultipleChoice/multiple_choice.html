@@ -11,10 +11,6 @@
       {{>rowOfOptions}}
     {{/with}}
   </div>
-
-  <div class="center-align item">
-    <a name="submit_multiple_choice" class="response mc_submit_btn btn blue waves-effect waves-blue white-text">SUBMIT</a>
-  </div> 
 </div>
 </template>
 
@@ -23,7 +19,7 @@
   {{#each options}}
     <div class="col l4 m4 s4">
       <!--[> IMG <]-->
-      <img name="option" alt="{{i}}" src="{{optionImgSrc}}" class="response image-choice {{#if correct }} correct {{/if}}" />
+      <img name="option" alt="{{i}}" src="{{optionImgSrc}}" class="response image-choice {{#if correct }} correct {{/if}}">
     </div>
   {{/each}}
   </div>

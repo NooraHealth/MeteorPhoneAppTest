@@ -12,6 +12,8 @@ class @QuestionBase
     return $("#" + @._module._id).find(".response").filter ( i, elem )=> not @.isCorrectAnswer $(elem).attr "value"
 
   isCorrectAnswer: ( val )=>
+    console.log "Val"
+    console.log val
     return val in @._module.correct_answer
 
   begin: ()->

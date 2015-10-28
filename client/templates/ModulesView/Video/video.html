@@ -2,9 +2,9 @@
   <div class="card padding module">
     <div class="center-align ">
       {{#if isEmbedded}}
-        <iframe title="{{title}}" class="embedded-video" src="{{video_url}}?start={{start}}&end={{end}}" frameborder="0" allowfullscreen></iframe>
+        <iframe id="video{{_id}}" title="{{title}}" class="embedded-video" src="{{video_url}}?start={{start}}&end={{end}}" frameborder="0" allowfullscreen></iframe>
       {{else}}
-        <video src="{{videoSrc}}" class="inherit" controls autoplay>
+        <video id="video{{_id}}" src="{{videoSrc}}" class="inherit" controls autoplay>
           Your browser does not support the video tag. Please logout and use another browser.
         </video>
       {{/if}}

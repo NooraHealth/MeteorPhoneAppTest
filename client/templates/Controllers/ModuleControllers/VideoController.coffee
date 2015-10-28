@@ -2,10 +2,14 @@
 class @VideoController
   constructor: ( @_module )->
 
-  moveOnstage: ()->
+  getVideoElem: ()->
+
+    return $("#" + @._module._id).find "video"
+
+  begin: ()->
     console.log "Moving the video onstage"
 
-  moveOffstage: ()=>
+  end: ()=>
     video = @.getVideoElem()
     if video and video.pause
       video.pause()

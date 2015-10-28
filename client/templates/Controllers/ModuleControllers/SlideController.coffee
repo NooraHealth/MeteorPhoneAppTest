@@ -7,8 +7,8 @@ class @SlideController
   constructor: ( @_module )->
     @.audio = new Audio @._module.src, "#audio"
 
-  moveOnstage: ()->
+  begin: ()->
     @.audio.playWhenReady()
 
-  moveOffstage: ()->
+  end: ()->
     @.audio.pause()

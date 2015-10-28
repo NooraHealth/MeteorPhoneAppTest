@@ -4,27 +4,30 @@ class @Audio
     @._playWhenReady = false
     @.setSrc @.src
 
+  @playAudio: ( tag, whenFinished )->
+    audio = $(tag)[0]
+    if audio and audio.play
+      audio.currentTime = 0
+      audio.play()
+
+    if whenFinished
+      audio.addEventListener "ended", whenFinished
+
   setSrc: ( src )=>
     audio = @.getAudioElement()
     audio.src = src
     audio.addEventListener "canplay", ()=>
       if @._playWhenReady
-        @._play()
+        Audio.playAudio @.getAudioElement()
         @._playWhenReady = false
       @._readyToPlay = true
 
   getAudioElement: ()->
     return $(@.id)[0]
 
-  _play: ()=>
-    audio = @.getAudioElement()
-    if audio and audio.play
-      audio.currentTime = 0
-      audio.play()
-
   playWhenReady: ()=>
     if @._readyToPlay
-      @._play()
+      Audio.playAudio @.getAudioElement()
     else
       @._playWhenReady = true
 
