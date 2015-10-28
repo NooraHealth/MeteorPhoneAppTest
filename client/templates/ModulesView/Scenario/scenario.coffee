@@ -8,6 +8,6 @@ Template.scenarioModule.helpers
     return MEDIA_URL + "VascularContent/Images/emergency.png"
 
 Template.scenarioModule.events
-  'click .response': (event, template)->
+  'click .scenario-btn': (event, template)->
     sequenceController = Scene.get().modulesSequenceController()
     sequenceController.notifyResponseRecieved event.target

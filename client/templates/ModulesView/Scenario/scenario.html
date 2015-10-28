@@ -10,15 +10,15 @@
       </div>
 
     <div class="item">
-        <a  class="btn waves-effect waves-light white-text green scenario-btn {{#if isCorrectAnswer 'Normal' }} correct {{/if}}" value="{{option 0}}">
+        <a  class="response btn waves-effect waves-light white-text green scenario-btn {{#if isCorrectAnswer 'Normal' }} correct {{/if}}" value="{{option 0}}">
           <i class="mdi-action-home"></i> NORMAL
         </a>
                 
-        <a class="btn waves-effect waves-light white-text yellow darken-3 scenario-btn {{#if isCorrectAnswer 'CallDoc' }} correct {{/if}}" value="{{option 1}}">
+        <a class="response btn waves-effect waves-light white-text yellow darken-3 scenario-btn {{#if isCorrectAnswer 'CallDoc' }} correct {{/if}}" value="{{option 1}}">
           <i class="mdi-action-settings-phone"></i> CALL {{#if isPhone }} DR {{else}} DOCTOR {{/if}}
         </a>
 
-        <a class="btn waves-effect waves-light white-text red scenario-btn {{#if isCorrectAnswer 'Call911' }} correct {{/if}}" value="{{option 2}}">
+        <a class="response btn waves-effect waves-light white-text red scenario-btn {{#if isCorrectAnswer 'Call911' }} correct {{/if}}" value="{{option 2}}">
           <i class="mdi-maps-local-hospital"></i> EMERGENCY
         </a>
     </div>
