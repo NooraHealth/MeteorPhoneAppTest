@@ -3,7 +3,7 @@ Template.lessonsView.helpers
     lessons = Scene.get().getLessons()
     if not lessons
       return []
-    numPerRow = 2
+    numPerRow = 1
     numRows = Math.ceil lessons.length / numPerRow
     row = 0
     rows = []

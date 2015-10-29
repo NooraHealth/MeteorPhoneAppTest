@@ -7,10 +7,16 @@ class @Scene
   class PrivateScene
     constructor: ()->
       @._lessons = []
+      @._contentEndpoint = Meteor.settings.public.CONTENT_SRC
+      @._currentLesson = null
+
+    getCurrentLesson: ()->
+      return @._currentLesson
 
     _setCurriculum: ( curriculum )->
       @.curriculum = curriculum
       @._lessons = @.curriculum.getLessonDocuments()
+      @._currentLesson = @._lessons[0]
       Session.set "curriculum id", @.curriculum._id
       @
 
@@ -52,10 +58,6 @@ class @Scene
 
     getContentEndpoint: () ->
       return @._contentEndpoint
-
-    setContentEndpoint: ( endpoint )->
-      @._contentEndpoint = endpoint
-      @
 
     goToLoadingScreen: ()->
       Router.go "loading"
