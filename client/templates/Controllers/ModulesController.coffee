@@ -1,7 +1,22 @@
 class @ModulesController
+  @_nextButtonClasses = [ "scale-up", "expanded"]
+
   constructor: ( lessonId )->
     @._lesson = Lessons.findOne { "_id" : lessonId }
     @._sequence = @._lesson.getModulesSequence()
+
+
+  @shakeNextButton: ()->
+    btn = $("#next")
+    for klass in ModulesController._nextButtonClasses
+      if not btn.hasClass klass
+        btn.addClass klass
+
+  @stopShakingNextButton: ()->
+    btn = $("#next")
+    for klass in ModulesController._nextButtonClasses
+      if btn.hasClass klass
+        btn.removeClass klass
 
   _goToModule: ( index )->
     @._currentModule = @._sequence[@._index]

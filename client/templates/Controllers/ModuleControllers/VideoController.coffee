@@ -8,6 +8,7 @@ class @VideoController
 
   begin: ()->
     console.log "Moving the video onstage"
+    ModulesController.stopShakingNextButton()
 
   end: ()=>
     video = @.getVideoElem()

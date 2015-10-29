@@ -11,7 +11,7 @@ class @SingleAnswerQuestion extends QuestionBase
       if @.audio
         @.audio.pause()
 
-      Audio.playAudio "#correct_soundeffect", ()=> @.correctAudio.playWhenReady()
+      Audio.playAudio "#correct_soundeffect", ()=> @.correctAudio.playWhenReady( ModulesController.shakeNextButton )
 
       $(target).addClass "expanded"
       console.log @.incorrectResponseButtons()

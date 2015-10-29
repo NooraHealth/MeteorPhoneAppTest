@@ -1,0 +1,43 @@
+
+@import '.meteor/local/build/programs/server/assets/packages/wolves_bourbon/bourbon/_bourbon';
+
+$prefix: 'scale-up' !default;
+
+// Placeholders
+%scale {
+  display: inline-block;
+  transform-origin: center center;
+}
+
+@mixin do-scale(
+  $name: 'scale-up', 
+  $end: 1.5,
+  $dur: 1s, 
+  $precision: .02, 
+  $opacity: false, 
+  $q: infinite, 
+  $t: ease-in-out, 
+  $delay: null,
+  $chunk: 100%
+  ) {  
+
+  // Keyframes
+  @at-root {
+    @keyframes #{$name} {
+      from {
+        @include transform(scale(.9));
+      }
+      to {
+        @include transform(scale($end));
+      }
+    }
+  }
+
+  @extend %scale;
+
+  &.#{$prefix}-constant {
+    animation: #{$name} $dur $t $q;
+  }
+
+}
+

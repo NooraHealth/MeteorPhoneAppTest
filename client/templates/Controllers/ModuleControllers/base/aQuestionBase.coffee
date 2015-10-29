@@ -23,4 +23,5 @@ class @QuestionBase
     @.audio.pause()
     @.correctAudio.pause()
     @.incorrectAudio.pause()
+    ModulesController.stopShakingNextButton()
 

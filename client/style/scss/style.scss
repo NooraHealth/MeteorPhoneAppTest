@@ -240,6 +240,13 @@ Custom NH components
   margin: 50px;
 }
 
+.scale-up {
+  @include animation(scale 1.0s ease);
+  @include animation-iteration-count(infinite);
+  /*@include animation-duration(2s);*/
+  /*@include animation-timing-function(ease);*/
+  /*@include animation-name(scale);*/
+} 
 .animated-overlay-wrapper {
   position: relative;
   & > .inner-overlay-wrapper {
@@ -248,17 +255,12 @@ Custom NH components
     left: 0;
     top: 0;
     position: absolute;
-    & > .animated-overlay {
-      @include animation(scale 1.0s ease);
-      @include animation-iteration-count(infinite);
-      /*@include animation-duration(2s);*/
-      /*@include animation-timing-function(ease);*/
-      /*@include animation-name(scale);*/
-      z-index: 10;
-      margin-right: auto;
-      margin-left:auto;
-      height: 100%;
-    } 
+  }
+  & > .overlay {
+    z-index: 10;
+    margin-right: auto;
+    margin-left:auto;
+    height: 100%;
   }
 }
 
@@ -355,6 +357,9 @@ Custom NH components
 .hidden-card, .hidden {
   /*@include transform(translate3d(0,-1000, 0));*/
   display: none;
+}
+.slide-up {
+  @include transform(translate3d(0, -200px,0));  
 }
 
 .slide-down {
@@ -513,11 +518,15 @@ Custom NH components
   background-color: $white;
 }
 
+.icon-large {
+  font-size: 1.6rem !important;
+}
+
 .next-module-btn {
   @include transition(all, 1s);
   letter-spacing: 2px;
-  font-size: 20px;
-  width: 150px;
+  font-size: 30px;
+  width: 250px;
   margin-left: 100px;
   position: absolute;
   bottom: 5px;
@@ -527,7 +536,7 @@ Custom NH components
     background-color: lighten($light-blue-2, 30%);
   }
   @media(min-width: 600px) {
-   width: 200px;
+   width: 250px;
   }
   @media(max-width: 600px) {
     width:150px;
