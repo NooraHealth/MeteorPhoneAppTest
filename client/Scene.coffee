@@ -8,15 +8,11 @@ class @Scene
     constructor: ()->
       @._lessons = []
       @._contentEndpoint = Meteor.settings.public.CONTENT_SRC
-      @._currentLesson = null
-
-    getCurrentLesson: ()->
-      return @._currentLesson
 
     _setCurriculum: ( curriculum )->
       @.curriculum = curriculum
       @._lessons = @.curriculum.getLessonDocuments()
-      @._currentLesson = @._lessons[0]
+      Session.set "current lesson", 0
       Session.set "curriculum id", @.curriculum._id
       @
 
@@ -29,6 +25,18 @@ class @Scene
       if not curriculum
         return []
       return curriculum.getLessonDocuments()
+
+    getCurrentLesson: ()->
+      currentLesson = Session.get "current lesson"
+      if currentLesson
+        return @._lessons[currentLesson]
+      else
+        return @._lessons[0]
+
+    incrementCurrentLesson: ()->
+      currLesson = Session.get "current lesson"
+      nextLesson = ( currLesson + 1 ) % @._lessons.length
+      Session.set "current lesson", nextLesson
 
     setCurriculum: (curriculum)->
       if Meteor.isCordova
@@ -43,7 +51,6 @@ class @Scene
         endpoint = @.getContentEndpoint()
         downloader = new ContentInterface curriculum, endpoint
         onSuccess = (entry)=>
-          console.log "Success downloading content: ", entry
           #Meteor.user().setContentAsLoaded true
           @._setCurriculum curriculum
           Scene.get().goToLessonsPage()

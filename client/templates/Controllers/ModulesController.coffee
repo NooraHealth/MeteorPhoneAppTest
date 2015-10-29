@@ -31,6 +31,7 @@ class @ModulesController
   goToNextModule: ()->
     @._index++
     if @._index == @._sequence.length
+      Scene.get().incrementCurrentLesson()
       Router.go "home"
 
     else
