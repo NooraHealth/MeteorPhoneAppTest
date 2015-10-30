@@ -11,6 +11,7 @@ class @SingleAnswerQuestion extends QuestionBase
       if @.audio
         @.audio.pause()
 
+      ModulesController.showResponsePopUp "#correct-pop-up"
       Audio.playAudio "#correct_soundeffect", ()=> @.correctAudio.playWhenReady( ModulesController.shakeNextButton )
 
       $(target).addClass "expanded"
@@ -18,6 +19,7 @@ class @SingleAnswerQuestion extends QuestionBase
       for btn in @.incorrectResponseButtons()
         $(btn).addClass "faded"
     else
+      ModulesController.showResponsePopUp "#incorrect-pop-up"
       Audio.playAudio "#incorrect_soundeffect", null
 
   getModuleDiv: ()->

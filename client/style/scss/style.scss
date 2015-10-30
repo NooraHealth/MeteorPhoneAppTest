@@ -105,6 +105,25 @@ body {
   margin: auto;
 }
 
+.response-pop-up-wrapper {
+  width: 100%;
+  bottom: 0;
+  position: absolute;
+}
+
+.show-pop-up {
+  z-index: 10;
+  opacity: 1 !important;
+  @include transform(translate3d(0, -75px,0));  
+}
+
+.response-pop-up {
+  @include transition(all, 1s);
+  opacity: 0;
+  height: 50px;
+  width: 50px;
+}
+
 .expanded {
   @include transition-delay(.3s);
   @include transition(scale, 2s);
@@ -247,7 +266,7 @@ Custom NH components
   /*@include animation-timing-function(ease);*/
   /*@include animation-name(scale);*/
 } 
-.animated-overlay-wrapper {
+.overlay-wrapper {
   position: relative;
   & > .inner-overlay-wrapper {
     width: 100%;

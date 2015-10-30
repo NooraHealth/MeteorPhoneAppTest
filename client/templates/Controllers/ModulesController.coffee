@@ -6,6 +6,13 @@ class @ModulesController
     @._sequence = @._lesson.getModulesSequence()
 
 
+  @showResponsePopUp: ( id )->
+    console.log "Showing the response popup!"
+    delay = (ms, func) -> setTimeout func, ms
+    popup = $(id)
+    popup.addClass "show-pop-up"
+    delay 2000, ()-> popup.removeClass "show-pop-up"
+
   @shakeNextButton: ()->
     btn = $("#next")
     for klass in ModulesController._nextButtonClasses

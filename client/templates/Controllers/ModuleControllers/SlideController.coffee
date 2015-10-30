@@ -5,10 +5,9 @@
 class @SlideController
 
   constructor: ( @_module )->
-    @.audio = new Audio @._module.src, "#audio"
+    @.audio = new Audio @._module.audioSrc(), "#audio"
 
   begin: ()=>
-    console.log "Beginning the slide!"
     @.audio.playWhenReady ModulesController.shakeNextButton
 
   end: ()->
