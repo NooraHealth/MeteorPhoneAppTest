@@ -13,6 +13,9 @@ Router.map ()->
     }
     layoutTemplate: 'layout'
     cache: true
+    waitOn: ()->
+      Meteor.subscribe "all"
+
     #waitOn: ()->
       #if !Meteor.user()
         #return []
@@ -60,6 +63,7 @@ Router.map ()->
 
     data: ()->
       scene = Scene.get()
+      console.log "scene"
       if not scene.curriculumIsSet()
         scene.openCurriculumMenu()
 

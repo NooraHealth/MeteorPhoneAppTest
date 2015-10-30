@@ -18,6 +18,8 @@ class @ContentInterface
 
   constructor: (@curriculum, @contentEndpoint)->
     console.log "Consutricting and this is the endp: ", @.contentEndpoint
+    if not Session.get "already loaded"
+      Session.setPersistent "already loaded", { loaded: [] }
 
   clearContentDirectory: ()->
     deferred = Q.defer()
@@ -43,6 +45,18 @@ class @ContentInterface
 
     return deferred.promise
 
+  @contentAlreadyLoaded: ( curriculum )->
+    console.log "Getting whether the content is already loaded!"
+    alreadyLoaded = Session.get("already loaded").loaded
+    return curriculum._id in alreadyLoaded
+
+  @markAsLoaded: ( curriculum )->
+    loaded = Session.get("already loaded").loaded
+    loaded.push curriculum._id
+    Session.update("already loaded", { loaded: loaded })
+    console.log "Marking content as already loaded"
+    console.log Session.get "already loaded"
+
   downloadFiles: (urls)->
     deferred = Q.defer()
     numToLoad = urls.length
@@ -53,11 +67,11 @@ class @ContentInterface
       return (err)->
         deferred.reject(err)
 
-    markAsResolved = ( entry )->
+    markAsResolved = ( entry )=>
       numRecieved++
       console.log "RESOLVED: " + numRecieved + "/"+ numToLoad
       if numRecieved == numToLoad
-        console.log "ALL FINISHED"
+        ContentInterface.markAsLoaded @.curriculum
         deferred.resolve( entry )
 
     onFileEntrySuccess = (url)->

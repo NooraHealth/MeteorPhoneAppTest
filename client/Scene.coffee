@@ -8,12 +8,19 @@ class @Scene
     constructor: ()->
       @._lessons = []
       @._contentEndpoint = Meteor.settings.public.CONTENT_SRC
+      id = Session.get "curriculum id"
+      console.log "Curriculum id", id
+      if id
+        curr = Curriculum.findOne { _id : id }
+        console.log "Setting the ucrriculum"
+        console.log curr
+        @.setCurriculum curr
 
     _setCurriculum: ( curriculum )->
       @.curriculum = curriculum
       @._lessons = @.curriculum.getLessonDocuments()
-      Session.set "current lesson", 0
-      Session.set "curriculum id", @.curriculum._id
+      Session.setPersistent "current lesson", 0
+      Session.setPersistent "curriculum id", @.curriculum._id
       @
 
     _getCurriculum: ()->
@@ -21,6 +28,8 @@ class @Scene
       return Curriculum.findOne {_id: id}
 
     getLessons: ()->
+      console.log "Getting the lessons"
+      console.log @.curriculum
       curriculum = @._getCurriculum()
       if not curriculum
         return []
@@ -36,10 +45,10 @@ class @Scene
     incrementCurrentLesson: ()->
       currLesson = Session.get "current lesson"
       nextLesson = ( currLesson + 1 ) % @._lessons.length
-      Session.set "current lesson", nextLesson
+      Session.setPersistent "current lesson", nextLesson
 
     setCurriculum: (curriculum)->
-      if Meteor.isCordova
+      if Meteor.isCordova and not ContentInterface.contentAlreadyLoaded curriculum
         @.downloadCurriculum curriculum
       else
         @._setCurriculum( curriculum )
@@ -61,10 +70,11 @@ class @Scene
           alert "There was an error downloading your content, please log in and try again: ", err
           Meteor.logout()
 
-        downloader.loadContent onSuccess, onError
+        if not downloader.alreadyLoaded()
+          downloader.loadContent onSuccess, onError
 
     getContentEndpoint: () ->
-      return @._contentEndpoint
+      return Meteor.settings.public.CONTENT_SRC
 
     goToLoadingScreen: ()->
       Router.go "loading"
