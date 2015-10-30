@@ -1,5 +1,5 @@
 class @ModulesController
-  @_nextButtonClasses = [ "scale-up", "expanded"]
+  @_nextButtonClasses = [ "slide-up", "scale-up", "expanded"]
 
   constructor: ( lessonId )->
     @._lesson = Lessons.findOne { "_id" : lessonId }
