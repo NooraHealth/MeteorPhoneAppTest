@@ -13,8 +13,6 @@ Router.map ()->
     }
     layoutTemplate: 'layout'
     cache: true
-    waitOn: ()->
-      Meteor.subscribe "all"
 
     #waitOn: ()->
       #if !Meteor.user()

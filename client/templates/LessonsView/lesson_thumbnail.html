@@ -8,10 +8,10 @@
 <template name="lessonThumbnail">
   <a>
     <div class="card z-depth-3 lesson-thumbnail {{#if currentLesson}} expanded {{else}} faded {{/if}}" id="{{_id}}">
-      <div class="overlay-wrapper center-align card-image  thumbnail-image valign-wrapper"> 
+      <div class="overlay-wrapper center-align card-image thumbnail-image"> 
         {{#if currentLesson}}
-          <div class="inner-overlay-wrapper">
-            <img src="play-button-overlay.png" class="valign scale-up overlay"/>
+          <div class="inner-overlay-wrapper valign-wrapper">
+            <img src="play-button-overlay2.png" class="valign scale-up overlay animated-overlay"/>
           </div>
         {{/if}}
         <img src="{{imgSrc}}" class="valign fit-height"/>

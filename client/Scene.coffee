@@ -9,9 +9,10 @@ class @Scene
       @._lessons = []
       @._contentEndpoint = Meteor.settings.public.CONTENT_SRC
       id = Session.get "curriculum id"
-      console.log "Curriculum id", id
       if id
         curr = Curriculum.findOne { _id : id }
+        console.trace()
+        console.log Curriculum.find().count()
         console.log "Setting the ucrriculum"
         console.log curr
         @.setCurriculum curr

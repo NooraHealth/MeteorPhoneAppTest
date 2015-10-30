@@ -273,6 +273,7 @@ Custom NH components
   /*@include animation-timing-function(ease);*/
   /*@include animation-name(scale);*/
 } 
+
 .overlay-wrapper {
   position: relative;
   & > .inner-overlay-wrapper {
@@ -281,12 +282,14 @@ Custom NH components
     left: 0;
     top: 0;
     position: absolute;
-  }
-  & > .overlay {
-    z-index: 10;
-    margin-right: auto;
-    margin-left:auto;
-    height: 100%;
+
+    & > .animated-overlay {
+      z-index: 10;
+      margin-right: auto;
+      margin-left:auto;
+      height: 100px !important;
+      width: 100px !important;
+    }
   }
 }
 

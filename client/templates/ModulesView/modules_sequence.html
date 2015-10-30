@@ -50,11 +50,23 @@
               <img src="/no.png" class="response-pop-up" id="incorrect-pop-up"/>
               <img src="/yes.png" class="response-pop-up" id="correct-pop-up"/>
             </div>
+          <!--<div class="row">-->
           {{>nextBtn}}
+          <!--{{>goHomeButton}}-->
+          <!--</div>-->
 
         {{/ionContent}}
       {{/ionView}}
     {{/ionNavView}}
   {{/ionBody}}
+</template>
+
+<template name="goHomeButton">
+  <div class="col valign-wrapper right-align">
+    <a class="center-align blue rounded blue-text text-lighten-3 flow-text btn-flat waves-effect waves-light large valign-wrapper " id="gohome" >
+      HOME
+      <i class="icon ion-home icon-large"></i>
+    </a>
+  </div>
 </template>
 
