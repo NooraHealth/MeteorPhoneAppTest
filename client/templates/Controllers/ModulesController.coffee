@@ -11,7 +11,7 @@ class @ModulesController
     delay = (ms, func) -> setTimeout func, ms
     popup = $(id)
     popup.addClass "show-pop-up"
-    delay 2000, ()-> popup.removeClass "show-pop-up"
+    delay 3000, ()-> popup.removeClass "show-pop-up"
 
   @shakeNextButton: ()->
     btn = $("#next")

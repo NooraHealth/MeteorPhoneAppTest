@@ -105,6 +105,14 @@ body {
   margin: auto;
 }
 
+.slider-pager {
+  font-size: 2rem;
+  bottom: 40px;
+
+  & > li {
+    margin: 10px;
+  }
+}
 .response-pop-up-wrapper {
   width: 100%;
   bottom: 0;
@@ -114,14 +122,14 @@ body {
 .show-pop-up {
   z-index: 10;
   opacity: 1 !important;
-  @include transform(translate3d(0, -75px,0));  
+  @include transform(translate3d(0, -200px,0));  
 }
 
 .response-pop-up {
   @include transition(all, 1s);
   opacity: 0;
-  height: 50px;
-  width: 50px;
+  height: 100px;
+  width: 100px;
 }
 
 .expanded {
@@ -260,7 +268,7 @@ Custom NH components
 }
 
 .module {
-  margin-top: 10px;
+  margin-top: 30px;
   margin-bottom: 20px;
   margin-left: 50px;
   margin-right: 50px;
@@ -548,18 +556,31 @@ Custom NH components
 }
 
 .icon-large {
-  font-size: 1.6rem !important;
+  font-size: 2.1rem !important;
 }
 
-.next-module-btn {
+.footer-button {
   @include transition(all, 1s);
   letter-spacing: 2px;
   font-size: 30px;
-  width: 250px;
-  margin-left: 100px;
   position: absolute;
-  bottom: 5px;
-  right: 5px;
+  bottom: 10px;
+}
+
+.gohome-button {
+  width: 250px;
+}
+
+.footer-row {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.next-module-btn {
+  width: 250px;
+  right: 10px;
+  margin-left: 100px;
   /*width: 100%;*/
   &:hover {
     background-color: lighten($light-blue-2, 30%);
