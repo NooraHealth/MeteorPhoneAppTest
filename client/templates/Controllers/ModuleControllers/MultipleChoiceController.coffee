@@ -19,12 +19,12 @@ class @MultipleChoiceController extends QuestionBase
     if $(target).hasClass "correct"
       $(target).addClass "correctly-selected"
       $(target).addClass "expanded"
-      Audio.playAudio "#correct_soundeffect", ()=> @.correctAudio.playWhenReady( ModulesController.shakeNextButton )
 
       if target not in @._responses
         @._responses.push target
 
       if @._responses.length == @._module.correct_answer.length
+        Audio.playAudio "#correct_soundeffect", ()=> @.correctAudio.playWhenReady( ModulesController.shakeNextButton )
         correctResponseButtons = @.correctResponseButtons()
         incorrectResponseButtons = @.incorrectResponseButtons()
         if @.audio
@@ -33,6 +33,8 @@ class @MultipleChoiceController extends QuestionBase
         for btn in incorrectResponseButtons
           if not $(btn).hasClass "faded"
             $(btn).addClass "faded"
+      else
+        Audio.playAudio "#correct_soundeffect"
 
     else
       Audio.playAudio "#incorrect_soundeffect", null
