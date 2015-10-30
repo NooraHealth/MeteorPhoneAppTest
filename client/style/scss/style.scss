@@ -163,6 +163,10 @@ td {
 Custom NH components 
 
 --------------------------------*/
+.video-module {
+  height: 500px;
+}
+
 .embedded-video {
   @media(min-width: 600px) {
     width: 660px;
