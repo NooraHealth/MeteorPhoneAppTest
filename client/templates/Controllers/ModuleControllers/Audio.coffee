@@ -18,6 +18,7 @@ class @Audio
     audio = @.getAudioElement()
     audio.src = src
     audio.addEventListener "canplay", ()=>
+      console.log "AUDIO CAN PLAY -------------------------------"
       if @._playWhenReady
         Audio.playAudio @.getAudioElement(), @._whenFinished
         @._playWhenReady = false
@@ -30,6 +31,7 @@ class @Audio
 
   playWhenReady: ( whenFinished )=>
     if @._readyToPlay
+      console.log "IN PLAY WHEN READER AND ABOUT TO PLAY___________"
       Audio.playAudio @.getAudioElement(), whenFinished
     else
       @._playWhenReady = true
