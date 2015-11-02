@@ -2,7 +2,7 @@ Array::merge = (other) -> Array::push.apply @, other
 
 class @ParsedUrl
   constructor: (@urlString, @endpoint)->
-    pieces = urlString.split('/')
+    pieces = @.urlString.split('/')
     @.pieces = pieces
   directories: ()->
     index = @.pieces.length - 1
@@ -46,7 +46,8 @@ class @ContentInterface
     return deferred.promise
 
   @contentAlreadyLoaded: ( curriculum )->
-    console.log "Getting whether the content is already loaded!"
+    if not Session.get "already loaded"
+      Session.setPersistent "already loaded", { loaded: [] }
     alreadyLoaded = Session.get("already loaded").loaded
     return curriculum._id in alreadyLoaded
 
@@ -147,6 +148,7 @@ class @ContentInterface
     for lesson in lessons
       urls.merge(@.retrieveContentUrls(lesson))
     
+    console.log "About to get the end urls"
     endURLS = (new ParsedUrl(url, @.contentEndpoint) for url in urls)
     
     console.log "About to download files"

@@ -71,8 +71,7 @@ class @Scene
           alert "There was an error downloading your content, please log in and try again: ", err
           Meteor.logout()
 
-        if not downloader.alreadyLoaded()
-          downloader.loadContent onSuccess, onError
+        downloader.loadContent onSuccess, onError
 
     getContentEndpoint: () ->
       return Meteor.settings.public.CONTENT_SRC
