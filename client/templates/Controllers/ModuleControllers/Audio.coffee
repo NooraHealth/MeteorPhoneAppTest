@@ -18,9 +18,9 @@ class @Audio
         console.log "Can play fired!"
         console.log audio
         if @._playWhenReady
-          Audio.playAudio @.getAudioElement(), @._whenFinished
+          audio.play()
           @._playWhenReady = false
-          @._whenFinished = null
+          #@._whenFinished = null
 
     else if audio and audio.play
       audio.play()
