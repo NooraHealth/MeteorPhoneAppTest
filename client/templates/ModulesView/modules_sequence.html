@@ -11,7 +11,7 @@
         {{#ionContent}}
           <audio id="audio"></audio>
           <audio id="correctaudio"></audio>
-          <audio id="incorrectaudio"></audio>
+          <!--<audio id="incorrectaudio"></audio>-->
           <audio id="correct_soundeffect" src="/correct_soundeffect.mp3"></audio>
           <audio id="incorrect_soundeffect" src="/incorrect_soundeffect.mp3"></audio>
           {{#ionSlideBox}}
@@ -59,7 +59,7 @@
 
 <template name="goHomeButton">
   <div class="col valign-wrapper right-align">
-    <a class="z-depth-1 gohome-button footer-button center-align green rounded text-lighten-3 flow-text black-text waves-effect waves-light large valign-wrapper " id="gohome" >
+    <a href="{{pathFor 'home'}}" class="z-depth-1 gohome-button footer-button center-align green rounded text-lighten-3 flow-text black-text waves-effect waves-light large valign-wrapper " id="gohome" >
       HOME
       <i class="icon ion-home icon-large"></i>
     </a>

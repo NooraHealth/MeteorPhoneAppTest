@@ -7,8 +7,22 @@ class @Audio
 
   @playAudio: ( tag, whenFinished )->
     audio = $(tag)[0]
-    if audio and audio.play
-      audio.currentTime = 0
+    audio.currentTime = 0
+
+    if audio.readyState < 3
+      console.log "Audio ready state"
+      console.log audio.readyState
+      console.log audio
+      @._playWhenReady = true
+      audio.addEventListener "canplay", ()=>
+        console.log "Can play fired!"
+        console.log audio
+        if @._playWhenReady
+          Audio.playAudio @.getAudioElement(), @._whenFinished
+          @._playWhenReady = false
+          @._whenFinished = null
+
+    else if audio and audio.play
       audio.play()
 
     if whenFinished
@@ -17,25 +31,17 @@ class @Audio
   setSrc: ( src )=>
     audio = @.getAudioElement()
     audio.src = src
-    audio.addEventListener "canplay", ()=>
-      console.log "AUDIO CAN PLAY -------------------------------"
-      if @._playWhenReady
-        Audio.playAudio @.getAudioElement(), @._whenFinished
-        @._playWhenReady = false
-        @._whenFinished = null
-
-      @._readyToPlay = true
+    audio.load()
 
   getAudioElement: ()->
     return $(@.id)[0]
 
   playWhenReady: ( whenFinished )=>
-    if @._readyToPlay
-      console.log "IN PLAY WHEN READER AND ABOUT TO PLAY___________"
-      Audio.playAudio @.getAudioElement(), whenFinished
-    else
-      @._playWhenReady = true
-      @._whenFinished = whenFinished
+    #if @._readyToPlay
+    Audio.playAudio @.getAudioElement(), whenFinished
+    #else
+      #@._playWhenReady = true
+      #@._whenFinished = whenFinished
 
   pause: ()->
     audio = @.getAudioElement()

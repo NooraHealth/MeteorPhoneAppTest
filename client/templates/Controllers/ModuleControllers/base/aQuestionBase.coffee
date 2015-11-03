@@ -2,7 +2,7 @@ class @QuestionBase
   constructor: ( @_module )->
     @.audio = new Audio @._module.audioSrc(), "#audio"
     @.correctAudio = new Audio @._module.correctAnswerAudio(), "#correctaudio"
-    @.incorrectAudio = new Audio @._module.incorrectAnswerAudio(), "#incorrectaudio"
+    #@.incorrectAudio = new Audio @._module.incorrectAnswerAudio(), "#incorrectaudio"
 
   correctResponseButtons: ()->
     return $("#" + @._module._id).find(".response").filter ( i, elem )=> @.isCorrectAnswer $(elem).attr "value"
@@ -20,6 +20,6 @@ class @QuestionBase
   end: ()->
     @.audio.pause()
     @.correctAudio.pause()
-    @.incorrectAudio.pause()
+    #@.incorrectAudio.pause()
     ModulesController.stopShakingNextButton()
 
