@@ -468,6 +468,7 @@ Custom NH components
 
 .dotstyle {
   display: inline-block;
+  padding: 15px;
 }
 
 .dotstyle ul {
@@ -482,9 +483,9 @@ Custom NH components
   position: relative;
   display: block;
   float: left;
-  margin: 0 5px;
-  width: 16px;
-  height: 16px;
+  margin: 0 7px;
+  width: 25px;
+  height: 25px;
   cursor: pointer;
 
   @media (max-width: 768px) {

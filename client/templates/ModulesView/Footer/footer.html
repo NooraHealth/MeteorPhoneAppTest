@@ -1,0 +1,24 @@
+<template name="moduleFooter">
+<div class="footer-row row valign-wrapper">
+
+  {{>goHomeButton}}
+  <div class="col center-align valign">
+    <!--<a class="waves-effect" name="previous" style="display:inline"><i class="mdi-navigation-chevron-left small"></i></a>-->
+    <div class="dotstyle dotstyle-scaleup"> 
+      <ul class="">
+        {{#each modules}}
+          {{#if currentModule}} 
+          <li class="current" name="{{i}}"><a class="module_nav" name="{{i}}"></a></li>
+          {{else}}
+          <li name="{{i}}"><a class="module_nav {{#if completed i}} green {{/if}}" name="{{i}}"></a></li>
+          {{/if}}
+        {{/each}}
+            
+      </ul>
+    </div>
+    <!--<a class="waves-effect" name="next" style="display:inline"><i class="mdi-navigation-chevron-right small"></i></a>-->
+  </div> 
+
+  {{>nextBtn}}
+</div>
+</template>
