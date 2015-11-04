@@ -103,7 +103,7 @@ class @Scene
     startModulesSequence: ()->
       @._modulesController.start()
 
-    getModuleController: ()->
+    getModuleSequenceController: ()->
       return @._modulesController
 
     getModulesSequence: ()->

@@ -5,6 +5,9 @@ class @ModulesController
     @._lesson = Lessons.findOne { "_id" : lessonId }
     @._sequence = @._lesson.getModulesSequence()
 
+  getCurrentController: ()->
+    return @._moduleController
+
   @showResponsePopUp: ( id )->
     console.log "Showing the response popup!"
     delay = (ms, func) -> setTimeout func, ms
@@ -28,10 +31,11 @@ class @ModulesController
     @._currentModule = @._sequence[index]
     if @._moduleController
       @._moduleController.end()
+    Router.go "module.show", { _id: @._currentModule._id }
+
     @._moduleController = ControllerFactory.get().getModuleController @._currentModule
     @._moduleController.begin()
     console.log "Going to module", @._currentModule._id
-    Router.go "module.show", { _id: @._currentModule._id }
 
   notifyResponseRecieved: ( target )->
     @._moduleController.responseRecieved target

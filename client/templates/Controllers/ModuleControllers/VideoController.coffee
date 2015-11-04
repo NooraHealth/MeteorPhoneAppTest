@@ -9,6 +9,7 @@ class @VideoController
     console.log "Moving the video onstage"
     ModulesController.stopShakingNextButton()
 
+  #playVideo: ()->
     video = @.getVideoElem()
     if video and video.play
       video.currentTime = 0
