@@ -565,6 +565,7 @@ Custom NH components
 
 .footer-button {
   @include transition(all, 1s);
+  padding: 10px;
   letter-spacing: 2px;
   font-size: 30px;
   position: absolute;
