@@ -1,4 +1,8 @@
 Template.modulesSequence.helpers
+
+  isCordova: ()->
+    return Meteor.isCordova
+
   isBinaryChoice: ()->
     return @.type == "BINARY"
 
@@ -15,7 +19,5 @@ Template.modulesSequence.helpers
     return @.type == "VIDEO"
 
 Template.modulesSequence.onRendered ()->
-  console.log "Does audio tag exist yet?"
-  console.log $("#audio")
   Scene.get().startModulesSequence()
 

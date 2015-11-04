@@ -21,5 +21,18 @@ class @QuestionBase
     @.audio.pause()
     @.correctAudio.pause()
     #@.incorrectAudio.pause()
+    @.resetState()
     ModulesController.stopShakingNextButton()
+  
+  resetState: ()->
+    for btn in @.incorrectResponseButtons()
+      if $(btn).hasClass "incorrectly-selected"
+        $(btn).removeClass "incorrectly-selected"
+      if $(btn).hasClass "faded"
+        $(btn).removeClass "faded"
+    for btn in @.correctResponseButtons()
+      if $(btn).hasClass "correctly-selected"
+        $(btn).removeClass "correctly-selected"
+      if $(btn).hasClass "expanded"
+        $(btn).removeClass "expanded"
 

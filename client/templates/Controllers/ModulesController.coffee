@@ -5,7 +5,6 @@ class @ModulesController
     @._lesson = Lessons.findOne { "_id" : lessonId }
     @._sequence = @._lesson.getModulesSequence()
 
-
   @showResponsePopUp: ( id )->
     console.log "Showing the response popup!"
     delay = (ms, func) -> setTimeout func, ms
@@ -26,30 +25,41 @@ class @ModulesController
         btn.removeClass klass
 
   _goToModule: ( index )->
-    @._currentModule = @._sequence[@._index]
+    @._currentModule = @._sequence[index]
     if @._moduleController
       @._moduleController.end()
     @._moduleController = ControllerFactory.get().getModuleController @._currentModule
     @._moduleController.begin()
+    console.log "Going to module", @._currentModule._id
+    Router.go "module.show", { _id: @._currentModule._id }
 
   notifyResponseRecieved: ( target )->
     @._moduleController.responseRecieved target
 
+  shouldBeRendered: ( template )->
+    console.log "Checking if should be rendered"
+    return true
+
+  currentModuleIndex: ()->
+    return Session.get "current module index"
+
   goToNextModule: ()->
-    @._index++
-    if @._index == @._sequence.length
+    index = Session.get "current module index"
+    index++
+    Session.update "current module index", index
+    if index == @._sequence.length
       Scene.get().incrementCurrentLesson()
       Router.go "home"
 
     else
-      @._goToModule @._index
-      $(".ion-slide-box").slick("next")
+      @._goToModule index
+      #$(".ion-slide-box").slick("next")
 
   getSequence: ()->
     return @._sequence
 
   start: ()->
-    @._index = 0
-    @._goToModule @._index
+    Session.set "current module index", 0
+    @._goToModule 0
     
 

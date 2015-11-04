@@ -96,11 +96,15 @@ class @Scene
       @
 
     goToModules: ( lessonId )->
+      lesson = Lessons.findOne {_id: lessonId}
       @._modulesController = new ModulesController lessonId
-      Router.go "modules.show", { "_id" : lessonId }
+      Router.go "module.show", { "_id" :  lesson.modules[0] }
 
     startModulesSequence: ()->
       @._modulesController.start()
+
+    getModuleController: ()->
+      return @._modulesController
 
     getModulesSequence: ()->
       if @._modulesController?

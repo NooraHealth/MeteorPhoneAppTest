@@ -9,39 +9,45 @@ class @Audio
     audio = $(tag)[0]
     audio.currentTime = 0
 
-    if audio.readyState < 3
+    playCallback = ( elem )->
+      return ()->
+        console.log "Can play fired!"
+        console.log elem
+        console.log "playign elem"
+        elem.play()
+          
+    whenFinishedCallback = ( callback )->
+      return ()->
+        console.log "Finished callback!"
+        callback()
+
+    if audio.readyState == 0
       console.log "Audio ready state"
       console.log audio.readyState
       console.log audio
-      @._playWhenReady = true
-      audio.addEventListener "canplay", ()=>
-        console.log "Can play fired!"
-        console.log audio
-        if @._playWhenReady
-          audio.play()
-          @._playWhenReady = false
-          #@._whenFinished = null
+      audio.load()
+      audio.addEventListener "canplay", playCallback(audio)
 
     else if audio and audio.play
+      console.log "Playing elem 2"
+      console.log audio
       audio.play()
 
     if whenFinished
-      audio.addEventListener "ended", whenFinished
+      console.log "When finished: "
+      console.log whenFinishedCallback
+      audio.addEventListener "ended", whenFinishedCallback(whenFinished)
 
   setSrc: ( src )=>
     audio = @.getAudioElement()
     audio.src = src
-    audio.load()
 
   getAudioElement: ()->
     return $(@.id)[0]
 
   playWhenReady: ( whenFinished )=>
-    #if @._readyToPlay
+    console.log "This is the when finished of the play when ready"
     Audio.playAudio @.getAudioElement(), whenFinished
-    #else
-      #@._playWhenReady = true
-      #@._whenFinished = whenFinished
 
   pause: ()->
     audio = @.getAudioElement()

@@ -1,18 +1,19 @@
 <template name="videoModule">
-  <div class="card padding module">
-    <div class="center-align ">
-      {{#if isEmbedded}}
-        <iframe id="video{{_id}}" title="{{title}}" class="embedded-video" src="{{video_url}}?start={{start}}&end={{end}}" frameborder="0" allowfullscreen></iframe>
-      {{else}}
-        <video id="video{{_id}}" src="{{videoSrc}}" class="video-module" controls autoplay>
-          Your browser does not support the video tag. Please logout and use another browser.
-        </video>
-      {{/if}}
-    </div>
+  {{#if shouldBeRendered}}
+    <div class="card padding module">
+      <div class="center-align ">
+        {{#if isEmbedded}}
+          <iframe id="video{{_id}}" title="{{title}}" class="embedded-video" src="{{video_url}}?start={{start}}&end={{end}}" frameborder="0" allowfullscreen></iframe>
+        {{else}}
+          <video id="video{{_id}}" src="{{videoSrc}}" class="video-module" controls autoplay>
+            Your browser does not support the video tag. Please logout and use another browser.
+          </video>
+        {{/if}}
+      </div>
 
-    <div class="flow-text grey-text text-darken-2 center-align">
-      {{title}}
+      <div class="flow-text grey-text text-darken-2 center-align">
+        {{title}}
+      </div>
     </div>
-  </div>
-
+  {{/if}}
 </template>

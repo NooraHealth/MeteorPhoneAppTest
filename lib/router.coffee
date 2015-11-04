@@ -70,16 +70,17 @@ Router.map ()->
   ###
   # module sequence
   ###
-  this.route '/modules/:_id', {
-    name: "modules.show"
-    path: '/modules/:_id'
+  this.route '/module/:_id', {
+    name: "module.show"
+    path: '/module/:_id'
     layoutTemplate: 'layout'
     template: "ModulesSequence"
     cache: true
     data: ()->
       Session.set "current lesson id", @.params._id
-      modules = Scene.get().getModulesSequence()
-      return { modules: modules }
+      module = Modules.findOne { _id: @.params._id }
+      #modules = Scene.get().getModulesSequence()
+      return { module : module }
   }
 
   this.route '/loading', {
