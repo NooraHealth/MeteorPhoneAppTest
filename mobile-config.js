@@ -1,4 +1,5 @@
 App.accessRule( "*");
+//App.preference("orientation", "landscape");
 
 App.info({
   name: "Noora Health WebApp",

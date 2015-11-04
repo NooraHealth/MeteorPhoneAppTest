@@ -1,6 +1,11 @@
 <template name="layout">
   {{#ionBody}}
     {{>ionNavBar class='nav z-depth-1'}}
+
+    {{#contentFor "headerTitle"}}
+      <a href="{{pathFor 'home'}}"><img class="round-tile z-depth-2" alt="Noora Health" src="/NHlogo.png"/></a>
+    {{/contentFor }}
+
     {{#ionNavView}}
       {{>yield}}
      {{/ionNavView}}
