@@ -1,62 +1,44 @@
 <template name="modulesSequence">
-  <!--{{#ionBody}}-->
-    <!--{{>ionNavBar class='nav z-depth-1'}}-->
+  <audio id="audio"></audio>
+  <audio id="correctaudio"></audio>
+  <!--<audio id="incorrectaudio"></audio>-->
+  {{#if isCordova}}
+    <audio id="correct_soundeffect" src="http://p2.noorahealth.org/correct_soundeffect.mp3"></audio>
+    <audio id="incorrect_soundeffect" src="http://p2.noorahealth.org/incorrect_soundeffect.mp3"></audio>
+  {{else}}
+    <audio id="correct_soundeffect" src="/correct_soundeffect.mp3"></audio>
+    <audio id="incorrect_soundeffect" src="/incorrect_soundeffect.mp3"></audio>
+  {{/if}}
 
-    <!--{{#ionNavView}}-->
-      <!--{{#contentFor "headerTitle"}}-->
-        <!--<a href="{{pathFor 'home'}}"><img class="round-tile z-depth-2" alt="Noora Health" src="/NHlogo.png"/></a>-->
-      <!--{{/contentFor }}-->
+  <div class="content-block inner-container">
+    <div class="content-block-title large-text">{{lessonTitle}}</div>
 
-      {{#ionView}}
-        {{#ionContent}}
+    {{#with module}}
+      <div id="{{_id}}" class="card">
+        {{#if isBinaryChoice}}
+          {{>binaryChoiceModule}}
+        {{/if}}
+        {{#if isSlideModule}}
+          {{>slideModule}}
+        {{/if}}
+        {{#if isScenario }}
+          {{>scenarioModule}}
+        {{/if}}
+        {{#if isMultipleChoice }}
+          {{> multipleChoiceModule }}
+        {{/if}}
+        {{#if isVideo }}
+          {{> videoModule }}
+        {{/if}}
+      </div>
 
-          <audio id="audio"></audio>
-          <audio id="correctaudio"></audio>
-          <!--<audio id="incorrectaudio"></audio>-->
-          {{#if isCordova}}
-            <audio id="correct_soundeffect" src="http://p2.noorahealth.org/correct_soundeffect.mp3"></audio>
-            <audio id="incorrect_soundeffect" src="http://p2.noorahealth.org/incorrect_soundeffect.mp3"></audio>
-          {{else}}
-            <audio id="correct_soundeffect" src="/correct_soundeffect.mp3"></audio>
-            <audio id="incorrect_soundeffect" src="/incorrect_soundeffect.mp3"></audio>
-          {{/if}}
-          <!--{{#ionSlideBox}}-->
-              {{#with module}}
+    {{/with}}
+    </div>
 
-                <!--{{#ionSlide}}-->
+    <div id="pop-up-div" class="inner-overlay-wrapper response-pop-up-wrapper center-align">
+      <img src="/no.png" class="response-pop-up" id="incorrect-pop-up"/>
+      <img src="/yes.png" class="response-pop-up" id="correct-pop-up"/>
+    </div>
 
-                <div id="{{_id}}">
-                  {{#if isBinaryChoice}}
-                    {{>binaryChoiceModule}}
-                  {{/if}}
-                  {{#if isSlideModule}}
-                    {{>slideModule}}
-                  {{/if}}
-                  {{#if isScenario }}
-                    {{>scenarioModule}}
-                  {{/if}}
-                  {{#if isMultipleChoice }}
-                    {{> multipleChoiceModule }}
-                  {{/if}}
-                  {{#if isVideo }}
-                    {{> videoModule }}
-                  {{/if}}
-                </div>
-
-                <!--{{/ionSlide}}-->
-
-              {{/with}}
-
-          <!--{{/ionSlideBox}}-->
-            <div id="pop-up-div" class="inner-overlay-wrapper response-pop-up-wrapper center-align">
-              <img src="/no.png" class="response-pop-up" id="incorrect-pop-up"/>
-              <img src="/yes.png" class="response-pop-up" id="correct-pop-up"/>
-            </div>
-
-            {{>moduleFooter1}}
-        {{/ionContent}}
-      {{/ionView}}
-    <!--{{/ionNavView}}-->
-  <!--{{/ionBody}}-->
 </template>
 

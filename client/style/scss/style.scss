@@ -71,9 +71,27 @@ body {
   margin: auto;
 }
 
+.small-text {
+  font-size: 75%;
+}
+
 .large-text {
   font-size: 150%;
 }
+
+.padding {
+  padding: 20px
+}
+
+.navbar, .toolbar {
+  height: 60px;
+}
+
+.toolbar {
+  background-color: $white !important;
+  color: $font-color !important;
+}
+
 .navbar {
   background-color: $primary-blue !important;
 }
@@ -577,7 +595,7 @@ Custom NH components
   margin-bottom: 20px;
 }
 
-.card {
+.lesson-card {
   width: 50%;
   margin-left: auto;
   margin-right: auto;
@@ -616,11 +634,17 @@ Custom NH components
 
 .footer-button {
   @include transition(all, 1s);
-  padding: 10px;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  padding-left: 50px;
+  padding-right: 50px;
   letter-spacing: 2px;
   font-size: 30px;
   position: absolute;
-  bottom: 10px;
+
+  & > i {
+    padding: 10px;
+  }
 }
 
 .gohome-button {
@@ -635,8 +659,6 @@ Custom NH components
 
 .next-module-btn {
   width: 250px;
-  right: 10px;
-  margin-left: 100px;
   /*width: 100%;*/
   &:hover {
     background-color: lighten($light-blue-2, 30%);

@@ -74,6 +74,8 @@ Router.map ()->
     name: "module.show"
     path: '/module/:_id'
     layoutTemplate: 'layout'
+    yieldTemplates:
+      'moduleFooter1' : { to: 'footer' }
     template: "ModulesSequence"
     cache: true
     data: ()->

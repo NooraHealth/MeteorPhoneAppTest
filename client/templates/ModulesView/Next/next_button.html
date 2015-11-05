@@ -13,15 +13,13 @@
 </template>
 
 <template name="browserNextBtn">
-  <div class="col valign-wrapper right-align">
-    <a class="next-module-btn z-depth-1 footer-button center-align blue rounded blue-text text-lighten-3 flow-text waves-effect waves-light {{#if isHidden}} slide-down {{/if}} large valign-wrapper " id="next" >
-      {{#if allModulesComplete}}
-        FINISH
-      {{else}}
-        NEXT
-      {{/if}}
-      <i class="icon ion-arrow-right-a icon-large"></i>
-    </a>
-  </div>
+  <a class="link footer-button button color-blue button-fill" id="next" >
+    {{#if allModulesComplete}}
+      FINISH
+    {{else}}
+      NEXT
+    {{/if}}
+    <i class="fa fa-arrow-right fa-2x"></i>
+  </a>
 </template>
 

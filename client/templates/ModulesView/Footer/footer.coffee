@@ -1,4 +1,4 @@
-Template.moduleFooter.helpers
+Template.moduleFooter1.helpers
 
   modules: ()->
     modules = Scene.get().getModulesSequence()

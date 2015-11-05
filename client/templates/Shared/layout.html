@@ -16,6 +16,12 @@
           <div class="page-content">
             {{>yield}}
           </div>
+
+          <div class="toolbar">
+            <div class="toolbar-inner">
+              {{>yield region="footer"}}
+            </div>
+          </div>
         </div>
       </div>
     </div>
