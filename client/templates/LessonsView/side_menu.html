@@ -1,12 +1,19 @@
 <template name="sideMenu">
-  <ul class='list'>
-    <li class='item item-divider'> CURRICULUMS </li>
-    {{#each curriculums}}
-      {{>listItem}}
-    {{/each}}
-  </ul>
+  <div class="content-block-title">
+    <div class="list-block">
+      <ul>
+        {{#each curriculums}}
+          {{>listItem}}
+        {{/each}}
+      </ul>
+    </div>
+  </div>
 </template>
 
 <template name='listItem'>
-  <li class='item' data-ion-menu-close><a id="{{_id}}"> {{title}} </a></li>
+  <li class='item-content'>
+    <div class="item-inner">
+      <div class="item-title"> {{title}}</div>
+    </div>
+  </li>
 </template>

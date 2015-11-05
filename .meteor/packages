@@ -24,9 +24,6 @@ pcel:loading
 mystor:device-detection
 ground:db
 natestrauser:cordova-file-server
-meteoric:ionic-sass
-meteoric:ionicons-sass
-meteoric:ionic
 iron:layout
 useraccounts:iron-routing
 iron:router
@@ -44,7 +41,9 @@ random
 ejson
 spacebars
 check
-wolves:bourbon
-materialize:materialize@=0.97.0
 u2622:persistent-session
 autopublish
+loftsteinn:framework7-ios
+fortawesome:fontawesome
+fourseven:scss
+wolves:bourbon

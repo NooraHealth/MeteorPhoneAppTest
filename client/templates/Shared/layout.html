@@ -1,14 +1,24 @@
 <template name="layout">
-  {{#ionBody}}
-    {{>ionNavBar class='nav z-depth-1'}}
+ <div class="views">
+    <div class="view view-main">
+      <div class="pages">
+        <!-- Now we need additional "navbar-fixed" and "toolbar-fixed" classes on Page -->
+        <div data-page="index" class="page navbar-fixed toolbar-fixed">
+            
+          <!-- Top Navbar-->
+          <div class="navbar">
+            <div class="navbar-inner">
+              <a href="{{pathFor 'home'}}"><img class="logo" alt="Noora Health" src="/NHlogo.png"/></a>
+              <a href="#" data-panel="right" class="open-panel right-aligned">Select Curriculum</a>
+            </div>
+          </div>
 
-    {{#ionNavView}}
-      {{#contentFor "headerTitle"}}
-        <a href="{{pathFor 'home'}}"><img class="round-tile z-depth-2" alt="Noora Health" src="/NHlogo.png"/></a>
-      {{/contentFor }}
-
-      {{>yield}}
-     {{/ionNavView}}
-  {{/ionBody}}
+          <div class="page-content">
+            {{>yield}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 

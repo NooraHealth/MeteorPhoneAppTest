@@ -1,6 +1,6 @@
-@import '.meteor/local/build/programs/server/assets/packages/wolves_bourbon/bourbon/_bourbon';
-@import '.meteor/local/build/programs/server/assets/packages/meteoric_ionic-sass/ionic';
-@import '.meteor/local/build/programs/server/assets/packages/meteoric_ionicons-sass/ionicons';
+/*@import '../../../.meteor/local/build/programs/server/assets/packages/wolves_bourbon/bourbon/_bourbon';*/
+@import "{wolves:bourbon}/_bourbon";
+/*@import "{meteoric:ionicons-sass}/_ionicons";*/
 
 /*@import '_bourbon';*/
 
@@ -10,6 +10,7 @@
 
 @import '_mixins';
 
+@import '_layout';
 @import '_layout';
 
 /* -------------------------------- 
@@ -31,14 +32,14 @@ html, body {
 }
 
 body {
-  .pane, .view {
-    /*color: $primary-font-color;*/
-    background: $light-blue-1;
-    overflow: scroll;
-  }
+
+}
+.page {
+  background: $light-blue-1 !important;
+  color: #fff;
 
   a {
-    /*color: lighten($primary-blue, 30%);*/
+    color: lighten($primary-blue, 30%);
     text-decoration: none;
     
     &:hover {
@@ -48,14 +49,23 @@ body {
   }
 }
 
-.nav {
-  background-color: $primary-blue;
-  width: 100%;
-  color: #fff;
+.logo {
+  position: absolute;
+  left: 30px;
+  top: 20px;
+  border-radius: 30px;
+  background-color: #fff;
+  padding: 10px;
+  box-shadow: 5px 5px 5px grey;
 }
 
-.right {
+.navbar {
+  background-color: $primary-blue !important;
+}
+
+.right-aligned {
   margin-left: auto;
+  margin-right: 20px;
 }
 
 .nav-menu {
@@ -540,16 +550,13 @@ Custom NH components
   margin-bottom: 20px;
 }
 
-.panel > .panel-heading {
-  background-color: $white;
+.item-title {
+  overflow: inherit;
 }
 
-.item {
-  font-size: 23px !important;
-}
-
-.navbar {
-  background-color: $primary-blue;
+.panel  {
+  background-color: $white !important;
+  width: 350px;
 }
 
 .middle {
@@ -558,10 +565,6 @@ Custom NH components
 }
 .padding-bottom-lg {
   padding-bottom: $padding-L;
-}
-
-.panel {
-  background-color: $white;
 }
 
 .icon-large {

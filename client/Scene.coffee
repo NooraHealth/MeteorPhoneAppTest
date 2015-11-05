@@ -29,8 +29,6 @@ class @Scene
       return Curriculum.findOne {_id: id}
 
     getLessons: ()->
-      console.log "Getting the lessons"
-      console.log @.curriculum
       curriculum = @._getCurriculum()
       if not curriculum
         return []
