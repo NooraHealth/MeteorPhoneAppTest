@@ -64,10 +64,10 @@ body {
   height: 100%;
   padding-left: 40px;
   padding-right: 40px;
-  padding-top: 20px;
 }
 
 .center {
+  display: block;
   margin: auto;
 }
 
@@ -77,6 +77,10 @@ body {
 
 .large-text {
   font-size: 150%;
+}
+
+.padding-sm {
+  padding: 10px
 }
 
 .padding {
@@ -608,6 +612,7 @@ Custom NH components
 }
 
 .thumbnail-image > img {
+  max-width: 100%;
   max-height: 100%;
 }
 
