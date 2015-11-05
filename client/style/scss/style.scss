@@ -550,8 +550,13 @@ Custom NH components
   margin-bottom: 20px;
 }
 
+.lesson-card-image .card-header {
+  height: 60vw;
+  background-size: cover;
+  background-position: center;
+}
 .item-title {
-  overflow: inherit;
+  overflow: inherit !important;
 }
 
 .panel  {

@@ -1,24 +1,37 @@
 <template name='rowOfLessonThumbnails'>
-  {{#each lessons}}
-    <div class='row'>
-      <div class='col thumbnail-wrapper'> {{>lessonThumbnail}} </div>
-    </div>
-  {{/each}}
-</template>
-<template name="lessonThumbnail">
-  <a>
-    <div class="card z-depth-3 lesson-thumbnail {{#if currentLesson}} expanded {{else}} faded {{/if}}" id="{{_id}}">
-      <div class="overlay-wrapper center-align card-image thumbnail-image"> 
-        {{#if currentLesson}}
-          <div class="inner-overlay-wrapper valign-wrapper">
-            <img src="play-button-overlay2.png" class="valign scale-up overlay animated-overlay"/>
-          </div>
-        {{/if}}
-        <img src="{{imgSrc}}" class="valign fit-height"/>
-      </div> 
-      <div class="card-content">
-        <p class="center-align flow-text grey-text text-darken-2">{{title}}</p>
+  <div class="content-block-title">{{curriculumTitle}}</div>
+    <div class="list-block">
+      <div class="cards-list">
+
+        <ul>
+          {{#each lessons}}
+            {{>lessonThumbnail}}
+          {{/each}}
+        </ul>
+
       </div>
     </div>
-  </a>
+</template>
+
+<template name="lessonThumbnail">
+  <div class="card">
+    <div class="card-content">
+
+      <div class="lesson-card-image card-header">
+        <div class="overlay-wrapper thumbnail-image"> 
+          {{#if currentLesson}}
+            <div class="inner-overlay-wrapper valign-wrapper">
+              <img src="play-button-overlay2.png" class="valign scale-up overlay animated-overlay"/>
+            </div>
+          {{/if}}
+          <img src="{{imgSrc}}"/>
+        </div> 
+      </div>
+
+      <div class="card-footer">
+        <p>{{title}}</p>
+      </div>
+
+    </div>
+  </div>
 </template>

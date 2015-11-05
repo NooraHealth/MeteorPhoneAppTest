@@ -1,4 +1,5 @@
 Meteor.startup ()->
-  App = new Framework7(
+  console.log "Creating app"
+  this.App = new Framework7(
     router:false
   )

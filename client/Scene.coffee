@@ -24,12 +24,12 @@ class @Scene
       Session.setPersistent "curriculum id", @.curriculum._id
       @
 
-    _getCurriculum: ()->
+    getCurriculum: ()->
       id = Session.get "curriculum id"
       return Curriculum.findOne {_id: id}
 
     getLessons: ()->
-      curriculum = @._getCurriculum()
+      curriculum = @.getCurriculum()
       if not curriculum
         return []
       return curriculum.getLessonDocuments()
