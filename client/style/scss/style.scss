@@ -66,6 +66,10 @@ body {
   padding-right: 40px;
 }
 
+.card-footer {
+  min-height: 80px;
+}
+
 .center {
   display: block;
   margin: auto;
@@ -375,8 +379,7 @@ Custom NH components
     height: 35vh;
   }
   @media(min-width: 600px){
-    margin: auto;
-    height: 60vh;
+    height: 50vh;
   }
   max-width: 100%;
 }
@@ -646,7 +649,9 @@ Custom NH components
   letter-spacing: 2px;
   font-size: 30px;
   position: absolute;
+}
 
+.button {
   & > i {
     padding: 10px;
   }

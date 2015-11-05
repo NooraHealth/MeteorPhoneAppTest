@@ -1,27 +1,25 @@
 <template name="scenarioModule">
   
-  <div id="{{_id}}" class="card module">
-      <div class="item center-align">
-        <img src="{{imgSrc}}" class="module-image">
-      </div>
+  <div class="card-header large-text center">
+    {{question}}
+  </div>
+
+  <div class="card-content padding-sm">
+    <img src="{{imgSrc}}" class="center module-image">
+  </div>
   
-      <div class="item item-text flow-text grey-text text-darken-2">
-        {{question}}
-      </div>
+  <div class="card-footer large-text">
+    <a  class="response button-big color-green button button-fill scenario-btn {{#if isCorrectAnswer 'Normal' }} correct {{/if}}" value="{{option 0}}">
+      <i class="fa fa-home fa-2x"></i> NORMAL
+    </a>
+            
+    <a class="response button button-big color-yellow button-fill scenario-btn {{#if isCorrectAnswer 'CallDoc' }} correct {{/if}}" value="{{option 1}}">
+      <i class="fa fa-phone fa-2x"></i> CALL {{#if isPhone }} DR {{else}} DOCTOR {{/if}}
+    </a>
 
-    <div class="item">
-        <a  class="response btn waves-effect waves-light white-text green scenario-btn {{#if isCorrectAnswer 'Normal' }} correct {{/if}}" value="{{option 0}}">
-          <i class="mdi-action-home"></i> NORMAL
-        </a>
-                
-        <a class="response btn waves-effect waves-light white-text yellow darken-3 scenario-btn {{#if isCorrectAnswer 'CallDoc' }} correct {{/if}}" value="{{option 1}}">
-          <i class="mdi-action-settings-phone"></i> CALL {{#if isPhone }} DR {{else}} DOCTOR {{/if}}
-        </a>
-
-        <a class="response btn waves-effect waves-light white-text red scenario-btn {{#if isCorrectAnswer 'Call911' }} correct {{/if}}" value="{{option 2}}">
-          <i class="mdi-maps-local-hospital"></i> EMERGENCY
-        </a>
-    </div>
+    <a class="response color-red button button-big button-fill scenario-btn {{#if isCorrectAnswer 'Call911' }} correct {{/if}}" value="{{option 2}}">
+      <i class="fa fa-ambulance fa-2x"></i> EMERGENCY
+    </a>
   </div>
 
 </template>
