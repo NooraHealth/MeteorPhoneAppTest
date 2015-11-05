@@ -59,6 +59,21 @@ body {
   box-shadow: 5px 5px 5px grey;
 }
 
+.inner-container {
+  width: 100%;
+  height: 100%;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-top: 20px;
+}
+
+.center {
+  margin: auto;
+}
+
+.large-text {
+  font-size: 150%;
+}
 .navbar {
   background-color: $primary-blue !important;
 }
@@ -109,8 +124,9 @@ body {
   height: 100%;
 }
 
-.thumbnail-image {
-  height: 75%;
+.thumbnail-image > img {
+  height: 40vh;
+  display: block;
 }
 
 .lesson-thumbnail {
@@ -156,6 +172,13 @@ body {
   @media(max-width: 600px) {
     @include transform(scale(1.2)); 
   }
+}
+
+.current-lesson {
+  @extend .expanded;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  box-shadow: 2px 4px 5px rgba(0, 0, 0, 0.3)
 }
 
 .faded {
@@ -298,7 +321,9 @@ Custom NH components
 } 
 
 .overlay-wrapper {
+  margin: auto;
   position: relative;
+  display: block;
   & > .inner-overlay-wrapper {
     width: 100%;
     height: 100%;
@@ -308,8 +333,10 @@ Custom NH components
 
     & > .animated-overlay {
       z-index: 10;
-      margin-right: auto;
-      margin-left:auto;
+      margin: auto;
+      top: 30%;
+      display: block;
+      position: relative;
       height: 100px !important;
       width: 100px !important;
     }
@@ -550,11 +577,22 @@ Custom NH components
   margin-bottom: 20px;
 }
 
-.lesson-card-image .card-header {
-  height: 60vw;
+.card {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.lesson-card-image {
+  height: 40vw;
   background-size: cover;
   background-position: center;
 }
+
+.thumbnail-image > img {
+  max-height: 100%;
+}
+
 .item-title {
   overflow: inherit !important;
 }

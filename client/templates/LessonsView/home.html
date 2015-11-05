@@ -9,10 +9,17 @@
     {{>sideMenu}}
   </div>
 
-  <div class="content-block">
-    {{#each rows}}
-      {{>rowOfLessonThumbnails}}
-    {{/each}}
+  <div class="content-block inner-container">
+    <div class="content-block-title large-text">{{curriculumTitle}}</div>
+    <div class="list-block">
+      <div class="cards-list">
+        <ul>
+          {{#each lessons}}
+            {{>lessonThumbnail}}
+          {{/each}}
+        </ul>
+      </div>
+    </div>
   </div>
 
 </template>

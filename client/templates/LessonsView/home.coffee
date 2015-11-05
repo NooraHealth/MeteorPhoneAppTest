@@ -1,16 +1,7 @@
 Template.lessonsView.helpers
-  rows: ()->
-    lessons = Scene.get().getLessons()
-    if not lessons
-      return []
-    numPerRow = 1
-    numRows = Math.ceil lessons.length / numPerRow
-    row = 0
-    rows = []
-    while row < numRows
-      index = numPerRow * row
-      arr = lessons.slice index, index + numPerRow
-      rows.push {lessons: arr}
-      row++
-    return rows
+  curriculumTitle: ()->
+    return Scene.get().getCurriculum().title
+
+  lessons: ()->
+    return Scene.get().getLessons()
 
