@@ -47,7 +47,9 @@ class @Scene
       Session.setPersistent "current lesson", nextLesson
 
     setCurriculum: (curriculum)->
+      console.log "Setting the curriculum!"
       if Meteor.isCordova and not ContentInterface.contentAlreadyLoaded curriculum
+        console.log "about to download the curriculum", curriculum
         @.downloadCurriculum curriculum
       else
         @._setCurriculum( curriculum )

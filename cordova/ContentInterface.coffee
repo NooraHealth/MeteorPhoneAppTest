@@ -17,6 +17,7 @@ class @ParsedUrl
 class @ContentInterface
 
   constructor: (@curriculum, @contentEndpoint)->
+    console.log "And this is the crriculum", @.curriculum
     console.log "Consutricting and this is the endp: ", @.contentEndpoint
     if not Session.get "already loaded"
       Session.setPersistent "already loaded", { loaded: [] }
@@ -148,6 +149,8 @@ class @ContentInterface
     for lesson in lessons
       urls.merge(@.retrieveContentUrls(lesson))
     
+    console.log "Therse are the urls"
+    console.log urls
     console.log "About to get the end urls"
     endURLS = (new ParsedUrl(url, @.contentEndpoint) for url in urls)
     
