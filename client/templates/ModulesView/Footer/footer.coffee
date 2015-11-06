@@ -9,7 +9,9 @@ Template.moduleFooter1.helpers
     return arr
 
   completed: ( i )->
-    if i < Scene.get().getModuleSequenceController().currentModuleIndex()
+    console.log "Completed?"
+    currentIndex = Session.get "current module index"
+    if i < currentIndex
       return true
     else
       return false

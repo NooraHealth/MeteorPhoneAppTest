@@ -170,15 +170,15 @@ body {
   }
 }
 .response-pop-up-wrapper {
+  @include transform(translate3d(0, 200px,0));  
   width: 100%;
-  bottom: 0;
   position: absolute;
 }
 
 .show-pop-up {
   z-index: 10;
   opacity: 1 !important;
-  @include transform(translate3d(0, -200px,0));  
+  @include transform(translate3d(0, -500px,0));  
 }
 
 .response-pop-up {
@@ -642,6 +642,8 @@ Custom NH components
 
 .footer-button {
   @include transition(all, 1s);
+  margin-left: 60px;
+  margin-right: 60px;
   padding-top: 25px;
   padding-bottom: 25px;
   padding-left: 50px;
@@ -658,7 +660,7 @@ Custom NH components
 }
 
 .gohome-button {
-  width: 250px;
+  margin-right: 60px;
 }
 
 .footer-row {
@@ -668,18 +670,8 @@ Custom NH components
 }
 
 .next-module-btn {
-  width: 250px;
+  margin-left: 60px;
   /*width: 100%;*/
-  &:hover {
-    background-color: lighten($light-blue-2, 30%);
-  }
-  @media(min-width: 600px) {
-   width: 250px;
-  }
-  @media(max-width: 600px) {
-    width:150px;
-  }
-
 }
 
 .image-choice {
@@ -687,6 +679,10 @@ Custom NH components
   width: 90%;
   height: 22vh;
   padding: 3px;
+}
+
+.green {
+  background-color: $success !important;
 }
 
 .correctly-selected {

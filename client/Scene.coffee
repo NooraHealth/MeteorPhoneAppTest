@@ -102,6 +102,7 @@ class @Scene
       @._modulesController.start()
 
     getModuleSequenceController: ()->
+      console.log "returning modeules sequence controller"
       return @._modulesController
 
     getModulesSequence: ()->
