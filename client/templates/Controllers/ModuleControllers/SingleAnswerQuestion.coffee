@@ -11,16 +11,32 @@ class @SingleAnswerQuestion extends QuestionBase
       if @.audio
         @.audio.pause()
 
-      ModulesController.showResponsePopUp "#correct-pop-up"
+      
+      swal {
+        title: ""
+        type: "success"
+        timer: 3000
+      }
+
+      #ModulesController.showResponsePopUp "#correct-pop-up"
       Audio.playAudio "#correct_soundeffect", ()=> @.correctAudio.playWhenReady( ModulesController.shakeNextButton )
 
-      $(target).addClass "expanded"
+      $(target).addClass "expanded correctly-selected"
       console.log @.incorrectResponseButtons()
       for btn in @.incorrectResponseButtons()
-        $(btn).addClass "faded"
+        if not $(btn).hasClass "faded"
+          $(btn).addClass "faded"
     else
-      ModulesController.showResponsePopUp "#incorrect-pop-up"
+      swal {
+        title: ""
+        type: "error"
+        timer: 2000
+      }
+      #ModulesController.showResponsePopUp "#incorrect-pop-up"
       Audio.playAudio "#incorrect_soundeffect", null
+      $(target).addClass "faded"
+      $(target).addClass "incorrectly-selected"
+
 
   getModuleDiv: ()->
     return $("#" + @._module._id )
