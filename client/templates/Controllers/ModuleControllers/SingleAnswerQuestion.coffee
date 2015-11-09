@@ -4,13 +4,13 @@ class @SingleAnswerQuestion extends QuestionBase
     super @._module
 
   responseRecieved: ( target )->
+    @._completedQuestion = true
     response = $(target).attr "value"
 
     if response in @._module.correct_answer
-      console.log "It's there!"
+      @._completedQuestion = true
       if @.audio
         @.audio.pause()
-
       
       swal {
         title: ""
@@ -35,7 +35,6 @@ class @SingleAnswerQuestion extends QuestionBase
       Audio.playAudio "#incorrect_soundeffect", null
       $(target).addClass "faded"
       $(target).addClass "incorrectly-selected"
-
 
   getModuleDiv: ()->
     return $("#" + @._module._id )

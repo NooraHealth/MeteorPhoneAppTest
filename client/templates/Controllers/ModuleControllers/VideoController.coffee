@@ -2,6 +2,10 @@
 class @VideoController
   constructor: ( @_module )->
 
+  replay: ()->
+    @.getVideoElem().pause()
+    @.playVideo()
+
   getVideoElem: ()->
     return $("#video" + @._module._id)[0]
 
@@ -9,7 +13,7 @@ class @VideoController
     console.log "Moving the video onstage"
     ModulesController.stopShakingNextButton()
 
-  #playVideo: ()->
+  playVideo: ()->
     video = @.getVideoElem()
     if video and video.play
       video.currentTime = 0
@@ -17,10 +21,13 @@ class @VideoController
 
     video.addEventListener "ended", ModulesController.shakeNextButton
 
-  end: ()=>
+  pauseVideo: ()->
     video = @.getVideoElem()
     if video and video.pause
       video.pause()
     else if video and video.pauseVideo
       video.pauseVideo()
+
+  end: ()=>
+    @.pauseVideo()
 

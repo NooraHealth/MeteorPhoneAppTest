@@ -1,26 +1,35 @@
 class @QuestionBase
   constructor: ( @_module )->
+    @._completedQuestion = false
     @.audio = new Audio @._module.audioSrc(), "#audio"
     @.correctAudio = new Audio @._module.correctAnswerAudio(), "#correctaudio"
-    #@.incorrectAudio = new Audio @._module.incorrectAnswerAudio(), "#incorrectaudio"
+
+  replay: ()->
+    @.stopAllAudio()
+    if @._completedQuestion
+      @.correctAudio.playWhenReady()
+    else
+      @.audio.playWhenReady()
 
   correctResponseButtons: ()->
     return $("#" + @._module._id).find(".response").filter ( i, elem )=> @.isCorrectAnswer $(elem).attr "value"
 
   incorrectResponseButtons: ()->
-    #return $("#" + @._module._id).find(".response").filter ( elem )=> $(elem).val() not in @._module.correct_answer
     return $("#" + @._module._id).find(".response").filter ( i, elem )=> not @.isCorrectAnswer $(elem).attr "value"
 
   isCorrectAnswer: ( val )=>
     return val in @._module.correct_answer
 
+  stopAllAudio: ()->
+    @.audio.pause()
+    @.correctAudio.pause()
+
   begin: ()->
     @.audio.playWhenReady()
 
   end: ()->
-    @.audio.pause()
-    @.correctAudio.pause()
-    #@.incorrectAudio.pause()
+    @.stopAllAudio()
+
     @.resetState()
     ModulesController.stopShakingNextButton()
   

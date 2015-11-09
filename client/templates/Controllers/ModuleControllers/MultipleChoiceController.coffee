@@ -24,6 +24,7 @@ class @MultipleChoiceController extends QuestionBase
         @._responses.push target
 
       if @._responses.length == @._module.correct_answer.length
+        @._completedQuestion = true
         console.log 'Playing audio and correct sound effect'
         Audio.playAudio "#correct_soundeffect", ()=> @.correctAudio.playWhenReady( ModulesController.shakeNextButton )
         correctResponseButtons = @.correctResponseButtons()

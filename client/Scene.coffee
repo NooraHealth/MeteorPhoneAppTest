@@ -46,6 +46,10 @@ class @Scene
       nextLesson = ( currLesson + 1 ) % @._lessons.length
       Session.setPersistent "current lesson", nextLesson
 
+    replayMedia: ()->
+      console.log @._modulesController
+      @._modulesController.replay()
+
     setCurriculum: (curriculum)->
       console.log "Setting the curriculum!"
       if Meteor.isCordova and not ContentInterface.contentAlreadyLoaded curriculum

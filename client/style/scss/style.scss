@@ -518,6 +518,8 @@ Custom NH components
 }
 
 .scenario-btn {
+  @include display(flex);
+  @include justify-content(center);
   margin: 4px;
   width: 29%;
 }

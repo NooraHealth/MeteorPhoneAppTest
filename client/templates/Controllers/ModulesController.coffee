@@ -8,6 +8,9 @@ class @ModulesController
   getCurrentController: ()->
     return @._moduleController
 
+  replay: ()->
+    @._moduleController.replay()
+
   @shakeNextButton: ()->
     btn = $("#next")
     for klass in ModulesController._nextButtonClasses
