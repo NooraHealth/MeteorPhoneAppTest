@@ -24,6 +24,7 @@ class @ModulesController
         btn.removeClass klass
 
   _goToModule: ( index )->
+    Scene.get().scrollToTop()
     @._currentModule = @._sequence[index]
     if @._moduleController
       @._moduleController.end()
@@ -53,7 +54,6 @@ class @ModulesController
 
     else
       @._goToModule index
-      #$(".ion-slide-box").slick("next")
 
   getSequence: ()->
     return @._sequence

@@ -549,8 +549,10 @@ Custom NH components
 }
 
 .dotstyle ul {
-  display: flex;
-  justify-content: center;
+  @include display(flex);
+  @include justify-content(center);
+  /*display: flex !important;*/
+  /*justify-content: center !important;*/
   position: relative;
   margin: 0 auto;
   width: 100%;
@@ -663,7 +665,7 @@ Custom NH components
   padding-left: 50px;
   padding-right: 50px;
   letter-spacing: 2px;
-  font-size: 30px;
+  font-size: 25px;
   position: absolute;
 }
 
