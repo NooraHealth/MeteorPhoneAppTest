@@ -18,7 +18,6 @@ class @SingleAnswerQuestion extends QuestionBase
         timer: 3000
       }
 
-      #ModulesController.showResponsePopUp "#correct-pop-up"
       Audio.playAudio "#correct_soundeffect", ()=> @.correctAudio.playWhenReady( ModulesController.shakeNextButton )
 
       $(target).addClass "expanded correctly-selected"
@@ -32,7 +31,7 @@ class @SingleAnswerQuestion extends QuestionBase
         type: "error"
         timer: 2000
       }
-      #ModulesController.showResponsePopUp "#incorrect-pop-up"
+
       Audio.playAudio "#incorrect_soundeffect", null
       $(target).addClass "faded"
       $(target).addClass "incorrectly-selected"

@@ -537,9 +537,12 @@ Custom NH components
 .dotstyle {
   display: inline-block;
   padding: 15px;
+  width: 400px;
 }
 
 .dotstyle ul {
+  display: flex;
+  justify-content: center;
   position: relative;
   margin: 0 auto;
   width: 100%;
@@ -644,8 +647,8 @@ Custom NH components
 
 .footer-button {
   @include transition(all, 1s);
-  margin-left: 60px;
-  margin-right: 60px;
+  margin-left: 10px;
+  margin-right: 10px;
   padding-top: 25px;
   padding-bottom: 25px;
   padding-left: 50px;
@@ -669,11 +672,6 @@ Custom NH components
   position: absolute;
   bottom: 0;
   width: 100%;
-}
-
-.next-module-btn {
-  margin-left: 60px;
-  /*width: 100%;*/
 }
 
 .image-choice {

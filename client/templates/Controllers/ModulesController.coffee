@@ -8,13 +8,6 @@ class @ModulesController
   getCurrentController: ()->
     return @._moduleController
 
-  @showResponsePopUp: ( id )->
-    console.log "Showing the response popup!"
-    delay = (ms, func) -> setTimeout func, ms
-    popup = $(id)
-    popup.addClass "show-pop-up"
-    delay 3000, ()-> popup.removeClass "show-pop-up"
-
   @shakeNextButton: ()->
     btn = $("#next")
     for klass in ModulesController._nextButtonClasses
