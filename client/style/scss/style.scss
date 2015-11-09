@@ -210,14 +210,14 @@ body {
 
 .current-lesson {
   @extend .expanded;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   box-shadow: 2px 4px 5px rgba(0, 0, 0, 0.3)
 }
 
 .faded {
   @include transition-delay(.3s);
-  @include transform(scale(.75));
+  @include transform(scale(.85));
   @include transition(2s);
   opacity: 0.5;
 }

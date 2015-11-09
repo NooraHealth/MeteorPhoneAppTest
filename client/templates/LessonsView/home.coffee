@@ -10,6 +10,9 @@ Template.lessonsView.onRendered ()->
   currentLesson = Session.get "current lesson"
   console.log "current lesson", currentLesson
   card = $(".card-footer")[currentLesson]
-  if card
-    card.scrollIntoView()
+  if currentLesson > 0 and card
+    $(card).scrollintoview {
+      duration: 2500,
+      direction: "vertical"
+    }
 

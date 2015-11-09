@@ -8,9 +8,9 @@ Router.map ()->
     path: '/'
     name: "home"
     template: 'lessonsView'
-    yieldTemplates: {
-      'footer': {to:"footer"}
-    }
+    #yieldTemplates: {
+      #'footer': {to:"footer"}
+    #}
     layoutTemplate: 'layout'
     cache: true
 

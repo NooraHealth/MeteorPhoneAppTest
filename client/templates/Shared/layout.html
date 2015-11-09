@@ -17,11 +17,13 @@
             {{>yield}}
           </div>
 
-          <div class="toolbar">
-            <div class="toolbar-inner">
-              {{>yield region="footer"}}
+          {{#if module}}
+            <div class="toolbar">
+              <div class="toolbar-inner">
+                {{>yield region="footer"}}
+              </div>
             </div>
-          </div>
+          {{/if}}
         </div>
       </div>
     </div>
