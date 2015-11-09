@@ -34,6 +34,7 @@ html, body {
 body {
 
 }
+
 .page {
   background: $light-blue-1 !important;
   color: #fff;
@@ -47,6 +48,11 @@ body {
       text-decoration: none;
     }
   }
+}
+
+.lessons-list {
+  padding-top: 50px !important;
+  padding-bottom: 100px !important;
 }
 
 .logo {
