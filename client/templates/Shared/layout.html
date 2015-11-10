@@ -9,7 +9,9 @@
           <div class="navbar">
             <div class="navbar-inner">
               <a href="{{pathFor 'home'}}"><img class="logo" alt="Noora Health" src="/NHlogo.png"/></a>
-              <a href="#" data-panel="right" class="open-panel right-aligned">Select Curriculum</a>
+              {{#unless module}}
+                <a href="#" data-panel="right" class="open-panel right-aligned">Select Curriculum</a>
+              {{/unless}}
             </div>
           </div>
 
