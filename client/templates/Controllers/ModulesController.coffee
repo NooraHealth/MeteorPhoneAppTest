@@ -28,7 +28,7 @@ class @ModulesController
     @._currentModule = @._sequence[index]
     if @._moduleController
       @._moduleController.end()
-    FlowRouter.go "/module/" +  @._currentModule._id
+    Session.set "current module id", @._currentModule._id
 
     @._moduleController = ControllerFactory.get().getModuleController @._currentModule
     @._moduleController.begin()
@@ -51,7 +51,6 @@ class @ModulesController
     if index == @._sequence.length
       Scene.get().incrementCurrentLesson()
       FlowRouter.go "/"
-
     else
       @._goToModule index
 

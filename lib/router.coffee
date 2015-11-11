@@ -17,17 +17,16 @@ FlowRouter.route '/', {
 ###
 # module sequence
 ###
-FlowRouter.route '/module/:_id', {
+
+FlowRouter.route '/modules/:_id', {
   subscriptions: ( params )->
     this.register "all", Meteor.subscribe "all"
 
   action: ( params, qparams )->
-    Session.set "current module id", params._id
     BlazeLayout.render "layout", { main: "modulesSequence" , footer: "moduleFooter1" }
 }
 
 FlowRouter.route '/loading',
   action: ()->
     BlazeLayout.render "layout", { main: "loading" }
-
 

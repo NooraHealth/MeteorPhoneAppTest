@@ -101,7 +101,7 @@ class @Scene
     goToModules: ( lessonId )->
       lesson = Lessons.findOne {_id: lessonId}
       @._modulesController = new ModulesController lessonId
-      FlowRouter.go "/module/" + lesson.modules[0]
+      FlowRouter.go "/modules/" +  lesson._id
 
     startModulesSequence: ()->
       @._modulesController.start()
