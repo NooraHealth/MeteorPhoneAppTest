@@ -36,7 +36,6 @@ ejson
 spacebars
 check
 u2622:persistent-session
-autopublish
 loftsteinn:framework7-ios
 fortawesome:fontawesome
 fourseven:scss
@@ -45,3 +44,4 @@ kevohagan:sweetalert
 mrt:jquery-scrollintoview
 kadira:flow-router
 kadira:blaze-layout
+arillo:flow-router-helpers

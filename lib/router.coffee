@@ -1,31 +1,33 @@
-  
-  ###
-  # Home
-  # Displays all lessons in curriculum
-  ###
-  FlowRouter.route '/', {
-    action: ( params, qparams )->
-      console.log "!!!!"
-      console.log "In the route@"
-      console.log "!!!!"
-      scene = Scene.get()
-      if not scene.curriculumIsSet()
-        scene.openCurriculumMenu()
-      BlazeLayout.render "layout", { main : "lessonsView" }
 
-  }
+###
+# Home
+# Displays all lessons in curriculum
+###
+FlowRouter.route '/', {
+  subscriptions: ( params )->
+    this.register "all", Meteor.subscribe "all"
 
-  ###
-  # module sequence
-  ###
-  FlowRouter.route '/module/:_id', {
-    action: ( params, qparams )->
-      Session.set "current module id", params._id
-      BlazeLayout.render "layout", { main: "modulesSequence" , footer: "moduleFooter1" }
-  }
+  action: ( params, qparams )->
+    console.log "!!!!"
+    console.log "In the route@"
+    console.log "!!!!"
+    BlazeLayout.render "layout", { main : "lessonsView" }
+}
 
-  FlowRouter.route '/loading',
-    action: ()->
-      BlazeLayout.render "layout", { main: "loading" }
+###
+# module sequence
+###
+FlowRouter.route '/module/:_id', {
+  subscriptions: ( params )->
+    this.register "all", Meteor.subscribe "all"
+
+  action: ( params, qparams )->
+    Session.set "current module id", params._id
+    BlazeLayout.render "layout", { main: "modulesSequence" , footer: "moduleFooter1" }
+}
+
+FlowRouter.route '/loading',
+  action: ()->
+    BlazeLayout.render "layout", { main: "loading" }
 
 

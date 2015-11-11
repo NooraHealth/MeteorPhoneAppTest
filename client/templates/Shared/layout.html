@@ -19,11 +19,13 @@
             {{> Template.dynamic template=main}}
           </div>
 
+        {{#if module}}
           <div class="toolbar">
             <div class="toolbar-inner">
               {{> Template.dynamic template=footer}}
             </div>
           </div>
+        {{/if}}
         </div>
       </div>
     </div>
