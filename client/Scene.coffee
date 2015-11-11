@@ -11,11 +11,8 @@ class @Scene
       id = Session.get "curriculum id"
       if id
         curr = Curriculum.findOne { _id : id }
-        console.trace()
-        console.log Curriculum.find().count()
-        console.log "Setting the ucrriculum"
-        console.log curr
-        @.setCurriculum curr
+        if curr
+          @.setCurriculum curr
 
     _setCurriculum: ( curriculum )->
       @.curriculum = curriculum
@@ -83,11 +80,11 @@ class @Scene
       return Meteor.settings.public.CONTENT_SRC
 
     goToLoadingScreen: ()->
-      Router.go "loading"
+      FlowRouter.go "loading"
       @
 
     goToLessonsPage: ()->
-      Router.go "home"
+      FlowRouter.go "home"
       @
 
     goToNextModule: ()->
@@ -104,7 +101,7 @@ class @Scene
     goToModules: ( lessonId )->
       lesson = Lessons.findOne {_id: lessonId}
       @._modulesController = new ModulesController lessonId
-      Router.go "module.show", { "_id" :  lesson.modules[0] }
+      FlowRouter.go "/module/" + lesson.modules[0]
 
     startModulesSequence: ()->
       @._modulesController.start()

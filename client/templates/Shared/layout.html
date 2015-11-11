@@ -8,7 +8,7 @@
           <!-- Top Navbar-->
           <div class="navbar">
             <div class="navbar-inner">
-              <a href="{{pathFor 'home'}}"><img class="logo" alt="Noora Health" src="/NHlogo.png"/></a>
+              <a id="logo"><img class="logo" alt="Noora Health" src="/NHlogo.png"/></a>
               {{#unless module}}
                 <a href="#" data-panel="right" class="open-panel right-aligned">Select Curriculum</a>
               {{/unless}}
@@ -16,16 +16,14 @@
           </div>
 
           <div class="page-content">
-            {{>yield}}
+            {{> Template.dynamic template=main}}
           </div>
 
-          {{#if module}}
-            <div class="toolbar">
-              <div class="toolbar-inner">
-                {{>yield region="footer"}}
-              </div>
+          <div class="toolbar">
+            <div class="toolbar-inner">
+              {{> Template.dynamic template=footer}}
             </div>
-          {{/if}}
+          </div>
         </div>
       </div>
     </div>

@@ -28,7 +28,7 @@ class @ModulesController
     @._currentModule = @._sequence[index]
     if @._moduleController
       @._moduleController.end()
-    Router.go "module.show", { _id: @._currentModule._id }
+    FlowRouter.go "/module/" +  @._currentModule._id
 
     @._moduleController = ControllerFactory.get().getModuleController @._currentModule
     @._moduleController.begin()
@@ -50,7 +50,7 @@ class @ModulesController
     Session.update "current module index", index
     if index == @._sequence.length
       Scene.get().incrementCurrentLesson()
-      Router.go "home"
+      FlowRouter.go "/"
 
     else
       @._goToModule index

@@ -1,4 +1,7 @@
 Template.modulesSequence.helpers
+  module: ()->
+    id = Session.get "current module id"
+    return Modules.findOne { _id: id }
 
   isCordova: ()->
     return Meteor.isCordova

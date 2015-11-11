@@ -37,6 +37,8 @@ Lessons.attachSchema LessonSchema
 
 Lessons.helpers {
   imgSrc: ()->
+    if not @.image
+      return ""
     url = Meteor.getContentSrc()
     return url + @.image
 

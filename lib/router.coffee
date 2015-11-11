@@ -1,98 +1,31 @@
-Router.map ()->
   
   ###
   # Home
   # Displays all lessons in curriculum
   ###
-  this.route '/', {
-    path: '/'
-    name: "home"
-    template: 'lessonsView'
-    #yieldTemplates: {
-      #'footer': {to:"footer"}
-    #}
-    layoutTemplate: 'layout'
-    cache: true
-
-    #waitOn: ()->
-      #if !Meteor.user()
-        #return []
-      #if Meteor.status().connected
-        #return [
-          #Meteor.subscribe("curriculum", Meteor.user().getCurriculumId()),
-          #Meteor.subscribe("lessons", Meteor.user().getCurriculumId()),
-        #]
-
-    #onBeforeAction: ()->
-      #console.log "In the onBeforeAction in the home route"
-      #if Meteor.loggingIn()
-        #this.next()
-      #else if !Meteor.user()
-        #this.next()
-
-      #if Meteor.isCordova
-        #console.log "Meteor is cordova and I'm about to initialize the server"
-        #initializeServer()
-        
-      #if not Meteor.user().curriculumIsSet()
-        #Router.go "selectCurriculum"
-
-      #if Meteor.isCordova and not Meteor.user().contentLoaded()# and not Session.get "content loaded"
-        #Router.go "loading"
-        #Meteor.call 'contentEndpoint', (err, endpoint)=>
-          #console.log "----------- Downloading the content----------------------------"
-          #console.log "About to make downloader"
-          #downloader = new ContentInterface(Meteor.user().getCurriculum(), endpoint)
-          #onSuccess = (entry)=>
-            #console.log "Success downloading content: ", entry
-            #Meteor.user().setContentAsLoaded true
-            #Router.go "home"
-
-          #onError = (err)->
-            #console.log "Error downloading content: ", err
-            #console.log err
-            #alert "There was an error downloading your content, please log in and try again: ", err
-            #Meteor.user().setContentAsLoaded false
-            #Meteor.logout()
-          #downloader.loadContent onSuccess, onError
-
-      #if this.next
-        #this.next()
-
-    data: ()->
+  FlowRouter.route '/', {
+    action: ( params, qparams )->
+      console.log "!!!!"
+      console.log "In the route@"
+      console.log "!!!!"
       scene = Scene.get()
-      console.log "scene"
       if not scene.curriculumIsSet()
         scene.openCurriculumMenu()
+      BlazeLayout.render "layout", { main : "lessonsView" }
 
   }
 
   ###
   # module sequence
   ###
-  this.route '/module/:_id', {
-    name: "module.show"
-    path: '/module/:_id'
-    layoutTemplate: 'layout'
-    yieldTemplates:
-      'moduleFooter1' : { to: 'footer' }
-    template: "ModulesSequence"
-    cache: true
-    data: ()->
-      Session.set "current lesson id", @.params._id
-      module = Modules.findOne { _id: @.params._id }
-      #modules = Scene.get().getModulesSequence()
-      return { module : module }
+  FlowRouter.route '/module/:_id', {
+    action: ( params, qparams )->
+      Session.set "current module id", params._id
+      BlazeLayout.render "layout", { main: "modulesSequence" , footer: "moduleFooter1" }
   }
 
-  this.route '/loading', {
-    path: '/loading'
-    name: 'loading'
-  }
+  FlowRouter.route '/loading',
+    action: ()->
+      BlazeLayout.render "layout", { main: "loading" }
 
-
-Router.configure {
-  progressSpinner:false,
-  #loadingTemplate: 'loading'
-}
 

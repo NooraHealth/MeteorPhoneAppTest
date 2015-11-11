@@ -4,15 +4,12 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-insecure
 underscore
 coffeescript
 aldeed:collection2
 dburles:collection-helpers
-mrt:q
 http
 accounts-ui
-useraccounts:materialize
 accounts-password
 service-configuration
 sanjo:jasmine
@@ -24,9 +21,6 @@ pcel:loading
 mystor:device-detection
 ground:db
 natestrauser:cordova-file-server
-iron:layout
-useraccounts:iron-routing
-iron:router
 standard-minifiers
 meteor-base
 mobile-experience
@@ -49,3 +43,5 @@ fourseven:scss
 wolves:bourbon
 kevohagan:sweetalert
 mrt:jquery-scrollintoview
+kadira:flow-router
+kadira:blaze-layout
