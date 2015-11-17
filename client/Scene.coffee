@@ -64,7 +64,6 @@ class @Scene
         endpoint = @.getContentEndpoint()
         downloader = new ContentInterface curriculum, endpoint
         onSuccess = (entry)=>
-          #Meteor.user().setContentAsLoaded true
           Scene.get().goToLessonsPage()
 
         onError = (err)->

@@ -9,9 +9,11 @@
           <div class="navbar">
             <div class="navbar-inner">
               <a id="logo"><img class="logo" alt="Noora Health" src="/NHlogo.png"/></a>
-              {{#unless module}}
+              {{#if module}}
+                <span class="right-aligned">{{lessonTitle}}</span>
+              {{else}}
                 <a href="#" data-panel="right" class="open-panel right-aligned">Select Curriculum</a>
-              {{/unless}}
+              {{/if}}
             </div>
           </div>
 
