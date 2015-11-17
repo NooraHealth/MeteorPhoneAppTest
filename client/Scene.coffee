@@ -54,8 +54,8 @@ class @Scene
       if Meteor.isCordova and not ContentInterface.contentAlreadyLoaded curriculum
         console.log "about to download the curriculum", curriculum
         @.downloadCurriculum curriculum
-      else
-        @._setCurriculum( curriculum )
+        @._setCurriculum curriculum
+      @._setCurriculum( curriculum )
       @
     
     downloadCurriculum: ( curriculum )->
@@ -65,7 +65,6 @@ class @Scene
         downloader = new ContentInterface curriculum, endpoint
         onSuccess = (entry)=>
           #Meteor.user().setContentAsLoaded true
-          @._setCurriculum curriculum
           Scene.get().goToLessonsPage()
 
         onError = (err)->
@@ -80,11 +79,12 @@ class @Scene
       return Meteor.settings.public.CONTENT_SRC
 
     goToLoadingScreen: ()->
-      FlowRouter.go "loading"
+      console.log "Going to the loading screen"
+      FlowRouter.go "/loading"
       @
 
     goToLessonsPage: ()->
-      FlowRouter.go "home"
+      FlowRouter.go "/"
       @
 
     goToNextModule: ()->

@@ -96,6 +96,7 @@ class @ContentInterface
 
         onTransferError = (error)->
           console.log "ERROR "
+          console.log targetPath
           console.log error
           if error.http_status == 404
             markAsResolved()

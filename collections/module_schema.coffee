@@ -101,7 +101,7 @@ Modules.helpers {
     return url + @.correct_audio
   
   videoSrc: ()->
-    if not @.vide
+    if not @.video
       return ""
     url = Meteor.getContentSrc()
     return url  + @.video
