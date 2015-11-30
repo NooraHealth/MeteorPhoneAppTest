@@ -26,7 +26,7 @@ class @MultipleChoiceController extends QuestionBase
       if @._responses.length == @._module.correct_answer.length
         @._completedQuestion = true
         console.log 'Playing audio and correct sound effect'
-        Audio.playAudio "#correct_soundeffect", ()=> @.correctAudio.playWhenReady( ModulesController.shakeNextButton )
+        @.correctSoundEffect.playAudio ()=> @.correctAudio.playWhenReady( ModulesController.shakeNextButton )
         correctResponseButtons = @.correctResponseButtons()
         incorrectResponseButtons = @.incorrectResponseButtons()
         if @.audio
@@ -36,10 +36,10 @@ class @MultipleChoiceController extends QuestionBase
           if not $(btn).hasClass "faded"
             $(btn).addClass "faded"
       else
-        Audio.playAudio "#correct_soundeffect"
+        @.correctSoundEffect.playAudio null
 
     else
-      Audio.playAudio "#incorrect_soundeffect", null
+      @.incorrectSoundEffect.playAudio null
       $(target).addClass "incorrectly-selected"
       $(target).addClass "faded"
 

@@ -18,7 +18,7 @@ class @SingleAnswerQuestion extends QuestionBase
         timer: 3000
       }
 
-      Audio.playAudio "#correct_soundeffect", ()=> @.correctAudio.playWhenReady( ModulesController.shakeNextButton )
+      @.correctSoundEffect.playAudio ()=> @.correctAudio.playWhenReady( ModulesController.shakeNextButton )
 
       $(target).addClass "expanded correctly-selected"
       console.log @.incorrectResponseButtons()
@@ -32,7 +32,7 @@ class @SingleAnswerQuestion extends QuestionBase
         timer: 2000
       }
 
-      Audio.playAudio "#incorrect_soundeffect", null
+      @.incorrectSoundEffect.playAudio null
       $(target).addClass "faded"
       $(target).addClass "incorrectly-selected"
 

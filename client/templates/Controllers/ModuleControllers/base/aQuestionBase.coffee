@@ -3,6 +3,9 @@ class @QuestionBase
     @._completedQuestion = false
     @.audio = new Audio @._module.audioSrc(), "#audio"
     @.correctAudio = new Audio @._module.correctAnswerAudio(), "#correctaudio"
+    @.correctSoundEffect = new Audio null, "#correct_soundeffect"
+    @.incorrectSoundEffect = new Audio null, "#incorrect_soundeffect"
+
 
   replay: ()->
     @.stopAllAudio()

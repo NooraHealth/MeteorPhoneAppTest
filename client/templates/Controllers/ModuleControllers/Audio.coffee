@@ -3,40 +3,41 @@ class @Audio
     @._readyToPlay = false
     @._playWhenReady = false
     @._whenFinished = null
-    @.setSrc @.src
+    if @.src
+      @.setSrc @.src
 
-  @playAudio: ( tag, whenFinished )->
-    audio = $(tag)[0]
+  playAudio: ( whenFinished )->
+    console.log "Going to play audio!", @.id
+    audio = @.getAudioElement()
     audio.currentTime = 0
 
-    playCallback = ( elem )->
-      return ()->
-        console.log "Can play fired!"
-        console.log elem
-        console.log "playign elem"
-        elem.play()
-          
-    whenFinishedCallback = ( callback )->
-      return ()->
-        console.log "Finished callback!"
-        callback()
-
     if audio.readyState == 0
-      console.log "Audio ready state"
-      console.log audio.readyState
-      console.log audio
+      console.log "Ready state 0!"
       audio.load()
-      audio.addEventListener "canplay", playCallback(audio)
+      @._shouldPlayOnReady = true
+      audio.addEventListener "canplay", @.checkIfShouldPlay()
 
     else if audio and audio.play
-      console.log "Playing elem 2"
-      console.log audio
+      console.log "NOPE PLAY"
       audio.play()
 
     if whenFinished
-      console.log "When finished: "
-      console.log whenFinishedCallback
-      audio.addEventListener "ended", whenFinishedCallback(whenFinished)
+      @._shouldCallback = true
+      @.callback = whenFinished
+      audio.addEventListener "ended", @.shouldCallback()
+
+  shouldCallback: ()->
+    console.log "Should I callback?", @._shouldCallback
+    if @._shouldCallback
+      if @.callback
+        @.callback()
+    @._shouldCallback = false
+
+  checkIfShouldPlay: ()->
+    console.log "Play on Ready?" , @._shouldPlayOnReady
+    if @._shouldPlayOnReady
+      @.getAudioElement().play()
+      @._shouldPlayOnReady = false
 
   setSrc: ( src )=>
     audio = @.getAudioElement()
@@ -47,7 +48,7 @@ class @Audio
 
   playWhenReady: ( whenFinished )=>
     console.log "This is the when finished of the play when ready"
-    Audio.playAudio @.getAudioElement(), whenFinished
+    @.playAudio whenFinished
 
   pause: ()->
     audio = @.getAudioElement()
