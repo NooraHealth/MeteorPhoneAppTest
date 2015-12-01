@@ -37,6 +37,7 @@ class @ModulesController
     $("body").append "<audio id='correctaudio"+@._currentModule._id+"'></audio>"
     $("body").append "<audio id='correct_soundeffect"+@._currentModule._id+"'></audio>"
     $("body").append "<audio id='incorrect_soundeffect"+@._currentModule._id+"'></audio>"
+    $("body").append "<audio id='intro"+@._currentModule._id+"'></audio>"
 
     @._moduleController = ControllerFactory.get().getModuleController @._currentModule
     @._moduleController.begin()

@@ -1,5 +1,8 @@
 Meteor.startup ()->
   BlazeLayout.setRoot "body"
+  intro = new Audio "/AppIntro.mp3", "#intro", ""
+  intro.playWhenReady()
+
   this.App = new Framework7(
     router:false
     tapHold: true

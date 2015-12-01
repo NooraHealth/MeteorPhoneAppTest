@@ -3,12 +3,14 @@ class @Audio
     @._readyToPlay = false
     @._playWhenReady = false
     @._whenFinished = null
+    
     if @.src
       @.setSrc @.src
 
   playAudio: ( whenFinished )->
     audio = @.getAudioElement()
     audio.currentTime = 0
+    console.log "About to play audio", @.id
 
     if audio.readyState == 0
       audio.load()
@@ -35,6 +37,7 @@ class @Audio
     @._shouldCallback = false
 
   checkIfShouldPlay: ()=>
+    console.log "Checking if should play!", @._shouldPlayOnReady
     if @._shouldPlayOnReady
       @.getAudioElement().play()
       @._shouldPlayOnReady = false
