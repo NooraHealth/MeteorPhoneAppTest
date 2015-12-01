@@ -13,6 +13,15 @@ class @Scene
         curr = Curriculum.findOne { _id : id }
         if curr
           @.setCurriculum curr
+      @.intro = new Audio "http://p2.noorahealth.org/AppIntro.mp3", "#intro", ""
+      @._hasPlayedIntro = false
+
+    stopAudio: ()->
+      @.intro.pause()
+    playAppIntro: ()->
+      if not @._hasPlayedIntro
+        @.intro.playWhenReady()
+        @._hasPlayedIntro = true
 
     _setCurriculum: ( curriculum )->
       @.curriculum = curriculum
@@ -24,8 +33,11 @@ class @Scene
     scrollToTop: ()->
       $($(".page-content")[0]).animate { scrollTop: 0 }, "slow"
 
+    getCurriculumId: ()->
+      return Session.get "curriculum id"
+
     getCurriculum: ()->
-      id = Session.get "curriculum id"
+      id = @.getCurriculumId()
       return Curriculum.findOne {_id: id}
 
     getLessons: ()->
@@ -36,7 +48,7 @@ class @Scene
 
     getCurrentLesson: ()->
       currentLesson = Session.get "current lesson"
-      if currentLesson
+      if currentLesson?
         return @._lessons[currentLesson]
       else
         return @._lessons[0]
@@ -83,7 +95,8 @@ class @Scene
       @
 
     goToLessonsPage: ()->
-      FlowRouter.go "/"
+      currId = @.getCurriculumId()
+      FlowRouter.go "/lessons/"+ currId
       @
 
     goToNextModule: ()->

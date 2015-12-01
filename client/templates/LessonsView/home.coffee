@@ -1,10 +1,14 @@
 Template.lessonsView.helpers
-  curriculumTitle: ()->
-    return Scene.get().getCurriculum().title
-
   lessons: ()->
-    return Scene.get().getLessons()
+    currId = FlowRouter.getParam "curr_id"
+    curriculum = Curriculum.findOne {_id: currId } || {}
+    return curriculum
 
+Template.lessonsView.onCreated ()->
+  @.autorun ()=>
+    curriculumId = FlowRouter.getParam "curr_id"
+    @.subscribe "lessons", curriculumId
+    
 Template.lessonsView.onRendered ()->
   console.log "Scroll into view"
   currentLesson = Session.get "current lesson"

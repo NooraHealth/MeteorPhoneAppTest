@@ -25,6 +25,7 @@ class @ModulesController
 
   _goToModule: ( index )->
     $("audio").each (elem)->
+      console.log "removing!", elem
       $(elem).remove()
 
     Scene.get().scrollToTop()

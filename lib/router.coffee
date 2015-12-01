@@ -4,13 +4,13 @@
 # Displays all lessons in curriculum
 ###
 FlowRouter.route '/', {
-  subscriptions: ( params )->
-    this.register "all", Meteor.subscribe "all"
-
   action: ( params, qparams )->
-    console.log "!!!!"
-    console.log "In the route@"
-    console.log "!!!!"
+    Scene.get().goToLessonsPage()
+}
+
+FlowRouter.route '/lessons/:curr_id', {
+  action: ( params, qparams )->
+    Scene.get().playAppIntro()
     BlazeLayout.render "layout", { main : "lessonsView" }
 }
 
@@ -19,10 +19,8 @@ FlowRouter.route '/', {
 ###
 
 FlowRouter.route '/modules/:_id', {
-  subscriptions: ( params )->
-    this.register "all", Meteor.subscribe "all"
-
   action: ( params, qparams )->
+    Scene.get().stopAudio()
     BlazeLayout.render "layout", { main: "modulesSequence" , footer: "moduleFooter1" }
 }
 
