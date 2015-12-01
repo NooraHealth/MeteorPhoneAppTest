@@ -22,7 +22,8 @@ Meteor.publish "all_lessons", ()->
 #Meteor.publish "attempts", (userId)->
   #return Attempts.find({})
 
-Meteor.publish "all_curriculums", ()->
+Meteor.publish "curriculums", ()->
+  console.log "Returning curriculums"
   return Curriculum.find({})
 
 Meteor.publish "all_modules", ()->

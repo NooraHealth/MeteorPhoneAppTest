@@ -18,6 +18,7 @@ class @Scene
 
     stopAudio: ()->
       @.intro.pause()
+
     playAppIntro: ()->
       if not @._hasPlayedIntro
         @.intro.playWhenReady()
@@ -25,9 +26,10 @@ class @Scene
 
     _setCurriculum: ( curriculum )->
       @.curriculum = curriculum
-      @._lessons = @.curriculum.getLessonDocuments()
+      #@._lessons = @.curriculum.getLessonDocuments()
       Session.setPersistent "current lesson", 0
       Session.setPersistent "curriculum id", @.curriculum._id
+      @.goToLessonsPage()
       @
 
     scrollToTop: ()->
@@ -90,7 +92,6 @@ class @Scene
       return Meteor.settings.public.CONTENT_SRC
 
     goToLoadingScreen: ()->
-      console.log "Going to the loading screen"
       FlowRouter.go "/loading"
       @
 
