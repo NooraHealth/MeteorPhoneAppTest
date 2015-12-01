@@ -7,9 +7,9 @@
       <ul class="">
         {{#each modules}}
           {{#if currentModule}} 
-          <li class="current" name="{{i}}"><a class="module_nav" name="{{i}}"></a></li>
+          <li class="current" name="{{i}}"><a class="module_footer" name="{{i}}">{{index}}</a></li>
           {{else}}
-          <li name="{{i}}"><a class="module_nav {{#if completed i}} green {{/if}}" name="{{i}}"></a></li>
+          <li name="{{i}}"><a class="module_footer {{#if completed i}} green {{/if}}" name="{{i}}">{{index}}</a></li>
           {{/if}}
         {{/each}}
             

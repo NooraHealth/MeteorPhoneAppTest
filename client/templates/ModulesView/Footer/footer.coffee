@@ -5,7 +5,7 @@ Template.moduleFooter1.helpers
 
     if !modules?
       return
-    arr = ({module: module, i: i} for module, i in modules)
+    arr = ({module: module, i: i, index: ++i} for module, i in modules)
     return arr
 
   completed: ( i )->
