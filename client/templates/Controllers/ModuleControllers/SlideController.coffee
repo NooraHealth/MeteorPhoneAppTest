@@ -5,7 +5,7 @@
 class @SlideController
 
   constructor: ( @_module )->
-    @.audio = new Audio @._module.audioSrc(), "#audio"
+    @.audio = new Audio @._module.audioSrc(), "#audio", @._module._id
 
   replay: ()->
     @.audio.pause()

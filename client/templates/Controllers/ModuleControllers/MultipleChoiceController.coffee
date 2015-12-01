@@ -15,6 +15,7 @@ class @MultipleChoiceController extends QuestionBase
     return $("#" + @._module._id).find(".response").filter ( i, elem )=> not $(elem).hasClass "correct"
 
   responseRecieved: ( target )->
+    console.log "Response received MC"
 
     if $(target).hasClass "correct"
       $(target).addClass "correctly-selected"
@@ -25,7 +26,7 @@ class @MultipleChoiceController extends QuestionBase
 
       if @._responses.length == @._module.correct_answer.length
         @._completedQuestion = true
-        console.log 'Playing audio and correct sound effect'
+        console.log '------------Playing audio and correct sound effect------------'
         @.correctSoundEffect.playAudio ()=> @.correctAudio.playWhenReady( ModulesController.shakeNextButton )
         correctResponseButtons = @.correctResponseButtons()
         incorrectResponseButtons = @.incorrectResponseButtons()

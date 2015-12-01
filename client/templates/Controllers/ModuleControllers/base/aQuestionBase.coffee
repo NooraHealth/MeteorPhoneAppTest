@@ -1,11 +1,10 @@
 class @QuestionBase
   constructor: ( @_module )->
     @._completedQuestion = false
-    @.audio = new Audio @._module.audioSrc(), "#audio"
-    @.correctAudio = new Audio @._module.correctAnswerAudio(), "#correctaudio"
-    @.correctSoundEffect = new Audio null, "#correct_soundeffect"
-    @.incorrectSoundEffect = new Audio null, "#incorrect_soundeffect"
-
+    @.audio = new Audio @._module.audioSrc(), "#audio", @._module._id
+    @.correctAudio = new Audio @._module.correctAnswerAudio(), "#correctaudio", @._module._id
+    @.correctSoundEffect = new Audio "/correct_soundeffect.mp3", "#correct_soundeffect", @._module._id
+    @.incorrectSoundEffect = new Audio "/incorrect_soundeffect.mp3", "#incorrect_soundeffect", @._module._id
 
   replay: ()->
     @.stopAllAudio()

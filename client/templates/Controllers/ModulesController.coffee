@@ -24,11 +24,19 @@ class @ModulesController
         btn.removeClass klass
 
   _goToModule: ( index )->
+    $("audio").each (elem)->
+      $(elem).remove()
+
     Scene.get().scrollToTop()
     @._currentModule = @._sequence[index]
     if @._moduleController
       @._moduleController.end()
+
     Session.set "current module id", @._currentModule._id
+    $("body").append "<audio id='audio"+@._currentModule._id+"'></audio>"
+    $("body").append "<audio id='correctaudio"+@._currentModule._id+"'></audio>"
+    $("body").append "<audio id='correct_soundeffect"+@._currentModule._id+"'></audio>"
+    $("body").append "<audio id='incorrect_soundeffect"+@._currentModule._id+"'></audio>"
 
     @._moduleController = ControllerFactory.get().getModuleController @._currentModule
     @._moduleController.begin()

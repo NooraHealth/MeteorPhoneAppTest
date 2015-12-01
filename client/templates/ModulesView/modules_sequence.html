@@ -4,16 +4,16 @@
 
     {{#with module}}
 
-      <audio id="audio"></audio>
-      <audio id="correctaudio"></audio>
-      <!--<audio id="incorrectaudio"></audio>-->
-      {{#if isCordova}}
-        <audio id="correct_soundeffect" src="http://p2.noorahealth.org/correct_soundeffect.mp3"></audio>
-        <audio id="incorrect_soundeffect" src="http://p2.noorahealth.org/incorrect_soundeffect.mp3"></audio>
-      {{else}}
-        <audio id="correct_soundeffect" src="/correct_soundeffect.mp3"></audio>
-        <audio id="incorrect_soundeffect" src="/incorrect_soundeffect.mp3"></audio>
-      {{/if}}
+    <!--<audio id="audio{{_id}}"></audio>-->
+    <!--<audio id="correctaudio{{_id}}"></audio>-->
+      <!--[><audio id="incorrectaudio"></audio><]-->
+      <!--{{#if isCordova}}-->
+        <!--<audio id="correct_soundeffect{{_id}}" src="http://p2.noorahealth.org/correct_soundeffect.mp3"></audio>-->
+        <!--<audio id="incorrect_soundeffect{{_id}}" src="http://p2.noorahealth.org/incorrect_soundeffect.mp3"></audio>-->
+      <!--{{else}}-->
+        <!--<audio id="correct_soundeffect{{_id}}" src="/correct_soundeffect.mp3"></audio>-->
+        <!--<audio id="incorrect_soundeffect{{_id}}" src="/incorrect_soundeffect.mp3"></audio>-->
+      <!--{{/if}}-->
       <div id="{{_id}}" class="card">
         {{#if isBinaryChoice}}
           {{>binaryChoiceModule}}
