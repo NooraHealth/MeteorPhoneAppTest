@@ -6,7 +6,7 @@ class @Scene
 
   class PrivateScene
     constructor: ()->
-      @._lessons = new ReactiveArray()
+      @._lessons = []
       @._contentEndpoint = Meteor.settings.public.CONTENT_SRC
       id = Session.get "curriculum id"
       if id
@@ -15,14 +15,9 @@ class @Scene
           @.setCurriculum curr
       @.intro = new Audio "http://p2.noorahealth.org/AppIntro.mp3", "#intro", ""
       @._hasPlayedIntro = false
-      
+
     notify: ( event )->
-      if event == "SUBSCRIPTIONS_READY"
-        @._lessons = @.getCurriculum().getLessonDocuments()
-        console.log "Here is the curriculum", @.getCurriculum()
-        console.log "JEre are all the lessons", Lessons.find {}
       if event == "SUBSCRIPTIONS_READY" and @._downloadContentWhenSubscriptionsReady
-        console.log "going to set the lessons"
         @.downloadCurriculum @.getCurriculum()
         @._downloadContentWhenSubscriptionsReady = false
 
@@ -36,15 +31,11 @@ class @Scene
 
     _setCurriculum: ( curriculum )->
       @.curriculum = curriculum
-
+      @._lessons = @.curriculum.getLessonDocuments()
       Session.setPersistent "current lesson", 0
       Session.setPersistent "curriculum id", @.curriculum._id
       @.goToLessonsPage()
       @
-
-    addToLessons: (lessonId)->
-      lesson = Lessons.findOne { _id: lessonId }
-      @._lessons.push lesson
 
     scrollToTop: ()->
       $($(".page-content")[0]).animate { scrollTop: 0 }, "slow"
@@ -63,7 +54,6 @@ class @Scene
       return curriculum.getLessonDocuments()
 
     getCurrentLesson: ()->
-      console.log @._lessons
       currentLesson = Session.get "current lesson"
       if currentLesson?
         return @._lessons[currentLesson]
@@ -91,7 +81,9 @@ class @Scene
     
     downloadCurriculum: ( curriculum )->
       if Meteor.isCordova
+        console.log "About to go to loading screen"
         endpoint = @.getContentEndpoint()
+        console.log "ENDPOINT", endpoint
         downloader = new ContentInterface curriculum, endpoint
         onSuccess = (entry)=>
           Scene.get().goToLessonsPage()

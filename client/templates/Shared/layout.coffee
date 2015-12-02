@@ -21,6 +21,7 @@ Template.layout.onCreated ()->
 
   @.autorun ()=>
     console.log "Subscribing"
+    Session.set "subscriptions ready", false
     curriculumId = Session.get "curriculum id"
     currHandle = Subs.subscribe "curriculums"
     lessonsHandle = Subs.subscribe "lessons", curriculumId
@@ -34,8 +35,9 @@ Template.layout.onCreated ()->
     currReady = @.currReady.get()
     modulesReady = @.modulesReady.get()
     if lessonsReady and currReady and modulesReady
-      console.log "Notifying that subscriptions are ready!"
-      Scene.get().notifySubscriptionsReady()
+      console.log "Notifying as subscriptions ready@"
+      Session.set "subscriptions ready", true
+      Scene.get().notify "SUBSCRIPTIONS_READY"
     
 Template.layout.events
   "click #logo": ()->

@@ -146,6 +146,7 @@ class @ContentInterface
     console.log "This is the curriculum"
     console.log @.curriculum
     lessons = @.curriculum.getLessonDocuments()
+    console.log "Here are the lessons"
     urls = []
     for lesson in lessons
       urls.merge(@.retrieveContentUrls(lesson))
