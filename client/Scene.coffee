@@ -16,6 +16,9 @@ class @Scene
       @.intro = new Audio "http://p2.noorahealth.org/AppIntro.mp3", "#intro", ""
       @._hasPlayedIntro = false
 
+    notifySubscriptionsReady: ()->
+      @._lessons = @.getCurriculum().getLessonDocuments()
+
     stopAudio: ()->
       @.intro.pause()
 
@@ -26,7 +29,7 @@ class @Scene
 
     _setCurriculum: ( curriculum )->
       @.curriculum = curriculum
-      #@._lessons = @.curriculum.getLessonDocuments()
+      @._lessons = @.curriculum.getLessonDocuments()
       Session.setPersistent "current lesson", 0
       Session.setPersistent "curriculum id", @.curriculum._id
       @.goToLessonsPage()
@@ -96,8 +99,7 @@ class @Scene
       @
 
     goToLessonsPage: ()->
-      currId = @.getCurriculumId()
-      FlowRouter.go "/lessons/"+ currId
+      FlowRouter.go "/"
       @
 
     goToNextModule: ()->
@@ -112,7 +114,8 @@ class @Scene
       @
 
     goToModules: ( lessonId )->
-      lesson = Lessons.findOne {_id: lessonId}
+      console.log "Going to modules with lessonId"
+      lesson = Lessons.findOne { _id: lessonId }
       @._modulesController = new ModulesController lessonId
       FlowRouter.go "/modules/" +  lesson._id
 
@@ -125,6 +128,7 @@ class @Scene
 
     getModulesSequence: ()->
       if @._modulesController?
+        console.log "Getting the sequence1"
         return @._modulesController.getSequence()
       else
         return []

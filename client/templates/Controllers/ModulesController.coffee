@@ -68,6 +68,7 @@ class @ModulesController
     return @._sequence
 
   start: ()->
+    console.log "Starting the sequence"
     Session.set "current module index", 0
     @._goToModule 0
     

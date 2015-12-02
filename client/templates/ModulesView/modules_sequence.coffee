@@ -1,6 +1,8 @@
 Template.modulesSequence.helpers
   module: ()->
     id = Session.get "current module id"
+    console.log "Returning the module", id
+    console.log Modules.findOne { _id: id }
     return Modules.findOne { _id: id }
 
   isCordova: ()->
@@ -23,4 +25,3 @@ Template.modulesSequence.helpers
 
 Template.modulesSequence.onRendered ()->
   Scene.get().startModulesSequence()
-

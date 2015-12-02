@@ -17,6 +17,7 @@
             </div>
           </div>
 
+      {{#if subscriptionsReady}}
           <div class="page-content">
             {{> Template.dynamic template=main}}
           </div>
@@ -28,6 +29,8 @@
             </div>
           </div>
         {{/if}}
+      {{/if}}
+
         </div>
       </div>
     </div>

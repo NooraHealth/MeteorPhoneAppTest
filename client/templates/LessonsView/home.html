@@ -4,22 +4,24 @@
 
     <div class="panel-overlay"></div>
 
-    <!-- Left panel, let it be with reveal effect -->
-    <div class="panel panel-cover panel-right">
-      {{>sideMenu}}
-    </div>
+      <!--{{#if subscriptionsReady}}-->
+      <!-- Left panel, let it be with reveal effect -->
+      <div class="panel panel-cover panel-right">
+        {{>sideMenu}}
+      </div>
 
-    <div class="content-block inner-container">
-      <div class="list-block">
-        <div class="cards-list">
-          <ul class="lessons-list">
-            {{#each lessons}}
-              {{>lessonThumbnail}}
-            {{/each}}
-          </ul>
+      <div class="content-block inner-container">
+        <div class="list-block">
+          <div class="cards-list">
+            <ul class="lessons-list">
+              {{#each lessons}}
+                {{>lessonThumbnail}}
+              {{/each}}
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
+      <!--{{/if}}-->
 
 </template>
 

@@ -47,3 +47,5 @@ kadira:blaze-layout
 arillo:flow-router-helpers
 mrt:q
 percolatestudio:segment.io
+meteorhacks:subs-manager
+reactive-var
