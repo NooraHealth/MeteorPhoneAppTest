@@ -26,8 +26,8 @@ Template.layout.onCreated ()->
     lessonsHandle = Subs.subscribe "lessons", curriculumId
     modulesHandle = Subs.subscribe "modules_in_curriculum", curriculumId
     @.modulesReady.set modulesHandle.ready()
-    @.currReady.set currHandle.ready()
     @.lessonsReady.set lessonsHandle.ready()
+    @.currReady.set currHandle.ready()
 
   @.autorun ()=>
     lessonsReady = @.lessonsReady.get()

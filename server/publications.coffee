@@ -38,9 +38,14 @@ Meteor.publish "modules_in_curriculum", ( currId )->
     console.log Modules.find({ _id: {$in: modules }}).count()
     return Modules.find { _id: {$in: modules }}
 
+  else
+    return []
+
 Meteor.publish "curriculum", (id)->
   if id
     return Curriculum.find ({_id: id})
+  else
+    return []
 
 Meteor.publish "lessons", (curriculumId)->
   if curriculumId
@@ -49,6 +54,8 @@ Meteor.publish "lessons", (curriculumId)->
       return []
     lessons = curr.lessons
     return Lessons.find {_id: {$in: lessons}}
+  else
+    return []
 
 Meteor.publish "lesson", (id)->
   return Lessons.find ({_id: id})
