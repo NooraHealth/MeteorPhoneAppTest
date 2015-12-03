@@ -74,7 +74,7 @@ class @Scene
       currLesson = Session.get "current lesson"
       nextLesson = ( currLesson + 1 ) % @._lessons.length
       Session.setPersistent "current lesson", nextLesson
-
+      
     replayMedia: ()->
       console.log @._modulesController
       @._modulesController.replay()

@@ -65,6 +65,8 @@ class @ModulesController
     if index == @._sequence.length
       Scene.get().incrementCurrentLesson()
       Scene.get().goToLessonsPage()
+      congratulations = new Accolade()
+      congratulations.sendAccolade()
     else
       @._goToModule index
 
