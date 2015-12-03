@@ -11,6 +11,8 @@ class @SingleAnswerQuestion extends QuestionBase
       @._completedQuestion = true
       if @.audio
         @.audio.pause()
+      if @.intro
+        @.intro.pause()
       
       swal {
         title: ""

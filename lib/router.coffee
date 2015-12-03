@@ -5,7 +5,8 @@
 ###
 FlowRouter.route '/', {
   action: ( params, qparams )->
-    Scene.get().playAppIntro()
+    if Scene.get().getCurriculum()
+      Scene.get().playAppIntro()
     BlazeLayout.render "layout", { main : "lessonsView" }
 }
 
@@ -21,5 +22,6 @@ FlowRouter.route '/modules/:_id', {
 
 FlowRouter.route '/loading',
   action: ()->
+    console.log "Going to loading!"
     BlazeLayout.render "layout", { main: "loading" }
 

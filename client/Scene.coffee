@@ -18,11 +18,9 @@ class @Scene
       
     notify: ( event )->
       if event == "SUBSCRIPTIONS_READY"
-        @._lessons = @.getCurriculum().getLessonDocuments()
-        console.log "Here is the curriculum", @.getCurriculum()
-        console.log "JEre are all the lessons", Lessons.find {}
+        if @.getCurriculum()
+          @._lessons = @.getCurriculum().getLessonDocuments()
       if event == "SUBSCRIPTIONS_READY" and @._downloadContentWhenSubscriptionsReady
-        console.log "going to set the lessons"
         @.downloadCurriculum @.getCurriculum()
         @._downloadContentWhenSubscriptionsReady = false
 
@@ -36,10 +34,8 @@ class @Scene
 
     _setCurriculum: ( curriculum )->
       @.curriculum = curriculum
-
       Session.setPersistent "current lesson", 0
       Session.setPersistent "curriculum id", @.curriculum._id
-      @.goToLessonsPage()
       @
 
     addToLessons: (lessonId)->
@@ -63,7 +59,6 @@ class @Scene
       return curriculum.getLessonDocuments()
 
     getCurrentLesson: ()->
-      console.log @._lessons
       currentLesson = Session.get "current lesson"
       if currentLesson?
         return @._lessons[currentLesson]
@@ -82,10 +77,11 @@ class @Scene
     setCurriculum: (curriculum)->
       console.log "Setting the curriculum!", curriculum
       if Meteor.isCordova and not ContentInterface.contentAlreadyLoaded curriculum
-        console.log "About to go to the loading screen"
-        Scene.get().goToLoadingScreen()
+        console.log "---- OGING TO LOADING SCREEN-----------"
+        @.goToLoadingScreen()
         @._downloadContentWhenSubscriptionsReady = true
-        @._setCurriculum curriculum
+      else
+        @.goToLessonsPage()
       @._setCurriculum( curriculum )
       @
     
@@ -127,7 +123,6 @@ class @Scene
       @
 
     goToModules: ( lessonId )->
-      console.log "Going to modules with lessonId"
       lesson = Lessons.findOne { _id: lessonId }
       @._modulesController = new ModulesController lessonId
       FlowRouter.go "/modules/" +  lesson._id
@@ -136,12 +131,10 @@ class @Scene
       @._modulesController.start()
 
     getModuleSequenceController: ()->
-      console.log "returning modeules sequence controller"
       return @._modulesController
 
     getModulesSequence: ()->
       if @._modulesController?
-        console.log "Getting the sequence1"
         return @._modulesController.getSequence()
       else
         return []
@@ -151,13 +144,11 @@ class @Scene
 
     getContentSrc: (filePath)->
       #encoding the m-dash in urls must be done manually
-      console.log "Getting the content src of ", filePath
       escaped = encodeURIComponent(filePath)
       correctMdash = '%E2%80%94'
       incorrectMdash = /%E2%80%93/
       if escaped.match incorrectMdash
         escaped = escaped.replace incorrectMdash, correctMdash
-      console.log "final escaped ", escaped
       return @.src + escaped
 
     getPageSize: ()->

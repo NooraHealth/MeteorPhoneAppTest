@@ -31,6 +31,8 @@ class @MultipleChoiceController extends QuestionBase
         incorrectResponseButtons = @.incorrectResponseButtons()
         if @.audio
           @.audio.pause()
+        if @.intro
+          @.intro.pause()
 
         for btn in incorrectResponseButtons
           if not $(btn).hasClass "faded"
