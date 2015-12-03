@@ -23,19 +23,15 @@ class @Accolade
   ]
 
   constructor: ()->
-    @.index = 0
-
 
   sendAccolade: ()->
-    message = @.messages[@.index]
+    rand = Math.random() * ( @.messages.length)
+    console.log "This is rand:"  + rand
+    message = @.messages[Math.floor(rand)]
     swal({
       title: message.title
       imageUrl: message.image
       animation: "slide-from-bottom"
       timer: 5000
     })
-
-    @.index = @.index++ % @.messages.length
-
-      
 
