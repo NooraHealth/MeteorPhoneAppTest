@@ -11,6 +11,9 @@ class @SlideController
     @.audio.pause()
     @.audio.playWhenReady( ModulesController.shakeNextButton )
 
+  stopAllAudio: ()->
+    @.audio.pause()
+
   begin: ()=>
     @.audio.playWhenReady ModulesController.shakeNextButton
 

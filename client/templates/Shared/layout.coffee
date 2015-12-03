@@ -41,4 +41,5 @@ Template.layout.onCreated ()->
     
 Template.layout.events
   "click #logo": ()->
-    FlowRouter.go "/"
+    Scene.get().goToLessonsPage()
+

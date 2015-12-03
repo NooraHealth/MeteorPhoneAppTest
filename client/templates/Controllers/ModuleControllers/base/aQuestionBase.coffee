@@ -13,6 +13,7 @@ class @QuestionBase
       introAudio = '/MCIntro.mp3'
 
     @.intro = new Audio "http://p2.noorahealth.org"+introAudio, "#intro", @._module._id
+
   replay: ()->
     @.stopAllAudio()
     if @._completedQuestion

@@ -1,3 +1,7 @@
+
+document.addEventListener "resume", ()->
+  Scene.get().playAppIntro(true)
+
 class @Scene
   @get: ()->
     if !@.scene
@@ -18,6 +22,7 @@ class @Scene
       
     notify: ( event )->
       if event == "SUBSCRIPTIONS_READY"
+        Scene.get().playAppIntro()
         if @.getCurriculum()
           @._lessons = @.getCurriculum().getLessonDocuments()
       if event == "SUBSCRIPTIONS_READY" and @._downloadContentWhenSubscriptionsReady
@@ -27,8 +32,8 @@ class @Scene
     stopAudio: ()->
       @.intro.pause()
 
-    playAppIntro: ()->
-      if not @._hasPlayedIntro
+    playAppIntro: ( force )->
+      if force or not @._hasPlayedIntro
         @.intro.playWhenReady()
         @._hasPlayedIntro = true
 
@@ -108,6 +113,11 @@ class @Scene
       @
 
     goToLessonsPage: ()->
+      console.log "Goingt o modulespage"
+      if @._modulesController
+        console.log "Stopping all audio"
+        @._modulesController.stopAllAudio()
+
       FlowRouter.go "/"
       @
 

@@ -11,6 +11,10 @@ class @ModulesController
   replay: ()->
     @._moduleController.replay()
 
+  stopAllAudio: ()->
+    if @._moduleController and @._moduleController.stopAllAudio
+      @._moduleController.stopAllAudio()
+
   @shakeNextButton: ()->
     btn = $("#next")
     for klass in ModulesController._nextButtonClasses
