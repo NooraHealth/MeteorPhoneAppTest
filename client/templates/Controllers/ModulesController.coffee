@@ -64,7 +64,7 @@ class @ModulesController
     Session.update "current module index", index
     if index == @._sequence.length
       Scene.get().incrementCurrentLesson()
-      FlowRouter.go "/"
+      Scene.get().goToLessonsPage()
     else
       @._goToModule index
 
