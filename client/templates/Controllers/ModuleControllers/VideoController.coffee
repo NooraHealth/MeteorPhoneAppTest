@@ -10,7 +10,6 @@ class @VideoController
     return $("#video" + @._module._id)[0]
 
   begin: ()->
-    console.log "Moving the video onstage"
     ModulesController.stopShakingNextButton()
 
   playVideo: ()->

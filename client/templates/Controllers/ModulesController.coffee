@@ -4,6 +4,7 @@ class @ModulesController
   constructor: ( lessonId )->
     @._lesson = Lessons.findOne { "_id" : lessonId }
     @._sequence = @._lesson.getModulesSequence()
+    @._alreadyPlayedIntro = []
 
   getCurrentController: ()->
     return @._moduleController
@@ -28,11 +29,10 @@ class @ModulesController
         btn.removeClass klass
 
   _goToModule: ( index )->
+    Scene.get().scrollToTop()
     $("audio").each (elem)->
-      console.log "removing!", elem
       $(elem).remove()
 
-    Scene.get().scrollToTop()
     @._currentModule = @._sequence[index]
     if @._moduleController
       @._moduleController.end()
@@ -45,8 +45,14 @@ class @ModulesController
     $("body").append "<audio id='intro"+@._currentModule._id+"'></audio>"
 
     @._moduleController = ControllerFactory.get().getModuleController @._currentModule
-    @._moduleController.begin()
-    console.log "Going to module", @._currentModule._id
+    @._moduleController.begin( @.shouldPlayIntro @._currentModule.type )
+
+  shouldPlayIntro: ( type )->
+    if type in @._alreadyPlayedIntro
+      return false
+    else
+      @._alreadyPlayedIntro.push type
+      return true
 
   notifyResponseRecieved: ( target )->
     @._moduleController.responseRecieved target

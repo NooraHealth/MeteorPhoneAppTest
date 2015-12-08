@@ -1,4 +1,5 @@
 class @QuestionBase
+
   constructor: ( @_module )->
     @._completedQuestion = false
     @.audio = new Audio @._module.audioSrc(), "#audio", @._module._id
@@ -35,14 +36,19 @@ class @QuestionBase
     @.correctAudio.pause()
     @.intro.pause()
 
-  begin: ()->
+  playIntro: ()->
     @.intro.playWhenReady( @.audio.playWhenReady )
  
+  begin: ( playIntro )->
+    ModulesController.stopShakingNextButton()
+    if playIntro
+      @.playIntro()
+    else
+      @.audio.playWhenReady()
+
   end: ()->
     @.stopAllAudio()
-
     @.resetState()
-    ModulesController.stopShakingNextButton()
   
   resetState: ()->
     for btn in @.incorrectResponseButtons()
