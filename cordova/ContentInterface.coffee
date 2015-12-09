@@ -17,8 +17,6 @@ class @ParsedUrl
 class @ContentInterface
 
   constructor: (@curriculum, @contentEndpoint)->
-    console.log "And this is the crriculum", @.curriculum
-    console.log "Consutricting and this is the endp: ", @.contentEndpoint
     if not Session.get "already loaded"
       Session.setPersistent "already loaded", { loaded: [] }
 
@@ -59,7 +57,15 @@ class @ContentInterface
     console.log "Marking content as already loaded"
     console.log Session.get "already loaded"
 
-  downloadFiles: (urls)->
+  downloadFiles: ( filenames )->
+    urls = []
+    for name in filenames
+      url = new ParsedUrl name, @.contentEndpoint
+      urls.push url
+
+    @._downloadFiles urls
+   
+  _downloadFiles: (urls)->
     deferred = Q.defer()
     numToLoad = urls.length
     numRecieved = 0
@@ -142,6 +148,9 @@ class @ContentInterface
 
     return deferred.promise
 
+  loadLessonContent: ()->
+    url = new ParsedUrl(lesson.image, @.contentEndpoint)
+
   loadContent: (onSuccess, onError)->
     console.log "This is the curriculum"
     console.log @.curriculum
@@ -158,7 +167,7 @@ class @ContentInterface
     
     console.log "About to download files"
     console.log endURLS
-    promise = @.downloadFiles endURLS
+    promise = @._downloadFiles endURLS
     promise.then (entry)->
       console.log "PROMISE SUCCESSFUL"
       onSuccess(entry)

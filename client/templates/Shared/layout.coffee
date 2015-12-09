@@ -43,3 +43,6 @@ Template.layout.events
   "click #logo": ()->
     Scene.get().goToLessonsPage()
 
+  "click .open-panel": ()->
+    console.log "CLICK"
+

@@ -85,6 +85,29 @@ class @Scene
         console.log "---- OGING TO LOADING SCREEN-----------"
         @.goToLoadingScreen()
         @._downloadContentWhenSubscriptionsReady = true
+
+        #cursors to track when updates or changes occur in the document set
+        #so the app can redownload content if necessary
+        lessonsCursor = Lessons.find({})
+        modulesCursor = Modules.find({})
+        lessonsCursor.observeChanges {
+          changed: ( id, fields )->
+            console.log "--------A LESSON HAS CHANGED!!!-----------"
+            lesson = Lessons.findOne {_id: id}
+            console.log lesson
+            ContentInterface.downloadFiles [lesson.image]
+
+          removed: ()->
+        }
+
+        modulesCursor.observeChanges {
+          changed: ( id, fields )->
+            console.log "--------A MODULE HAS CHANGED!!!-----------"
+            module = Modules.findOne {_id: id}
+            filenames = ContentInterface.moduleUrls module
+            ContentInterface.downloadFiles filenames
+        }
+      
       else
         @.goToLessonsPage()
       @._setCurriculum( curriculum )
