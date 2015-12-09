@@ -63,6 +63,7 @@ class @ContentInterface
       url = new ParsedUrl name, @.contentEndpoint
       urls.push url
 
+    console.log "About to _downloadFiles", urls
     @._downloadFiles urls
    
   _downloadFiles: (urls)->

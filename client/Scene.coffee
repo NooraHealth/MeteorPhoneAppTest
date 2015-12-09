@@ -10,6 +10,37 @@ class @Scene
 
   class PrivateScene
     constructor: ()->
+      if Meteor.isCordova
+        Curriculum.find({}).observeChanges {
+          changed: ( id, fields )->
+            console.log "CURRICULUM CHANGES"
+        }
+
+        Lessons.find({}).observeChanges({
+          added: ( id, fields )->
+            console.log "Lesson added"
+
+          removed: ( id, fields )->
+            console.log "Added"
+
+          changed: ( id, fields )->
+            console.log "--------A LESSON HAS CHANGED!!!-----------"
+            console.log id
+            console.log fields
+            lesson = Lessons.findOne { _id: id }
+            console.log lesson
+            ContentInterface.downloadFiles [lesson.image]
+
+        })
+
+        Modules.find({}).observeChanges({
+          changed: ( id, fields )->
+            console.log "--------A MODULE HAS CHANGED!!!-----------"
+            #module = Modules.findOne {_id: id}
+            #filenames = ContentInterface.moduleUrls module
+            #ContentInterface.downloadFiles filenames
+        })
+      
       @._lessons = new ReactiveArray()
       @._contentEndpoint = Meteor.settings.public.CONTENT_SRC
       id = Session.get "curriculum id"
@@ -86,28 +117,6 @@ class @Scene
         @.goToLoadingScreen()
         @._downloadContentWhenSubscriptionsReady = true
 
-        #cursors to track when updates or changes occur in the document set
-        #so the app can redownload content if necessary
-        lessonsCursor = Lessons.find({})
-        modulesCursor = Modules.find({})
-        lessonsCursor.observeChanges {
-          changed: ( id, fields )->
-            console.log "--------A LESSON HAS CHANGED!!!-----------"
-            lesson = Lessons.findOne {_id: id}
-            console.log lesson
-            ContentInterface.downloadFiles [lesson.image]
-
-          removed: ()->
-        }
-
-        modulesCursor.observeChanges {
-          changed: ( id, fields )->
-            console.log "--------A MODULE HAS CHANGED!!!-----------"
-            module = Modules.findOne {_id: id}
-            filenames = ContentInterface.moduleUrls module
-            ContentInterface.downloadFiles filenames
-        }
-      
       else
         @.goToLessonsPage()
       @._setCurriculum( curriculum )
