@@ -29,7 +29,9 @@ class @Scene
             console.log fields
             lesson = Lessons.findOne { _id: id }
             console.log lesson
-            ContentInterface.downloadFiles [lesson.image]
+            files = []
+            files.push lesson.image
+            ContentInterface.downloadFiles files
 
         })
 
@@ -112,11 +114,10 @@ class @Scene
 
     setCurriculum: (curriculum)->
       console.log "Setting the curriculum!", curriculum
-      if Meteor.isCordova and not ContentInterface.contentAlreadyLoaded curriculum
+      if Meteor.isCordova# and not ContentInterface.contentAlreadyLoaded curriculum
         console.log "---- OGING TO LOADING SCREEN-----------"
         @.goToLoadingScreen()
         @._downloadContentWhenSubscriptionsReady = true
-
       else
         @.goToLessonsPage()
       @._setCurriculum( curriculum )
@@ -124,8 +125,7 @@ class @Scene
     
     downloadCurriculum: ( curriculum )->
       if Meteor.isCordova
-        endpoint = @.getContentEndpoint()
-        downloader = new ContentInterface curriculum, endpoint
+        downloader = new ContentInterface curriculum
         onSuccess = (entry)=>
           Scene.get().goToLessonsPage()
 
@@ -136,9 +136,6 @@ class @Scene
           Meteor.logout()
 
         downloader.loadContent onSuccess, onError
-
-    getContentEndpoint: () ->
-      return Meteor.settings.public.CONTENT_SRC
 
     goToLoadingScreen: ()->
       FlowRouter.go "/loading"

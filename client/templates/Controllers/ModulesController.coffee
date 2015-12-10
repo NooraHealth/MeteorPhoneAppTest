@@ -48,11 +48,12 @@ class @ModulesController
     @._moduleController.begin( @.shouldPlayIntro @._currentModule.type )
 
   shouldPlayIntro: ( type )->
-    if type in @._alreadyPlayedIntro
-      return false
-    else
-      @._alreadyPlayedIntro.push type
-      return true
+    return false
+#    if type in @._alreadyPlayedIntro
+      #return false
+    #else
+      #@._alreadyPlayedIntro.push type
+      #return true
 
   notifyResponseRecieved: ( target )->
     @._moduleController.responseRecieved target

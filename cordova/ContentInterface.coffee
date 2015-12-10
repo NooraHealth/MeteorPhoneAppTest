@@ -2,6 +2,8 @@ Array::merge = (other) -> Array::push.apply @, other
 
 class @ParsedUrl
   constructor: (@urlString, @endpoint)->
+    console.log @.urlString
+    console.log @.endpoint
     pieces = @.urlString.split('/')
     @.pieces = pieces
   directories: ()->
@@ -16,9 +18,13 @@ class @ParsedUrl
 
 class @ContentInterface
 
-  constructor: (@curriculum, @contentEndpoint)->
+  constructor: (@curriculum)->
+    @.contentEndpoint = ContentInterface.getContentEndpoint
     if not Session.get "already loaded"
       Session.setPersistent "already loaded", { loaded: [] }
+
+  @getContentEndpoint: () ->
+    return Meteor.settings.public.CONTENT_SRC
 
   clearContentDirectory: ()->
     deferred = Q.defer()
@@ -44,23 +50,25 @@ class @ContentInterface
 
     return deferred.promise
 
-  @contentAlreadyLoaded: ( curriculum )->
-    if not Session.get "already loaded"
-      Session.setPersistent "already loaded", { loaded: [] }
-    alreadyLoaded = Session.get("already loaded").loaded
-    return curriculum._id in alreadyLoaded
+  #@contentAlreadyLoaded: ( curriculum )->
+    #if not Session.get "already loaded"
+      #Session.setPersistent "already loaded", { loaded: [] }
+    #alreadyLoaded = Session.get("already loaded").loaded
+    #return curriculum._id in alreadyLoaded
 
-  @markAsLoaded: ( curriculum )->
-    loaded = Session.get("already loaded").loaded
-    loaded.push curriculum._id
-    Session.update("already loaded", { loaded: loaded })
-    console.log "Marking content as already loaded"
-    console.log Session.get "already loaded"
+  #@markAsLoaded: ( curriculum )->
+    #loaded = Session.get("already loaded").loaded
+    #loaded.push curriculum._id
+    #Session.update("already loaded", { loaded: loaded })
+    #console.log "Marking content as already loaded"
+    #console.log Session.get "already loaded"
 
   downloadFiles: ( filenames )->
+    console.log "About to download files!"
     urls = []
     for name in filenames
-      url = new ParsedUrl name, @.contentEndpoint
+      console.log name
+      url = new ParsedUrl name, ContentInterface.getContentEndpoint()
       urls.push url
 
     console.log "About to _downloadFiles", urls
@@ -80,7 +88,6 @@ class @ContentInterface
       numRecieved++
       console.log "RESOLVED: " + numRecieved + "/"+ numToLoad
       if numRecieved == numToLoad
-        ContentInterface.markAsLoaded @.curriculum
         deferred.resolve( entry )
 
     onFileEntrySuccess = (url)->
@@ -152,10 +159,10 @@ class @ContentInterface
   loadLessonContent: ()->
     url = new ParsedUrl(lesson.image, @.contentEndpoint)
 
-  loadContent: (onSuccess, onError)->
+  loadContent: ( curriculum, onSuccess, onError)->
     console.log "This is the curriculum"
-    console.log @.curriculum
-    lessons = @.curriculum.getLessonDocuments()
+    console.log curriculum
+    lessons = curriculum.getLessonDocuments()
     console.log "Here are the lessons"
     urls = []
     for lesson in lessons
