@@ -34,10 +34,11 @@ class @Scene
         Modules.find({}).observe ({
           changed: ( newModule, oldModule )->
             console.log "--------A MODULE HAS CHANGED!!!-----------"
-            filenames = ContentInterface.moduleUrls newModule
+            Scene.get().goToLoadingScreen()
+            filenames = Scene.get().downloader.moduleUrls newModule
             promise = Scene.get().downloader.downloadFiles filenames
             promise.then (entry)->
-              FlowRouter.reload()
+              Scene.get().goToLessonsPage()
             promise.fail (err)->
         })
       
