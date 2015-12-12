@@ -9,9 +9,6 @@ coffeescript
 aldeed:collection2
 dburles:collection-helpers
 http
-accounts-ui
-accounts-password
-service-configuration
 sanjo:jasmine
 velocity:console-reporter
 velocity:html-reporter

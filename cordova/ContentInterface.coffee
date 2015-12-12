@@ -2,8 +2,6 @@ Array::merge = (other) -> Array::push.apply @, other
 
 class @ParsedUrl
   constructor: (@urlString, @endpoint)->
-    console.log @.urlString
-    console.log @.endpoint
     pieces = @.urlString.split('/')
     @.pieces = pieces
   directories: ()->
@@ -19,7 +17,7 @@ class @ParsedUrl
 class @ContentInterface
 
   constructor: (@curriculum)->
-    @.contentEndpoint = ContentInterface.getContentEndpoint
+    @.contentEndpoint = ContentInterface.getContentEndpoint()
     if not Session.get "already loaded"
       Session.setPersistent "already loaded", { loaded: [] }
 
@@ -72,7 +70,7 @@ class @ContentInterface
       urls.push url
 
     console.log "About to _downloadFiles", urls
-    @._downloadFiles urls
+    return @._downloadFiles urls
    
   _downloadFiles: (urls)->
     deferred = Q.defer()
@@ -121,14 +119,18 @@ class @ContentInterface
             deferred.reject(error)
 
         #download the file from the endpoint and save to target path on mobile device
+        console.log "URI to download:", uri
+        console.log ft
         ft.download(uri, targetPath, markAsResolved, onTransferError)
 
     fileNotFound = (dirEntry, file, url)->
       return (err)->
+        console.log "File not found"
         dirEntry.getFile file, {create: true, exclusive: false}, onFileEntrySuccess(url), onError(file)
 
     onDirEntrySuccess = (url, directories)->
       return (dirEntry)->
+        console.log "Dir entry success"
         if directories.length == 0
           file = url.file()
           dirEntry.getFile file, {create: false, exclusive: false}, markAsResolved, fileNotFound(dirEntry, file, url)
@@ -140,6 +142,7 @@ class @ContentInterface
 
     window.requestFileSystem LocalFileSystem.PERSISTENT, 5*1024*1024, (fs)->
       for url in urls
+        console.log "Got filessystem"
         directories = url.directories()
         #TODO: this should be done in the object
         firstDir = directories[0] + '/'
@@ -156,14 +159,8 @@ class @ContentInterface
 
     return deferred.promise
 
-  loadLessonContent: ()->
-    url = new ParsedUrl(lesson.image, @.contentEndpoint)
-
   loadContent: ( curriculum, onSuccess, onError)->
-    console.log "This is the curriculum"
-    console.log curriculum
     lessons = curriculum.getLessonDocuments()
-    console.log "Here are the lessons"
     urls = []
     for lesson in lessons
       urls.merge(@.retrieveContentUrls(lesson))

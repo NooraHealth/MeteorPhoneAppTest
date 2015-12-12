@@ -3,6 +3,12 @@ Template.sideMenu.helpers
     return Curriculum.find({title:{$ne: "Start a New Curriculum"}})
 
 Template.listItem.events
+  '.panel closed': ()->
+    console.log "THE PANEL WAS CLOSED"
+
+  '.panel opened': ()->
+    console.log "THE PANEL WAS OPENED"
+
   'click': ( e , template )->
     data = Template.currentData()
     console.log "This is the current data"

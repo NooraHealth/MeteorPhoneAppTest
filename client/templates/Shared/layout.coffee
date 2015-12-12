@@ -31,6 +31,10 @@ Template.layout.onCreated ()->
     @.currReady.set currHandle.ready()
 
   @.autorun ()=>
+    console.log "Autorun"
+    console.log @.lessonsReady.get()
+    console.log @.modulesReady.get()
+    console.log @.currReady.get()
     lessonsReady = @.lessonsReady.get()
     currReady = @.currReady.get()
     modulesReady = @.modulesReady.get()

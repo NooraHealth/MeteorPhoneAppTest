@@ -5,6 +5,7 @@
 ###
 FlowRouter.route '/', {
   action: ( params, qparams )->
+    console.log "Loading home"
     BlazeLayout.render "layout", { main : "lessonsView" }
 }
 
@@ -20,6 +21,5 @@ FlowRouter.route '/modules/:_id', {
 
 FlowRouter.route '/loading',
   action: ()->
-    console.log "Going to loading!"
     BlazeLayout.render "layout", { main: "loading" }
 

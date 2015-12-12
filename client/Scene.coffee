@@ -10,37 +10,35 @@ class @Scene
 
   class PrivateScene
     constructor: ()->
+      console.log "CREATING SCENE!", Meteor.isCordova
+      @.downloader = new ContentInterface()
       if Meteor.isCordova
-        Curriculum.find({}).observeChanges {
-          changed: ( id, fields )->
+        console.log "===========About to use observeChanges---------"
+        Curriculum.find({}).observe {
+          changed: ( newCurr, oldCurr )->
             console.log "CURRICULUM CHANGES"
         }
 
-        Lessons.find({}).observeChanges({
-          added: ( id, fields )->
-            console.log "Lesson added"
-
-          removed: ( id, fields )->
-            console.log "Added"
-
-          changed: ( id, fields )->
+        Lessons.find({}).observe ({
+          changed: ( newLesson, oldLesson )->
+            Scene.get().goToLoadingScreen()
             console.log "--------A LESSON HAS CHANGED!!!-----------"
-            console.log id
-            console.log fields
-            lesson = Lessons.findOne { _id: id }
-            console.log lesson
             files = []
-            files.push lesson.image
-            ContentInterface.downloadFiles files
-
+            files.push newLesson.image
+            promise = Scene.get().downloader.downloadFiles files
+            promise.then (entry)->
+              Scene.get().goToLessonsPage()
+            promise.fail (err)->
         })
 
-        Modules.find({}).observeChanges({
-          changed: ( id, fields )->
+        Modules.find({}).observe ({
+          changed: ( newModule, oldModule )->
             console.log "--------A MODULE HAS CHANGED!!!-----------"
-            #module = Modules.findOne {_id: id}
-            #filenames = ContentInterface.moduleUrls module
-            #ContentInterface.downloadFiles filenames
+            filenames = ContentInterface.moduleUrls newModule
+            promise = Scene.get().downloader.downloadFiles filenames
+            promise.then (entry)->
+              FlowRouter.reload()
+            promise.fail (err)->
         })
       
       @._lessons = new ReactiveArray()
@@ -55,6 +53,7 @@ class @Scene
       
     notify: ( event )->
       if event == "SUBSCRIPTIONS_READY"
+        console.log "The subscriptions are ready!"
         Scene.get().playAppIntro()
         if @.getCurriculum()
           @._lessons = @.getCurriculum().getLessonDocuments()
@@ -125,7 +124,6 @@ class @Scene
     
     downloadCurriculum: ( curriculum )->
       if Meteor.isCordova
-        downloader = new ContentInterface curriculum
         onSuccess = (entry)=>
           Scene.get().goToLessonsPage()
 
@@ -135,7 +133,7 @@ class @Scene
           alert "There was an error downloading your content, please log in and try again: ", err
           Meteor.logout()
 
-        downloader.loadContent onSuccess, onError
+        @.downloader.loadContent curriculum, onSuccess, onError
 
     goToLoadingScreen: ()->
       FlowRouter.go "/loading"

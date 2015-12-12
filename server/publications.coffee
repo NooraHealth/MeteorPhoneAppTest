@@ -19,27 +19,24 @@ Meteor.publish "modules", (lessonId)->
 
 Meteor.publish "all_lessons", ()->
   return Lessons.find({})
-#Meteor.publish "attempts", (userId)->
-  #return Attempts.find({})
 
 Meteor.publish "curriculums", ()->
   console.log "Returning curriculums"
+  console.log Curriculum.find({}).count()
   return Curriculum.find({})
 
 Meteor.publish "modules_in_curriculum", ( currId )->
   curr = Curriculum.findOne { _id: currId }
   console.log curr
   modules = []
-  if curr
+  if not curr
+    return []
+  else
     for lesson in curr.getLessonDocuments()
       for module in lesson.modules
         modules.push module
-
-    console.log Modules.find({ _id: {$in: modules }}).count()
-    return Modules.find { _id: {$in: modules }}
-
-  else
-    return []
+      console.log Modules.find({ _id: {$in: modules }}).count()
+      return Modules.find { _id: {$in: modules }}
 
 Meteor.publish "curriculum", (id)->
   if id
