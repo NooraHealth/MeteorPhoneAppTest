@@ -62,14 +62,11 @@ class @ContentInterface
     #console.log Session.get "already loaded"
 
   downloadFiles: ( filenames )->
-    console.log "About to download files!"
     urls = []
     for name in filenames
-      console.log name
       url = new ParsedUrl name, ContentInterface.getContentEndpoint()
       urls.push url
 
-    console.log "About to _downloadFiles", urls
     return @._downloadFiles urls
    
   _downloadFiles: (urls)->
@@ -108,7 +105,6 @@ class @ContentInterface
 
         onTransferError = (error)->
           console.log "ERROR "
-          console.log targetPath
           console.log error
           if error.http_status == 404
             markAsResolved()
@@ -119,18 +115,14 @@ class @ContentInterface
             deferred.reject(error)
 
         #download the file from the endpoint and save to target path on mobile device
-        console.log "URI to download:", uri
-        console.log ft
         ft.download(uri, targetPath, markAsResolved, onTransferError)
 
     fileNotFound = (dirEntry, file, url)->
       return (err)->
-        console.log "File not found"
         dirEntry.getFile file, {create: true, exclusive: false}, onFileEntrySuccess(url), onError(file)
 
     onDirEntrySuccess = (url, directories)->
       return (dirEntry)->
-        console.log "Dir entry success"
         if directories.length == 0
           file = url.file()
           dirEntry.getFile file, {create: false, exclusive: false}, markAsResolved, fileNotFound(dirEntry, file, url)
@@ -142,7 +134,6 @@ class @ContentInterface
 
     window.requestFileSystem LocalFileSystem.PERSISTENT, 5*1024*1024, (fs)->
       for url in urls
-        console.log "Got filessystem"
         directories = url.directories()
         #TODO: this should be done in the object
         firstDir = directories[0] + '/'
@@ -165,24 +156,15 @@ class @ContentInterface
     for lesson in lessons
       urls.merge(@.retrieveContentUrls(lesson))
     
-    console.log "Therse are the urls"
-    console.log urls
-    console.log "About to get the end urls"
     endURLS = (new ParsedUrl(url, @.contentEndpoint) for url in urls)
     
-    console.log "About to download files"
-    console.log endURLS
     promise = @._downloadFiles endURLS
     promise.then (entry)->
-      console.log "PROMISE SUCCESSFUL"
       onSuccess(entry)
     promise.fail (err)->
-      console.log "PROMISE REJECTED"
-      console.log err
       onError(err)
   
   retrieveContentUrls: (lesson)->
-    console.log "RETRIEVING CONTENT URLS"
     try
       if not lesson? or not lesson.getModulesSequence?
         throw Meteor.Error "retrieveContentUrls argument must be a Lesson document"
