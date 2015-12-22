@@ -12,7 +12,8 @@ Template.layout.helpers
     modulesReady = Template.instance().modulesReady.get()
     console.log "Are the subscriptionsReady?"
     console.log lessonsReady and currReady and modulesReady
-    return lessonsReady and currReady and modulesReady
+    return Session.get "subscriptions ready"
+    #return lessonsReady and currReady and modulesReady
 
 Template.layout.onCreated ()->
   @.currReady = new ReactiveVar()
@@ -46,7 +47,4 @@ Template.layout.onCreated ()->
 Template.layout.events
   "click #logo": ()->
     Scene.get().goToLessonsPage()
-
-  "click .open-panel": ()->
-    console.log "CLICK"
 

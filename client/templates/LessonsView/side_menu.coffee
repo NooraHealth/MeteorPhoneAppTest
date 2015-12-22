@@ -14,6 +14,6 @@ Template.listItem.events
     console.log "This is the current data"
     console.log data
     Scene.get().setCurriculum Curriculum.findOne {_id: data._id}
-    App.closePanel()
+    #App.closePanel()
 
 

@@ -204,6 +204,7 @@ class @ContentInterface
 
   moduleUrls: (module)->
     urls = []
+    console.log module
     if module.image
       urls.push module.image
     if module.video
