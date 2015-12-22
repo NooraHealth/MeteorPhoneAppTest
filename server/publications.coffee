@@ -1,14 +1,3 @@
-Meteor.publish "users", ()->
-  return Meteor.users.find({})
-
-Meteor.publish "all", ()->
-  return [
-    Meteor.users.find({}),
-    Curriculum.find({}),
-    Modules.find({}),
-    Lessons.find({}),
-  ]
-
 Meteor.publish "modules", (lessonId)->
   if !lessonId
     return []
@@ -16,6 +5,13 @@ Meteor.publish "modules", (lessonId)->
   modules = lesson.modules
   console.log Modules.find({_id: {$in: modules}}).count()
   return Modules.find {_id: {$in: modules}}
+
+Meteor.publish "all_curriculums", ()->
+  console.log "AL CUURR"
+  return Curriculum.find({})
+
+Meteor.publish "all_modules", ()->
+  return Modules.find({})
 
 Meteor.publish "all_lessons", ()->
   return Lessons.find({})

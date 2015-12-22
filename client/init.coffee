@@ -1,8 +1,7 @@
 Meteor.startup ()->
-  sceneInit = Scene.get()
+  #sceneInit = Scene.get()
 
   BlazeLayout.setRoot "body"
-  this.Subs = new SubsManager()
 
   this.App = new Framework7(
     materialRipple: true
@@ -11,3 +10,4 @@ Meteor.startup ()->
     tapHoldPreventClicks: false
     tapHoldDelay: 1500
   )
+

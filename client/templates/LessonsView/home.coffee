@@ -8,9 +8,8 @@ Template.lessonsView.helpers
       return []
 
 Template.lessonsView.onRendered ()->
-  console.log "Scroll into view"
+  Scene.get().playAppIntro()
   currentLesson = Session.get "current lesson"
-  console.log "current lesson", currentLesson
   card = $(".card-footer")[currentLesson]
   if currentLesson > 0 and card
     $(card).scrollintoview {

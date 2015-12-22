@@ -10,10 +10,8 @@ class @Scene
 
   class PrivateScene
     constructor: ()->
-      console.log "CREATING SCENE!", Meteor.isCordova
-      @.downloader = new ContentInterface()
       if Meteor.isCordova
-        console.log "===========About to use observeChanges---------"
+        @.downloader = new ContentInterface()
         Curriculum.find({}).observe {
           changed: ( newCurr, oldCurr )->
             console.log "CURRICULUM CHANGES"
@@ -42,7 +40,6 @@ class @Scene
             promise.fail (err)->
         })
       
-      @._lessons = new ReactiveArray()
       @._contentEndpoint = Meteor.settings.public.CONTENT_SRC
       id = Session.get "curriculum id"
       if id
@@ -52,16 +49,6 @@ class @Scene
       @.intro = new Audio "http://p2.noorahealth.org/AppIntro.mp3", "#intro", ""
       @._hasPlayedIntro = false
       
-    notify: ( event )->
-      if event == "SUBSCRIPTIONS_READY"
-        console.log "The subscriptions are ready!"
-        Scene.get().playAppIntro()
-        if @.getCurriculum()
-          @._lessons = @.getCurriculum().getLessonDocuments()
-      if event == "SUBSCRIPTIONS_READY" and @._downloadContentWhenSubscriptionsReady
-        @.downloadCurriculum @.getCurriculum()
-        @._downloadContentWhenSubscriptionsReady = false
-
     stopAudio: ()->
       @.intro.pause()
 
@@ -76,12 +63,9 @@ class @Scene
       Session.setPersistent "curriculum id", @.curriculum._id
       @
 
-    addToLessons: (lessonId)->
-      lesson = Lessons.findOne { _id: lessonId }
-      @._lessons.push lesson
-
     scrollToTop: ()->
       $($(".page-content")[0]).animate { scrollTop: 0 }, "slow"
+      @
 
     getCurriculumId: ()->
       return Session.get "curriculum id"
@@ -92,38 +76,37 @@ class @Scene
 
     getLessons: ()->
       curriculum = @.getCurriculum()
-      if not curriculum
+      if not curriculum?
         return []
       return curriculum.getLessonDocuments()
 
     getCurrentLesson: ()->
       currentLesson = Session.get "current lesson"
       if currentLesson?
-        return @._lessons[currentLesson]
+        return @.getLessons()[currentLesson]
       else
-        return @._lessons[0]
+        return @.getLessons()[0]
 
     incrementCurrentLesson: ()->
       currLesson = Session.get "current lesson"
-      nextLesson = ( currLesson + 1 ) % @._lessons.length
+      nextLesson = ( currLesson + 1 ) % @.getLessons().length
       Session.setPersistent "current lesson", nextLesson
       
     replayMedia: ()->
-      console.log @._modulesController
       @._modulesController.replay()
 
     setCurriculum: (curriculum)->
-      console.log "Setting the curriculum!", curriculum
-      if Meteor.isCordova# and not ContentInterface.contentAlreadyLoaded curriculum
+      if Meteor.isCordova and Meteor.status().connected# and not ContentInterface.contentAlreadyLoaded curriculum
         console.log "---- OGING TO LOADING SCREEN-----------"
         @.goToLoadingScreen()
-        @._downloadContentWhenSubscriptionsReady = true
+        @.downloadCurriculum curriculum
       else
         @.goToLessonsPage()
       @._setCurriculum( curriculum )
       @
     
     downloadCurriculum: ( curriculum )->
+      console.log "In download curriculum"
       if Meteor.isCordova
         onSuccess = (entry)=>
           Scene.get().goToLessonsPage()
@@ -134,6 +117,7 @@ class @Scene
           alert "There was an error downloading your content, please log in and try again: ", err
           Meteor.logout()
 
+        console.table "This is the curr", curriculum
         @.downloader.loadContent curriculum, onSuccess, onError
 
     goToLoadingScreen: ()->
@@ -141,9 +125,7 @@ class @Scene
       @
 
     goToLessonsPage: ()->
-      console.log "Goingt o modulespage"
       if @._modulesController
-        console.log "Stopping all audio"
         @._modulesController.stopAllAudio()
 
       FlowRouter.go "/"
