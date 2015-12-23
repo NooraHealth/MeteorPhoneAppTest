@@ -10,7 +10,6 @@ var httpUrl = null;
 var httpd = null;
 
 this.initializeServer = function() {
-  console.log("INITIALIZING SERVER");
   this.startServer = function(wwwroot) {
     console.log('starting server at ' + wwwroot);
     console.log("Is there httpd?"+ httpd);

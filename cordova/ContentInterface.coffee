@@ -2,7 +2,7 @@ Array::merge = (other) -> Array::push.apply @, other
 
 class @ParsedUrl
   constructor: (@urlString, @endpoint)->
-    pieces = urlString.split('/')
+    pieces = @.urlString.split('/')
     @.pieces = pieces
   directories: ()->
     index = @.pieces.length - 1
@@ -16,8 +16,13 @@ class @ParsedUrl
 
 class @ContentInterface
 
-  constructor: (@curriculum, @contentEndpoint)->
-    console.log "Consutricting and this is the endp: ", @.contentEndpoint
+  constructor: (@curriculum)->
+    @.contentEndpoint = ContentInterface.getContentEndpoint()
+    if not Session.get "already loaded"
+      Session.setPersistent "already loaded", { loaded: [] }
+
+  @getContentEndpoint: () ->
+    return Meteor.settings.public.CONTENT_SRC
 
   clearContentDirectory: ()->
     deferred = Q.defer()
@@ -43,7 +48,28 @@ class @ContentInterface
 
     return deferred.promise
 
-  downloadFiles: (urls)->
+  #@contentAlreadyLoaded: ( curriculum )->
+    #if not Session.get "already loaded"
+      #Session.setPersistent "already loaded", { loaded: [] }
+    #alreadyLoaded = Session.get("already loaded").loaded
+    #return curriculum._id in alreadyLoaded
+
+  #@markAsLoaded: ( curriculum )->
+    #loaded = Session.get("already loaded").loaded
+    #loaded.push curriculum._id
+    #Session.update("already loaded", { loaded: loaded })
+    #console.log "Marking content as already loaded"
+    #console.log Session.get "already loaded"
+
+  downloadFiles: ( filenames )->
+    urls = []
+    for name in filenames
+      url = new ParsedUrl name, ContentInterface.getContentEndpoint()
+      urls.push url
+
+    return @._downloadFiles urls
+   
+  _downloadFiles: (urls)->
     deferred = Q.defer()
     numToLoad = urls.length
     numRecieved = 0
@@ -53,12 +79,19 @@ class @ContentInterface
       return (err)->
         deferred.reject(err)
 
+    markAsResolved = ( entry )=>
+      numRecieved++
+      console.log "RESOLVED: " + numRecieved + "/"+ numToLoad
+      if numRecieved == numToLoad
+        deferred.resolve( entry )
+
     onFileEntrySuccess = (url)->
       return (fileEntry)->
         ft = new FileTransfer()
         endpnt = url.endpointPath()
         uri = encodeURI(endpnt)
         targetPath = fileEntry.toURL()
+
 
         ft.onprogress = (event)->
           percent = numRecieved/numToLoad
@@ -70,41 +103,29 @@ class @ContentInterface
           #bytesLoaded = event.loaded
           #Session.set "bytes downloaded", bytesLoaded
 
-        onTransferSuccess = (entry)->
-          console.log "TRANSFER SUCCESS"
-          console.log entry
-          numRecieved++
-          if numRecieved == numToLoad
-            deferred.resolve(entry)
-
         onTransferError = (error)->
           console.log "ERROR "
           console.log error
-          if error.code == 3
+          if error.http_status == 404
+            markAsResolved()
+          else if error.code == 3
             #try to download the file again
-            ft.download(uri, targetPath, onTransferSuccess, onTransferError)
+            ft.download(uri, targetPath, markAsResolved, onTransferError)
           else
             deferred.reject(error)
 
         #download the file from the endpoint and save to target path on mobile device
-        ft.download(uri, targetPath, onTransferSuccess, onTransferError)
+        ft.download(uri, targetPath, markAsResolved, onTransferError)
 
-    fileFound = ()->
-      numRecieved++
-      console.log "Num recieved/numToLoad: "+ numRecieved + "/"+ numToLoad
-      if numRecieved == numToLoad
-        deferred.resolve()
-      
     fileNotFound = (dirEntry, file, url)->
       return (err)->
         dirEntry.getFile file, {create: true, exclusive: false}, onFileEntrySuccess(url), onError(file)
-
 
     onDirEntrySuccess = (url, directories)->
       return (dirEntry)->
         if directories.length == 0
           file = url.file()
-          dirEntry.getFile file, {create: false, exclusive: false}, fileFound, fileNotFound(dirEntry, file, url)
+          dirEntry.getFile file, {create: false, exclusive: false}, markAsResolved, fileNotFound(dirEntry, file, url)
         else
           dir = directories[0] + '/'
           remainingDirs = directories.splice(1)
@@ -129,25 +150,21 @@ class @ContentInterface
 
     return deferred.promise
 
-  loadContent: (onSuccess, onError)->
-    lessons = @.curriculum.getLessonDocuments()
+  loadContent: ( curriculum, onSuccess, onError)->
+    lessons = curriculum.getLessonDocuments()
     urls = []
     for lesson in lessons
       urls.merge(@.retrieveContentUrls(lesson))
     
     endURLS = (new ParsedUrl(url, @.contentEndpoint) for url in urls)
     
-    promise = @.downloadFiles endURLS
+    promise = @._downloadFiles endURLS
     promise.then (entry)->
-      console.log "PROMISE SUCCESSFUL"
       onSuccess(entry)
     promise.fail (err)->
-      console.log "PROMISE REJECTED"
-      console.log err
       onError(err)
   
   retrieveContentUrls: (lesson)->
-    console.log "RETRIEVING CONTENT URLS"
     try
       if not lesson? or not lesson.getModulesSequence?
         throw Meteor.Error "retrieveContentUrls argument must be a Lesson document"
@@ -169,7 +186,6 @@ class @ContentInterface
 
   moduleUrls: (module)->
     urls = []
-    console.log "ModuleURLS: "
     console.log module
     if module.image
       urls.push module.image

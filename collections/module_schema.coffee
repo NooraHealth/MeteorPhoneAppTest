@@ -76,30 +76,33 @@ Modules.helpers {
     return @.next_module == -1
 
   imgSrc: ()->
+    if not @.image
+      return ""
     url = Meteor.getContentSrc()
     return url+ @.image
 
-  questionAudio: ()->
-    url = Meteor.getContentSrc()
-    if !@.audio
-      return ""
-    return url + @.audio
-
   audioSrc: ()->
-    url = Meteor.getContentSrc()
-    if !@.audio
+    if not @.audio
       return ""
+    url = Meteor.getContentSrc()
     return url + @.audio
 
   incorrectAnswerAudio: ()->
+    if not @.incorrect_audio
+      return ""
+
     url = Meteor.getContentSrc()
     return url + @.incorrect_audio
 
   correctAnswerAudio: ()->
+    if not @.correct_audio
+      return ""
     url = Meteor.getContentSrc()
     return url + @.correct_audio
   
   videoSrc: ()->
+    if not @.video
+      return ""
     url = Meteor.getContentSrc()
     return url  + @.video
 

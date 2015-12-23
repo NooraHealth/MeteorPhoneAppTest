@@ -1,0 +1,25 @@
+<template name="nextBtn">
+  {{#if isPhone}}
+    {{>phoneNextBtn}}
+  {{else}}
+    {{>browserNextBtn}}
+  {{/if}}
+</template>
+
+<template name="phoneNextBtn">
+  <a id="next" class=" z-depth-2 waves-effect waves-light next-btn-tile valign {{#if isHidden}} slide-down {{/if}}"> 
+    <i class="icon ion-arrow-right-a icon-large"></i>
+  </a>
+</template>
+
+<template name="browserNextBtn">
+  <a class="link next-module-btn footer-button button color-blue button-fill" id="next" >
+    {{#if allModulesComplete}}
+      FINISH
+    {{else}}
+      NEXT
+    {{/if}}
+    <i class="fa fa-arrow-right fa-2x"></i>
+  </a>
+</template>
+

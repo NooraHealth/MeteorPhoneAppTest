@@ -1,0 +1,40 @@
+<template name="modulesSequence">
+
+  <div class="content-block inner-container">
+    {{#with module}}
+
+    <!--<audio id="audio{{_id}}"></audio>-->
+    <!--<audio id="correctaudio{{_id}}"></audio>-->
+      <!--[><audio id="incorrectaudio"></audio><]-->
+      <!--{{#if isCordova}}-->
+        <!--<audio id="mc_intro" src="http://p2.noorahealth.org/MCIntro.mp3"></audio>-->
+        <!--<audio id="binary_intro" src="http://p2.noorahealth.org/BinaryIntro.mp3"></audio>-->
+        <!--<audio id="scenario_intro" src="http://p2.noorahealth.org/ScenarioIntro.mp3"></audio>-->
+      <!--{{else}}-->
+        <!--<audio id="mc_intro" src="/MCIntro.mp3"></audio>-->
+        <!--<audio id="binary_intro" src="/BinaryIntro.mp3"></audio>-->
+        <!--<audio id="scenario_intro" src="/ScenarioIntro.mp3"></audio>-->
+      <!--{{/if}}-->
+      <div id="{{_id}}" class="card">
+        {{#if isBinaryChoice}}
+          {{>binaryChoiceModule}}
+        {{/if}}
+        {{#if isSlideModule}}
+          {{>slideModule}}
+        {{/if}}
+        {{#if isScenario }}
+          {{>scenarioModule}}
+        {{/if}}
+        {{#if isMultipleChoice }}
+          {{> multipleChoiceModule }}
+        {{/if}}
+        {{#if isVideo }}
+          {{> videoModule }}
+        {{/if}}
+      </div>
+
+    {{/with}}
+  </div>
+
+</template>
+

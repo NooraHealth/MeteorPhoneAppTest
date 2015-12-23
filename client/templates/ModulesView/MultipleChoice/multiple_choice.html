@@ -1,0 +1,24 @@
+<template name="multipleChoiceModule">
+
+<!--<audio src="{{audioSrc}}" name="audio{{_id}}" class="question" autoplay></audio>-->
+<div class="card-header large-text center ">{{question}}</div>
+<div class="card-content padding">
+  {{#with firstRow}}
+    {{>rowOfOptions}}
+  {{/with}}
+  {{#with secondRow}}
+    {{>rowOfOptions}}
+  {{/with}}
+</div>
+</template>
+
+<template name="rowOfOptions">
+  <div class="row">
+  {{#each options}}
+    <div class="col-33">
+      <!--[> IMG <]-->
+      <img name="option" alt="{{i}}" src="{{optionImgSrc}}" class="response image-choice {{#if correct }} correct {{/if}}">
+    </div>
+  {{/each}}
+  </div>
+</template>

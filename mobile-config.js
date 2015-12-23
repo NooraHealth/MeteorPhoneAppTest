@@ -1,25 +1,26 @@
 App.accessRule( "*");
+//App.preference("orientation", "landscape");
 
 App.info({
   name: "Noora Health WebApp",
   description: "Noora Health's online and mobile app curriculum",
-  version: "0.0.2"
+  version: "0.0.3"
 });
 
 App.icons({
   // iOS
-  //'iphone': 'public/icons/icon-60x60.png',
-  //'ipad': 'public/icons/icon-76x76.png',
+  'iphone': 'public/icons/icon-60x60.png',
+  'ipad': 'public/icons/icon-76x76.png',
 
   //// Android
-  //'android_ldpi': 'public/icons/icon-36x36.png',
-  //'android_mdpi': 'public/icons/icon-48x48.png',
-  //'android_xhdpi': 'public/icons/icon-96x96.png'
+  'android_ldpi': 'public/icons/icon-36x36.png',
+  'android_mdpi': 'public/icons/icon-48x48.png',
+  'android_xhdpi': 'public/icons/icon-96x96.png'
 });
 
 App.launchScreens({
   // iOS
-  //'iphone': 'public/splash/splash-320x480.png',
+  'iphone': 'public/splash/splash-320x480.png',
   //'iphone_2x': 'public/splash/splash-320x480@2x.png',
   //'iphone5': 'public/splash/splash-320x568@2x.png',
   //'iphone6': 'public/splash/splash-375x667@2x.png',

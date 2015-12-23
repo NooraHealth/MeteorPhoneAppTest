@@ -1,0 +1,13 @@
+TODO
+---------------------------------------------------
+fix audio inconsistencies and occasional next-button not working inconsistencies
+clean audio
+investigate latencies
+  -adding and removing the audio tag from the DOM is expensive and will need to be fixed if used
+add slide effects to modules
+install segment.io
+favicons
+start screen
+animations for the next button between slides
+
+

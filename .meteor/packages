@@ -4,26 +4,11 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-meteor-platform
-insecure
 underscore
 coffeescript
 aldeed:collection2
-iron:router
 dburles:collection-helpers
-mrt:q
-fourseven:scss
-wolves:bourbon
 http
-accounts-ui
-materialize:materialize
-useraccounts:materialize
-accounts-password
-gadicohen:famous-views
-raix:famono
-edgee:slingshot
-service-configuration
-multiply:iron-router-progress
 sanjo:jasmine
 velocity:console-reporter
 velocity:html-reporter
@@ -32,3 +17,33 @@ pcel:loading
 
 mystor:device-detection
 ground:db
+natestrauser:cordova-file-server
+standard-minifiers
+meteor-base
+mobile-experience
+mongo
+blaze-html-templates
+session
+jquery
+tracker
+logging
+reload
+random
+ejson
+spacebars
+check
+u2622:persistent-session
+loftsteinn:framework7-ios
+fortawesome:fontawesome
+fourseven:scss
+wolves:bourbon
+kevohagan:sweetalert
+mrt:jquery-scrollintoview
+kadira:flow-router
+kadira:blaze-layout
+arillo:flow-router-helpers
+mrt:q
+percolatestudio:segment.io
+reactive-var
+manuel:reactivearray
+autopublish
