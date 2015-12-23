@@ -10,7 +10,6 @@ class @Audio
   playAudio: ( whenFinished )->
     audio = @.getAudioElement()
     audio.currentTime = 0
-    console.log "About to play audio", @.id
 
     if audio.readyState == 0
       audio.load()
@@ -37,7 +36,6 @@ class @Audio
     @._shouldCallback = false
 
   checkIfShouldPlay: ()=>
-    console.log "Checking if should play!", @._shouldPlayOnReady
     if @._shouldPlayOnReady
       @.getAudioElement().play()
       @._shouldPlayOnReady = false

@@ -18,7 +18,9 @@ class @VideoController
       video.currentTime = 0
       video.play()
 
-    video.addEventListener "ended", ModulesController.shakeNextButton
+    video.addEventListener "ended", ()->
+      console.log "ENDER 1"
+      ModulesController.shakeNextButton()
 
   pauseVideo: ()->
     video = @.getVideoElem()

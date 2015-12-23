@@ -6,14 +6,6 @@ class @QuestionBase
     @.correctAudio = new Audio @._module.correctAnswerAudio(), "#correctaudio", @._module._id
     @.correctSoundEffect = new Audio "http://p2.noorahealth.org/correct_soundeffect.mp3", "#correct_soundeffect", @._module._id
     @.incorrectSoundEffect = new Audio "http://p2.noorahealth.org/incorrect_soundeffect.mp3", "#incorrect_soundeffect", @._module._id
-    if @._module.type == "SCENARIO"
-      introAudio = '/ScenarioIntro.mp3'
-    if @._module.type == "BINARY"
-      introAudio = '/BinaryIntro.mp3'
-    if @._module.type == "MULTIPLE_CHOICE"
-      introAudio = '/MCIntro.mp3'
-
-    @.intro = new Audio "http://p2.noorahealth.org"+introAudio, "#intro", @._module._id
 
   replay: ()->
     @.stopAllAudio()
@@ -34,17 +26,10 @@ class @QuestionBase
   stopAllAudio: ()->
     @.audio.pause()
     @.correctAudio.pause()
-    @.intro.pause()
-
-  playIntro: ()->
-    @.intro.playWhenReady( @.audio.playWhenReady )
  
   begin: ( playIntro )->
     ModulesController.stopShakingNextButton()
-    if playIntro
-      @.playIntro()
-    else
-      @.audio.playWhenReady()
+    @.audio.playWhenReady()
 
   end: ()->
     @.stopAllAudio()

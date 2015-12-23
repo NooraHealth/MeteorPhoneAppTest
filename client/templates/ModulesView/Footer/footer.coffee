@@ -9,7 +9,6 @@ Template.moduleFooter1.helpers
     return arr
 
   completed: ( i )->
-    console.log "Completed?"
     currentIndex = Session.get "current module index"
     if i < currentIndex
       return true

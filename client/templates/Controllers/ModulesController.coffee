@@ -42,24 +42,14 @@ class @ModulesController
     $("body").append "<audio id='correctaudio"+@._currentModule._id+"'></audio>"
     $("body").append "<audio id='correct_soundeffect"+@._currentModule._id+"'></audio>"
     $("body").append "<audio id='incorrect_soundeffect"+@._currentModule._id+"'></audio>"
-    $("body").append "<audio id='intro"+@._currentModule._id+"'></audio>"
 
     @._moduleController = ControllerFactory.get().getModuleController @._currentModule
     @._moduleController.begin( @.shouldPlayIntro @._currentModule.type )
-
-  shouldPlayIntro: ( type )->
-    return false
-#    if type in @._alreadyPlayedIntro
-      #return false
-    #else
-      #@._alreadyPlayedIntro.push type
-      #return true
 
   notifyResponseRecieved: ( target )->
     @._moduleController.responseRecieved target
 
   shouldBeRendered: ( template )->
-    console.log "Checking if should be rendered"
     return true
 
   currentModuleIndex: ()->
@@ -81,7 +71,6 @@ class @ModulesController
     return @._sequence
 
   start: ()->
-    console.log "Starting the sequence"
     Session.set "current module index", 0
     @._goToModule 0
     
