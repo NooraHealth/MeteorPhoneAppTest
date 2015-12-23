@@ -44,7 +44,7 @@ class @ModulesController
     $("body").append "<audio id='incorrect_soundeffect"+@._currentModule._id+"'></audio>"
 
     @._moduleController = ControllerFactory.get().getModuleController @._currentModule
-    @._moduleController.begin( @.shouldPlayIntro @._currentModule.type )
+    @._moduleController.begin()
 
   notifyResponseRecieved: ( target )->
     @._moduleController.responseRecieved target

@@ -96,6 +96,7 @@ class @Scene
       @._modulesController.replay()
 
     setCurriculum: (curriculum)->
+      console.log "Is connected?", Meteor.status().connected
       if Meteor.isCordova and Meteor.status().connected# and not ContentInterface.contentAlreadyLoaded curriculum
         console.log "---- OGING TO LOADING SCREEN-----------"
         @.goToLoadingScreen()
