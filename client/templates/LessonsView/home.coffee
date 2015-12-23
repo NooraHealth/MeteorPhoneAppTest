@@ -8,6 +8,7 @@ Template.lessonsView.helpers
       return []
 
 Template.lessonsView.onRendered ()->
+  console.log "About to play app intro"
   Scene.get().playAppIntro()
   currentLesson = Session.get "current lesson"
   card = $(".card-footer")[currentLesson]

@@ -1,5 +1,6 @@
 class @Audio
   constructor: ( @src, @id, @_module_id )->
+    console.log "Creating an audio with src: ", @.src
     @._readyToPlay = false
     @._playWhenReady = false
     @._whenFinished = null
@@ -44,6 +45,8 @@ class @Audio
 
   setSrc: ( src )=>
     audio = @.getAudioElement()
+    console.log "Here is audio element"
+    console.log audio
     audio.src = src
 
   getAudioElement: ()->

@@ -46,13 +46,15 @@ class @Scene
         curr = Curriculum.findOne { _id : id }
         if curr
           @.setCurriculum curr
-      @.intro = new Audio "http://p2.noorahealth.org/AppIntro.mp3", "#intro", ""
       @._hasPlayedIntro = false
       
     stopAudio: ()->
       @.intro.pause()
 
     playAppIntro: ( force )->
+      if not @.intro?
+        @.intro = new Audio "http://p2.noorahealth.org/AppIntro.mp3", "#intro", ""
+
       if force or not @._hasPlayedIntro
         @.intro.playWhenReady()
         @._hasPlayedIntro = true
