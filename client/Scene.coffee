@@ -53,7 +53,7 @@ class @Scene
 
     playAppIntro: ( force )->
       if not @.intro?
-        @.intro = new Audio "http://p2.noorahealth.org/AppIntro.mp3", "#intro", ""
+        @.intro = new Audio Meteor.getContentSrc() + 'NooraHealthContent/Audio/AppIntro.mp3', "#intro", ""
 
       if force or not @._hasPlayedIntro
         @.intro.playWhenReady()

@@ -81,7 +81,8 @@ class @ContentInterface
 
     markAsResolved = ( entry )=>
       numRecieved++
-      console.log "RESOLVED: " + numRecieved + "/"+ numToLoad
+      console.log "RESOLVED:" + numRecieved + "/"+ numToLoad
+      console.log entry
       if numRecieved == numToLoad
         deferred.resolve( entry )
 
@@ -153,6 +154,12 @@ class @ContentInterface
   loadContent: ( curriculum, onSuccess, onError)->
     lessons = curriculum.getLessonDocuments()
     urls = []
+
+    console.log "Lading all the files"
+    urls.push "NooraHealthContent/Audio/AppIntro.mp3"
+    urls.push "NooraHealthContent/Audio/correct_soundeffect.mp3"
+    urls.push "NooraHealthContent/Audio/incorrect_soundeffect.mp3"
+
     for lesson in lessons
       urls.merge(@.retrieveContentUrls(lesson))
     
