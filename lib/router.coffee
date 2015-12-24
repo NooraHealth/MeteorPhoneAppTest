@@ -5,7 +5,7 @@
 ###
 FlowRouter.route '/', {
   action: ( params, qparams )->
-    Scene.get()
+    Scene.get().playAppIntro()
     BlazeLayout.render "layout", { main : "lessonsView" }
 }
 

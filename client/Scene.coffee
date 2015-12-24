@@ -20,7 +20,6 @@ class @Scene
         Lessons.find({}).observe ({
           changed: ( newLesson, oldLesson )->
             Scene.get().goToLoadingScreen()
-            console.log "--------A LESSON HAS CHANGED!!!-----------"
             files = []
             files.push newLesson.image
             promise = Scene.get().downloader.downloadFiles files
@@ -31,7 +30,6 @@ class @Scene
 
         Modules.find({}).observe ({
           changed: ( newModule, oldModule )->
-            console.log "--------A MODULE HAS CHANGED!!!-----------"
             Scene.get().goToLoadingScreen()
             filenames = Scene.get().downloader.moduleUrls newModule
             promise = Scene.get().downloader.downloadFiles filenames
@@ -54,6 +52,9 @@ class @Scene
     playAppIntro: ( force )->
       if not @.intro?
         @.intro = new Audio Meteor.getContentSrc() + 'NooraHealthContent/Audio/AppIntro.mp3', "#intro", ""
+
+      if not @.getCurriculum()
+        return
 
       if force or not @._hasPlayedIntro
         @.intro.playWhenReady()
