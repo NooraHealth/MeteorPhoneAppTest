@@ -4,8 +4,8 @@ class @QuestionBase
     @._completedQuestion = false
     @.audio = new Audio @._module.audioSrc(), "#audio", @._module._id
     @.correctAudio = new Audio @._module.correctAnswerAudio(), "#correctaudio", @._module._id
-    @.correctSoundEffect = new Audio "http://p2.noorahealth.org/correct_soundeffect.mp3", "#correct_soundeffect", @._module._id
-    @.incorrectSoundEffect = new Audio "http://p2.noorahealth.org/incorrect_soundeffect.mp3", "#incorrect_soundeffect", @._module._id
+    @.correctSoundEffect = new Audio Meteor.getContentSrc() + "NooraHealthContent/Audio/correct_soundeffect.mp3", "#correct_soundeffect", @._module._id
+    @.incorrectSoundEffect = new Audio Meteor.getContentSrc() + "NooraHealthContent/Audio/incorrect_soundeffect.mp3", "#incorrect_soundeffect", @._module._id
 
   replay: ()->
     @.stopAllAudio()
