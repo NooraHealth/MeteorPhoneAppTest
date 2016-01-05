@@ -50,6 +50,9 @@ class @Scene
       @.intro.pause()
 
     playAppIntro: ( force )->
+      console.log "About to play app intro"
+      console.log $("#intro")
+      console.trace()
       if not @.intro?
         @.intro = new Audio Meteor.getContentSrc() + 'NooraHealthContent/Audio/AppIntro.mp3', "#intro", ""
 
