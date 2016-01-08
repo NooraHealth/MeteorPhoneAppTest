@@ -59,6 +59,10 @@ class @ModulesController
     index = Session.get "current module index"
     index++
     Session.update "current module index", index
+
+    if index == @._sequence.length-1
+      $("#next").text("FINISH")
+
     if index == @._sequence.length
       Scene.get().incrementCurrentLesson()
       Scene.get().goToLessonsPage()
