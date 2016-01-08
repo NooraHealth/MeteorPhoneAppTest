@@ -9,14 +9,13 @@ class @SlideController
 
   replay: ()->
     @.audio.pause()
-    @.audio.playWhenReady( ModulesController.shakeNextButton )
+    @.audio.playWhenReady( ModulesController.readyForNextModule )
 
   stopAllAudio: ()->
     @.audio.pause()
 
   begin: ()=>
-    @.audio.playWhenReady ModulesController.shakeNextButton
+    @.audio.playWhenReady ModulesController.readyForNextModule
 
   end: ()->
     @.audio.pause()
-    ModulesController.stopShakingNextButton()

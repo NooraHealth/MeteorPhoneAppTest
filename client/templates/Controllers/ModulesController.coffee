@@ -1,10 +1,10 @@
 class @ModulesController
-  @_nextButtonClasses = [ "slide-up", "scale-up", "expanded"]
 
   constructor: ( lessonId )->
     @._lesson = Lessons.findOne { "_id" : lessonId }
     @._sequence = @._lesson.getModulesSequence()
     @._alreadyPlayedIntro = []
+    @._nextBtn = NextButton.get()
 
   getCurrentController: ()->
     return @._moduleController
@@ -16,17 +16,8 @@ class @ModulesController
     if @._moduleController and @._moduleController.stopAllAudio
       @._moduleController.stopAllAudio()
 
-  @shakeNextButton: ()->
-    btn = $("#next")
-    for klass in ModulesController._nextButtonClasses
-      if not btn.hasClass klass
-        btn.addClass klass
-
-  @stopShakingNextButton: ()->
-    btn = $("#next")
-    for klass in ModulesController._nextButtonClasses
-      if btn.hasClass klass
-        btn.removeClass klass
+  @readyForNextModule: ()->
+    NextButton.get().shake()
 
   _goToModule: ( index )->
     Scene.get().scrollToTop()
@@ -59,9 +50,10 @@ class @ModulesController
     index = Session.get "current module index"
     index++
     Session.update "current module index", index
+    NextButton.get().stopShake()
 
     if index == @._sequence.length-1
-      $("#next").text("FINISH")
+      NextButton.get().changeButtonText "FINISH"
 
     if index == @._sequence.length
       Scene.get().incrementCurrentLesson()

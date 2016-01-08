@@ -11,7 +11,6 @@
 @import '_mixins';
 
 @import '_layout';
-@import '_layout';
 
 /* -------------------------------- 
 
@@ -76,6 +75,10 @@ html, body {
 
 .card-footer {
   min-height: 80px;
+}
+
+.blur {
+  -webkit-filter: blur(2px);
 }
 
 .center {

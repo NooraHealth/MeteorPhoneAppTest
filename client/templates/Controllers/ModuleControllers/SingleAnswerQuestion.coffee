@@ -20,7 +20,7 @@ class @SingleAnswerQuestion extends QuestionBase
         timer: 3000
       }
 
-      @.correctSoundEffect.playAudio ()=> @.correctAudio.playWhenReady( ModulesController.shakeNextButton )
+      @.correctSoundEffect.playAudio ()=> @.correctAudio.playWhenReady( ModulesController.readyForNextModule )
 
       $(target).addClass "expanded correctly-selected"
       console.log @.incorrectResponseButtons()

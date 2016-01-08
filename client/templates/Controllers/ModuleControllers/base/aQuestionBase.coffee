@@ -28,7 +28,6 @@ class @QuestionBase
     @.correctAudio.pause()
  
   begin: ( playIntro )->
-    ModulesController.stopShakingNextButton()
     @.audio.playWhenReady()
 
   end: ()->

@@ -10,7 +10,6 @@ class @VideoController
     return $("#video" + @._module._id)[0]
 
   begin: ()->
-    ModulesController.stopShakingNextButton()
 
   playVideo: ()->
     video = @.getVideoElem()
@@ -20,7 +19,7 @@ class @VideoController
 
     video.addEventListener "ended", ()->
       console.log "ENDER 1"
-      ModulesController.shakeNextButton()
+      ModulesController.readyForNextModule()
 
   pauseVideo: ()->
     video = @.getVideoElem()

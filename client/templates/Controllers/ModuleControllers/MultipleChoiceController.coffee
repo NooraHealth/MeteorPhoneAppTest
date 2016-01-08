@@ -26,7 +26,7 @@ class @MultipleChoiceController extends QuestionBase
 
       if @._responses.length == @._module.correct_answer.length
         @._completedQuestion = true
-        @.correctSoundEffect.playAudio ()=> @.correctAudio.playWhenReady( ModulesController.shakeNextButton )
+        @.correctSoundEffect.playAudio ()=> @.correctAudio.playWhenReady( ModulesController.readyForNextModule )
         correctResponseButtons = @.correctResponseButtons()
         incorrectResponseButtons = @.incorrectResponseButtons()
         if @.audio
