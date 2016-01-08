@@ -1,4 +1,7 @@
 Template.modulesSequence.helpers
+  contentBlurred: ()->
+    return Session.get "module content blurred"
+
   module: ()->
     id = Session.get "current module id"
     return Modules.findOne { _id: id }

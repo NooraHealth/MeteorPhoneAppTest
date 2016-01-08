@@ -16,8 +16,12 @@ class @ModulesController
     if @._moduleController and @._moduleController.stopAllAudio
       @._moduleController.stopAllAudio()
 
+  @setContentBlurred: ( state )->
+    Session.set "module content blurred", state
+
   @readyForNextModule: ()->
     NextButton.get().shake()
+    ModulesController.setContentBlurred true
 
   _goToModule: ( index )->
     Scene.get().scrollToTop()
@@ -51,6 +55,7 @@ class @ModulesController
     index++
     Session.update "current module index", index
     NextButton.get().stopShake()
+    ModulesController.setContentBlurred false
 
     if index == @._sequence.length-1
       NextButton.get().changeButtonText "FINISH"

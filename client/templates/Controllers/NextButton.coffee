@@ -9,20 +9,24 @@ class @NextButton
 
     constructor: ()->
       @_shakeActionClasses = [ "slide-up", "scale-up", "expanded"]
-      @_elem = $("#next")
+
+    getElem: ()->
+      return $("#next")
 
     changeButtonText: ( text )->
-      @_elem.text text
+      @getElem().text text
 
     shake: ()->
+      console.log "Going to shake the next button"
       for klass in @._shakeActionClasses
-        if not @_elem.hasClass klass
-          @_elem.addClass klass
+        if not @getElem().hasClass klass
+          @getElem().addClass klass
 
     stopShake: ()->
+      console.log "Stopping the button from shaking"
       for klass in @._shakeActionClasses
-        if @_elem.hasClass klass
-          @_elem.removeClass klass
+        if @getElem().hasClass klass
+          @getElem().removeClass klass
  
 
 
