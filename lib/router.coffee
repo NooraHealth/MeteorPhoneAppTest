@@ -15,7 +15,7 @@ FlowRouter.route '/', {
 FlowRouter.route '/modules/:_id', {
   action: ( params, qparams )->
     Scene.get().stopAudio()
-    BlazeLayout.render "layout", { main: "modulesSequence" , footer: "moduleFooter1" }
+    BlazeLayout.render "layout", { main: "modulesSequence" , footer: "moduleFooter" }
 }
 
 FlowRouter.route '/loading',

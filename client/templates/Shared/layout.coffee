@@ -4,6 +4,8 @@ Template.layout.helpers
     return Scene.get().getCurrentLesson().title
 
   module: ()->
+    console.log "Returning thwther there is a module"
+    console.log FlowRouter.getParam "_id"
     return FlowRouter.getParam "_id"
 
 Template.layout.events
