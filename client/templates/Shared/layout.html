@@ -18,7 +18,9 @@
           </div>
 
           <div class="page-content">
-            {{> Template.dynamic template=main}}
+            {{#momentum plugin='flow-router'}}
+              {{> Template.dynamic template=main}}
+            {{/momentum}}
           </div>
 
         {{#if module}}

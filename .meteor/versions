@@ -73,7 +73,10 @@ observe-sequence@1.0.7
 ordered-dict@1.0.4
 package-version-parser@3.0.4
 pcel:loading@1.0.3
+percolate:momentum@0.7.2
+percolate:velocityjs@1.1.0
 percolatestudio:segment.io@3.0.0
+philippspo:momentum-flow-router@0.0.7
 practicalmeteor:chai@2.1.0_1
 practicalmeteor:loglevel@1.2.0_2
 promise@0.5.1
