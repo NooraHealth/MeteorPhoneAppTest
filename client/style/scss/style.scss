@@ -162,7 +162,7 @@ html, body {
 }
 
 .thumbnail-image > img {
-  height: 40vh;
+  height: 40vh !important;
   display: block;
   height: 100%;
 }

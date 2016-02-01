@@ -12,9 +12,11 @@
         <div class="list-block">
           <div class="cards-list">
             <ul class="lessons-list">
-              {{#each lessons}}
-                {{>lessonThumbnail}}
-              {{/each}}
+              {{#momentum plugin='fade'}}
+                {{#each lessons}}
+                  {{>lessonThumbnail}}
+                {{/each}}
+              {{/momentum}}
             </ul>
           </div>
         </div>
