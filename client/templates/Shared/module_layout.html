@@ -1,13 +1,13 @@
-<template name="layout">
+<template name='moduleLayout'>
+
   {{#contentWrapper}}
-      <!-- Now we need additional "navbar-fixed" and "toolbar-fixed" classes on Page -->
       <div data-page="index" class="page navbar-fixed toolbar-fixed">
 
         <!-- Top Navbar-->
         <div class="navbar">
           <div class="navbar-inner">
             <a id="logo"><img class="logo" alt="Noora Health" src="/NHlogo.png"/></a>
-              <a data-panel="right" id="open_side_panel" class="open-panel right-aligned">Select Curriculum</a>
+              <span class="right-aligned">{{lessonTitle}}</span>
           </div>
         </div>
 
@@ -22,7 +22,13 @@
 
             {{> Template.dynamic template=main}}
         </div>
-      </div>
-        {{/contentWrapper}}
-</template>
 
+        <div class="toolbar">
+          <div class="toolbar-inner">
+            {{> Template.dynamic template=footer}}
+          </div>
+        </div>
+      </div>
+   {{/contentWrapper}}
+
+  </template>

@@ -1,4 +1,4 @@
-Template.modulesSequence.helpers
+Template.module.helpers
   contentBlurred: ()->
     return Session.get "module content blurred"
 
@@ -24,5 +24,5 @@ Template.modulesSequence.helpers
   isVideo: ()->
     return @.type == "VIDEO"
 
-Template.modulesSequence.onRendered ()->
+Template.module.onRendered ()->
   Scene.get().startModulesSequence()

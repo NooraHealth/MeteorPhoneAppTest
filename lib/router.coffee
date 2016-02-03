@@ -13,11 +13,11 @@ FlowRouter.route '/', {
 # module sequence
 ###
 
-FlowRouter.route '/modules/:_id', {
+FlowRouter.route '/module/:_id', {
   name: "module"
   action: ( params, qparams )->
     Scene.get().stopAudio()
-    BlazeLayout.render "layout", { main: "modulesSequence" , footer: "moduleFooter" }
+    BlazeLayout.render "layout", { main: "module" , footer: "moduleFooter" }
 }
 
 FlowRouter.route '/loading',
