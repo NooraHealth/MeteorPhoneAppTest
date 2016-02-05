@@ -28,5 +28,3 @@ Template.module.helpers
   isVideo: ()->
     return @.type == "VIDEO"
 
-Template.module.onRendered ()->
-  Scene.get().startModulesSequence()
