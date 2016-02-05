@@ -13,14 +13,13 @@
 
 
         <div class="page-content">
-            <div class="panel-overlay"></div>
-            <!--{{#if subscriptionsReady}}-->
-            <!-- Left panel, let it be with reveal effect -->
-            <div class="panel panel-cover panel-right">
-              {{>sideMenu}}
+          <div class=" {{#if contentBlurred}} blur {{/if}} content-block inner-container">
+    s       <div id="{{_id}}" class="card">
+          {{#momentum plugin='left-to-right'}}
+            {{> Template.dynamic template=main data=module}}
+          {{/momentum}}
             </div>
-
-            {{> Template.dynamic template=main}}
+          </div>
         </div>
 
         <div class="toolbar">
