@@ -154,12 +154,12 @@
   height: 60px;
 }
 
-.module-footer {
-  /*display: block;*/
-  text-align: center;
-  text-indent: 0em !important;
-  color: $white !important;
-}
+/*.module-footer {*/
+  /*[>display: block;<]*/
+  /*text-align: center;*/
+  /*text-indent: 0em !important;*/
+  /*color: $white !important;*/
+/*}*/
 
 .footer-button {
   @include transition(all, 1s);
@@ -228,6 +228,9 @@
   text-indent: -999em;
   cursor: pointer;
   position: absolute;
+  text-align: center;
+  text-indent: 0em !important;
+  color: $white !important;
 }
 
 .dotstyle-scaleup li a {
