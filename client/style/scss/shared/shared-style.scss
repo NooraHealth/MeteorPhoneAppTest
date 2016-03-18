@@ -1,0 +1,205 @@
+
+/*@import '../../../.meteor/local/build/programs/server/assets/packages/wolves_bourbon/bourbon/_bourbon';*/
+@import "{wolves:bourbon}/_bourbon";
+/*@import "{meteoric:ionicons-sass}/_ionicons";*/
+
+/*@import '_bourbon';*/
+
+@import '../_variables'; 
+
+@import '../_mixins';
+
+@import '../_layout';
+
+/* -------------------------------- 
+
+ BODY
+
+-------------------------------- */
+
+*, *::after, *::before {
+  box-sizing: border-box;
+}
+
+*::after, *::before {
+  content: '';
+}
+
+html, body {
+  overflow: hidden !important;
+}
+
+.page {
+  background: $light-blue-1 !important;
+  color: #fff;
+
+  a {
+    color: lighten($primary-blue, 30%);
+    text-decoration: none;
+    
+    &:hover {
+      /*color: $primary-blue;*/
+      text-decoration: none;
+    }
+  }
+}
+
+.logo {
+  position: absolute;
+  left: 30px;
+  top: 20px;
+  border-radius: 30px;
+  background-color: #fff;
+  padding: 10px;
+  box-shadow: 5px 5px 5px grey;
+}
+
+.container {
+  padding-bottom: 100px;
+}
+
+.inner-container {
+  width: 100%;
+  height: 100%;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+/* -------------------------------- 
+
+ NAVBAR
+
+-------------------------------- */
+
+.navbar {
+  background-color: $primary-blue !important;
+  height: 60px;
+}
+
+
+/*.navbar, .toolbar {*/
+.navbar {
+}
+
+/*.round-tile {*/
+  /*border-radius: 30px;*/
+  /*background-color: #FFFFFF;*/
+  /*padding: 8px;*/
+  /*margin: 10px;*/
+/*}*/
+
+
+/*.nav-menu {*/
+  /*& ul {*/
+    /*margin: 5px; */
+  /*}*/
+
+  /*& ul li {*/
+    /*display: inline;*/
+    /*margin: 10px;*/
+    /*font-size: 15px;*/
+  /*}*/
+
+  /*& i {*/
+    /*vertical-align: middle;*/
+  /*}*/
+
+/*}*/
+
+/* -------------------------------- 
+
+ ANIMATIONS
+
+-------------------------------- */
+
+.expanded {
+  @include transition-delay(.3s);
+  @include transition(scale, 2s);
+
+  @media(min-width: 600px) {
+    @include transform(scale(1.1)); 
+  }
+  @media(max-width: 600px) {
+    @include transform(scale(1.2)); 
+  }
+}
+
+.faded {
+  @include transition-delay(.3s);
+  @include transform(scale(.85));
+  @include transition(2s);
+  opacity: 0.5;
+}
+
+/* -------------------------------- 
+
+ LOADING
+
+-------------------------------- */
+
+.loading-message {
+  color: #fff;
+  font-size: 25px;
+  font-weight: 300;
+  font-family: sans-serif;
+}
+
+/* -------------------------------- 
+
+ ALIGNMENT
+
+-------------------------------- */
+
+/*.row {*/
+  /*margin: 0;*/
+/*}*/
+
+.full-width {
+  width: 100%;
+}
+
+.right-aligned {
+  margin-left: auto;
+  margin-right: 20px;
+}
+
+.blur {
+  -webkit-filter: blur(2px);
+}
+
+.center {
+  display: block;
+  margin: auto;
+}
+
+.small-text {
+  font-size: 75%;
+}
+
+.large-text {
+  font-size: 150%;
+}
+
+.padding-sm {
+  padding: 10px
+}
+
+.padding {
+  padding: 20px
+}
+
+.padding-lg {
+  padding: 30px;
+}
+
+.padding-bottom {
+  padding-bottom: 10px
+}
+
+.padding-bottom-lg {
+  padding-bottom: $padding-L;
+}
+
+.padding-top {
+  padding-top: 10px
+}

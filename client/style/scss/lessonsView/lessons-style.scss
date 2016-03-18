@@ -1,0 +1,117 @@
+
+/*@import '../../../.meteor/local/build/programs/server/assets/packages/wolves_bourbon/bourbon/_bourbon';*/
+@import "{wolves:bourbon}/_bourbon";
+/*@import "{meteoric:ionicons-sass}/_ionicons";*/
+
+/*@import '_bourbon';*/
+
+@import '../_variables'; 
+
+@import '../_mixins';
+
+@import '../_layout';
+
+
+/* -------------------------------- 
+
+ LESSON THUMBNAILS
+
+-------------------------------- */
+
+.lessons-list {
+  padding-top: 50px !important;
+  padding-bottom: 100px !important;
+}
+
+.current-lesson {
+  @extend .expanded;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  box-shadow: 2px 4px 5px rgba(0, 0, 0, 0.3)
+}
+
+.lesson-card {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.lesson-card-image {
+  height: 40vw;
+  background-size: cover;
+  background-position: center;
+}
+
+.thumbnail-wrapper {
+  height: 366px;
+  margin: 15px;
+}
+
+.thumbnail-image > img {
+  height: 40vh !important;
+  display: block;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.card-footer {
+  min-height: 80px;
+}
+
+/*.item-title {*/
+  /*overflow: inherit !important;*/
+/*}*/
+
+
+/* -------------------------------- 
+
+ THUMBNAIL OVERLAYS
+
+-------------------------------- */
+
+.overlay-wrapper {
+  margin: auto;
+  position: relative;
+  display: block;
+  & > .inner-overlay-wrapper {
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    position: absolute;
+
+    & > .animated-overlay {
+      z-index: 10;
+      margin: auto;
+      top: 30%;
+      display: block;
+      position: relative;
+      height: 100px !important;
+      width: 100px !important;
+    }
+  }
+}
+
+
+
+/*.overlay {*/
+  /*position: absolute;*/
+  /*top:0;*/
+  /*left:0;*/
+  /*width:100%;*/
+  /*height:100%;*/
+  /*z-index:10;*/
+/*}*/
+
+/* -------------------------------- 
+
+ SIDE PANEL
+
+-------------------------------- */
+
+.panel  {
+  padding-top: 30px;
+  background-color: $white !important;
+  width: 350px;
+}

@@ -21,7 +21,7 @@ class @ModulesController
 
   @readyForNextModule: ()->
     NextButton.get().shake()
-    ModulesController.setContentBlurred true
+    #ModulesController.setContentBlurred true
 
   _goToModule: ( index )->
     Scene.get().scrollToTop()
@@ -45,9 +45,6 @@ class @ModulesController
   notifyResponseRecieved: ( target )->
     @._moduleController.responseRecieved target
 
-  shouldBeRendered: ( template )->
-    return true
-
   currentModuleIndex: ()->
     return Session.get "current module index"
 
@@ -56,7 +53,7 @@ class @ModulesController
     index++
     Session.update "current module index", index
     NextButton.get().stopShake()
-    ModulesController.setContentBlurred false
+    #ModulesController.setContentBlurred false
 
     if index == @._sequence.length-1
       NextButton.get().changeButtonText "FINISH"

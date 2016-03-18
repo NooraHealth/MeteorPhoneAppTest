@@ -1,0 +1,255 @@
+
+/*@import '../../../.meteor/local/build/programs/server/assets/packages/wolves_bourbon/bourbon/_bourbon';*/
+@import "{wolves:bourbon}/_bourbon";
+/*@import "{meteoric:ionicons-sass}/_ionicons";*/
+
+/*@import '_bourbon';*/
+
+@import '../_variables'; 
+
+@import '../_mixins';
+
+@import '../_layout';
+
+/* -------------------------------- 
+
+ BASE
+
+-------------------------------- */
+
+.response {
+  width: 48%;
+}
+
+.module-container {
+  max-width: 850px;
+  position: relative;
+  width: 100%;
+}
+
+.module {
+  z-index: 0;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.module-card {
+  height: 600px;
+  width: 900px;
+  /*perspective: 1100px;*/
+  /*width: 100%;*/
+  /*height: 100%;*/
+}
+
+.module-image {
+  @media(max-width:600px) {
+    height: 35vh;
+  }
+  @media(min-width: 600px){
+    height: 50vh;
+  }
+  max-width: 100%;
+}
+
+.correctly-selected {
+  border: 4px solid $success !important;
+}
+
+.selected{
+  border: 4px solid $primary-blue;
+}
+
+.incorrectly-selected {
+  border: 4px solid $danger !important;
+}
+
+/*.module-wrapper {*/
+  /*text-align:center;*/
+  /*width: 100%;*/
+/*}*/
+
+/* -------------------------------- 
+
+ ANIMATIONS
+
+-------------------------------- */
+
+.scale-up {
+  @include animation(scale 1.0s ease);
+  @include animation-iteration-count(infinite);
+  /*@include animation-duration(2s);*/
+  /*@include animation-timing-function(ease);*/
+  /*@include animation-name(scale);*/
+} 
+
+.slide-up {
+  @include transform(translateY(-300px));  
+  bottom: 300px !important;
+  right: 50px !important;
+}
+
+.slide-down {
+  @include transform(translate3d(0, 1000px,0));  
+}
+
+
+/* -------------------------------- 
+
+  TEMPLATE-SPECIFIC
+
+-------------------------------- */
+
+.scenario-btn {
+  @include display(flex);
+  @include justify-content(center);
+  margin: 4px;
+  width: 29%;
+}
+
+.binary-btn {
+  width: 200px;
+  
+  @media (max-width: 992px) {
+    width: 150px;
+  }
+}
+
+.binary-image {
+  height:55vh;
+}
+
+.video-module {
+  height: 450px;
+}
+
+.embedded-video {
+  @media(min-width: 600px) {
+    width: 660px;
+    height: 480px;
+  }
+  @media(max-width: 668px) {
+    height: 200px;
+    width: 320px;
+  }
+}
+
+.image-choice {
+  cursor: pointer;
+  width: 90%;
+  height: 22vh;
+  padding: 3px;
+}
+
+/* -------------------------------- 
+
+  FOOTER
+
+-------------------------------- */
+
+.toolbar {
+  background-color: $white !important;
+  color: $font-color !important;
+  height: 60px;
+}
+
+.module-footer {
+  display: block;
+  text-align: center;
+  text-indent: 0em !important;
+  color: $white !important;
+}
+
+.footer-button {
+  @include transition(all, 1s);
+  margin-left: 10px;
+  margin-right: 10px;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  padding-left: 50px;
+  padding-right: 50px;
+  letter-spacing: 2px;
+  font-size: 25px;
+  position: absolute;
+}
+
+.green {
+  background-color: $success !important;
+}
+
+.gohome-button {
+  margin-right: 60px;
+}
+
+
+.dotstyle {
+  display: inline-block;
+  padding: 15px;
+  width: 400px;
+}
+
+.dotstyle ul {
+  @include display(flex);
+  @include justify-content(center);
+  /*display: flex !important;*/
+  /*justify-content: center !important;*/
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0;
+  list-style: none;
+}
+
+.dotstyle li {
+  position: relative;
+  display: block;
+  float: left;
+  margin: 0 7px;
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+
+  @media (max-width: 768px) {
+    width: 10px;
+    height: 10px;
+    margin: 0 3px;
+  }
+}
+
+.dotstyle li a {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  outline: none;
+  border-radius: 50%;
+  background-color: $light-blue-2;
+  text-indent: -999em;
+  cursor: pointer;
+  position: absolute;
+}
+
+.dotstyle-scaleup li a {
+  -webkit-transition: -webkit-transform 0.3s ease, background-color 0.3s ease;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.dotstyle-scaleup li a:hover,
+.dotstyle-scaleup li a:focus {
+  opacity: 1;
+  background-color: $light-blue-1;
+}
+
+.dotstyle-scaleup li.current a {
+  background-color: $primary-blue;
+  -webkit-transform: scale(1.5);
+  transform: scale(1.5);
+}
+
+.module-navigation-bar {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  text-align: center;
+}

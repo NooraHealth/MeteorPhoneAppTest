@@ -14,10 +14,10 @@
 
         <div class="page-content">
           <div class=" {{#if contentBlurred}} blur {{/if}} content-block inner-container">
-    s       <div id="{{_id}}" class="card">
-          {{#momentum plugin='left-to-right'}}
-            {{> Template.dynamic template=main data=module}}
-          {{/momentum}}
+           <div id="{{_id}}" class="card module-card">
+              {{#momentum plugin='left-to-right'}}
+                {{> Template.dynamic template=main data=module}}
+              {{/momentum}}
             </div>
           </div>
         </div>
