@@ -34,7 +34,11 @@ class @MultipleChoiceController extends QuestionBase
         if @.intro
           @.intro.pause()
 
+        console.log incorrectResponseButtons
+        console.log $("#" + @._module._id)
         for btn in incorrectResponseButtons
+          console.log "got the incorrect response buttons"
+          console.log btn
           if not $(btn).hasClass "faded"
             $(btn).addClass "faded"
       else
