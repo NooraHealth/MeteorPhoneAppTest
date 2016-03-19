@@ -1,15 +1,13 @@
 
-/*@import '../../../.meteor/local/build/programs/server/assets/packages/wolves_bourbon/bourbon/_bourbon';*/
 @import "{wolves:bourbon}/_bourbon";
-/*@import "{meteoric:ionicons-sass}/_ionicons";*/
-
-/*@import '_bourbon';*/
 
 @import '../_variables'; 
 
 @import '../_mixins';
 
 @import '../_layout';
+
+@import '../_animations';
 
 /* -------------------------------- 
 
@@ -39,7 +37,6 @@ html, body {
     text-decoration: none;
     
     &:hover {
-      /*color: $primary-blue;*/
       text-decoration: none;
     }
   }
@@ -77,36 +74,6 @@ html, body {
   height: 60px;
 }
 
-
-/*.navbar, .toolbar {*/
-.navbar {
-}
-
-/*.round-tile {*/
-  /*border-radius: 30px;*/
-  /*background-color: #FFFFFF;*/
-  /*padding: 8px;*/
-  /*margin: 10px;*/
-/*}*/
-
-
-/*.nav-menu {*/
-  /*& ul {*/
-    /*margin: 5px; */
-  /*}*/
-
-  /*& ul li {*/
-    /*display: inline;*/
-    /*margin: 10px;*/
-    /*font-size: 15px;*/
-  /*}*/
-
-  /*& i {*/
-    /*vertical-align: middle;*/
-  /*}*/
-
-/*}*/
-
 /* -------------------------------- 
 
  ANIMATIONS
@@ -132,6 +99,12 @@ html, body {
   opacity: 0.5;
 }
 
+.animate-scale {
+  @include animation(scale 1.0s ease);
+  @include animation-iteration-count(infinite);
+} 
+
+
 /* -------------------------------- 
 
  LOADING
@@ -151,9 +124,9 @@ html, body {
 
 -------------------------------- */
 
-/*.row {*/
-  /*margin: 0;*/
-/*}*/
+.row {
+  margin: 20px;
+}
 
 .full-width {
   width: 100%;
