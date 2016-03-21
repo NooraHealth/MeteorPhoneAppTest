@@ -110,7 +110,7 @@ html, body {
 } 
 
 .offscreen-left {
-  @include transform(translateX(-3000px));
+  left: -3000px;
   @include transition(2s);
 } 
 
@@ -196,4 +196,8 @@ html, body {
 
 .padding-top {
   padding-top: 10px
+}
+
+.hidden {
+  display: none;
 }

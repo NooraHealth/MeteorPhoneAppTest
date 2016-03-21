@@ -7,4 +7,3 @@ Template.moduleLayout.helpers
     id = FlowRouter.getParam("_id")
     module =  Modules.findOne { _id: id }
     return module
-
