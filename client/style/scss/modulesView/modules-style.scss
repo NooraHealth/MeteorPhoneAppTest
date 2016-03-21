@@ -36,7 +36,6 @@
 }
 
 .module-card {
-  height: 600px;
   width: 900px;
   /*perspective: 1100px;*/
   /*width: 100%;*/
@@ -118,6 +117,7 @@
 
 .binary-image {
   height:55vh;
+  max-width: 80%;
 }
 
 .video-module {
