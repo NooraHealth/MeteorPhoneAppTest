@@ -104,6 +104,16 @@ html, body {
   @include animation-iteration-count(infinite);
 } 
 
+.offscreen-right {
+  @include transform(translateX(3000px));
+  @include transition(2s);
+} 
+
+.offscreen-left {
+  @include transform(translateX(-3000px));
+  @include transition(2s);
+} 
+
 
 /* -------------------------------- 
 

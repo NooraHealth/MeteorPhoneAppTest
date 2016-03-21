@@ -15,6 +15,13 @@ FlowRouter.route '/', {
 
 FlowRouter.route '/module/:_id', {
   name: "module"
+  triggersExit: [ ( context, redirect ) ->
+    console.log "CONTEXT"
+    console.log context
+    $(".module-card").removeClass "offscreen-left"
+    $(".module-card").addClass "offscreen-right"
+    console.log $(".module-card")
+  ]
   action: ( params, qparams )->
     module = Modules.findOne { _id: params._id }
     console.log Modules.find({}).count()

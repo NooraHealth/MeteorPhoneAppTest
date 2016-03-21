@@ -39,6 +39,7 @@
   width: 900px;
   height: 85%;
   margin: auto;
+  @include transition(2s);
 }
 
 .module-image {
