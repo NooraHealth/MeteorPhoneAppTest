@@ -20,3 +20,11 @@ Template.moduleSlider.helpers
       template = "slideModule"
 
     return template
+
+Template.moduleSlider.onRendered ()->
+  mySwiper = App.swiper '.swiper-container', {
+      pagination: '.swiper-pagination',
+      paginationHide: false,
+      paginationClickable: true,
+      nextButton: '.swiper-button-next',
+  }
