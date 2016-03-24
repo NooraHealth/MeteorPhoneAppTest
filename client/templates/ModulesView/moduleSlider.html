@@ -1,0 +1,13 @@
+<template name='moduleSlider'>
+
+  <div class='swiper-container'>
+    <div class='swiper-wrapper'>
+      {{#each module in modules}}
+        {{#with module}}
+          {{> UI.dynamic template=getTemplate data=module}}
+        {{/with}}
+      {{/each}}
+    </div>
+  </div>
+
+</template>

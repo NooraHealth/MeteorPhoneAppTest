@@ -13,32 +13,11 @@ FlowRouter.route '/', {
 # module sequence
 ###
 
-FlowRouter.route '/module/:_id', {
-  name: "module"
+FlowRouter.route '/lesson/:_id', {
+  name: "lesson"
   action: ( params, qparams )->
-    module = Modules.findOne { _id: params._id }
-    console.log Modules.find({}).count()
-    console.log module
-    console.log params._id
-    if module.type == "BINARY"
-      template = "binaryChoiceModule"
-    if module.type == "MULTIPLE_CHOICE"
-      template = "multipleChoiceModule"
-    if module.type == "SCENARIO"
-      template = "scenarioModule"
-    if module.type == "VIDEO"
-      template = "videoModule"
-    if module.type == "SLIDE"
-      template = "slideModule"
-    BlazeLayout.render "moduleLayout", { main: template , footer: "moduleFooter" }
+    BlazeLayout.render "moduleLayout", { main: "moduleSlider", footer: "moduleFooter" }
 
-  triggersExit: [ ( context, redirect ) ->
-    console.log "CONTEXT"
-    console.log context
-    card = $( "#" + context.params._id )
-    if card
-      card.addClass "offscreen-right"
-  ]
 }
 
 FlowRouter.route '/loading',

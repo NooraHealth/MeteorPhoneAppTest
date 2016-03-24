@@ -33,7 +33,7 @@ class @ModulesController
       @._moduleController.end()
 
     #Session.set "current module id", @._currentModule._id
-    FlowRouter.go "/module/" + @._currentModule._id
+    #FlowRouter.go "/module/" + @._currentModule._id
     $("body").append "<audio id='audio"+@._currentModule._id+"'></audio>"
     $("body").append "<audio id='correctaudio"+@._currentModule._id+"'></audio>"
     $("body").append "<audio id='correct_soundeffect"+@._currentModule._id+"'></audio>"
@@ -71,6 +71,6 @@ class @ModulesController
 
   start: ()->
     Session.set "current module index", 0
-    @._goToModule 0
+    #@._goToModule 0
     
 

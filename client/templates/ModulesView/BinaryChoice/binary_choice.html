@@ -1,15 +1,19 @@
 <template name="binaryChoiceModule">
-  <div class="card-header large-text center">
-    {{question}}
-  </div>
+  {{#moduleSlideWrapper}}
 
-  <div class="card-content padding-sm">
-    <img src="{{imgSrc}}" class="center binary-image">
-  </div>
+    <div class="card-header large-text center">
+      {{question}}
+    </div>
 
-  <div class="card-footer large-text">
-    <a class="response button button-fill button-big color-lightblue" value="Yes">YES</a>
-    <a class="response button button-fill button-big color-lightblue" value="No">NO</a>
-  </div>
+    <div class="card-content padding-sm">
+      <img src="{{imgSrc}}" class="center binary-image">
+    </div>
+
+    <div class="card-footer large-text">
+      <a class="response button button-fill button-big color-lightblue" value="Yes">YES</a>
+      <a class="response button button-fill button-big color-lightblue" value="No">NO</a>
+    </div>
+  
+  {{/moduleSlideWrapper}}
 
 </template>

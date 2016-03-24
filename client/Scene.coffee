@@ -150,6 +150,7 @@ class @Scene
       lesson = Lessons.findOne { _id: lessonId }
       @._modulesController = new ModulesController lessonId
       @.stopAudio()
+      FlowRouter.go "lesson", { _id: lessonId }
       @._modulesController.start()
 
     getModuleSequenceController: ()->
