@@ -26,5 +26,7 @@ Template.moduleSlider.onRendered ()->
       pagination: '.swiper-pagination',
       paginationHide: false,
       paginationClickable: true,
+      lazyLoading: true,
+      preloadImages: false,
       nextButton: '.swiper-button-next',
   }
