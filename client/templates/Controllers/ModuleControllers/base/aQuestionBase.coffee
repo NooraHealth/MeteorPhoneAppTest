@@ -28,6 +28,8 @@ class @QuestionBase
     @.correctAudio.pause()
  
   begin: ( playIntro )->
+    console.log "About to play the audio"
+    console.log @.audio
     @.audio.playWhenReady()
 
   end: ()->

@@ -24,15 +24,15 @@ class @ModulesController
     #ModulesController.setContentBlurred true
 
   _goToModule: ( index )->
-    Scene.get().scrollToTop()
+    #Scene.get().scrollToTop()
     $("audio").each (elem)->
       $(elem).remove()
 
-    @._currentModule = @._sequence[index]
+    @._currentModule = @.getSequence()[index]
     if @._moduleController
       @._moduleController.end()
 
-    #Session.set "current module id", @._currentModule._id
+    Session.set "current module id", @._currentModule._id
     #FlowRouter.go "/module/" + @._currentModule._id
     $("body").append "<audio id='audio"+@._currentModule._id+"'></audio>"
     $("body").append "<audio id='correctaudio"+@._currentModule._id+"'></audio>"
@@ -52,13 +52,15 @@ class @ModulesController
     index = Session.get "current module index"
     index++
     Session.update "current module index", index
+    console.log "Goignt o next module: "  +  index
+    console.log @.getSequence().length
     NextButton.get().stopShake()
     #ModulesController.setContentBlurred false
 
-    if index == @._sequence.length-1
+    if index == @.getSequence().length-1
       NextButton.get().changeButtonText "FINISH"
 
-    if index == @._sequence.length
+    if index == @.getSequence().length
       Scene.get().incrementCurrentLesson()
       Scene.get().goToLessonsPage()
       congratulations = new Accolade()
@@ -71,6 +73,6 @@ class @ModulesController
 
   start: ()->
     Session.set "current module index", 0
-    #@._goToModule 0
+    @._goToModule 0
     
 
