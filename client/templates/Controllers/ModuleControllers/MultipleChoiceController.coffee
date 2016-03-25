@@ -12,6 +12,8 @@ class @MultipleChoiceController extends QuestionBase
 
   incorrectResponseButtons: ()->
     #return $("#" + @._module._id).find(".response").filter ( elem )=> $(elem).val() not in @._module.correct_answer
+    console.log "Response btns"
+    console.log $("#" + @._module._id).find(".response")
     return $("#" + @._module._id).find(".response").filter ( i, elem )=> not $(elem).hasClass "correct"
 
   responseRecieved: ( target )->
@@ -34,6 +36,7 @@ class @MultipleChoiceController extends QuestionBase
         if @.intro
           @.intro.pause()
 
+        console.log "THE INCORRECT RESPONSE BUTTONS"
         console.log incorrectResponseButtons
         console.log $("#" + @._module._id)
         for btn in incorrectResponseButtons

@@ -32,7 +32,7 @@ class @QuestionBase
 
   end: ()->
     @.stopAllAudio()
-    @.resetState()
+    #@.resetState()
   
   resetState: ()->
     for btn in @.incorrectResponseButtons()
