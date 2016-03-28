@@ -102,6 +102,7 @@ html, body {
 .animate-scale {
   @include animation(scale 1.0s ease);
   @include animation-iteration-count(infinite);
+  @include animation-direction(alternate-reverse);
 } 
 
 .offscreen-right {

@@ -8,7 +8,7 @@ class @NextButton
   class PrivateClass
 
     constructor: ()->
-      @_shakeActionClasses = [ "slide-up", "scale-up", "expanded"]
+      @_shakeActionClasses = [ "slide-up"]
 
     getElem: ()->
       return $("#next")
