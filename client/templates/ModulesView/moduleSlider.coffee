@@ -5,8 +5,6 @@ Template.moduleSlider.helpers
     return lesson.getModulesSequence()
 
   getTemplate: ( context )->
-    console.log "Getting the module slider contecxt"
-    console.log Template.currentData()
     module = Template.currentData()
     if module.type == "BINARY"
       template = "binaryChoiceModule"
@@ -23,9 +21,6 @@ Template.moduleSlider.helpers
 
 Template.moduleSlider.onRendered ()->
   mySwiper = App.swiper '.swiper-container', {
-      pagination: '.swiper-pagination',
-      paginationHide: false,
-      paginationClickable: true,
       lazyLoading: true,
       preloadImages: false,
       nextButton: '.swiper-button-next',

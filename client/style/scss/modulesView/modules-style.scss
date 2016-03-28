@@ -75,19 +75,8 @@
 
 -------------------------------- */
 
-.scale-up {
-  @include animation(scale 1.0s ease);
-  @include animation-iteration-count(infinite);
-  /*@include animation-duration(2s);*/
-  /*@include animation-timing-function(ease);*/
-  /*@include animation-name(scale);*/
-} 
-
 .slide-up {
-  /*@include transform(translateY(-300px));  */
   transform: translateY(-300px) !important;
-  /*bottom: 300px !important;*/
-  /*right: 50px !important;*/
 }
 
 .slide-down {
