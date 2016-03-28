@@ -7,24 +7,41 @@ class @NextButton
 
   class PrivateClass
 
-    constructor: ()->
-      @_shakeActionClasses = [ "slide-up"]
+    _wrapperClasses: ()->
+      return ["animate-scale"]
+
+    _buttonClasses: ()->
+      return ["slide-up"]
 
     getElem: ()->
       return $("#next")
 
+    getWrapper: ()->
+      return $("#next-button-wrapper")
+
     changeButtonText: ( text )->
       @getElem().text text
 
-    shake: ()->
-      console.log "Going to shake the next button"
-      for klass in @._shakeActionClasses
+    animate: ()->
+      console.log "Animating!!"
+      for klass in @._wrapperClasses()
+        console.log "Adding " + klass
+        if not @getWrapper().hasClass klass
+          console.log "Adding " + klass
+          @getWrapper().addClass klass
+
+      for klass in @._buttonClasses()
+        console.log "Adding " + klass
         if not @getElem().hasClass klass
+          console.log "Adding " + klass
           @getElem().addClass klass
 
-    stopShake: ()->
-      console.log "Stopping the button from shaking"
-      for klass in @._shakeActionClasses
+    stopAnimation: ()->
+      for klass in @._wrapperClasses()
+        if @getWrapper().hasClass klass
+          @getWrapper().removeClass klass
+
+      for klass in @._buttonClasses()
         if @getElem().hasClass klass
           @getElem().removeClass klass
  

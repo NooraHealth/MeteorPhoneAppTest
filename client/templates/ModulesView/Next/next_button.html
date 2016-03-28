@@ -13,13 +13,15 @@
 </template>
 
 <template name="browserNextBtn">
-  <a class="link next-module-btn footer-button button color-blue button-fill swiper-button-next" id="next" >
-    {{#if allModulesComplete}}
-      FINISH
-    {{else}}
-      NEXT
-    {{/if}}
-    <i class="fa fa-arrow-right fa-2x"></i>
-  </a>
+  <div id="next-button-wrapper">
+    <a class="link next-module-btn footer-button button color-blue button-fill swiper-button-next" id="next" >
+      {{#if allModulesComplete}}
+        FINISH
+      {{else}}
+        NEXT
+      {{/if}}
+      <i class="fa fa-arrow-right fa-2x"></i>
+    </a>
+  </div>
 </template>
 

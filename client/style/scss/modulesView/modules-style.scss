@@ -76,7 +76,9 @@
 -------------------------------- */
 
 .slide-up {
-  transform: translateY(-300px) !important;
+  /*@include transform(translateY(-300px));*/
+  @include animation(slideup 1s ease);
+  @include animation-fill-mode(forwards);
 }
 
 .slide-down {

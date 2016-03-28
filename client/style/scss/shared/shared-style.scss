@@ -100,7 +100,7 @@ html, body {
 }
 
 .animate-scale {
-  @include animation(scale 1.0s ease);
+  @include animation(scale 1.0s ease-in);
   @include animation-iteration-count(infinite);
   @include animation-direction(alternate-reverse);
 } 

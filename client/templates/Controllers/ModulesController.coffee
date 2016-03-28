@@ -20,7 +20,7 @@ class @ModulesController
     Session.set "module content blurred", state
 
   @readyForNextModule: ()->
-    NextButton.get().shake()
+    NextButton.get().animate()
     #ModulesController.setContentBlurred true
 
   _goToModule: ( index )->
@@ -52,9 +52,7 @@ class @ModulesController
     index = Session.get "current module index"
     index++
     Session.update "current module index", index
-    console.log "Goignt o next module: "  +  index
-    console.log @.getSequence().length
-    NextButton.get().stopShake()
+    NextButton.get().stopAnimation()
     #ModulesController.setContentBlurred false
 
     if index == @.getSequence().length-1
