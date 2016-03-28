@@ -23,5 +23,6 @@ FlowRouter.route '/lesson/:_id', {
 FlowRouter.route '/loading',
   name: "loading"
   action: ()->
+    console.log "In the loading router"
     BlazeLayout.render "layout", { main: "loading" }
 

@@ -10,11 +10,9 @@
 
 @include keyframes(slideup) {
   from {
-    /*bottom: 0px;*/
     @include transform(translateY(0));
   }
   to {
-    /*bottom: 300px;*/
     @include transform(translateY(-300px));
   }
 }

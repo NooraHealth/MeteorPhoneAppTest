@@ -23,17 +23,12 @@ class @NextButton
       @getElem().text text
 
     animate: ()->
-      console.log "Animating!!"
       for klass in @._wrapperClasses()
-        console.log "Adding " + klass
         if not @getWrapper().hasClass klass
-          console.log "Adding " + klass
           @getWrapper().addClass klass
 
       for klass in @._buttonClasses()
-        console.log "Adding " + klass
         if not @getElem().hasClass klass
-          console.log "Adding " + klass
           @getElem().addClass klass
 
     stopAnimation: ()->

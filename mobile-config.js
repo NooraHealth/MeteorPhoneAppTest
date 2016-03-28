@@ -1,5 +1,4 @@
 App.accessRule( "*");
-//App.preference("orientation", "landscape");
 
 App.info({
   name: "Noora Health WebApp",
@@ -27,9 +26,9 @@ App.launchScreens({
   //'iphone6p_portrait': 'public/splash/splash-414x736@3x.png',
   //'iphone6p_landscape': 'public/splash/splash-736x414@3x.png',
 
-  //'ipad_portrait': 'public/splash/splash-768x1024.png',
+  'ipad_portrait': 'public/splash/splash-1024x768.png',
   //'ipad_portrait_2x': 'public/splash/splash-768x1024@2x.png',
-  //'ipad_landscape': 'public/splash/splash-1024x768.png',
+  'ipad_landscape': 'public/splash/splash-1024x768.png',
   //'ipad_landscape_2x': 'public/splash/splash-1024x768@2x.png',
 
   //// Android

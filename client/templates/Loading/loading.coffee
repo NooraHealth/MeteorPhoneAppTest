@@ -12,6 +12,7 @@ Template.loading.helpers
     return Session.get "percent loaded"
 
 Template.loading.onRendered ()->
+  console.log "Rendered the on loading screen"
   this.loading = window.pleaseWait {
     logo: 'NHlogo.png',
     loadingHtml: message + spinner

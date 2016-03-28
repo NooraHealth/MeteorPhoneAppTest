@@ -101,7 +101,7 @@ class @Scene
     setCurriculum: (curriculum)->
       console.log "Is connected?", Meteor.status().connected
       if Meteor.isCordova and Meteor.status().connected# and not ContentInterface.contentAlreadyLoaded curriculum
-        console.log "---- OGING TO LOADING SCREEN-----------"
+        console.log "---- GOING TO LOADING SCREEN-----------"
         @.goToLoadingScreen()
         @.downloadCurriculum curriculum
       else
@@ -125,6 +125,7 @@ class @Scene
         @.downloader.loadContent curriculum, onSuccess, onError
 
     goToLoadingScreen: ()->
+      console.log "Int he going to loading function"
       FlowRouter.go "/loading"
       @
 
