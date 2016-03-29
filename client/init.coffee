@@ -1,6 +1,4 @@
 Meteor.startup ()->
-  #sceneInit = Scene.get()
-
   BlazeLayout.setRoot "body"
 
   this.App = new Framework7(
@@ -10,4 +8,3 @@ Meteor.startup ()->
     tapHoldPreventClicks: false
     tapHoldDelay: 1500
   )
-

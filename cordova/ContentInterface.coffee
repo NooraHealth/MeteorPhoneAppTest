@@ -151,7 +151,8 @@ class @ContentInterface
 
     return deferred.promise
 
-  loadContent: ( curriculum, onSuccess, onError)->
+  loadContent: ( id, onSuccess, onError)->
+    curriculum = Curriculums.findOne { _id: id }
     lessons = curriculum.getLessonDocuments()
     urls = []
 

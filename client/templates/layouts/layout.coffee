@@ -10,6 +10,7 @@ Template.layout.helpers
 
 Template.layout.events
   "click #open_side_panel": ()->
+    console.log Curriculums.find({}).fetch()
     console.log "CLICK"
 
   "click #logo": ()->

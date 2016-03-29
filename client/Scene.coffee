@@ -10,8 +10,13 @@ class @Scene
 
   class PrivateScene
     constructor: ()->
+      console.log "POSTING MESSAGE"
+
       if Meteor.isCordova
-        @.downloader = new ContentInterface()
+        if Worker
+          this.DownloadWorker = new Worker "Worker.js"
+        
+        #@.downloader = new ContentInterface()
         Curriculum.find({}).observe {
           changed: ( newCurr, oldCurr )->
             console.log "CURRICULUM CHANGES"
@@ -43,7 +48,7 @@ class @Scene
       if id
         curr = Curriculum.findOne { _id : id }
         if curr
-          @.setCurriculum curr
+          @.setCurriculum id
       @._hasPlayedIntro = false
       
     stopAudio: ()->
@@ -118,11 +123,13 @@ class @Scene
         onError = (err)->
           console.log "Error downloading content: ", err
           console.log err
-          alert "There was an error downloading your content, please log in and try again: ", err
-          Meteor.logout()
+          Scene.get().goToLessonsPage()
 
         console.table "This is the curr", curriculum
-        @.downloader.loadContent curriculum, onSuccess, onError
+        this.DownloadWorker.postMessage {
+          curriculum: curriculum._id
+        }
+        #@.downloader.loadContent curriculum, onSuccess, onError
 
     goToLoadingScreen: ()->
       console.log "Int he going to loading function"
