@@ -23,10 +23,9 @@ CurriculumSchema = new SimpleSchema
     type:String
     min:0
 
-Curriculum.attachSchema CurriculumSchema
+Curriculums.attachSchema CurriculumSchema
 
-
-Curriculum.helpers {
+Curriculums.helpers {
   getLessonDocuments: ()->
     
     if !this.lessons

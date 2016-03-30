@@ -10,14 +10,13 @@ class @Scene
 
   class PrivateScene
     constructor: ()->
-      console.log "POSTING MESSAGE"
 
       if Meteor.isCordova
-        if Worker
-          this.DownloadWorker = new Worker "Worker.js"
+        #if Worker
+          #this.DownloadWorker = new Worker "Worker.js"
         
-        #@.downloader = new ContentInterface()
-        Curriculum.find({}).observe {
+        @.downloader = new ContentInterface()
+        Curriculums.find({}).observe {
           changed: ( newCurr, oldCurr )->
             console.log "CURRICULUM CHANGES"
         }
@@ -46,9 +45,13 @@ class @Scene
       @._contentEndpoint = Meteor.settings.public.CONTENT_SRC
       id = Session.get "curriculum id"
       if id
-        curr = Curriculum.findOne { _id : id }
+        curr = Curriculums.findOne { _id : id }
+        console.log "this is the id", id
+        console.log "This is the curriculum"
+        console.log Curriculums.find({}).count()
+        console.log curr
         if curr
-          @.setCurriculum id
+          @.setCurriculum curr
       @._hasPlayedIntro = false
       
     stopAudio: ()->
@@ -80,7 +83,7 @@ class @Scene
 
     getCurriculum: ()->
       id = @.getCurriculumId()
-      return Curriculum.findOne {_id: id}
+      return Curriculums.findOne {_id: id}
 
     getLessons: ()->
       curriculum = @.getCurriculum()
@@ -103,7 +106,9 @@ class @Scene
     replayMedia: ()->
       @._modulesController.replay()
 
-    setCurriculum: (curriculum)->
+    setCurriculum: ( curriculum )->
+      console.trace()
+      console.log "Setting the curriculum as ", curriculum
       console.log "Is connected?", Meteor.status().connected
       if Meteor.isCordova and Meteor.status().connected# and not ContentInterface.contentAlreadyLoaded curriculum
         console.log "---- GOING TO LOADING SCREEN-----------"
@@ -126,10 +131,10 @@ class @Scene
           Scene.get().goToLessonsPage()
 
         console.table "This is the curr", curriculum
-        this.DownloadWorker.postMessage {
-          curriculum: curriculum._id
-        }
-        #@.downloader.loadContent curriculum, onSuccess, onError
+        #this.DownloadWorker.postMessage {
+          #curriculum: curriculum._id
+        #}
+        @.downloader.loadContent curriculum._id, onSuccess, onError
 
     goToLoadingScreen: ()->
       console.log "Int he going to loading function"

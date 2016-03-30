@@ -1,7 +1,7 @@
 Template.lessonsView.helpers
   lessons: ()->
     currId = Session.get "curriculum id"
-    curriculum = Curriculum.findOne {_id: currId }
+    curriculum = Curriculums.findOne {_id: currId }
     if curriculum
       return curriculum.getLessonDocuments()
     else

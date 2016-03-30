@@ -4,8 +4,8 @@
   <div class="content-block">
     <div class="list-block">
       <ul>
-        {{#each curriculums}}
-          {{>listItem}}
+        {{#each curriculum in curriculums}}
+          {{ >listItem curriculum=curriculum }}
         {{/each}}
       </ul>
     </div>
@@ -15,7 +15,7 @@
 <template name='listItem'>
   <li class='item-content'>
     <div class="item-inner">
-      <div class="item-title"> {{title}}</div>
+      <div class="item-title"> {{curriculum.title}}</div>
     </div>
   </li>
 </template>

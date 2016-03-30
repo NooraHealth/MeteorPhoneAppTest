@@ -17,10 +17,10 @@
 
 <template name="rowOfOptions">
   <div class="row">
-  {{#each options}}
+  {{#each option in options}}
     <div class="col-33">
       <!--[> IMG <]-->
-      <img name="option" alt="{{i}}" src="{{optionImgSrc}}" class="response image-choice {{#if correct }} correct {{/if}}">
+      <img name="option" alt="{{option.i}}" src="{{option.optionImgSrc}}" class="js-user-selects response image-choice {{#if correct }} correct {{/if}}">
     </div>
   {{/each}}
   </div>
