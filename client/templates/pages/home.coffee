@@ -1,4 +1,4 @@
-Template.lessonsView.helpers
+Template.Home_page.helpers
   lessons: ()->
     currId = Session.get "curriculum id"
     curriculum = Curriculums.findOne {_id: currId }
@@ -7,7 +7,7 @@ Template.lessonsView.helpers
     else
       return []
 
-Template.lessonsView.onRendered ()->
+Template.Home_page.onRendered ()->
   console.log "About to play app intro"
   Scene.get().playAppIntro()
   currentLesson = Session.get "current lesson"

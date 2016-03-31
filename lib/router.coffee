@@ -6,7 +6,7 @@
 FlowRouter.route '/', {
   name: "home"
   action: ( params, qparams )->
-    BlazeLayout.render "layout", { main : "lessonsView" }
+    BlazeLayout.render "layout", { main : "Home_page" }
 }
 
 ###

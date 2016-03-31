@@ -1,9 +1,9 @@
-<template name="lessonsView">
+<template name="Home_page">
   <div class="list-block">
     <div class="cards-list">
       <ul class="lessons-list">
-        {{#each lessons}}
-          {{>lessonThumbnail}}
+        {{#each lesson in lessons}}
+          {{ >Home_thumbnail lesson=lesson }}
         {{/each}}
       </ul>
     </div>

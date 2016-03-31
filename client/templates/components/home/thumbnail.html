@@ -1,22 +1,22 @@
 
-<template name="lessonThumbnail">
-  <div class="lesson-card card {{#if currentLesson}} current-lesson {{else}} faded {{/if}}">
+<template name="Home_thumbnail">
+  <div class="lesson-card card {{#if currentLesson lesson}} current-lesson {{else}} faded {{/if}}">
     <div class="card-content">
 
       <div class="lesson-card-image card-header">
         <div class="overlay-wrapper thumbnail-image"> 
-          {{#if currentLesson}}
+          {{#if currentLesson lesson}}
             <div class="inner-overlay-wrapper">
               <img src="/play-button-overlay2.png" class="animate-scale animated-overlay"/>
             </div>
           {{/if}}
 
-          <img src="{{imgSrc}}" class='lazy'/>
+          <img src="{{lesson.imgSrc}}" class='lazy'/>
         </div> 
       </div>
 
       <div class="card-footer">
-        <p class="center large-text">{{title}}</p>
+        <p class="center large-text">{{lesson.title}}</p>
       </div>
 
     </div>
