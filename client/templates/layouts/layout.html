@@ -1,30 +1,6 @@
 <template name="layout">
   {{#contentWrapper}}
-      <!-- Now we need additional "navbar-fixed" and "toolbar-fixed" classes on Page -->
-      <div data-page="index" class="page navbar-fixed toolbar-fixed">
-
-        <!-- Top Navbar-->
-        <div class="navbar">
-          <div class="navbar-inner">
-            <a id="logo"><img class="logo" alt="Noora Health" src="/NHlogo.png"/></a>
-            <a data-panel="right" id="open_side_panel" class="open-panel right-aligned">Select Curriculum</a>
-          </div>
-        </div>
-
-
-        <div class="page-content">
-            <div class="panel-overlay"></div>
-            <!--{{#if subscriptionsReady}}-->
-            <!-- Left panel, let it be with reveal effect -->
-            <div class="panel panel-cover panel-right">
-              {{>sideMenu}}
-            </div>
-
-            <div class="content-block inner-container">
-              {{> Template.dynamic template=main}}
-            </div>
-        </div>
-      </div>
-        {{/contentWrapper}}
+    {{> Template.dynamic template=main}}
+  {{/contentWrapper}}
 </template>
 

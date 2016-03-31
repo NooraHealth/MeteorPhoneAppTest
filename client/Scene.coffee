@@ -57,16 +57,16 @@ class @Scene
     stopAudio: ()->
       @.intro.pause()
 
-    playAppIntro: ( force )->
-      if not @.intro?
-        @.intro = new Audio Meteor.getContentSrc() + 'NooraHealthContent/Audio/AppIntro.mp3', "#intro", ""
+    #playAppIntro: ( force )->
+      #if not @.intro?
+        #@.intro = new Audio Meteor.getContentSrc() + 'NooraHealthContent/Audio/AppIntro.mp3', "#intro", ""
 
-      if not @.getCurriculum()
-        return
+      #if not @.getCurriculum()
+        #return
 
-      if force or not @._hasPlayedIntro
-        @.intro.playWhenReady()
-        @._hasPlayedIntro = true
+      #if force or not @._hasPlayedIntro
+        #@.intro.playWhenReady()
+        #@._hasPlayedIntro = true
 
     _setCurriculum: ( curriculum )->
       @.curriculum = curriculum

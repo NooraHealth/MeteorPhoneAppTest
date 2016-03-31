@@ -1,21 +1,14 @@
-<template name="sideMenu">
+<template name="Home_curriculum_menu">
   <div class="content-block-title"><p><a href="#" class="close-panel"><i class="fa fa-times-circle fa-2x"></i></a></p></div>
 
   <div class="content-block">
     <div class="list-block">
       <ul>
         {{#each curriculum in curriculums}}
-          {{ >listItem curriculum=curriculum }}
+          {{ >Home_curriculum_menu_list_item curriculum=curriculum onCurriculumSelected=onCurriculumSelected }}
         {{/each}}
       </ul>
     </div>
   </div>
 </template>
 
-<template name='listItem'>
-  <li class='item-content'>
-    <div class="item-inner">
-      <div class="item-title"> {{curriculum.title}}</div>
-    </div>
-  </li>
-</template>

@@ -1,17 +1,66 @@
+Template.Home_page.onCreated ->
+  @state = new ReactiveDict()
+  @state.setDefault {
+    curriculumId: ""
+    lessonIndex: 0
+    hasPlayedIntro: false
+  }
+
+  @state.set "curriculumId", Session.get "curriculumId"
+  @state.set "lessonIndex", Session.get "lessonIndex"
+
+  @intro = new Audio Meteor.getContentSrc() + 'NooraHealthContent/Audio/AppIntro.mp3', "#intro", ""
+
+  @onLessonCompleted = =>
+    lessonIndex = @state.lessonIndex
+    @state.set "lessonIndex", ++lessonIndex
+
+  @onCurriculmSelected = ( id )=>
+    @state.set curriculumId, id
+
+  @playAppIntro = =>
+    if not @state.get "hasPlayedIntro" then @intro.playWhenReady()
+
+  @autorun =>
+    lessonIndex = @state.get "lessonIndex"
+    Session.setPersistent "lessonIndex", lessonIndex
+    console.log "AUTORUN: Setting the state #{lessonIndex}"
+
+  @autorun =>
+    curriculumId = @state.get "curriculumId"
+    Session.setPersistent "curriculumId", curriculumId
+    console.log "AUTORUN: Setting the state #{curriculumId}"
+
+
 Template.Home_page.helpers
-  lessons: ()->
-    currId = Session.get "curriculum id"
-    curriculum = Curriculums.findOne {_id: currId }
-    if curriculum
-      return curriculum.getLessonDocuments()
+
+  menuArgs: ->
+    console.log "getting the menu args!"
+    instance = Template.instance()
+    return {
+      onCurriculmSelected: instance.onCurriculmSelected
+    }
+
+  thumbnailArgs: (lesson) ->
+
+  lessons: ->
+    instance = Template.instance()
+    curriculumId = instance.state.get "curriculumId"
+    if curriculumId?
+      curriculum = Curriculums.findOne {_id: curriculumId }
+      return curriculum?.getLessonDocuments()
     else
       return []
 
-Template.Home_page.onRendered ()->
+Template.Home_page.onRendered ->
   console.log "About to play app intro"
-  Scene.get().playAppIntro()
-  currentLesson = Session.get "current lesson"
-  card = $(".card-footer")[currentLesson]
+  #currentLesson = Session.get "current lesson"
+  instance = Template.instance()
+  instance.playAppIntro()
+
+  # Scroll to the current lesson
+  currentLesson = instance.state.get "currentLesson"
+  thumbnail = $(".js-lesson-thumbnail")[currentLesson]
   if currentLesson > 0 and card
     $(card).scrollintoview {
       duration: 2500,
