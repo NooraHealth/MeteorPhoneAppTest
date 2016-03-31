@@ -1,12 +1,22 @@
 Template.Home_curriculum_menu.helpers
+  listItemArgs: (curriculum) ->
+    instance = Template.instance()
+    console.log instance
+    data = Template.currentData()
+    return {
+      curriculum: curriculum
+      onCurriculumSelected: data.onCurriculumSelected
+    }
+    
   curriculums: ()->
-    return Curriculums.find({title:{$ne: "Start a New Curriculum"}})
 
 Template.Home_curriculum_menu.onCreated ->
   @autorun =>
+    console.log "Context: "
     console.log Template.currentData()
     schema = new SimpleSchema({
-      onCurriculmSelected: {type: Function}
+      onCurriculumSelected: {type: Function}
+      curriculums: {type: Mongo.Cursor}
     })
 
     context = schema.namedContext()

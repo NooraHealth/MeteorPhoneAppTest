@@ -5,7 +5,7 @@
     <div class="list-block">
       <ul>
         {{#each curriculum in curriculums}}
-          {{ >Home_curriculum_menu_list_item curriculum=curriculum onCurriculumSelected=onCurriculumSelected }}
+          {{ >Home_curriculum_menu_list_item (listItemArgs curriculum) }}
         {{/each}}
       </ul>
     </div>

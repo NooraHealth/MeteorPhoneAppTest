@@ -18,7 +18,6 @@ pcel:loading
 mystor:device-detection
 ground:db
 natestrauser:cordova-file-server
-standard-minifiers
 meteor-base
 mobile-experience
 mongo
@@ -49,3 +48,5 @@ manuel:reactivearray
 autopublish
 philippspo:momentum-flow-router
 reactive-dict
+standard-minifier-css
+standard-minifier-js

@@ -15,8 +15,10 @@ Template.Home_page.onCreated ->
     lessonIndex = @state.lessonIndex
     @state.set "lessonIndex", ++lessonIndex
 
-  @onCurriculmSelected = ( id )=>
-    @state.set curriculumId, id
+  @onCurriculumSelected = ( id )=>
+    console.log "Curriculum selected"
+    console.trace()
+    @state.set "curriculumId", id
 
   @playAppIntro = =>
     if not @state.get "hasPlayedIntro" then @intro.playWhenReady()
@@ -37,11 +39,20 @@ Template.Home_page.helpers
   menuArgs: ->
     console.log "getting the menu args!"
     instance = Template.instance()
+    console.log instance.onCurriculmSelected
+    curriculumsToList = Curriculums.find({title:{$ne: "Start a New Curriculum"}})
     return {
-      onCurriculmSelected: instance.onCurriculmSelected
+      onCurriculumSelected: instance.onCurriculumSelected
+      curriculums: curriculumsToList
     }
 
   thumbnailArgs: (lesson) ->
+    console.log "GEtting the thumbnail args"
+    instance = Template.instance()
+    return {
+      lesson: lesson
+      onCurriculmSelected: instance.onCurriculmSelected
+    }
 
   lessons: ->
     instance = Template.instance()

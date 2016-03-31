@@ -11,8 +11,6 @@ Template.Home_curriculum_menu_list_item.events
 Template.Home_curriculum_menu_list_item.onCreated ->
   # Data context validation
   @autorun =>
-    console.log "Validating the context"
-    console.log Template.currentData()
     schema = new SimpleSchema({
       title: {type: String}
       id: {type: String}
@@ -22,6 +20,6 @@ Template.Home_curriculum_menu_list_item.onCreated ->
     context = schema.namedContext()
     context.validate(Template.currentData())
 
-    if not context.isValid() then console.log "ERROR: data context invalude for Home_curriculum_menu_list_item"
+    if not context.isValid() then console.log "ERROR: data context invalude for Home_curriculum_menu_list_item", Template.currentData()
 
 
