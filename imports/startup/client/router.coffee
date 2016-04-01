@@ -7,6 +7,11 @@
 # LIBRARIES
 require '../../api/lib.coffee'
 
+# CSS
+#require '../../ui/style/scss/shared/shared.scss'
+#require '../../ui/style/scss/lessons/lessons.scss'
+#require '../../ui/style/scss/home/home.scss'
+
 # PAGES
 require '../../ui/pages/home.html'
 require '../../ui/pages/home.coffee'
