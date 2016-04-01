@@ -1,5 +1,7 @@
 NUM_OBJECTS_PER_ROW = 3
 
+Modules = require('../collections.coffee').Modules
+
 ###
 # Module
 #

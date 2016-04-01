@@ -4,7 +4,7 @@ class @Audio
     @._playWhenReady = false
     @._whenFinished = null
     
-    if @.src
+    if @.src?
       @.setSrc @.src
 
   playAudio: ( whenFinished )->
@@ -57,3 +57,5 @@ class @Audio
     audio = @.getAudioElement()
     if audio and audio.pause
       audio.pause()
+
+module.exports.Audio = Audio

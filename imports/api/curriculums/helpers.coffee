@@ -1,5 +1,5 @@
+Curriculums = require('../collections.coffee').Curriculums
 
-Curriculums = new Mongo.Collection("nh_home_pages");
 Curriculums.helpers {
   getLessonDocuments: ()->
     

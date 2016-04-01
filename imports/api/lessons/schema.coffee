@@ -1,4 +1,6 @@
 
+Lessons = require('../collections.coffee').Lessons
+
 LessonSchema = new SimpleSchema
   title:
     type:String

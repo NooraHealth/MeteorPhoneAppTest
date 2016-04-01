@@ -1,7 +1,9 @@
 
-require './home.html'
+
+Curriculums = require('../../api/collections.coffee').Curriculums
 
 Template.Home_page.onCreated ->
+  console.log "In home page", Curriculums.find({}).fetch()
   @state = new ReactiveDict()
   @state.setDefault {
     curriculumId: ""
@@ -12,7 +14,7 @@ Template.Home_page.onCreated ->
   @state.set "curriculumId", Session.get "curriculumId"
   @state.set "lessonIndex", Session.get "lessonIndex"
 
-  @intro = new Audio Meteor.getContentSrc() + 'NooraHealthContent/Audio/AppIntro.mp3', "#intro", ""
+  #@intro = new Audio Meteor.getContentSrc() + 'NooraHealthContent/Audio/AppIntro.mp3', "#intro", ""
 
   @onLessonCompleted = =>
     lessonIndex = @state.lessonIndex
@@ -23,8 +25,8 @@ Template.Home_page.onCreated ->
     console.trace()
     @state.set "curriculumId", id
 
-  @playAppIntro = =>
-    if not @state.get "hasPlayedIntro" then @intro.playWhenReady()
+  #@playAppIntro = =>
+    #if not @state.get "hasPlayedIntro" then @intro.playWhenReady()
 
   @autorun =>
     lessonIndex = @state.get "lessonIndex"
@@ -57,7 +59,14 @@ Template.Home_page.helpers
       onCurriculmSelected: instance.onCurriculmSelected
     }
 
+  audioArgs: ->
+    return {
+      src: Meteor.getContentSrc() + 'NooraHealthContent/Audio/AppIntro.mp3'
+      id: 'intro'
+    }
+
   lessons: ->
+    console.log "Retrieving lessons"
     instance = Template.instance()
     curriculumId = instance.state.get "curriculumId"
     if curriculumId?
@@ -67,10 +76,9 @@ Template.Home_page.helpers
       return []
 
 Template.Home_page.onRendered ->
-  console.log "About to play app intro"
   #currentLesson = Session.get "current lesson"
   instance = Template.instance()
-  instance.playAppIntro()
+  #instance.playAppIntro()
 
   # Scroll to the current lesson
   currentLesson = instance.state.get "currentLesson"

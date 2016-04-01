@@ -1,4 +1,6 @@
 
+Lessons = require('../collections.coffee').Lessons
+
 Lessons.helpers {
   imgSrc: ()->
     if not @.image

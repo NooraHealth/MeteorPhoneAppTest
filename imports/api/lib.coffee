@@ -22,5 +22,4 @@ Meteor.getContentSrc = ()->
     return "http://noorahealthcontent.noorahealth.org/"
   else
     return Meteor.settings.public.CONTENT_SRC
-    
 

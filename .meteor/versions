@@ -59,7 +59,7 @@ livedata@1.0.16
 loftsteinn:framework7-ios@1.4.2
 logging@1.0.10
 manuel:reactivearray@1.0.5
-mdg:validation-error@0.2.0
+mdg:validation-error@0.5.1
 meteor@1.1.12
 meteor-base@1.0.2
 minifier-css@1.1.9
@@ -81,7 +81,7 @@ ordered-dict@1.0.5
 package-version-parser@3.0.6
 pcel:loading@1.0.3
 percolate:momentum@0.7.2
-percolate:velocityjs@1.1.0
+percolate:velocityjs@1.2.1_1
 percolatestudio:segment.io@3.0.0
 philippspo:momentum-flow-router@0.0.7
 practicalmeteor:chai@2.1.0_1

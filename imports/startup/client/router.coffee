@@ -4,6 +4,9 @@
 { BlazeLayout } = require 'meteor/kadira:blaze-layout'
 { FlowRouter } = require 'meteor/kadira:flow-router'
 
+# LIBRARIES
+require '../../api/lib.coffee'
+
 # PAGES
 require '../../ui/pages/home.html'
 require '../../ui/pages/home.coffee'
@@ -15,11 +18,13 @@ require '../../ui/components/home/footer.html'
 require '../../ui/components/home/thumbnail.html'
 require '../../ui/components/home/menu/menu.html'
 require '../../ui/components/home/menu/list_item.html'
+require '../../ui/components/audio/audio.html'
 
 require '../../ui/layouts/layout.coffee'
 require '../../ui/components/home/thumbnail.coffee'
 require '../../ui/components/home/menu/menu.coffee'
 require '../../ui/components/home/menu/list_item.coffee'
+require '../../ui/components/audio/audio.coffee'
 
 ###
 # Home
