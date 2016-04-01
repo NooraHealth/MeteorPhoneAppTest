@@ -59,10 +59,6 @@
   min-height: 80px;
 }
 
-/*.item-title {*/
-  /*overflow: inherit !important;*/
-/*}*/
-
 
 /* -------------------------------- 
 
@@ -106,5 +102,6 @@
 }
 
 .item-title {
-  overflow: inherit !important;
+  overflow: visible !important;
+  padding: inherit;
 }
