@@ -1,6 +1,6 @@
 
 
-Curriculums = require('../../api/collections.coffee').Curriculums
+Curriculums = require('../../api/curriculums/curriculums.coffee').Curriculums
 
 Template.Home_page.onCreated ->
   console.log "In home page", Curriculums.find({}).fetch()
@@ -70,7 +70,7 @@ Template.Home_page.helpers
     instance = Template.instance()
     curriculumId = instance.state.get "curriculumId"
     if curriculumId?
-      curriculum = Curriculums.findOne {_id: curriculumId }
+      curriculum = Curriculums?.findOne {_id: curriculumId }
       return curriculum?.getLessonDocuments()
     else
       return []

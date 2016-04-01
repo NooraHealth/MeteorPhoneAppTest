@@ -1,6 +1,43 @@
-NUM_OBJECTS_PER_ROW = 3
+Modules = new Mongo.Collection("nh_modules")
 
-Modules = require('../collections.coffee').Modules
+ModuleSchema = new SimpleSchema
+  type:
+    type:String
+  title:
+    type:String
+    optional:true
+  image:
+    type:String
+    optional: true
+  #QUESTION MODULE
+  question:
+    type:String
+    optional:true
+  explanation:
+    type:String
+    optional:true
+  options:
+    type:[String]
+    optional:true
+  correct_answer:
+    type:[String]
+    optional:true
+  incorrect_audio:
+    type:String
+    optional:true
+  correct_audio:
+    type:String
+    optional:true
+  video:
+    type:String
+    optional:true
+  audio:
+    type:String
+    optional:true
+
+Modules.attachSchema ModuleSchema
+
+NUM_OBJECTS_PER_ROW = 3
 
 ###
 # Module
@@ -12,7 +49,6 @@ Modules = require('../collections.coffee').Modules
 
 Modules.helpers {
   videoUrl: ()->
-    #return this.video_url + "?autoplay=1"
     return this.video_url
 
   isEmbedded: ()->
@@ -20,9 +56,6 @@ Modules.helpers {
       return false
     else
       return this.video_url.startsWith "http"
-
-  isLastModule: ()->
-    return @.next_module == -1
 
   imgSrc: ()->
     if not @.image
@@ -92,10 +125,9 @@ Modules.helpers {
   isScenarioModule: ()->
     return @.type == "SCENARIO"
 
-  isLastModule: ()->
-    return @.next_module == '-1' or @.next_module == -1
-
-  nextModule: ()->
-    return Modules.findOne {nh_id: @.next_module}
-    
 }
+
+Ground.Collection Modules
+
+module.exports.Modules = Modules
+
