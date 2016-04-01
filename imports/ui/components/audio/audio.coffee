@@ -22,8 +22,5 @@ Template.Audio.onCreated ->
 Template.Audio.helpers {
   arguments: ->
     data = Template.currentData()
-    return {
-      src: data.src
-      id: data.id
-    }
+    return "src=#{data.src} id=#{data.id}"
 }

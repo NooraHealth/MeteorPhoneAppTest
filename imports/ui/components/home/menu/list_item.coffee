@@ -1,22 +1,19 @@
 
-CurriculumSchema = require('../../../../api/curriculums/schema.coffee').CurriculumSchema
-
 Template.Home_curriculum_menu_list_item.onCreated ->
   console.log "Home curriculum menu list item created:"
   # Data context validation
-  console.log "Validating the list item data", Template.currentData()
-  schema = new SimpleSchema({
-    onCurriculumSelected: {type: Function}
-  })
+  @autorun =>
+    console.log "Validating the list item data", Template.currentData()
 
-  callbackContext = schema.namedContext()
-  callbackContext.validate(Template.currentData().onCurriculumSelected)
-  if not callbackContext.isValid() then console.log "DATA CONTEXT ERROR: Home_curriculum_menu_list_item: callback data invalid"
+    schema = new SimpleSchema({
+      onCurriculumSelected: {type: Function}
+      title: {type: String}
+      _id: {type: String}
+    })
 
-  curriculumContext = CurriculumSchema.namedContext()
-  curriculumContext.validate(Template.currentData().curriculum)
-  console.log curriculumContext
-  if not curriculumContext.isValid() then console.log "DATA CONTEXT ERROR: Home_curriculum_menu_list_item: curriculum data invalid"
+    callbackContext = schema.namedContext()
+    callbackContext.validate(Template.currentData())
+    if not callbackContext.isValid() then console.log "DATA CONTEXT ERROR: Home_curriculum_menu_list_item: callback data invalid"
 
 Template.Home_curriculum_menu_list_item.events
   'click': ( e , template )->
