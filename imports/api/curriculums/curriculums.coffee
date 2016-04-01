@@ -32,11 +32,8 @@ Curriculums.helpers {
 
     lessons = []
     _.each @lessons, (lessonID) ->
-      console.log "IN THE FOR EACH"
-      console.log Lessons
       lesson = Lessons.findOne {_id: lessonID}
-      if lesson?
-        lessons.push lesson
+      lessons?.push lesson
 
     return lessons
 }

@@ -9,12 +9,15 @@ Template.Home_page.onCreated ->
     curriculumId: ""
     lessonIndex: 0
     hasPlayedIntro: false
+    lessons: []
   }
 
   @state.set "curriculumId", Session.get "curriculumId"
   @state.set "lessonIndex", Session.get "lessonIndex"
 
   #@intro = new Audio Meteor.getContentSrc() + 'NooraHealthContent/Audio/AppIntro.mp3', "#intro", ""
+  @currentLessonId = =>
+    lessonIndex = @state.get "lessonIndex"
 
   @onLessonCompleted = =>
     lessonIndex = @state.lessonIndex
@@ -23,7 +26,10 @@ Template.Home_page.onCreated ->
   @onCurriculumSelected = ( id )=>
     console.log "Curriculum selected"
     console.trace()
+    curriculum = Curriculums?.findOne {_id: id }
+    lessons = curriculum?.getLessonDocuments()
     @state.set "curriculumId", id
+    @state.set "lessons", lessons
 
   #@playAppIntro = =>
     #if not @state.get "hasPlayedIntro" then @intro.playWhenReady()
@@ -42,9 +48,7 @@ Template.Home_page.onCreated ->
 Template.Home_page.helpers
 
   menuArgs: ->
-    console.log "getting the menu args!"
     instance = Template.instance()
-    console.log instance.onCurriculmSelected
     curriculumsToList = Curriculums.find({title:{$ne: "Start a New Curriculum"}})
     return {
       onCurriculumSelected: instance.onCurriculumSelected
@@ -52,11 +56,12 @@ Template.Home_page.helpers
     }
 
   thumbnailArgs: (lesson) ->
-    console.log "GEtting the thumbnail args"
     instance = Template.instance()
+    #isCurrentLesson = lesson._id = 
     return {
       lesson: lesson
       onCurriculmSelected: instance.onCurriculmSelected
+      #currentLesson:  
     }
 
   audioArgs: ->
@@ -66,14 +71,14 @@ Template.Home_page.helpers
     }
 
   lessons: ->
-    console.log "Retrieving lessons"
     instance = Template.instance()
-    curriculumId = instance.state.get "curriculumId"
-    if curriculumId?
-      curriculum = Curriculums?.findOne {_id: curriculumId }
-      return curriculum?.getLessonDocuments()
-    else
-      return []
+    return instance.state.get "lessons"
+    #curriculumId = instance.state.get "curriculumId"
+    #if curriculumId?
+      #curriculum = Curriculums?.findOne {_id: curriculumId }
+      #return curriculum?.getLessonDocuments()
+    #else
+      #return []
 
 Template.Home_page.onRendered ->
   #currentLesson = Session.get "current lesson"
