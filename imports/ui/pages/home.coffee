@@ -39,6 +39,9 @@ Template.Home_page.onCreated ->
     console.log lessonIndex
     return lessons[lessonIndex]._id
 
+  @onLessonSelected = (id) =>
+    console.log "Lesson selected!"
+
   @onLessonCompleted = =>
     lessonIndex = @state.lessonIndex
     @state.set "lessonIndex", ++lessonIndex
@@ -78,7 +81,7 @@ Template.Home_page.helpers
     isCurrentLesson = ( lesson._id == instance.currentLessonId() )
     return {
       lesson: lesson
-      onCurriculmSelected: instance.onCurriculmSelected
+      onLessonSelected: instance.onLessonSelected
       isCurrentLesson: isCurrentLesson
     }
 
@@ -91,12 +94,6 @@ Template.Home_page.helpers
   lessons: ->
     instance = Template.instance()
     return instance.state.get "lessons"
-    #curriculumId = instance.state.get "curriculumId"
-    #if curriculumId?
-      #curriculum = Curriculums?.findOne {_id: curriculumId }
-      #return curriculum?.getLessonDocuments()
-    #else
-      #return []
 
 Template.Home_page.onRendered ->
   #currentLesson = Session.get "current lesson"
