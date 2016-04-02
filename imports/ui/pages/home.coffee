@@ -20,24 +20,21 @@ Template.Home_page.onCreated ->
     curriculumId: ""
     lessonIndex: 0
     hasPlayedIntro: false
-    lessons: []
   }
 
   #@intro = new Audio Meteor.getContentSrc() + 'NooraHealthContent/Audio/AppIntro.mp3', "#intro", ""
-  @setLessons = =>
-    console.log "setting the lessons"
+  @getLessonDocuments = =>
+    curriculum = @getCurriculumDoc()
+    lessonIds = curriculum?.getLessonDocuments()
+
+  @getCurriculumDoc = =>
     id = @state.get "curriculumId"
-    curriculum = Curriculums?.findOne {_id: id }
-    lessons = curriculum?.getLessonDocuments()
-    @state.set "lessons", lessons
-    console.log lessons
+    return Curriculums?.findOne {_id: id }
 
   @currentLessonId = =>
+    curriculum = @getCurriculumDoc()
     lessonIndex = @state.get "lessonIndex"
-    lessons = @state.get "lessons"
-    console.log lessons
-    console.log lessonIndex
-    return lessons[lessonIndex]._id
+    return curriculum.lessons[lessonIndex]
 
   @onLessonSelected = (id) =>
     console.log "Lesson selected!"
@@ -47,23 +44,10 @@ Template.Home_page.onCreated ->
     @state.set "lessonIndex", ++lessonIndex
 
   @onCurriculumSelected = ( id )=>
-    console.log "Curriculum selected"
-    console.trace()
     @state.set "curriculumId", id
-    @setLessons()
 
   #@playAppIntro = =>
     #if not @state.get "hasPlayedIntro" then @intro.playWhenReady()
-
-  @autorun =>
-    lessonIndex = @state.get "lessonIndex"
-    Session.setPersistent "lessonIndex", lessonIndex
-    console.log "AUTORUN: Setting the state #{lessonIndex}"
-
-  @autorun =>
-    curriculumId = @state.get "curriculumId"
-    Session.setPersistent "curriculumId", curriculumId
-    console.log "AUTORUN: Setting the state #{curriculumId}"
 
 
 Template.Home_page.helpers
@@ -93,17 +77,16 @@ Template.Home_page.helpers
 
   lessons: ->
     instance = Template.instance()
-    return instance.state.get "lessons"
+    return instance.getLessonDocuments()
 
 Template.Home_page.onRendered ->
-  #currentLesson = Session.get "current lesson"
   instance = Template.instance()
   #instance.playAppIntro()
 
   # Scroll to the current lesson
-  currentLesson = instance.state.get "currentLesson"
-  thumbnail = $(".js-lesson-thumbnail")[currentLesson]
-  if currentLesson > 0 and card
+  lessonIndex = instance.state.get "lessonIndex"
+  thumbnail = $(".js-lesson-thumbnail")[lessonIndex]
+  if lessonIndex > 0 and card
     $(card).scrollintoview {
       duration: 2500,
       direction: "vertical"

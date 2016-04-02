@@ -12,6 +12,7 @@ Template.Home_thumbnail.onCreated ->
       isCurrentLesson: {type: Boolean}
       lesson: {type: Lessons._helpers}
       _id: {type: String}
+      onLessonSelected: {type: Function}
     }).validate(Template.currentData())
 
     #callbackContext = schema.namedContext()
