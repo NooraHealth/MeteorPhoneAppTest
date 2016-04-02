@@ -5,13 +5,11 @@ require './thumbnail.html'
 Template.Home_thumbnail.onCreated ->
   # Data context validation
   @autorun =>
-
     console.log "This is the lesson doc", Template.currentData().lesson
     console.log Lessons
     schema = new SimpleSchema({
-      isCurrentLesson: {type: Boolean}
       lesson: {type: Lessons._helpers}
-      _id: {type: String}
+      isCurrentLesson: {type: Boolean}
       onLessonSelected: {type: Function}
     }).validate(Template.currentData())
 
@@ -22,6 +20,8 @@ Template.Home_thumbnail.onCreated ->
 
 Template.Home_thumbnail.events
   'click' : ( e )->
-    Scene.get().goToModules( Template.currentData()._id )
+    data = Template.currentData()
+    data.onLessonSelected data.lesson._id
+
 
   

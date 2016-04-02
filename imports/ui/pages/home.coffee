@@ -33,8 +33,12 @@ Template.Home_page.onCreated ->
 
   @currentLessonId = =>
     curriculum = @getCurriculumDoc()
+    console.log "Getting the current lessonId"
+    console.trace()
+    console.log curriculum
     lessonIndex = @state.get "lessonIndex"
-    return curriculum.lessons[lessonIndex]
+    console.log "Lesson index", lessonIndex
+    return curriculum?.lessons?[lessonIndex]
 
   @onLessonSelected = (id) =>
     console.log "Lesson selected!"
