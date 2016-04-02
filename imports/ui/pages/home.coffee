@@ -2,22 +2,42 @@
 
 Curriculums = require('../../api/curriculums/curriculums.coffee').Curriculums
 
+# TEMPLATE
+require './home.html'
+
+# COMPONENTS
+require '../../ui/layouts/layout.coffee'
+require '../../ui/components/home/thumbnail.coffee'
+require '../../ui/components/home/menu/menu.coffee'
+require '../../ui/components/home/menu/list_item.coffee'
+require '../../ui/components/audio/audio.coffee'
+
+
 Template.Home_page.onCreated ->
-  console.log "In home page", Curriculums.find({}).fetch()
-  @state = new ReactiveDict()
-  @state.setDefault {
+  @state = new PersistentReactiveDict("Home_page")
+  console.log "The state", @state
+  @state.setDefaultPersistent {
     curriculumId: ""
     lessonIndex: 0
     hasPlayedIntro: false
     lessons: []
   }
 
-  @state.set "curriculumId", Session.get "curriculumId"
-  @state.set "lessonIndex", Session.get "lessonIndex"
-
   #@intro = new Audio Meteor.getContentSrc() + 'NooraHealthContent/Audio/AppIntro.mp3', "#intro", ""
+  @setLessons = =>
+    console.log "setting the lessons"
+    id = @state.get "curriculumId"
+    curriculum = Curriculums?.findOne {_id: id }
+    lessons = curriculum?.getLessonDocuments()
+    @state.set "lessons", lessons
+    console.log lessons
+
   @currentLessonId = =>
     lessonIndex = @state.get "lessonIndex"
+    lessons = @state.get "lessons"
+    console.log lessons
+    console.log lessonIndex
+    return lessons[lessonIndex]._id
 
   @onLessonCompleted = =>
     lessonIndex = @state.lessonIndex
@@ -26,10 +46,8 @@ Template.Home_page.onCreated ->
   @onCurriculumSelected = ( id )=>
     console.log "Curriculum selected"
     console.trace()
-    curriculum = Curriculums?.findOne {_id: id }
-    lessons = curriculum?.getLessonDocuments()
     @state.set "curriculumId", id
-    @state.set "lessons", lessons
+    @setLessons()
 
   #@playAppIntro = =>
     #if not @state.get "hasPlayedIntro" then @intro.playWhenReady()
@@ -57,11 +75,11 @@ Template.Home_page.helpers
 
   thumbnailArgs: (lesson) ->
     instance = Template.instance()
-    #isCurrentLesson = lesson._id = 
+    isCurrentLesson = ( lesson._id == instance.currentLessonId() )
     return {
       lesson: lesson
       onCurriculmSelected: instance.onCurriculmSelected
-      #currentLesson:  
+      isCurrentLesson: isCurrentLesson
     }
 
   audioArgs: ->

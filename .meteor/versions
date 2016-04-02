@@ -95,6 +95,7 @@ reactive-dict@1.1.5
 reactive-var@1.0.7
 reload@1.1.6
 retry@1.0.5
+robertlowe:persistent-reactive-dict@0.1.2
 routepolicy@1.0.8
 sanjo:jasmine@0.21.0
 sanjo:karma@3.1.1

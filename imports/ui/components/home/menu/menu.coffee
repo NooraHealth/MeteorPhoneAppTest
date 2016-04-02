@@ -1,4 +1,6 @@
 
+require './menu.html'
+
 Template.Home_curriculum_menu.onCreated ->
   @autorun =>
     schema = new SimpleSchema({

@@ -1,4 +1,6 @@
 
+require './list_item.html'
+
 Template.Home_curriculum_menu_list_item.onCreated ->
   # Data context validation
   @autorun =>

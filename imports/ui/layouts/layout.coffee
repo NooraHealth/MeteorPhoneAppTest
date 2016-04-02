@@ -1,3 +1,5 @@
+require '../layouts/Content_wrapper.html'
+require '../layouts/layout.html'
 
 Template.layout.helpers
   lessonTitle: ()->

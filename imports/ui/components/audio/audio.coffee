@@ -1,3 +1,5 @@
+require './audio.html'
+
 Template.Audio.onCreated ->
   @state = new ReactiveDict()
 

@@ -13,23 +13,7 @@ require '../../api/lib.coffee'
 #require '../../ui/style/scss/home/home.scss'
 
 # PAGES
-require '../../ui/pages/home.html'
 require '../../ui/pages/home.coffee'
-
-# COMPONENTS
-require '../../ui/layouts/layout.html'
-require '../../ui/layouts/Content_wrapper.html'
-require '../../ui/components/home/footer.html'
-require '../../ui/components/home/thumbnail.html'
-require '../../ui/components/home/menu/menu.html'
-require '../../ui/components/home/menu/list_item.html'
-require '../../ui/components/audio/audio.html'
-
-require '../../ui/layouts/layout.coffee'
-require '../../ui/components/home/thumbnail.coffee'
-require '../../ui/components/home/menu/menu.coffee'
-require '../../ui/components/home/menu/list_item.coffee'
-require '../../ui/components/audio/audio.coffee'
 
 ###
 # Home
@@ -38,7 +22,6 @@ require '../../ui/components/audio/audio.coffee'
 FlowRouter.route '/', {
   name: "home"
   action: ( params, qparams )->
-    console.log "Rendering layout"
     BlazeLayout.render 'layout', { main : 'Home_page' }
 }
 

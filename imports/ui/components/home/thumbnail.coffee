@@ -1,13 +1,19 @@
 require './thumbnail.html'
 
-Template.Home_thumbnail.helpers
-  currentLesson: (lesson) ->
-    console.log "Here is the lesson", lesson._id
-    console.log Scene.get().getCurrentLesson()._id
-    if Scene.get().getCurrentLesson() and lesson
-      return Scene.get().getCurrentLesson()._id == lesson._id
-    else
-      return true
+Template.Home_thumbnail.onCreated ->
+  # Data context validation
+  @autorun =>
+
+    schema = new SimpleSchema({
+      onCurriculumSelected: {type: Function}
+      title: {type: String}
+      _id: {type: String}
+    })
+
+    callbackContext = schema.namedContext()
+    callbackContext.validate(Template.currentData())
+    if not callbackContext.isValid() then console.log "DATA CONTEXT ERROR: Home_curriculum_menu_list_item: callback data invalid"
+
 
 Template.Home_thumbnail.events
   'click' : ( e )->
