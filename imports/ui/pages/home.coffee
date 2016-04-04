@@ -1,31 +1,29 @@
 
-
 Curriculums = require('../../api/curriculums/curriculums.coffee').Curriculums
 
 # TEMPLATE
 require './home.html'
 
 # COMPONENTS
+require '../../ui/components/navbar.html'
+require '../../ui/components/home/footer.html'
 require '../../ui/layouts/layout.coffee'
 require '../../ui/components/home/thumbnail.coffee'
 require '../../ui/components/home/menu/menu.coffee'
 require '../../ui/components/home/menu/list_item.coffee'
 require '../../ui/components/audio/audio.coffee'
 
-
 Template.Home_page.onCreated ->
   @state = new PersistentReactiveDict("Home_page")
   console.log "The state", @state
-  @state.setDefaultPersistent {
-    curriculumId: ""
-    lessonIndex: 0
-    hasPlayedIntro: false
-  }
 
   #@intro = new Audio Meteor.getContentSrc() + 'NooraHealthContent/Audio/AppIntro.mp3', "#intro", ""
   @getLessonDocuments = =>
     curriculum = @getCurriculumDoc()
-    lessonIds = curriculum?.getLessonDocuments()
+    docs = curriculum?.getLessonDocuments()
+    console.log "THe docs"
+    console.log docs
+    return docs
 
   @getCurriculumDoc = =>
     id = @state.get "curriculumId"
@@ -33,22 +31,20 @@ Template.Home_page.onCreated ->
 
   @currentLessonId = =>
     curriculum = @getCurriculumDoc()
-    console.log "Getting the current lessonId"
-    console.trace()
-    console.log curriculum
     lessonIndex = @state.get "lessonIndex"
-    console.log "Lesson index", lessonIndex
     return curriculum?.lessons?[lessonIndex]
 
   @onLessonSelected = (id) =>
     console.log "Lesson selected!"
 
   @onLessonCompleted = =>
-    lessonIndex = @state.lessonIndex
-    @state.set "lessonIndex", ++lessonIndex
+    lessonIndex = @state.get "lessonIndex"
+    @state.setPersistent "lessonIndex", ++lessonIndex
 
   @onCurriculumSelected = ( id )=>
-    @state.set "curriculumId", id
+    console.log "Setting the curriculumId"
+    console.log id
+    @state.setPersistent "curriculumId", id
 
   #@playAppIntro = =>
     #if not @state.get "hasPlayedIntro" then @intro.playWhenReady()
@@ -66,7 +62,7 @@ Template.Home_page.helpers
 
   thumbnailArgs: (lesson) ->
     instance = Template.instance()
-    isCurrentLesson = ( lesson._id == instance.currentLessonId() )
+    isCurrentLesson = ( lesson?._id == instance.currentLessonId() )
     return {
       lesson: lesson
       onLessonSelected: instance.onLessonSelected

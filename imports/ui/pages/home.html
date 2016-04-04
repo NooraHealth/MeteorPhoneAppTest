@@ -2,13 +2,9 @@
   <!-- Now we need additional "navbar-fixed" and "toolbar-fixed" classes on Page -->
   <div data-page="index" class="page navbar-fixed toolbar-fixed">
 
-    <!-- Top Navbar-->
-    <div class="navbar">
-      <div class="navbar-inner">
-        <a id="logo"><img class="logo" alt="Noora Health" src="/NHlogo.png"/></a>
-        <a data-panel="right" id="open_side_panel" class="open-panel right-aligned">Select Curriculum</a>
-      </div>
-    </div>
+    {{#Navbar}}
+      <a data-panel="right" id="open_side_panel" class="open-panel right-aligned">Select Curriculum</a>
+    {{/Navbar}}
 
 
     <div class="page-content">
@@ -32,6 +28,7 @@
       </div>
     </div>
   </div>
+  {{> Home_page_footer }}
   {{> Audio (audioArgs) }}
 </template>
 
