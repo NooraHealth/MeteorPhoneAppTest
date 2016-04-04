@@ -15,14 +15,12 @@ require '../../ui/components/audio/audio.coffee'
 
 Template.Home_page.onCreated ->
   @state = new PersistentReactiveDict("Home_page")
-  console.log "The state", @state
+  @state.setTemporary "hasPlayedIntro", false
 
   #@intro = new Audio Meteor.getContentSrc() + 'NooraHealthContent/Audio/AppIntro.mp3', "#intro", ""
   @getLessonDocuments = =>
     curriculum = @getCurriculumDoc()
     docs = curriculum?.getLessonDocuments()
-    console.log "THe docs"
-    console.log docs
     return docs
 
   @getCurriculumDoc = =>

@@ -31,7 +31,6 @@ Curriculums.helpers {
     lessons = []
     _.each @lessons, (lessonID) ->
       lesson = Lessons.findOne {_id: lessonID}
-      console.log "This is the lesson", lesson
       if lesson?
         lessons.push lesson
 
