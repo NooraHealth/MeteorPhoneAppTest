@@ -26,7 +26,7 @@ FlowRouter.route '/', {
 ###
 
 FlowRouter.route '/lesson/:_id', {
-  name: "lessonView"
+  name: "lesson"
   action: ( params, qparams )->
     BlazeLayout.render "layout", { main: "Lesson_view_page" }
 

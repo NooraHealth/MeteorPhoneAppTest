@@ -1,4 +1,16 @@
+
+Lessons = require('../../api/lessons/lessons.coffee').Lessons
 require './lesson_view.html'
+
+Template.Lesson_view_page.onCreated ()->
+  @state = new ReactiveDict()
+  @state.setDefault {
+    moduleIndex: 0
+  }
+
+  @onClickNext = ()=>
+    index = @state.get "moduleIndex"
+    @state.set "moduleIndex", ++index
 
 Template.Lesson_view_page.helpers
   modules: ()->
