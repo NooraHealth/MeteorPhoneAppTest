@@ -7,13 +7,9 @@
 # LIBRARIES
 require '../../api/lib.coffee'
 
-# CSS
-#require '../../ui/style/scss/shared/shared.scss'
-#require '../../ui/style/scss/lessons/lessons.scss'
-#require '../../ui/style/scss/home/home.scss'
-
 # PAGES
 require '../../ui/pages/home.coffee'
+require '../../ui/pages/lesson_view.coffee'
 
 ###
 # Home
@@ -29,12 +25,12 @@ FlowRouter.route '/', {
 # module sequence
 ###
 
-#FlowRouter.route '/lesson/:_id', {
-  #name: "lesson"
-  #action: ( params, qparams )->
-    #BlazeLayout.render "moduleLayout", { main: "moduleSlider", footer: "moduleFooter" }
+FlowRouter.route '/lesson/:_id', {
+  name: "lessonView"
+  action: ( params, qparams )->
+    BlazeLayout.render "layout", { main: "Lesson_view_page" }
 
-#}
+}
 
 #FlowRouter.route '/loading',
   #name: "loading"

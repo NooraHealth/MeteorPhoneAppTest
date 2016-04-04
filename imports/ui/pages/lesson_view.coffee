@@ -1,4 +1,6 @@
-Template.moduleSlider.helpers
+require './lesson_view.html'
+
+Template.Lesson_view_page.helpers
   modules: ()->
     _id = FlowRouter.getParam "_id"
     lesson = Lessons.findOne { _id: _id }
@@ -19,7 +21,7 @@ Template.moduleSlider.helpers
 
     return template
 
-Template.moduleSlider.onRendered ()->
+Template.Lesson_view_page.onRendered ()->
   mySwiper = App.swiper '.swiper-container', {
       lazyLoading: true,
       preloadImages: false,

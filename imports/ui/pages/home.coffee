@@ -33,7 +33,8 @@ Template.Home_page.onCreated ->
     return curriculum?.lessons?[lessonIndex]
 
   @onLessonSelected = (id) =>
-    console.log "Lesson selected!"
+    console.log "Lesson selected!", id
+    FlowRouter.go "lesson", {_id: id}
 
   @onLessonCompleted = =>
     lessonIndex = @state.get "lessonIndex"
