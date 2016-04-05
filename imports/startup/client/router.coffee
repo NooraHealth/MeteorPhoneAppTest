@@ -8,6 +8,7 @@
 require '../../api/lib.coffee'
 
 # PAGES
+require '../../ui/layouts/layout.html'
 require '../../ui/pages/home.coffee'
 require '../../ui/pages/lesson_view.coffee'
 

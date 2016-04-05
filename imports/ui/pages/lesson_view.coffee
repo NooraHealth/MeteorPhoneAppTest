@@ -8,30 +8,40 @@ Template.Lesson_view_page.onCreated ()->
     moduleIndex: 0
   }
 
+  @getLesson = ()=>
+    console.log "Getting the lesson"
+    id = FlowRouter.getParam "_id"
+    console.log id
+    lesson = Lessons.findOne { _id: id }
+    console.log Lessons.find({}).count()
+    console.log lesson
+    return lesson
+
   @onClickNext = ()=>
     index = @state.get "moduleIndex"
     @state.set "moduleIndex", ++index
 
 Template.Lesson_view_page.helpers
+  lessonTitle: ()->
+    instance = Template.instance()
+    return instance.getLesson().title
+
   modules: ()->
-    _id = FlowRouter.getParam "_id"
-    lesson = Lessons.findOne { _id: _id }
+    lesson = Template.instance().getLesson()
     return lesson.getModulesSequence()
 
-  getTemplate: ( context )->
-    module = Template.currentData()
-    if module.type == "BINARY"
-      template = "binaryChoiceModule"
-    if module.type == "MULTIPLE_CHOICE"
-      template = "multipleChoiceModule"
-    if module.type == "SCENARIO"
-      template = "scenarioModule"
-    if module.type == "VIDEO"
-      template = "videoModule"
-    if module.type == "SLIDE"
-      template = "slideModule"
-
-    return template
+  getTemplate: ( module )->
+    console.log "getting the template"
+    if module?.type == "BINARY"
+      return "Lessons_view_page_binary"
+    if module?.type == "MULTIPLE_CHOICE"
+      return "Lessons_view_page_multiple_choice"
+    if module?.type == "SCENARIO"
+      return "Lessons_view_page_scenario"
+    if module?.type == "VIDEO"
+      return "Lessons_view_page_video"
+    if module?.type == "SLIDE"
+      return "Lessons_view_page_slide"
 
 Template.Lesson_view_page.onRendered ()->
   mySwiper = App.swiper '.swiper-container', {

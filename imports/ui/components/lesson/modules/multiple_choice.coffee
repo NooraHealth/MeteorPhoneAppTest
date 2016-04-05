@@ -1,4 +1,4 @@
-Template.multipleChoiceModule.helpers
+Template.Lesson_view_page_multiple_choice.helpers
   secondRow: ()->
     return @.getOptions 3, 6
   firstRow: ()->
@@ -6,7 +6,7 @@ Template.multipleChoiceModule.helpers
   module: ()->
     return @
 
-Template.multipleChoiceModule.events
+Template.Lesson_view_page_multiple_choice.events
   'click .js-user-selects': (event, template)->
     sequenceController = Scene.get().modulesSequenceController()
     sequenceController.notifyResponseRecieved event.target

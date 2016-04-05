@@ -1,11 +1,9 @@
 <template name='Lesson_view_page'>
       <div data-page="index" class="page navbar-fixed toolbar-fixed">
-
         <!-- Top Navbar-->
         {{#Navbar}}
           <span class="right-aligned">{{lessonTitle}}</span>
         {{/Navbar}}
-
 
         <div class="page-content">
           <div class="content-block inner-container">
@@ -15,7 +13,7 @@
                   {{#with module}}
                     <div class='swiper-slide'>
                       <div id="{{_id}}" class="card module-card">
-                        {{> UI.dynamic template=getTemplate module=module}}
+                        {{> UI.dynamic template=(getTemplate module)}}
                       </div>
                     </div>
                   {{/with}}

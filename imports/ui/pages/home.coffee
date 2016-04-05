@@ -7,7 +7,6 @@ require './home.html'
 # COMPONENTS
 require '../../ui/components/navbar.html'
 require '../../ui/components/home/footer.html'
-require '../../ui/layouts/layout.coffee'
 require '../../ui/components/home/thumbnail.coffee'
 require '../../ui/components/home/menu/menu.coffee'
 require '../../ui/components/home/menu/list_item.coffee'

@@ -1,18 +1,13 @@
-<template name="multipleChoiceModule">
-
-  {{#moduleSlideWrapper}}
-    <!--<audio src="{{audioSrc}}" name="audio{{_id}}" class="question" autoplay></audio>-->
-    <div class="card-header large-text center ">{{question}}</div>
-    <div class="card-content padding">
-      {{#with firstRow}}
-        {{>rowOfOptions}}
-      {{/with}}
-      {{#with secondRow}}
-        {{>rowOfOptions}}
-      {{/with}}
-    </div>
-  {{/moduleSlideWrapper}}
-
+<template name="Lesson_view_page_multiple_choice">
+  <div class="card-header large-text center ">{{question}}</div>
+  <div class="card-content padding">
+    {{#with firstRow}}
+      {{>rowOfOptions}}
+    {{/with}}
+    {{#with secondRow}}
+      {{>rowOfOptions}}
+    {{/with}}
+  </div>
 </template>
 
 <template name="rowOfOptions">
