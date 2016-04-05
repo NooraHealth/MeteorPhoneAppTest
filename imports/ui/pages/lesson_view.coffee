@@ -9,12 +9,8 @@ Template.Lesson_view_page.onCreated ()->
   }
 
   @getLesson = ()=>
-    console.log "Getting the lesson"
     id = FlowRouter.getParam "_id"
-    console.log id
     lesson = Lessons.findOne { _id: id }
-    console.log Lessons.find({}).count()
-    console.log lesson
     return lesson
 
   @onClickNext = ()=>
@@ -26,11 +22,14 @@ Template.Lesson_view_page.helpers
     instance = Template.instance()
     return instance.getLesson().title
 
-  modules: ()->
+  moduleArgs: (module) ->
+    return { module: module }
+
+  modules: ->
     lesson = Template.instance().getLesson()
     return lesson.getModulesSequence()
 
-  getTemplate: ( module )->
+  getTemplate: (module) ->
     console.log "getting the template"
     if module?.type == "BINARY"
       return "Lessons_view_page_binary"

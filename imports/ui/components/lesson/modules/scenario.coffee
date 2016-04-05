@@ -1,5 +1,5 @@
     
-Template.scenarioModule.helpers
+Template.Lesson_view_page_scenario.helpers
   normalIconSrc: ()->
     return MEDIA_URL + "VascularContent/Images/home.png"
   callDoctorIconSrc: ()->
