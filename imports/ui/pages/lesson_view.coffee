@@ -1,6 +1,12 @@
 
 Lessons = require('../../api/lessons/lessons.coffee').Lessons
+
 require './lesson_view.html'
+require '../components/lesson/modules/binary.coffee'
+require '../components/lesson/modules/scenario.coffee'
+require '../components/lesson/modules/multiple_choice.coffee'
+require '../components/lesson/modules/slide.html'
+require '../components/lesson/modules/video.coffee'
 
 Template.Lesson_view_page.onCreated ()->
   @state = new ReactiveDict()
@@ -32,15 +38,15 @@ Template.Lesson_view_page.helpers
   getTemplate: (module) ->
     console.log "getting the template"
     if module?.type == "BINARY"
-      return "Lessons_view_page_binary"
+      return "Lesson_view_page_binary"
     if module?.type == "MULTIPLE_CHOICE"
-      return "Lessons_view_page_multiple_choice"
+      return "Lesson_view_page_multiple_choice"
     if module?.type == "SCENARIO"
-      return "Lessons_view_page_scenario"
+      return "Lesson_view_page_scenario"
     if module?.type == "VIDEO"
-      return "Lessons_view_page_video"
+      return "Lesson_view_page_video"
     if module?.type == "SLIDE"
-      return "Lessons_view_page_slide"
+      return "Lesson_view_page_slide"
 
 Template.Lesson_view_page.onRendered ()->
   mySwiper = App.swiper '.swiper-container', {

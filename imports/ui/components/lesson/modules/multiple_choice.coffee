@@ -1,3 +1,6 @@
+
+require "./multiple_choice.html"
+
 Template.Lesson_view_page_multiple_choice.helpers
   secondRow: ()->
     return @.getOptions 3, 6

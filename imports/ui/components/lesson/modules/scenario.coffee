@@ -1,3 +1,5 @@
+
+require "./scenario.html"
     
 Template.Lesson_view_page_scenario.helpers
   normalIconSrc: ()->
@@ -7,7 +9,7 @@ Template.Lesson_view_page_scenario.helpers
   emergencyIcon: ()->
     return MEDIA_URL + "VascularContent/Images/emergency.png"
 
-Template.scenarioModule.events
+Template.Lesson_view_page_scenario.events
   'click .js-user-selects': (event, template)->
     sequenceController = Scene.get().modulesSequenceController()
     sequenceController.notifyResponseRecieved event.target
