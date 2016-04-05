@@ -13,7 +13,7 @@
                   {{#with module}}
                     <div class='swiper-slide'>
                       <div id="{{_id}}" class="card module-card">
-                        {{> UI.dynamic template=(getTemplate module)  data=moduleArgs }}
+                        {{> UI.dynamic template=(getTemplate module)  data=(moduleArgs module) }}
                       </div>
                     </div>
                   {{/with}}

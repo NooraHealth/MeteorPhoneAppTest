@@ -29,6 +29,8 @@ Template.Lesson_view_page.helpers
     return instance.getLesson().title
 
   moduleArgs: (module) ->
+    console.log "getting the module arguments"
+    console.log module
     return { module: module }
 
   modules: ->
@@ -36,8 +38,6 @@ Template.Lesson_view_page.helpers
     return lesson.getModulesSequence()
 
   getTemplate: (module) ->
-    console.log "getting the template"
-    console.log module
     if module?.type == "BINARY"
       return "Lesson_view_page_binary"
     if module?.type == "MULTIPLE_CHOICE"

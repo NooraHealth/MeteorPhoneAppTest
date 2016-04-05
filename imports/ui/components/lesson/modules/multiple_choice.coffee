@@ -11,11 +11,9 @@ Template.Lesson_view_page_multiple_choice.onCreated ->
   
 Template.Lesson_view_page_multiple_choice.helpers
   secondRow: ()->
-    return @.getOptions 3, 6
+    #return @.getOptions 3, 6
   firstRow: ()->
-    return @.getOptions 0, 3
-  module: ()->
-    return @
+    #return @.getOptions 0, 3
 
 Template.Lesson_view_page_multiple_choice.events
   'click .js-user-selects': (event, template)->
