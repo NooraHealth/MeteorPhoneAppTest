@@ -7,6 +7,7 @@ require '../components/lesson/modules/scenario.coffee'
 require '../components/lesson/modules/multiple_choice.coffee'
 require '../components/lesson/modules/slide.html'
 require '../components/lesson/modules/video.coffee'
+require '../components/lesson/footer/footer.coffee'
 
 Template.Lesson_view_page.onCreated ()->
   @state = new ReactiveDict()

@@ -1,18 +1,4 @@
-<template name="Lesson_view_page_next_button">
-  {{#if isPhone}}
-    {{>Phone_lesson_view_page_next_button}}
-  {{else}}
-    {{>Browser_lesson_view_page_next_button}}
-  {{/if}}
-</template>
-
-<template name="Phone_lesson_view_page_next_button">
-  <a id="next" class=" z-depth-2 waves-effect waves-light next-btn-tile valign {{#if isHidden}} slide-down {{/if}}"> 
-    <i class="icon ion-arrow-right-a icon-large"></i>
-  </a>
-</template>
-
-<template name="Browser_lesson_view_page_next_button">
+<template name="Lesson_view_page_next_btn">
   <div id="next-button-wrapper">
     <a class="link next-module-btn footer-button button color-blue button-fill swiper-button-next" id="next" >
       {{#if allModulesComplete}}
@@ -24,4 +10,3 @@
     </a>
   </div>
 </template>
-
