@@ -1,9 +1,7 @@
   
-Template.nextBtn.events
+Template.Lesson_view_page_next_btn.onCreated () ->
+
+Template.Lesson_view_page_next_btn.events
   "click": ()->
-    console.log "Clicked next!"
-    btn = $("#next")
-    btn.removeClass "active-state"
-    Scene.get().goToNextModule()
 
 

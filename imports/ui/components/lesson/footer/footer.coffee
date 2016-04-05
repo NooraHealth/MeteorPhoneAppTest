@@ -1,25 +1,9 @@
-Template.moduleFooter.helpers
+Template.Lesson_view_page_footer.onCreated () ->
 
-  modules: ()->
-    modules = Scene.get().getModulesSequence()
+Template.Lesson_view_page_footer.helpers
+  dots: () ->
 
-    if !modules?
-      return
-    arr = ({module: module, i: i, index: ++i} for module, i in modules)
-    return arr
+  success: (dot) ->
 
-  completed: ( i )->
-    currentIndex = Session.get "current module index"
-    if i < currentIndex
-      return true
-    else
-      return false
-
-  currentModule: ()->
-    currentModuleIndex = Session.get "current module index"
-    
-    if !currentModuleIndex?
-      return @.i == 0
-    else
-      return @.i == currentModuleIndex
+  current: ()->
 

@@ -37,6 +37,7 @@ Template.Lesson_view_page.helpers
 
   getTemplate: (module) ->
     console.log "getting the template"
+    console.log module
     if module?.type == "BINARY"
       return "Lesson_view_page_binary"
     if module?.type == "MULTIPLE_CHOICE"

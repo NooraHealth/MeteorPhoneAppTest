@@ -1,12 +1,12 @@
-<template name="moduleFooter">
+<template name="Lesson_view_page_footer">
 
-  {{>goHomeButton}}
+  {{> Lesson_view_page_go_home_btn }}
     <!--<a class="waves-effect" name="previous" style="display:inline"><i class="mdi-navigation-chevron-left small"></i></a>-->
   <a href="#" class=""> 
     <div class="dotstyle dotstyle-scaleup"> 
       <ul class="">
-        {{#each modules}}
-          {{#if currentModule}} 
+        {{#each dots}}
+          {{#if current}} 
           <li class="current" name="{{i}}"><a name="{{i}}">{{index}}</a></li>
           {{else}}
           <li name="{{i}}"><a class="module_footer {{#if completed i}} green {{/if}}" name="{{i}}">{{index}}</a></li>
@@ -16,8 +16,7 @@
       </ul>
     </div>
     </a>
-    <!--<a class="waves-effect" name="next" style="display:inline"><i class="mdi-navigation-chevron-right small"></i></a>-->
 
-  {{>replayButton}}
-  {{>nextBtn}}
+  {{> Lesson_view_page_replay_btn }}
+  {{> Lesson_view_page_next_btn }}
 </template>
