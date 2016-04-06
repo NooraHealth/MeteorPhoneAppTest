@@ -22,7 +22,6 @@ Template.Lesson_view_page.onCreated ()->
     return index == modules.indexOf moduleId
 
   @isCompleted = (moduleId) =>
-    console.log "Getting the lesson", @getLesson()
     modules = @getLesson()?.modules
     index = @state.get "moduleIndex"
     return index > modules?.indexOf moduleId
@@ -30,13 +29,20 @@ Template.Lesson_view_page.onCreated ()->
   @getPagesForPaginator = =>
     modules = @getModules()
     console.log "MODULES", modules
-    getPageData = (module, i) =>
-      data = {
-        completed: @isCompleted module._id
-        current: @isCurrent module._id
-        index: i
-      }
-    pages = getPageData(module, i) for module, i in modules?
+    if not modules?
+      console.log "NOT MODULES: ", Modules.find({}).count()
+      return []
+    else
+      getPageData = (module, i) =>
+        data = {
+          completed: @isCompleted module._id
+          current: @isCurrent module._id
+          index: i
+        }
+        return data
+      pages = ( getPageData(module, i) for module, i in modules )
+      console.log "PAGES", pages
+      return pages
 
   @lessonComplete = =>
     lesson = @getLesson()
@@ -48,8 +54,6 @@ Template.Lesson_view_page.onCreated ()->
   @getLesson = =>
     id = FlowRouter.getParam "_id"
     lesson = Lessons.findOne { _id: id }
-    console.log "Getting the lesson", id
-    console.log Lessons.find({}).count()
     return lesson
 
   @onClickNext = =>
