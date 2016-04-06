@@ -6,7 +6,6 @@
 #{ Lessons } = require('../lessons/lessons.coffee').Lessons
 Lessons = require('../lessons/lessons.coffee').Lessons
 
-
 Curriculums = new Mongo.Collection("nh_home_pages")
 
 CurriculumSchema = new SimpleSchema

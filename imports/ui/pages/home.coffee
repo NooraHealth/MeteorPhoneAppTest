@@ -1,4 +1,5 @@
 
+ContentInterface = require('../../api/content/ContentInterface.coffee').ContentInterface
 Curriculums = require('../../api/curriculums/curriculums.coffee').Curriculums
 
 # TEMPLATE
@@ -69,7 +70,7 @@ Template.Home_page.helpers
 
   audioArgs: ->
     return {
-      src: Meteor.getContentSrc() + 'NooraHealthContent/Audio/AppIntro.mp3'
+      src: ContentInterface.get().getUrl 'NooraHealthContent/Audio/AppIntro.mp3'
       id: 'intro'
     }
 

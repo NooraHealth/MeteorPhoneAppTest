@@ -11,7 +11,7 @@ class ContentInterface
   
   class PrivateInterface
 
-    getUrl: (path) => @_getContentSrc + path
+    getUrl: (path) => @_getContentSrc() + path
 
     _getContentSrc: ->
       if Meteor.isCordova
