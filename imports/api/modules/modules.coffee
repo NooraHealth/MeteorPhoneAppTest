@@ -48,50 +48,30 @@ NUM_OBJECTS_PER_ROW = 3
 ###
 
 Modules.helpers {
-  videoUrl: ()->
-    return this.video_url
 
-  isEmbedded: ()->
-    if this.video or !this.video_url
-      return false
-    else
-      return this.video_url.startsWith "http"
+  isEmbedded: ->
+    if this.video or !this.video_url then false
+    else this.video_url.startsWith "http"
 
-  imgSrc: ()->
-    if not @.image
-      return ""
-    url = Meteor.getContentSrc()
-    return url+ @.image
+  imgSrc: ->
+    if not @image then "" else Meteor.getContentSrc() + @image
 
-  audioSrc: ()->
-    if not @.audio
-      return ""
-    url = Meteor.getContentSrc()
-    return url + @.audio
+  audioSrc: ->
+    if not @audio then "" else Meteor.getContentSrc() + @audio
 
-  incorrectAnswerAudio: ()->
-    if not @.incorrect_audio
-      return ""
+  incorrectAnswerAudio: ->
+    if not @incorrect_audio then "" else Meteor.getContentSrc() + @incorrect_audio
 
-    url = Meteor.getContentSrc()
-    return url + @.incorrect_audio
-
-  correctAnswerAudio: ()->
-    if not @.correct_audio
-      return ""
-    url = Meteor.getContentSrc()
-    return url + @.correct_audio
+  correctAnswerAudio: ->
+    if not @correct_audio then "" else Meteor.getContentSrc() + @correct_audio
   
-  videoSrc: ()->
-    if not @.video
-      return ""
-    url = Meteor.getContentSrc()
-    return url  + @.video
+  videoSrc: ->
+    if not @video then "" else Meteor.getContentSrc() + @video
 
-  isCorrectAnswer: (response)->
-    return response in @.correct_answer
+  isCorrectAnswer: (response) ->
+    return response in @correct_answer
 
-  getOptions: (start, end)->
+  getOptions: (start, end) ->
     url = Meteor.getContentSrc()
     module = @
 
@@ -104,27 +84,26 @@ Modules.helpers {
     newArr = ({option: option, optionImgSrc: url + option, nh_id: module.nh_id, i: i, correct: isCorrect(option)} for option, i in @.options when i >= start and i < end)
     return {options: newArr}
 
-  option: (i)->
-    return @.options[i]
+  option: (i) ->
+    return @options[i]
 
-  isVideoModule: ()->
-    return @.type == "VIDEO"
+  isVideoModule: ->
+    return @type == "VIDEO"
 
-  isBinaryModule: ()->
-    return @.type == "BINARY"
+  isBinaryModule: ->
+    return @type == "BINARY"
 
-  isMultipleChoiceModule: ()->
-    return @.type == "MULTIPLE_CHOICE"
+  isMultipleChoiceModule: ->
+    return @type == "MULTIPLE_CHOICE"
 
-  isSlideModule: ()->
-    return @.type == "SLIDE"
+  isSlideModule: ->
+    return @type == "SLIDE"
   
-  isGoalChoiceModule: ()->
-    return @.type == "GOAL_CHOICE"
+  isGoalChoiceModule: ->
+    return @type == "GOAL_CHOICE"
 
-  isScenarioModule: ()->
-    return @.type == "SCENARIO"
-
+  isScenarioModule: ->
+    return @type == "SCENARIO"
 }
 
 Ground.Collection Modules

@@ -1,13 +1,13 @@
 <template name="Lesson_view_page_video">
   <div class="card-header large-text">
-    {{title}}
+    {{module.title}}
   </div>
 
   <div class="card-content padding-sm">
     {{#if isEmbedded}}
-      <iframe id="video{{_id}}" title="{{title}}" class="embedded-video center" src="{{video_url}}?start={{start}}&end={{end}}" frameborder="0" allowfullscreen></iframe>
+      <iframe id="video{{module._id}}" title="{{module.title}}" class="embedded-video center" src="{{module.video_url}}?start={{module.start}}&end={{module.end}}" frameborder="0" allowfullscreen></iframe>
     {{else}}
-      <video id="video{{_id}}" src="{{videoSrc}}" class="video-module center" controls autoplay>
+      <video id="video{{module._id}}" src="{{module.videoSrc}}" class="video-module center" controls autoplay>
         Your browser does not support the video tag. Please logout and use another browser.
       </video>
     {{/if}}

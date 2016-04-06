@@ -13,7 +13,6 @@ Template.Button.onCreated ->
 
 Template.Button.events
   'click': (e) ->
-    console.log "Button is clicked!!"
     data = Template.currentData()
     data.onClick e
 
