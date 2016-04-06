@@ -38,7 +38,7 @@ Template.Lesson_view_page.onCreated ()->
         data = {
           completed: @isCompleted module._id
           current: @isCurrent module._id
-          index: i
+          index: i+1
         }
         return data
       pages = ( getPageData(module, i) for module, i in modules )
