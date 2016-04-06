@@ -19,16 +19,12 @@ Template.Lesson_view_page_multiple_choice.onCreated ->
   @module = Template.currentData().module
 
   @getOptionCallback = (module, state) ->
-    console.log "Module@@", module
     return (option) ->
-      console.log module
-      console.log state
       if option.correct
         num = state.get "numCorrectResponses"
         state.set "numCorrectResponses", ++num
         if num == module.correct_answer.length
           state.set "completed", true
-          console.log "Question complete! do question complete things like play audio"
 
 Template.Lesson_view_page_multiple_choice.helpers
   optionArgs: (option) ->
