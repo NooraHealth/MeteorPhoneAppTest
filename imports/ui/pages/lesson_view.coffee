@@ -38,6 +38,10 @@ Template.Lesson_view_page.onCreated ()->
       }
     pages = getPageData(module, i) for module, i in modules?
 
+  @lessonComplete = =>
+    lesson = @getLesson()
+    return @state.get "moduleIndex" == lesson.modules.length-1
+
   @getModules = =>
     return @getLesson()?.getModulesSequence()
 
@@ -63,6 +67,7 @@ Template.Lesson_view_page.helpers
         @state.set "moduleIndex", ++index
       onReplayButtonClicked: =>
       pages: instance.getPagesForPaginator()
+      lessonComplete: instance.lessonComplete
     }
 
   lessonTitle: ()->

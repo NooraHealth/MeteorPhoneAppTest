@@ -17,7 +17,14 @@ Template.Lesson_view_page_footer.onCreated ->
       "pages.$.current": {type: Boolean}
       "pages.$.completed": {type: Boolean}
       "pages.$.index": {type: Number}
+      "lessonComplete": {type: Function}
     }).validate Template.currentData()
+
+  @getNextButtonText = ()=>
+    data = Template.currentData()
+    complete = data.lessonComplete()
+    if complete then "FINISH" else "NEXT"
+
 
 Template.Lesson_view_page_footer.helpers
   goHomeButtonArgs: ->
@@ -31,6 +38,8 @@ Template.Lesson_view_page_footer.helpers
     }
     
   nextButtonArgs: ->
+    instance = Template.instance()
+    text = instance.getNextButtonText()
     onClick = Template.currentData().onReplayButtonClicked
     return {
       attributes: {
