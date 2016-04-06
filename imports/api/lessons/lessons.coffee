@@ -1,5 +1,6 @@
 
 { Modules } = require '../modules/modules.coffee'
+ContentInterface = require '../content/ContentInterface.coffee'
 
 Lessons = new Mongo.Collection("nh_lessons")
 
@@ -8,11 +9,9 @@ LessonSchema = new SimpleSchema
     type:String
   icon:
     type: String
-    #regEx:  /^([/]?\w+)+[.]png/
     optional:true
   image:
     type: String
-    #regEx:  /^([/]?\w+)+[.]png/
     optional:true
   modules:
     type: [String]
@@ -21,27 +20,12 @@ LessonSchema = new SimpleSchema
 Lessons.attachSchema LessonSchema
 
 Lessons.helpers {
-  imgSrc: ()->
-    if not @.image
-      return ""
-    url = Meteor.getContentSrc()
-    return url + @.image
+  imgSrc: ->
+    if not @image then "" else ContentInterface.getUrl @image
 
   getModulesSequence: ()->
-    if this.modules
-      moduleDocs = ( Modules.findOne {_id: moduleId} for moduleId in @.modules )
-      return moduleDocs
-
-    else
-      modules = []
-
-      module = @.getFirstModule()
-      modules.push module
-      until module.isLastModule()
-        module = module.nextModule()
-        modules.push module
-      return modules
-
+    if @modules
+      return ( Modules.findOne {_id: moduleId} for moduleId in @modules )
 }
 
 Ground.Collection Lessons

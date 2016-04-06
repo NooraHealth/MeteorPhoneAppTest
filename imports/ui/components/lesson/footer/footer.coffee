@@ -17,9 +17,10 @@ Template.Lesson_view_page_footer.onCreated ->
       "pages.$.index": {type: Number}
     }).validate Template.currentData()
 
-  @getNextButtonText = ()=>
+  @getNextButtonText = =>
     data = Template.currentData()
     complete = data.lessonComplete()
+    console.log "getting whether the lesson is complete", complete
     if complete then "FINISH" else "NEXT"
 
 

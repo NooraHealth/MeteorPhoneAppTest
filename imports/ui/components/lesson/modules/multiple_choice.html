@@ -1,11 +1,11 @@
 <template name="Lesson_view_page_multiple_choice">
   <div class="card-header large-text center ">{{question}}</div>
   <div class="card-content padding">
-    {{#with firstRow}}
+    {{#with module.firstRow}}
       {{>rowOfOptions}}
     {{/with}}
-    {{#with secondRow}}
-      {{>rowOfOptions}}
+    {{#with module.secondRow}}
+      {{>rowOfOptions }}
     {{/with}}
   </div>
 </template>

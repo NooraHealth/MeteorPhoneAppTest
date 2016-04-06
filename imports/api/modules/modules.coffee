@@ -51,45 +51,29 @@ Modules.attachSchema ModuleSchema
 Modules.helpers {
 
   isEmbedded: ->
-    console.log "Getting whether this is embedded"
     if this.video or !this.video_url then false
     else this.video_url.startsWith "http"
 
   imgSrc: ->
-    console.log "Getting the image src", ContentInterface.getContentSrc()
-    if not @image then "" else ContentInterface.getContentSrc() + @image
+    if not @image then "" else ContentInterface.getUrl @image
 
   audioSrc: ->
-    if not @audio then "" else ContentInterface.getContentSrc() + @audio
+    if not @audio then "" else ContentInterface.getUrl @audio
 
   incorrectAnswerAudio: ->
-    if not @incorrect_audio then "" else ContentInterface.getContentSrc() + @incorrect_audio
+    if not @incorrect_audio then "" else ContentInterface.getUrl @incorrect_audio
 
   correctAnswerAudio: ->
-    if not @correct_audio then "" else ContentInterface.getContentSrc() + @correct_audio
+    if not @correct_audio then "" else ContentInterface.getUrl @correct_audio
   
   videoSrc: ->
-    if not @video then "" else ContentInterface.getContentSrc() + @video
+    if not @video then "" else ContentInterface.getUrl @video
 
   isCorrectAnswer: (response) ->
     return response in @correct_answer
 
-  getOptions: (start, end) ->
-    NUM_OBJECTS_PER_ROW = 3
-    url = ContentInterface.getContentSrc()
-    module = @
-
-    if not @.options
-      return []
-
-    isCorrect = (option)=>
-      return option in @.correct_answer
-
-    newArr = ({option: option, optionImgSrc: url + option, nh_id: module.nh_id, i: i, correct: isCorrect(option)} for option, i in @.options when i >= start and i < end)
-    return {options: newArr}
-
-  option: (i) ->
-    return @options[i]
+  optionSrc: (i) ->
+    if not @options[i] then "" else ContentInterface.getUrl @options[i]
 
   isVideoModule: ->
     return @type == "VIDEO"
