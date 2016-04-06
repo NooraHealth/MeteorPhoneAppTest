@@ -30,7 +30,6 @@ Template.Lesson_view_page_multiple_choice_option.onCreated ->
 Template.Lesson_view_page_multiple_choice_option.helpers
   attributes: (option) ->
     instance = Template.instance()
-
     classes = 'image-choice'
     if instance.correctlySelected()
       classes += ' correctly-selected'

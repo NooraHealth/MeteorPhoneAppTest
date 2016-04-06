@@ -17,20 +17,26 @@ Template.Lesson_view_page_multiple_choice.onCreated ->
     }).validate(Template.currentData())
 
   @module = Template.currentData().module
-  @onOptionSelected = (option) =>
-    if option.correct
-      num = @state.get "numCorrectResponses"
-      @state.set "numCorrectResponses", ++num
-      if num == @module.correct_answer.length
-        @state.set "completed", true
-        console.log "Question complete! do question complete things like play audio"
+
+  @getOptionCallback = (module, state) ->
+    console.log "Module@@", module
+    return (option) ->
+      console.log module
+      console.log state
+      if option.correct
+        num = state.get "numCorrectResponses"
+        state.set "numCorrectResponses", ++num
+        if num == module.correct_answer.length
+          state.set "completed", true
+          console.log "Question complete! do question complete things like play audio"
 
 Template.Lesson_view_page_multiple_choice.helpers
-  optionArgs: (option)->
+  optionArgs: (option) ->
     instance = Template.instance()
+    module = instance.module
     return {
       option: option
-      onSelected: instance.onOptionSelected
+      onSelected: instance.getOptionCallback(module, instance.state)
       questionComplete: instance.state.get "completed"
     }
 
@@ -46,49 +52,5 @@ Template.Lesson_view_page_multiple_choice.helpers
         correct: module.isCorrectAnswer(option)
       }
     options = (getOptionData(option, i) for option, i in module.options when i >= start and i < end)
-    console.log "OPtions", options
     return {options: options}
-
-Template.Lesson_view_page_multiple_choice.events
-  'click .js-user-selects': (event, template)->
-    instance = Template.instance()
-    module = Template.currentData().module
-    responses = instance.state.get "responses"
-    target = event.target
-    console.log "Getting the target"
-    console.log $(target).attr "id"
-
-    if $(target).hasClass "correct"
-      $(target).addClass "correctly-selected"
-      $(target).addClass "expanded"
-      console.log responses
-
-      if $(target).attr("id") not in responses
-        console.log "pushing responses"
-        responses.push target
-
-      if responses.length == module.correct_answer.length
-        #@.correctSoundEffect.playAudio ()=> @.correctAudio.playWhenReady( ModulesController.readyForNextModule )
-        correctResponseButtons = instance.correctResponseButtons()
-        incorrectResponseButtons = instance.incorrectResponseButtons()
-        console.log incorrectResponseButtons
-        console.log correctResponseButtons
-        #if @.audio
-          #@.audio.pause()
-        #if @.intro
-          #@.intro.pause()
-
-        for btn in incorrectResponseButtons
-          if not $(btn).hasClass "faded"
-            $(btn).addClass "faded"
-      #else
-        #@.correctSoundEffect.playAudio null
-
-    else
-      #@.incorrectSoundEffect.playAudio null
-      $(target).addClass "incorrectly-selected"
-      $(target).addClass "faded"
-      
-    instance.state.set "responses", responses
-
 
