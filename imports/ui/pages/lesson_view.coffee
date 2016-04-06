@@ -14,33 +14,38 @@ Template.Lesson_view_page.onCreated ()->
   @state.setDefault {
     moduleIndex: 0
   }
+  console.log @state
 
   @isCurrent = (moduleId) =>
     modules = @getLesson().modules
     index = @state.get "moduleIndex"
-    return index == Array.indexOf moduleId, modules
+    return index == modules.indexOf moduleId
 
   @isCompleted = (moduleId) =>
-    modules = @getLesson().modules
+    console.log "Getting the lesson", @getLesson()
+    modules = @getLesson()?.modules
     index = @state.get "moduleIndex"
-    return index > Array.indexOf moduleId, modules
+    return index > modules?.indexOf moduleId
 
   @getPagesForPaginator = =>
     modules = @getModules()
+    console.log "MODULES", modules
     getPageData = (module, i) =>
       data = {
         completed: @isCompleted module._id
         current: @isCurrent module._id
         index: i
       }
-    pages = getPageData(module, i) for module, i in modules
+    pages = getPageData(module, i) for module, i in modules?
 
   @getModules = =>
-    return @state.getLesson().getModulesSequence()
+    return @getLesson()?.getModulesSequence()
 
   @getLesson = =>
     id = FlowRouter.getParam "_id"
     lesson = Lessons.findOne { _id: id }
+    console.log "Getting the lesson", id
+    console.log Lessons.find({}).count()
     return lesson
 
   @onClickNext = =>
@@ -48,9 +53,21 @@ Template.Lesson_view_page.onCreated ()->
     @state.set "moduleIndex", ++index
 
 Template.Lesson_view_page.helpers
+  footerArgs: ()->
+    instance = Template.instance()
+    return {
+      onHomeButtonClicked: ->
+        FlowRouter.go "home"
+      onNextButtonClicked: =>
+        index = @state.get "moduleIndex"
+        @state.set "moduleIndex", ++index
+      onReplayButtonClicked: =>
+      pages: instance.getPagesForPaginator()
+    }
+
   lessonTitle: ()->
     instance = Template.instance()
-    return instance.getLesson().title
+    return instance.getLesson()?.title
 
   moduleArgs: (module) ->
     return { module: module }

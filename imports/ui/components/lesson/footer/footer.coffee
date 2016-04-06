@@ -1,16 +1,22 @@
 
 Modules = require('../../../../api/modules/modules.coffee').Modules
 require '../../button.html'
+require './paginator.coffee'
 require './footer.html'
 
 Template.Lesson_view_page_footer.onCreated ->
   # data context validation
   @autorun =>
+    console.log "Validating footer"
+    console.log Template.currentData()
     new SimpleSchema({
-      onHomeButtonClicked: {type: Function}
-      onNextButtonClicked: {type: Function}
-      onReplayButtonClicked: {type: Function}
-      pages: {type: [Object]}
+      "onHomeButtonClicked": {type: Function}
+      "onNextButtonClicked": {type: Function}
+      "onReplayButtonClicked": {type: Function}
+      "pages": {type: [Object]}
+      "pages.$.current": {type: Boolean}
+      "pages.$.completed": {type: Boolean}
+      "pages.$.index": {type: Number}
     }).validate Template.currentData()
 
 Template.Lesson_view_page_footer.helpers

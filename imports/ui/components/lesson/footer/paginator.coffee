@@ -1,3 +1,6 @@
+
+require './paginator.html'
+
 Template.Lesson_view_page_footer_paginator.onCreated ->
   #data context validation
   @autorun =>
