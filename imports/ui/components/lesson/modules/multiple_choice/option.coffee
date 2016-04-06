@@ -46,7 +46,7 @@ Template.Lesson_view_page_multiple_choice_option.helpers
 
 Template.Lesson_view_page_multiple_choice_option.events
   "click": (target, template) ->
-    console.log template
     data = Template.currentData()
+    template.state.set "selected", true
     data.onSelected data.option, template.correctlySelected()
 
