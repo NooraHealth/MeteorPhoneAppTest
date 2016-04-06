@@ -15,12 +15,35 @@ Template.Lesson_view_page.onCreated ()->
     moduleIndex: 0
   }
 
-  @getLesson = ()=>
+  @isCurrent = (moduleId) =>
+    modules = @getLesson().modules
+    index = @state.get "moduleIndex"
+    return index == Array.indexOf moduleId, modules
+
+  @isCompleted = (moduleId) =>
+    modules = @getLesson().modules
+    index = @state.get "moduleIndex"
+    return index > Array.indexOf moduleId, modules
+
+  @getPagesForPaginator = =>
+    modules = @getModules()
+    getPageData = (module, i) =>
+      data = {
+        completed: @isCompleted module._id
+        current: @isCurrent module._id
+        index: i
+      }
+    pages = getPageData(module, i) for module, i in modules
+
+  @getModules = =>
+    return @state.getLesson().getModulesSequence()
+
+  @getLesson = =>
     id = FlowRouter.getParam "_id"
     lesson = Lessons.findOne { _id: id }
     return lesson
 
-  @onClickNext = ()=>
+  @onClickNext = =>
     index = @state.get "moduleIndex"
     @state.set "moduleIndex", ++index
 
@@ -30,13 +53,11 @@ Template.Lesson_view_page.helpers
     return instance.getLesson().title
 
   moduleArgs: (module) ->
-    console.log "getting the module arguments"
-    console.log module
     return { module: module }
 
   modules: ->
-    lesson = Template.instance().getLesson()
-    return lesson.getModulesSequence()
+    instance = Template.instance()
+    return instance.getModules()
 
   getTemplate: (module) ->
     if module?.type == "BINARY"
