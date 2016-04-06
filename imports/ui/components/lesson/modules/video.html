@@ -4,10 +4,10 @@
   </div>
 
   <div class="card-content padding-sm">
-    {{#if isEmbedded}}
-      <iframe id="video{{module._id}}" title="{{module.title}}" class="embedded-video center" src="{{module.video_url}}?start={{module.start}}&end={{module.end}}" frameborder="0" allowfullscreen></iframe>
+    {{#if module.isEmbedded}}
+      <iframe {{iframeAttributes module}}></iframe>
     {{else}}
-      <video id="video{{module._id}}" src="{{module.videoSrc}}" class="video-module center" controls autoplay>
+      <video {{videoTagAttributes module}}>
         Your browser does not support the video tag. Please logout and use another browser.
       </video>
     {{/if}}

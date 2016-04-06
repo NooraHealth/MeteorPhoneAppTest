@@ -15,7 +15,6 @@ Template.Lesson_view_page.onCreated ()->
   @state.setDefault {
     moduleIndex: 0
   }
-  console.log @state
 
   @isCurrent = (moduleId) =>
     modules = @getLesson().modules
@@ -29,9 +28,7 @@ Template.Lesson_view_page.onCreated ()->
 
   @getPagesForPaginator = =>
     modules = @getModules()
-    console.log "MODULES", modules
     if not modules?
-      console.log "NOT MODULES: ", Modules.find({}).count()
       return []
     else
       getPageData = (module, i) =>
@@ -42,7 +39,6 @@ Template.Lesson_view_page.onCreated ()->
         }
         return data
       pages = ( getPageData(module, i) for module, i in modules )
-      console.log "PAGES", pages
       return pages
 
   @lessonComplete = =>
@@ -58,7 +54,6 @@ Template.Lesson_view_page.onCreated ()->
     return lesson
 
   @onNextButtonClicked = =>
-    console.log "Next button clicked!"
     index = @state.get "moduleIndex"
     @state.set "moduleIndex", ++index
 

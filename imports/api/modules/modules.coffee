@@ -51,10 +51,12 @@ Modules.attachSchema ModuleSchema
 Modules.helpers {
 
   isEmbedded: ->
+    console.log "Getting whether this is embedded"
     if this.video or !this.video_url then false
     else this.video_url.startsWith "http"
 
   imgSrc: ->
+    console.log "Getting the image src", ContentInterface.getContentSrc()
     if not @image then "" else ContentInterface.getContentSrc() + @image
 
   audioSrc: ->

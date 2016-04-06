@@ -12,6 +12,7 @@ Template.Lesson_view_page_video.onCreated ->
 
 Template.Lesson_view_page_video.helpers
   iframeAttributes: (module) ->
+    console.log "Fetting the iframe attributes", module
     return {
       title: module.title
       class: "embedded-video center"
@@ -21,10 +22,11 @@ Template.Lesson_view_page_video.helpers
     }
 
   videoTagAttributes: (module) ->
+    console.log "Fetting the videoTag attributes", module
     return {
       title: module.title
       class: "video-module center"
-      src: module.videoSrc()
+      src: module.video_url
       controls: true
       autoplay: true
     }
