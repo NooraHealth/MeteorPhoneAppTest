@@ -19,14 +19,13 @@ LessonSchema = new SimpleSchema
 
 Lessons.attachSchema LessonSchema
 
-Lessons.helpers {
+Lessons.helpers
   imgSrc: ->
     if not @image then "" else ContentInterface.getUrl @image
 
   getModulesSequence: ()->
     if @modules
       return ( Modules.findOne {_id: moduleId} for moduleId in @modules )
-}
 
 Ground.Collection Lessons
 

@@ -10,23 +10,22 @@ Template.Lesson_view_page_multiple_choice.onCreated ->
     }).validate(Template.currentData())
 
   @getOptions = (module, start, end) ->
+    if not module.options then []
+
     NUM_OBJECTS_PER_ROW = 3
-    url = ContentInterface.getContentSrc()
-
-    if not @.options
-      return []
-
-    isCorrect = (option)=>
-      return option in @.correct_answer
-
     options = ({option: option, optionImgSrc: module.optionSrc(i), i: i, correct: module.isCorrect(option)} for option, i in module.options when i >= start and i < end)
     return {options: options}
   
 Template.Lesson_view_page_multiple_choice.helpers
-  secondRow: ()->
-    #return @.getOptions 3, 6
-  firstRow: ()->
-    #return @.getOptions 0, 3
+  getOptions: (module, start, end) ->
+    console.log module
+    console.log start
+    console.log end
+    if not module.options then {options: []}
+
+    NUM_OBJECTS_PER_ROW = 3
+    options = ({option: option, optionImgSrc: module.optionSrc(i), i: i, correct: module.isCorrectAnswer(option)} for option, i in module.options when i >= start and i < end)
+    return {options: options}
 
 Template.Lesson_view_page_multiple_choice.events
   'click .js-user-selects': (event, template)->

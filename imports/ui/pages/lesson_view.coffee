@@ -42,8 +42,13 @@ Template.Lesson_view_page.onCreated ()->
       return pages
 
   @lessonComplete = =>
+    console.log "Getting whether the lesson is complete in lesson_view.coffee"
     lesson = @getLesson()
-    return @state.get "moduleIndex" == lesson?.modules.length-1
+    console.log "lesson, ", lesson
+    index = @state.get "moduleIndex"
+    console.log index
+    console.log lesson?.modules?.length-1
+    return index == lesson?.modules?.length-1
 
   @getModules = =>
     return @getLesson()?.getModulesSequence()
@@ -51,6 +56,8 @@ Template.Lesson_view_page.onCreated ()->
   @getLesson = =>
     id = FlowRouter.getParam "_id"
     lesson = Lessons.findOne { _id: id }
+    console.log "getting the lesson"
+    console.log id
     return lesson
 
   @onNextButtonClicked = =>
@@ -77,6 +84,7 @@ Template.Lesson_view_page.helpers
 
   modules: ->
     instance = Template.instance()
+    console.log instance.getModules()
     return instance.getModules()
 
   getTemplate: (module) ->

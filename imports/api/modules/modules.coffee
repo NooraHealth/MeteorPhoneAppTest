@@ -7,7 +7,7 @@
 # or a video.
 ###
 
-ContentInterface = require '../content/ContentInterface.coffee'
+ContentInterface = require('../content/ContentInterface.coffee').ContentInterface
 
 Modules = new Mongo.Collection("nh_modules")
 
@@ -55,25 +55,25 @@ Modules.helpers {
     else this.video_url.startsWith "http"
 
   imgSrc: ->
-    if not @image then "" else ContentInterface.getUrl @image
+    if not @image then "" else ContentInterface.get().getUrl(@image)
 
   audioSrc: ->
-    if not @audio then "" else ContentInterface.getUrl @audio
+    if not @audio then "" else ContentInterface.get().getUrl(@audio)
 
   incorrectAnswerAudio: ->
-    if not @incorrect_audio then "" else ContentInterface.getUrl @incorrect_audio
+    if not @incorrect_audio then "" else ContentInterface.get().getUrl(@incorrect_audio)
 
   correctAnswerAudio: ->
-    if not @correct_audio then "" else ContentInterface.getUrl @correct_audio
+    if not @correct_audio then "" else ContentInterface.get().getUrl(@correct_audio)
   
   videoSrc: ->
-    if not @video then "" else ContentInterface.getUrl @video
+    if not @video then "" else ContentInterface.get().getUrl(@video)
 
   isCorrectAnswer: (response) ->
     return response in @correct_answer
 
   optionSrc: (i) ->
-    if not @options[i] then "" else ContentInterface.getUrl @options[i]
+    if not @options[i] then "" else ContentInterface.get().getUrl(@options[i])
 
   isVideoModule: ->
     return @type == "VIDEO"

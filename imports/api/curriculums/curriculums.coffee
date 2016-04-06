@@ -21,21 +21,9 @@ CurriculumSchema = new SimpleSchema
 
 Curriculums.attachSchema CurriculumSchema
 
-Curriculums.helpers {
-  getLessonDocuments: ()->
-    
-    if not @lessons?
-      throw new Meteor.error "malformed-document", "Your curriculum object
-        does not contain a properly formed lessons field."
-
-    lessons = []
-    _.each @lessons, (lessonID) ->
-      lesson = Lessons.findOne {_id: lessonID}
-      if lesson?
-        lessons.push lesson
-
-    return lessons
-}
+Curriculums.helpers
+  getLessonDocuments: ->
+    return ( Lessons.findOne {_id: id} for id in @lessons)
 
 Ground.Collection Curriculums
 
