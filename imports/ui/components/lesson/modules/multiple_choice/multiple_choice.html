@@ -1,0 +1,22 @@
+<template name="Lesson_view_page_multiple_choice">
+  <div class="card-header large-text center ">{{module.question}}</div>
+
+  <div class="card-content padding">
+    {{#with (getOptions module 0 3) }}
+      <div class="row">
+        {{#each option in options}}
+          {{> Lesson_view_page_multiple_choice_option (optionArgs option) }}
+        {{/each}}
+      </div>
+    {{/with}}
+
+    {{#with (getOptions module 3 6) }}
+      <div class="row">
+        {{#each option in options}}
+          {{> Lesson_view_page_multiple_choice_option (optionArgs option) }}
+        {{/each}}
+      </div>
+    {{/with}}
+  </div>
+</template>
+

@@ -5,7 +5,7 @@ Modules = require('../../api/modules/modules.coffee').Modules
 require './lesson_view.html'
 require '../components/lesson/modules/binary.coffee'
 require '../components/lesson/modules/scenario.coffee'
-require '../components/lesson/modules/multiple_choice.coffee'
+require '../components/lesson/modules/multiple_choice/multiple_choice.coffee'
 require '../components/lesson/modules/slide.html'
 require '../components/lesson/modules/video.coffee'
 require '../components/lesson/footer/footer.coffee'
