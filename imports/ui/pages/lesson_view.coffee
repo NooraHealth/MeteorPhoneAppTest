@@ -1,5 +1,6 @@
 
 Lessons = require('../../api/lessons/lessons.coffee').Lessons
+Modules = require('../../api/modules/modules.coffee').Modules
 
 require './lesson_view.html'
 require '../components/lesson/modules/binary.coffee'
@@ -46,7 +47,7 @@ Template.Lesson_view_page.onCreated ()->
 
   @lessonComplete = =>
     lesson = @getLesson()
-    return @state.get "moduleIndex" == lesson.modules.length-1
+    return @state.get "moduleIndex" == lesson?.modules.length-1
 
   @getModules = =>
     return @getLesson()?.getModulesSequence()
@@ -56,7 +57,8 @@ Template.Lesson_view_page.onCreated ()->
     lesson = Lessons.findOne { _id: id }
     return lesson
 
-  @onClickNext = =>
+  @onNextButtonClicked = =>
+    console.log "Next button clicked!"
     index = @state.get "moduleIndex"
     @state.set "moduleIndex", ++index
 
@@ -64,11 +66,8 @@ Template.Lesson_view_page.helpers
   footerArgs: ()->
     instance = Template.instance()
     return {
-      onHomeButtonClicked: ->
-        FlowRouter.go "home"
-      onNextButtonClicked: =>
-        index = @state.get "moduleIndex"
-        @state.set "moduleIndex", ++index
+      onHomeButtonClicked: -> FlowRouter.go "home"
+      onNextButtonClicked: instance.onNextButtonClicked
       onReplayButtonClicked: =>
       pages: instance.getPagesForPaginator()
       lessonComplete: instance.lessonComplete

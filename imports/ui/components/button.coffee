@@ -6,12 +6,15 @@ Template.Button.onCreated ->
     new SimpleSchema({
       onClick: {type: Function}
       content: {type: String}
-      classes: {type: String}
+      "attributes.class": {type: String, optional: true}
+      "attributes.id": {type: String, optional: true}
+      "attributes.name": {type: String, optional: true}
     }).validate(Template.currentData())
 
 Template.Button.events
   'click': (e) ->
-    instance = Template.instance()
-    instance.state.onClick e
+    console.log "Button is clicked!!"
+    data = Template.currentData()
+    data.onClick e
 
 

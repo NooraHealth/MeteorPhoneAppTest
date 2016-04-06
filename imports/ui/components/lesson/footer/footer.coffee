@@ -1,6 +1,6 @@
 
 Modules = require('../../../../api/modules/modules.coffee').Modules
-require '../../button.html'
+require '../../button.coffee'
 require './paginator.coffee'
 require './footer.html'
 
@@ -37,12 +37,13 @@ Template.Lesson_view_page_footer.helpers
   nextButtonArgs: ->
     instance = Template.instance()
     text = instance.getNextButtonText()
-    onClick = Template.currentData().onReplayButtonClicked
+    onClick = Template.currentData().onNextButtonClicked
     return {
       attributes: {
         class: 'link next-module-btn footer-button button color-blue button-fill swiper-button-next'
       }
       content: text + '<i class="fa fa-arrow-right fa-2x"></i>'
+      onClick: onClick
     }
 
   replayButtonArgs: ->
@@ -52,6 +53,7 @@ Template.Lesson_view_page_footer.helpers
         class: 'link button button-rounded color-pink button-fill'
       }
       content: '<i class="fa fa-repeat fa-2x"></i>'
+      onClick: onClick
     }
 
   paginatorArgs: ->
