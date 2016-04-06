@@ -14,7 +14,8 @@ require '../../ui/components/home/menu/list_item.coffee'
 require '../../ui/components/audio/audio.coffee'
 
 Template.Home_page.onCreated ->
-  @state = new PersistentReactiveDict("Home_page")
+  console.log "This is the oncreated of Home", @state
+  @state = PersistentDictStore.getDict "Home_page"
   @state.setTemporary "hasPlayedIntro", false
 
   #@intro = new Audio Meteor.getContentSrc() + 'NooraHealthContent/Audio/AppIntro.mp3', "#intro", ""
@@ -48,6 +49,8 @@ Template.Home_page.onCreated ->
   #@playAppIntro = =>
     #if not @state.get "hasPlayedIntro" then @intro.playWhenReady()
 
+Template.Home_page.onDestroyed ->
+  console.log "Destroying the home page"
 
 Template.Home_page.helpers
 
@@ -91,3 +94,15 @@ Template.Home_page.onRendered ->
       direction: "vertical"
     }
 
+
+class PersistentDictStore
+  @getDict: (name)->
+    @dict ?= new Private name
+    return @dict.getDict()
+
+  class Private
+    constructor: (name) ->
+      @dict = new PersistentReactiveDict name
+
+    getDict: ->
+      return @dict
