@@ -14,7 +14,7 @@ class @ParsedUrl
     return @.endpoint.concat @.urlString
 
 
-class @ContentInterface
+class @ContentDownloader
 
   constructor: (@curriculum)->
     @.contentEndpoint = ContentInterface.getContentEndpoint()

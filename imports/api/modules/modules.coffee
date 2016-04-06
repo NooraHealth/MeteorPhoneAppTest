@@ -1,3 +1,14 @@
+
+###
+# Module
+#
+# A single unit of instructional material, 
+# such as a question, a slide, an audio clip, 
+# or a video.
+###
+
+ContentInterface = require '../content/ContentInterface.coffee'
+
 Modules = new Mongo.Collection("nh_modules")
 
 ModuleSchema = new SimpleSchema
@@ -37,16 +48,6 @@ ModuleSchema = new SimpleSchema
 
 Modules.attachSchema ModuleSchema
 
-NUM_OBJECTS_PER_ROW = 3
-
-###
-# Module
-#
-# A single unit of instructional material, 
-# such as a question, a slide, an audio clip, 
-# or a video.
-###
-
 Modules.helpers {
 
   isEmbedded: ->
@@ -54,25 +55,26 @@ Modules.helpers {
     else this.video_url.startsWith "http"
 
   imgSrc: ->
-    if not @image then "" else Meteor.getContentSrc() + @image
+    if not @image then "" else ContentInterface.getContentSrc() + @image
 
   audioSrc: ->
-    if not @audio then "" else Meteor.getContentSrc() + @audio
+    if not @audio then "" else ContentInterface.getContentSrc() + @audio
 
   incorrectAnswerAudio: ->
-    if not @incorrect_audio then "" else Meteor.getContentSrc() + @incorrect_audio
+    if not @incorrect_audio then "" else ContentInterface.getContentSrc() + @incorrect_audio
 
   correctAnswerAudio: ->
-    if not @correct_audio then "" else Meteor.getContentSrc() + @correct_audio
+    if not @correct_audio then "" else ContentInterface.getContentSrc() + @correct_audio
   
   videoSrc: ->
-    if not @video then "" else Meteor.getContentSrc() + @video
+    if not @video then "" else ContentInterface.getContentSrc() + @video
 
   isCorrectAnswer: (response) ->
     return response in @correct_answer
 
   getOptions: (start, end) ->
-    url = Meteor.getContentSrc()
+    NUM_OBJECTS_PER_ROW = 3
+    url = ContentInterface.getContentSrc()
     module = @
 
     if not @.options

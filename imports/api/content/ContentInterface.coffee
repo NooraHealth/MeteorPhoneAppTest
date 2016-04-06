@@ -1,4 +1,8 @@
 
+VIDEO_FOLDER = "Video/"
+IMAGE_FOLDER = "Image/"
+AUDIO_FOLDER = "Audio/"
+
 class ContentInterface
 
   @getContentSrc: ->
@@ -17,7 +21,6 @@ class ContentInterface
       prefix = CONTENT_FOLDER + AUDIO_FOLDER
     if file.type.match /// image/ ///
       prefix = CONTENT_FOLDER + IMAGE_FOLDER
-
     return prefix + file.name
 
 module.exports.ContentInterface = ContentInterface
