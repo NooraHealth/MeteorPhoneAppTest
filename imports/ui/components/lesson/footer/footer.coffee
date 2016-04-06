@@ -16,7 +16,6 @@ Template.Lesson_view_page_footer.onCreated ->
       "pages.$.completed": {type: Boolean}
       "pages.$.index": {type: Number}
     }).validate Template.currentData()
-    console.log "FOOTER VALIDATED"
 
   @getNextButtonText = ()=>
     data = Template.currentData()
@@ -43,7 +42,7 @@ Template.Lesson_view_page_footer.helpers
       attributes: {
         class: 'link next-module-btn footer-button button color-blue button-fill swiper-button-next'
       }
-      content: text + '<i class="fa fa-repeat fa-2x"></i>'
+      content: text + '<i class="fa fa-arrow-right fa-2x"></i>'
     }
 
   replayButtonArgs: ->
