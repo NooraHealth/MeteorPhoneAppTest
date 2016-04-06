@@ -14,6 +14,7 @@ Template.Lesson_view_page_multiple_choice_option.onCreated ->
       "option.i": {type: Number}
       "option.correct": {type: Boolean}
       "onSelected": {type: Function}
+      "questionComplete": {type: Boolean}
     }).validate Template.currentData()
 
   @incorrectlySelected = =>
@@ -34,7 +35,7 @@ Template.Lesson_view_page_multiple_choice_option.helpers
     if instance.correctlySelected()
       classes += ' correctly-selected'
       classes += ' expanded'
-    else if instance.incorrectlySelected()
+    else if instance.incorrectlySelected() or Template.currentData().questionComplete
       classes += ' incorrectly-selected'
       classes += ' faded'
     return {
@@ -48,5 +49,5 @@ Template.Lesson_view_page_multiple_choice_option.events
   "click": (target, template) ->
     data = Template.currentData()
     template.state.set "selected", true
-    data.onSelected data.option, template.correctlySelected()
+    data.onSelected data.option
 

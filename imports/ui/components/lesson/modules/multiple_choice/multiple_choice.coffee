@@ -7,8 +7,8 @@ Template.Lesson_view_page_multiple_choice.onCreated ->
   # Data context validation
   @state = new ReactiveDict()
   @state.setDefault {
-    responses: []
     completed: false
+    numCorrectResponses: 0
   }
 
   @autorun =>
@@ -16,24 +16,26 @@ Template.Lesson_view_page_multiple_choice.onCreated ->
       module: {type: Modules._helpers}
     }).validate(Template.currentData())
 
-  @correctResponseButtons = (instance) ->
-    console.log "Getting correct response buttons"
-    console.log instance.$(".correct")
-    return instance.$(".correct")
-
-  @incorrectResponseButtons = (instance) ->
-    console.log "INCORRECT buttons"
-    console.log instance.$(".response")
-    return instance.$(".response").filter ( i, elem )=> not $(elem).hasClass "correct"
+  @module = Template.currentData().module
+  @onOptionSelected = (option) =>
+    if option.correct
+      num = @state.get "numCorrectResponses"
+      @state.set "numCorrectResponses", ++num
+      if num == @module.correct_answer.length
+        @state.set "completed", true
+        console.log "Question complete! do question complete things like play audio"
 
 Template.Lesson_view_page_multiple_choice.helpers
   optionArgs: (option)->
+    instance = Template.instance()
     return {
       option: option
-      onSelected: =>
+      onSelected: instance.onOptionSelected
+      questionComplete: instance.state.get "completed"
     }
 
   getOptions: (module, start, end) ->
+    instance = Template.instance()
     NUM_OBJECTS_PER_ROW = 3
     if not module.options then {options: []}
     getOptionData = (option, i) =>
