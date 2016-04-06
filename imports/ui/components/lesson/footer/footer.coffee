@@ -23,7 +23,6 @@ Template.Lesson_view_page_footer.onCreated ->
     console.log "getting whether the lesson is complete", complete
     if complete then "FINISH" else "NEXT"
 
-
 Template.Lesson_view_page_footer.helpers
   goHomeButtonArgs: ->
     onClick = Template.currentData().onHomeButtonClicked

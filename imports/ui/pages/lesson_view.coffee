@@ -60,16 +60,24 @@ Template.Lesson_view_page.onCreated ()->
     console.log id
     return lesson
 
-  @onNextButtonClicked = =>
+  @celebrateCompletion = =>
+    @goHome()
+
+  @goHome = ->
+    FlowRouter.go "home"
+
+  @goToNextModule = =>
     index = @state.get "moduleIndex"
     @state.set "moduleIndex", ++index
 
 Template.Lesson_view_page.helpers
   footerArgs: ()->
     instance = Template.instance()
+    onNextButtonClicked = if instance.lessonComplete() then instance.celebrateCompletion else instance.goToNextModule
+    console.log onNextButtonClicked
     return {
-      onHomeButtonClicked: -> FlowRouter.go "home"
-      onNextButtonClicked: instance.onNextButtonClicked
+      onHomeButtonClicked: => instance.goHome
+      onNextButtonClicked: onNextButtonClicked
       onReplayButtonClicked: =>
       pages: instance.getPagesForPaginator()
       lessonComplete: instance.lessonComplete
