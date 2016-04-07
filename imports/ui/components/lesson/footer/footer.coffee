@@ -7,8 +7,9 @@ require './footer.html'
 Template.Lesson_view_page_footer.onCreated ->
   # data context validation
   @autorun =>
+    console.log "Validating footer"
     new SimpleSchema({
-      "onRendered": {type: Function}
+      "onNextButtonRendered": {type: Function}
       "onHomeButtonClicked": {type: Function}
       "onNextButtonClicked": {type: Function}
       "onReplayButtonClicked": {type: Function}
@@ -17,6 +18,7 @@ Template.Lesson_view_page_footer.onCreated ->
       "pages.$.completed": {type: Boolean}
       "pages.$.index": {type: Number}
     }).validate Template.currentData()
+    console.log "Done validating footer"
 
   @getNextButtonText = =>
     data = Template.currentData()
@@ -39,12 +41,14 @@ Template.Lesson_view_page_footer.helpers
     instance = Template.instance()
     text = instance.getNextButtonText()
     onClick = Template.currentData().onNextButtonClicked
+    onRendered = Template.currentData().onNextButtonRendered
     return {
       attributes: {
         class: 'link next-module-btn footer-button button color-blue button-fill swiper-button-next'
       }
       content: text + '<i class="fa fa-arrow-right fa-2x"></i>'
       onClick: onClick
+      onRendered: onRendered
     }
 
   replayButtonArgs: ->
@@ -62,7 +66,3 @@ Template.Lesson_view_page_footer.helpers
     return {
       pages: pages
     }
-
-
-Template.Lesson_view_page_footer.onRendered ()->
-  Template.currentData().onRendered()

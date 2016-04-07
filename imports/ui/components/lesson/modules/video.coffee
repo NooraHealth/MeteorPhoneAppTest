@@ -6,9 +6,11 @@ Template.Lesson_view_page_video.onCreated ->
   # Data context validation
   @autorun =>
     console.log "This is the module of the video", Template.currentData().module
+    console.log "Validating video"
     schema = new SimpleSchema({
       module: {type: Modules._helpers}
     }).validate(Template.currentData())
+    console.log "Done validating video"
 
 Template.Lesson_view_page_video.helpers
   iframeAttributes: (module) ->

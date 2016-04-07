@@ -19,6 +19,7 @@ Template.Lesson_view_page_binary.onCreated ->
       incorrectClasses: {type: String}
       incorrectlySelectedClasses: {type: String}
     }).validate(Template.currentData())
+    console.log "Done validating binary"
 
   @module = Template.currentData().module
 

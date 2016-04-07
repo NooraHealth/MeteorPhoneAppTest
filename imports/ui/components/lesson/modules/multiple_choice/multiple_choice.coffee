@@ -27,10 +27,10 @@ Template.Lesson_view_page_multiple_choice.onCreated ->
   @getOnSelectedCallback = (module, templateInstance) ->
     console.log "getting the onSelected callback"
     return (option) ->
-      console.log "in onSelected of ", option
       selected = templateInstance.state.get "selectedOptions"
+      console.log "this is selected", selected
       if option not in selected
-        selected.push "option"
+        selected.push option
         templateInstance.state.set "selectedOptions", selected
 
   @autorun (arg)=>
@@ -44,19 +44,22 @@ Template.Lesson_view_page_multiple_choice.onCreated ->
     getClasses = (option) ->
       selected = instance.state.get "selectedOptions"
       isCorrect = module.isCorrectAnswer option
+      console.log "isCorrect", isCorrect
       classes = 'image-choice'
+      console.log "Getting the classes"
+      console.log selected
+      console.log option
       if option in selected
         if isCorrect
           classes += " #{data.correctlySelectedClasses}"
         else
           classes += " #{data.incorrectlySelectedClasses}"
+          classes += " #{data.incorrectClasses}"
       else if instance.state.get "completed"
         classes += " #{data.incorrect}"
       return classes
     
     mapData = (option, i) ->
-      console.log "mapping all the data"
-      console.log getClasses(option)
       map[option] = {
         src: module.optionSrc(i)
         class: getClasses(option)

@@ -67,7 +67,7 @@ Template.Lesson_view_page.onCreated ()->
     index = @state.get "moduleIndex"
     @state.set "moduleIndex", ++index
 
-  @onFooterRendered = =>
+  @onNextButtonRendered = =>
     mySwiper = App.swiper '.swiper-container', {
         lazyLoading: true,
         preloadImages: false,
@@ -84,7 +84,7 @@ Template.Lesson_view_page.helpers
       onReplayButtonClicked: =>
       pages: instance.getPagesForPaginator()
       lessonComplete: instance.lessonComplete
-      onRendered: instance.onFooterRendered
+      onNextButtonRendered: instance.onNextButtonRendered
     }
 
   lessonTitle: ->
