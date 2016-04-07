@@ -5,8 +5,12 @@ require "./scenario.html"
 Template.Lesson_view_page_scenario.onCreated ->
   # Data context validation
   @autorun =>
+    console.log "Validating scneario", Template.currentData()
     schema = new SimpleSchema({
       module: {type: Modules._helpers}
+      correctlySelectedClasses: {type: String}
+      incorrectClasses: {type: String}
+      incorrectlySelectedClasses: {type: String}
     }).validate(Template.currentData())
 
 Template.Lesson_view_page_scenario.helpers

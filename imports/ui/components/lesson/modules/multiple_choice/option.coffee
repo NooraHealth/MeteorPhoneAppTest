@@ -8,13 +8,12 @@ Template.Lesson_view_page_multiple_choice_option.onCreated ->
   }
 
   @autorun =>
+    console.log "validating option"
+    console.log Template.currentData()
     new SimpleSchema({
-      "option.option": {type: String}
-      "option.src": {type: String}
-      "option.i": {type: Number}
-      "option.correct": {type: Boolean}
+      "attributes.src": {type: String}
+      "attributes.class": {type: String}
       "onSelected": {type: Function}
-      "questionComplete": {type: Boolean}
     }).validate Template.currentData()
 
   @incorrectlySelected = =>
@@ -28,21 +27,21 @@ Template.Lesson_view_page_multiple_choice_option.onCreated ->
     return selected and correct
 
 Template.Lesson_view_page_multiple_choice_option.helpers
-  attributes: (option) ->
-    instance = Template.instance()
-    classes = 'image-choice'
-    if instance.correctlySelected()
-      classes += ' correctly-selected'
-      classes += ' expanded'
-    else if instance.incorrectlySelected() or Template.currentData().questionComplete
-      classes += ' incorrectly-selected'
-      classes += ' faded'
-    return {
-      id: option.option
-      alt: option.i
-      src: option.src
-      class: classes
-    }
+  #attributes: (option) ->
+    #instance = Template.instance()
+    #classes = 'image-choice'
+    #if instance.correctlySelected()
+      #classes += " #{data.correctlySelectedClasses}"
+    #else if instance.incorrectlySelected()
+      #classes += " #{data.incorrectlySelectedClasses}"
+    #else if Template.currentData().questionComplete
+      #classes += " #{data.incorrectClasses}"
+    #return {
+      #id: option.option
+      #alt: option.i
+      #src: option.src
+      #class: classes
+    #}
 
 Template.Lesson_view_page_multiple_choice_option.events
   "click": (target, template) ->
