@@ -14,7 +14,9 @@ Template.Lesson_view_page_multiple_choice_option.onCreated ->
       "attributes.src": {type: String}
       "attributes.class": {type: String}
       "onSelected": {type: Function}
+      "option": {type: String}
     }).validate Template.currentData()
+    console.log "Option validated"
 
   @incorrectlySelected = =>
     correct = Template.currentData().option.correct

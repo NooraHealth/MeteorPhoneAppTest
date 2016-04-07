@@ -67,6 +67,13 @@ Template.Lesson_view_page.onCreated ()->
     index = @state.get "moduleIndex"
     @state.set "moduleIndex", ++index
 
+  @onFooterRendered = =>
+    mySwiper = App.swiper '.swiper-container', {
+        lazyLoading: true,
+        preloadImages: false,
+        nextButton: '.swiper-button-next',
+    }
+
 Template.Lesson_view_page.helpers
   footerArgs: ->
     instance = Template.instance()
@@ -77,6 +84,7 @@ Template.Lesson_view_page.helpers
       onReplayButtonClicked: =>
       pages: instance.getPagesForPaginator()
       lessonComplete: instance.lessonComplete
+      onRendered: instance.onFooterRendered
     }
 
   lessonTitle: ->
@@ -116,8 +124,3 @@ Template.Lesson_view_page.helpers
       return "Lesson_view_page_slide"
 
 Template.Lesson_view_page.onRendered ()->
-  mySwiper = App.swiper '.swiper-container', {
-      lazyLoading: true,
-      preloadImages: false,
-      nextButton: '.swiper-button-next',
-  }

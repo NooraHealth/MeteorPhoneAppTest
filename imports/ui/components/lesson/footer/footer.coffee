@@ -8,6 +8,7 @@ Template.Lesson_view_page_footer.onCreated ->
   # data context validation
   @autorun =>
     new SimpleSchema({
+      "onRendered": {type: Function}
       "onHomeButtonClicked": {type: Function}
       "onNextButtonClicked": {type: Function}
       "onReplayButtonClicked": {type: Function}
@@ -63,3 +64,5 @@ Template.Lesson_view_page_footer.helpers
     }
 
 
+Template.Lesson_view_page_footer.onRendered ()->
+  Template.currentData().onRendered()
