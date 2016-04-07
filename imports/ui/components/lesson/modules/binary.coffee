@@ -4,6 +4,10 @@ require "./binary.html"
 
 Template.Lesson_view_page_binary.onCreated ->
   # Data context validation
+  @state = new ReactiveDict()
+  @state.setDefault {
+    completed: false
+  }
   @autorun =>
     schema = new SimpleSchema({
       module: {type: Modules._helpers}
@@ -11,25 +15,25 @@ Template.Lesson_view_page_binary.onCreated ->
 
   @module = Template.currentData().module
 
-  @getOnSelectedCallback = (buttonValue, correctAnswer) ->
+  @onSelected = =>
+    @state.set "completed", true
 
 Template.Lesson_view_page_binary.helpers
-  noButtonArgs: ->
+  buttonArgs: (value) ->
     instance = Template.instance()
+    module = instance.module
     classes = 'response button button-fill button-big color-lightblue'
+    if instance.state.completed
+      if module.isCorrectAnswer value
+        classes += "correctly-selected expanded"
+      else
+        classes += 'incorrectly-selected faded'
     return {
-      class: classes
-      value: 'No'
-      content: 'NO'
-      onSelected: instance.onNoSelected
-    }
-
-  yesButtonArgs: ->
-    instance = Template.instance()
-    return {
-      class: 'response button button-fill button-big color-lightblue'
-      value: 'Yes'
-      content: 'YES'
-      onSelected: instance.onYesSelected
+      attributes: {
+        class: classes
+        value: value
+      }
+      content: value.toUpperCase()
+      onClick: instance.onSelected
     }
 
