@@ -7,7 +7,6 @@ require './footer.html'
 Template.Lesson_view_page_footer.onCreated ->
   # data context validation
   @autorun =>
-    console.log "Validating footer"
     new SimpleSchema({
       "onNextButtonRendered": {type: Function}
       "onHomeButtonClicked": {type: Function}
@@ -18,12 +17,10 @@ Template.Lesson_view_page_footer.onCreated ->
       "pages.$.completed": {type: Boolean}
       "pages.$.index": {type: Number}
     }).validate Template.currentData()
-    console.log "Done validating footer"
 
   @getNextButtonText = =>
     data = Template.currentData()
     complete = data.lessonComplete()
-    console.log "getting whether the lesson is complete", complete
     if complete then "FINISH" else "NEXT"
 
 Template.Lesson_view_page_footer.helpers

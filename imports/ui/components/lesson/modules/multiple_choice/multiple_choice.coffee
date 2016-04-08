@@ -29,11 +29,9 @@ Template.Lesson_view_page_multiple_choice.onCreated ->
       if module.isCorrectAnswer option
         correctlySelected = templateInstance.state.get "correctlySelected"
         if option not in correctlySelected
-          console.log "pushing option"
           correctlySelected.push option
           templateInstance.state.set "correctlySelected", correctlySelected
           if correctlySelected.length == module.correct_answer.length
-            console.log "Completed is true!!"
             templateInstance.state.set "completed", true
       else
         incorrectlySelected = templateInstance.state.get "incorrectlySelected"
@@ -43,7 +41,7 @@ Template.Lesson_view_page_multiple_choice.onCreated ->
 
   @autorun =>
     instance = @
-    module = Template.currentData().module
+    module = instance.data.module
     data = instance.data
     map = {}
 
@@ -81,19 +79,5 @@ Template.Lesson_view_page_multiple_choice.helpers
     }
 
   getOptions: (module, start, end) ->
-    instance = Template.instance()
-    NUM_OBJECTS_PER_ROW = 3
-    #if not module.options then {options: []}
-    #getOptionData = (option, i) =>
-      #return {
-        #i: i
-        #option: option
-        #src: module.optionSrc(i)
-        #correct: module.isCorrectAnswer(option)
-        #correctlySelectedClasses: {type: String}
-        #incorrectClasses: {type: String}
-        #incorrectlySelectedClasses: {type: String}
-      #}
-    #options = (getOptionData(option, i) for option, i in module.options when i >= start and i < end)
-    return {options: module.options.slice(start, end)}
+    return {options: module.options[start...end]}
 

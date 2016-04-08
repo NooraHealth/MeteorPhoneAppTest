@@ -6,46 +6,70 @@ Template.Lesson_view_page_binary.onCreated ->
   # Data context validation
   @state = new ReactiveDict()
   @state.setDefault {
-    noSelected: false
-    yesSelected: false
+    selected: null
+    buttonAttributes: {}
   }
 
   @autorun =>
-    console.log "Validating binary", Template.currentData()
-    console.log Template.currentData()
     schema = new SimpleSchema({
       module: {type: Modules._helpers}
       correctlySelectedClasses: {type: String}
       incorrectClasses: {type: String}
       incorrectlySelectedClasses: {type: String}
     }).validate(Template.currentData())
-    console.log "Done validating binary"
 
-  @module = Template.currentData().module
+    @data = Template.currentData()
 
-  @getClasses = (value) ->
-    classes = 'response button button-fill button-big color-lightblue'
-
-  @onSelected = (module) ->
+  @getOnSelected = (instance) ->
     return (event)->
-      value = $(event.target).val()
-      console.log "Value of selected button", value
-      if module.isCorrectAnswer value
-        @state.set "completed", true
+      option = $(event.target).attr "value"
+      console.log $(event.target)
+      console.log "This was the option that was selected"
+      console.log option
+      instance.state.set "selected", option
+      
 
+  @autorun =>
+    instance = @
+    module = instance.data.module
+    data = instance.data
+    map = {}
+    selected = instance.state.get "selected"
 
+    getClasses = (option) ->
+      classes = 'response button button-fill button-big color-lightblue'
+      console.log classes
+      if option is selected
+        if module.isCorrectAnswer option
+          classes += " #{data.correctlySelectedClasses}"
+        else
+          classes += " #{data.incorrectlySelectedClasses}"
+          classes += " #{data.incorrectClasses}"
+      else if selected? and module.isCorrectAnswer selected
+        classes += " #{data.incorrectClasses}"
+      return classes
+    
+    mapData = (option, i) ->
+      console.log "getting the map options", option
+      map[option] = {
+        class: getClasses(option)
+        value: option
+      }
+    mapData(option, i) for option, i in module.options
+    console.log map
+    instance.state.set "optionAttributes", map
 
 Template.Lesson_view_page_binary.helpers
-  buttonArgs: (value) ->
+  buttonArgs: (option) ->
     instance = Template.instance()
-    module = instance.module
-    data = Template.currentData()
+    attributes = instance.state.get "optionAttributes"
+    console.log "option" , option
+    console.log ":attributes" , attributes
+    console.log "attributes[option]" , attributes[option]
+    console.log "attributes[yes]" , attributes["Yes"]
     return {
-      attributes: {
-        class: instance.getClasses value
-        value: value
-      }
-      content: value.toUpperCase()
-      onClick: instance.onSelected
+      attributes: attributes[option]
+      content: option.toUpperCase()
+      onClick: instance.getOnSelected(instance)
     }
 
