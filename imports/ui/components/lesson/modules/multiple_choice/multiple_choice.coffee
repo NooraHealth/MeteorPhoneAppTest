@@ -79,5 +79,6 @@ Template.Lesson_view_page_multiple_choice.helpers
     }
 
   getOptions: (module, start, end) ->
-    return {options: module.options[start...end]}
+    options = (module.options[start...end]).filter (o) -> o?
+    return {options: options}
 

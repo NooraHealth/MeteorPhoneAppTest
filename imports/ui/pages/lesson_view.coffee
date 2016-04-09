@@ -2,6 +2,7 @@
 AppState = require('../../api/AppState.coffee').AppState
 Lessons = require('../../api/lessons/lessons.coffee').Lessons
 Modules = require('../../api/modules/modules.coffee').Modules
+Award = require('../components/lesson/awards/award.coffee').Award
 
 require './lesson_view.html'
 require '../components/lesson/modules/binary.coffee'
@@ -60,6 +61,7 @@ Template.Lesson_view_page.onCreated ()->
 
   @celebrateCompletion = =>
     AppState.get().incrementLesson()
+    new Award().sendAward()
     @goHome()
 
   @goHome = ->
@@ -111,6 +113,7 @@ Template.Lesson_view_page.helpers
 
   modules: ->
     instance = Template.instance()
+    console.log "Getting the modules", instance.getModules()
     return instance.getModules()
 
   getTemplate: (module) ->
