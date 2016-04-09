@@ -68,13 +68,3 @@ Template.Home_page.helpers
   lessons: ->
     instance = Template.instance()
     return instance.getLessonDocuments()
-
-Template.Home_page.onRendered ->
-  # Scroll to the current lesson
-  lessonIndex = AppState.get().getLessonIndex()
-  thumbnail = $(".js-lesson-thumbnail")[lessonIndex]
-  if lessonIndex > 0 and card
-    $(card).scrollintoview {
-      duration: 2500,
-      direction: "vertical"
-    }

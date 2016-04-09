@@ -17,5 +17,13 @@ Template.Home_thumbnail.events
     data = Template.currentData()
     data.onLessonSelected data.lesson._id
 
+Template.Home_thumbnail.onRendered ->
+  if Template.currentData().isCurrentLesson
+    Template.instance().$(".js-scroll-into-view").scrollintoview {
+      duration: 2500,
+      direction: "vertical"
+    }
+    
+
 
   
