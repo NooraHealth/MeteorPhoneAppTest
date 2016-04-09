@@ -8,16 +8,8 @@
   </div>
   
   <div class="card-footer large-text">
-    <a  class="js-user-selects response button-big color-green button button-fill scenario-btn {{#if module.isCorrectAnswer 'Normal' }} correct {{/if}}" value="{{module.option 0}}">
-      <i class="fa fa-home fa-2x"></i> NORMAL
-    </a>
-            
-    <a class="js-user-selects response button button-big color-yellow button-fill scenario-btn {{#if module.isCorrectAnswer 'CallDoc' }} correct {{/if}}" value="{{module.option 1}}">
-      <i class="fa fa-phone fa-2x"></i> CALL {{#if isPhone }} DR {{else}} DOCTOR {{/if}}
-    </a>
-
-    <a class="js-user-selects response color-red button button-big button-fill scenario-btn {{#if module.isCorrectAnswer 'Call911' }} correct {{/if}}" value="{{module.option 2}}">
-      <i class="fa fa-ambulance fa-2x"></i> EMERGENCY
-    </a>
+    {{> Button normalButtonArgs}}
+    {{> Button callDoctorButtonArgs}}
+    {{> Button emergencyButtonArgs}}
   </div>
 </template>

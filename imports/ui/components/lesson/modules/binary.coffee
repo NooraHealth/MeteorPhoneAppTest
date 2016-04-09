@@ -4,12 +4,6 @@ require "./binary.html"
 
 Template.Lesson_view_page_binary.onCreated ->
   # Data context validation
-  @state = new ReactiveDict()
-  @state.setDefault {
-    selected: null
-    buttonAttributes: {}
-  }
-
   @autorun =>
     schema = new SimpleSchema({
       module: {type: Modules._helpers}
@@ -17,17 +11,25 @@ Template.Lesson_view_page_binary.onCreated ->
       incorrectClasses: {type: String}
       incorrectlySelectedClasses: {type: String}
     }).validate(Template.currentData())
-
     @data = Template.currentData()
 
-  @getOnSelected = (instance) ->
+  #set the state
+  @state = new ReactiveDict()
+  @state.setDefault {
+    selected: null
+    buttonAttributes: {}
+  }
+
+  @getOnSelected = (instance, option) ->
     return (event)->
-      option = $(event.target).attr "value"
-      console.log $(event.target)
-      console.log "This was the option that was selected"
-      console.log option
       instance.state.set "selected", option
-      
+
+  @questionComplete = ->
+    console.log "Returning whether the question is complete"
+    selected = @state.get "selected"
+    complete = selected? and @data.module.isCorrectAnswer selected
+    console.log complete
+    return complete
 
   @autorun =>
     instance = @
@@ -45,31 +47,25 @@ Template.Lesson_view_page_binary.onCreated ->
         else
           classes += " #{data.incorrectlySelectedClasses}"
           classes += " #{data.incorrectClasses}"
-      else if selected? and module.isCorrectAnswer selected
+      else if instance.questionComplete()
         classes += " #{data.incorrectClasses}"
       return classes
     
     mapData = (option, i) ->
-      console.log "getting the map options", option
       map[option] = {
         class: getClasses(option)
         value: option
       }
     mapData(option, i) for option, i in module.options
-    console.log map
     instance.state.set "optionAttributes", map
 
 Template.Lesson_view_page_binary.helpers
   buttonArgs: (option) ->
     instance = Template.instance()
     attributes = instance.state.get "optionAttributes"
-    console.log "option" , option
-    console.log ":attributes" , attributes
-    console.log "attributes[option]" , attributes[option]
-    console.log "attributes[yes]" , attributes["Yes"]
     return {
       attributes: attributes[option]
       content: option.toUpperCase()
-      onClick: instance.getOnSelected(instance)
+      onClick: instance.getOnSelected(instance, option)
     }
 
