@@ -1,4 +1,5 @@
 
+AppState = require('../../api/AppState.coffee').AppState
 Lessons = require('../../api/lessons/lessons.coffee').Lessons
 Modules = require('../../api/modules/modules.coffee').Modules
 
@@ -58,6 +59,7 @@ Template.Lesson_view_page.onCreated ()->
     return lesson
 
   @celebrateCompletion = =>
+    AppState.get().incrementLesson()
     @goHome()
 
   @goHome = ->

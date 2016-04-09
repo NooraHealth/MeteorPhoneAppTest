@@ -33,39 +33,25 @@ Template.Lesson_view_page_scenario.onCreated ->
   @responseClasses = (option) ->
     selected = @state.get "selected"
     isCorrectAnswer = @data.module.isCorrectAnswer option
-    console.log "getting response classes", option
-    console.log "Selected", selected
-    console.log "Question completE", @questionComplete()
-    console.log "isCorrectAnswer", isCorrectAnswer
     if @questionComplete()
-      console.log "THE QUESTION IS COMPLET!"
       if isCorrectAnswer
-        console.log @data.correctlySelectedClasses
         return @data.correctlySelectedClasses
       else
-        console.log @data.incorrectClasses
         return @data.incorrectClasses
     else if option in selected
-      console.log "#{@data.incorrectlySelectedClasses} #{@data.incorrectClasses}"
       return "#{@data.incorrectlySelectedClasses} #{@data.incorrectClasses}"
     else return ""
       
   @getNormalButtonClasses = ->
-    console.log "NORMAL"
     classes = "#{@responseClasses(@NORMAL)} #{@sharedButtonClasses} color-green"
-    console.log classes
     return classes
 
   @getCallDoctorButtonClasses = ->
-    console.log "DOCT"
     classes = "#{@responseClasses(@CALLDOC)} #{@sharedButtonClasses} color-yellow"
-    console.log classes
     return classes
 
   @getEmergencyButtonClasses = ->
-    console.log "EMERGE"
     classes = "#{@responseClasses(@EMERGENCY)} #{@sharedButtonClasses} color-red"
-    console.log classes
     return classes
 
   @getOnSelected = (instance, module, option) ->

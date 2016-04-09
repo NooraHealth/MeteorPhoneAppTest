@@ -1,6 +1,9 @@
 
 ContentInterface = require('../../api/content/ContentInterface.coffee').ContentInterface
+
 Curriculums = require('../../api/curriculums/curriculums.coffee').Curriculums
+
+AppState = require('../../api/AppState.coffee').AppState
 
 # TEMPLATE
 require './home.html'
@@ -14,10 +17,6 @@ require '../../ui/components/home/menu/list_item.coffee'
 require '../../ui/components/audio/audio.coffee'
 
 Template.Home_page.onCreated ->
-  console.log "This is the oncreated of Home", @state
-  @state = PersistentDictStore.getDict "Home_page"
-  @state.setTemporary "hasPlayedIntro", false
-
   #@intro = new Audio Meteor.getContentSrc() + 'NooraHealthContent/Audio/AppIntro.mp3', "#intro", ""
   @getLessonDocuments = =>
     curriculum = @getCurriculumDoc()
@@ -25,35 +24,24 @@ Template.Home_page.onCreated ->
     return docs
 
   @getCurriculumDoc = =>
-    id = @state.get "curriculumId"
+    id = AppState.get().getCurriculumId()
     return Curriculums?.findOne {_id: id }
 
   @currentLessonId = =>
     curriculum = @getCurriculumDoc()
-    lessonIndex = @state.get "lessonIndex"
+    lessonIndex = AppState.get().getLessonIndex()
     return curriculum?.lessons?[lessonIndex]
 
-  @onLessonSelected = (id) =>
-    console.log "Lesson selected!", id
+  @onLessonSelected = (id) ->
     FlowRouter.go "lesson", {_id: id}
 
-  @onLessonCompleted = =>
-    lessonIndex = @state.get "lessonIndex"
-    @state.setPersistent "lessonIndex", ++lessonIndex
-
-  @onCurriculumSelected = ( id )=>
-    console.log "Setting the curriculumId"
-    console.log id
-    @state.setPersistent "curriculumId", id
+  @onCurriculumSelected = ( id ) ->
+    AppState.get().setCurriculumId id
 
   #@playAppIntro = =>
-    #if not @state.get "hasPlayedIntro" then @intro.playWhenReady()
-
-Template.Home_page.onDestroyed ->
-  console.log "Destroying the home page"
+    #if not @appState.get "hasPlayedIntro" then @intro.playWhenReady()
 
 Template.Home_page.helpers
-
   menuArgs: ->
     instance = Template.instance()
     curriculumsToList = Curriculums.find({title:{$ne: "Start a New Curriculum"}})
@@ -82,27 +70,11 @@ Template.Home_page.helpers
     return instance.getLessonDocuments()
 
 Template.Home_page.onRendered ->
-  instance = Template.instance()
-  #instance.playAppIntro()
-
   # Scroll to the current lesson
-  lessonIndex = instance.state.get "lessonIndex"
+  lessonIndex = AppState.get().getLessonIndex()
   thumbnail = $(".js-lesson-thumbnail")[lessonIndex]
   if lessonIndex > 0 and card
     $(card).scrollintoview {
       duration: 2500,
       direction: "vertical"
     }
-
-
-class PersistentDictStore
-  @getDict: (name)->
-    @dict ?= new Private name
-    return @dict.getDict()
-
-  class Private
-    constructor: (name) ->
-      @dict = new PersistentReactiveDict name
-
-    getDict: ->
-      return @dict
