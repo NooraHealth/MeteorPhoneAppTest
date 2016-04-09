@@ -46,6 +46,22 @@ Template.Lesson_view_page.onCreated ()->
       pages = ( getPageData(module, i) for module, i in modules )
       return pages
 
+  @onCorrectAnswer = ->
+    console.log "On correct answer!!"
+    swal {
+      title: ""
+      type: "success"
+      timer: 3000
+    }
+
+  @onWrongAnswer = ->
+    console.log "On wrong answer!!"
+    swal {
+      title: ""
+      type: "error"
+      timer: 3000
+    }
+
   @lessonComplete = =>
     lesson = @getLesson()
     index = @state.get "moduleIndex"
@@ -100,14 +116,20 @@ Template.Lesson_view_page.helpers
     isQuestion = (type) ->
       return type == "BINARY" or type == "SCENARIO" or type == "MULTIPLE_CHOICE"
 
+    shouldRespondWithPopups = (type)->
+      return type == "BINARY" or type == "SCENARIO"
+
     if isQuestion module.type
-      return {
+      args = {
         module: module
         incorrectClasses: instance.state.get "incorrectClasses"
         incorrectlySelectedClasses: instance.state.get "incorrectlySelectedClasses"
         correctlySelectedClasses: instance.state.get "correctlySelectedClasses"
       }
-
+      if shouldRespondWithPopups module.type
+        args["onWrongAnswer"] = instance.onWrongAnswer
+        args["onCorrectAnswer"] = instance.onCorrectAnswer
+      return args
     else
       return {module: module}
 

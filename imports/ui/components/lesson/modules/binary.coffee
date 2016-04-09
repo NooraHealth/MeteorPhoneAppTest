@@ -5,11 +5,14 @@ require "./binary.html"
 Template.Lesson_view_page_binary.onCreated ->
   # Data context validation
   @autorun =>
+    console.log "Template data", Template.currentData()
     schema = new SimpleSchema({
       module: {type: Modules._helpers}
       correctlySelectedClasses: {type: String}
       incorrectClasses: {type: String}
       incorrectlySelectedClasses: {type: String}
+      onWrongAnswer: {type: Function}
+      onCorrectAnswer: {type: Function}
     }).validate(Template.currentData())
     @data = Template.currentData()
 
@@ -22,7 +25,12 @@ Template.Lesson_view_page_binary.onCreated ->
 
   @getOnSelected = (instance, option) ->
     return (event)->
+      module = instance.data.module
       instance.state.set "selected", option
+      if module.isCorrectAnswer option
+        instance.data.onCorrectAnswer()
+      else
+        instance.data.onWrongAnswer()
 
   @questionComplete = ->
     console.log "Returning whether the question is complete"

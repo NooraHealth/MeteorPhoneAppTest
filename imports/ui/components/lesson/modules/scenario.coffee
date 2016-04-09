@@ -11,6 +11,8 @@ Template.Lesson_view_page_scenario.onCreated ->
       correctlySelectedClasses: {type: String}
       incorrectClasses: {type: String}
       incorrectlySelectedClasses: {type: String}
+      onWrongAnswer: {type: Function}
+      onCorrectAnswer: {type: Function}
     }).validate(Template.currentData())
 
     @data = Template.currentData()
@@ -60,8 +62,12 @@ Template.Lesson_view_page_scenario.onCreated ->
       if option not in selected
         selected.push option
         instance.state.set "selected", selected
-        if module.isCorrectAnswer option
-          instance.state.set "complete", true
+      if module.isCorrectAnswer option
+        instance.state.set "complete", true
+        instance.data.onCorrectAnswer()
+      else
+        instance.data.onWrongAnswer()
+
 
 
 Template.Lesson_view_page_scenario.helpers
