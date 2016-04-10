@@ -25,10 +25,10 @@ class AppState
       @dict.set "curriculumId", id
       @setLessonIndex 0
 
-    getPlayedIntro: (state) ->
+    shouldPlayIntro: (state) ->
       @dict.get "playedIntro"
 
-    setPlayedIntro: (state) ->
+    setShouldPlayIntro: (state) ->
       @dict.set "playedIntro", state
 
 module.exports.AppState = AppState

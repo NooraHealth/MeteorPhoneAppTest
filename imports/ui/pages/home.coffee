@@ -60,9 +60,12 @@ Template.Home_page.helpers
     }
 
   audioArgs: ->
+    instance = Template.instance()
     return {
-      src: ContentInterface.get().getUrl 'NooraHealthContent/Audio/AppIntro.mp3'
-      id: 'intro'
+      attributes: {
+        src: ContentInterface.get().getUrl 'NooraHealthContent/Audio/AppIntro.mp3'
+      }
+      playing: AppState.get().shouldPlayIntro()
     }
 
   lessons: ->

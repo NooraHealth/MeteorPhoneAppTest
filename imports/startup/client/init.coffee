@@ -4,7 +4,7 @@ AppState = require('../../api/AppState.coffee').AppState
 
 Meteor.startup ()->
   BlazeLayout.setRoot "body"
-  AppState.get().setPlayedIntro false
+  AppState.get().setShouldPlayIntro true
 
   this.App = new Framework7(
     materialRipple: true
