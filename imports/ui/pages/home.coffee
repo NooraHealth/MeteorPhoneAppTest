@@ -61,11 +61,15 @@ Template.Home_page.helpers
 
   audioArgs: ->
     instance = Template.instance()
+    whenFinished = ->
+      console.log "calling the on ended"
+      AppState.get().setShouldPlayIntro false
     return {
       attributes: {
         src: ContentInterface.get().getUrl 'NooraHealthContent/Audio/AppIntro.mp3'
       }
       playing: AppState.get().shouldPlayIntro()
+      whenFinished: whenFinished
     }
 
   lessons: ->

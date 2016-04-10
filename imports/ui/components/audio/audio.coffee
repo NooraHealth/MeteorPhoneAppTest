@@ -8,16 +8,13 @@ Template.Audio.onCreated ->
   }
 
   @autorun =>
-    schema = new SimpleSchema {
+    new SimpleSchema({
       "attributes.src": {type: String}
       playing: {type: Boolean}
       whenFinished: {type: Function, optional: true}
-    }
+    }).validate Template.currentData()
 
-    context = schema.namedContext()
-    context.validate(Template.currentData())
-
-    if not context.isValid() then console.log "ERROR: data context invalude for Home_curriculum_menu"
+    @data = Template.currentData()
 
   @elem = (template) ->
     console.log @
@@ -33,12 +30,15 @@ Template.Audio.onCreated ->
     playing = Template.currentData().playing
     console.log "Should the audio be playing? ", playing
     instance = @
+    elem = @elem instance
     if playing
-      console.log "This is the elem", @elem instance
-      @elem(instance).currentTime = 0
-      @elem(instance).play()
+      console.log "Playing the audio"
+      console.log elem
+      elem.currentTime = 0
+      elem.play()
+      elem.addEventListener "ended", @data.whenFinished
     else
-      @elem(instance).pause()
+      elem.pause()
 
 Template.Audio.onRendered ->
   instance = Template.instance()
