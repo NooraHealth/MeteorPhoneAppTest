@@ -17,7 +17,7 @@ Template.Lesson_view_page.onCreated ()->
   @setCurrentModuleId = =>
     index = @state.get "moduleIndex"
     console.log @getLesson()
-    moduleId = @getLesson()?.modules[index]._id
+    moduleId = @getLesson()?.modules[index]
     console.log "setting the current moduleId", index
     console.log moduleId
     @state.set "currentModuleId", moduleId
@@ -130,6 +130,11 @@ Template.Lesson_view_page.onCreated ()->
     @subscribe "lesson", lessonId
     @subscribe "modules.inLesson", lessonId
 
+  @autorun =>
+    console.log "Checking if the subscriptionsReady()", @subscriptionsReady()
+    if @subscriptionsReady()
+      console.log "Going to set the current module"
+      @setCurrentModuleId()
   @state = new ReactiveDict()
   @state.setDefault {
     moduleIndex: 0
@@ -140,7 +145,6 @@ Template.Lesson_view_page.onCreated ()->
     playingExplanation: false
   }
 
-  @setCurrentModuleId()
   
 
 

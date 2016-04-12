@@ -50,8 +50,6 @@ Template.Home_page.helpers
   menuArgs: ->
     instance = Template.instance()
     curriculumsToList = Curriculums.find({title:{$ne: "Start a New Curriculum"}})
-    console.log "Returning the menuargs"
-    console.log curriculumsToList.fetch()
     return {
       onCurriculumSelected: instance.onCurriculumSelected
       curriculums: curriculumsToList
@@ -68,15 +66,12 @@ Template.Home_page.helpers
 
   audioArgs: ->
     instance = Template.instance()
-    whenFinished = ->
-      console.log "calling the on ended"
-      AppState.get().setShouldPlayIntro false
     return {
       attributes: {
         src: ContentInterface.get().getUrl 'NooraHealthContent/Audio/AppIntro.mp3'
       }
       playing: AppState.get().shouldPlayIntro()
-      whenFinished: whenFinished
+      whenFinished: -> AppState.get().setShouldPlayIntro false
     }
 
   lessons: ->
