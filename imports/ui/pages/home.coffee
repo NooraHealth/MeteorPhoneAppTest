@@ -37,10 +37,21 @@ Template.Home_page.onCreated ->
   @onCurriculumSelected = ( id ) ->
     AppState.get().setCurriculumId id
 
+  @autorun =>
+    id = AppState.get().getCurriculumId()
+    @subscribe "curriculums.all"
+    @subscribe "lessons.inCurriculum", id
+
 Template.Home_page.helpers
+  curriculumsReady: ->
+    instance = Template.instance()
+    return instance.subscriptionsReady()
+
   menuArgs: ->
     instance = Template.instance()
     curriculumsToList = Curriculums.find({title:{$ne: "Start a New Curriculum"}})
+    console.log "Returning the menuargs"
+    console.log curriculumsToList.fetch()
     return {
       onCurriculumSelected: instance.onCurriculumSelected
       curriculums: curriculumsToList

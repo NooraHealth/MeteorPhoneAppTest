@@ -13,6 +13,8 @@ Template.Home_curriculum_menu.helpers
   listItemArgs: (curriculum) ->
     instance = Template.instance()
     onCurriculumSelected = Template.currentData().onCurriculumSelected
+    console.log "The curriculums to get the args"
+    console.log curriculum
     return {
       curriculum: curriculum
       onCurriculumSelected: onCurriculumSelected

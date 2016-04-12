@@ -11,21 +11,23 @@
       <div class="panel-overlay"></div>
       <!--{{#if subscriptionsReady}}-->
       <!-- Left panel, let it be with reveal effect -->
-      <div class="panel panel-cover panel-right">
-        {{>Home_curriculum_menu (menuArgs)}}
-      </div>
+        {{#if curriculumsReady}}
+        <div class="panel panel-cover panel-right">
+          {{>Home_curriculum_menu (menuArgs)}}
+        </div>
 
-      <div class="content-block inner-container">
-        <div class="list-block">
-          <div class="cards-list">
-            <ul class="lessons-list">
-              {{#each lesson in lessons}}
-                {{ >Home_thumbnail (thumbnailArgs lesson)}}
-              {{/each}}
-            </ul>
+        <div class="content-block inner-container">
+          <div class="list-block">
+            <div class="cards-list">
+              <ul class="lessons-list">
+                {{#each lesson in lessons}}
+                  {{ >Home_thumbnail (thumbnailArgs lesson)}}
+                {{/each}}
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
+      {{/if}}
     </div>
   </div>
   {{> Home_page_footer }}

@@ -124,16 +124,11 @@ Template.Lesson_view_page.onCreated ()->
     else
       return false
 
-
   #subscription
   @autorun =>
     lessonId = @getLessonId()
     @subscribe "lesson", lessonId
     @subscribe "modules.inLesson", lessonId
-
-  @autorun =>
-    ready = @subscriptionsReady()
-    console.log "READY??", ready
 
   @state = new ReactiveDict()
   @state.setDefault {
