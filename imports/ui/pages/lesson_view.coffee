@@ -53,8 +53,9 @@ Template.Lesson_view_page.onCreated ()->
 
   @onAnswerCallback = (instance, type) ->
     return (module) ->
-      instance.state.set "playingQuestion", false
-      instance.state.set "playingExplanation", true
+      if type == "CORRECT"
+        instance.state.set "playingQuestion", false
+        instance.state.set "playingExplanation", true
       if module.type is "BINARY" or module.type is "SCENARIO"
         if type is "CORRECT"
           alertType = "success"
@@ -96,14 +97,11 @@ Template.Lesson_view_page.onCreated ()->
     @state.set "moduleIndex", newIndex
     @state.set "nextButtonAnimated", false
     @state.set "playingQuestion", true
-    console.log "In go to next module"
-    console.log @state
     @setCurrentModuleId()
-
   
   @shouldPlayQuestionAudio = (id) =>
-    isPlayingExplanation = @state.get "playingExplanation"
-    return @isCurrent(id) and not isPlayingExplanation
+    isPlayingQuestion = @state.get "playingQuestion"
+    return @isCurrent(id) and isPlayingQuestion
 
   @shouldPlayExplanationAudio = (id) =>
     shouldPlay = @state.get "playingExplanation"
@@ -140,6 +138,7 @@ Template.Lesson_view_page.onCreated ()->
     incorrectClasses: 'faded'
     incorrectlySelectedClasses: 'incorrectly-selected'
     playingExplanation: false
+    playingQuestion: true
     nextButtonAnimated: false
   }
 
@@ -172,6 +171,7 @@ Template.Lesson_view_page.helpers
       return type == "BINARY" or type == "SCENARIO" or type == "MULTIPLE_CHOICE"
 
     if isQuestion module.type
+      console.log instance.shouldPlayQuestionAudio(module._id)
       return {
         module: module
         incorrectClasses: instance.state.get "incorrectClasses"
