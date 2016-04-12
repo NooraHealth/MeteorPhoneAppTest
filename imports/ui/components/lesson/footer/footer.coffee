@@ -21,20 +21,20 @@ Template.Lesson_view_page_footer.onCreated ->
     }).validate Template.currentData()
 
 Template.Lesson_view_page_footer.helpers
-  goHomeButtonArgs: ->
-    onClick = Template.currentData().onHomeButtonClicked
+  goHomeButtonArgs: (data) ->
     return {
       attributes: {
         class: 'link gohome-btn button footer-button color-green button-rounded button-fill'
       }
       content: '<i class="fa fa-home fa-2x"></i> HOME'
-      onClick: onClick
+      onClick: data.onClick
     }
     
   nextButtonArgs: (data) ->
     instance = Template.instance()
     defaultClasses = 'link next-module-btn footer-button button color-blue button-fill swiper-button-next'
     if data.animated then defaultClasses += 'slide-up'
+    console.log data
     return {
       attributes: {
         class: 'link next-module-btn footer-button button color-blue button-fill swiper-button-next'
@@ -50,13 +50,12 @@ Template.Lesson_view_page_footer.helpers
     return classes
 
   replayButtonArgs: (data) ->
-    onClick = data.onReplayButtonClicked
     return {
       attributes: {
         class: 'link button button-rounded color-pink button-fill'
       }
       content: '<i class="fa fa-repeat fa-2x"></i>'
-      onClick: onClick
+      onClick: data.onClick
     }
 
   paginatorArgs: (pages) ->

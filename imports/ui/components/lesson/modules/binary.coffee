@@ -16,7 +16,8 @@ Template.Lesson_view_page_binary.onCreated ->
       onCorrectAnswer: {type: Function}
       playQuestionAudio: {type: Boolean}
       playExplanationAudio: {type: Boolean}
-      onFinishExplanation: {type: Function}
+      onFinishExplanation: {type: Function, optional: true}
+      onPauseExplanation: {type: Function, optional: true}
     }).validate(Template.currentData())
     @data = Template.currentData()
 
@@ -94,6 +95,6 @@ Template.Lesson_view_page_binary.helpers
         src: ContentInterface.get().getUrl src
       }
       playing: playing
-      #whenFinished: null
       whenFinished: instance.data.onFinishExplanation
+      whenPaused: instance.data.onPauseExplanation
     }

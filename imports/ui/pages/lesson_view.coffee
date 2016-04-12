@@ -44,13 +44,9 @@ Template.Lesson_view_page.onCreated ()->
       return pages
 
   @onPauseExplanation = =>
-    console.log "Audio finished, animate next button"
-    console.trace()
     @state.set "playingExplanation", false
 
   @onFinishExplanation = =>
-    console.log "Audio finished, animate next button"
-    console.trace()
     @state.set "playingExplanation", false
     @state.set "nextButtonAnimated", true
 
@@ -101,12 +97,6 @@ Template.Lesson_view_page.onCreated ()->
     @state.set "playingQuestion", true
     @setCurrentModuleId()
 
-  @onNextButtonRendered = =>
-    mySwiper = App.swiper '.swiper-container', {
-        lazyLoading: true,
-        preloadImages: false,
-        nextButton: '.swiper-button-next',
-    }
   
   @shouldPlayQuestionAudio = (id) =>
     isPlayingExplanation = @state.get "playingExplanation"
@@ -116,7 +106,14 @@ Template.Lesson_view_page.onCreated ()->
     shouldPlay = @state.get "playingExplanation"
     if @isCurrent(id) and shouldPlay then return true else return false
 
-  @onNextButtonClicked = => if @lessonComplete() then @celebrateCompletion else @goToNextModule
+  @onNextButtonRendered = =>
+    mySwiper = App.swiper '.swiper-container', {
+        lazyLoading: true,
+        preloadImages: false,
+        nextButton: '.swiper-button-next',
+    }
+
+  @onNextButtonClicked = => if @lessonComplete() then @celebrateCompletion() else @goToNextModule()
 
   @onReplayButtonClicked = => console.log "Replay clicked! Do Something!"
 
@@ -182,6 +179,7 @@ Template.Lesson_view_page.helpers
         playQuestionAudio: instance.shouldPlayQuestionAudio(module._id)
         playExplanationAudio: instance.shouldPlayExplanationAudio(module._id)
         onFinishExplanation: instance.onFinishExplanation
+        onPauseExplanation: instance.onPauseExplanation
       }
     else
       return {module: module}
