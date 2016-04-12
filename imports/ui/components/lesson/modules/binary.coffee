@@ -7,7 +7,6 @@ require "./binary.html"
 Template.Lesson_view_page_binary.onCreated ->
   # Data context validation
   @autorun =>
-    console.log "Template data", Template.currentData()
     schema = new SimpleSchema({
       module: {type: Modules._helpers}
       correctlySelectedClasses: {type: String}
@@ -88,12 +87,13 @@ Template.Lesson_view_page_binary.helpers
       whenFinished: null
     }
 
-  explanationAudioArgs: (src, playing, onAudioFinished) ->
+  explanationAudioArgs: (src, playing) ->
+    instance = Template.instance()
     return {
       attributes: {
         src: ContentInterface.get().getUrl src
       }
       playing: playing
-      whenFinished: null
-      #whenFinished: onAudioFinished
+      #whenFinished: null
+      whenFinished: instance.data.onFinishExplanation
     }

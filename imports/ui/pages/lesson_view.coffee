@@ -16,16 +16,11 @@ Template.Lesson_view_page.onCreated ()->
 
   @setCurrentModuleId = =>
     index = @state.get "moduleIndex"
-    console.log @getLesson()
     moduleId = @getLesson()?.modules[index]
-    console.log "setting the current moduleId", index
-    console.log moduleId
     @state.set "currentModuleId", moduleId
 
   @isCurrent = (moduleId) =>
     current = @state.get "currentModuleId"
-    console.log moduleId + " " + current
-    console.log "Is current?", current is moduleId
     return moduleId is current
 
   @isCompleted = (moduleId) =>
@@ -48,15 +43,16 @@ Template.Lesson_view_page.onCreated ()->
       pages = ( getPageData(module, i) for module, i in modules )
       return pages
 
-  @onFinishExplanation = =>
-    return =>
-      #console.log "Audio finished, animate next button"
-      #console.trace()
-      #@state.set "playingExplanation", false
+  @onFinishExplanation = (instance) ->
+    return ->
+      console.log "Audio finished, animate next button"
+      console.trace()
+      instance.state.set "playingExplanation", false
+      console.log instance.state
 
   @onAnswerCallback = (instance, type) ->
     return (module) ->
-      console.log "SETTING PLAYING EXPLANATION TO TRUE"
+      instance.state.set "playingQuestion", false
       instance.state.set "playingExplanation", true
       if module.type is "BINARY" or module.type is "SCENARIO"
         if type is "CORRECT"
@@ -75,9 +71,6 @@ Template.Lesson_view_page.onCreated ()->
     return index == lesson?.modules?.length-1
 
   @getModules = =>
-    console.log "getting the modules"
-    console.log "Lesson", @getLesson()
-    console.log @getLesson()?.getModulesSequence()
     return @getLesson()?.getModulesSequence()
 
   @getLessonId = =>
@@ -100,7 +93,8 @@ Template.Lesson_view_page.onCreated ()->
     index = @state.get "moduleIndex"
     newIndex = ++index
     @state.set "moduleIndex", newIndex
-    @state.set "currentModuleId", @getLesson()?.modules[newIndex]._id
+    @state.set "playingQuestion", true
+    @setCurrentModuleId()
 
   @onNextButtonRendered = =>
     mySwiper = App.swiper '.swiper-container', {
@@ -111,18 +105,11 @@ Template.Lesson_view_page.onCreated ()->
   
   @shouldPlayQuestionAudio = (id) =>
     isPlayingExplanation = @state.get "playingExplanation"
-    if @isCurrent id then console.log "Is playing explanationin playQuestion audio?", isPlayingExplanation
-    console.log @isCurrent(id) and not isPlayingExplanation
     return @isCurrent(id) and not isPlayingExplanation
 
   @shouldPlayExplanationAudio = (id) =>
     shouldPlay = @state.get "playingExplanation"
-    if @isCurrent id then console.log "Should play the explanation audio?", shouldPlay
-    if @isCurrent(id) and shouldPlay
-      console.log "Returning that hsould play explanation audio!"
-      return true
-    else
-      return false
+    if @isCurrent(id) and shouldPlay then return true else return false
 
   #subscription
   @autorun =>
@@ -131,10 +118,9 @@ Template.Lesson_view_page.onCreated ()->
     @subscribe "modules.inLesson", lessonId
 
   @autorun =>
-    console.log "Checking if the subscriptionsReady()", @subscriptionsReady()
     if @subscriptionsReady()
-      console.log "Going to set the current module"
       @setCurrentModuleId()
+
   @state = new ReactiveDict()
   @state.setDefault {
     moduleIndex: 0
@@ -144,9 +130,6 @@ Template.Lesson_view_page.onCreated ()->
     incorrectlySelectedClasses: 'incorrectly-selected'
     playingExplanation: false
   }
-
-  
-
 
 Template.Lesson_view_page.helpers
   footerArgs: ->
@@ -180,19 +163,17 @@ Template.Lesson_view_page.helpers
         onWrongAnswer: instance.onAnswerCallback(instance, "WRONG")
         playQuestionAudio: instance.shouldPlayQuestionAudio(module._id)
         playExplanationAudio: instance.shouldPlayExplanationAudio(module._id)
-        onFinishExplanation: instance.onFinishExplanation()
+        onFinishExplanation: instance.onFinishExplanation(instance)
       }
     else
       return {module: module}
 
   modulesReady: ->
     instance = Template.instance()
-    console.log "modules ready?", instance.subscriptionsReady()
     return instance.subscriptionsReady()
 
   modules: ->
     instance = Template.instance()
-    console.log "Getting the modules", instance.getModules()
     return instance.getModules()
 
   getTemplate: (module) ->

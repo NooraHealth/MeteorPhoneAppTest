@@ -32,6 +32,7 @@ Template.Audio.onCreated ->
       elem.currentTime = 0
       elem.play()
       elem.addEventListener "ended", => @data.whenFinished?()
+      elem.addEventListener "pause", => @data.whenFinished?()
     else
       elem.pause()
 
