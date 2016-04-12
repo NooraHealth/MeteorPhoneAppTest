@@ -33,7 +33,8 @@ Template.Lesson_view_page_footer.helpers
   nextButtonArgs: (data) ->
     instance = Template.instance()
     defaultClasses = 'link next-module-btn footer-button button color-blue button-fill swiper-button-next'
-    if data.animated then defaultClasses += 'slide-up'
+    if data.animated then defaultClasses += ' slide-up'
+    console.log defaultClasses
     console.log data
     return {
       attributes: {
@@ -46,7 +47,8 @@ Template.Lesson_view_page_footer.helpers
 
   nextButtonWrapperClasses: (animated) ->
     classes = 'next-button-wrapper'
-    if animated then classes += 'animate-scale'
+    if animated then classes += ' animate-scale'
+    console.log "wrapper classes", classes
     return classes
 
   replayButtonArgs: (data) ->

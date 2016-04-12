@@ -30,6 +30,7 @@ Template.Audio.onCreated ->
     instance = @
     elem = @elem instance
     if playing
+      console.log "playing this", elem
       elem.currentTime = 0
       elem.play()
       elem.addEventListener "ended", => @data.whenFinished?()

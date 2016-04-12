@@ -49,6 +49,7 @@ Template.Lesson_view_page.onCreated ()->
   @onFinishExplanation = =>
     @state.set "playingExplanation", false
     @state.set "nextButtonAnimated", true
+    console.log @state
 
   @onAnswerCallback = (instance, type) ->
     return (module) ->
@@ -95,6 +96,8 @@ Template.Lesson_view_page.onCreated ()->
     @state.set "moduleIndex", newIndex
     @state.set "nextButtonAnimated", false
     @state.set "playingQuestion", true
+    console.log "In go to next module"
+    console.log @state
     @setCurrentModuleId()
 
   
@@ -137,7 +140,7 @@ Template.Lesson_view_page.onCreated ()->
     incorrectClasses: 'faded'
     incorrectlySelectedClasses: 'incorrectly-selected'
     playingExplanation: false
-    nextButtonAnimated: true
+    nextButtonAnimated: false
   }
 
 Template.Lesson_view_page.helpers
