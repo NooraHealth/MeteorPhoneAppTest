@@ -13,6 +13,17 @@ require '../components/lesson/modules/video.coffee'
 require '../components/lesson/footer/footer.coffee'
 
 Template.Lesson_view_page.onCreated ()->
+  @state = new ReactiveDict()
+  @state.setDefault {
+    moduleIndex: 0
+    currentModuleId: null
+    correctlySelectedClasses: 'correctly-selected expanded'
+    incorrectClasses: 'faded'
+    incorrectlySelectedClasses: 'incorrectly-selected'
+    playingExplanation: false
+    playingQuestion: true
+    nextButtonAnimated: false
+  }
 
   @setCurrentModuleId = =>
     index = @state.get "moduleIndex"
@@ -91,14 +102,6 @@ Template.Lesson_view_page.onCreated ()->
   @goHome = ->
     FlowRouter.go "home"
 
-  @goToNextModule = =>
-    index = @state.get "moduleIndex"
-    newIndex = ++index
-    @state.set "moduleIndex", newIndex
-    @state.set "nextButtonAnimated", false
-    @state.set "playingQuestion", true
-    @setCurrentModuleId()
-  
   @shouldPlayQuestionAudio = (id) =>
     isPlayingQuestion = @state.get "playingQuestion"
     return @isCurrent(id) and isPlayingQuestion
@@ -107,6 +110,14 @@ Template.Lesson_view_page.onCreated ()->
     shouldPlay = @state.get "playingExplanation"
     if @isCurrent(id) and shouldPlay then return true else return false
 
+  @goToNextModule = =>
+    index = @state.get "moduleIndex"
+    newIndex = ++index
+    @state.set "moduleIndex", newIndex
+    @state.set "nextButtonAnimated", false
+    @state.set "playingQuestion", true
+    @setCurrentModuleId()
+  
   @onNextButtonRendered = =>
     mySwiper = App.swiper '.swiper-container', {
         lazyLoading: true,
@@ -116,11 +127,10 @@ Template.Lesson_view_page.onCreated ()->
 
   @onNextButtonClicked = => if @lessonComplete() then @celebrateCompletion() else @goToNextModule()
 
-  @onReplayButtonClicked = => console.log "Replay clicked! Do Something!"
-
   @nextButtonText = => if @lessonComplete() then "FINISH" else "NEXT"
 
-  #subscription
+  @onReplayButtonClicked = => console.log "Replay clicked! Do Something!"
+
   @autorun =>
     lessonId = @getLessonId()
     @subscribe "lesson", lessonId
@@ -129,18 +139,6 @@ Template.Lesson_view_page.onCreated ()->
   @autorun =>
     if @subscriptionsReady()
       @setCurrentModuleId()
-
-  @state = new ReactiveDict()
-  @state.setDefault {
-    moduleIndex: 0
-    currentModuleId: null
-    correctlySelectedClasses: 'correctly-selected expanded'
-    incorrectClasses: 'faded'
-    incorrectlySelectedClasses: 'incorrectly-selected'
-    playingExplanation: false
-    playingQuestion: true
-    nextButtonAnimated: false
-  }
 
 Template.Lesson_view_page.helpers
   footerArgs: ->
@@ -179,10 +177,16 @@ Template.Lesson_view_page.helpers
         correctlySelectedClasses: instance.state.get "correctlySelectedClasses"
         onCorrectAnswer: instance.onAnswerCallback(instance, "CORRECT")
         onWrongAnswer: instance.onAnswerCallback(instance, "WRONG")
-        playQuestionAudio: instance.shouldPlayQuestionAudio(module._id)
-        playExplanationAudio: instance.shouldPlayExplanationAudio(module._id)
-        onFinishExplanation: instance.onFinishExplanation
-        onPauseExplanation: instance.onPauseExplanation
+        explanationData: {
+          playing: instance.shouldPlayExplanationAudio(module._id)
+          onFinish: instance.onFinishExplanation
+          onPause: instance.onPauseExplanation
+          src: module.correct_audio
+        }
+        audioData: {
+          playing: instance.shouldPlayQuestionAudio(module._id)
+          src: module.audio
+        }
       }
     else
       return {module: module}

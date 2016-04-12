@@ -15,10 +15,14 @@ Template.Lesson_view_page_binary.onCreated ->
       incorrectlySelectedClasses: {type: String}
       onWrongAnswer: {type: Function}
       onCorrectAnswer: {type: Function}
-      playQuestionAudio: {type: Boolean}
-      playExplanationAudio: {type: Boolean}
-      onFinishExplanation: {type: Function, optional: true}
-      onPauseExplanation: {type: Function, optional: true}
+      "explanationData.onFinish": {type: Function, optional: true}
+      "explanationData.onPause": {type: Function, optional: true}
+      "explanationData.playing": {type: Boolean}
+      "explanationData.src": {type: String}
+      "audioData.onFinish": {type: Function, optional: true}
+      "audioData.onPause": {type: Function, optional: true}
+      "audioData.playing": {type: Boolean}
+      "audioData.src": {type: String}
     }).validate(Template.currentData())
     @data = Template.currentData()
 
@@ -80,22 +84,12 @@ Template.Lesson_view_page_binary.helpers
       onClick: instance.getOnSelected(instance, option)
     }
 
-  questionAudioArgs: (src, playing) ->
+  audioArgs: (data) ->
     return {
       attributes: {
-        src: ContentInterface.get().getUrl src
+        src: ContentInterface.get().getUrl data.src
       }
-      playing: playing
-      whenFinished: null
-    }
-
-  explanationAudioArgs: (src, playing) ->
-    instance = Template.instance()
-    return {
-      attributes: {
-        src: ContentInterface.get().getUrl src
-      }
-      playing: playing
-      whenFinished: instance.data.onFinishExplanation
-      whenPaused: instance.data.onPauseExplanation
+      playing: data.playing
+      whenFinished: data.onFinish
+      whenPaused: data.onPause
     }
