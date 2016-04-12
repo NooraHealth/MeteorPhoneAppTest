@@ -94,6 +94,6 @@ Template.Lesson_view_page_binary.helpers
         src: ContentInterface.get().getUrl src
       }
       playing: playing
-      #whenFinished: null
-      whenFinished: onAudioFinished
+      whenFinished: null
+      #whenFinished: onAudioFinished
     }

@@ -31,7 +31,7 @@ Template.Audio.onCreated ->
     if playing
       elem.currentTime = 0
       elem.play()
-      elem.addEventListener "ended", -> console.log "WHEN FINISHED"
+      elem.addEventListener "ended", -> @data.whenFinished?()
     else
       elem.pause()
 

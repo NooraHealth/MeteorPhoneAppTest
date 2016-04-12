@@ -1,9 +1,15 @@
-Meteor.publish "modules", (lessonId)->
-  if !lessonId
-    return []
+
+Curriculums = require('./curriculums/curriculums.coffee').Curriculums
+Lessons = require('./lessons/lessons.coffee').Lessons
+Modules = require('./modules/modules.coffee').Modules
+
+Meteor.publish "modules.inLesson", (lessonId) ->
+  console.log "returning modules in lesson", lessonId
+  if !lessonId then return []
   lesson = Lessons.findOne {_id: lessonId}
   modules = lesson.modules
-  console.log Modules.find({_id: {$in: modules}}).count()
+  console.log modules
+  console.log Modules.find {_id: {$in: modules}}
   return Modules.find {_id: {$in: modules}}
 
 Meteor.publish "all_curriculums", ()->
@@ -51,5 +57,7 @@ Meteor.publish "lessons", (curriculumId)->
     return []
 
 Meteor.publish "lesson", (id)->
+  console.log "Publishing the lesson", id
+  console.log Lessons.find ({_id: id})
   return Lessons.find ({_id: id})
 

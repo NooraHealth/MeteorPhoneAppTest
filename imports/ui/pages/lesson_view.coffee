@@ -13,19 +13,20 @@ require '../components/lesson/modules/video.coffee'
 require '../components/lesson/footer/footer.coffee'
 
 Template.Lesson_view_page.onCreated ()->
-  @state = new ReactiveDict()
-  @state.setDefault {
-    moduleIndex: 0
-    correctlySelectedClasses: 'correctly-selected expanded'
-    incorrectClasses: 'faded'
-    incorrectlySelectedClasses: 'incorrectly-selected'
-    playingExplanation: false
-  }
+
+  @setCurrentModuleId = =>
+    index = @state.get "moduleIndex"
+    console.log @getLesson()
+    moduleId = @getLesson()?.modules[index]._id
+    console.log "setting the current moduleId", index
+    console.log moduleId
+    @state.set "currentModuleId", moduleId
 
   @isCurrent = (moduleId) =>
-    modules = @getLesson().modules
-    index = @state.get "moduleIndex"
-    return index == modules.indexOf moduleId
+    current = @state.get "currentModuleId"
+    console.log moduleId + " " + current
+    console.log "Is current?", current is moduleId
+    return moduleId is current
 
   @isCompleted = (moduleId) =>
     modules = @getLesson()?.modules
@@ -49,8 +50,8 @@ Template.Lesson_view_page.onCreated ()->
 
   @onFinishExplanation = =>
     return =>
-      console.log "Audio finished, animate next button"
-      console.trace()
+      #console.log "Audio finished, animate next button"
+      #console.trace()
       #@state.set "playingExplanation", false
 
   @onAnswerCallback = (instance, type) ->
@@ -74,10 +75,16 @@ Template.Lesson_view_page.onCreated ()->
     return index == lesson?.modules?.length-1
 
   @getModules = =>
+    console.log "getting the modules"
+    console.log "Lesson", @getLesson()
+    console.log @getLesson()?.getModulesSequence()
     return @getLesson()?.getModulesSequence()
 
+  @getLessonId = =>
+    return FlowRouter.getParam "_id"
+
   @getLesson = =>
-    id = FlowRouter.getParam "_id"
+    id = @getLessonId()
     lesson = Lessons.findOne { _id: id }
     return lesson
 
@@ -91,7 +98,9 @@ Template.Lesson_view_page.onCreated ()->
 
   @goToNextModule = =>
     index = @state.get "moduleIndex"
-    @state.set "moduleIndex", ++index
+    newIndex = ++index
+    @state.set "moduleIndex", newIndex
+    @state.set "currentModuleId", @getLesson()?.modules[newIndex]._id
 
   @onNextButtonRendered = =>
     mySwiper = App.swiper '.swiper-container', {
@@ -114,6 +123,30 @@ Template.Lesson_view_page.onCreated ()->
       return true
     else
       return false
+
+
+  #subscription
+  @autorun =>
+    lessonId = @getLessonId()
+    @subscribe "lesson", lessonId
+    @subscribe "modules.inLesson", lessonId
+
+  @autorun =>
+    ready = @subscriptionsReady()
+    console.log "READY??", ready
+
+  @state = new ReactiveDict()
+  @state.setDefault {
+    moduleIndex: 0
+    currentModuleId: null
+    correctlySelectedClasses: 'correctly-selected expanded'
+    incorrectClasses: 'faded'
+    incorrectlySelectedClasses: 'incorrectly-selected'
+    playingExplanation: false
+  }
+
+  @setCurrentModuleId()
+  
 
 
 Template.Lesson_view_page.helpers
@@ -152,6 +185,11 @@ Template.Lesson_view_page.helpers
       }
     else
       return {module: module}
+
+  modulesReady: ->
+    instance = Template.instance()
+    console.log "modules ready?", instance.subscriptionsReady()
+    return instance.subscriptionsReady()
 
   modules: ->
     instance = Template.instance()
