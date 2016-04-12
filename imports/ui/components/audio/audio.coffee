@@ -17,26 +17,21 @@ Template.Audio.onCreated ->
     @data = Template.currentData()
 
   @elem = (template) ->
-    console.log @
     if not @state.get "rendered" then return ""
     else
       template.find "audio"
 
   @autorun =>
-    console.log "Checking if the audio is playing"
     elemRendered = @state.get "rendered"
     if not elemRendered then return
 
     playing = Template.currentData().playing
-    console.log "Should the audio be playing? ", playing
     instance = @
     elem = @elem instance
     if playing
-      console.log "Playing the audio"
-      console.log elem
       elem.currentTime = 0
       elem.play()
-      elem.addEventListener "ended", @data.whenFinished
+      elem.addEventListener "ended", -> console.log "WHEN FINISHED"
     else
       elem.pause()
 

@@ -48,11 +48,14 @@ Template.Lesson_view_page.onCreated ()->
       return pages
 
   @onFinishExplanation = =>
-    console.log "Audio finished, animate next button"
-    @state.set "playingExplanation", false
+    return =>
+      console.log "Audio finished, animate next button"
+      console.trace()
+      #@state.set "playingExplanation", false
 
   @onAnswerCallback = (instance, type) ->
     return (module) ->
+      console.log "SETTING PLAYING EXPLANATION TO TRUE"
       instance.state.set "playingExplanation", true
       if module.type is "BINARY" or module.type is "SCENARIO"
         if type is "CORRECT"
@@ -99,12 +102,15 @@ Template.Lesson_view_page.onCreated ()->
   
   @shouldPlayQuestionAudio = (id) =>
     isPlayingExplanation = @state.get "playingExplanation"
-    console.log "Is playing explanation?", isPlayingExplanation
-    return @isCurrent id# and not isPlayingExplanation
+    if @isCurrent id then console.log "Is playing explanationin playQuestion audio?", isPlayingExplanation
+    console.log @isCurrent(id) and not isPlayingExplanation
+    return @isCurrent(id) and not isPlayingExplanation
 
   @shouldPlayExplanationAudio = (id) =>
     shouldPlay = @state.get "playingExplanation"
-    if @isCurrent id and shouldPlay
+    if @isCurrent id then console.log "Should play the explanation audio?", shouldPlay
+    if @isCurrent(id) and shouldPlay
+      console.log "Returning that hsould play explanation audio!"
       return true
     else
       return false
@@ -142,7 +148,7 @@ Template.Lesson_view_page.helpers
         onWrongAnswer: instance.onAnswerCallback(instance, "WRONG")
         playQuestionAudio: instance.shouldPlayQuestionAudio(module._id)
         playExplanationAudio: instance.shouldPlayExplanationAudio(module._id)
-        onFinishExplanation: instance.onFinishExplanation
+        onFinishExplanation: instance.onFinishExplanation()
       }
     else
       return {module: module}

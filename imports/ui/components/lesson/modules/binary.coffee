@@ -38,10 +38,8 @@ Template.Lesson_view_page_binary.onCreated ->
         instance.data.onWrongAnswer(instance.data.module)
 
   @questionComplete = ->
-    console.log "Returning whether the question is complete"
     selected = @state.get "selected"
     complete = selected? and @data.module.isCorrectAnswer selected
-    console.log complete
     return complete
 
   @autorun =>
@@ -53,7 +51,6 @@ Template.Lesson_view_page_binary.onCreated ->
 
     getClasses = (option) ->
       classes = 'response button button-fill button-big color-lightblue'
-      console.log classes
       if option is selected
         if module.isCorrectAnswer option
           classes += " #{data.correctlySelectedClasses}"
@@ -92,11 +89,11 @@ Template.Lesson_view_page_binary.helpers
     }
 
   explanationAudioArgs: (src, playing, onAudioFinished) ->
-    console.log onAudioFinished
     return {
       attributes: {
         src: ContentInterface.get().getUrl src
       }
       playing: playing
+      #whenFinished: null
       whenFinished: onAudioFinished
     }
