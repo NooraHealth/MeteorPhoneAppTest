@@ -12,6 +12,7 @@ Template.Audio.onCreated ->
       "attributes.src": {type: String}
       playing: {type: Boolean}
       whenFinished: {type: Function, optional: true}
+      whenPaused: {type: Function, optional: true}
     }).validate Template.currentData()
 
     @data = Template.currentData()
@@ -32,7 +33,7 @@ Template.Audio.onCreated ->
       elem.currentTime = 0
       elem.play()
       elem.addEventListener "ended", => @data.whenFinished?()
-      elem.addEventListener "pause", => @data.whenFinished?()
+      elem.addEventListener "pause", => @data.whenPaused?()
     else
       elem.pause()
 

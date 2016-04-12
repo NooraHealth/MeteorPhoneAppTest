@@ -43,12 +43,16 @@ Template.Lesson_view_page.onCreated ()->
       pages = ( getPageData(module, i) for module, i in modules )
       return pages
 
-  @onFinishExplanation = (instance) ->
-    return ->
-      console.log "Audio finished, animate next button"
-      console.trace()
-      instance.state.set "playingExplanation", false
-      console.log instance.state
+  @onPauseExplanation = =>
+    console.log "Audio finished, animate next button"
+    console.trace()
+    @state.set "playingExplanation", false
+
+  @onFinishExplanation = =>
+    console.log "Audio finished, animate next button"
+    console.trace()
+    @state.set "playingExplanation", false
+    @state.set "nextButtonAnimated", true
 
   @onAnswerCallback = (instance, type) ->
     return (module) ->
@@ -93,6 +97,7 @@ Template.Lesson_view_page.onCreated ()->
     index = @state.get "moduleIndex"
     newIndex = ++index
     @state.set "moduleIndex", newIndex
+    @state.set "nextButtonAnimated", false
     @state.set "playingQuestion", true
     @setCurrentModuleId()
 
@@ -110,6 +115,12 @@ Template.Lesson_view_page.onCreated ()->
   @shouldPlayExplanationAudio = (id) =>
     shouldPlay = @state.get "playingExplanation"
     if @isCurrent(id) and shouldPlay then return true else return false
+
+  @onNextButtonClicked = => if @lessonComplete() then @celebrateCompletion else @goToNextModule
+
+  @onReplayButtonClicked = => console.log "Replay clicked! Do Something!"
+
+  @nextButtonText = => if @lessonComplete() then "FINISH" else "NEXT"
 
   #subscription
   @autorun =>
@@ -129,19 +140,26 @@ Template.Lesson_view_page.onCreated ()->
     incorrectClasses: 'faded'
     incorrectlySelectedClasses: 'incorrectly-selected'
     playingExplanation: false
+    nextButtonAnimated: true
   }
 
 Template.Lesson_view_page.helpers
   footerArgs: ->
     instance = Template.instance()
-    onNextButtonClicked = if instance.lessonComplete() then instance.celebrateCompletion else instance.goToNextModule
     return {
-      onHomeButtonClicked: instance.goHome
-      onNextButtonClicked: onNextButtonClicked
-      onReplayButtonClicked: =>
+      homeButton: {
+        onClick: instance.goHome
+      }
+      nextButton: {
+        onClick: instance.onNextButtonClicked
+        text: instance.nextButtonText()
+        onRendered: instance.onNextButtonRendered
+        animated: instance.state.get("nextButtonAnimated")
+      }
+      replayButton: {
+        onClick: instance.onReplayButtonClicked
+      }
       pages: instance.getPagesForPaginator()
-      lessonComplete: instance.lessonComplete
-      onNextButtonRendered: instance.onNextButtonRendered
     }
 
   lessonTitle: ->
@@ -163,7 +181,7 @@ Template.Lesson_view_page.helpers
         onWrongAnswer: instance.onAnswerCallback(instance, "WRONG")
         playQuestionAudio: instance.shouldPlayQuestionAudio(module._id)
         playExplanationAudio: instance.shouldPlayExplanationAudio(module._id)
-        onFinishExplanation: instance.onFinishExplanation(instance)
+        onFinishExplanation: instance.onFinishExplanation
       }
     else
       return {module: module}

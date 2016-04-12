@@ -1,12 +1,12 @@
 <template name="Lesson_view_page_footer">
 
-  {{> Button goHomeButtonArgs}}
+  {{> Button (goHomeButtonArgs goHomeButton)}}
 
-  {{> Lesson_view_page_footer_paginator paginatorArgs}}
+  {{> Lesson_view_page_footer_paginator (paginatorArgs pages)}}
 
-  {{> Button replayButtonArgs}}
-  <div class='next-button-wrapper'>
-    {{> Button nextButtonArgs}}
+  {{> Button (replayButtonArgs replayButton)}}
+  <div class={{nextButtonWrapperClasses nextButton.animated}}>
+    {{> Button (nextButtonArgs nextButton)}}
   </div>
 
 </template>
