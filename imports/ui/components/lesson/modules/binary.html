@@ -13,4 +13,7 @@
     {{ > Button (buttonArgs module.options.[1]) }}
   </div>
 
+  {{> Audio (questionAudioArgs module.audio playQuestionAudio)}}
+  {{> Audio (explanationAudioArgs module.correct_audio playExplanationAudio onFinishExplanation)}}
+
 </template>

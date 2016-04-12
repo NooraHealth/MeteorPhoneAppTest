@@ -20,6 +20,11 @@ Template.Lesson_view_page_multiple_choice.onCreated ->
       correctlySelectedClasses: {type: String}
       incorrectClasses: {type: String}
       incorrectlySelectedClasses: {type: String}
+      onWrongAnswer: {type: Function}
+      onCorrectAnswer: {type: Function}
+      playQuestionAudio: {type: Boolean}
+      playExplanationAudio: {type: Boolean}
+      onFinishExplanation: {type: Function}
     }).validate(Template.currentData())
 
     @data = Template.currentData()

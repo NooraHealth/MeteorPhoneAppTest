@@ -17,7 +17,6 @@ require '../../ui/components/home/menu/list_item.coffee'
 require '../../ui/components/audio/audio.coffee'
 
 Template.Home_page.onCreated ->
-  #@intro = new Audio Meteor.getContentSrc() + 'NooraHealthContent/Audio/AppIntro.mp3', "#intro", ""
   @getLessonDocuments = =>
     curriculum = @getCurriculumDoc()
     docs = curriculum?.getLessonDocuments()
@@ -37,9 +36,6 @@ Template.Home_page.onCreated ->
 
   @onCurriculumSelected = ( id ) ->
     AppState.get().setCurriculumId id
-
-  #@playAppIntro = =>
-    #if not @appState.get "hasPlayedIntro" then @intro.playWhenReady()
 
 Template.Home_page.helpers
   menuArgs: ->

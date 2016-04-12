@@ -1,5 +1,7 @@
+ContentInterface = require('../../../../api/content/ContentInterface.coffee').ContentInterface
 
 Modules = require('../../../../api/modules/modules.coffee').Modules
+require "../../audio/audio.coffee"
 require "./binary.html"
 
 Template.Lesson_view_page_binary.onCreated ->
@@ -13,6 +15,9 @@ Template.Lesson_view_page_binary.onCreated ->
       incorrectlySelectedClasses: {type: String}
       onWrongAnswer: {type: Function}
       onCorrectAnswer: {type: Function}
+      playQuestionAudio: {type: Boolean}
+      playExplanationAudio: {type: Boolean}
+      onFinishExplanation: {type: Function}
     }).validate(Template.currentData())
     @data = Template.currentData()
 
@@ -28,9 +33,9 @@ Template.Lesson_view_page_binary.onCreated ->
       module = instance.data.module
       instance.state.set "selected", option
       if module.isCorrectAnswer option
-        instance.data.onCorrectAnswer()
+        instance.data.onCorrectAnswer(instance.data.module)
       else
-        instance.data.onWrongAnswer()
+        instance.data.onWrongAnswer(instance.data.module)
 
   @questionComplete = ->
     console.log "Returning whether the question is complete"
@@ -77,3 +82,21 @@ Template.Lesson_view_page_binary.helpers
       onClick: instance.getOnSelected(instance, option)
     }
 
+  questionAudioArgs: (src, playing) ->
+    return {
+      attributes: {
+        src: ContentInterface.get().getUrl src
+      }
+      playing: playing
+      whenFinished: null
+    }
+
+  explanationAudioArgs: (src, playing, onAudioFinished) ->
+    console.log onAudioFinished
+    return {
+      attributes: {
+        src: ContentInterface.get().getUrl src
+      }
+      playing: playing
+      whenFinished: onAudioFinished
+    }

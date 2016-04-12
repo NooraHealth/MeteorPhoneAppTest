@@ -19,6 +19,7 @@ Template.Lesson_view_page.onCreated ()->
     correctlySelectedClasses: 'correctly-selected expanded'
     incorrectClasses: 'faded'
     incorrectlySelectedClasses: 'incorrectly-selected'
+    playingExplanation: false
   }
 
   @isCurrent = (moduleId) =>
@@ -46,21 +47,23 @@ Template.Lesson_view_page.onCreated ()->
       pages = ( getPageData(module, i) for module, i in modules )
       return pages
 
-  @onCorrectAnswer = ->
-    console.log "On correct answer!!"
-    swal {
-      title: ""
-      type: "success"
-      timer: 3000
-    }
+  @onFinishExplanation = =>
+    console.log "Audio finished, animate next button"
+    @state.set "playingExplanation", false
 
-  @onWrongAnswer = ->
-    console.log "On wrong answer!!"
-    swal {
-      title: ""
-      type: "error"
-      timer: 3000
-    }
+  @onAnswerCallback = (instance, type) ->
+    return (module) ->
+      instance.state.set "playingExplanation", true
+      if module.type is "BINARY" or module.type is "SCENARIO"
+        if type is "CORRECT"
+          alertType = "success"
+        else
+          alertType = "error"
+        swal {
+          title: ""
+          type: alertType
+          timer: 3000
+        }
 
   @lessonComplete = =>
     lesson = @getLesson()
@@ -93,6 +96,19 @@ Template.Lesson_view_page.onCreated ()->
         preloadImages: false,
         nextButton: '.swiper-button-next',
     }
+  
+  @shouldPlayQuestionAudio = (id) =>
+    isPlayingExplanation = @state.get "playingExplanation"
+    console.log "Is playing explanation?", isPlayingExplanation
+    return @isCurrent id# and not isPlayingExplanation
+
+  @shouldPlayExplanationAudio = (id) =>
+    shouldPlay = @state.get "playingExplanation"
+    if @isCurrent id and shouldPlay
+      return true
+    else
+      return false
+
 
 Template.Lesson_view_page.helpers
   footerArgs: ->
@@ -116,20 +132,18 @@ Template.Lesson_view_page.helpers
     isQuestion = (type) ->
       return type == "BINARY" or type == "SCENARIO" or type == "MULTIPLE_CHOICE"
 
-    shouldRespondWithPopups = (type)->
-      return type == "BINARY" or type == "SCENARIO"
-
     if isQuestion module.type
-      args = {
+      return {
         module: module
         incorrectClasses: instance.state.get "incorrectClasses"
         incorrectlySelectedClasses: instance.state.get "incorrectlySelectedClasses"
         correctlySelectedClasses: instance.state.get "correctlySelectedClasses"
+        onCorrectAnswer: instance.onAnswerCallback(instance, "CORRECT")
+        onWrongAnswer: instance.onAnswerCallback(instance, "WRONG")
+        playQuestionAudio: instance.shouldPlayQuestionAudio(module._id)
+        playExplanationAudio: instance.shouldPlayExplanationAudio(module._id)
+        onFinishExplanation: instance.onFinishExplanation
       }
-      if shouldRespondWithPopups module.type
-        args["onWrongAnswer"] = instance.onWrongAnswer
-        args["onCorrectAnswer"] = instance.onCorrectAnswer
-      return args
     else
       return {module: module}
 
