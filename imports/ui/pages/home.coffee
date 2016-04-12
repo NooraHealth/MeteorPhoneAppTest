@@ -66,12 +66,14 @@ Template.Home_page.helpers
 
   audioArgs: ->
     instance = Template.instance()
+    setPlayIntroToFalse = -> AppState.get().setShouldPlayIntro false
     return {
       attributes: {
         src: ContentInterface.get().getUrl 'NooraHealthContent/Audio/AppIntro.mp3'
       }
       playing: AppState.get().shouldPlayIntro()
-      whenFinished: -> AppState.get().setShouldPlayIntro false
+      whenPaused: setPlayIntroToFalse
+      whenFinished: setPlayIntroToFalse
     }
 
   lessons: ->
