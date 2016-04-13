@@ -3,6 +3,7 @@ AppState = require('../../api/AppState.coffee').AppState
 Lessons = require('../../api/lessons/lessons.coffee').Lessons
 Modules = require('../../api/modules/modules.coffee').Modules
 Award = require('../components/lesson/awards/award.coffee').Award
+ContentInterface = require('../../api/content/ContentInterface.coffee').ContentInterface
 
 require './lesson_view.html'
 require '../components/lesson/modules/binary.coffee'
@@ -141,6 +142,10 @@ Template.Lesson_view_page.onCreated ()->
       @setCurrentModuleId()
 
 Template.Lesson_view_page.helpers
+  modulesReady: ->
+    instance = Template.instance()
+    return instance.subscriptionsReady()
+
   footerArgs: ->
     instance = Template.instance()
     return {
@@ -191,9 +196,31 @@ Template.Lesson_view_page.helpers
     else
       return {module: module}
 
-  modulesReady: ->
+  hasAudio: (module) ->
+    return module.audio?
+
+  hasExplanation: (module) ->
+    return module.correct_audio?
+
+  explanationArgs: (module) ->
     instance = Template.instance()
-    return instance.subscriptionsReady()
+    return {
+      attributes: {
+        src: ContentInterface.get().getUrl module.correct_audio
+      }
+      playing: instance.shouldPlayExplanationAudio(module._id)
+      whenFinished: instance.onFinishExplanation
+      whenPaused: instance.onPauseExplanation
+    }
+
+  audioArgs: (module) ->
+    instance = Template.instance()
+    return {
+      attributes: {
+        src: ContentInterface.get().getUrl module.audio
+      }
+      playing: instance.shouldPlayQuestionAudio(module._id)
+    }
 
   modules: ->
     instance = Template.instance()

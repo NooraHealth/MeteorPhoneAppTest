@@ -17,6 +17,13 @@
                       {{> UI.dynamic template=(getTemplate module)  data=(moduleArgs module) }}
                     </div>
                   </div>
+                  {{#if hasAudio module}}
+                    {{>Audio audioArgs module}}
+                  {{/if}}
+
+                  {{#if hasExplanation module}}
+                    {{>Audio explanationArgs module}} 
+                  {{/if}}
                 {{/with}}
               {{/each}}
             </div>

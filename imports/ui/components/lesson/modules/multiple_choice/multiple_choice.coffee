@@ -22,9 +22,6 @@ Template.Lesson_view_page_multiple_choice.onCreated ->
       incorrectlySelectedClasses: {type: String}
       onWrongAnswer: {type: Function}
       onCorrectAnswer: {type: Function}
-      playQuestionAudio: {type: Boolean}
-      playExplanationAudio: {type: Boolean}
-      onFinishExplanation: {type: Function}
     }).validate(Template.currentData())
 
     @data = Template.currentData()
@@ -86,4 +83,14 @@ Template.Lesson_view_page_multiple_choice.helpers
   getOptions: (module, start, end) ->
     options = (module.options[start...end]).filter (o) -> o?
     return {options: options}
+
+  audioArgs: (data) ->
+    return {
+      attributes: {
+        src: ContentInterface.get().getUrl data.src
+      }
+      playing: data.playing
+      whenFinished: data.onFinish
+      whenPaused: data.onPause
+    }
 

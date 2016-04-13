@@ -84,12 +84,3 @@ Template.Lesson_view_page_binary.helpers
       onClick: instance.getOnSelected(instance, option)
     }
 
-  audioArgs: (data) ->
-    return {
-      attributes: {
-        src: ContentInterface.get().getUrl data.src
-      }
-      playing: data.playing
-      whenFinished: data.onFinish
-      whenPaused: data.onPause
-    }
