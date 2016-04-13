@@ -32,11 +32,11 @@ Template.Lesson_view_page_footer.helpers
     
   nextButtonArgs: (data) ->
     instance = Template.instance()
-    defaultClasses = 'link next-module-btn footer-button button color-blue button-fill swiper-button-next'
-    if data.animated then defaultClasses += ' slide-up'
+    classes = 'link next-module-btn footer-button button color-blue button-fill swiper-button-next'
+    if data.animated then classes += ' slide-up'
     return {
       attributes: {
-        class: 'link next-module-btn footer-button button color-blue button-fill swiper-button-next'
+        class: classes
       }
       content: data.text + '<i class="fa fa-arrow-right fa-2x"></i>'
       onClick: data.onClick
