@@ -24,6 +24,8 @@ Template.Lesson_view_page.onCreated ()->
     playingExplanation: false
     playingQuestion: true
     nextButtonAnimated: false
+    playingIncorrectSoundEffect: false
+    playingCorrectSoundEffect: false
   }
 
   @setCurrentModuleId = =>
@@ -70,14 +72,20 @@ Template.Lesson_view_page.onCreated ()->
         instance.state.set "playingExplanation", true
       if module.type is "BINARY" or module.type is "SCENARIO"
         if type is "CORRECT"
+          instance.state.set "playingCorrectSoundEffect", true
           alertType = "success"
         else
+          instance.state.set "playingIncorrectSoundEffect", true
           alertType = "error"
         swal {
           title: ""
           type: alertType
           timer: 3000
         }
+
+  @stopPlayingSoundEffect = =>
+    @state.set "playingCorrectSoundEffect", false
+    @state.set "playingIncorrectSoundEffect", false
 
   @lessonComplete = =>
     lesson = @getLesson()
@@ -182,16 +190,6 @@ Template.Lesson_view_page.helpers
         correctlySelectedClasses: instance.state.get "correctlySelectedClasses"
         onCorrectAnswer: instance.onAnswerCallback(instance, "CORRECT")
         onWrongAnswer: instance.onAnswerCallback(instance, "WRONG")
-        explanationData: {
-          playing: instance.shouldPlayExplanationAudio(module._id)
-          onFinish: instance.onFinishExplanation
-          onPause: instance.onPauseExplanation
-          src: module.correct_audio
-        }
-        audioData: {
-          playing: instance.shouldPlayQuestionAudio(module._id)
-          src: module.audio
-        }
       }
     else
       return {module: module}
@@ -220,6 +218,38 @@ Template.Lesson_view_page.helpers
         src: ContentInterface.get().getUrl module.audio
       }
       playing: instance.shouldPlayQuestionAudio(module._id)
+    }
+
+  incorrectSoundEffectArgs: ->
+    instance = Template.instance()
+    return {
+      attributes: {
+        src: ContentInterface.get().incorrectSoundEffect()
+      }
+      playing: instance.state.get("playingIncorrectSoundEffect")
+      whenFinished: instance.stopPlayingSoundEffect
+      whenPaused: instance.stopPlayingSoundEffect
+    }
+
+  correctSoundEffectArgs: ->
+    instance = Template.instance()
+    return {
+      attributes: {
+        src: ContentInterface.get().correctSoundEffect()
+      }
+      playing: instance.state.get("playingCorrectSoundEffect")
+      whenFinished: instance.stopPlayingSoundEffect
+      whenPaused: instance.stopPlayingSoundEffect
+    }
+  correctSoundEffectArgs: ->
+    instance = Template.instance()
+    return {
+      attributes: {
+        src: ContentInterface.get().correctSoundEffect()
+      }
+      playing: instance.state.get("playingCorrectSoundEffect")
+      whenFinished: instance.stopPlayingSoundEffect
+      whenPaused: instance.stopPlayingSoundEffect
     }
 
   modules: ->

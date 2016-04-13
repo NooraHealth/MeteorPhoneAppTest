@@ -31,4 +31,12 @@ class ContentInterface
         prefix = CONTENT_FOLDER + IMAGE_FOLDER
       return prefix + file.name
 
+    incorrectSoundEffect: ->
+      return @getUrl('NooraHealthContent/Audio/incorrect_soundeffect.mp3')
+
+    correctSoundEffect: ->
+      return @getUrl('NooraHealthContent/Audio/correct_soundeffect.mp3')
+
+    introAudio: ->
+
 module.exports.ContentInterface = ContentInterface
