@@ -64,9 +64,9 @@ Template.Lesson_view_page_scenario.onCreated ->
         instance.state.set "selected", selected
       if module.isCorrectAnswer option
         instance.state.set "complete", true
-        instance.data.onCorrectAnswer()
+        instance.data.onCorrectAnswer module
       else
-        instance.data.onWrongAnswer()
+        instance.data.onWrongAnswer module
 
 
 

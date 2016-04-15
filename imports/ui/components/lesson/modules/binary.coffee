@@ -15,14 +15,6 @@ Template.Lesson_view_page_binary.onCreated ->
       incorrectlySelectedClasses: {type: String}
       onWrongAnswer: {type: Function}
       onCorrectAnswer: {type: Function}
-      "explanationData.onFinish": {type: Function, optional: true}
-      "explanationData.onPause": {type: Function, optional: true}
-      "explanationData.playing": {type: Boolean}
-      "explanationData.src": {type: String}
-      "audioData.onFinish": {type: Function, optional: true}
-      "audioData.onPause": {type: Function, optional: true}
-      "audioData.playing": {type: Boolean}
-      "audioData.src": {type: String}
     }).validate(Template.currentData())
     @data = Template.currentData()
 

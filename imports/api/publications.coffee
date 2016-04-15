@@ -9,6 +9,8 @@ Meteor.publish "modules.inLesson", (lessonId) ->
   return Modules.find {_id: {$in: lesson.modules}}
 
 Meteor.publish "curriculums.all", ->
+  console.log "returning he curreiculums"
+  console.log Curriculums.find().fetch()
   return Curriculums.find({})
 
 Meteor.publish "curriculum", (id) ->

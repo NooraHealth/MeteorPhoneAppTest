@@ -63,14 +63,13 @@ Template.Lesson_view_page.onCreated ()->
   @onFinishExplanation = =>
     @state.set "playingExplanation", false
     @state.set "nextButtonAnimated", true
-    console.log @state
 
   @onAnswerCallback = (instance, type) ->
     return (module) ->
       if type == "CORRECT"
         instance.state.set "playingQuestion", false
         instance.state.set "playingExplanation", true
-      if module.type is "BINARY" or module.type is "SCENARIO"
+      if module?.type is "BINARY" or module?.type is "SCENARIO"
         if type is "CORRECT"
           instance.state.set "playingCorrectSoundEffect", true
           alertType = "success"
@@ -111,14 +110,6 @@ Template.Lesson_view_page.onCreated ()->
   @goHome = ->
     FlowRouter.go "home"
 
-  @shouldPlayQuestionAudio = (id) =>
-    isPlayingQuestion = @state.get "playingQuestion"
-    return @isCurrent(id) and isPlayingQuestion
-
-  @shouldPlayExplanationAudio = (id) =>
-    shouldPlay = @state.get "playingExplanation"
-    if @isCurrent(id) and shouldPlay then return true else return false
-
   @goToNextModule = =>
     index = @state.get "moduleIndex"
     newIndex = ++index
@@ -139,6 +130,15 @@ Template.Lesson_view_page.onCreated ()->
   @nextButtonText = => if @lessonComplete() then "FINISH" else "NEXT"
 
   @onReplayButtonClicked = => console.log "Replay clicked! Do Something!"
+
+
+  @shouldPlayQuestionAudio = (id) =>
+    isPlayingQuestion = @state.get "playingQuestion"
+    return @isCurrent(id) and isPlayingQuestion
+
+  @shouldPlayExplanationAudio = (id) =>
+    shouldPlay = @state.get "playingExplanation"
+    if @isCurrent(id) and shouldPlay then return true else return false
 
   @autorun =>
     lessonId = @getLessonId()
@@ -195,9 +195,13 @@ Template.Lesson_view_page.helpers
       return {module: module}
 
   hasAudio: (module) ->
+    console.log "Checking if has explanadtion", module
+    console.log module.audio
     return module.audio?
 
   hasExplanation: (module) ->
+    console.log "Checking if has explanadtion", module
+    console.log module.correct_audio
     return module.correct_audio?
 
   explanationArgs: (module) ->
