@@ -9,20 +9,17 @@ message = '<p class="loading-message">'+"Welcome to Noora Health"+'</p><p class=
 
 spinner = '<div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>'
 
-Template.loading.onCreated ->
-  console.log "In the loading on created"
-
 Template.loading.helpers
-  percent: ()->
+  percent: ->
     return Session.get "percent loaded"
 
-Template.loading.onRendered ()->
-  console.log "Rendered the on loading screen"
-  this.loading = window.pleaseWait {
+Template.loading.onRendered ->
+  @loading = window.pleaseWait {
     logo: 'NHlogo.png',
     loadingHtml: message + spinner
   }
-  this.autorun ()->
+
+  @autorun ->
     percent = Session.get "percent loaded"
     if not percent
       return
@@ -30,8 +27,8 @@ Template.loading.onRendered ()->
     $("#progress").val percent*100
 
 
-Template.loading.onDestroyed ()->
+Template.loading.onDestroyed ->
   console.log "Destroying the loading page"
-  if this.loading
-    this.loading.finish()
+  if @loading
+    @loading.finish()
 
