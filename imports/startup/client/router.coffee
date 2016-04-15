@@ -11,6 +11,7 @@ require '../../api/lib.coffee'
 require '../../ui/layouts/layout.html'
 require '../../ui/pages/home.coffee'
 require '../../ui/pages/lesson_view.coffee'
+require '../../ui/pages/loading.coffee'
 
 ###
 # Home
@@ -33,9 +34,9 @@ FlowRouter.route '/lesson/:_id', {
 
 }
 
-#FlowRouter.route '/loading',
-  #name: "loading"
-  #action: ()->
-    #console.log "In the loading router"
-    #BlazeLayout.render "layout", { main: "loading" }
+FlowRouter.route '/loading',
+  name: "loading"
+  action: ()->
+    console.log "In the loading router"
+    BlazeLayout.render "layout", { main: "loading" }
 
