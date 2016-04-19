@@ -18,10 +18,12 @@ class ContentInterface
       @contentEndpoint = Meteor.settings.public.CONTENT_SRC
 
     getUrl: (path) =>
+      console.log "In get url"
       url = @_getContentSrc() + path
       if Meteor.isCordova
+        console.log "this is the path", path
         offlineFile = OfflineFiles.findOne {url: url}
-        return WebAppLocalServer.localFileSystemUrl(offlineFile.fsPath)
+        if offlineFile? then WebAppLocalServer.localFileSystemUrl(offlineFile.fsPath) else ""
       else
         return url
 
