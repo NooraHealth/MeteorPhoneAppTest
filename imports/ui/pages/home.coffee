@@ -21,6 +21,7 @@ Template.Home_page.onCreated ->
   @getLessonDocuments = =>
     curriculum = @getCurriculumDoc()
     docs = curriculum?.getLessonDocuments()
+    console.log "These are the lesson docs", docs
     return docs
 
   @getCurriculumDoc = =>
@@ -38,15 +39,22 @@ Template.Home_page.onCreated ->
   @onCurriculumSelected = ( id ) ->
     console.log "CURRICUKU<M SELECTED"
     AppState.get().setCurriculumId id
-    if Meteor.isCordova
-      FlowRouter.go 'loading'
-      #download curriculum
-      ContentInterface.downloadCurriculum id
 
   @autorun =>
     id = AppState.get().getCurriculumId()
     @subscribe "curriculums.all"
     @subscribe "lessons.inCurriculum", id
+
+  @autorun =>
+    console.log "gettint the subscriptiuns ready"
+    subscriptionsReady = @subscriptionsReady()
+    console.log "The subscriptions ready?", subscriptionsReady
+    id = AppState.get().getCurriculumId()
+    if subscriptionsReady and Meteor.isCordova and id
+      console.log "Going to loading"
+      console.log id
+      FlowRouter.go "loading"
+      ContentInterface.get().loadCurriculum id
 
   console.log "End of home page"
 

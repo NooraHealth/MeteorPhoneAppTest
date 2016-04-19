@@ -36,7 +36,7 @@ class ContentInterface
     introAudio: =>
       return @getUrl @introPath
 
-    downloadCurriculum: (_id) =>
+    loadCurriculum: (_id) =>
       console.log "ABOUT TO DOWNLOAD CURRICUM"
       if not _id?
         return null

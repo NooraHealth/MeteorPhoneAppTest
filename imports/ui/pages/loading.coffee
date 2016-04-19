@@ -9,6 +9,15 @@ message = '<p class="loading-message">'+"Welcome to Noora Health"+'</p><p class=
 
 spinner = '<div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>'
 
+Template.loading.onCreated ->
+  @autorun ->
+    percent = Session.get "percent loaded"
+    if not percent
+      return
+    console.log "Setting the progress: ", percent
+    progressBar = @.find("#progress")
+    progressBar?.val percent*100
+
 Template.loading.helpers
   percent: ->
     return Session.get "percent loaded"
@@ -18,14 +27,6 @@ Template.loading.onRendered ->
     logo: 'NHlogo.png',
     loadingHtml: message + spinner
   }
-
-  @autorun ->
-    percent = Session.get "percent loaded"
-    if not percent
-      return
-    console.log "Setting the progress: ", percent
-    $("#progress").val percent*100
-
 
 Template.loading.onDestroyed ->
   console.log "Destroying the loading page"
