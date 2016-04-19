@@ -2,6 +2,7 @@
 require './menu.html'
 
 Template.Home_curriculum_menu.onCreated ->
+  console.log "validating emnu"
   # Data context validation
   @autorun =>
     new SimpleSchema({

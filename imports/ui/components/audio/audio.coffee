@@ -8,6 +8,8 @@ Template.Audio.onCreated ->
   }
 
   @autorun =>
+    console.log "Validating audio"
+    console.log Template.currentData()
     new SimpleSchema({
       "attributes.src": {type: String}
       playing: {type: Boolean}
