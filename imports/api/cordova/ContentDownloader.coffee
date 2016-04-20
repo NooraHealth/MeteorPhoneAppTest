@@ -73,8 +73,12 @@ class @ContentDownloader
           offlineId = Random.id()
           console.log fs
           console.log fs.root
-          fsPath = fs.root.toUrl() + offlineId + file.name
+          console.log fs.root.nativeUrl
+          console.log "After those things"
+          fsPath = fs.root.toURL() + offlineId
+          console.log "The fs path", fsPath
           ft.download(file.url, fsPath, getSuccessCallback(file, fsPath), getErrorCallback(file, fsPath))
+
 
         getSuccessCallback = (file, fsPath) ->
           return (entry)->
