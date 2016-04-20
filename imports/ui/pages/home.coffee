@@ -73,6 +73,7 @@ Template.Home_page.helpers
   menuArgs: ->
     instance = Template.instance()
     curriculumsToList = Curriculums.find({title:{$ne: "Start a New Curriculum"}})
+    console.log "the curriculums to list", curriculumsToList
     return {
       onCurriculumSelected: instance.onCurriculumSelected
       curriculums: curriculumsToList

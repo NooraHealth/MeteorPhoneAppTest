@@ -15,7 +15,7 @@ Template.loading.onCreated ->
     if not percent
       return
     console.log "Setting the progress: ", percent
-    progressBar = @.find("#progress")
+    progressBar = $("#progress")
     progressBar?.val percent*100
 
 Template.loading.helpers

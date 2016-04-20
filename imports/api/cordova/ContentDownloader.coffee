@@ -19,13 +19,7 @@ class @ContentDownloader
       if not id? then return null
 
       curriculum = Curriculums.findOne { _id: id }
-      console.log "Curridulum?", curriculum
-      console.log "Id?", id
       if not curriculum? then return null
-      console.log "got the curriculums", curriculum
-      console.log "ConetnInterface"
-      console.log ContentInterface
-      console.log "After content interface"
       lessons = curriculum.getLessonDocuments()
       paths = []
 
@@ -37,13 +31,19 @@ class @ContentDownloader
         paths.merge @_allContentPathsInLesson(lesson)
 
       getFileName = (path) ->
-        return path.replace /[/]/g, ''
+        spaces = new RegExp("[ ]+","g")
+        backslash = new RegExp("[/]+","g")
+        path = path.replace spaces, ""
+        path = path.replace backslash, ""
+        console.log "NEW PATH", path
+        return path
 
       urls = ( {url: ContentInterface.get().getEndpoint(path), name: getFileName(path)} for path in paths )
 
       promise = @_downloadFiles urls
       promise.then (entry)->
         #this is where you do the on success thing
+        console.log "Success!!", entry
         onSuccess(entry)
       promise.fail (err)->
         #this is where you do the on error thing
@@ -61,7 +61,7 @@ class @ContentDownloader
       numToLoad = files.length
       numRecieved = 0
 
-      window.requestFileSystem LocalFileSystem.PERSISTENT, 5*1024*1024, (fs)->
+      window.requestFileSystem LocalFileSystem.PERSISTENT, 0, (fs)->
 
         ft = new FileTransfer()
 
@@ -71,13 +71,8 @@ class @ContentDownloader
 
         downloadFile = (file) ->
           offlineId = Random.id()
-          console.log fs
-          console.log fs.root
-          console.log fs.root.nativeUrl
-          console.log "After those things"
-          fsPath = fs.root.toURL() + offlineId
-          console.log "The fs path", fsPath
-          ft.download(file.url, fsPath, getSuccessCallback(file, fsPath), getErrorCallback(file, fsPath))
+          fsPath = fs.root.toURL() + offlineId + file.name
+          ft.download(file.url, fsPath, getSuccessCallback(file, fsPath), getErrorCallback(file, fsPath), true)
 
 
         getSuccessCallback = (file, fsPath) ->
@@ -85,16 +80,22 @@ class @ContentDownloader
             numRecieved++
             console.log "RESOLVED:" + numRecieved + "/"+ numToLoad
             console.log entry
-            OfflineFiles.insert {
+            console.log file
+            OfflineFiles.insert({
               url: file.url
               name: file.name
               fsPath: fsPath
-            }
+            }, (error) ->
+              console.log "Error inserting doc"
+              console.log error
+            )
             if numRecieved == numToLoad
               deferred.resolve entry
 
         getErrorCallback = (file) ->
           return (error)->
+            console.log "ERROR"
+            console.log file
             console.log "ERROR "
             console.log error
             if error.http_status == 404
