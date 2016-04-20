@@ -1,5 +1,6 @@
 
 ContentInterface = require('../../api/content/ContentInterface.coffee').ContentInterface
+ContentDownloader = require('../../api/cordova/ContentDownloader.coffee').ContentDownloader
 
 Curriculums = require('../../api/curriculums/curriculums.coffee').Curriculums
 
@@ -56,7 +57,12 @@ Template.Home_page.onCreated ->
       console.log "Going to loading"
       console.log id
       FlowRouter.go "loading"
-      ContentInterface.get().loadCurriculum id
+      onError = (e) ->
+        console.log "ERROR LOADING"
+        console.log e
+      onSuccess = (e) ->
+        console.log "SUCCESS LOADING"
+      ContentDownloader.get().loadCurriculum id, onSuccess, onError
 
 
 Template.Home_page.helpers
