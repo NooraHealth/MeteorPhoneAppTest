@@ -1,6 +1,6 @@
 
-{ Modules } = require '../modules/modules.coffee'
-ContentInterface = require('../content/ContentInterface.coffee').ContentInterface
+{ Modules } = require './modules/modules.coffee'
+ContentInterface = require('./content/ContentInterface.coffee').ContentInterface
 
 Lessons = new Mongo.Collection("nh_lessons")
 
@@ -21,7 +21,7 @@ Lessons.attachSchema LessonSchema
 
 Lessons.helpers
   imgSrc: ->
-    if not @image then "" else ContentInterface.get().getUrl @image
+    if not @image then "" else ContentInterface.get().getSrc @image
 
   getModulesSequence: ()->
     if @modules

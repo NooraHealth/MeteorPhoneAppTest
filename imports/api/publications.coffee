@@ -1,18 +1,22 @@
 
 Curriculums = require('./curriculums/curriculums.coffee').Curriculums
-Lessons = require('./lessons/lessons.coffee').Lessons
+Lessons = require('./lessons.coffee').Lessons
 Modules = require('./modules/modules.coffee').Modules
-
-Meteor.publish "modules.inLesson", (lessonId) ->
-  if !lessonId then return []
-  lesson = Lessons.findOne {_id: lessonId}
-  return Modules.find {_id: {$in: lesson.modules}}
 
 Meteor.publish "curriculums.all", ->
   return Curriculums.find({})
 
+Meteor.publish "lessons.all", ->
+  return Lessons.find({})
+
+Meteor.publish "modules.all", ->
+  return Modules.find({})
+
 Meteor.publish "curriculum", (id) ->
   if id then Curriculums.find ({_id: id}) else []
+
+Meteor.publish "lesson", (id) ->
+  return Lessons.find ({_id: id})
 
 Meteor.publish "lessons.inCurriculum", (curriculumId) ->
   if curriculumId
@@ -21,6 +25,8 @@ Meteor.publish "lessons.inCurriculum", (curriculumId) ->
   else
     return []
 
-Meteor.publish "lesson", (id) ->
-  return Lessons.find ({_id: id})
+Meteor.publish "modules.inLesson", (lessonId) ->
+  if !lessonId then return []
+  lesson = Lessons.findOne {_id: lessonId}
+  return Modules.find {_id: {$in: lesson.modules}}
 

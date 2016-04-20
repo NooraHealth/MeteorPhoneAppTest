@@ -5,17 +5,15 @@ Array::merge = (other) -> Array::push.apply @, other
 
 class @ContentDownloader
 
-  downloadFiles: (files) ->
+  @downloadFiles: (files) ->
 
-    console.log "Validating the files"
     new SimpleSchema({
-      files: {type: Object}
       "files.$.name": {type: String}
       "files.$.url": {type: String}
     }).validate({files: files})
 
     deferred = Q.defer()
-    numToLoad = urls.length
+    numToLoad = files.length
     numRecieved = 0
 
     window.requestFileSystem LocalFileSystem.PERSISTENT, 5*1024*1024, (fs)->
@@ -28,6 +26,8 @@ class @ContentDownloader
 
       downloadFile = (file) ->
         offlineId = Random.id()
+        console.log fs
+        console.log fs.root
         fsPath = fs.root.toUrl() + offlineId + file.name
         ft.download(file.url, fsPath, getSuccessCallback(file, fsPath), getErrorCallback(file, fsPath))
 

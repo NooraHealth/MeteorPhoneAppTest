@@ -17,11 +17,9 @@ require '../../ui/components/home/menu/list_item.coffee'
 require '../../ui/components/audio/audio.coffee'
 
 Template.Home_page.onCreated ->
-  console.log "Going to the home page"
   @getLessonDocuments = =>
     curriculum = @getCurriculumDoc()
     docs = curriculum?.getLessonDocuments()
-    console.log "These are the lesson docs", docs
     return docs
 
   @getCurriculumDoc = =>
@@ -37,26 +35,29 @@ Template.Home_page.onCreated ->
     FlowRouter.go "lesson", {_id: id}
 
   @onCurriculumSelected = ( id ) ->
-    console.log "CURRICUKU<M SELECTED"
     AppState.get().setCurriculumId id
 
   @autorun =>
     id = AppState.get().getCurriculumId()
     @subscribe "curriculums.all"
-    @subscribe "lessons.inCurriculum", id
+    if Meteor.isCordova
+      @subscribe "lessons.all"
+      @subscribe "modules.all"
+    else
+      @subscribe "lessons.inCurriculum", id
 
   @autorun =>
     console.log "gettint the subscriptiuns ready"
     subscriptionsReady = @subscriptionsReady()
     console.log "The subscriptions ready?", subscriptionsReady
     id = AppState.get().getCurriculumId()
-    if subscriptionsReady and Meteor.isCordova and id
+    console.log "this is id", id
+    if subscriptionsReady and Meteor.isCordova and id?
       console.log "Going to loading"
       console.log id
       FlowRouter.go "loading"
       ContentInterface.get().loadCurriculum id
 
-  console.log "End of home page"
 
 Template.Home_page.helpers
   curriculumsReady: ->
@@ -83,7 +84,6 @@ Template.Home_page.helpers
   audioArgs: ->
     instance = Template.instance()
     setPlayIntroToFalse = -> AppState.get().setShouldPlayIntro false
-    console.log ContentInterface.get().introAudio()
     return {
       attributes: {
         src: ContentInterface.get().introAudio()

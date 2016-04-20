@@ -55,25 +55,25 @@ Modules.helpers {
     else this.video_url.startsWith "http"
 
   imgSrc: ->
-    if not @image then "" else ContentInterface.get().getUrl(@image)
+    if not @image then "" else ContentInterface.get().getSrc(@image)
 
   audioSrc: ->
-    if not @audio then "" else ContentInterface.get().getUrl(@audio)
+    if not @audio then "" else ContentInterface.get().getSrc(@audio)
 
   incorrectAnswerAudio: ->
-    if not @incorrect_audio then "" else ContentInterface.get().getUrl(@incorrect_audio)
+    if not @incorrect_audio then "" else ContentInterface.get().getSrc(@incorrect_audio)
 
   correctAnswerAudio: ->
-    if not @correct_audio then "" else ContentInterface.get().getUrl(@correct_audio)
+    if not @correct_audio then "" else ContentInterface.get().getSrc(@correct_audio)
   
   videoSrc: ->
-    if not @video then "" else ContentInterface.get().getUrl(@video)
+    if not @video then "" else ContentInterface.get().getSrc(@video)
 
   isCorrectAnswer: (response) ->
     return response in @correct_answer
 
   optionSrc: (i) ->
-    if not @options[i] then "" else ContentInterface.get().getUrl(@options[i])
+    if not @options[i] then "" else ContentInterface.get().getSrc(@options[i])
 
   isVideoModule: ->
     return @type == "VIDEO"

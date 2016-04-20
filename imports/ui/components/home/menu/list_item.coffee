@@ -3,7 +3,6 @@ Curriculums = require('../../../../api/curriculums/curriculums.coffee').Curricul
 require './list_item.html'
 
 Template.Home_curriculum_menu_list_item.onCreated ->
-  console.log "validating list item"
   # Data context validation
   @autorun =>
     new SimpleSchema({

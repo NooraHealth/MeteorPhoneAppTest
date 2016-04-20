@@ -4,7 +4,7 @@
 # A single Noora Health curriculum for a condition.
 ###
 #{ Lessons } = require('../lessons/lessons.coffee').Lessons
-Lessons = require('../lessons/lessons.coffee').Lessons
+Lessons = require('../lessons.coffee').Lessons
 
 Curriculums = new Mongo.Collection("nh_home_pages")
 
