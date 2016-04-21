@@ -46,7 +46,6 @@ class @ContentDownloader
         promise = @_downloadFiles filteredUrls
         promise.then (entry)->
           #this is where you do the on success thing
-          console.log "Success!!", entry
           onSuccess(entry)
         promise.fail (err)->
           #this is where you do the on error thing

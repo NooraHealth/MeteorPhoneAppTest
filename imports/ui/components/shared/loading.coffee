@@ -14,6 +14,7 @@ Template.loading.onCreated ->
     percent = AppState.get().getPercentLoaded()
     console.log "PERCENT LOADED", percent
     progressBar = $("#progress")
+    console.log progressBar
     progressBar?.val percent*100
 
 Template.loading.helpers

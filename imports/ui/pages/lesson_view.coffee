@@ -208,7 +208,7 @@ Template.Lesson_view_page.helpers
     instance = Template.instance()
     return {
       attributes: {
-        src: ContentInterface.get().getUrl module.correct_audio
+        src: ContentInterface.get().getSrc module.correct_audio
       }
       playing: instance.shouldPlayExplanationAudio(module._id)
       whenFinished: instance.onFinishExplanation
@@ -219,7 +219,7 @@ Template.Lesson_view_page.helpers
     instance = Template.instance()
     return {
       attributes: {
-        src: ContentInterface.get().getUrl module.audio
+        src: ContentInterface.get().getSrc module.audio
       }
       playing: instance.shouldPlayQuestionAudio(module._id)
     }
@@ -239,17 +239,7 @@ Template.Lesson_view_page.helpers
     instance = Template.instance()
     return {
       attributes: {
-        src: ContentInterface.get().correctSoundEffectPath()
-      }
-      playing: instance.state.get("playingCorrectSoundEffect")
-      whenFinished: instance.stopPlayingSoundEffect
-      whenPaused: instance.stopPlayingSoundEffect
-    }
-  correctSoundEffectArgs: ->
-    instance = Template.instance()
-    return {
-      attributes: {
-        src: ContentInterface.get().correctSoundEffect()
+        src: ContentInterface.get().correctSoundEffectFilePath()
       }
       playing: instance.state.get("playingCorrectSoundEffect")
       whenFinished: instance.stopPlayingSoundEffect
