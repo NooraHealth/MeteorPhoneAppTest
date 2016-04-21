@@ -37,7 +37,8 @@ Template.Home_page.onCreated ->
 
   @onCurriculumSelected = ( id ) ->
     AppState.get().setCurriculumId id
-    AppState.get().setCurriculumDownloaded false
+    if Meteor.isCordova
+      AppState.get().setCurriculumDownloaded false
 
   @autorun =>
     id = AppState.get().getCurriculumId()
@@ -51,14 +52,12 @@ Template.Home_page.onCreated ->
   @autorun =>
     subscriptionsReady = @subscriptionsReady()
     id = AppState.get().getCurriculumId()
-    curriculumDownloaded = AppState.get().getCurriculumDownloaded()
+    curriculumDownloaded = AppState.get().getCurriculumDownloaded(id)
     if subscriptionsReady and Meteor.isCordova and id? and not curriculumDownloaded
-      FlowRouter.go "loading"
       onError = (e) ->
         console.log "ERROR LOADING"
         console.log e
       onSuccess = (e) ->
-        Router.go "home"
         console.log "SUCCESS LOADING"
         AppState.get().setCurriculumDownloaded true
       ContentDownloader.get().loadCurriculum id, onSuccess, onError
@@ -67,7 +66,8 @@ Template.Home_page.onCreated ->
 Template.Home_page.helpers
   curriculumsReady: ->
     instance = Template.instance()
-    return instance.subscriptionsReady()
+    curriculumDownloaded = if Meteor.isCordova then AppState.get().getCurriculumDownloaded() else true
+    return instance.subscriptionsReady() and curriculumDownloaded
 
   menuArgs: ->
     instance = Template.instance()

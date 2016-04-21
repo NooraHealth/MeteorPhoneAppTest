@@ -19,48 +19,51 @@ class @ContentDownloader
 
       console.log "IDB EFORE", id
       console.log id
-      try
-        #validate the arguments
-        console.log "ID", id
-        console.log id
-        new SimpleSchema({
-          id: {type: String}
-          onSuccess: {type: Function}
-          onError: {type: Function, optional: true}
-        }).validate({id: id, onSuccess: onSuccess, onError: onError})
+      #try
+      #validate the arguments
+      console.log "ID", id
+      console.log id
+      new SimpleSchema({
+        id: {type: String}
+        onSuccess: {type: Function}
+        onError: {type: Function, optional: true}
+      }).validate({id: id, onSuccess: onSuccess, onError: onError})
 
-        curriculum = Curriculums.findOne { _id: id }
-        if not curriculum? then throw new Meteor.Error "curriculum-not-found", "Curriculum of id #{id} not found"
+      curriculum = Curriculums.findOne { _id: id }
+      if not curriculum? then throw new Meteor.Error "curriculum-not-found", "Curriculum of id #{id} not found"
 
-        lessons = curriculum.getLessonDocuments()
-        paths = []
+      lessons = curriculum.getLessonDocuments()
+      paths = []
 
-        paths.push ContentInterface.get().introAudio()
-        paths.push ContentInterface.get().correctSoundEffect()
-        paths.push ContentInterface.get().incorrectSoundEffect()
+      paths.push ContentInterface.get().introAudio()
+      paths.push ContentInterface.get().correctSoundEffect()
+      paths.push ContentInterface.get().incorrectSoundEffect()
+      console.log "PATHS"
+      console.log paths
 
-        for lesson in lessons
-          paths.merge @_allContentPathsInLesson(lesson)
+      for lesson in lessons
+        paths.merge @_allContentPathsInLesson(lesson)
 
-        getFileName = (path) ->
-          spaces = new RegExp("[ ]+","g")
-          backslash = new RegExp("[/]+","g")
-          path = path.replace spaces, ""
-          path = path.replace backslash, ""
-          return path
+      getFileName = (path) ->
+        spaces = new RegExp("[ ]+","g")
+        backslash = new RegExp("[/]+","g")
+        path = path.replace spaces, ""
+        path = path.replace backslash, ""
+        return path
 
-        urls = ( {url: ContentInterface.get().getEndpoint(path), name: getFileName(path)} for path in paths )
+      urls = ( {url: ContentInterface.get().getEndpoint(path), name: getFileName(path)} for path in paths )
+      filteredUrls = ( url for url in urls when not OfflineFiles.findOne({url: url.url})? )
 
-        promise = @_downloadFiles urls
-        promise.then (entry)->
-          #this is where you do the on success thing
-          console.log "Success!!", entry
-          onSuccess(entry)
-        promise.fail (err)->
-          #this is where you do the on error thing
-          onError(err)
-      catch e
-        onError e
+      promise = @_downloadFiles filteredUrls
+      promise.then (entry)->
+        #this is where you do the on success thing
+        console.log "Success!!", entry
+        onSuccess(entry)
+      promise.fail (err)->
+        #this is where you do the on error thing
+        onError(err)
+      #catch e
+        #onError e
 
     _downloadFiles: (files) ->
 
@@ -80,6 +83,7 @@ class @ContentDownloader
         ft.onprogress = (event)->
           percent = numRecieved/numToLoad
           AppState.get().setPercentLoaded percent
+          console.log "Percent loaded", percent
 
         downloadFile = (file) ->
           offlineId = Random.id()

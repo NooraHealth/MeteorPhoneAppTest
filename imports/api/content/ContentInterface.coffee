@@ -21,8 +21,6 @@ class ContentInterface
     getSrc: (path) =>
       url = @getEndpoint(path)
       if Meteor.isCordova
-        console.log "getting the srC"
-        console.log url
         offlineFile = OfflineFiles.findOne {url: url}
         console.log "Get the source?"
         console.log offlineFile

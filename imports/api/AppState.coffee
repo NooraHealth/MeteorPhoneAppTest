@@ -34,10 +34,11 @@ class AppState
       @dict.setPersistent "curriculumDownloaded", state
       
     getCurriculumDownloaded: (state) ->
-      @dict.get "curriculumDownloaded", state
+      return @dict.get "curriculumDownloaded", state
       
     setPercentLoaded: (percent) ->
       @dict.setTemporary "percentLoaded", percent
+      console.log @getPercentLoaded
 
     getPercentLoaded: ->
       @dict.get "percentLoaded"
