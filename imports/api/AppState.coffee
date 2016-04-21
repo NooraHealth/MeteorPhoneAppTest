@@ -35,7 +35,8 @@ class AppState
       
     getCurriculumDownloaded: (id) ->
       if not id then return true
-      @dict.get "curriculumDownloaded#{id}"
+      downloaded = @dict.get "curriculumDownloaded#{id}"
+      if not downloaded? then return false else return downloaded
       
     setPercentLoaded: (percent) ->
       @dict.setTemporary "percentLoaded", percent

@@ -58,7 +58,8 @@ Template.Home_page.onCreated ->
         console.log e
       onSuccess = (e) ->
         console.log "SUCCESS LOADING"
-        AppState.get().setCurriculumDownloaded true
+        AppState.get().setCurriculumDownloaded id, true
+        console.log "WAS IT DOWNLOADED?", AppState.get().getCurriculumDownloaded id
       ContentDownloader.get().loadCurriculum id, onSuccess, onError
 
 

@@ -16,48 +16,43 @@ class @ContentDownloader
     constructor: ->
 
     loadCurriculum: (id, onSuccess, onError) =>
+      try
+        #validate the arguments
+        new SimpleSchema({
+          id: {type: String}
+          onSuccess: {type: Function}
+          onError: {type: Function, optional: true}
+        }).validate({id: id, onSuccess: onSuccess, onError: onError})
 
-      console.log "IDB EFORE", id
-      console.log id
-      #try
-      #validate the arguments
-      console.log "ID", id
-      console.log id
-      new SimpleSchema({
-        id: {type: String}
-        onSuccess: {type: Function}
-        onError: {type: Function, optional: true}
-      }).validate({id: id, onSuccess: onSuccess, onError: onError})
+        curriculum = Curriculums.findOne { _id: id }
+        if not curriculum? then throw new Meteor.Error "curriculum-not-found", "Curriculum of id #{id} not found"
 
-      curriculum = Curriculums.findOne { _id: id }
-      if not curriculum? then throw new Meteor.Error "curriculum-not-found", "Curriculum of id #{id} not found"
+        lessons = curriculum.getLessonDocuments()
 
-      lessons = curriculum.getLessonDocuments()
+        paths = []
+        for lesson in lessons
+          paths.merge @_allContentPathsInLesson(lesson)
 
-      paths = []
-      for lesson in lessons
-        paths.merge @_allContentPathsInLesson(lesson)
+        getFileName = (path) ->
+          spaces = new RegExp("[ ]+","g")
+          backslash = new RegExp("[/]+","g")
+          path = path.replace spaces, ""
+          path = path.replace backslash, ""
+          return path
 
-      getFileName = (path) ->
-        spaces = new RegExp("[ ]+","g")
-        backslash = new RegExp("[/]+","g")
-        path = path.replace spaces, ""
-        path = path.replace backslash, ""
-        return path
+        urls = ( {url: ContentInterface.get().getEndpoint(path), name: getFileName(path)} for path in paths )
+        filteredUrls = ( url for url in urls when not OfflineFiles.findOne({url: url.url})? )
 
-      urls = ( {url: ContentInterface.get().getEndpoint(path), name: getFileName(path)} for path in paths )
-      filteredUrls = ( url for url in urls when not OfflineFiles.findOne({url: url.url})? )
-
-      promise = @_downloadFiles filteredUrls
-      promise.then (entry)->
-        #this is where you do the on success thing
-        console.log "Success!!", entry
-        onSuccess(entry)
-      promise.fail (err)->
-        #this is where you do the on error thing
-        onError(err)
-      #catch e
-        #onError e
+        promise = @_downloadFiles filteredUrls
+        promise.then (entry)->
+          #this is where you do the on success thing
+          console.log "Success!!", entry
+          onSuccess(entry)
+        promise.fail (err)->
+          #this is where you do the on error thing
+          onError(err)
+      catch e
+        onError e
 
     _downloadFiles: (files) ->
 
@@ -69,6 +64,8 @@ class @ContentDownloader
       deferred = Q.defer()
       numToLoad = files.length
       numRecieved = 0
+      if numToLoad == 0
+        deferred.resolve()
 
       window.requestFileSystem LocalFileSystem.PERSISTENT, 0, (fs)->
 
