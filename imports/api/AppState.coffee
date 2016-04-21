@@ -30,11 +30,12 @@ class AppState
       index = @dict.get "lessonIndex"
       @setLessonIndex ++index
 
-    setCurriculumDownloaded: (state) ->
-      @dict.setPersistent "curriculumDownloaded", state
+    setCurriculumDownloaded: (id, state) ->
+      @dict.setPersistent "curriculumDownloaded#{id}", state
       
-    getCurriculumDownloaded: (state) ->
-      return @dict.get "curriculumDownloaded", state
+    getCurriculumDownloaded: (id) ->
+      if not id then return true
+      @dict.get "curriculumDownloaded#{id}"
       
     setPercentLoaded: (percent) ->
       @dict.setTemporary "percentLoaded", percent

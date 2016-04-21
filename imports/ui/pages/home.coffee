@@ -38,8 +38,6 @@ Template.Home_page.onCreated ->
 
   @onCurriculumSelected = ( id ) ->
     AppState.get().setCurriculumId id
-    if Meteor.isCordova
-      AppState.get().setCurriculumDownloaded false
 
   @autorun =>
     id = AppState.get().getCurriculumId()
@@ -67,8 +65,11 @@ Template.Home_page.onCreated ->
 Template.Home_page.helpers
   curriculumsReady: ->
     instance = Template.instance()
-    curriculumDownloaded = if Meteor.isCordova then AppState.get().getCurriculumDownloaded() else true
-    return instance.subscriptionsReady() and curriculumDownloaded
+    if Meteor.isCordova
+      id = AppState.get().getCurriculumId()
+      return instance.subscriptionsReady() and AppState.get().getCurriculumDownloaded(id)
+    else
+      return instance.subscriptionsReady()
 
   menuArgs: ->
     instance = Template.instance()
