@@ -10,12 +10,13 @@ AppState = require('../../api/AppState.coffee').AppState
 require './home.html'
 
 # COMPONENTS
-require '../../ui/components/navbar.html'
+require '../../ui/components/shared/navbar.html'
 require '../../ui/components/home/footer.html'
 require '../../ui/components/home/thumbnail.coffee'
 require '../../ui/components/home/menu/menu.coffee'
 require '../../ui/components/home/menu/list_item.coffee'
 require '../../ui/components/audio/audio.coffee'
+require '../../ui/components/shared/loading.coffee'
 
 Template.Home_page.onCreated ->
   @getLessonDocuments = =>
@@ -91,7 +92,7 @@ Template.Home_page.helpers
     setPlayIntroToFalse = -> AppState.get().setShouldPlayIntro false
     return {
       attributes: {
-        src: ContentInterface.get().introAudio()
+        src: ContentInterface.get().introPath()
       }
       playing: AppState.get().getShouldPlayIntro()
       whenPaused: setPlayIntroToFalse

@@ -1,6 +1,6 @@
 
 Modules = require('../../../../api/modules/modules.coffee').Modules
-require '../../button.coffee'
+require '../../shared/button.coffee'
 require './paginator.coffee'
 require './footer.html'
 

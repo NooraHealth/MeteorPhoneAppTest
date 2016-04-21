@@ -10,10 +10,16 @@ class ContentInterface
   class PrivateInterface
 
     constructor: ->
-      @introPath = "NooraHealthContent/Audio/AppIntro.mp3"
-      @correctSoundEffectFilePath = "NooraHealthContent/Audio/correct_soundeffect.mp3"
-      @incorrectSoundEffectFilePath = "NooraHealthContent/Audio/incorrect_soundeffect.mp3"
       @contentEndpoint = Meteor.settings.public.CONTENT_SRC
+
+    introPath: =>
+      return "./AppIntro.mp3"
+
+    correctSoundEffectFilePath: =>
+      return "./correct_soundeffect.mp3"
+
+    incorrectSoundEffectFilePath: =>
+      return "./incorrect_soundeffect.mp3"
 
     getEndpoint: (path) =>
       return @contentEndpoint + path
@@ -27,17 +33,6 @@ class ContentInterface
         if offlineFile? then WebAppLocalServer.localFileSystemUrl(offlineFile.fsPath) else ""
       else
         return url
-
-    incorrectSoundEffect: =>
-      return @getSrc @incorrectSoundEffectFilePath
-
-    correctSoundEffect: =>
-      return @getSrc @correctSoundEffectFilePath
-
-    introAudio: =>
-      console.log "getting the instro audio"
-      console.log @getSrc @introPath
-      return @getSrc @introPath
 
     _getContentSrc: ->
       return @contentEndpoint

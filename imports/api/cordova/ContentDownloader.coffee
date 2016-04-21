@@ -33,14 +33,8 @@ class @ContentDownloader
       if not curriculum? then throw new Meteor.Error "curriculum-not-found", "Curriculum of id #{id} not found"
 
       lessons = curriculum.getLessonDocuments()
+
       paths = []
-
-      paths.push ContentInterface.get().introAudio()
-      paths.push ContentInterface.get().correctSoundEffect()
-      paths.push ContentInterface.get().incorrectSoundEffect()
-      console.log "PATHS"
-      console.log paths
-
       for lesson in lessons
         paths.merge @_allContentPathsInLesson(lesson)
 
@@ -91,19 +85,22 @@ class @ContentDownloader
           ft.download(file.url, fsPath, getSuccessCallback(file, fsPath), getErrorCallback(file, fsPath), true)
 
 
+        markAsResolved = ->
+          numRecieved++
+          console.log "RESOLVED:" + numRecieved + "/"+ numToLoad
+          if numRecieved == numToLoad
+            deferred.resolve entry
+
         getSuccessCallback = (file, fsPath) ->
           return (entry)->
-            numRecieved++
-            console.log "RESOLVED:" + numRecieved + "/"+ numToLoad
-            console.log entry
             console.log file
+            console.log entry
             OfflineFiles.insert {
               url: file.url
               name: file.name
               fsPath: fsPath
             }
-            if numRecieved == numToLoad
-              deferred.resolve entry
+            markAsResolved()
 
         getErrorCallback = (file) ->
           return (error)->

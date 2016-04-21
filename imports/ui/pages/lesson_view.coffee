@@ -228,7 +228,7 @@ Template.Lesson_view_page.helpers
     instance = Template.instance()
     return {
       attributes: {
-        src: ContentInterface.get().incorrectSoundEffect()
+        src: ContentInterface.get().incorrectSoundEffectFilePath()
       }
       playing: instance.state.get("playingIncorrectSoundEffect")
       whenFinished: instance.stopPlayingSoundEffect
@@ -239,7 +239,7 @@ Template.Lesson_view_page.helpers
     instance = Template.instance()
     return {
       attributes: {
-        src: ContentInterface.get().correctSoundEffect()
+        src: ContentInterface.get().correctSoundEffectPath()
       }
       playing: instance.state.get("playingCorrectSoundEffect")
       whenFinished: instance.stopPlayingSoundEffect
