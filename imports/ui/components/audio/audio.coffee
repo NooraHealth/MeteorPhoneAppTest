@@ -8,8 +8,6 @@ Template.Audio.onCreated ->
   }
 
   @autorun =>
-    console.log "Validating audio"
-    console.log Template.currentData()
     new SimpleSchema({
       "attributes.src": {type: String}
       playing: {type: Boolean}
@@ -32,7 +30,6 @@ Template.Audio.onCreated ->
     instance = @
     elem = @elem instance
     if playing
-      console.log "playing this", elem
       elem.currentTime = 0
       elem.play()
       elem.addEventListener "ended", => @data.whenFinished?()

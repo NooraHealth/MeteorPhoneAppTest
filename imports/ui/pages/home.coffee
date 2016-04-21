@@ -37,6 +37,7 @@ Template.Home_page.onCreated ->
 
   @onCurriculumSelected = ( id ) ->
     AppState.get().setCurriculumId id
+    AppState.get().setCurriculumDownloaded false
 
   @autorun =>
     id = AppState.get().getCurriculumId()
@@ -48,20 +49,18 @@ Template.Home_page.onCreated ->
       @subscribe "lessons.inCurriculum", id
 
   @autorun =>
-    console.log "gettint the subscriptiuns ready"
     subscriptionsReady = @subscriptionsReady()
-    console.log "The subscriptions ready?", subscriptionsReady
     id = AppState.get().getCurriculumId()
-    console.log "this is id", id
-    if subscriptionsReady and Meteor.isCordova and id?
-      console.log "Going to loading"
-      console.log id
+    curriculumDownloaded = AppState.get().getCurriculumDownloaded()
+    if subscriptionsReady and Meteor.isCordova and id? and not curriculumDownloaded
       FlowRouter.go "loading"
       onError = (e) ->
         console.log "ERROR LOADING"
         console.log e
       onSuccess = (e) ->
+        Router.go "home"
         console.log "SUCCESS LOADING"
+        AppState.get().setCurriculumDownloaded true
       ContentDownloader.get().loadCurriculum id, onSuccess, onError
 
 
@@ -73,7 +72,6 @@ Template.Home_page.helpers
   menuArgs: ->
     instance = Template.instance()
     curriculumsToList = Curriculums.find({title:{$ne: "Start a New Curriculum"}})
-    console.log "the curriculums to list", curriculumsToList
     return {
       onCurriculumSelected: instance.onCurriculumSelected
       curriculums: curriculumsToList
@@ -95,7 +93,7 @@ Template.Home_page.helpers
       attributes: {
         src: ContentInterface.get().introAudio()
       }
-      playing: AppState.get().shouldPlayIntro()
+      playing: AppState.get().getShouldPlayIntro()
       whenPaused: setPlayIntroToFalse
       whenFinished: setPlayIntroToFalse
     }

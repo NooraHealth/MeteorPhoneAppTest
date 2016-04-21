@@ -1,6 +1,7 @@
 
 Curriculums = require('../curriculums/curriculums.coffee').Curriculums
 ContentInterface = require('../content/ContentInterface.coffee').ContentInterface
+AppState = require('../AppState.coffee').AppState
 OfflineFiles = require('./offline_files.coffee').OfflineFiles
 
 Array::merge = (other) -> Array::push.apply @, other
@@ -15,40 +16,51 @@ class @ContentDownloader
     constructor: ->
 
     loadCurriculum: (id, onSuccess, onError) =>
-      console.log "ABOUT TO DOWNLOAD CURRICUM"
-      if not id? then return null
 
-      curriculum = Curriculums.findOne { _id: id }
-      if not curriculum? then return null
-      lessons = curriculum.getLessonDocuments()
-      paths = []
+      console.log "IDB EFORE", id
+      console.log id
+      try
+        #validate the arguments
+        console.log "ID", id
+        console.log id
+        new SimpleSchema({
+          id: {type: String}
+          onSuccess: {type: Function}
+          onError: {type: Function, optional: true}
+        }).validate({id: id, onSuccess: onSuccess, onError: onError})
 
-      paths.push ContentInterface.get().introAudio()
-      paths.push ContentInterface.get().correctSoundEffect()
-      paths.push ContentInterface.get().incorrectSoundEffect()
+        curriculum = Curriculums.findOne { _id: id }
+        if not curriculum? then throw new Meteor.Error "curriculum-not-found", "Curriculum of id #{id} not found"
 
-      for lesson in lessons
-        paths.merge @_allContentPathsInLesson(lesson)
+        lessons = curriculum.getLessonDocuments()
+        paths = []
 
-      getFileName = (path) ->
-        spaces = new RegExp("[ ]+","g")
-        backslash = new RegExp("[/]+","g")
-        path = path.replace spaces, ""
-        path = path.replace backslash, ""
-        console.log "NEW PATH", path
-        return path
+        paths.push ContentInterface.get().introAudio()
+        paths.push ContentInterface.get().correctSoundEffect()
+        paths.push ContentInterface.get().incorrectSoundEffect()
 
-      urls = ( {url: ContentInterface.get().getEndpoint(path), name: getFileName(path)} for path in paths )
+        for lesson in lessons
+          paths.merge @_allContentPathsInLesson(lesson)
 
-      promise = @_downloadFiles urls
-      promise.then (entry)->
-        #this is where you do the on success thing
-        console.log "Success!!", entry
-        onSuccess(entry)
-      promise.fail (err)->
-        #this is where you do the on error thing
-        onError(err)
+        getFileName = (path) ->
+          spaces = new RegExp("[ ]+","g")
+          backslash = new RegExp("[/]+","g")
+          path = path.replace spaces, ""
+          path = path.replace backslash, ""
+          return path
 
+        urls = ( {url: ContentInterface.get().getEndpoint(path), name: getFileName(path)} for path in paths )
+
+        promise = @_downloadFiles urls
+        promise.then (entry)->
+          #this is where you do the on success thing
+          console.log "Success!!", entry
+          onSuccess(entry)
+        promise.fail (err)->
+          #this is where you do the on error thing
+          onError(err)
+      catch e
+        onError e
 
     _downloadFiles: (files) ->
 
@@ -67,7 +79,7 @@ class @ContentDownloader
 
         ft.onprogress = (event)->
           percent = numRecieved/numToLoad
-          Session.set "percent loaded", percent
+          AppState.get().setPercentLoaded percent
 
         downloadFile = (file) ->
           offlineId = Random.id()
@@ -81,14 +93,11 @@ class @ContentDownloader
             console.log "RESOLVED:" + numRecieved + "/"+ numToLoad
             console.log entry
             console.log file
-            OfflineFiles.insert({
+            OfflineFiles.insert {
               url: file.url
               name: file.name
               fsPath: fsPath
-            }, (error) ->
-              console.log "Error inserting doc"
-              console.log error
-            )
+            }
             if numRecieved == numToLoad
               deferred.resolve entry
 

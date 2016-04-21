@@ -1,5 +1,5 @@
 
-
+AppState = require('../../api/AppState.coffee').AppState
 require './loading.html'
 
 message = '<p class="loading-message">'+"Welcome to Noora Health"+'</p><p class="white-text">Just a moment, your curriculum is updating </p><p><a onClick="Meteor.logout()">Abort</a></p>
@@ -11,11 +11,7 @@ spinner = '<div class="spinner"><div class="bounce1"></div><div class="bounce2">
 
 Template.loading.onCreated ->
   @autorun ->
-    percent = Session.get "percent loaded"
-    if not percent
-      return
-    console.log "Setting the progress: ", percent
-    progressBar = $("#progress")
+    percent = AppState.get().getPercentLoaded()
     progressBar?.val percent*100
 
 Template.loading.helpers
