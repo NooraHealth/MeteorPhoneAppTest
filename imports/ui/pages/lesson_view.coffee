@@ -182,7 +182,6 @@ Template.Lesson_view_page.helpers
       return type == "BINARY" or type == "SCENARIO" or type == "MULTIPLE_CHOICE"
 
     if isQuestion module.type
-      console.log instance.shouldPlayQuestionAudio(module._id)
       return {
         module: module
         incorrectClasses: instance.state.get "incorrectClasses"
@@ -195,13 +194,9 @@ Template.Lesson_view_page.helpers
       return {module: module}
 
   hasAudio: (module) ->
-    console.log "Checking if has explanadtion", module
-    console.log module.audio
     return module.audio?
 
   hasExplanation: (module) ->
-    console.log "Checking if has explanadtion", module
-    console.log module.correct_audio
     return module.correct_audio?
 
   explanationArgs: (module) ->

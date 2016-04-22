@@ -36,8 +36,10 @@ class @ContentDownloader
         getFileName = (path) ->
           spaces = new RegExp("[ ]+","g")
           backslash = new RegExp("[/]+","g")
+          periods = new RegExp("[\.]+","g")
           path = path.replace spaces, ""
           path = path.replace backslash, ""
+          path = path.replace periods, ""
           return path
 
         urls = ( {url: ContentInterface.get().getEndpoint(path), name: getFileName(path)} for path in paths )

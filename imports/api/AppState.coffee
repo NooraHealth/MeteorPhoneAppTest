@@ -40,7 +40,6 @@ class AppState
       
     setPercentLoaded: (percent) ->
       @dict.setTemporary "percentLoaded", percent
-      console.log @getPercentLoaded
 
     getPercentLoaded: ->
       @dict.get "percentLoaded"

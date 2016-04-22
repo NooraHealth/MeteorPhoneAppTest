@@ -1,5 +1,6 @@
 
 Modules = require('../../../../api/modules/modules.coffee').Modules
+ContentInterface = require('../../../../api/content/ContentInterface.coffee').ContentInterface
 require "./video.html"
 
 Template.Lesson_view_page_video.onCreated ->
@@ -28,7 +29,7 @@ Template.Lesson_view_page_video.helpers
     return {
       title: module.title
       class: "video-module center"
-      src: module.video_url
+      src: ContentInterface.get().getSrc(module.video)
       controls: true
       autoplay: true
     }
