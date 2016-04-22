@@ -19,6 +19,11 @@ require '../../ui/components/audio/audio.coffee'
 require '../../ui/components/shared/loading.coffee'
 
 Template.Home_page.onCreated ->
+  console.log "Playing the sound"
+  sound = new Howl({
+    urls: ['AppIntro.mp3']
+  }).play()
+
   @getLessonDocuments = =>
     curriculum = @getCurriculumDoc()
     docs = curriculum?.getLessonDocuments()
@@ -106,14 +111,21 @@ Template.Home_page.helpers
   audioArgs: ->
     instance = Template.instance()
     setPlayIntroToFalse = -> AppState.get().setShouldPlayIntro false
-    return {
-      attributes: {
-        src: ContentInterface.get().introPath()
-      }
-      playing: AppState.get().getShouldPlayIntro()
-      whenPaused: setPlayIntroToFalse
-      whenFinished: setPlayIntroToFalse
-    }
+    sound = new Howl({
+      urls: ['AppIntro.mp3']
+    })
+    console.log "AUDIO ARGS"
+    if AppState.get().getShouldPlayIntro()
+      console.log "PLAHING THE HOWL"
+      sound.play()
+    #return {
+      #attributes: {
+        #src: ContentInterface.get().introPath()
+      #}
+      #playing: AppState.get().getShouldPlayIntro()
+      #whenPaused: setPlayIntroToFalse
+      #whenFinished: setPlayIntroToFalse
+    #}
 
   lessons: ->
     instance = Template.instance()
