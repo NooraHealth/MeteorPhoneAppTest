@@ -190,6 +190,11 @@ Template.Lesson_view_page.helpers
         onCorrectAnswer: instance.onAnswerCallback(instance, "CORRECT")
         onWrongAnswer: instance.onAnswerCallback(instance, "WRONG")
       }
+    else if module.type == "VIDEO"
+      return {
+        module: module
+        playing: instance.isCurrent module._id
+      }
     else
       return {module: module}
 

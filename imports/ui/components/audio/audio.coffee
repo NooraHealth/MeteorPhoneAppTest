@@ -4,7 +4,7 @@ Template.Audio.onCreated ->
   @state = new ReactiveDict()
 
   @state.setDefault {
-    whenFinished: null
+    rendered: false
   }
 
   @autorun =>
