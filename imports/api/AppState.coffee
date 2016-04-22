@@ -31,11 +31,14 @@ class AppState
       @setLessonIndex ++index
 
     setCurriculumDownloaded: (id, state) ->
+      console.log "Setting the curriculum downloaded of #{id} to #{state}"
       @dict.setPersistent "curriculumDownloaded#{id}", state
       
     getCurriculumDownloaded: (id) ->
+      console.log "Is there an id?", id
       if not id then return true
       downloaded = @dict.get "curriculumDownloaded#{id}"
+      console.log "GETTIGN the curriculum downloaded of #{id}: ", downloaded
       if not downloaded? then return false else return downloaded
       
     setPercentLoaded: (percent) ->
@@ -56,5 +59,17 @@ class AppState
 
     getShouldPlayIntro: (state) ->
       @dict.get "playedIntro"
+
+    setDownloadError: (id, error) ->
+      @dict.setTemporary "errordownloading#{id}", error
+
+    getDownloadError: (id) ->
+      @dict.get "errordownloading#{id}"
+
+    loading: ->
+      @dict.get "loading"
+
+    setLoading: (state) ->
+      @dict.set "loading", state
 
 module.exports.AppState = AppState

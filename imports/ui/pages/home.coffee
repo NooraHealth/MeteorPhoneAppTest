@@ -52,22 +52,37 @@ Template.Home_page.onCreated ->
     subscriptionsReady = @subscriptionsReady()
     id = AppState.get().getCurriculumId()
     curriculumDownloaded = AppState.get().getCurriculumDownloaded(id)
-    if subscriptionsReady and Meteor.isCordova and id? and not curriculumDownloaded
+    loading = AppState.get().loading()
+    if subscriptionsReady and Meteor.isCordova and id? and not curriculumDownloaded and not loading
       onError = (e) ->
         console.log "ERROR LOADING"
         console.log e
+        AppState.get().setDownloadError id, e.message
+        AppState.get().setLoading false
       onSuccess = (e) ->
         console.log "SUCCESS LOADING"
         AppState.get().setCurriculumDownloaded id, true
+        AppState.get().setLoading false
+      AppState.get().setLoading true
       ContentDownloader.get().loadCurriculum id, onSuccess, onError
 
+  @autorun =>
+    id = AppState.get().getCurriculumId()
+    error = AppState.get().getDownloadError(id)
+    if error
+      swal {
+        type: "error"
+        title: "Error downloading your curriculum"
+        text: error
+      }
 
 Template.Home_page.helpers
   curriculumsReady: ->
     instance = Template.instance()
     if Meteor.isCordova
       id = AppState.get().getCurriculumId()
-      return instance.subscriptionsReady() and AppState.get().getCurriculumDownloaded(id)
+      console.log "In the curriculums ready: is curriculum downloaded?", AppState.get().getCurriculumDownloaded(id)
+      return instance.subscriptionsReady() and not AppState.get().loading()
     else
       return instance.subscriptionsReady()
 

@@ -36,23 +36,37 @@ class @ContentDownloader
         getFileName = (path) ->
           spaces = new RegExp("[ ]+","g")
           backslash = new RegExp("[/]+","g")
-          periods = new RegExp("[\.]+","g")
           path = path.replace spaces, ""
           path = path.replace backslash, ""
-          path = path.replace periods, ""
           return path
 
         urls = ( {url: ContentInterface.get().getEndpoint(path), name: getFileName(path)} for path in paths )
         filteredUrls = ( url for url in urls when not OfflineFiles.findOne({url: url.url})? )
 
-        promise = @_downloadFiles filteredUrls
-        promise.then (entry)->
+        console.log "DOWNLOADING FILTERED URLS", filteredUrls.length
+        @_downloadFiles filteredUrls
+        .then (entry, error)->
           #this is where you do the on success thing
+          console.log "in the onsuccess"
+          console.log "entry"
+          console.log entry
+          console.log "error"
+          console.log error
           onSuccess(entry)
-        promise.fail (err)->
+        , (err)->
           #this is where you do the on error thing
-          onError(err)
+          console.log "throwing meteor error"
+          console.log "IN THE ONCATCH"
+          message = ""
+          if err.code == 2
+            message = "Error accessing content on server"
+            onError(new Meteor.Error("error-downloading", message))
+        , (progress) ->
+          console.log "PROGRESS IN .notify"
+          console.log progress
+          AppState.get().setPercentLoaded progress
       catch e
+        console.log "CATCHING THE ERROR"
         onError e
 
     _downloadFiles: (files) ->
@@ -64,8 +78,11 @@ class @ContentDownloader
 
       deferred = Q.defer()
       numToLoad = files.length
+      console.log files
+      console.log "NUM TO LOAD before", numToLoad
       numRecieved = 0
       if numToLoad == 0
+        console.log "NUM TO LOAD IS 0 so resolving"
         deferred.resolve()
 
       window.requestFileSystem LocalFileSystem.PERSISTENT, 0, (fs)->
@@ -74,8 +91,7 @@ class @ContentDownloader
 
         ft.onprogress = (event)->
           percent = numRecieved/numToLoad
-          AppState.get().setPercentLoaded percent
-          console.log "Percent loaded", percent
+          deferred.notify(percent)
 
         downloadFile = (file) ->
           offlineId = Random.id()
@@ -83,10 +99,11 @@ class @ContentDownloader
           ft.download(file.url, fsPath, getSuccessCallback(file, fsPath), getErrorCallback(file, fsPath), true)
 
 
-        markAsResolved = ->
+        markAsResolved = (entry) ->
           numRecieved++
           console.log "RESOLVED:" + numRecieved + "/"+ numToLoad
           if numRecieved == numToLoad
+            console.log "THE NUMBERS EQUAL EACH OTHER ABOUT TO RESOLVE---------------------------"
             deferred.resolve entry
 
         getSuccessCallback = (file, fsPath) ->
@@ -102,16 +119,15 @@ class @ContentDownloader
 
         getErrorCallback = (file) ->
           return (error)->
-            console.log "ERROR"
-            console.log file
-            console.log "ERROR "
-            console.log error
             if error.http_status == 404
               markAsResolved()
             else if error.code == 3
+              console.log "ERROR CODE 3 about to dowload again"
               downloadFile file
             else
-              deferred.reject(error)
+              console.log "ABOUT TO REJECT"
+              deferred.reject error
+              #throw new Meteor.Error "error-downloading", error
 
         for file in files
           if not (OfflineFiles.findOne { url: file.url })?
@@ -120,7 +136,7 @@ class @ContentDownloader
       , (err)->
         console.log "ERROR requesting local filesystem: "
         console.log err
-        promise.reject err
+        deferred.reject err
 
       return deferred.promise
 
