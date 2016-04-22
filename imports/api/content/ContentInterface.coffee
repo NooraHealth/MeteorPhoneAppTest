@@ -13,13 +13,13 @@ class ContentInterface
       @contentEndpoint = Meteor.settings.public.CONTENT_SRC
 
     introPath: =>
-      return "./AppIntro.mp3"
+      return "AppIntro.mp3"
 
     correctSoundEffectFilePath: =>
-      return "./correct_soundeffect.mp3"
+      return "correct_soundeffect.mp3"
 
     incorrectSoundEffectFilePath: =>
-      return "./incorrect_soundeffect.mp3"
+      return "incorrect_soundeffect.mp3"
 
     getEndpoint: (path) =>
       return @contentEndpoint + path

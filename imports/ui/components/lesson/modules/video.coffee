@@ -11,13 +11,10 @@ Template.Lesson_view_page_video.onCreated ->
   }
   # Data context validation
   @autorun =>
-    console.log "This is the module of the video", Template.currentData().module
-    console.log "Validating video"
     schema = new SimpleSchema({
       module: {type: Modules._helpers}
       playing: {type: Boolean}
     }).validate(Template.currentData())
-    console.log "Done validating video"
 
   @elem = (template) ->
     if not @state.get "rendered" then return ""
@@ -32,8 +29,6 @@ Template.Lesson_view_page_video.onCreated ->
     instance = @
     elem = @elem instance
     if playing
-      console.log "ABOUT TO PLAY THIS", elem
-      console.log elem
       elem.currentTime = 0
       elem.play()
     else
@@ -41,7 +36,6 @@ Template.Lesson_view_page_video.onCreated ->
 
 Template.Lesson_view_page_video.helpers
   iframeAttributes: (module) ->
-    console.log "Fetting the iframe attributes", module
     return {
       title: module.title
       class: "embedded-video center"
@@ -51,7 +45,6 @@ Template.Lesson_view_page_video.helpers
     }
 
   videoTagAttributes: (module) ->
-    console.log "Fetting the videoTag attributes", module
     return {
       title: module.title
       class: "video-module center"
@@ -60,7 +53,6 @@ Template.Lesson_view_page_video.helpers
     }
 
 Template.Lesson_view_page_video.onRendered ->
-  console.log "Rendering the videoModule"
   instance = Template.instance()
   instance.state.set "rendered", true
   #videoController = Scene.get().getModuleSequenceController().getCurrentController()

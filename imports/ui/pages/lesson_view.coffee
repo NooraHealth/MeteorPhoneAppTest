@@ -66,11 +66,12 @@ Template.Lesson_view_page.onCreated ()->
 
   @onAnswerCallback = (instance, type) ->
     return (module) ->
-      if type == "CORRECT"
+      if type is "CORRECT"
         instance.state.set "playingQuestion", false
         instance.state.set "playingExplanation", true
       if module?.type is "BINARY" or module?.type is "SCENARIO"
         if type is "CORRECT"
+          console.log "Setting the sound effect"
           instance.state.set "playingCorrectSoundEffect", true
           alertType = "success"
         else
@@ -237,6 +238,8 @@ Template.Lesson_view_page.helpers
 
   correctSoundEffectArgs: ->
     instance = Template.instance()
+    console.log "Changing the correct sound effect args"
+    console.log instance.state.get("playingCorrectSoundEffect")
     return {
       attributes: {
         src: ContentInterface.get().correctSoundEffectFilePath()

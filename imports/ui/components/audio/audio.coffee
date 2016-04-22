@@ -1,45 +1,52 @@
 require './audio.html'
 
 Template.Audio.onCreated ->
-  @state = new ReactiveDict()
 
+  @state = new ReactiveDict()
   @state.setDefault {
-    rendered: false
+    playing: false
   }
 
   @autorun =>
+    data = Template.currentData()
     new SimpleSchema({
       "attributes.src": {type: String}
       playing: {type: Boolean}
       whenFinished: {type: Function, optional: true}
       whenPaused: {type: Function, optional: true}
-    }).validate Template.currentData()
+    }).validate data
 
-    @data = Template.currentData()
-
-  @elem = (template) ->
-    if not @state.get "rendered" then return ""
-    else
-      template.find "audio"
+    @sound = new Howl {
+      urls: [data.attributes.src]
+      onend: data.whenFinished
+      #onpause: data.whenPaused
+      onend: ->
+        console.log "ON END"
+      onpause: ->
+        console.log "ON PAUSE"
+      onloaderror: (error)->
+        console.log "error loading #{data.attributes.src}"
+        console.log error
+      onplay: =>
+        console.log "I am being played!", data.attributes.src
+    }
 
   @autorun =>
-    elemRendered = @state.get "rendered"
-    if not elemRendered then return
+    shouldPlay = Template.currentData().playing
+    console.log "Change to teh state of #{Template.currentData().attributes.src} #{shouldPlay}"
+    alreadyPlaying = @state.get "playing"
+    if shouldPlay and not alreadyPlaying
+      console.log "playing the sound"
+      console.log @sound
+      @state.set "playing", true
+      @sound.play()
+    else if alreadyPlaying
+      @sound.stop()
 
-    playing = Template.currentData().playing
-    instance = @
-    elem = @elem instance
-    if playing
-      console.log "ABOUT TO PLAY THIS", elem
-      console.log elem
-      console.log @data
-      elem.currentTime = 0
-      elem.play()
-      elem.addEventListener "ended", => @data.whenFinished?()
-      elem.addEventListener "pause", => @data.whenPaused?()
-    else
-      elem.pause()
-
-Template.Audio.onRendered ->
-  instance = Template.instance()
-  instance.state.set "rendered", true
+Template.Audio.onDestroyed ->
+  console.log "Destroying #{Template.instance().sound}"
+  if Template.instance().sound?
+    console.log "stopping thehowl"
+    console.log Template.instance().sound
+    Template.instance().sound.stop()
+      

@@ -80,6 +80,13 @@ Template.Home_page.onCreated ->
         title: "Error downloading your curriculum"
         text: error
       }
+  @correctSoundEffect = new Howl {
+    urls: ContentInterface.get().correctSoundEffectFilePath()
+  }
+
+  @incorrectSoundEffect = new Howl {
+    urls: ContentInterface.get().incorrectSoundEffectFilePath()
+  }
 
 Template.Home_page.helpers
   curriculumsReady: ->
@@ -111,21 +118,14 @@ Template.Home_page.helpers
   audioArgs: ->
     instance = Template.instance()
     setPlayIntroToFalse = -> AppState.get().setShouldPlayIntro false
-    sound = new Howl({
-      urls: ['AppIntro.mp3']
-    })
-    console.log "AUDIO ARGS"
-    if AppState.get().getShouldPlayIntro()
-      console.log "PLAHING THE HOWL"
-      sound.play()
-    #return {
-      #attributes: {
-        #src: ContentInterface.get().introPath()
-      #}
-      #playing: AppState.get().getShouldPlayIntro()
-      #whenPaused: setPlayIntroToFalse
-      #whenFinished: setPlayIntroToFalse
-    #}
+    return {
+      attributes: {
+        src: ContentInterface.get().introPath()
+      }
+      playing: AppState.get().getShouldPlayIntro()
+      whenPaused: setPlayIntroToFalse
+      whenFinished: setPlayIntroToFalse
+    }
 
   lessons: ->
     instance = Template.instance()
