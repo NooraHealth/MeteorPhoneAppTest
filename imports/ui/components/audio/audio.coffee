@@ -1,52 +1,55 @@
 require './audio.html'
 
 Template.Audio.onCreated ->
-
   @state = new ReactiveDict()
+
   @state.setDefault {
     playing: false
   }
 
   @autorun =>
-    data = Template.currentData()
+    @data = Template.currentData()
     new SimpleSchema({
       "attributes.src": {type: String}
       playing: {type: Boolean}
       whenFinished: {type: Function, optional: true}
       whenPaused: {type: Function, optional: true}
-    }).validate data
-
-    @sound = new Howl {
-      urls: [data.attributes.src]
-      onend: data.whenFinished
-      #onpause: data.whenPaused
-      onend: ->
-        console.log "ON END"
-      onpause: ->
-        console.log "ON PAUSE"
-      onloaderror: (error)->
-        console.log "error loading #{data.attributes.src}"
-        console.log error
-      onplay: =>
-        console.log "I am being played!", data.attributes.src
-    }
+    }).validate @data
 
   @autorun =>
-    shouldPlay = Template.currentData().playing
-    console.log "Change to teh state of #{Template.currentData().attributes.src} #{shouldPlay}"
+    data = Template.currentData()
+    shouldPlay = data.playing
     alreadyPlaying = @state.get "playing"
     if shouldPlay and not alreadyPlaying
-      console.log "playing the sound"
-      console.log @sound
-      @state.set "playing", true
+      console.log "Autorun playing!!! #{data.attributes.src}"
+      @sound = new Howl {
+        urls: [data.attributes.src]
+        onloaderror: ->
+          console.log "LOADERROR #{data.attributes.src}"
+        onend: @data.whenFinished
+        onpause: @data.whenPaused
+        #onpause: ->
+          #console.log "PAUSED #{data.attributes.src}"
+        #onload: ->
+          #console.log "LOADED #{data.attributes.src}"
+        #onplay: ->
+          #console.log "PLAY #{data.attributes.src}"
+        #onend: ->
+          #console.log "ENDED #{data.attributes.src}"
+      }
       @sound.play()
-    else if alreadyPlaying
-      @sound.stop()
+      @state.set "playing", true
+    else if not shouldPlay and alreadyPlaying and @sound?
+      console.log "Stopping the audio"
+      @state.set "playing", false
+      @sound.pause()
 
 Template.Audio.onDestroyed ->
-  console.log "Destroying #{Template.instance().sound}"
-  if Template.instance().sound?
-    console.log "stopping thehowl"
-    console.log Template.instance().sound
-    Template.instance().sound.stop()
-      
+  instance = Template.instance()
+  isPlaying = instance.state.get "playing"
+  console.log "Is it playing?", isPlaying
+  if isPlaying
+    console.log "Is playing!"
+    console.log instance.sound
+    instance.sound?.stop()
+  instance.sound?.unload()
