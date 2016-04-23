@@ -26,6 +26,7 @@ Template.Audio.onCreated ->
         urls: [data.attributes.src]
         onloaderror: ->
           console.log "LOADERROR #{data.attributes.src}"
+          console.trace()
         onend: @data.whenFinished
         onpause: @data.whenPaused
         #onpause: ->

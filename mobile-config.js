@@ -1,4 +1,6 @@
 App.accessRule( "*");
+App.setPreference('AllowInlineMediaPlayback', 'true');
+App.setPreference('MediaPlaybackRequiresUserAction', 'false');
 
 App.info({
   name: "Noora Health WebApp",
