@@ -11,8 +11,9 @@ Template.Lesson_view_page_scenario.onCreated ->
       correctlySelectedClasses: {type: String}
       incorrectClasses: {type: String}
       incorrectlySelectedClasses: {type: String}
-      onWrongAnswer: {type: Function}
-      onCorrectAnswer: {type: Function}
+      onWrongChoice: {type: Function}
+      onCorrectChoice: {type: Function}
+      onCompletedQuestion: {type: Function}
     }).validate(Template.currentData())
 
     @data = Template.currentData()
@@ -64,11 +65,10 @@ Template.Lesson_view_page_scenario.onCreated ->
         instance.state.set "selected", selected
       if module.isCorrectAnswer option
         instance.state.set "complete", true
-        instance.data.onCorrectAnswer module
+        instance.data.onCorrectChoice()
+        instance.data.onCompletedQuestion()
       else
-        instance.data.onWrongAnswer module
-
-
+        instance.data.onWrongChoice()
 
 Template.Lesson_view_page_scenario.helpers
   normalButtonArgs: ->

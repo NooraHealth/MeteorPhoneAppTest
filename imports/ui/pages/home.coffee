@@ -19,10 +19,6 @@ require '../../ui/components/audio/audio.coffee'
 require '../../ui/components/shared/loading.coffee'
 
 Template.Home_page.onCreated ->
-  console.log "Playing the sound"
-  sound = new Howl({
-    urls: ['AppIntro.mp3']
-  }).play()
 
   @getLessonDocuments = =>
     curriculum = @getCurriculumDoc()

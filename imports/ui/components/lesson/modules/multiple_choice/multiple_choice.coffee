@@ -20,8 +20,9 @@ Template.Lesson_view_page_multiple_choice.onCreated ->
       correctlySelectedClasses: {type: String}
       incorrectClasses: {type: String}
       incorrectlySelectedClasses: {type: String}
-      onWrongAnswer: {type: Function}
-      onCorrectAnswer: {type: Function}
+      onWrongChoice: {type: Function}
+      onCorrectChoice: {type: Function}
+      onCompletedQuestion: {type: Function}
     }).validate(Template.currentData())
 
     @data = Template.currentData()
@@ -29,13 +30,16 @@ Template.Lesson_view_page_multiple_choice.onCreated ->
   @getOnSelectedCallback = (module, templateInstance) ->
     return (option) ->
       if module.isCorrectAnswer option
+        templateInstance.data.onCorrectChoice()
         correctlySelected = templateInstance.state.get "correctlySelected"
         if option not in correctlySelected
           correctlySelected.push option
           templateInstance.state.set "correctlySelected", correctlySelected
           if correctlySelected.length == module.correct_answer.length
             templateInstance.state.set "completed", true
+            templateInstance.data.onCompletedQuestion()
       else
+        templateInstance.data.onWrongChoice()
         incorrectlySelected = templateInstance.state.get "incorrectlySelected"
         if option not in incorrectlySelected
           incorrectlySelected.push option

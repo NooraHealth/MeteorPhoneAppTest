@@ -58,30 +58,37 @@ Template.Lesson_view_page.onCreated ()->
       return pages
 
   @onPauseExplanation = =>
+    console.log "In the on pause explanation"
     @state.set "playingExplanation", false
 
   @onFinishExplanation = =>
+    console.log "In the on finish explanation"
     @state.set "playingExplanation", false
     @state.set "nextButtonAnimated", true
 
-  @onAnswerCallback = (instance, type) ->
-    return (module) ->
+  @onChoice = (instance, type, showAlert) ->
+    return ->
       if type is "CORRECT"
-        instance.state.set "playingQuestion", false
-        instance.state.set "playingExplanation", true
-      if module?.type is "BINARY" or module?.type is "SCENARIO"
-        if type is "CORRECT"
-          console.log "Setting the sound effect"
-          instance.state.set "playingCorrectSoundEffect", true
-          alertType = "success"
-        else
-          instance.state.set "playingIncorrectSoundEffect", true
-          alertType = "error"
+        instance.state.set "playingCorrectSoundEffect", true
+        instance.state.set "playingIncorrectSoundEffect", false
+        alertType = 'success'
+      else
+        instance.state.set "playingIncorrectSoundEffect", true
+        instance.state.set "playingCorrectSoundEffect", false
+        alertType = 'error'
+      if showAlert
         swal {
           title: ""
           type: alertType
           timer: 3000
         }
+
+  @onCompletedQuestion = (instance) ->
+    return ->
+      instance.state.set "playingQuestion", false
+      instance.state.set "playingExplanation", true
+      instance.state.set "playingCorrectSoundEffect", false
+      instance.state.set "playingIncorrectSoundEffect", true
 
   @stopPlayingSoundEffect = =>
     @state.set "playingCorrectSoundEffect", false
@@ -183,13 +190,15 @@ Template.Lesson_view_page.helpers
       return type == "BINARY" or type == "SCENARIO" or type == "MULTIPLE_CHOICE"
 
     if isQuestion module.type
+      showAlert = if module.type == 'MULTIPLE_CHOICE' then false else true
       return {
         module: module
         incorrectClasses: instance.state.get "incorrectClasses"
         incorrectlySelectedClasses: instance.state.get "incorrectlySelectedClasses"
         correctlySelectedClasses: instance.state.get "correctlySelectedClasses"
-        onCorrectAnswer: instance.onAnswerCallback(instance, "CORRECT")
-        onWrongAnswer: instance.onAnswerCallback(instance, "WRONG")
+        onCorrectChoice: instance.onChoice(instance, "CORRECT", showAlert)
+        onWrongChoice: instance.onChoice(instance, "WRONG", showAlert)
+        onCompletedQuestion: instance.onCompletedQuestion(instance)
       }
     else if module.type == "VIDEO"
       return {

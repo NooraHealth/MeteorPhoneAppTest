@@ -13,8 +13,9 @@ Template.Lesson_view_page_binary.onCreated ->
       correctlySelectedClasses: {type: String}
       incorrectClasses: {type: String}
       incorrectlySelectedClasses: {type: String}
-      onWrongAnswer: {type: Function}
-      onCorrectAnswer: {type: Function}
+      onWrongChoice: {type: Function}
+      onCorrectChoice: {type: Function}
+      onCompletedQuestion: {type: Function}
     }).validate(Template.currentData())
     @data = Template.currentData()
 
@@ -30,9 +31,10 @@ Template.Lesson_view_page_binary.onCreated ->
       module = instance.data.module
       instance.state.set "selected", option
       if module.isCorrectAnswer option
-        instance.data.onCorrectAnswer(instance.data.module)
+        instance.data.onCorrectChoice()
+        instance.data.onCompletedQuestion()
       else
-        instance.data.onWrongAnswer(instance.data.module)
+        instance.data.onWrongChoice()
 
   @questionComplete = ->
     selected = @state.get "selected"
