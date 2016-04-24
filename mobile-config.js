@@ -1,4 +1,6 @@
 App.accessRule( "*");
+
+App.setPreference('Orientation', 'landscape');
 App.setPreference('AllowInlineMediaPlayback', 'true');
 App.setPreference('MediaPlaybackRequiresUserAction', 'false');
 
