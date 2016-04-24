@@ -55,6 +55,7 @@ class AppState
       @dict.get "curriculumId"
 
     setShouldPlayIntro: (state) ->
+      console.log "setting whether should play intro to ", state
       @dict.setPersistent "playedIntro", state
 
     getShouldPlayIntro: (state) ->

@@ -19,6 +19,10 @@ require '../../ui/components/audio/audio.coffee'
 require '../../ui/components/shared/loading.coffee'
 
 Template.Home_page.onCreated ->
+  console.log "MAKING A NEW HOWL"
+  new Howl {
+    urls: ['correct_soundeffect.mp3', 'incorrect_soundeffect.mp3']
+  }
 
   @getLessonDocuments = =>
     curriculum = @getCurriculumDoc()

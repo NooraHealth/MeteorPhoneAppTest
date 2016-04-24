@@ -58,11 +58,9 @@ Template.Lesson_view_page.onCreated ()->
       return pages
 
   @onPauseExplanation = =>
-    console.log "In the on pause explanation"
     @state.set "playingExplanation", false
 
   @onFinishExplanation = =>
-    console.log "In the on finish explanation"
     @state.set "playingExplanation", false
     @state.set "nextButtonAnimated", true
 
@@ -87,8 +85,6 @@ Template.Lesson_view_page.onCreated ()->
     return ->
       instance.state.set "playingQuestion", false
       instance.state.set "playingExplanation", true
-      instance.state.set "playingCorrectSoundEffect", false
-      instance.state.set "playingIncorrectSoundEffect", true
 
   @stopPlayingSoundEffect = =>
     @state.set "playingCorrectSoundEffect", false
