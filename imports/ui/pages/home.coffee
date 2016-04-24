@@ -19,9 +19,14 @@ require '../../ui/components/audio/audio.coffee'
 require '../../ui/components/shared/loading.coffee'
 
 Template.Home_page.onCreated ->
-  console.log "MAKING A NEW HOWL"
+  
+  #loads the soundeffects, circumventing a howler.js bug that prevents
+  #them from loading in lessons_view.coffee
   new Howl {
-    urls: ['correct_soundeffect.mp3', 'incorrect_soundeffect.mp3']
+    urls: ['incorrect_soundeffect.mp3']
+  }
+  new Howl {
+    urls: ['correct_soundeffect.mp3']
   }
 
   @getLessonDocuments = =>
@@ -66,6 +71,7 @@ Template.Home_page.onCreated ->
         AppState.get().setLoading false
       onSuccess = (e) ->
         console.log "SUCCESS LOADING"
+      AppState.get().setLessonIndex 0
         AppState.get().setCurriculumDownloaded id, true
         AppState.get().setLoading false
       AppState.get().setLoading true

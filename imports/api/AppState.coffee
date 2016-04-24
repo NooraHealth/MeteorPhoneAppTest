@@ -1,4 +1,6 @@
 
+Curriculums = require('./curriculums/curriculums.coffee').Curriculums
+
 class AppState
   @get: ()->
     @dict ?= new Private "NooraHealthApp"
@@ -27,8 +29,10 @@ class AppState
       @dict.get "lessonIndex"
 
     incrementLesson: ->
+      id = @getCurriculumId()
+      numLessons = Curriculums.findOne({_id: id}).lessons.length
       index = @dict.get "lessonIndex"
-      @setLessonIndex ++index
+      @setLessonIndex((++index) % numLessons)
 
     setCurriculumDownloaded: (id, state) ->
       console.log "Setting the curriculum downloaded of #{id} to #{state}"
