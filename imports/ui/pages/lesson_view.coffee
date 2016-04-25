@@ -129,7 +129,12 @@ Template.Lesson_view_page.onCreated ()->
         nextButton: '.swiper-button-next',
     }
 
-  @onNextButtonClicked = => if @lessonComplete() then @celebrateCompletion() else @goToNextModule()
+  @onNextButtonClicked = =>
+    #remove .active-state class if it exists (Framework7 bug hackaround)
+    active = $(".active-state")
+    if active?
+      active.removeClass "active-state"
+    if @lessonComplete() then @celebrateCompletion() else @goToNextModule()
 
   @nextButtonText = => if @lessonComplete() then "FINISH" else "NEXT"
 

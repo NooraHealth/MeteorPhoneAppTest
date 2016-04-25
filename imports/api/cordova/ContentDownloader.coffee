@@ -80,6 +80,7 @@ class @ContentDownloader
       numToLoad = files.length
       console.log files
       console.log "NUM TO LOAD before", numToLoad
+      retry = []
       numRecieved = 0
       if numToLoad == 0
         console.log "NUM TO LOAD IS 0 so resolving"
@@ -123,7 +124,11 @@ class @ContentDownloader
               markAsResolved()
             else if error.code == 3
               console.log "ERROR CODE 3 about to dowload again"
-              downloadFile file
+              if file.name in retry
+                deferred.reject error
+              else
+                retry.push file
+                downloadFile file
             else
               console.log "ABOUT TO REJECT"
               deferred.reject error

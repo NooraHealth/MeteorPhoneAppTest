@@ -80,6 +80,7 @@ Template.Home_page.onCreated ->
         AppState.get().setCurriculumDownloaded id, true
         AppState.get().setLoading false
       AppState.get().setLoading true
+      Tracker.flush()
       ContentDownloader.get().loadCurriculum id, onSuccess, onError
 
   @autorun =>
@@ -103,7 +104,6 @@ Template.Home_page.helpers
       return instance.subscriptionsReady()
 
   isLoading: ->
-    console.log "is loading?", AppState.get().loading()
     return AppState.get().loading()
 
   menuArgs: ->
@@ -140,5 +140,7 @@ Template.Home_page.helpers
     return instance.getLessonDocuments()
 
 Template.Home_page.events
-  '.open-panel': ->
-    console.log "Clicked!"
+  '.open-panel': (e, template) ->
+    #hackaround Framework7 bugs on ios where active state is not removed
+    active = @find("active-state")
+    if active? then active.removeClass "active-state"
