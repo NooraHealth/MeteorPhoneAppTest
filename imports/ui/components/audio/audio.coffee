@@ -52,5 +52,5 @@ Template.Audio.onDestroyed ->
   if isPlaying
     console.log "Is playing!"
     console.log instance.sound
-    instance.sound?.stop()
+    instance.sound?.pause()
   instance.sound?.unload()

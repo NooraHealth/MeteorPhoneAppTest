@@ -43,10 +43,11 @@ class AppState
       @dict.get "curriculumId"
 
     setShouldPlayIntro: (state) ->
-      @dict.setPersistent "playedIntro", state
+      console.log "Setting play intro to #{state}"
+      @dict.setPersistent "playIntro", state
 
     getShouldPlayIntro: (state) ->
-      @dict.get "playedIntro"
+      @dict.get "playIntro"
 
     setDownloadError: (id, error) ->
       @dict.setTemporary "errordownloading#{id}", error

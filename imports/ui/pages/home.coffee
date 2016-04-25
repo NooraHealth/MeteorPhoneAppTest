@@ -40,8 +40,6 @@ Template.Home_page.onCreated ->
 
   @currentLessonId = =>
     curriculum = @getCurriculumDoc()
-    console.log curriculum
-    console.log "curriculum #{curriculum.lessons.length}"
     numLessons = if curriculum then curriculum.lessons.length else 0
     if not curriculum? then return 0
     lessonIndex = AppState.get().getLessonIndex()
@@ -104,7 +102,8 @@ Template.Home_page.helpers
     else
       return instance.subscriptionsReady()
 
-  loading: ->
+  isLoading: ->
+    console.log "is loading?", AppState.get().loading()
     return AppState.get().loading()
 
   menuArgs: ->
