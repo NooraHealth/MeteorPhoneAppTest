@@ -21,7 +21,6 @@ class AppState
       @setLessonIndex ++index
 
     setCurriculumDownloaded: (id, state) ->
-      console.log "Setting the curriculum downloaded of #{id} to #{state}"
       @dict.setPersistent "curriculumDownloaded#{id}", state
       
     getCurriculumDownloaded: (id) ->
@@ -43,17 +42,16 @@ class AppState
       @dict.get "curriculumId"
 
     setShouldPlayIntro: (state) ->
-      console.log "Setting play intro to #{state}"
       @dict.setPersistent "playIntro", state
 
     getShouldPlayIntro: (state) ->
       @dict.get "playIntro"
 
-    setDownloadError: (id, error) ->
-      @dict.setTemporary "errordownloading#{id}", error
+    setErrorMessage: (error) ->
+      @dict.setTemporary "errorMessage", error
 
-    getDownloadError: (id) ->
-      @dict.get "errordownloading#{id}"
+    getErrorMessage: ->
+      @dict.get "errorMessage"
 
     loading: ->
       @dict.get "loading"

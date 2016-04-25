@@ -57,15 +57,14 @@ Template.Home_page.onCreated ->
 
   @autorun =>
     id = AppState.get().getCurriculumId()
-    @subscribe "curriculums.all"
-    if Meteor.isCordova
-      @subscribe "lessons.all"
-      @subscribe "modules.all"
-    else
+    if not Meteor.isCordova
+      @subscribe "curriculums.all"
       @subscribe "lessons.inCurriculum", id
 
   @autorun =>
     subscriptionsReady = @subscriptionsReady()
+    console.log "Subscriptions ready?", subscriptionsReady
+    console.log Curriculums.find({}).fetch()
     id = AppState.get().getCurriculumId()
     curriculumDownloaded = AppState.get().getCurriculumDownloaded(id)
     loading = AppState.get().loading()
@@ -73,7 +72,7 @@ Template.Home_page.onCreated ->
       onError = (e) ->
         console.log "ERROR LOADING"
         console.log e
-        AppState.get().setDownloadError id, e.message
+        AppState.get().setErrorMessage e.message
         AppState.get().setLoading false
       onSuccess = (e) ->
         console.log "SUCCESS LOADING"
@@ -85,12 +84,19 @@ Template.Home_page.onCreated ->
 
   @autorun =>
     id = AppState.get().getCurriculumId()
-    error = AppState.get().getDownloadError(id)
-    if error
+    console.log "Getting whether is connected!", Meteor.status().connected
+    if Meteor.isCordova and @subscriptionsReady() and not id
+      if not Meteor.status().connected
+        AppState.get().setErrorMessage "Please connect to data in order to view and download curriculums"
+
+  @autorun =>
+    id = AppState.get().getCurriculumId()
+    message = AppState.get().getErrorMessage()
+    if message
       swal {
         type: "error"
         title: "Error downloading your curriculum"
-        text: error
+        text: message
       }
 
 Template.Home_page.helpers
@@ -99,6 +105,9 @@ Template.Home_page.helpers
     if Meteor.isCordova
       id = AppState.get().getCurriculumId()
       console.log "In the curriculums ready: is curriculum downloaded?", AppState.get().getCurriculumDownloaded(id)
+      console.log "WHAT???"
+      console.log id
+      console.log "subscriptionsReady ", instance.subscriptionsReady()
       return instance.subscriptionsReady() and not AppState.get().loading()
     else
       return instance.subscriptionsReady()

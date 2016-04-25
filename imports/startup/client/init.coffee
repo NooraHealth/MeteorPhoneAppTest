@@ -3,6 +3,10 @@ require 'meteor/loftsteinn:framework7-ios'
 AppState = require('../../api/AppState.coffee').AppState
 
 Meteor.startup ()->
+  if Meteor.isCordova
+    Meteor.subscribe "curriculums.all"
+    Meteor.subscribe "lessons.all"
+    Meteor.subscribe "modules.all"
   BlazeLayout.setRoot "body"
   AppState.get().setShouldPlayIntro true
 

@@ -151,8 +151,9 @@ Template.Lesson_view_page.onCreated ()->
 
   @autorun =>
     lessonId = @getLessonId()
-    @subscribe "lesson", lessonId
-    @subscribe "modules.inLesson", lessonId
+    if not Meteor.isCordova
+      @subscribe "lesson", lessonId
+      @subscribe "modules.inLesson", lessonId
 
   @autorun =>
     if @subscriptionsReady()

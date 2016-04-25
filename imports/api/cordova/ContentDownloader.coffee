@@ -24,6 +24,9 @@ class @ContentDownloader
           onError: {type: Function, optional: true}
         }).validate({id: id, onSuccess: onSuccess, onError: onError})
 
+        if not Meteor.status().connected
+          throw new Meteor.error "not-connected", "The iPad is not connected to data. Please connect and try again"
+
         curriculum = Curriculums.findOne { _id: id }
         if not curriculum? then throw new Meteor.Error "curriculum-not-found", "Curriculum of id #{id} not found"
 
@@ -47,23 +50,14 @@ class @ContentDownloader
         @_downloadFiles filteredUrls
         .then (entry, error)->
           #this is where you do the on success thing
-          console.log "in the onsuccess"
-          console.log "entry"
-          console.log entry
-          console.log "error"
-          console.log error
           onSuccess(entry)
         , (err)->
           #this is where you do the on error thing
-          console.log "throwing meteor error"
-          console.log "IN THE ONCATCH"
           message = ""
           if err.code == 2
             message = "Error accessing content on server"
             onError(new Meteor.Error("error-downloading", message))
         , (progress) ->
-          console.log "PROGRESS IN .notify"
-          console.log progress
           AppState.get().setPercentLoaded progress
       catch e
         console.log "CATCHING THE ERROR"
