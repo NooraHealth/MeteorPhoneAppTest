@@ -28,7 +28,9 @@
           </div>
         </div>
       {{else}}
-        {{>loading}}
+        {{#if loading}}
+          {{>loading}}
+        {{/if}}
       {{/if}}
     </div>
   </div>

@@ -40,14 +40,22 @@ Template.Home_page.onCreated ->
 
   @currentLessonId = =>
     curriculum = @getCurriculumDoc()
+    console.log curriculum
+    console.log "curriculum #{curriculum.lessons.length}"
+    numLessons = if curriculum then curriculum.lessons.length else 0
+    if not curriculum? then return 0
     lessonIndex = AppState.get().getLessonIndex()
+    if lessonIndex >= numLessons
+      lessonIndex = 0
+      AppState.get().setLessonIndex lessonIndex
     return curriculum?.lessons?[lessonIndex]
 
   @onLessonSelected = (id) ->
     FlowRouter.go "lesson", {_id: id}
 
-  @onCurriculumSelected = ( id ) ->
+  @onCurriculumSelected = (id) ->
     AppState.get().setCurriculumId id
+    AppState.get().setLessonIndex 0
 
   @autorun =>
     id = AppState.get().getCurriculumId()
@@ -71,7 +79,6 @@ Template.Home_page.onCreated ->
         AppState.get().setLoading false
       onSuccess = (e) ->
         console.log "SUCCESS LOADING"
-      AppState.get().setLessonIndex 0
         AppState.get().setCurriculumDownloaded id, true
         AppState.get().setLoading false
       AppState.get().setLoading true
@@ -86,13 +93,6 @@ Template.Home_page.onCreated ->
         title: "Error downloading your curriculum"
         text: error
       }
-  @correctSoundEffect = new Howl {
-    urls: ContentInterface.get().correctSoundEffectFilePath()
-  }
-
-  @incorrectSoundEffect = new Howl {
-    urls: ContentInterface.get().incorrectSoundEffectFilePath()
-  }
 
 Template.Home_page.helpers
   curriculumsReady: ->
@@ -103,6 +103,9 @@ Template.Home_page.helpers
       return instance.subscriptionsReady() and not AppState.get().loading()
     else
       return instance.subscriptionsReady()
+
+  loading: ->
+    return AppState.get().loading()
 
   menuArgs: ->
     instance = Template.instance()
@@ -136,3 +139,7 @@ Template.Home_page.helpers
   lessons: ->
     instance = Template.instance()
     return instance.getLessonDocuments()
+
+Template.Home_page.events
+  '.open-panel': ->
+    console.log "Clicked!"

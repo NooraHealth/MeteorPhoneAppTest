@@ -9,18 +9,6 @@ class AppState
   class Private
     constructor: (name) ->
       @dict = new PersistentReactiveDict name
-      console.log "The persistent Dict app state"
-      console.log @dict
-      #@dict.setDefaultPersistent {
-        #lessonIndex: 0
-        #curriculumDownloaded: false
-        #playedIntro: false
-        #curriculumId: null
-      #}
-
-      #@dict.setDefaultTemporary {
-        #percentLoaded: 0
-      #}
 
     setLessonIndex: (i) ->
       @dict.setPersistent "lessonIndex", i
@@ -29,20 +17,16 @@ class AppState
       @dict.get "lessonIndex"
 
     incrementLesson: ->
-      id = @getCurriculumId()
-      numLessons = Curriculums.findOne({_id: id}).lessons.length
-      index = @dict.get "lessonIndex"
-      @setLessonIndex((++index) % numLessons)
+      index = @getLessonIndex()
+      @setLessonIndex ++index
 
     setCurriculumDownloaded: (id, state) ->
       console.log "Setting the curriculum downloaded of #{id} to #{state}"
       @dict.setPersistent "curriculumDownloaded#{id}", state
       
     getCurriculumDownloaded: (id) ->
-      console.log "Is there an id?", id
       if not id then return true
       downloaded = @dict.get "curriculumDownloaded#{id}"
-      console.log "GETTIGN the curriculum downloaded of #{id}: ", downloaded
       if not downloaded? then return false else return downloaded
       
     setPercentLoaded: (percent) ->
@@ -59,7 +43,6 @@ class AppState
       @dict.get "curriculumId"
 
     setShouldPlayIntro: (state) ->
-      console.log "setting whether should play intro to ", state
       @dict.setPersistent "playedIntro", state
 
     getShouldPlayIntro: (state) ->
