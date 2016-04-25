@@ -124,9 +124,12 @@ Template.Lesson_view_page.onCreated ()->
   
   @onNextButtonRendered = =>
     mySwiper = App.swiper '.swiper-container', {
-        lazyLoading: true,
-        preloadImages: false,
-        nextButton: '.swiper-button-next',
+      lazyLoading: true,
+      preloadImages: false,
+      nextButton: '.swiper-button-next',
+      shortSwipes: false
+      longSwipes: false
+      followFinger: false
     }
 
   @onNextButtonClicked = =>
