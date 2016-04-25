@@ -29,6 +29,7 @@ Template.Lesson_view_page_video.onCreated ->
     instance = @
     elem = @elem instance
     if playing
+      console.log "About to play the video"
       elem.currentTime = 0
       elem.play()
     else
@@ -55,7 +56,4 @@ Template.Lesson_view_page_video.helpers
 Template.Lesson_view_page_video.onRendered ->
   instance = Template.instance()
   instance.state.set "rendered", true
-  #videoController = Scene.get().getModuleSequenceController().getCurrentController()
-  #if videoController
-    #videoController.playVideo()
   

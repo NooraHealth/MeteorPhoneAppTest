@@ -64,6 +64,6 @@ class AppState
       @dict.get "loading"
 
     setLoading: (state) ->
-      @dict.set "loading", state
+      @dict.setTemporary "loading", state
 
 module.exports.AppState = AppState

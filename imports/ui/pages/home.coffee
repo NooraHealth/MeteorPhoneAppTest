@@ -66,6 +66,7 @@ Template.Home_page.onCreated ->
     id = AppState.get().getCurriculumId()
     curriculumDownloaded = AppState.get().getCurriculumDownloaded(id)
     loading = AppState.get().loading()
+    console.log "IS LOADING???", loading
     if subscriptionsReady and
       Meteor.isCordova and
       id? and not
@@ -87,7 +88,7 @@ Template.Home_page.onCreated ->
             AppState.get().setLoading false
           AppState.get().setLoading true
           console.log "FLUSHING"
-          #Tracker.flush()
+          Tracker.flush()
           ContentDownloader.get().loadCurriculum id, onSuccess, onError
 
   @autorun =>
@@ -95,7 +96,6 @@ Template.Home_page.onCreated ->
     id = AppState.get().getCurriculumId()
     if Meteor.isCordova and @subscriptionsReady() and not id
       if not Meteor.status().connected
-        console.log "About to set an error messagej"
         AppState.get().setError(new Meteor.Error("Not Connected", "Please connect to data in order to view and download curriculums"))
 
 Template.Home_page.helpers
