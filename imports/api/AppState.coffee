@@ -47,10 +47,17 @@ class AppState
     getShouldPlayIntro: (state) ->
       @dict.get "playIntro"
 
-    setErrorMessage: (error) ->
+    setError: (error) ->
+      if error
+        new SimpleSchema({
+          reason: {type: String}
+          error: {type: String}
+        }).validate error
+
+      console.log "SET THE ERROR"
       @dict.setTemporary "errorMessage", error
 
-    getErrorMessage: ->
+    getError: ->
       @dict.get "errorMessage"
 
     loading: ->

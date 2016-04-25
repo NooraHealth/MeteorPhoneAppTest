@@ -16,6 +16,7 @@ class @ContentDownloader
     constructor: ->
 
     loadCurriculum: (id, onSuccess, onError) =>
+      console.log "LOADING CURRICULM"
       try
         #validate the arguments
         new SimpleSchema({
@@ -25,7 +26,7 @@ class @ContentDownloader
         }).validate({id: id, onSuccess: onSuccess, onError: onError})
 
         if not Meteor.status().connected
-          throw new Meteor.error "not-connected", "The iPad is not connected to data. Please connect and try again"
+          throw new Meteor.Error "not-connected", "The iPad is not connected to data. Please connect and try again"
 
         curriculum = Curriculums.findOne { _id: id }
         if not curriculum? then throw new Meteor.Error "curriculum-not-found", "Curriculum of id #{id} not found"

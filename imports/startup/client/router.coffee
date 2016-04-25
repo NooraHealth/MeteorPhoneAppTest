@@ -8,7 +8,7 @@
 require '../../api/lib.coffee'
 
 # PAGES
-require '../../ui/layouts/layout.html'
+require '../../ui/layouts/layout.coffee'
 require '../../ui/pages/home.coffee'
 require '../../ui/pages/lesson_view.coffee'
 
@@ -19,7 +19,7 @@ require '../../ui/pages/lesson_view.coffee'
 FlowRouter.route '/', {
   name: "home"
   action: ( params, qparams )->
-    BlazeLayout.render 'layout', { main : 'Home_page' }
+    BlazeLayout.render 'Layout', { main : 'Home_page' }
 }
 
 ###
@@ -29,7 +29,7 @@ FlowRouter.route '/', {
 FlowRouter.route '/lesson/:_id', {
   name: "lesson"
   action: ( params, qparams )->
-    BlazeLayout.render "layout", { main: "Lesson_view_page" }
+    BlazeLayout.render "Layout", { main: "Lesson_view_page" }
 
 }
 

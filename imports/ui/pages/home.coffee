@@ -63,41 +63,40 @@ Template.Home_page.onCreated ->
 
   @autorun =>
     subscriptionsReady = @subscriptionsReady()
-    console.log "Subscriptions ready?", subscriptionsReady
-    console.log Curriculums.find({}).fetch()
     id = AppState.get().getCurriculumId()
     curriculumDownloaded = AppState.get().getCurriculumDownloaded(id)
     loading = AppState.get().loading()
-    if subscriptionsReady and Meteor.isCordova and id? and not curriculumDownloaded and not loading
-      onError = (e) ->
-        console.log "ERROR LOADING"
-        console.log e
-        AppState.get().setErrorMessage e.message
-        AppState.get().setLoading false
-      onSuccess = (e) ->
-        console.log "SUCCESS LOADING"
-        AppState.get().setCurriculumDownloaded id, true
-        AppState.get().setLoading false
-      AppState.get().setLoading true
-      Tracker.flush()
-      ContentDownloader.get().loadCurriculum id, onSuccess, onError
+    if subscriptionsReady and
+      Meteor.isCordova and
+      id? and not
+      curriculumDownloaded and not
+      loading
+        console.log "About to check if connected"
+        if not Meteor.status().connected
+          console.log "Setting the error"
+          AppState.get().setError(new Meteor.Error("Not Connected", "Please connect to data in order to download your curriculum."))
+        else
+          onError = (e) ->
+            console.log "ERROR LOADING"
+            console.log e
+            AppState.get().setError e
+            AppState.get().setLoading false
+          onSuccess = (e) ->
+            console.log "SUCCESS LOADING"
+            AppState.get().setCurriculumDownloaded id, true
+            AppState.get().setLoading false
+          AppState.get().setLoading true
+          console.log "FLUSHING"
+          #Tracker.flush()
+          ContentDownloader.get().loadCurriculum id, onSuccess, onError
 
   @autorun =>
+    console.log "in the second autorun"
     id = AppState.get().getCurriculumId()
-    console.log "Getting whether is connected!", Meteor.status().connected
     if Meteor.isCordova and @subscriptionsReady() and not id
       if not Meteor.status().connected
-        AppState.get().setErrorMessage "Please connect to data in order to view and download curriculums"
-
-  @autorun =>
-    id = AppState.get().getCurriculumId()
-    message = AppState.get().getErrorMessage()
-    if message
-      swal {
-        type: "error"
-        title: "Error downloading your curriculum"
-        text: message
-      }
+        console.log "About to set an error messagej"
+        AppState.get().setError(new Meteor.Error("Not Connected", "Please connect to data in order to view and download curriculums"))
 
 Template.Home_page.helpers
   curriculumsReady: ->
@@ -105,9 +104,6 @@ Template.Home_page.helpers
     if Meteor.isCordova
       id = AppState.get().getCurriculumId()
       console.log "In the curriculums ready: is curriculum downloaded?", AppState.get().getCurriculumDownloaded(id)
-      console.log "WHAT???"
-      console.log id
-      console.log "subscriptionsReady ", instance.subscriptionsReady()
       return instance.subscriptionsReady() and not AppState.get().loading()
     else
       return instance.subscriptionsReady()
