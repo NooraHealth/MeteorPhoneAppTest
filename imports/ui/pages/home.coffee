@@ -145,7 +145,9 @@ Template.Home_page.helpers
     return instance.getLessonDocuments()
 
 Template.Home_page.events
-  '.open-panel': (e, template) ->
+  'click #open_side_panel': (e, template) ->
     #hackaround Framework7 bugs on ios where active state is not removed
-    active = @find("active-state")
-    if active? then active.removeClass "active-state"
+    console.log "Removing active state"
+    active = template.find(".active-state")
+    console.log active
+    if active? then $(active).removeClass "active-state"
