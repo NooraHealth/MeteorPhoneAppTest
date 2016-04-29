@@ -64,15 +64,12 @@ Template.Home_page.onCreated ->
     id = AppState.get().getCurriculumId()
     curriculumDownloaded = AppState.get().getCurriculumDownloaded(id)
     loading = AppState.get().loading()
-    console.log "IS LOADING???", loading
     if subscriptionsReady and
       Meteor.isCordova and
       id? and not
       curriculumDownloaded and not
       loading
-        console.log "About to check if connected"
         if not Meteor.status().connected
-          console.log "Setting the error"
           AppState.get().setError(new Meteor.Error("Not Connected", "Please connect to data in order to download your curriculum."))
         else
           onError = (e) ->
@@ -85,12 +82,10 @@ Template.Home_page.onCreated ->
             AppState.get().setCurriculumDownloaded id, true
             AppState.get().setLoading false
           AppState.get().setLoading true
-          console.log "FLUSHING"
           Tracker.flush()
           ContentDownloader.get().loadCurriculum id, onSuccess, onError
 
   @autorun =>
-    console.log "in the second autorun"
     id = AppState.get().getCurriculumId()
     if Meteor.isCordova and @subscriptionsReady() and not id
       if not Meteor.status().connected
@@ -145,7 +140,6 @@ Template.Home_page.helpers
 Template.Home_page.events
   'click #open_side_panel': (e, template) ->
     #hackaround Framework7 bugs on ios where active state is not removed
-    console.log "Removing active state"
+    console.log("removing the activestate");
     active = template.find(".active-state")
-    console.log active
     if active? then $(active).removeClass "active-state"
