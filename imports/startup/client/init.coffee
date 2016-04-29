@@ -1,6 +1,7 @@
+
 { BlazeLayout } = require 'meteor/kadira:blaze-layout'
+{ AppState } = require('../../api/AppState.coffee').AppState
 require 'meteor/loftsteinn:framework7-ios'
-AppState = require('../../api/AppState.coffee').AppState
 
 Meteor.startup ()->
   if Meteor.isCordova

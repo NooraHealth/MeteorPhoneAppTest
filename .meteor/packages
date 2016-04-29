@@ -53,3 +53,4 @@ modules
 robertlowe:persistent-reactive-dict
 aldeed:simple-schema
 ovcharik:howler
+noorahealth:mongo-schemas

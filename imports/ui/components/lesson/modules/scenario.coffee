@@ -1,6 +1,6 @@
 
-Modules = require('../../../../api/modules/modules.coffee').Modules
-ContentInterface = require('../../../../api/content/ContentInterface.coffee').ContentInterface
+{ Modules } = require("meteor/mongo-schemas").Modules
+{ ContentInterface } = require('../../../../api/content/ContentInterface.coffee').ContentInterface
 require "./scenario.html"
     
 Template.Lesson_view_page_scenario.onCreated ->

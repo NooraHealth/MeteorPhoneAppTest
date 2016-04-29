@@ -1,5 +1,5 @@
 
-Curriculums = require('../../../../api/curriculums/curriculums.coffee').Curriculums
+{ Curriculums } = require("meteor/mongo-schemas").Curriculums
 require './list_item.html'
 
 Template.Home_curriculum_menu_list_item.onCreated ->

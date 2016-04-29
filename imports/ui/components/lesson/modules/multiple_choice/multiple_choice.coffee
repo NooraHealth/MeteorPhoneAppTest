@@ -1,5 +1,5 @@
 
-Modules = require('../../../../../api/modules/modules.coffee').Modules
+{ Modules } = require("meteor/mongo-schemas").Modules
 require "./multiple_choice.html"
 require "./option.coffee"
 

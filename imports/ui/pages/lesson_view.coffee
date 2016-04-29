@@ -1,9 +1,10 @@
 
-AppState = require('../../api/AppState.coffee').AppState
-Lessons = require('../../api/lessons.coffee').Lessons
-Modules = require('../../api/modules/modules.coffee').Modules
-Award = require('../components/lesson/awards/award.coffee').Award
-ContentInterface = require('../../api/content/ContentInterface.coffee').ContentInterface
+{ Lessons } = require("meteor/mongo-schemas").Lessons
+{ Modules } = require("meteor/mongo-schemas").Modules
+
+{ AppState } = require('../../api/AppState.coffee').AppState
+{ Award } = require('../components/lesson/awards/award.coffee').Award
+{ ContentInterface }= require('../../api/content/ContentInterface.coffee').ContentInterface
 
 require './lesson_view.html'
 require '../components/lesson/modules/binary.coffee'

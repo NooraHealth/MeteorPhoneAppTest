@@ -74,6 +74,7 @@ mrt:jquery-scrollintoview@1.8.0
 mrt:q@1.0.1
 mystor:device-detection@0.2.0
 natestrauser:cordova-file-server@0.1.2
+noorahealth:mongo-schemas@0.0.1
 npm-mongo@1.4.42
 observe-sequence@1.0.10
 ordered-dict@1.0.6

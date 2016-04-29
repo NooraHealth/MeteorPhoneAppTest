@@ -1,5 +1,5 @@
 
-Curriculums = require('./curriculums/curriculums.coffee').Curriculums
+{ Curriculums } = require("meteor/mongo-schemas").Curriculums
 
 class AppState
   @get: ()->

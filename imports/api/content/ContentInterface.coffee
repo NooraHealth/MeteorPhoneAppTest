@@ -1,5 +1,5 @@
 
-OfflineFiles = require('../cordova/offline_files.coffee').OfflineFiles
+{ OfflineFiles } = require("meteor/mongo-schemas").OfflineFiles
 
 class ContentInterface
   @get: ()->

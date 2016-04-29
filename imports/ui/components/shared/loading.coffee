@@ -1,5 +1,5 @@
 
-AppState = require('../../../api/AppState.coffee').AppState
+{ AppState } = require('../../../api/AppState.coffee').AppState
 require './loading.html'
 
 message = '<p class="loading-message">'+"Welcome to Noora Health"+'</p><p class="white-text">Just a moment, your curriculum is updating </p><p><a onClick="Meteor.logout()">Abort</a></p>

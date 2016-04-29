@@ -4,9 +4,6 @@
 { BlazeLayout } = require 'meteor/kadira:blaze-layout'
 { FlowRouter } = require 'meteor/kadira:flow-router'
 
-# LIBRARIES
-require '../../api/lib.coffee'
-
 # PAGES
 require '../../ui/layouts/layout.coffee'
 require '../../ui/pages/home.coffee'

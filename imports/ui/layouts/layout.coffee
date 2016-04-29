@@ -1,6 +1,6 @@
 
+{ AppState } = require('../../api/AppState.coffee').AppState
 require './layout.html'
-AppState = require('../../api/AppState.coffee').AppState
 
 Template.Layout.onCreated ->
   @autorun =>

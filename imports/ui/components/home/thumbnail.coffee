@@ -1,5 +1,5 @@
 
-Lessons = require('../../../api/lessons.coffee').Lessons
+{ Lessons } = require("meteor/mongo-schemas").Lessons
 require './thumbnail.html'
 
 Template.Home_thumbnail.onCreated ->

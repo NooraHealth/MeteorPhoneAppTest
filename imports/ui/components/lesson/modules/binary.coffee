@@ -1,6 +1,5 @@
-ContentInterface = require('../../../../api/content/ContentInterface.coffee').ContentInterface
-
-Modules = require('../../../../api/modules/modules.coffee').Modules
+{ ContentInterface } = require('../../../../api/content/ContentInterface.coffee').ContentInterface
+{ Modules } = require("meteor/mongo-schemas").Modules
 require "../../audio/audio.coffee"
 require "./binary.html"
 
