@@ -1,8 +1,8 @@
 
-{ ContentInterface } = require('../../api/content/ContentInterface.coffee').ContentInterface
-{ ContentDownloader } = require('../../api/cordova/ContentDownloader.coffee').ContentDownloader
-{ Curriculums } = require("meteor/mongo-schemas").Curriculums
-{ AppState } = require('../../api/AppState.coffee').AppState
+{ ContentInterface } = require('../../api/content/ContentInterface.coffee')
+{ ContentDownloader } = require('../../api/cordova/ContentDownloader.coffee')
+{ Curriculums } = require("meteor/noorahealth:mongo-schemas")
+{ AppState } = require('../../api/AppState.coffee')
 
 # TEMPLATE
 require './home.html'

@@ -1,5 +1,5 @@
 
-{ Curriculums } = require("meteor/mongo-schemas").Curriculums
+{ Curriculums } = require("meteor/noorahealth:mongo-schemas")
 require './list_item.html'
 
 Template.Home_curriculum_menu_list_item.onCreated ->

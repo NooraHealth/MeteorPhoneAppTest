@@ -1,8 +1,8 @@
 
-{ Curriculums } = require("meteor/mongo-schemas").Curriculums
-{ OfflineFiles } = require("meteor/mongo-schemas").OfflineFiles
-{ ContentInterface } = require('../content/ContentInterface.coffee').ContentInterface
-{ AppState } = require('../AppState.coffee').AppState
+{ Curriculums } = require("meteor/noorahealth:mongo-schemas")
+{ OfflineFiles } = require("meteor/noorahealth:mongo-schemas")
+{ ContentInterface } = require('../content/ContentInterface.coffee')
+{ AppState } = require('../AppState.coffee')
 
 Array::merge = (other) -> Array::push.apply @, other
 

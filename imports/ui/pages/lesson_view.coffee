@@ -1,6 +1,6 @@
 
-{ Lessons } = require("meteor/mongo-schemas").Lessons
-{ Modules } = require("meteor/mongo-schemas").Modules
+{ Lessons } = require("meteor/noorahealth:mongo-schemas").Lessons
+{ Modules } = require("meteor/noorahealth:mongo-schemas").Modules
 
 { AppState } = require('../../api/AppState.coffee').AppState
 { Award } = require('../components/lesson/awards/award.coffee').Award

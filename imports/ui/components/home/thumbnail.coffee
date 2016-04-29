@@ -1,5 +1,5 @@
 
-{ Lessons } = require("meteor/mongo-schemas").Lessons
+{ Lessons } = require("meteor/noorahealth:mongo-schemas")
 require './thumbnail.html'
 
 Template.Home_thumbnail.onCreated ->

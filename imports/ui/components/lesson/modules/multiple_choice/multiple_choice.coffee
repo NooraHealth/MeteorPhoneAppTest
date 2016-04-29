@@ -1,5 +1,5 @@
 
-{ Modules } = require("meteor/mongo-schemas").Modules
+{ Modules } = require("meteor/noorahealth:mongo-schemas")
 require "./multiple_choice.html"
 require "./option.coffee"
 

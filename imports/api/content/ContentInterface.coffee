@@ -1,5 +1,5 @@
 
-{ OfflineFiles } = require("meteor/mongo-schemas").OfflineFiles
+{ OfflineFiles } = require("meteor/noorahealth:mongo-schemas")
 
 class ContentInterface
   @get: ()->

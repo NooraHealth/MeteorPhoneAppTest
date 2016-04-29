@@ -1,5 +1,5 @@
 
-{ Curriculums } = require("meteor/mongo-schemas").Curriculums
+{ Curriculums } = require("meteor/noorahealth:mongo-schemas")
 
 class AppState
   @get: ()->
@@ -65,5 +65,8 @@ class AppState
 
     setLoading: (state) ->
       @dict.setTemporary "loading", state
+
+console.log "Exporting AppState: ", AppState
+console.log "CURRICULUMS", Curriculums
 
 module.exports.AppState = AppState

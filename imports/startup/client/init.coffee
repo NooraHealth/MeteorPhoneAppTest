@@ -1,6 +1,6 @@
 
 { BlazeLayout } = require 'meteor/kadira:blaze-layout'
-{ AppState } = require('../../api/AppState.coffee').AppState
+{ AppState } = require('../../api/AppState.coffee')
 require 'meteor/loftsteinn:framework7-ios'
 
 Meteor.startup ()->
