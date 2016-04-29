@@ -1,10 +1,10 @@
 
-{ Lessons } = require("meteor/noorahealth:mongo-schemas").Lessons
-{ Modules } = require("meteor/noorahealth:mongo-schemas").Modules
+{ Lessons } = require("meteor/noorahealth:mongo-schemas")
+{ Modules } = require("meteor/noorahealth:mongo-schemas")
 
-{ AppState } = require('../../api/AppState.coffee').AppState
-{ Award } = require('../components/lesson/awards/award.coffee').Award
-{ ContentInterface }= require('../../api/content/ContentInterface.coffee').ContentInterface
+{ AppState } = require('../../api/AppState.coffee')
+{ Award } = require('../components/lesson/awards/award.coffee')
+{ ContentInterface }= require('../../api/content/ContentInterface.coffee')
 
 require './lesson_view.html'
 require '../components/lesson/modules/binary.coffee'
@@ -103,8 +103,11 @@ Template.Lesson_view_page.onCreated ()->
     return FlowRouter.getParam "_id"
 
   @getLesson = =>
+    console.log "getting the lesson"
     id = @getLessonId()
+    console.log id
     lesson = Lessons.findOne { _id: id }
+    console.log lesson
     return lesson
 
   @celebrateCompletion = =>

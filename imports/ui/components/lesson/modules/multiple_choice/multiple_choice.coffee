@@ -1,4 +1,5 @@
 
+{ ContentInterface } = require '../../../../../api/content/ContentInterface.coffee'
 { Modules } = require("meteor/noorahealth:mongo-schemas")
 require "./multiple_choice.html"
 require "./option.coffee"
@@ -66,7 +67,7 @@ Template.Lesson_view_page_multiple_choice.onCreated ->
     
     mapData = (option, i) ->
       map[option] = {
-        src: module.optionSrc(i)
+        src: ContentInterface.get().getSrc( option )
         class: getClasses(option)
       }
 
