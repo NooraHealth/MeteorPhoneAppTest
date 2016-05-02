@@ -1,7 +1,9 @@
 { ContentInterface } = require './ContentInterface.coffee'
+{ sinon } = require 'meteor/practicalmeteor:sinon'
 should = require( 'chai' ).should()
 
 describe "ContentInterface", ->
+
   it 'Should be a singleton', ->
     should.exist ContentInterface.get
 
@@ -25,8 +27,10 @@ describe "ContentInterface", ->
     should.equal ContentInterface.get().getEndpoint("file"), Meteor.settings.public.CONTENT_SRC + "file"
 
   it "should know where to source content", ->
+    fakeEndpoint = 'fake/endpoint/'
+    sinon.stub ContentInterface.get(), 'getEndpoint', (path)-> fakeEndpoint + path
     should.exist ContentInterface.get().getSrc
     should.exist ContentInterface.get().getSrc()
     if not Meteor.isCordova
-      should.equal ContentInterface.get().getSrc('file'), ContentInterface.get().getEndpoint('file')
+      should.equal ContentInterface.get().getSrc('file'), fakeEndpoint + 'file'
 
