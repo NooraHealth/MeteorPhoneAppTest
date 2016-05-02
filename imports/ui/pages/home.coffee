@@ -140,6 +140,6 @@ Template.Home_page.helpers
 Template.Home_page.events
   'click #open_side_panel': (e, template) ->
     #hackaround Framework7 bugs on ios where active state is not removed
-    console.log("removing the activestate");
+    console.log("removing the activestate")
     active = template.find(".active-state")
     if active? then $(active).removeClass "active-state"
