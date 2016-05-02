@@ -26,11 +26,20 @@ describe "ContentInterface", ->
     should.equal ContentInterface.get().getEndpoint(), Meteor.settings.public.CONTENT_SRC
     should.equal ContentInterface.get().getEndpoint("file"), Meteor.settings.public.CONTENT_SRC + "file"
 
-  it "should know where to source content", ->
+  it "should source from endpoint when in browser", ->
+    Meteor.isCordova = false
     fakeEndpoint = 'fake/endpoint/'
     sinon.stub ContentInterface.get(), 'getEndpoint', (path)-> fakeEndpoint + path
     should.exist ContentInterface.get().getSrc
     should.exist ContentInterface.get().getSrc()
-    if not Meteor.isCordova
-      should.equal ContentInterface.get().getSrc('file'), fakeEndpoint + 'file'
+    should.equal ContentInterface.get().getSrc('file'), fakeEndpoint + 'file'
+
+  it 'should return empty string when in Cordova and not downloaded', ->
+    Meteor.isCordova = true
+    should.equal ContentInterface.get().getSrc('file'), ''
+
+  it 'should source locally when in Cordova and file downloaded', ->
+    
+    Meteor.isCordova = true
+    should.equal 1, 2
 
