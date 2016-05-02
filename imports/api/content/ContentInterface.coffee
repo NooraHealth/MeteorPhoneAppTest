@@ -30,7 +30,7 @@ class ContentInterface
 
     # Where the content is stored remotely (AWS S3 server)
     getEndpoint: (path) =>
-      return @contentEndpoint + path
+      if path? then return @contentEndpoint + path else return @contentEndpoint
 
     # Given a filename (path), getSrc will identify where to find
     # that particular file -- in Cordova, this is local and in the browser
