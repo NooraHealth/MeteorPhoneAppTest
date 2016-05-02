@@ -9,9 +9,6 @@ coffeescript
 aldeed:collection2
 dburles:collection-helpers
 http
-sanjo:jasmine
-velocity:console-reporter
-velocity:html-reporter
 pcel:loading
 
 

@@ -32,9 +32,9 @@ class ContentInterface
     getEndpoint: (path) =>
       return @contentEndpoint + path
 
-    # Where the app should source it's content
-    # If in the browser, remotely, if in Cordova, then 
-    # locally
+    # Given a filename (path), getSrc will identify where to find
+    # that particular file -- in Cordova, this is local and in the browser
+    # it will find it remotely
     getSrc: (path) =>
       url = @getEndpoint(path)
       if Meteor.isCordova
