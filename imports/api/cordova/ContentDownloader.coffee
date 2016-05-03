@@ -19,11 +19,13 @@ class @ContentDownloader
       console.log "LOADING CURRICULM"
       try
         #validate the arguments
+        console.log "VALIDATION THE SCHEMA"
         new SimpleSchema({
           id: {type: String}
           onSuccess: {type: Function}
           onError: {type: Function, optional: true}
         }).validate({id: id, onSuccess: onSuccess, onError: onError})
+        console.log "VALIDATED"
 
         if not Meteor.status().connected
           throw new Meteor.Error "not-connected", "The iPad is not connected to data. Please connect and try again"
@@ -54,14 +56,14 @@ class @ContentDownloader
           onSuccess(entry)
         , (err)->
           #this is where you do the on error thing
+          console.log "IN THE SECOND STEP"
+          console.log err
           message = ""
-          if err.code == 2
-            message = "Error accessing content on server"
-            onError(new Meteor.Error("error-downloading", message))
         , (progress) ->
           AppState.get().setPercentLoaded progress
       catch e
         console.log "CATCHING THE ERROR"
+        console.log e
         onError e
 
     _downloadFiles: (files) ->
@@ -115,8 +117,13 @@ class @ContentDownloader
 
         getErrorCallback = (file) ->
           return (error)->
+            console.log "There was an error: "
+            console.log error
             if error.http_status == 404
               markAsResolved()
+            else if error.code == 2
+              message = "Error accessing content on server"
+              deferred.reject(new Meteor.Error("error-downloading", message))
             else if error.code == 3
               console.log "ERROR CODE 3 about to dowload again"
               if file.name in retry
@@ -141,10 +148,14 @@ class @ContentDownloader
       return deferred.promise
 
     _allContentPathsInLesson: (lesson) ->
+      console.log "GETTING ALL CONTENT PATHS IN LESSOn"
+      console.log lesson
       if not lesson?
         return []
 
       modules = lesson.getModulesSequence()
+      console.log "GOT MODULES"
+      console.log modules
       paths = []
       if lesson.image
         paths.push lesson.image
@@ -152,9 +163,12 @@ class @ContentDownloader
       for module in modules
         paths.merge @_allContentPathsInModule(module)
 
+      console.log "Got all the paths in the lesson"
+      console.log paths
       return paths
 
     _allContentPathsInModule: (module) ->
+      console.log "GETTING ALL THE CONTENT PATHS IN THE MODULE"
       paths = []
       if module.image
         paths.push module.image
@@ -168,6 +182,7 @@ class @ContentDownloader
         paths.push module.correct_audio
       if module.options and module.type == 'MULTIPLE_CHOICE'
         paths.merge (option for option in module.options when option?)
+      console.log "COMPLETE"
       return paths
 
 

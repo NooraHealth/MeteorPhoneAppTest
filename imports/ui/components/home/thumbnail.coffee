@@ -6,7 +6,8 @@ require './thumbnail.html'
 Template.Home_thumbnail.onCreated ->
   # Data context validation
   @autorun =>
-    console.log "In the home thumbnail: ", Template.currentData()
+    console.log "In the home thumbnail: "
+    console.log Template.currentData()
     schema = new SimpleSchema({
       lesson: {type: Lessons._helpers}
       isCurrentLesson: {type: Boolean}

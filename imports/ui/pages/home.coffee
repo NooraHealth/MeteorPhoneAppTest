@@ -55,7 +55,12 @@ Template.Home_page.onCreated ->
 
   @autorun =>
     id = AppState.get().getCurriculumId()
-    if not Meteor.isCordova
+    #if not Meteor.isCordova
+    if Meteor.isCordova
+      @subscribe "curriculums.all"
+      @subscribe "lessons.all"
+      @subscribe "modules.all"
+    else
       @subscribe "curriculums.all"
       @subscribe "lessons.inCurriculum", id
 
@@ -97,6 +102,7 @@ Template.Home_page.helpers
     if Meteor.isCordova
       id = AppState.get().getCurriculumId()
       console.log "In the curriculums ready: is curriculum downloaded?", AppState.get().getCurriculumDownloaded(id)
+      console.log "SUBSCRIPTIONS READY", instance.subscriptionsReady()
       return instance.subscriptionsReady() and not AppState.get().loading()
     else
       return instance.subscriptionsReady()
@@ -137,9 +143,3 @@ Template.Home_page.helpers
     instance = Template.instance()
     return instance.getLessonDocuments()
 
-Template.Home_page.events
-  'click #open_side_panel': (e, template) ->
-    #hackaround Framework7 bugs on ios where active state is not removed
-    console.log("removing the activestate")
-    active = template.find(".active-state")
-    if active? then $(active).removeClass "active-state"

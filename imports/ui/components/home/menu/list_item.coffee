@@ -15,5 +15,5 @@ Template.Home_curriculum_menu_list_item.events
     instance = Template.instance()
     data = Template.currentData()
     data.onCurriculumSelected data.curriculum._id
-    App.closePanel()
+    App.closePanel("right")
 
