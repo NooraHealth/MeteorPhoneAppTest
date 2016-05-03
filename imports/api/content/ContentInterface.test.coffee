@@ -1,6 +1,13 @@
+
+### --------------------------- IMPORTS ------------------------------------- ###
+
 { ContentInterface } = require './ContentInterface.coffee'
+{ OfflineFiles } = require 'meteor/noorahealth:mongo-schemas'
+{ Factory } = require 'meteor/dburles:factory'
 { sinon } = require 'meteor/practicalmeteor:sinon'
 should = require( 'chai' ).should()
+
+### --------------------------- TESTS ------------------------------------- ###
 
 describe "ContentInterface", ->
 
@@ -38,8 +45,27 @@ describe "ContentInterface", ->
     Meteor.isCordova = true
     should.equal ContentInterface.get().getSrc('file'), ''
 
-  it 'should source locally when in Cordova and file downloaded', ->
+  # To be completed once it is possible to simulate the Cordova environment
+  # 
+  #it 'should source locally when in Cordova and file downloaded', ->
+    #window.WebAppLocalServer = {
+      #'localFileSystemUrl': ()->
+    #}
+
+    #sinon.stub WebAppLocalServer, 'localFileSystemUrl', (path) -> "local/path/" + path
+
+    #Factory.define 'file', OfflineFiles, {
+      #fsPath: 'local/file/path'
+      #url: ContentInterface.get().getEndpoint 'filename'
+      #name: 'filename'
+    #}
+
+    #file = Factory.create 'file'
+    #console.log "FACTORY FILE"
+    #console.log file
+    #Meteor.isCordova = true
     
-    Meteor.isCordova = true
-    should.equal 1, 2
+    #should.exist ContentInterface.get().getSrc(file.name)
+    #should.not.equal ContentInterface.get().getSrc(file.name), ""
+    #should.equal ContentInterface.get().getSrc(file.name), WebAppLocalServer.localFileSystemUrl file.fsPath
 

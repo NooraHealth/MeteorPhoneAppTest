@@ -1,10 +1,25 @@
 
+### --------------------------- IMPORTS ------------------------------------- ###
+
 { Curriculums } = require("meteor/noorahealth:mongo-schemas")
 { OfflineFiles } = require("meteor/noorahealth:mongo-schemas")
 { ContentInterface } = require('../content/ContentInterface.coffee')
 { AppState } = require('../AppState.coffee')
 
+### --------------------------- ARRAY CUSTOMIZATION ------------------------------------- ###
+
 Array::merge = (other) -> Array::push.apply @, other
+
+##############################################################################
+#                                                                
+# ContentDownloader                                                          
+#
+# Given the id of a Curriculum, the CurriculumDownloader fetches all of the 
+# images, audio, and videos from the remote server (ContentInterface), 
+# and stores them locally on the device. A reference to each file is stored
+# as an OfflineFile document upon successful download.
+#
+#############################################################################
 
 class @ContentDownloader
   @get: ()->
@@ -13,6 +28,7 @@ class @ContentDownloader
     return @interface
 
   class PrivateDownloader
+
     constructor: ->
 
     loadCurriculum: (id, onSuccess, onError) =>
@@ -55,9 +71,6 @@ class @ContentDownloader
         , (err)->
           #this is where you do the on error thing
           message = ""
-          if err.code == 2
-            message = "Error accessing content on server"
-            onError(new Meteor.Error("error-downloading", message))
         , (progress) ->
           AppState.get().setPercentLoaded progress
       catch e
@@ -99,7 +112,6 @@ class @ContentDownloader
           numRecieved++
           console.log "RESOLVED:" + numRecieved + "/"+ numToLoad
           if numRecieved == numToLoad
-            console.log "THE NUMBERS EQUAL EACH OTHER ABOUT TO RESOLVE---------------------------"
             deferred.resolve entry
 
         getSuccessCallback = (file, fsPath) ->
@@ -116,26 +128,27 @@ class @ContentDownloader
         getErrorCallback = (file) ->
           return (error)->
             if error.http_status == 404
-              markAsResolved()
+              # If the file does not exist fail silently in an evil manner
+              deferred.reject new Meteor.Error("error-downloading", "Some content could not be found")
+            else if error.code == 2
+              deferred.reject new Meteor.Error("error-downloading", "Error accessing content on server")
             else if error.code == 3
-              console.log "ERROR CODE 3 about to dowload again"
               if file.name in retry
-                deferred.reject error
+                # If already retried downloading, reject
+                deferred.reject new Meteor.Error("error-downloading", "Timeout accessing content on server")
               else
+                # Try downloading again
                 retry.push file
                 downloadFile file
             else
-              console.log "ABOUT TO REJECT"
               deferred.reject error
-              #throw new Meteor.Error "error-downloading", error
 
         for file in files
           if not (OfflineFiles.findOne { url: file.url })?
             downloadFile file
 
       , (err)->
-        console.log "ERROR requesting local filesystem: "
-        console.log err
+        # Error retrieving the local filesystem
         deferred.reject err
 
       return deferred.promise

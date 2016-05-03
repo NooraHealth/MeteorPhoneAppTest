@@ -1,10 +1,11 @@
-###
+##############################################################################
+#
 # ContentInterface
 # 
 # The interface between the app and the Noora Health content (images, videos, audio).
 # It knows where the Noora Health content is located and how to get there.
 #
-###
+##############################################################################
 
 { OfflineFiles } = require("meteor/noorahealth:mongo-schemas")
 
