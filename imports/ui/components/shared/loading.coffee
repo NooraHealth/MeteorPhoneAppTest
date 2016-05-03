@@ -2,7 +2,7 @@
 { AppState } = require('../../../api/AppState.coffee')
 require './loading.html'
 
-message = '<p class="loading-message">'+"Welcome to Noora Health"+'</p><p class="white-text">Just a moment, your curriculum is updating </p><p><a onClick="Meteor.logout()">Abort</a></p>
+message = '<p class="loading-message">'+"Welcome to Noora Health"+'</p><p class="white-text">Just a moment, your curriculum is updating </p>
   <div class="progress">
     <progress id="progress" value="0" max="100"></div>
   </div>'
