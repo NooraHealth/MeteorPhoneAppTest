@@ -103,11 +103,8 @@ Template.Lesson_view_page.onCreated ()->
     return FlowRouter.getParam "_id"
 
   @getLesson = =>
-    console.log "getting the lesson"
     id = @getLessonId()
-    console.log id
     lesson = Lessons.findOne { _id: id }
-    console.log lesson
     return lesson
 
   @celebrateCompletion = =>
@@ -149,7 +146,9 @@ Template.Lesson_view_page.onCreated ()->
 
 
   @shouldPlayQuestionAudio = (id) =>
+    console.log "SHould play question audio??"
     isPlayingQuestion = @state.get "playingQuestion"
+    console.log(@isCurrent(id) and isPlayingQuestion)
     return @isCurrent(id) and isPlayingQuestion
 
   @shouldPlayExplanationAudio = (id) =>

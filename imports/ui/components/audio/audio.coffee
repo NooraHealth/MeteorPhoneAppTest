@@ -17,10 +17,13 @@ Template.Audio.onCreated ->
     }).validate @data
 
   @autorun =>
+    console.log "IN AUDIO AUTORUN"
     data = Template.currentData()
     shouldPlay = data.playing
     alreadyPlaying = @state.get "playing"
     if shouldPlay and not alreadyPlaying
+      console.log "PLAYING"
+      console.log "PLaying ", data.attributes.src
       @sound = new Howl {
         urls: [data.attributes.src]
         onloaderror: ->

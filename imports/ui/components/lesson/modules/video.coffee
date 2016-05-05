@@ -28,7 +28,7 @@ Template.Lesson_view_page_video.onCreated ->
     playing = Template.currentData().playing
     instance = @
     elem = @elem instance
-    if playing
+    if playing and Meteor.isCordova
       console.log "About to play the video"
       elem.currentTime = 0
       elem.play()
