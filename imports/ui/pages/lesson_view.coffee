@@ -58,10 +58,10 @@ Template.Lesson_view_page.onCreated ()->
 
   @onPauseExplanation = =>
     #@state.set "playingExplanation", false
-    @state.set "audioPlaying", null
+    #@state.set "audioPlaying", null
 
   @onFinishExplanation = =>
-    @state.set "audioPlaying", null
+    #@state.set "audioPlaying", null
     #@state.set "playingExplanation", false
     @state.set "nextButtonAnimated", true
 
@@ -147,9 +147,12 @@ Template.Lesson_view_page.onCreated ()->
 
   @nextButtonText = => if @lessonComplete() then "FINISH" else "NEXT"
 
+  @afterReplay = =>
+    @state.set "replayAudio", false
+
   @onReplayButtonClicked = =>
     console.log "Replay button clicked"
-    isPlaying = @state.get "audioPlaying"
+    @state.set "replayAudio", true
 
   @shouldPlayQuestionAudio = (id) =>
     isPlayingQuestion = @state.get "playingQuestion"
@@ -229,12 +232,15 @@ Template.Lesson_view_page.helpers
   explanationArgs: (module) ->
     instance = Template.instance()
     playing = instance.state.get("audioPlaying") == "EXPLANATION"
+    replay = instance.state.get("replayAudio")
     isCurrent = instance.isCurrent(module._id)
     return {
       attributes: {
         src: ContentInterface.get().getSrc module.correct_audio
       }
       playing: playing and isCurrent
+      replay: playing and replay and isCurrent
+      afterReplay: instance.afterReplay
       whenFinished: instance.onFinishExplanation
       whenPaused: instance.onPauseExplanation
     }
@@ -242,12 +248,15 @@ Template.Lesson_view_page.helpers
   audioArgs: (module) ->
     instance = Template.instance()
     playing = instance.state.get("audioPlaying") == "QUESTION"
+    replay = instance.state.get("replayAudio")
     isCurrent = instance.isCurrent(module._id)
     return {
       attributes: {
         src: ContentInterface.get().getSrc module.audio
       }
       playing: playing and isCurrent
+      replay: playing and replay and isCurrent
+      afterReplay: instance.afterReplay
     }
 
   incorrectSoundEffectArgs: ->

@@ -12,9 +12,20 @@ Template.Audio.onCreated ->
     new SimpleSchema({
       "attributes.src": {type: String}
       playing: {type: Boolean}
+      replay: {type: Boolean, optional: true}
+      afterReplay: {type: Function, optional: true}
       whenFinished: {type: Function, optional: true}
       whenPaused: {type: Function, optional: true}
     }).validate @data
+
+  @autorun =>
+    data = Template.currentData()
+    shouldReplay = data.replay
+    if shouldReplay
+      console.log "Replaying"
+      @sound?.stop()
+      @sound?.play()
+      data.afterReplay()
 
   @autorun =>
     data = Template.currentData()
