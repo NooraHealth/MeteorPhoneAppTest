@@ -22,11 +22,9 @@ Template.Lesson_view_page.onCreated ()->
     correctlySelectedClasses: 'correctly-selected expanded'
     incorrectClasses: 'faded'
     incorrectlySelectedClasses: 'incorrectly-selected'
-    playingExplanation: false
-    playingQuestion: true
     nextButtonAnimated: false
-    playingIncorrectSoundEffect: false
-    playingCorrectSoundEffect: false
+    soundEfffectPlaying: null
+    audioPlaying: "QUESTION"
   }
 
   @setCurrentModuleId = =>
@@ -59,21 +57,25 @@ Template.Lesson_view_page.onCreated ()->
       return pages
 
   @onPauseExplanation = =>
-    @state.set "playingExplanation", false
+    #@state.set "playingExplanation", false
+    @state.set "audioPlaying", null
 
   @onFinishExplanation = =>
-    @state.set "playingExplanation", false
+    @state.set "audioPlaying", null
+    #@state.set "playingExplanation", false
     @state.set "nextButtonAnimated", true
 
   @onChoice = (instance, type, showAlert) ->
     return ->
       if type is "CORRECT"
-        instance.state.set "playingCorrectSoundEffect", true
-        instance.state.set "playingIncorrectSoundEffect", false
+        instance.state.set "soundEfffectPlaying", "CORRECT"
+        #instance.state.set "playingCorrectSoundEffect", true
+        #instance.state.set "playingIncorrectSoundEffect", false
         alertType = 'success'
       else
-        instance.state.set "playingIncorrectSoundEffect", true
-        instance.state.set "playingCorrectSoundEffect", false
+        instance.state.set "soundEfffectPlaying", "INCORRECT"
+        #instance.state.set "playingIncorrectSoundEffect", true
+        #instance.state.set "playingCorrectSoundEffect", false
         alertType = 'error'
       if showAlert
         swal {
@@ -84,12 +86,14 @@ Template.Lesson_view_page.onCreated ()->
 
   @onCompletedQuestion = (instance) ->
     return ->
-      instance.state.set "playingQuestion", false
-      instance.state.set "playingExplanation", true
+      instance.state.set "audioPlaying", "EXPLANATION"
+      #instance.state.set "playingQuestion", false
+      #instance.state.set "playingExplanation", true
 
   @stopPlayingSoundEffect = =>
-    @state.set "playingCorrectSoundEffect", false
-    @state.set "playingIncorrectSoundEffect", false
+    @state.set "soundEfffectPlaying", null
+    #@state.set "playingCorrectSoundEffect", false
+    #@state.set "playingIncorrectSoundEffect", false
 
   @lessonComplete = =>
     lesson = @getLesson()
@@ -103,11 +107,8 @@ Template.Lesson_view_page.onCreated ()->
     return FlowRouter.getParam "_id"
 
   @getLesson = =>
-    console.log "getting the lesson"
     id = @getLessonId()
-    console.log id
     lesson = Lessons.findOne { _id: id }
-    console.log lesson
     return lesson
 
   @celebrateCompletion = =>
@@ -123,7 +124,8 @@ Template.Lesson_view_page.onCreated ()->
     newIndex = ++index
     @state.set "moduleIndex", newIndex
     @state.set "nextButtonAnimated", false
-    @state.set "playingQuestion", true
+    #@state.set "playingQuestion", true
+    @state.set "audioPlaying", "QUESTION"
     @setCurrentModuleId()
   
   @onNextButtonRendered = =>
@@ -145,8 +147,9 @@ Template.Lesson_view_page.onCreated ()->
 
   @nextButtonText = => if @lessonComplete() then "FINISH" else "NEXT"
 
-  @onReplayButtonClicked = => console.log "Replay clicked! Do Something!"
-
+  @onReplayButtonClicked = =>
+    console.log "Replay button clicked"
+    isPlaying = @state.get "audioPlaying"
 
   @shouldPlayQuestionAudio = (id) =>
     isPlayingQuestion = @state.get "playingQuestion"
@@ -225,31 +228,36 @@ Template.Lesson_view_page.helpers
 
   explanationArgs: (module) ->
     instance = Template.instance()
+    playing = instance.state.get("audioPlaying") == "EXPLANATION"
+    isCurrent = instance.isCurrent(module._id)
     return {
       attributes: {
         src: ContentInterface.get().getSrc module.correct_audio
       }
-      playing: instance.shouldPlayExplanationAudio(module._id)
+      playing: playing and isCurrent
       whenFinished: instance.onFinishExplanation
       whenPaused: instance.onPauseExplanation
     }
 
   audioArgs: (module) ->
     instance = Template.instance()
+    playing = instance.state.get("audioPlaying") == "QUESTION"
+    isCurrent = instance.isCurrent(module._id)
     return {
       attributes: {
         src: ContentInterface.get().getSrc module.audio
       }
-      playing: instance.shouldPlayQuestionAudio(module._id)
+      playing: playing and isCurrent
     }
 
   incorrectSoundEffectArgs: ->
     instance = Template.instance()
+    playing = instance.state.get("soundEfffectPlaying") == "INCORRECT"
     return {
       attributes: {
         src: ContentInterface.get().incorrectSoundEffectFilePath()
       }
-      playing: instance.state.get("playingIncorrectSoundEffect")
+      playing: playing
       whenFinished: instance.stopPlayingSoundEffect
       whenPaused: instance.stopPlayingSoundEffect
     }
@@ -258,11 +266,12 @@ Template.Lesson_view_page.helpers
     instance = Template.instance()
     console.log "Changing the correct sound effect args"
     console.log instance.state.get("playingCorrectSoundEffect")
+    playing = instance.state.get("soundEfffectPlaying") == "CORRECT"
     return {
       attributes: {
         src: ContentInterface.get().correctSoundEffectFilePath()
       }
-      playing: instance.state.get("playingCorrectSoundEffect")
+      playing: playing
       whenFinished: instance.stopPlayingSoundEffect
       whenPaused: instance.stopPlayingSoundEffect
     }

@@ -15,6 +15,7 @@ blaze@2.1.7
 blaze-html-templates@1.0.4
 blaze-tools@1.0.8
 boilerplate-generator@1.0.8
+bojicas:howler2@2.0.0_9
 caching-compiler@1.0.4
 caching-html-compiler@1.0.6
 callback-hook@1.0.8
@@ -78,12 +79,8 @@ noorahealth:mongo-schemas@0.0.1
 npm-mongo@1.4.43
 observe-sequence@1.0.11
 ordered-dict@1.0.7
-ovcharik:howler@1.1.26
 pcel:loading@1.0.3
-percolate:momentum@0.7.2
-percolate:velocityjs@1.2.1_1
 percolatestudio:segment.io@3.0.0
-philippspo:momentum-flow-router@0.0.7
 practicalmeteor:chai@2.1.0_1
 practicalmeteor:loglevel@1.2.0_2
 practicalmeteor:mocha@2.4.5_2
@@ -116,4 +113,5 @@ url@1.0.9
 webapp@1.2.8
 webapp-hashing@1.0.9
 wolves:bourbon@3.1.0
+xolvio:cleaner@0.3.0
 zimme:active-route@2.3.2

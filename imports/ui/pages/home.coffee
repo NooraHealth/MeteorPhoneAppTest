@@ -21,10 +21,10 @@ Template.Home_page.onCreated ->
   #loads the soundeffects, circumventing a howler.js bug that prevents
   #them from loading in lessons_view.coffee
   new Howl {
-    urls: ['incorrect_soundeffect.mp3']
+    src: ['incorrect_soundeffect.mp3']
   }
   new Howl {
-    urls: ['correct_soundeffect.mp3']
+    src: ['correct_soundeffect.mp3']
   }
 
   @getLessonDocuments = =>

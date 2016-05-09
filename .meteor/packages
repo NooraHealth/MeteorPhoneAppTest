@@ -42,14 +42,15 @@ mrt:q
 percolatestudio:segment.io
 reactive-var
 manuel:reactivearray
-philippspo:momentum-flow-router
 reactive-dict
 standard-minifier-css
 standard-minifier-js
 modules
 robertlowe:persistent-reactive-dict
 aldeed:simple-schema
-ovcharik:howler
 noorahealth:mongo-schemas
 practicalmeteor:mocha
 dburles:factory
+xolvio:cleaner
+practicalmeteor:chai
+bojicas:howler2

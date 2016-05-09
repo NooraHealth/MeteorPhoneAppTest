@@ -19,25 +19,31 @@ Template.Audio.onCreated ->
   @autorun =>
     data = Template.currentData()
     shouldPlay = data.playing
-    alreadyPlaying = @state.get "playing"
+    alreadyPlaying = @sound?.playing()
     if shouldPlay and not alreadyPlaying
-      @sound = new Howl {
-        urls: [data.attributes.src]
-        onloaderror: ->
+      @sound ?= new Howl {
+        src: [data.attributes.src]
+        onloaderror: (id, error)->
           console.log "LOADERROR #{data.attributes.src}"
+          console.log error
           console.trace()
         onend: @data.whenFinished
         onpause: @data.whenPaused
+        #html5: true
       }
       @sound.play()
-      @state.set "playing", true
     else if not shouldPlay and alreadyPlaying and @sound?
-      @state.set "playing", false
       @sound.pause()
 
 Template.Audio.onDestroyed ->
   instance = Template.instance()
-  isPlaying = instance.state.get "playing"
-  if isPlaying
-    instance.sound?.pause()
+  #isPlaying = instance.state.get "playing"
+  #if isPlaying
+    #instance.sound?.pause()
+  console.log "Is the sound playing"
+  console.log "On onDestroyed"
+  console.log instance
+  console.log instance.sound?.playing()
+  if instance.sound and instance.sound.playing()
+    instance.sound.pause()
   instance.sound?.unload()
