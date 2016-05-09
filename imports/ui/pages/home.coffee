@@ -55,16 +55,18 @@ Template.Home_page.onCreated ->
 
   @autorun =>
     id = AppState.get().getCurriculumId()
+    console.log "Getting ths subscriptions for #{id}"
     #if not Meteor.isCordova
-    if Meteor.isCordova
-      @subscribe "curriculums.all"
-      @subscribe "lessons.all"
-      @subscribe "modules.all"
-    else
+    if not Meteor.isCordova
+      #@subscribe "curriculums.all"
+      #@subscribe "lessons.all"
+      #@subscribe "modules.all"
+    #else
       @subscribe "curriculums.all"
       @subscribe "lessons.inCurriculum", id
 
   @autorun =>
+    console.log "in the download autorun: ", @subscriptionsReady()
     subscriptionsReady = @subscriptionsReady()
     id = AppState.get().getCurriculumId()
     curriculumDownloaded = AppState.get().getCurriculumDownloaded(id)
@@ -103,7 +105,7 @@ Template.Home_page.helpers
     if Meteor.isCordova
       id = AppState.get().getCurriculumId()
       console.log "In the curriculums ready: is curriculum downloaded?", AppState.get().getCurriculumDownloaded(id)
-      console.log "SUBSCRIPTIONS READY", instance.subscriptionsReady()
+      console.log "CURRiculums READY", instance.subscriptionsReady()
       return instance.subscriptionsReady() and not AppState.get().loading()
     else
       return instance.subscriptionsReady()

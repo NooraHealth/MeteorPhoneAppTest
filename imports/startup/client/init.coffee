@@ -4,7 +4,7 @@
 require 'meteor/loftsteinn:framework7-ios'
 
 Meteor.startup ()->
-  if Meteor.isCordova
+  if Meteor.isCordova and Meteor.status().connected
     console.log "SUBSCRIBING"
     Meteor.subscribe "curriculums.all"
     Meteor.subscribe "lessons.all"
