@@ -3,6 +3,7 @@
 ###
 { BlazeLayout } = require 'meteor/kadira:blaze-layout'
 { FlowRouter } = require 'meteor/kadira:flow-router'
+{ AppState } = require '../../api/AppState.coffee'
 
 # PAGES
 require '../../ui/layouts/layout.coffee'
@@ -16,6 +17,8 @@ require '../../ui/pages/lesson_view.coffee'
 FlowRouter.route '/', {
   name: "home"
   action: ( params, qparams )->
+    console.log "Going to the home page"
+    AppState.get().setLoading false
     BlazeLayout.render 'Layout', { main : 'Home_page' }
 }
 
@@ -26,6 +29,7 @@ FlowRouter.route '/', {
 FlowRouter.route '/lesson/:_id', {
   name: "lesson"
   action: ( params, qparams )->
+    console.log "Going to the lessons page"
     BlazeLayout.render "Layout", { main: "Lesson_view_page" }
 
 }

@@ -1,10 +1,11 @@
-###
+##############################################################################
+#
 # ContentInterface
 # 
 # The interface between the app and the Noora Health content (images, videos, audio).
 # It knows where the Noora Health content is located and how to get there.
 #
-###
+##############################################################################
 
 { OfflineFiles } = require("meteor/noorahealth:mongo-schemas")
 
@@ -30,11 +31,11 @@ class ContentInterface
 
     # Where the content is stored remotely (AWS S3 server)
     getEndpoint: (path) =>
-      return @contentEndpoint + path
+      if path? then return @contentEndpoint + path else return @contentEndpoint
 
-    # Where the app should source it's content
-    # If in the browser, remotely, if in Cordova, then 
-    # locally
+    # Given a filename (path), getSrc will identify where to find
+    # that particular file -- in Cordova, this is local and in the browser
+    # it will find it remotely
     getSrc: (path) =>
       url = @getEndpoint(path)
       if Meteor.isCordova

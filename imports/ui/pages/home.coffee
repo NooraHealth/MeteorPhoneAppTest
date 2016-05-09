@@ -17,14 +17,14 @@ require '../../ui/components/audio/audio.coffee'
 require '../../ui/components/shared/loading.coffee'
 
 Template.Home_page.onCreated ->
-  
+  console.log "Home template created"
   #loads the soundeffects, circumventing a howler.js bug that prevents
   #them from loading in lessons_view.coffee
   new Howl {
-    urls: ['incorrect_soundeffect.mp3']
+    src: ['incorrect_soundeffect.mp3']
   }
   new Howl {
-    urls: ['correct_soundeffect.mp3']
+    src: ['correct_soundeffect.mp3']
   }
 
   @getLessonDocuments = =>
@@ -87,7 +87,8 @@ Template.Home_page.onCreated ->
             AppState.get().setCurriculumDownloaded id, true
             AppState.get().setLoading false
           AppState.get().setLoading true
-          Tracker.flush()
+          console.log "About to flush the tracker"
+          #Tracker.flush()
           ContentDownloader.get().loadCurriculum id, onSuccess, onError
 
   @autorun =>
@@ -143,3 +144,12 @@ Template.Home_page.helpers
     instance = Template.instance()
     return instance.getLessonDocuments()
 
+Template.Home_page.events
+  'click #open_side_panel': (e, template) ->
+    #hackaround Framework7 bugs on ios where active state is not removed
+    console.log("removing the activestate")
+    active = template.find(".active-state")
+    if active? then $(active).removeClass "active-state"
+
+Template.Home_page.onDestroyed ->
+  AppState.get().setLoading false

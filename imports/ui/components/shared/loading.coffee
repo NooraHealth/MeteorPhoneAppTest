@@ -10,6 +10,7 @@ message = '<p class="loading-message">'+"Welcome to Noora Health"+'</p><p class=
 spinner = '<div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>'
 
 Template.Loading.onCreated ->
+  console.log "Making a loading template"
   @autorun ->
     percent = AppState.get().getPercentLoaded()
     console.log "PERCENT LOADED", percent

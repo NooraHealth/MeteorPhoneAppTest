@@ -66,7 +66,4 @@ class AppState
     setLoading: (state) ->
       @dict.setTemporary "loading", state
 
-console.log "Exporting AppState: ", AppState
-console.log "CURRICULUMS", Curriculums
-
 module.exports.AppState = AppState

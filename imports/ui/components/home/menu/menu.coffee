@@ -4,6 +4,7 @@ require './menu.html'
 Template.Home_curriculum_menu.onCreated ->
   # Data context validation
   @autorun =>
+    console.log "Validating the home menu"
     new SimpleSchema({
       onCurriculumSelected: {type: Function}
       curriculums: {type: Mongo.Cursor}
