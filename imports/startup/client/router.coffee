@@ -3,6 +3,7 @@
 ###
 { BlazeLayout } = require 'meteor/kadira:blaze-layout'
 { FlowRouter } = require 'meteor/kadira:flow-router'
+{ AppState } = require '../../api/AppState.coffee'
 
 # PAGES
 require '../../ui/layouts/layout.coffee'
@@ -17,6 +18,7 @@ FlowRouter.route '/', {
   name: "home"
   action: ( params, qparams )->
     console.log "Going to the home page"
+    AppState.get().setLoading false
     BlazeLayout.render 'Layout', { main : 'Home_page' }
 }
 

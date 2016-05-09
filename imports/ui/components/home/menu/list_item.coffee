@@ -5,6 +5,7 @@ require './list_item.html'
 Template.Home_curriculum_menu_list_item.onCreated ->
   # Data context validation
   @autorun =>
+    console.log "validating the list item"
     new SimpleSchema({
       onCurriculumSelected: {type: Function}
       curriculum: {type: Curriculums._helpers}

@@ -29,9 +29,9 @@ Template.Lesson_view_page_video.onCreated ->
     instance = @
     elem = @elem instance
     if playing
-      console.log "About to play the video"
-      elem.currentTime = 0
-      elem.play()
+      console.log "About to play the video (NOT)"
+      #elem.currentTime = 0
+      #elem.play()
     else
       elem.pause()
 

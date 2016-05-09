@@ -17,7 +17,7 @@ require '../../ui/components/audio/audio.coffee'
 require '../../ui/components/shared/loading.coffee'
 
 Template.Home_page.onCreated ->
-  
+  console.log "Home template created"
   #loads the soundeffects, circumventing a howler.js bug that prevents
   #them from loading in lessons_view.coffee
   new Howl {
@@ -82,7 +82,8 @@ Template.Home_page.onCreated ->
             AppState.get().setCurriculumDownloaded id, true
             AppState.get().setLoading false
           AppState.get().setLoading true
-          Tracker.flush()
+          console.log "About to flush the tracker"
+          #Tracker.flush()
           ContentDownloader.get().loadCurriculum id, onSuccess, onError
 
   @autorun =>
@@ -145,4 +146,4 @@ Template.Home_page.events
     if active? then $(active).removeClass "active-state"
 
 Template.Home_page.onDestroyed ->
-  AppState.setLoading false
+  AppState.get().setLoading false
