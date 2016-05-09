@@ -48,9 +48,9 @@ standard-minifier-js
 modules
 robertlowe:persistent-reactive-dict
 aldeed:simple-schema
-noorahealth:mongo-schemas
 practicalmeteor:mocha
 dburles:factory
 xolvio:cleaner
 practicalmeteor:chai
 bojicas:howler2
+noorahealth:mongo-schemas
