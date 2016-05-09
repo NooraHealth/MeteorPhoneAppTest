@@ -143,3 +143,6 @@ Template.Home_page.events
     console.log("removing the activestate")
     active = template.find(".active-state")
     if active? then $(active).removeClass "active-state"
+
+Template.Home_page.onDestroyed ->
+  AppState.setLoading false
