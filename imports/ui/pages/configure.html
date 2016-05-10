@@ -1,0 +1,24 @@
+<template name="Configure_app_page">
+    <div class="page-content">
+      <h1> Welcome to the Noora Health App</h1>
+      <h3> Please select your hospital and condition </h3>
+      <div class="content-block inner-container">
+        <p>Hospital</p>
+        <div class="item-input">
+          {{#each hospital in hospitals}}
+            <select>{{hospital.name}}</select>
+          {{/each}}
+        </div>  
+
+        <p>Condition</p>
+        <div class="item-input">
+          {{#each condition in conditions}}
+            <select>{{condition}}</select>
+          {{/each}}
+        </div>  
+
+        {{>Button buttonArgs}}
+      </div>
+    </div>
+
+</template>

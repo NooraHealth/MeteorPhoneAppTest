@@ -66,4 +66,42 @@ class AppState
     setLoading: (state) ->
       @dict.setTemporary "loading", state
 
+    setConfiguration: (configuration) ->
+      if not Meteor.isCordova
+        throw Meteor.Error "developer-error", "The app should not call AppState.get().setConfiguration when not in Cordova. Developer error."
+
+      if @isConfigured()
+        throw Meteor.Error "developer-error", "The app is calling setConfiguration after it has already been configured. This should not have happened. Developer error"
+
+      new SimpleSchema({
+        hospital: {type: String, min: 1} #Hospital and condition cannot be empty strings
+        condition: {type: String, min: 1}
+      }).validate configuration
+
+      @dict.setPersistent 'configuration', configuration
+      #@dict.setPersistent 'hospital', configuration.hospital
+      #@dict.setPersistent 'condition', configuration.condition
+
+    isConfigured: (state) ->
+      if Meteor.isCordova
+        configuration = @dict.get 'configuration'
+        #hospital = @dict.get 'hospital'
+        #condition = @dict.get 'condition'
+        return configuration? and
+          configuration?.hospital? and
+          configuration.hospital isnt "" and
+          configuration.condition? and
+          configuration.condition isnt ""
+      else
+        throw Meteor.Error 'developer-error', 'App reached AppState.get().isConfigured while not in Cordova. This should not have happened. Developer Error'
+
+    getConfiguration: ->
+      if not Meteor.isCordova
+        throw Meteor.Error "developer-error", "The app should not call AppState.get().getConfiguration when not in Cordova. Developer error."
+
+      if not @isConfigured()
+        throw Meteor.Error "developer-error", "The app is calling getConfiguration before it has been configured. This should not have happened. Developer error"
+
+      return @dict.get "configuration"
+
 module.exports.AppState = AppState
