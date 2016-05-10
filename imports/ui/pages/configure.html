@@ -1,24 +1,51 @@
 <template name="Configure_app_page">
-    <div class="page-content">
-      <h1> Welcome to the Noora Health App</h1>
-      <h3> Please select your hospital and condition </h3>
-      <div class="content-block inner-container">
-        <p>Hospital</p>
-        <div class="item-input">
-          {{#each hospital in hospitals}}
-            <select>{{hospital.name}}</select>
-          {{/each}}
+  <div data-page="index" class="page navbar-fixed toolbar-fixed">
+
+    {{#Navbar}}
+    {{/Navbar}}
+
+    <br/>
+
+    <div class="page-content align-center padding-lg inner-container">
+      <div class='content-block-title'> <p class='center'>Welcome to the Noora Health App</p></div>
+      <div class='content-block'>
+
+        <div class='row'>
+          <p class="color-grey"> Please select your hospital and condition </p>
+        </div>
+
+        <div class='row'>
+          <div class='center'>
+            <div class="item-input">
+              <label for="hospital_select">Hospital</label>
+              <select id="hospital_select">
+              {{#each hospital in hospitals}}
+                <option>{{hospital.name}}</option>
+              {{/each}}
+              </select>
+            </div>  
+          </div>  
         </div>  
 
-        <p>Condition</p>
-        <div class="item-input">
-          {{#each condition in conditions}}
-            <select>{{condition}}</select>
-          {{/each}}
-        </div>  
+        <div class='row'>
+          <div class='center'>
+            <div class="item-input">
+              <label for="condition_select">Condition</label>
+              <select id="condition_select">
+              {{#each condition in conditions}}
+                <option>{{condition.name}}</option>
+              {{/each}}
+              </select>
+            </div>  
+          </div>  
+        </div>
+        <br/>
 
-        {{>Button buttonArgs}}
+        <div class='row'>
+          {{>Button buttonArgs}}
+        </div>
       </div>
     </div>
+  </div>
 
 </template>

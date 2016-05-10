@@ -23,5 +23,8 @@ Template.Configure_app_page.helpers
     instance = Template.instance()
     return {
       onClick: instance.configureApp
-      content: 'Configure'
+      content: 'CONFIGURE'
+      attributes: {
+        class: 'full-width link button button-rounded color-blue  button-fill'
+      }
     }

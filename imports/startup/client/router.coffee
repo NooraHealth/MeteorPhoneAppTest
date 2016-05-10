@@ -21,9 +21,6 @@ if Meteor.isCordova
 FlowRouter.route '/', {
   name: "home"
   action: ( params, qparams )->
-    console.log "Going to the home page"
-    console.log "Is CONFIGURED???"
-    console.log AppState.get().isConfigured()
     if not AppState.get().isConfigured()
       BlazeLayout.render 'Layout', { main : 'Configure_app_page' }
     else
