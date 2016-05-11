@@ -45,6 +45,10 @@ class @ContentDownloader
           throw new Meteor.Error "not-connected", "The iPad is not connected to data. Please connect and try again"
 
         docs = cursor.fetch()
+        console.log "Downloading these docs"
+        console.log docs
+        console.log "number of curriculums in the database"
+        console.log Curriculums.find().count()
         filteredFiles = []
         for doc in docs
           #curriculum = Curriculums.findOne { _id: docs[0]._id }
