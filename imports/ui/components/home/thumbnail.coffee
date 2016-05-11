@@ -8,7 +8,6 @@ Template.Home_thumbnail.onCreated ->
   console.log "Home thumbnail created"
   @autorun =>
     console.log "Validating the thumbnail"
-    console.log Template.currentData()
     schema = new SimpleSchema({
       lesson: {type: Lessons._helpers}
       isCurrentLesson: {type: Boolean}

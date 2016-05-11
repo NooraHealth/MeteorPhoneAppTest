@@ -1,24 +1,25 @@
 
 require './menu.html'
 
-Template.Home_curriculum_menu.onCreated ->
+Template.Home_language_menu.onCreated ->
   # Data context validation
   @autorun =>
     console.log "Validating the home menu"
     new SimpleSchema({
-      onCurriculumSelected: {type: Function}
-      curriculums: {type: Mongo.Cursor}
+      onLanguageSelected: {type: Function}
+      languages: {type: [String]}
     }).validate(Template.currentData())
+    console.log "validated"
 
-Template.Home_curriculum_menu.helpers
-  listItemArgs: (curriculum) ->
+Template.Home_language_menu.helpers
+  listItemArgs: (language) ->
     instance = Template.instance()
-    onCurriculumSelected = Template.currentData().onCurriculumSelected
+    onLanguageSelected = Template.currentData().onLanguageSelected
     return {
-      curriculum: curriculum
-      onCurriculumSelected: onCurriculumSelected
+      language: language
+      onLanguageSelected: onLanguageSelected
     }
     
-  curriculums: ()->
-    return Template.currentData().curriculums
+  languages: ()->
+    return Template.currentData().languages
 

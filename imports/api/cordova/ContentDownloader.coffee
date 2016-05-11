@@ -10,7 +10,7 @@
 
 Array::merge = (other) -> Array::push.apply @, other
 
-##############################################################################
+##
 #                                                                
 # ContentDownloader                                                          
 #
@@ -19,7 +19,7 @@ Array::merge = (other) -> Array::push.apply @, other
 # and stores them locally on the device. A reference to each file is stored
 # as an OfflineFile document upon successful download.
 #
-#############################################################################
+##
 
 class @ContentDownloader
   @get: ()->
@@ -31,58 +31,57 @@ class @ContentDownloader
 
     constructor: ->
 
-    loadCurriculum: (id, onSuccess, onError) =>
-      console.log "LOADING CURRICULM"
+    loadCurriculums: (cursor, onComplete) =>
       try
         #validate the arguments
         console.log "VALIDATION THE SCHEMA"
         new SimpleSchema({
-          id: {type: String}
-          onSuccess: {type: Function}
-          onError: {type: Function, optional: true}
-        }).validate({id: id, onSuccess: onSuccess, onError: onError})
+          cursor: {type: Mongo.Cursor}
+          onComplete: {type: Function}
+        }).validate({cursor: cursor, onComplete: onComplete})
         console.log "VALIDATED"
 
         if not Meteor.status().connected
           throw new Meteor.Error "not-connected", "The iPad is not connected to data. Please connect and try again"
 
-        curriculum = Curriculums.findOne { _id: id }
-        if not curriculum? then throw new Meteor.Error "curriculum-not-found", "Curriculum of id #{id} not found"
+        docs = cursor.fetch()
+        filteredFiles = []
+        for doc in docs
+          #curriculum = Curriculums.findOne { _id: docs[0]._id }
+          curriculum = Curriculums.findOne { _id: doc._id }
+          if not curriculum? then throw new Meteor.Error "curriculum-not-found", "Curriculum of id #{id} not found"
 
-        lessons = curriculum.getLessonDocuments()
+          lessons = curriculum.getLessonDocuments()
+          paths = []
+          for lesson in lessons
+            paths.merge @_allContentPathsInLesson(lesson)
 
-        paths = []
-        for lesson in lessons
-          paths.merge @_allContentPathsInLesson(lesson)
+          getFileName = (path, index) ->
+            getRandomInt = (min, max) => Math.floor(Math.random() * (max - min)) + min
+            rand = getRandomInt(1, 400)
+            matches = path.match(/[\.][a-z1-9]+$/)
+            filetype = matches[ matches.length - 1 ] #the filetype extension will be the last match
+            newFilename = index + rand + filetype
+            return newFilename
 
-        getFileName = (path) ->
-          spaces = new RegExp("[ ]+","g")
-          backslash = new RegExp("[/]+","g")
-          path = path.replace spaces, ""
-          path = path.replace backslash, ""
-          return path
+          files = ( {url: ContentInterface.get().getEndpoint(path), name: getFileName(path, index)} for path, index in paths )
+          filteredFiles.push file for file in files when not OfflineFiles.findOne({url: file.url})?
 
-        urls = ( {url: ContentInterface.get().getEndpoint(path), name: getFileName(path)} for path in paths )
-        filteredUrls = ( url for url in urls when not OfflineFiles.findOne({url: url.url})? )
-
-        console.log "DOWNLOADING FILTERED URLS", filteredUrls.length
-        @_downloadFiles filteredUrls
-        .then (entry, error)->
+        @_downloadFiles filteredFiles
+        .then (error)->
           #this is where you do the on success thing
-          onSuccess(entry)
+          onComplete(error)
         , (err)->
-          #this is where you do the on error thing
-          console.log "IN THE SECOND STEP"
-          console.log err
+          console.log "This is the middle one"
           message = ""
         , (progress) ->
           AppState.get().setPercentLoaded progress
       catch e
-        console.log "CATCHING THE ERROR"
-        console.log e
-        onError e
+        onComplete e
 
     _downloadFiles: (files) ->
+      console.log "About to download these files:"
+      console.log files
 
       new SimpleSchema({
         "files.$.name": {type: String}
@@ -90,14 +89,14 @@ class @ContentDownloader
       }).validate({files: files})
 
       deferred = Q.defer()
+      error = null
       numToLoad = files.length
       console.log files
       console.log "NUM TO LOAD before", numToLoad
       retry = []
       numRecieved = 0
       if numToLoad == 0
-        console.log "NUM TO LOAD IS 0 so resolving"
-        deferred.resolve()
+        deferred.resolve(error)
 
       window.requestFileSystem LocalFileSystem.PERSISTENT, 0, (fs)->
 
@@ -111,7 +110,6 @@ class @ContentDownloader
           offlineId = Random.id()
           fsPath = fs.root.toURL() + offlineId + file.name
           ft.download(file.url, fsPath, getSuccessCallback(file, fsPath), getErrorCallback(file, fsPath), true)
-
 
         markAsResolved = (entry) ->
           numRecieved++
@@ -131,23 +129,27 @@ class @ContentDownloader
             markAsResolved()
 
         getErrorCallback = (file) ->
-          return (error)->
+          return (err)->
             console.log "There was an error: "
-            console.log error
-            if error.http_status == 404
-              deferred.reject new Meteor.Error("error-downloading", "Some content could not be found")
-            else if error.code == 2
-              deferred.reject new Meteor.Error("error-downloading", "Error accessing content on server")
-            else if error.code == 3
+            console.log err
+            if err.http_status == 404
+              markAsResolved(file)
+              error = new Meteor.Error("error-downloading", "Some content could not be found")
+            else if err.code == 2
+              markAsResolved(file)
+              error = new Meteor.Error("error-downloading", "Error accessing content on server")
+            else if err.code == 3
               if file.name in retry
+                markAsResolved(file)
                 # If already retried downloading, reject
-                deferred.reject new Meteor.Error("error-downloading", "Timeout accessing content on server")
+                error = new Meteor.Error("error-downloading", "Timeout accessing content on server")
               else
                 # Try downloading again
                 retry.push file
                 downloadFile file
             else
-              deferred.reject error
+              markAsResolved(file)
+              error = err
 
         for file in files
           if not (OfflineFiles.findOne { url: file.url })?
@@ -155,7 +157,7 @@ class @ContentDownloader
 
       , (err)->
         # Error retrieving the local filesystem
-        deferred.reject err
+        deferred.resolve err
 
       return deferred.promise
 

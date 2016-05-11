@@ -3,7 +3,7 @@
   <div data-page="index" class="page navbar-fixed toolbar-fixed">
 
     {{#Navbar}}
-      <a data-panel="right" id="open_side_panel" class="open-panel right-aligned">Select Curriculum</a>
+      <a data-panel="right" id="open_side_panel" class="open-panel right-aligned">Select Language</a>
     {{/Navbar}}
 
 
@@ -13,7 +13,7 @@
       <!-- Left panel, let it be with reveal effect -->
         {{#if curriculumsReady}}
         <div class="panel panel-cover panel-right">
-          {{>Home_curriculum_menu (menuArgs)}}
+          {{>Home_language_menu (menuArgs)}}
         </div>
 
         <div class="content-block inner-container">
@@ -27,10 +27,6 @@
             </div>
           </div>
         </div>
-      {{else}}
-        {{#if isLoading}}
-          {{>Loading}}
-        {{/if}}
       {{/if}}
     </div>
   </div>

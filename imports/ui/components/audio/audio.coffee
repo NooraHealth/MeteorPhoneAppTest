@@ -1,14 +1,12 @@
 require './audio.html'
 
 Template.Audio.onCreated ->
-  @state = new ReactiveDict()
-
-  @state.setDefault {
-    playing: false
-  }
+  console.log "Creating an audio"
 
   @autorun =>
+    console.log "Validating the audio"
     @data = Template.currentData()
+    console.log @data
     new SimpleSchema({
       "attributes.src": {type: String}
       playing: {type: Boolean}
@@ -17,9 +15,9 @@ Template.Audio.onCreated ->
       whenFinished: {type: Function, optional: true}
       whenPaused: {type: Function, optional: true}
     }).validate @data
+    console.log "Audio validated"
 
   @autorun =>
-    console.log "IN AUDIO AUTORUN"
     data = Template.currentData()
     shouldReplay = data.replay
     if shouldReplay

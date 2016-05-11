@@ -21,10 +21,10 @@ if Meteor.isCordova
 FlowRouter.route '/', {
   name: "home"
   action: ( params, qparams )->
+    console.log "In the route for home"
     if not AppState.get().isConfigured()
       BlazeLayout.render 'Layout', { main : 'Configure_app_page' }
     else
-      AppState.get().setLoading false
       BlazeLayout.render 'Layout', { main : 'Home_page' }
 }
 
@@ -43,8 +43,8 @@ FlowRouter.route '/lesson/:_id', {
 # Load Curriculums
 ###
 if Meteor.isCordova
-  FlowRouter.route 'load', {
-    name: "loadCurriculums"
+  FlowRouter.route '/load', {
+    name: "load"
     action: ( params, qparams )->
       console.log "Going to the load curriculums page"
       BlazeLayout.render "Layout", { main: "Load_curriculums_page" }

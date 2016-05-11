@@ -49,8 +49,9 @@ Template.Home_page.onCreated ->
   @onLessonSelected = (id) ->
     FlowRouter.go "lesson", {_id: id}
 
-  @onCurriculumSelected = (id) ->
-    AppState.get().setCurriculumId id
+  @onLanguageSelected = (language) ->
+    console.log "In the on language selected"
+    AppState.get().setLanguage language
     AppState.get().setLessonIndex 0
 
   @autorun =>
@@ -58,67 +59,27 @@ Template.Home_page.onCreated ->
     console.log "Getting ths subscriptions for #{id}"
     #if not Meteor.isCordova
     if not Meteor.isCordova
-      #@subscribe "curriculums.all"
-      #@subscribe "lessons.all"
-      #@subscribe "modules.all"
-    #else
+      @subscribe "curriculums.all"
+      @subscribe "lessons.all"
+      @subscribe "modules.all"
+    else
       @subscribe "curriculums.all"
       @subscribe "lessons.inCurriculum", id
-
-  @autorun =>
-    console.log "in the download autorun: ", @subscriptionsReady()
-    subscriptionsReady = @subscriptionsReady()
-    id = AppState.get().getCurriculumId()
-    curriculumDownloaded = AppState.get().getCurriculumDownloaded(id)
-    loading = AppState.get().loading()
-    if subscriptionsReady and
-      Meteor.isCordova and
-      id? and not
-      curriculumDownloaded and not
-      loading
-        if not Meteor.status().connected
-          AppState.get().setError(new Meteor.Error("Not Connected", "Please connect to data in order to download your curriculum."))
-        else
-          onError = (e) ->
-            console.log "ERROR LOADING"
-            console.log e
-            AppState.get().setError e
-            AppState.get().setLoading false
-          onSuccess = (e) ->
-            console.log "SUCCESS LOADING"
-            AppState.get().setCurriculumDownloaded id, true
-            AppState.get().setLoading false
-          AppState.get().setLoading true
-          console.log "About to flush the tracker"
-          #Tracker.flush()
-          ContentDownloader.get().loadCurriculum id, onSuccess, onError
-
-  @autorun =>
-    id = AppState.get().getCurriculumId()
-    if Meteor.isCordova and @subscriptionsReady() and not id
-      if not Meteor.status().connected
-        AppState.get().setError(new Meteor.Error("Not Connected", "Please connect to data in order to view and download curriculums"))
 
 Template.Home_page.helpers
   curriculumsReady: ->
     instance = Template.instance()
     if Meteor.isCordova
       id = AppState.get().getCurriculumId()
-      console.log "In the curriculums ready: is curriculum downloaded?", AppState.get().getCurriculumDownloaded(id)
-      console.log "CURRiculums READY", instance.subscriptionsReady()
-      return instance.subscriptionsReady() and not AppState.get().loading()
+      return instance.subscriptionsReady()
     else
       return instance.subscriptionsReady()
 
-  isLoading: ->
-    return AppState.get().loading()
-
   menuArgs: ->
     instance = Template.instance()
-    curriculumsToList = Curriculums.find({title:{$ne: "Start a New Curriculum"}})
     return {
-      onCurriculumSelected: instance.onCurriculumSelected
-      curriculums: curriculumsToList
+      onLanguageSelected: instance.onLanguageSelected
+      languages: ['English', 'Hindi', 'Kannada', 'Tamil']
     }
 
   thumbnailArgs: (lesson) ->
@@ -152,6 +113,3 @@ Template.Home_page.events
     console.log("removing the activestate")
     active = template.find(".active-state")
     if active? then $(active).removeClass "active-state"
-
-Template.Home_page.onDestroyed ->
-  AppState.get().setLoading false

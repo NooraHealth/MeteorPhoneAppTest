@@ -11,7 +11,6 @@ Meteor.startup ()->
     Meteor.subscribe "lessons.all"
     Meteor.subscribe "modules.all"
   BlazeLayout.setRoot "body"
-  AppState.get().setShouldPlayIntro true
 
   this.App = new Framework7(
     materialRipple: true

@@ -34,18 +34,35 @@ class AppState
     getPercentLoaded: ->
       @dict.get "percentLoaded"
 
-    setCurriculumId: (id) ->
-      @dict.setPersistent "curriculumId", id
+    setLanguage: (language) ->
+      @dict.setPersistent "language", language
       @setLessonIndex 0
 
     getCurriculumId: ->
-      @dict.get "curriculumId"
+      console.log "Getting the curriculum Id"
+      console.trace()
+      if not @isConfigured()
+        @setError new Meteor.Error("developer-error", "The app is calling setConfiguration after it has already been configured. This should not have happened. Developer error")
+
+      language = @dict.get "language"
+      condition = @dict.get('configuration').condition
+      console.log language
+      console.log condition
+      if not language? or not condition?
+        return null
+      console.log Curriculums.find({condition: condition}).fetch()
+      curriculum = Curriculums.findOne {language: language, condition: condition}
+      console.log curriculum
+      if not curriculum
+        @setError new Meteor.Error("no-curriculum", "There doesn't appear to be a curriculum for that language and condition. Please select another language")
+      return curriculum?._id
 
     setShouldPlayIntro: (state) ->
       @dict.setPersistent "playIntro", state
 
     getShouldPlayIntro: (state) ->
-      @dict.get "playIntro"
+      shouldPlay = @dict.get "playIntro"
+      if shouldPlay? then return shouldPlay else return false
 
     setError: (error) ->
       if error
@@ -54,28 +71,21 @@ class AppState
           error: {type: String}
         }).validate error
 
-      console.log "SET THE ERROR"
       @dict.setTemporary "errorMessage", error
 
     getError: ->
       @dict.get "errorMessage"
 
-    loading: ->
-      @dict.get "loading"
-
-    setLoading: (state) ->
-      @dict.setTemporary "loading", state
-
     setConfiguration: (configuration) ->
       if not Meteor.isCordova
-        throw Meteor.Error "developer-error", "The app should not call AppState.get().setConfiguration when not in Cordova. Developer error."
+        @setError new Meteor.Error("developer-error", "The app should not call AppState.get().setConfiguration when not in Cordova. Developer error.")
 
       if @isConfigured()
-        throw Meteor.Error "developer-error", "The app is calling setConfiguration after it has already been configured. This should not have happened. Developer error"
+        @setError new Meteor.Error("developer-error", "The app is calling setConfiguration after it has already been configured. This should not have happened. Developer error")
 
       new SimpleSchema({
-        hospital: {type: String, min: 1} #Hospital and condition cannot be empty strings
-        condition: {type: String, min: 1}
+        hospital: {type: String, min: 1, optional: true} #Hospital and condition cannot be empty strings
+        condition: {type: String, min: 1, optional: true}
       }).validate configuration
 
       @dict.setPersistent 'configuration', configuration
@@ -93,14 +103,14 @@ class AppState
           configuration.condition? and
           configuration.condition isnt ""
       else
-        throw Meteor.Error 'developer-error', 'App reached AppState.get().isConfigured while not in Cordova. This should not have happened. Developer Error'
+        throw Meteor.Error('developer-error', 'App reached AppState.get().isConfigured while not in Cordova. This should not have happened. Developer Error')
 
     getConfiguration: ->
       if not Meteor.isCordova
-        throw Meteor.Error "developer-error", "The app should not call AppState.get().getConfiguration when not in Cordova. Developer error."
+        @setError new Meteor.Error("developer-error", "The app should not call AppState.get().getConfiguration when not in Cordova. Developer error.")
 
       if not @isConfigured()
-        throw Meteor.Error "developer-error", "The app is calling getConfiguration before it has been configured. This should not have happened. Developer error"
+        @setError new Meteor.Error("developer-error", "The app is calling getConfiguration before it has been configured. This should not have happened. Developer error")
 
       return @dict.get "configuration"
 
