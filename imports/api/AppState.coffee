@@ -51,15 +51,9 @@ class AppState
 
       language = @dict.get "language"
       condition = @dict.get('configuration').condition
-      console.log language
-      console.log condition
       if not language? or not condition?
         return null
-      console.log Curriculums.find({condition: condition}).fetch()
       curriculum = Curriculums.findOne {language: language, condition: condition}
-      console.log curriculum
-      if not curriculum
-        @setError new Meteor.Error("no-curriculum", "There doesn't appear to be a curriculum for that language and condition. Please select another language")
       return curriculum?._id
 
     setShouldPlayIntro: (state) ->

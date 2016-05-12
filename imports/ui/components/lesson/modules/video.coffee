@@ -24,14 +24,10 @@ Template.Lesson_view_page_video.onCreated ->
   @autorun =>
     elemRendered = @state.get "rendered"
     if not elemRendered then return
-    playing = Template.currentData().playing
+    shouldPlay = Template.currentData().playing
     instance = @
     elem = @elem instance
-    if playing and not Meteor.isCordova
-      console.log "About to play the video (NOT)"
-      elem.currentTime = 0
-      elem.play()
-    else
+    if not shouldPlay
       elem.pause()
 
 Template.Lesson_view_page_video.helpers
