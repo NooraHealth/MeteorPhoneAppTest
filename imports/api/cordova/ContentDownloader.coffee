@@ -88,8 +88,6 @@ class @ContentDownloader
         onComplete e
 
     _downloadFiles: (files) ->
-      console.log "About to download these files:"
-      console.log files
 
       new SimpleSchema({
         "files.$.name": {type: String}
@@ -149,19 +147,16 @@ class @ContentDownloader
               markAsResolved(file)
               error = new Meteor.Error("error-downloading", "Error accessing content on server")
             else if err.code == 3
-              console.log "error code 3"
               if file.name in retry
-                console.log "Already retried, about to resolve"
                 markAsResolved(file)
                 # If already retried downloading, reject
                 error = new Meteor.Error("error-downloading", "Timeout accessing content on server")
               else
-                console.log "Retrying"
+                console.log "Retrying download"
                 # Try downloading again
                 retry.push file
                 downloadFile file
             else
-              console.log "In the else statement"
               markAsResolved(file)
               error = err
 
@@ -176,14 +171,10 @@ class @ContentDownloader
       return deferred.promise
 
     _allContentPathsInLesson: (lesson) ->
-      console.log "GETTING ALL CONTENT PATHS IN LESSOn"
-      console.log lesson
       if not lesson?
         return []
 
       modules = lesson.getModulesSequence()
-      console.log "GOT MODULES"
-      console.log modules
       paths = []
       if lesson.image
         paths.push lesson.image
@@ -191,12 +182,9 @@ class @ContentDownloader
       for module in modules
         paths.merge @_allContentPathsInModule(module)
 
-      console.log "Got all the paths in the lesson"
-      console.log paths
       return paths
 
     _allContentPathsInModule: (module) ->
-      console.log "GETTING ALL THE CONTENT PATHS IN THE MODULE"
       paths = []
       if module.image
         paths.push module.image
@@ -210,7 +198,6 @@ class @ContentDownloader
         paths.push module.correct_audio
       if module.options and module.type == 'MULTIPLE_CHOICE'
         paths.merge (option for option in module.options when option?)
-      console.log "COMPLETE"
       return paths
 
 

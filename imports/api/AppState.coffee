@@ -12,6 +12,7 @@ class AppState
 
     setLessonIndex: (i) ->
       @dict.setPersistent "lessonIndex", i
+      @
 
     getLessonIndex: ->
       @dict.get "lessonIndex"
@@ -19,9 +20,11 @@ class AppState
     incrementLesson: ->
       index = @getLessonIndex()
       @setLessonIndex ++index
+      @
 
     setCurriculumDownloaded: (id, state) ->
       @dict.setPersistent "curriculumDownloaded#{id}", state
+      @
       
     getCurriculumDownloaded: (id) ->
       if not id then return true
@@ -30,6 +33,7 @@ class AppState
       
     setPercentLoaded: (percent) ->
       @dict.setTemporary "percentLoaded", percent
+      @
 
     getPercentLoaded: ->
       @dict.get "percentLoaded"
@@ -37,6 +41,7 @@ class AppState
     setLanguage: (language) ->
       @dict.setPersistent "language", language
       @setLessonIndex 0
+      @
 
     getCurriculumId: ->
       console.log "Getting the curriculum Id"
@@ -53,10 +58,13 @@ class AppState
       console.log Curriculums.find({condition: condition}).fetch()
       curriculum = Curriculums.findOne {language: language, condition: condition}
       console.log curriculum
-      if curriculum? then return curriculum._id else return null
+      if not curriculum
+        @setError new Meteor.Error("no-curriculum", "There doesn't appear to be a curriculum for that language and condition. Please select another language")
+      return curriculum?._id
 
     setShouldPlayIntro: (state) ->
       @dict.setPersistent "playIntro", state
+      @
 
     getShouldPlayIntro: (state) ->
       shouldPlay = @dict.get "playIntro"
@@ -70,6 +78,7 @@ class AppState
         }).validate error
 
       @dict.setTemporary "errorMessage", error
+      return @
 
     getError: ->
       @dict.get "errorMessage"
@@ -87,6 +96,7 @@ class AppState
       }).validate configuration
 
       @dict.setPersistent 'configuration', configuration
+      return @
       #@dict.setPersistent 'hospital', configuration.hospital
       #@dict.setPersistent 'condition', configuration.condition
 
@@ -114,8 +124,9 @@ class AppState
 
     setSubscribed: (state) ->
       @dict.set "subscribed", state
+      return @
 
-    subscribed: ->
+    isSubscribed: ->
       subscribed = @dict.get "subscribed"
       if subscribed? then return subscribed else return false
 

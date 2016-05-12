@@ -13,11 +13,10 @@ Template.Load_curriculums_page.onCreated ->
     @subscribe "modules.all"
 
   @autorun =>
-    console.log "Getting whether subscriptionsReady in the loadCurriculums"
+    console.log "Getting whether subscriptionsReady"
     console.log @subscriptionsReady()
     if @subscriptionsReady() and @firstRun
       @firstRun = false
-      console.log "About to download"
       configuration = AppState.get().getConfiguration()
       curriculums = Curriculums.find { condition: configuration.condition }
       if not Meteor.status().connected
@@ -29,11 +28,9 @@ Template.Load_curriculums_page.onCreated ->
           console.log "SUCCESS LOADING"
           console.log e
           if e
-            console.log "setting the app error"
             AppState.get().setError e
           AppState.get().setLanguage 'English'
           AppState.get().setShouldPlayIntro true
-          console.log "Going home"
           FlowRouter.go "home"
         ContentDownloader.get().loadCurriculums curriculums, onComplete
   

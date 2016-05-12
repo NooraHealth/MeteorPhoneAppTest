@@ -1,16 +1,16 @@
 
 { BlazeLayout } = require 'meteor/kadira:blaze-layout'
 { AppState } = require('../../api/AppState.coffee')
+{ Curriculums } = require("meteor/noorahealth:mongo-schemas")
 require 'meteor/loftsteinn:framework7-ios'
 
 Meteor.startup ()->
   console.log "In the startup!"
-  console.log "Subscribed??", AppState.get().subscribed()
+  console.log AppState.get().isSubscribed()
   console.log Curriculums.find().count()
-  console.log Lessons.find().count()
-  console.log Modules.find().count()
-  if Meteor.isCordova and not AppState.get().subscribed()
+  if Meteor.isCordova and not AppState.get().isSubscribed()
     console.log "In the meteor isConnected and cordova in init"
+    console.log "Subscribing"
     Meteor.subscribe "curriculums.all"
     Meteor.subscribe "lessons.all"
     Meteor.subscribe "modules.all"
