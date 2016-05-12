@@ -53,9 +53,7 @@ class AppState
       console.log Curriculums.find({condition: condition}).fetch()
       curriculum = Curriculums.findOne {language: language, condition: condition}
       console.log curriculum
-      if not curriculum
-        @setError new Meteor.Error("no-curriculum", "There doesn't appear to be a curriculum for that language and condition. Please select another language")
-      return curriculum?._id
+      if curriculum? then return curriculum._id else return null
 
     setShouldPlayIntro: (state) ->
       @dict.setPersistent "playIntro", state
@@ -113,5 +111,12 @@ class AppState
         @setError new Meteor.Error("developer-error", "The app is calling getConfiguration before it has been configured. This should not have happened. Developer error")
 
       return @dict.get "configuration"
+
+    setSubscribed: (state) ->
+      @dict.set "subscribed", state
+
+    subscribed: ->
+      subscribed = @dict.get "subscribed"
+      if subscribed? then return subscribed else return false
 
 module.exports.AppState = AppState

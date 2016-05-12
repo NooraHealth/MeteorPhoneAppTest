@@ -74,6 +74,8 @@ class @ContentDownloader
         @_downloadFiles filteredFiles
         .then (error)->
           #this is where you do the on success thing
+          console.log "about to run on complete"
+          console.log error
           onComplete(error)
         , (err)->
           console.log "This is the middle one"
@@ -81,6 +83,8 @@ class @ContentDownloader
         , (progress) ->
           AppState.get().setPercentLoaded progress
       catch e
+        console.log "in the on complete"
+        console.log e
         onComplete e
 
     _downloadFiles: (files) ->
@@ -136,6 +140,8 @@ class @ContentDownloader
           return (err)->
             console.log "There was an error: "
             console.log err
+            console.log err.code
+            console.log err.code == 3
             if err.http_status == 404
               markAsResolved(file)
               error = new Meteor.Error("error-downloading", "Some content could not be found")
@@ -143,15 +149,19 @@ class @ContentDownloader
               markAsResolved(file)
               error = new Meteor.Error("error-downloading", "Error accessing content on server")
             else if err.code == 3
+              console.log "error code 3"
               if file.name in retry
+                console.log "Already retried, about to resolve"
                 markAsResolved(file)
                 # If already retried downloading, reject
                 error = new Meteor.Error("error-downloading", "Timeout accessing content on server")
               else
+                console.log "Retrying"
                 # Try downloading again
                 retry.push file
                 downloadFile file
             else
+              console.log "In the else statement"
               markAsResolved(file)
               error = err
 
