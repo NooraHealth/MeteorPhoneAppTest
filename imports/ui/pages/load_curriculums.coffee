@@ -18,7 +18,9 @@ Template.Load_curriculums_page.onCreated ->
   @autorun =>
     console.log "Getting whether subscriptionsReady"
     console.log @subscriptionsReady()
-    if @subscriptionsReady()
+    @firstRun = true
+    if @subscriptionsReady() and @firstRun
+      @firstRun = false
       configuration = AppState.get().getConfiguration()
       curriculums = Curriculums.find { condition: configuration.condition }
       if not Meteor.status().connected

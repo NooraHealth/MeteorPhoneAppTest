@@ -136,6 +136,8 @@ class @ContentDownloader
           return (err)->
             console.log "There was an error: "
             console.log err
+            console.log err.code
+            console.log err.code == 3
             if err.http_status == 404
               markAsResolved(file)
               error = new Meteor.Error("error-downloading", "Some content could not be found")
@@ -143,15 +145,19 @@ class @ContentDownloader
               markAsResolved(file)
               error = new Meteor.Error("error-downloading", "Error accessing content on server")
             else if err.code == 3
+              console.log "errcode was 3"
               if file.name in retry
+                console.log "Already retried, marking as resolved"
                 markAsResolved(file)
                 # If already retried downloading, reject
                 error = new Meteor.Error("error-downloading", "Timeout accessing content on server")
               else
+                console.log "Retrying download"
                 # Try downloading again
                 retry.push file
                 downloadFile file
             else
+              console.log "in the else statement"
               markAsResolved(file)
               error = err
 

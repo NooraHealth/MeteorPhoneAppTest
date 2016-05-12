@@ -7,6 +7,7 @@ Meteor.startup ()->
   console.log "In the startup!"
   if Meteor.isCordova
     console.log "In the meteor isConnected and cordova in init"
+    console.log "Subscribing"
     Meteor.subscribe "curriculums.all"
     Meteor.subscribe "lessons.all"
     Meteor.subscribe "modules.all"

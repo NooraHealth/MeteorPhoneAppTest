@@ -55,16 +55,20 @@ Template.Home_page.onCreated ->
     AppState.get().setLessonIndex 0
 
   @autorun =>
-    id = AppState.get().getCurriculumId()
-    console.log "Getting ths subscriptions for #{id}"
     #if not Meteor.isCordova
     if not Meteor.isCordova
       @subscribe "curriculums.all"
       @subscribe "lessons.all"
       @subscribe "modules.all"
     else
+      id = AppState.get().getCurriculumId()
+      console.log "Getting ths subscriptions for #{id}"
       @subscribe "curriculums.all"
       @subscribe "lessons.inCurriculum", id
+
+    @autorun =>
+      console.log "The curriculkums ready in home.coffee?"
+      console.log @subscriptionsReady()
 
 Template.Home_page.helpers
   curriculumsReady: ->
