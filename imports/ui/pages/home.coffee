@@ -56,26 +56,20 @@ Template.Home_page.onCreated ->
 
   @autorun =>
     #if not Meteor.isCordova
-    if not Meteor.isCordova
-      @subscribe "curriculums.all"
-      @subscribe "lessons.all"
-      @subscribe "modules.all"
-    else
-      id = AppState.get().getCurriculumId()
-      console.log "Getting ths subscriptions for #{id}"
-      @subscribe "curriculums.all"
-      @subscribe "lessons.inCurriculum", id
+    @subscribe "curriculums.all"
+    @subscribe "lessons.all"
+    @subscribe "modules.all"
 
-    @autorun =>
-      console.log "The curriculkums ready in home.coffee?"
-      console.log @subscriptionsReady()
+  @autorun =>
+    console.log "The curriculkums ready in home.coffee?"
+    console.log @subscriptionsReady()
+    console.log Curriculums.find().count()
 
 Template.Home_page.helpers
   curriculumsReady: ->
     instance = Template.instance()
     if Meteor.isCordova
-      id = AppState.get().getCurriculumId()
-      return instance.subscriptionsReady()
+      return AppState.get().isSubscribed()
     else
       return instance.subscriptionsReady()
 
@@ -83,7 +77,7 @@ Template.Home_page.helpers
     instance = Template.instance()
     return {
       onLanguageSelected: instance.onLanguageSelected
-      languages: ['English', 'Hindi', 'Kannada', 'Tamil']
+      languages: ['English', 'Hindi', 'Kannada']
     }
 
   thumbnailArgs: (lesson) ->

@@ -8,6 +8,8 @@ Template.Load_curriculums_page.onCreated ->
   Meteor.subscribe "lessons.all"
   Meteor.subscribe "modules.all"
 
+  @firstRun = true
+
   @autorun =>
    if Meteor.isCordova and Meteor.status().connected
     console.log "In the meteor isConnected and cordova in init"
@@ -18,7 +20,6 @@ Template.Load_curriculums_page.onCreated ->
   @autorun =>
     console.log "Getting whether subscriptionsReady"
     console.log @subscriptionsReady()
-    @firstRun = true
     if @subscriptionsReady() and @firstRun
       @firstRun = false
       configuration = AppState.get().getConfiguration()

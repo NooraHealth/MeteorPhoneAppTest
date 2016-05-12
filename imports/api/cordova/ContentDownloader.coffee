@@ -84,8 +84,6 @@ class @ContentDownloader
         onComplete e
 
     _downloadFiles: (files) ->
-      console.log "About to download these files:"
-      console.log files
 
       new SimpleSchema({
         "files.$.name": {type: String}
@@ -172,14 +170,10 @@ class @ContentDownloader
       return deferred.promise
 
     _allContentPathsInLesson: (lesson) ->
-      console.log "GETTING ALL CONTENT PATHS IN LESSOn"
-      console.log lesson
       if not lesson?
         return []
 
       modules = lesson.getModulesSequence()
-      console.log "GOT MODULES"
-      console.log modules
       paths = []
       if lesson.image
         paths.push lesson.image
@@ -187,12 +181,9 @@ class @ContentDownloader
       for module in modules
         paths.merge @_allContentPathsInModule(module)
 
-      console.log "Got all the paths in the lesson"
-      console.log paths
       return paths
 
     _allContentPathsInModule: (module) ->
-      console.log "GETTING ALL THE CONTENT PATHS IN THE MODULE"
       paths = []
       if module.image
         paths.push module.image
@@ -206,7 +197,6 @@ class @ContentDownloader
         paths.push module.correct_audio
       if module.options and module.type == 'MULTIPLE_CHOICE'
         paths.merge (option for option in module.options when option?)
-      console.log "COMPLETE"
       return paths
 
 
