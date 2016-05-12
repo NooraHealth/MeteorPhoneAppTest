@@ -63,9 +63,10 @@ Template.Home_page.onCreated ->
 Template.Home_page.helpers
   curriculumsReady: ->
     instance = Template.instance()
-    console.log "Subscriptions ready?"
-    console.log @subscriptionsReady()
     if Meteor.isCordova
+      subscribed = AppState.get().isSubscribed()
+      numCurr = Curriculums.find().count()
+      alert "Subscripeitons ready? #{subscribed} #{numCurr}"
       return AppState.get().isSubscribed()
     else
       return instance.subscriptionsReady()
