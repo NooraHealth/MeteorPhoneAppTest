@@ -53,7 +53,7 @@ class @ContentDownloader
         for doc in docs
           #curriculum = Curriculums.findOne { _id: docs[0]._id }
           console.log "Doc", doc
-          if doc.language is "Hindi"
+          if doc.language is "English"
             curriculum = Curriculums.findOne { _id: doc._id }
             if not curriculum? then throw new Meteor.Error "curriculum-not-found", "Curriculum of id #{id} not found"
 
@@ -127,13 +127,13 @@ class @ContentDownloader
 
         getSuccessCallback = (file, fsPath) ->
           return (entry)->
-            console.log file
-            console.log entry
-            OfflineFiles.insert {
+            id = OfflineFiles.insert {
               url: file.url
               name: file.name
               fsPath: fsPath
             }
+            console.log "Successfully entered: here is the OfflineFile"
+            console.log OfflineFiles.findOne({_id: id})
             markAsResolved()
 
         getErrorCallback = (file) ->

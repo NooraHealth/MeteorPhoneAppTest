@@ -4,12 +4,19 @@
   </div>
 
   <div class="card-content padding-sm">
-    {{#if module.isEmbedded}}
-      <iframe {{iframeAttributes module}}></iframe>
-    {{else}}
-      <video {{videoTagAttributes module}}>
-        Your browser does not support the video tag. Please logout and use another browser.
-      </video>
-    {{/if}}
+    <div class="overlay-wrapper thumbnail-image"> 
+
+      <div class="inner-overlay-wrapper">
+        <img id='play_video' src="/play-button-overlay2.png" class="animate-scale animated-overlay"/>
+      </div>
+
+      {{#if module.isEmbedded}}
+        <iframe {{iframeAttributes module}}></iframe>
+      {{else}}
+        <video {{videoTagAttributes module}}>
+          Your browser does not support the video tag. Please logout and use another browser.
+        </video>
+      {{/if}}
+    </div>
   </div>
 </template>

@@ -29,6 +29,7 @@ Template.Audio.onCreated ->
     alreadyPlaying = @sound?.playing()
     if shouldPlay and not alreadyPlaying
       console.log "About to play"
+      #@sound = new Media(data.attributes.src)
       @sound ?= new Howl {
         src: [data.attributes.src]
         onloaderror: (id, error)->
@@ -43,8 +44,7 @@ Template.Audio.onCreated ->
       }
       @sound.play()
       console.log "Is playing now??"
-      console.log @sound.playing()
-    else if not shouldPlay and alreadyPlaying and @sound?
+    else if not shouldPlay and @sound?
       @sound.pause()
 
 Template.Audio.onDestroyed ->
@@ -55,7 +55,7 @@ Template.Audio.onDestroyed ->
   console.log "Is the sound playing"
   console.log "On onDestroyed"
   console.log instance
-  console.log instance.sound?.playing()
+  #console.log instance.sound?.playing()
   if instance.sound and instance.sound.playing()
-    instance.sound.stop()
+    instance.sound.pause()
   instance.sound?.unload()

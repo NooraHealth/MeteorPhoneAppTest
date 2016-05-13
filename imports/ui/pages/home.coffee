@@ -67,12 +67,7 @@ Template.Home_page.onCreated ->
 Template.Home_page.helpers
   curriculumsReady: ->
     instance = Template.instance()
-    if Meteor.status().connected
-      return instance.subscriptionsReady()
-    else if Meteor.isCordova
-      return AppState.get().isSubscribed()
-    else
-      return instance.subscriptionsReady()
+    ContentInterface.get().subscriptionsReady(instance)
 
   menuArgs: ->
     instance = Template.instance()

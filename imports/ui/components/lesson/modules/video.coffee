@@ -19,7 +19,8 @@ Template.Lesson_view_page_video.onCreated ->
   @elem = (template) ->
     if not @state.get "rendered" then return ""
     else
-      template.find "video"
+      console.log template.find "video"
+      return template.find "video"
 
   @autorun =>
     elemRendered = @state.get "rendered"
@@ -29,6 +30,10 @@ Template.Lesson_view_page_video.onCreated ->
     elem = @elem instance
     if not shouldPlay
       elem.pause()
+
+  @playVideo = =>
+    console.log "about to play the vide"
+    @elem(@).play()
 
 Template.Lesson_view_page_video.helpers
   iframeAttributes: (module) ->
@@ -47,6 +52,11 @@ Template.Lesson_view_page_video.helpers
       src: ContentInterface.get().getSrc(module.video)
       controls: true
     }
+
+Template.Lesson_view_page_video.events
+  'click #play_video': ->
+    instance = Template.instance()
+    instance.playVideo()
 
 Template.Lesson_view_page_video.onRendered ->
   instance = Template.instance()

@@ -178,7 +178,7 @@ Template.Lesson_view_page.onCreated ()->
 Template.Lesson_view_page.helpers
   modulesReady: ->
     instance = Template.instance()
-    return instance.subscriptionsReady()
+    ContentInterface.get().subscriptionsReady(instance)
 
   footerArgs: ->
     instance = Template.instance()

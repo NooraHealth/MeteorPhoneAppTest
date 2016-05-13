@@ -121,7 +121,10 @@ class AppState
       return @
 
     isSubscribed: ->
+      console.log "Getting is subscribed in appstate"
       subscribed = @dict.get "subscribed"
+      console.log "subscribed " + subscribed
+      console.log subscribed?
       if subscribed? then return subscribed else return false
 
 module.exports.AppState = AppState

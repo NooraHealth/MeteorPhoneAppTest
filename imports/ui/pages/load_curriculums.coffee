@@ -1,6 +1,7 @@
 require './load_curriculums.html'
 { AppState } = require '../../api/AppState.coffee'
 { Curriculums } = require 'meteor/noorahealth:mongo-schemas'
+{ ContentInterface } = require('../../api/content/ContentInterface.coffee')
 
 Template.Load_curriculums_page.onCreated ->
 
@@ -14,8 +15,8 @@ Template.Load_curriculums_page.onCreated ->
 
   @autorun =>
     console.log "Getting whether subscriptionsReady"
-    console.log @subscriptionsReady()
-    if @subscriptionsReady() and @firstRun
+    console.log ContentInterface.get().subscriptionsReady(@)
+    if ContentInterface.get().subscriptionsReady(@) and @firstRun
       @firstRun = false
       configuration = AppState.get().getConfiguration()
       curriculums = Curriculums.find { condition: configuration.condition }
