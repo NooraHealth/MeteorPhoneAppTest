@@ -20,20 +20,15 @@ class ContentInterface
 
     constructor: ->
       @remoteContentEndpoint = Meteor.settings.public.CONTENT_SRC
-      @localAudioEndpoint = "application/app/"
-
-    #introPath: =>
-      #return @localAudioEndpoint + "AppIntro.mp3"
 
     introPath: =>
       return "AppIntro.mp3"
 
     correctSoundEffectFilePath: =>
-      #return @localAudioEndpoint + "correct_soundeffect.mp3"
       return "correct_soundeffect.mp3"
 
     incorrectSoundEffectFilePath: =>
-      return @localAudioEndpoint + "incorrect_soundeffect.mp3"
+      return "incorrect_soundeffect.mp3"
 
     # Where the content is stored remotely (AWS S3 server)
     getEndpoint: (path) =>
@@ -46,21 +41,12 @@ class ContentInterface
       url = @getEndpoint(path)
       if Meteor.isCordova
         offlineFile = OfflineFiles.findOne {url: url}
-        if path[path.length - 1] == "4"
-          return if offlineFile? then WebAppLocalServer.localFileSystemUrl(offlineFile.fsPath) else ""
-        else
-          return @correctSoundEffectFilePath()
-        #if offlineFile? then WebAppLocalServer.localFileSystemUrl(offlineFile.fsPath) else ""
-        #if offlineFile? then offlineFile.fsPath else ""
+        return if offlineFile? then WebAppLocalServer.localFileSystemUrl(offlineFile.fsPath) else ""
       else
         return url
 
     subscriptionsReady: (instance) ->
-      console.log Meteor.status()
-      console.log Meteor.status().connected
-      console.log Meteor.isCordova
       if Meteor.status().connected
-        console.log "Connected in hom: returning ", instance.subscriptionsReady()
         return instance.subscriptionsReady()
       else if Meteor.isCordova
         console.log "Not connected in Cordova"
