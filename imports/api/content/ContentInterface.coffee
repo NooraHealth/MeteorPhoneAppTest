@@ -36,12 +36,25 @@ class ContentInterface
     # Given a filename (path), getSrc will identify where to find
     # that particular file -- in Cordova, this is local and in the browser
     # it will find it remotely
+    #getSrc: (path) =>
+      #url = @getEndpoint(path)
+      #if Meteor.isCordova
+        #offlineFile = OfflineFiles.findOne {url: url}
+        #if offlineFile? then WebAppLocalServer.localFileSystemUrl(offlineFile.fsPath) else ""
+      #else
+        #return url
+
     getSrc: (path) =>
-      url = @getEndpoint(path)
-      if Meteor.isCordova
-        offlineFile = OfflineFiles.findOne {url: url}
-        if offlineFile? then WebAppLocalServer.localFileSystemUrl(offlineFile.fsPath) else ""
+      return path
+
+    subscriptionsReady: (instance) ->
+      if Meteor.status().connected
+        console.log "Connected in hom: returning ", instance.subscriptionsReady()
+        return instance.subscriptionsReady()
+      else if Meteor.isCordova
+        console.log "not connected in cordova: returning ". AppState.get().isSubscribed()
+        return AppState.get().isSubscribed()
       else
-        return url
+        return instance.subscriptionsReady()
 
 module.exports.ContentInterface = ContentInterface
