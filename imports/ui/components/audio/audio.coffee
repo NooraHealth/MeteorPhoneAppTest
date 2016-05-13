@@ -28,19 +28,19 @@ Template.Audio.onCreated ->
     shouldPlay = data.playing
     alreadyPlaying = @sound?.playing()
     if shouldPlay and not alreadyPlaying
-      console.log "about to make a sound and then play it"
-      @sound = new Media(WebAppLocalServer.localFileSystemUrl(data.attributes.src))
-
-      #@sound ?= new Howl {
-        #src: [data.attributes.src]
-        #onloaderror: (id, error)->
-          #console.log "LOADERROR #{data.attributes.src}"
-          #console.log error
-          #console.trace()
-        #onend: @data.whenFinished
-        #onpause: @data.whenPaused
-        ##html5: true
-      #}
+      console.log "About to play"
+      @sound ?= new Howl {
+        src: [data.attributes.src]
+        onloaderror: (id, error)->
+          console.log "LOADERROR #{data.attributes.src}"
+          console.log error
+          console.trace()
+        onend: @data.whenFinished
+        onpause: @data.whenPaused
+        onplay: ()->
+          console.log "begun playing #{data.attributes.src}"
+        #html5: true
+      }
       @sound.play()
       console.log "Is playing now??"
       console.log @sound.playing()

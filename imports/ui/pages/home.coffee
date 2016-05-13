@@ -34,8 +34,6 @@ Template.Home_page.onCreated ->
     console.log "num lessons", Lessons.find().count()
     console.log "num Curriculums", Curriculums.find().count()
     docs = curriculum?.getLessonDocuments()
-    console.log "The lesson documents"
-    console.log docs
     return docs
 
   @getCurriculumDoc = =>
@@ -69,7 +67,9 @@ Template.Home_page.onCreated ->
 Template.Home_page.helpers
   curriculumsReady: ->
     instance = Template.instance()
-    if Meteor.isCordova
+    if Meteor.status().connected
+      return instance.subscriptionsReady()
+    else if Meteor.isCordova
       return AppState.get().isSubscribed()
     else
       return instance.subscriptionsReady()
