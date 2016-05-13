@@ -2,6 +2,7 @@
 { ContentInterface } = require('../../api/content/ContentInterface.coffee')
 { ContentDownloader } = require('../../api/cordova/ContentDownloader.coffee')
 { Curriculums } = require("meteor/noorahealth:mongo-schemas")
+{ Lessons } = require("meteor/noorahealth:mongo-schemas")
 { AppState } = require('../../api/AppState.coffee')
 
 # TEMPLATE
@@ -29,7 +30,12 @@ Template.Home_page.onCreated ->
 
   @getLessonDocuments = =>
     curriculum = @getCurriculumDoc()
+    console.log curriculum
+    console.log "num lessons", Lessons.find().count()
+    console.log "num Curriculums", Curriculums.find().count()
     docs = curriculum?.getLessonDocuments()
+    console.log "The lesson documents"
+    console.log docs
     return docs
 
   @getCurriculumDoc = =>

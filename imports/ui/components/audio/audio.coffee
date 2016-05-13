@@ -4,9 +4,7 @@ Template.Audio.onCreated ->
   console.log "Creating an audio"
 
   @autorun =>
-    console.log "Validating the audio"
     @data = Template.currentData()
-    console.log @data
     new SimpleSchema({
       "attributes.src": {type: String}
       playing: {type: Boolean}
@@ -15,7 +13,6 @@ Template.Audio.onCreated ->
       whenFinished: {type: Function, optional: true}
       whenPaused: {type: Function, optional: true}
     }).validate @data
-    console.log "Audio validated"
 
   @autorun =>
     data = Template.currentData()
@@ -31,17 +28,22 @@ Template.Audio.onCreated ->
     shouldPlay = data.playing
     alreadyPlaying = @sound?.playing()
     if shouldPlay and not alreadyPlaying
-      @sound ?= new Howl {
-        src: [data.attributes.src]
-        onloaderror: (id, error)->
-          console.log "LOADERROR #{data.attributes.src}"
-          console.log error
-          console.trace()
-        onend: @data.whenFinished
-        onpause: @data.whenPaused
-        #html5: true
-      }
+      console.log "about to make a sound and then play it"
+      @sound = new Media(WebAppLocalServer.localFileSystemUrl(data.attributes.src))
+
+      #@sound ?= new Howl {
+        #src: [data.attributes.src]
+        #onloaderror: (id, error)->
+          #console.log "LOADERROR #{data.attributes.src}"
+          #console.log error
+          #console.trace()
+        #onend: @data.whenFinished
+        #onpause: @data.whenPaused
+        ##html5: true
+      #}
       @sound.play()
+      console.log "Is playing now??"
+      console.log @sound.playing()
     else if not shouldPlay and alreadyPlaying and @sound?
       @sound.pause()
 
@@ -55,5 +57,5 @@ Template.Audio.onDestroyed ->
   console.log instance
   console.log instance.sound?.playing()
   if instance.sound and instance.sound.playing()
-    instance.sound.pause()
+    instance.sound.stop()
   instance.sound?.unload()
