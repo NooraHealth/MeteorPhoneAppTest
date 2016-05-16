@@ -43,6 +43,9 @@ class AppState
       @setLessonIndex 0
       @
 
+    getLanguage: ->
+      @dict.get "language"
+
     getCurriculumId: ->
       console.log "Getting the curriculum Id"
       console.trace()
