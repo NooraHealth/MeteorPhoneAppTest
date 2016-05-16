@@ -32,6 +32,10 @@ Template.Lesson_view_page.onCreated ()->
     moduleId = @getLesson()?.modules[index]
     @state.set "currentModuleId", moduleId
 
+  @getCurrentModule = =>
+    id = @currentModuleId()
+    return Modules.findOne {_id: id}
+
   @isCurrent = (moduleId) =>
     current = @state.get "currentModuleId"
     return moduleId is current
@@ -56,26 +60,16 @@ Template.Lesson_view_page.onCreated ()->
       pages = ( getPageData(module, i) for module, i in modules )
       return pages
 
-  @onPauseExplanation = =>
-    #@state.set "playingExplanation", false
-    #@state.set "audioPlaying", null
-
   @onFinishExplanation = =>
-    #@state.set "audioPlaying", null
-    #@state.set "playingExplanation", false
     @state.set "nextButtonAnimated", true
 
   @onChoice = (instance, type, showAlert) ->
     return ->
       if type is "CORRECT"
         instance.state.set "soundEfffectPlaying", "CORRECT"
-        #instance.state.set "playingCorrectSoundEffect", true
-        #instance.state.set "playingIncorrectSoundEffect", false
         alertType = 'success'
       else
         instance.state.set "soundEfffectPlaying", "INCORRECT"
-        #instance.state.set "playingIncorrectSoundEffect", true
-        #instance.state.set "playingCorrectSoundEffect", false
         alertType = 'error'
       if showAlert
         swal {
@@ -151,6 +145,20 @@ Template.Lesson_view_page.onCreated ()->
     console.log "Replay button clicked"
     @state.set "replayAudio", true
 
+  @shouldShowReplayButton = =>
+    return @getCurrentModule().type isnt "VIDEO"
+
+  @onPlayVideo = =>
+    @state.set "playingVideo", true
+
+  @onStopVideo = =>
+    @state.set "playingVideo", false
+
+  @videoPlaying = =>
+    console.log "Getting whether the video is playing"
+    playing = @state.get "playingVideo"
+    if playing? then return playing else return false
+
   @shouldPlayQuestionAudio = (id) =>
     console.log "SHould play question audio??"
     isPlayingQuestion = @state.get "playingQuestion"
@@ -191,6 +199,7 @@ Template.Lesson_view_page.helpers
       }
       replayButton: {
         onClick: instance.onReplayButtonClicked
+        shouldShowReplayButton: instance.shouldShowReplayButton
       }
       pages: instance.getPagesForPaginator()
     }
@@ -218,7 +227,9 @@ Template.Lesson_view_page.helpers
     else if module.type == "VIDEO"
       return {
         module: module
-        playing: instance.isCurrent module._id
+        onPlayVideo: instance.onPlayVideo
+        onStopVideo: instance.onStopVideo
+        playing: instance.isCurrent(module._id) and instance.videoPlaying()
       }
     else
       return {module: module}
@@ -242,7 +253,6 @@ Template.Lesson_view_page.helpers
       replay: playing and replay and isCurrent
       afterReplay: instance.afterReplay
       whenFinished: instance.onFinishExplanation
-      whenPaused: instance.onPauseExplanation
     }
 
   audioArgs: (module) ->

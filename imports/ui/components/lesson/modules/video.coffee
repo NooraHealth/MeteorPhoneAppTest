@@ -14,12 +14,23 @@ Template.Lesson_view_page_video.onCreated ->
   @autorun =>
     schema = new SimpleSchema({
       module: {type: Modules._helpers}
+      onPlayVideo: {type: Function}
+      onStopVideo: {type: Function}
       playing: {type: Boolean}
     }).validate(Template.currentData())
 
+    @data = Template.currentData()
+
+  @onStopVideo = =>
+    @data.onStopVideo()
+
+  @onPlayVideo = =>
+    @data.onPlayVideo()
+
   @elem = (template) ->
-    if not @state.get "rendered" then return ""
+    if not @state.get("rendered") then return ""
     else
+      console.log "getting the elem"
       console.log template.find "video"
       return template.find "video"
 
@@ -57,7 +68,9 @@ Template.Lesson_view_page_video.helpers
   
   playing: ->
     instance = Template.instance()
-    return instance.state.get "playing"
+    console.log "Returning whether playing"
+    console.log instance.data.playing
+    return instance.data.playing
 
 Template.Lesson_view_page_video.events
   'click #play_video': ->
@@ -68,7 +81,16 @@ Template.Lesson_view_page_video.onRendered ->
   instance = Template.instance()
   instance.state.set "rendered", true
 
-  instance.elem.addEventListener "playing", ->
-    console.log "Is playing"
-    instance.state.set "playing", true
+  instance.elem(instance).addEventListener "playing", ->
+    console.log "Video playing!"
+    instance.onPlayVideo()
+
+  instance.elem(instance).addEventListener "pause", ->
+    console.log "Video paused!"
+    instance.onStopVideo()
+
+  instance.elem(instance).addEventListener "onended", ->
+    console.log "Video onended!"
+    instance.onStopVideo()
+  
   
