@@ -36,8 +36,8 @@
 }
 
 .module-card {
-  width: 900px;
-  height: 85%;
+  width: 800px;
+  height: 75%;
   margin: auto;
   @include transition(2s);
 }
@@ -63,11 +63,6 @@
 .incorrectly-selected {
   border: 4px solid $danger !important;
 }
-
-/*.module-wrapper {*/
-  /*text-align:center;*/
-  /*width: 100%;*/
-/*}*/
 
 /* -------------------------------- 
 
@@ -108,7 +103,7 @@
 }
 
 .binary-image {
-  height:55vh;
+  height:45vh;
   max-width: 80%;
 }
 
