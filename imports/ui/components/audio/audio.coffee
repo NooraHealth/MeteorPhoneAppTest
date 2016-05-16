@@ -43,19 +43,11 @@ Template.Audio.onCreated ->
         #html5: true
       }
       @sound.play()
-      console.log "Is playing now??"
     else if not shouldPlay and @sound?
       @sound.pause()
 
 Template.Audio.onDestroyed ->
   instance = Template.instance()
-  #isPlaying = instance.state.get "playing"
-  #if isPlaying
-    #instance.sound?.pause()
-  console.log "Is the sound playing"
-  console.log "On onDestroyed"
-  console.log instance
-  #console.log instance.sound?.playing()
   if instance.sound and instance.sound.playing()
     instance.sound.pause()
   instance.sound?.unload()
