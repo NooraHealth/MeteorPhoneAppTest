@@ -13,10 +13,17 @@ Template.Button.onCreated ->
       "attributes.name": {type: String, optional: true}
     }).validate(Template.currentData())
 
+  @removeActiveState = ->
+    active = @find(".active-state")
+    if active?
+      $(active).removeClass "active-state"
+
 Template.Button.events
   'click': (e) ->
+    instance = Template.instance()
     data = Template.currentData()
     data.onClick e
+    instance.removeActiveState()
 
 Template.Button.onRendered ->
   Template.currentData().onRendered?()

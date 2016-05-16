@@ -27,17 +27,22 @@ Template.Lesson_view_page.onCreated ()->
     audioPlaying: "QUESTION"
   }
 
+  @getCurrentModuleId = =>
+    @state.get "currentModuleId"
+
   @setCurrentModuleId = =>
     index = @state.get "moduleIndex"
     moduleId = @getLesson()?.modules[index]
     @state.set "currentModuleId", moduleId
 
   @getCurrentModule = =>
-    id = @currentModuleId()
+    console.log "gEtting the current module"
+    id = @getCurrentModuleId()
+    console.log id
     return Modules.findOne {_id: id}
 
   @isCurrent = (moduleId) =>
-    current = @state.get "currentModuleId"
+    current = @getCurrentModuleId()
     return moduleId is current
 
   @isCompleted = (moduleId) =>
@@ -81,13 +86,9 @@ Template.Lesson_view_page.onCreated ()->
   @onCompletedQuestion = (instance) ->
     return ->
       instance.state.set "audioPlaying", "EXPLANATION"
-      #instance.state.set "playingQuestion", false
-      #instance.state.set "playingExplanation", true
 
   @stopPlayingSoundEffect = =>
     @state.set "soundEfffectPlaying", null
-    #@state.set "playingCorrectSoundEffect", false
-    #@state.set "playingIncorrectSoundEffect", false
 
   @lessonComplete = =>
     lesson = @getLesson()
@@ -154,6 +155,10 @@ Template.Lesson_view_page.onCreated ()->
   @onStopVideo = =>
     @state.set "playingVideo", false
 
+  @onVideoEnd = =>
+    @state.set "playingVideo", false
+    @state.set "nextButtonAnimated", true
+
   @videoPlaying = =>
     console.log "Getting whether the video is playing"
     playing = @state.get "playingVideo"
@@ -199,7 +204,7 @@ Template.Lesson_view_page.helpers
       }
       replayButton: {
         onClick: instance.onReplayButtonClicked
-        shouldShowReplayButton: instance.shouldShowReplayButton
+        shouldShow: instance.shouldShowReplayButton
       }
       pages: instance.getPagesForPaginator()
     }
@@ -229,6 +234,7 @@ Template.Lesson_view_page.helpers
         module: module
         onPlayVideo: instance.onPlayVideo
         onStopVideo: instance.onStopVideo
+        onVideoEnd: instance.onVideoEnd
         playing: instance.isCurrent(module._id) and instance.videoPlaying()
       }
     else

@@ -16,6 +16,7 @@ Template.Lesson_view_page_video.onCreated ->
       module: {type: Modules._helpers}
       onPlayVideo: {type: Function}
       onStopVideo: {type: Function}
+      onVideoEnd: {type: Function}
       playing: {type: Boolean}
     }).validate(Template.currentData())
 
@@ -26,6 +27,9 @@ Template.Lesson_view_page_video.onCreated ->
 
   @onPlayVideo = =>
     @data.onPlayVideo()
+
+  @onVideoEnd = =>
+    @data.onVideoEnd()
 
   @elem = (template) ->
     if not @state.get("rendered") then return ""
@@ -91,6 +95,6 @@ Template.Lesson_view_page_video.onRendered ->
 
   instance.elem(instance).addEventListener "onended", ->
     console.log "Video onended!"
-    instance.onStopVideo()
+    instance.onVideoEnd()
   
   

@@ -84,9 +84,6 @@ class AppState
       if not Meteor.isCordova
         @setError new Meteor.Error("developer-error", "The app should not call AppState.get().setConfiguration when not in Cordova. Developer error.")
 
-      if @isConfigured()
-        @setError new Meteor.Error("developer-error", "The app is calling setConfiguration after it has already been configured. This should not have happened. Developer error")
-
       new SimpleSchema({
         hospital: {type: String, min: 1, optional: true} #Hospital and condition cannot be empty strings
         condition: {type: String, min: 1, optional: true}

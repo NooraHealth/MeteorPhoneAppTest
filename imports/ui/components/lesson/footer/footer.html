@@ -4,7 +4,9 @@
 
   {{> Lesson_view_page_footer_paginator (paginatorArgs pages)}}
 
-  {{> Button (replayButtonArgs replayButton)}}
+  {{#if shouldShow replayButton}}
+    {{> Button (replayButtonArgs replayButton)}}
+  {{/if}}
   <div class={{nextButtonWrapperClasses nextButton.animated}}>
     {{> Button (nextButtonArgs nextButton)}}
   </div>

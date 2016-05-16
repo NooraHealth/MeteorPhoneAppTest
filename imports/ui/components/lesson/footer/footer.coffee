@@ -10,6 +10,7 @@ Template.Lesson_view_page_footer.onCreated ->
     new SimpleSchema({
       "homeButton.onClick": {type: Function}
       "replayButton.onClick": {type: Function}
+      "replayButton.shouldShow": {type: Function}
       "nextButton.onClick": {type: Function}
       "nextButton.onRendered": {type: Function}
       "nextButton.animated": {type: Boolean}
@@ -47,10 +48,14 @@ Template.Lesson_view_page_footer.helpers
     if animated then classes += ' animate-scale'
     return classes
 
+  shouldShow: (data) ->
+    return data.shouldShow()
+
   replayButtonArgs: (data) ->
+    classes = 'link button button-rounded color-pink button-fill'
     return {
       attributes: {
-        class: 'link button button-rounded color-pink button-fill'
+        class: classes
       }
       content: '<i class="fa fa-repeat fa-2x"></i>'
       onClick: data.onClick
