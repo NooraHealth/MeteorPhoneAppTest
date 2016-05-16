@@ -30,7 +30,6 @@ Template.Load_curriculums_page.onCreated ->
           console.log e
           if e
             AppState.get().setError e
-          AppState.get().setLanguage 'English'
           AppState.get().setShouldPlayIntro true
           FlowRouter.go "home"
         ContentDownloader.get().loadCurriculums curriculums, onComplete
