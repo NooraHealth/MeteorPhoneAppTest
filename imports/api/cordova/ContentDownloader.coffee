@@ -52,8 +52,9 @@ class @ContentDownloader
         filteredFiles = []
         for doc in docs
           #curriculum = Curriculums.findOne { _id: docs[0]._id }
-          console.log "Doc", doc
-          if doc.language is "Hindi"
+          if Meteor.settings.TESTING
+            if doc.language isnt "Hindi" then continue
+          else
             curriculum = Curriculums.findOne { _id: doc._id }
             if not curriculum? then throw new Meteor.Error "curriculum-not-found", "Curriculum of id #{id} not found"
 
