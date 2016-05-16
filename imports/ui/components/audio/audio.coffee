@@ -48,6 +48,7 @@ Template.Audio.onCreated ->
 
 Template.Audio.onDestroyed ->
   instance = Template.instance()
-  if instance.sound and instance.sound.playing()
+  if instance.sound? and instance.sound.playing()
+    console.log "pausing the sound"
     instance.sound.pause()
-  instance.sound?.unload()
+  #instance.sound?.unload()

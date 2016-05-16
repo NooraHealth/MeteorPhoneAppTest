@@ -36,9 +36,7 @@ Template.Lesson_view_page.onCreated ()->
     @state.set "currentModuleId", moduleId
 
   @getCurrentModule = =>
-    console.log "gEtting the current module"
     id = @getCurrentModuleId()
-    console.log id
     return Modules.findOne {_id: id}
 
   @isCurrent = (moduleId) =>
@@ -87,6 +85,11 @@ Template.Lesson_view_page.onCreated ()->
     return ->
       instance.state.set "audioPlaying", "EXPLANATION"
 
+  @stopPlayingEmptySound = =>
+    console.log "on stop playing the empty sound"
+    @state.set "playingEmptySound", false
+    @state.set "playingVideo", true
+
   @stopPlayingSoundEffect = =>
     @state.set "soundEfffectPlaying", null
 
@@ -99,6 +102,7 @@ Template.Lesson_view_page.onCreated ()->
     return @getLesson()?.getModulesSequence()
 
   @getLessonId = =>
+    #return AppState.get().getLessonId()
     return FlowRouter.getParam "_id"
 
   @getLesson = =>
@@ -143,14 +147,18 @@ Template.Lesson_view_page.onCreated ()->
     @state.set "replayAudio", false
 
   @onReplayButtonClicked = =>
-    console.log "Replay button clicked"
     @state.set "replayAudio", true
 
   @shouldShowReplayButton = =>
-    return @getCurrentModule().type isnt "VIDEO"
+    currentModule = @getCurrentModule()
+    if currentModule? and currentModule.type? then return currentModule.type isnt "VIDEO" else return false
+
+  @playEmptySound = =>
+    @state.set "playingEmptySound", true
 
   @onPlayVideo = =>
-    @state.set "playingVideo", true
+    console.log "About to play the empty sound and then play the video"
+    @playEmptySound()
 
   @onStopVideo = =>
     @state.set "playingVideo", false
@@ -160,14 +168,11 @@ Template.Lesson_view_page.onCreated ()->
     @state.set "nextButtonAnimated", true
 
   @videoPlaying = =>
-    console.log "Getting whether the video is playing"
     playing = @state.get "playingVideo"
     if playing? then return playing else return false
 
   @shouldPlayQuestionAudio = (id) =>
-    console.log "SHould play question audio??"
     isPlayingQuestion = @state.get "playingQuestion"
-    console.log(@isCurrent(id) and isPlayingQuestion)
     return @isCurrent(id) and isPlayingQuestion
 
   @shouldPlayExplanationAudio = (id) =>
@@ -180,8 +185,6 @@ Template.Lesson_view_page.onCreated ()->
     @subscribe "modules.inLesson", lessonId
 
   @autorun =>
-    console.log "Subscriptions ready?"
-    console.log @subscriptionsReady()
     if @subscriptionsReady()
       @setCurrentModuleId()
 
@@ -289,8 +292,6 @@ Template.Lesson_view_page.helpers
 
   correctSoundEffectArgs: ->
     instance = Template.instance()
-    console.log "Changing the correct sound effect args"
-    console.log instance.state.get("playingCorrectSoundEffect")
     playing = instance.state.get("soundEfffectPlaying") == "CORRECT"
     return {
       attributes: {
@@ -301,6 +302,19 @@ Template.Lesson_view_page.helpers
       whenPaused: instance.stopPlayingSoundEffect
     }
 
+  emptySoundEffectArgs: ->
+    instance = Template.instance()
+    playing = instance.state.get("playingEmptySound")
+    if not playing? then playing = false
+    return {
+      attributes: {
+        src: ContentInterface.get().correctSoundEffectFilePath()
+      }
+      playing: playing
+      whenFinished: instance.stopPlayingEmptySound
+      whenPaused: instance.stopPlayingEmptySound
+    }
+  
   modules: ->
     instance = Template.instance()
     return instance.getModules()
@@ -318,3 +332,7 @@ Template.Lesson_view_page.helpers
       return "Lesson_view_page_slide"
 
 Template.Lesson_view_page.onRendered ()->
+  console.log "About ot play the sound effect howl"
+  new Howl({
+    src: ['correct_soundeffect.mp3']
+  }).play()
