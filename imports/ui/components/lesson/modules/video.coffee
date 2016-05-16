@@ -9,6 +9,7 @@ Template.Lesson_view_page_video.onCreated ->
   @state.setDefault {
     rendered: false
   }
+
   # Data context validation
   @autorun =>
     schema = new SimpleSchema({
@@ -35,6 +36,7 @@ Template.Lesson_view_page_video.onCreated ->
     console.log "about to play the vide"
     @elem(@).play()
 
+
 Template.Lesson_view_page_video.helpers
   iframeAttributes: (module) ->
     return {
@@ -52,6 +54,10 @@ Template.Lesson_view_page_video.helpers
       src: ContentInterface.get().getSrc(module.video)
       controls: true
     }
+  
+  playing: ->
+    instance = Template.instance()
+    return instance.state.get "playing"
 
 Template.Lesson_view_page_video.events
   'click #play_video': ->
@@ -61,4 +67,8 @@ Template.Lesson_view_page_video.events
 Template.Lesson_view_page_video.onRendered ->
   instance = Template.instance()
   instance.state.set "rendered", true
+
+  instance.elem.addEventListener "playing", ->
+    console.log "Is playing"
+    instance.state.set "playing", true
   

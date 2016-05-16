@@ -7,7 +7,7 @@
     <div class="overlay-wrapper thumbnail-image"> 
 
       <div class="inner-overlay-wrapper">
-        <img id='play_video' src="/play-button-overlay2.png" class="animate-scale animated-overlay"/>
+        <img id='play_video' src="/play-button-overlay2.png" class="{{#if playing}} hidden {{/if}} animate-scale animated-overlay"/>
       </div>
 
       {{#if module.isEmbedded}}
