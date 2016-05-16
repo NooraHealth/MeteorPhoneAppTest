@@ -85,6 +85,10 @@ Template.Home_page.helpers
       isCurrentLesson: isCurrentLesson
     }
 
+  languageSelected: ->
+    language = AppState.get().getLanguage()
+    return language? and language isnt null
+
   audioArgs: ->
     instance = Template.instance()
     setPlayIntroToFalse = -> AppState.get().setShouldPlayIntro false
