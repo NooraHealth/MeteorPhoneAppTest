@@ -22,8 +22,6 @@ Template.Load_curriculums_page.onCreated ->
       curriculums = Curriculums.find { condition: configuration.condition }
       if not Meteor.status().connected
         AppState.get().setError(new Meteor.Error("Not Connected", "Please connect to data in order to download your curriculum."))
-        AppState.get().setConfiguration {}
-        FlowRouter.go 'home'
       else
         onComplete = (e) ->
           console.log "SUCCESS LOADING"
