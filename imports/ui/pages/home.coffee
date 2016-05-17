@@ -18,7 +18,6 @@ require '../../ui/components/audio/audio.coffee'
 require '../../ui/components/shared/loading.coffee'
 
 Template.Home_page.onCreated ->
-  console.log "Home template created"
   #loads the soundeffects, circumventing a howler.js bug that prevents
   #them from loading in lessons_view.coffee
   new Howl {
@@ -30,9 +29,6 @@ Template.Home_page.onCreated ->
 
   @getLessonDocuments = =>
     curriculum = @getCurriculumDoc()
-    console.log curriculum
-    console.log "num lessons", Lessons.find().count()
-    console.log "num Curriculums", Curriculums.find().count()
     docs = curriculum?.getLessonDocuments()
     return docs
 
@@ -54,7 +50,6 @@ Template.Home_page.onCreated ->
     FlowRouter.go "lesson", {_id: id}
 
   @onLanguageSelected = (language) ->
-    console.log "In the on language selected"
     AppState.get().setLanguage language
     AppState.get().setLessonIndex 0
 
@@ -108,6 +103,5 @@ Template.Home_page.helpers
 Template.Home_page.events
   'click #open_side_panel': (e, template) ->
     #hackaround Framework7 bugs on ios where active state is not removed
-    console.log("removing the activestate")
     active = template.find(".active-state")
     if active? then $(active).removeClass "active-state"

@@ -47,8 +47,6 @@ class AppState
       @dict.get "language"
 
     getCurriculumId: ->
-      console.log "Getting the curriculum Id"
-      console.trace()
       if not @isConfigured()
         @setError new Meteor.Error("developer-error", "The app is calling setConfiguration after it has already been configured. This should not have happened. Developer error")
 
@@ -121,10 +119,7 @@ class AppState
       return @
 
     isSubscribed: ->
-      console.log "Getting is subscribed in appstate"
       subscribed = @dict.get "subscribed"
-      console.log "subscribed " + subscribed
-      console.log subscribed?
       if subscribed? then return subscribed else return false
 
 module.exports.AppState = AppState

@@ -147,7 +147,8 @@ Template.Lesson_view_page.onCreated ()->
     @state.set "replayAudio", true
 
   @shouldShowReplayButton = =>
-    return @getCurrentModule().type isnt "VIDEO"
+    module = @getCurrentModule()
+    return module?.type isnt "VIDEO"
 
   @onPlayVideo = =>
     @state.set "playingVideo", true
@@ -316,5 +317,3 @@ Template.Lesson_view_page.helpers
       return "Lesson_view_page_video"
     if module?.type == "SLIDE"
       return "Lesson_view_page_slide"
-
-Template.Lesson_view_page.onRendered ()->
