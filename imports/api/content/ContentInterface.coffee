@@ -8,6 +8,7 @@
 ##############################################################################
 
 { OfflineFiles } = require("meteor/noorahealth:mongo-schemas")
+{ Curriculums } = require("meteor/noorahealth:mongo-schemas")
 { AppState } = require("../AppState.coffee")
 
 class ContentInterface
@@ -46,16 +47,17 @@ class ContentInterface
         return url
 
     subscriptionsReady: (instance) ->
-      if Meteor.status().connected
-        return instance.subscriptionsReady()
-      else if Meteor.isCordova
+      #if Meteor.status().connected
+        #return instance.subscriptionsReady()
+      #else if Meteor.isCordova
+      if Meteor.isCordova
         console.log "Not connected in Cordova"
         console.log "AppState"
         console.log AppState
-        console.log "AppState.get()"
-        console.log AppState.get()
         console.log "is subscribed"
         console.log AppState.get().isSubscribed()
+        console.log "num curriculums"
+        console.log Curriculums.find().count
         console.log "not connected in cordova: returning ", AppState.get().isSubscribed()
         return AppState.get().isSubscribed()
       else

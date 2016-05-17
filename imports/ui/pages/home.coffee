@@ -54,10 +54,9 @@ Template.Home_page.onCreated ->
     AppState.get().setLessonIndex 0
 
   @autorun =>
-    @subscribe "curriculums.all"
-    @subscribe "lessons.all"
-    @subscribe "modules.all"
-
+    #@subscribe "curriculums.all"
+    #@subscribe "lessons.all"
+    #@subscribe "modules.all"
 
 Template.Home_page.helpers
   curriculumsReady: ->
