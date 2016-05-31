@@ -18,21 +18,17 @@ require '../../ui/components/audio/audio.coffee'
 require '../../ui/components/shared/loading.coffee'
 
 Template.Home_page.onCreated ->
-  console.log "Home template created"
   #loads the soundeffects, circumventing a howler.js bug that prevents
   #them from loading in lessons_view.coffee
-  new Howl {
-    src: ['incorrect_soundeffect.mp3']
-  }
-  new Howl {
-    src: ['correct_soundeffect.mp3']
-  }
+  #new Howl {
+    #src: [ContentInterface.get().getSrc(ContentInterface.gg)]
+  #}
+  #new Howl {
+    #src: ['correct_soundeffect.mp3']
+  #}
 
   @getLessonDocuments = =>
     curriculum = @getCurriculumDoc()
-    console.log curriculum
-    console.log "num lessons", Lessons.find().count()
-    console.log "num Curriculums", Curriculums.find().count()
     docs = curriculum?.getLessonDocuments()
     return docs
 
@@ -56,20 +52,19 @@ Template.Home_page.onCreated ->
     #AppState.get().setLessonId id
 
   @onLanguageSelected = (language) ->
-    console.log "In the on language selected"
     AppState.get().setLanguage language
     AppState.get().setLessonIndex 0
 
   @autorun =>
-    @subscribe "curriculums.all"
-    @subscribe "lessons.all"
-    @subscribe "modules.all"
-
+    #@subscribe "curriculums.all"
+    #@subscribe "lessons.all"
+    #@subscribe "modules.all"
 
 Template.Home_page.helpers
   curriculumsReady: ->
     instance = Template.instance()
-    ContentInterface.get().subscriptionsReady(instance)
+    #ContentInterface.get().subscriptionsReady(instance)
+    return instance.subscriptionsReady()
 
   menuArgs: ->
     instance = Template.instance()
@@ -96,7 +91,7 @@ Template.Home_page.helpers
     setPlayIntroToFalse = -> AppState.get().setShouldPlayIntro false
     return {
       attributes: {
-        src: ContentInterface.get().introPath()
+        src: ContentInterface.get().getSrc(ContentInterface.get().introPath())
       }
       playing: AppState.get().getShouldPlayIntro()
       whenPaused: setPlayIntroToFalse
@@ -110,6 +105,5 @@ Template.Home_page.helpers
 Template.Home_page.events
   'click #open_side_panel': (e, template) ->
     #hackaround Framework7 bugs on ios where active state is not removed
-    console.log("removing the activestate")
     active = template.find(".active-state")
     if active? then $(active).removeClass "active-state"

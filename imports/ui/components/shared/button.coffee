@@ -19,7 +19,7 @@ Template.Button.onCreated ->
       $(active).removeClass "active-state"
 
 Template.Button.events
-  'click': (e) ->
+  'touchend': (e) ->
     instance = Template.instance()
     data = Template.currentData()
     data.onClick e

@@ -8,6 +8,7 @@
 ##############################################################################
 
 { OfflineFiles } = require("meteor/noorahealth:mongo-schemas")
+{ Curriculums } = require("meteor/noorahealth:mongo-schemas")
 { AppState } = require("../AppState.coffee")
 
 class ContentInterface
@@ -22,13 +23,13 @@ class ContentInterface
       @remoteContentEndpoint = Meteor.settings.public.CONTENT_SRC
 
     introPath: =>
-      return "AppIntro.mp3"
+      return "NooraHealthContent/Audio/AppIntro.mp3"
 
     correctSoundEffectFilePath: =>
-      return "correct_soundeffect.mp3"
+      return "NooraHealthContent/Audio/correct_soundeffect.mp3"
 
     incorrectSoundEffectFilePath: =>
-      return "incorrect_soundeffect.mp3"
+      return "NooraHealthContent/Audio/incorrect_soundeffect.mp3"
 
     # Where the content is stored remotely (AWS S3 server)
     getEndpoint: (path) =>
@@ -46,17 +47,10 @@ class ContentInterface
         return url
 
     subscriptionsReady: (instance) ->
-      if Meteor.status().connected
-        return instance.subscriptionsReady()
-      else if Meteor.isCordova
-        console.log "Not connected in Cordova"
-        console.log "AppState"
-        console.log AppState
-        console.log "AppState.get()"
-        console.log AppState.get()
-        console.log "is subscribed"
-        console.log AppState.get().isSubscribed()
-        console.log "not connected in cordova: returning ", AppState.get().isSubscribed()
+      #if Meteor.status().connected
+        #return instance.subscriptionsReady()
+      #else if Meteor.isCordova
+      if Meteor.isCordova
         return AppState.get().isSubscribed()
       else
         return instance.subscriptionsReady()

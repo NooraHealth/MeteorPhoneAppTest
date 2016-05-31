@@ -73,7 +73,7 @@ Template.Lesson_view_page_video.helpers
     return instance.data.playing
 
 Template.Lesson_view_page_video.events
-  'click #play_video': ->
+  'touchend #play_video': ->
     instance = Template.instance()
     instance.playVideo()
 
@@ -87,7 +87,7 @@ Template.Lesson_view_page_video.onRendered ->
   instance.elem(instance).addEventListener "pause", ->
     instance.onStopVideo()
 
-  instance.elem(instance).addEventListener "ended", ->
+  instance.elem(instance).addEventListener "onended", ->
     instance.onVideoEnd()
   
   

@@ -48,8 +48,6 @@ class AppState
       @dict.get "language"
 
     getCurriculumId: ->
-      console.log "Getting the curriculum Id"
-      console.trace()
       if not @isConfigured()
         @setError new Meteor.Error("developer-error", "The app is calling setConfiguration after it has already been configured. This should not have happened. Developer error")
 
@@ -92,14 +90,10 @@ class AppState
 
       @dict.setPersistent 'configuration', configuration
       return @
-      #@dict.setPersistent 'hospital', configuration.hospital
-      #@dict.setPersistent 'condition', configuration.condition
 
     isConfigured: (state) ->
       if Meteor.isCordova
         configuration = @dict.get 'configuration'
-        #hospital = @dict.get 'hospital'
-        #condition = @dict.get 'condition'
         return configuration? and
           configuration?.hospital? and
           configuration.hospital isnt "" and
@@ -122,10 +116,7 @@ class AppState
       return @
 
     isSubscribed: ->
-      console.log "Getting is subscribed in appstate"
       subscribed = @dict.get "subscribed"
-      console.log "subscribed " + subscribed
-      console.log subscribed?
       if subscribed? then return subscribed else return false
 
     #setRoute: (route) ->
