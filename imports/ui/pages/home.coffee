@@ -20,12 +20,12 @@ require '../../ui/components/shared/loading.coffee'
 Template.Home_page.onCreated ->
   #loads the soundeffects, circumventing a howler.js bug that prevents
   #them from loading in lessons_view.coffee
-  new Howl {
-    src: ['incorrect_soundeffect.mp3']
-  }
-  new Howl {
-    src: ['correct_soundeffect.mp3']
-  }
+  #new Howl {
+    #src: [ContentInterface.get().getSrc(ContentInterface.gg)]
+  #}
+  #new Howl {
+    #src: ['correct_soundeffect.mp3']
+  #}
 
   @getLessonDocuments = =>
     curriculum = @getCurriculumDoc()
@@ -61,7 +61,8 @@ Template.Home_page.onCreated ->
 Template.Home_page.helpers
   curriculumsReady: ->
     instance = Template.instance()
-    ContentInterface.get().subscriptionsReady(instance)
+    #ContentInterface.get().subscriptionsReady(instance)
+    return instance.subscriptionsReady()
 
   menuArgs: ->
     instance = Template.instance()
@@ -88,7 +89,7 @@ Template.Home_page.helpers
     setPlayIntroToFalse = -> AppState.get().setShouldPlayIntro false
     return {
       attributes: {
-        src: ContentInterface.get().introPath()
+        src: ContentInterface.get().getSrc(ContentInterface.get().introPath())
       }
       playing: AppState.get().getShouldPlayIntro()
       whenPaused: setPlayIntroToFalse

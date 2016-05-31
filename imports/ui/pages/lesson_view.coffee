@@ -1,4 +1,5 @@
 
+{ Curriculums } = require("meteor/noorahealth:mongo-schemas")
 { Lessons } = require("meteor/noorahealth:mongo-schemas")
 { Modules } = require("meteor/noorahealth:mongo-schemas")
 
@@ -31,14 +32,13 @@ Template.Lesson_view_page.onCreated ()->
     @state.get "currentModuleId"
 
   @setCurrentModuleId = =>
+    console.log "Setting the current module id"
     index = @state.get "moduleIndex"
     moduleId = @getLesson()?.modules[index]
     @state.set "currentModuleId", moduleId
 
   @getCurrentModule = =>
-    console.log "gEtting the current module"
     id = @getCurrentModuleId()
-    console.log id
     return Modules.findOne {_id: id}
 
   @isCurrent = (moduleId) =>
@@ -115,13 +115,28 @@ Template.Lesson_view_page.onCreated ()->
     FlowRouter.go "home"
 
   @goToNextModule = =>
+    console.log "Going to next module"
+    console.log "-----------------------"
     index = @state.get "moduleIndex"
     newIndex = ++index
     @state.set "moduleIndex", newIndex
     @state.set "nextButtonAnimated", false
     #@state.set "playingQuestion", true
-    @state.set "audioPlaying", "QUESTION"
+    #@state.set "audioPlaying", "QUESTION"
     @setCurrentModuleId()
+
+    module = @getCurrentModule()
+    console.log "The module"
+    console.log module
+    #if module.audio
+      #console.log "MAKING AN AUDIo AND PLAYING IT"
+      #sound = new Howl {
+        #src: [ContentInterface.get().getSrc module.audio]
+        #onplay: ->
+          #console.log "in go to next module on play event"
+      #}
+
+      #sound.play()
   
   @onNextButtonRendered = =>
     mySwiper = App.swiper '.swiper-container', {
@@ -133,8 +148,15 @@ Template.Lesson_view_page.onCreated ()->
       followFinger: false
     }
 
+  #@howl = new Howl {
+    #src: ContentInterface.get().getSrc(ContentInterface.get().correctSoundEffectFilePath())
+    #onplay: ->
+      #console.log "in the stub on play event"
+  #}
+
   @onNextButtonClicked = =>
     #remove .active-state class if it exists (Framework7 bug hackaround)
+    #@howl.play()
     if @lessonComplete() then @celebrateCompletion() else @goToNextModule()
 
   @nextButtonText = => if @lessonComplete() then "FINISH" else "NEXT"
@@ -143,7 +165,6 @@ Template.Lesson_view_page.onCreated ()->
     @state.set "replayAudio", false
 
   @onReplayButtonClicked = =>
-    console.log "Replay button clicked"
     @state.set "replayAudio", true
 
   @shouldShowReplayButton = =>
@@ -161,14 +182,11 @@ Template.Lesson_view_page.onCreated ()->
     @state.set "nextButtonAnimated", true
 
   @videoPlaying = =>
-    console.log "Getting whether the video is playing"
     playing = @state.get "playingVideo"
     if playing? then return playing else return false
 
   @shouldPlayQuestionAudio = (id) =>
-    console.log "SHould play question audio??"
     isPlayingQuestion = @state.get "playingQuestion"
-    console.log(@isCurrent(id) and isPlayingQuestion)
     return @isCurrent(id) and isPlayingQuestion
 
   @shouldPlayExplanationAudio = (id) =>
@@ -181,14 +199,14 @@ Template.Lesson_view_page.onCreated ()->
     #@subscribe "modules.inLesson", lessonId
 
   @autorun =>
-    console.log "Subscriptions ready?"
     if ContentInterface.get().subscriptionsReady(@)
       @setCurrentModuleId()
 
 Template.Lesson_view_page.helpers
   modulesReady: ->
     instance = Template.instance()
-    ContentInterface.get().subscriptionsReady(instance)
+    #return ContentInterface.get().subscriptionsReady(instance)
+    return instance.subscriptionsReady()
 
   footerArgs: ->
     instance = Template.instance()
@@ -280,7 +298,7 @@ Template.Lesson_view_page.helpers
     playing = instance.state.get("soundEfffectPlaying") == "INCORRECT"
     return {
       attributes: {
-        src: ContentInterface.get().incorrectSoundEffectFilePath()
+        src: ContentInterface.get().getSrc(ContentInterface.get().incorrectSoundEffectFilePath())
       }
       playing: playing
       whenFinished: instance.stopPlayingSoundEffect
@@ -289,12 +307,10 @@ Template.Lesson_view_page.helpers
 
   correctSoundEffectArgs: ->
     instance = Template.instance()
-    console.log "Changing the correct sound effect args"
-    console.log instance.state.get("playingCorrectSoundEffect")
     playing = instance.state.get("soundEfffectPlaying") == "CORRECT"
     return {
       attributes: {
-        src: ContentInterface.get().correctSoundEffectFilePath()
+        src: ContentInterface.get().getSrc(ContentInterface.get().correctSoundEffectFilePath())
       }
       playing: playing
       whenFinished: instance.stopPlayingSoundEffect

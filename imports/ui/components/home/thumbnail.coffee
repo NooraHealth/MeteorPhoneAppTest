@@ -7,7 +7,6 @@ Template.Home_thumbnail.onCreated ->
   # Data context validation
   console.log "Home thumbnail created"
   @autorun =>
-    console.log "Validating the thumbnail"
     schema = new SimpleSchema({
       lesson: {type: Lessons._helpers}
       isCurrentLesson: {type: Boolean}

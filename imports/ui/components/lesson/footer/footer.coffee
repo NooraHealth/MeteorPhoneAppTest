@@ -6,7 +6,6 @@ require './footer.html'
 Template.Lesson_view_page_footer.onCreated ->
   # data context validation
   @autorun =>
-    console.log Template.currentData()
     new SimpleSchema({
       "homeButton.onClick": {type: Function}
       "replayButton.onClick": {type: Function}

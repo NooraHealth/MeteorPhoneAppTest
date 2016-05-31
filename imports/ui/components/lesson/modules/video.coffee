@@ -34,8 +34,6 @@ Template.Lesson_view_page_video.onCreated ->
   @elem = (template) ->
     if not @state.get("rendered") then return ""
     else
-      console.log "getting the elem"
-      console.log template.find "video"
       return template.find "video"
 
   @autorun =>
@@ -48,7 +46,6 @@ Template.Lesson_view_page_video.onCreated ->
       elem.pause()
 
   @playVideo = =>
-    console.log "about to play the vide"
     @elem(@).play()
 
 
@@ -72,12 +69,10 @@ Template.Lesson_view_page_video.helpers
   
   playing: ->
     instance = Template.instance()
-    console.log "Returning whether playing"
-    console.log instance.data.playing
     return instance.data.playing
 
 Template.Lesson_view_page_video.events
-  'click #play_video': ->
+  'touchend #play_video': ->
     instance = Template.instance()
     instance.playVideo()
 
@@ -86,15 +81,12 @@ Template.Lesson_view_page_video.onRendered ->
   instance.state.set "rendered", true
 
   instance.elem(instance).addEventListener "playing", ->
-    console.log "Video playing!"
     instance.onPlayVideo()
 
   instance.elem(instance).addEventListener "pause", ->
-    console.log "Video paused!"
     instance.onStopVideo()
 
   instance.elem(instance).addEventListener "onended", ->
-    console.log "Video onended!"
     instance.onVideoEnd()
   
   
