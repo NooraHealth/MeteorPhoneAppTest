@@ -89,14 +89,10 @@ class AppState
 
       @dict.setPersistent 'configuration', configuration
       return @
-      #@dict.setPersistent 'hospital', configuration.hospital
-      #@dict.setPersistent 'condition', configuration.condition
 
     isConfigured: (state) ->
       if Meteor.isCordova
         configuration = @dict.get 'configuration'
-        #hospital = @dict.get 'hospital'
-        #condition = @dict.get 'condition'
         return configuration? and
           configuration?.hospital? and
           configuration.hospital isnt "" and

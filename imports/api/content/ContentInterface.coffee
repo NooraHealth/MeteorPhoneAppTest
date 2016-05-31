@@ -23,13 +23,13 @@ class ContentInterface
       @remoteContentEndpoint = Meteor.settings.public.CONTENT_SRC
 
     introPath: =>
-      return "AppIntro.mp3"
+      return "NooraHealthContent/Audio/AppIntro.mp3"
 
     correctSoundEffectFilePath: =>
-      return "correct_soundeffect.mp3"
+      return "NooraHealthContent/Audio/correct_soundeffect.mp3"
 
     incorrectSoundEffectFilePath: =>
-      return "incorrect_soundeffect.mp3"
+      return "NooraHealthContent/Audio/incorrect_soundeffect.mp3"
 
     # Where the content is stored remotely (AWS S3 server)
     getEndpoint: (path) =>
@@ -51,14 +51,6 @@ class ContentInterface
         #return instance.subscriptionsReady()
       #else if Meteor.isCordova
       if Meteor.isCordova
-        console.log "Not connected in Cordova"
-        console.log "AppState"
-        console.log AppState
-        console.log "is subscribed"
-        console.log AppState.get().isSubscribed()
-        console.log "num curriculums"
-        console.log Curriculums.find().count
-        console.log "not connected in cordova: returning ", AppState.get().isSubscribed()
         return AppState.get().isSubscribed()
       else
         return instance.subscriptionsReady()

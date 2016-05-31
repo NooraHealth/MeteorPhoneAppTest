@@ -49,30 +49,35 @@ class @ContentDownloader
         console.log docs
         console.log "number of curriculums in the database"
         console.log Curriculums.find().count()
-        filteredFiles = []
+
+        paths = []
+        paths.push ContentInterface.get().introPath()
+        paths.push ContentInterface.get().correctSoundEffectFilePath()
+        paths.push ContentInterface.get().incorrectSoundEffectFilePath()
+
         for doc in docs
           #curriculum = Curriculums.findOne { _id: docs[0]._id }
           if Meteor.settings.public.TESTING
-            if doc.language isnt "English" then continue
+            if doc.language isnt "Hindi" then continue
 
           curriculum = Curriculums.findOne { _id: doc._id }
           if not curriculum? then throw new Meteor.Error "curriculum-not-found", "Curriculum of id #{id} not found"
 
           lessons = curriculum.getLessonDocuments()
-          paths = []
           for lesson in lessons
             paths.merge @_allContentPathsInLesson(lesson)
 
-          getFileName = (path, index) ->
-            getRandomInt = (min, max) => Math.floor(Math.random() * (max - min)) + min
-            rand = getRandomInt(1, 400)
-            matches = path.match(/[\.][a-z1-9]+$/)
-            filetype = matches[ matches.length - 1 ] #the filetype extension will be the last match
-            newFilename = index + rand + filetype
-            return newFilename
+        getFileName = (path, index) ->
+          getRandomInt = (min, max) => Math.floor(Math.random() * (max - min)) + min
+          rand = getRandomInt(1, 400)
+          matches = path.match(/[\.][a-z1-9]+$/)
+          filetype = matches[ matches.length - 1 ] #the filetype extension will be the last match
+          newFilename = index + rand + filetype
+          return newFilename
 
-          files = ( {url: ContentInterface.get().getEndpoint(path), name: getFileName(path, index)} for path, index in paths )
-          filteredFiles.push file for file in files when not OfflineFiles.findOne({url: file.url})?
+        filteredFiles = []
+        files = ( {url: ContentInterface.get().getEndpoint(path), name: getFileName(path, index)} for path, index in paths )
+        filteredFiles.push file for file in files when not OfflineFiles.findOne({url: file.url})?
 
         @_downloadFiles filteredFiles
         .then (error)->

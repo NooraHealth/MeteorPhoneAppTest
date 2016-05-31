@@ -1,8 +1,6 @@
 require './audio.html'
 
 Template.Audio.onCreated ->
-  console.log "Creating an audio"
-
   @autorun =>
     @data = Template.currentData()
     new SimpleSchema({
@@ -18,7 +16,6 @@ Template.Audio.onCreated ->
     data = Template.currentData()
     shouldReplay = data.replay
     if shouldReplay
-      console.log "Replaying"
       @sound?.stop()
       @sound?.play()
       data.afterReplay()
@@ -40,9 +37,11 @@ Template.Audio.onCreated ->
         onpause: @data.whenPaused
         onplay: ()->
           console.log "begun playing #{data.attributes.src}"
+          console.log @
         #html5: true
       }
       @sound.play()
+      #@sound.mute(false)
     else if not shouldPlay and @sound?
       @sound.pause()
 

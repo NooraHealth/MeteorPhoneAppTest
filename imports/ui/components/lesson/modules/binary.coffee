@@ -7,7 +7,6 @@ require "./binary.html"
 Template.Lesson_view_page_binary.onCreated ->
   # Data context validation
   @autorun =>
-    console.log Template.currentData()
     new SimpleSchema({
       module: {type: Modules._helpers}
       correctlySelectedClasses: {type: String}
