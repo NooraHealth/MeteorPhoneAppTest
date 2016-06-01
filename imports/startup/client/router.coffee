@@ -25,6 +25,10 @@ FlowRouter.route '/', {
     if not AppState.get().isConfigured()
       BlazeLayout.render 'Layout', { main : 'Configure_app_page' }
     else
+      hospital = AppState.get().getHospital()
+      analytics.identify hospital, {
+        hospital: hospital
+      }
       BlazeLayout.render 'Layout', { main : 'Home_page' }
 }
 
