@@ -110,6 +110,9 @@ class AppState
 
       return @dict.get "configuration"
 
+    getHospital: ->
+      return @getConfiguration().hospital
+
     setSubscribed: (state) ->
       @dict.set "subscribed", state
       return @
