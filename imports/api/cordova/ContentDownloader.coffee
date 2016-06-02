@@ -57,7 +57,7 @@ class @ContentDownloader
 
         for doc in docs
           #curriculum = Curriculums.findOne { _id: docs[0]._id }
-          if Meteor.settings.public.TESTING
+          if Meteor.settings.public.METEOR_ENV == "development"
             if doc.language isnt "Hindi" then continue
 
           curriculum = Curriculums.findOne { _id: doc._id }
