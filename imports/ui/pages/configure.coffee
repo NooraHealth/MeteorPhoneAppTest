@@ -1,10 +1,18 @@
 
 { AppState } = require '../../api/AppState.coffee'
+{ Conditions } = require 'meteor/noorahealth:mongo-schemas'
+{ Facilities } = require 'meteor/noorahealth:mongo-schemas'
+
 require './configure.html'
 
 Template.Configure_app_page.onCreated ->
   @configureApp = ->
     console.log "Configuring the app!!"
+    analytics.track "Configured App", {
+      condition: condition
+      hospital: hospital
+    }
+
     hospital = $("#hospital_select").val()
     condition = $("#condition_select").val()
     AppState.get().setConfiguration {
@@ -14,18 +22,24 @@ Template.Configure_app_page.onCreated ->
 
     FlowRouter.go "load"
 
+  @autorun =>
+    @subscribe "facilities.all"
+    @subscribe "conditions.all"
+
+  @autorun =>
+    console.log @subscriptionsReady()
+ 
 Template.Configure_app_page.helpers
+  subscriptionsReady: ()->
+    console.log "in the subscriptionsReady"
+    instance = Template.instance()
+    return instance.subscriptionsReady()
+
   hospitals: ->
-    return [
-      {name: 'Jayadeva'},
-      {name: 'Manipal Bangalore'}
-    ]
+    return Facilities.find({}).fetch()
 
   conditions: ->
-    return [
-      {name: 'Cardiac Surgery'},
-      {name: 'Neonatology'}
-    ]
+    return Conditions.find({}).fetch()
 
   buttonArgs: ->
     instance = Template.instance()

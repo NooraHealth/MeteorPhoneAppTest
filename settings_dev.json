@@ -3,7 +3,7 @@
     "CONTENT_SRC" : "http://s3-us-west-1.amazonaws.com/noorahealthcontent.noorahealth.org/",
     "METEOR_ENV": "development",
     "analyticsSettings": {
-      "Segmentio": { "apiKey": "j7ucVGSmWEAdbQ5lXPOMykwy7o0keU3v" }
+      "Segment.io": { "apiKey": "j7ucVGSmWEAdbQ5lXPOMykwy7o0keU3v" }
     }
   }
 }

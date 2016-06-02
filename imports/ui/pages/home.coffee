@@ -18,14 +18,6 @@ require '../../ui/components/audio/audio.coffee'
 require '../../ui/components/shared/loading.coffee'
 
 Template.Home_page.onCreated ->
-  #loads the soundeffects, circumventing a howler.js bug that prevents
-  #them from loading in lessons_view.coffee
-  #new Howl {
-    #src: [ContentInterface.get().getSrc(ContentInterface.gg)]
-  #}
-  #new Howl {
-    #src: ['correct_soundeffect.mp3']
-  #}
 
   @getLessonDocuments = =>
     curriculum = @getCurriculumDoc()
@@ -50,18 +42,18 @@ Template.Home_page.onCreated ->
     FlowRouter.go "lesson", {_id: id}
 
   @onLanguageSelected = (language) ->
+    analytics.track "Changed Language", {
+      fromLanguage: AppState.get().getLanguage()
+      toLanguage: language
+      condition: AppState.get().getCondition()
+    }
+
     AppState.get().setLanguage language
     AppState.get().setLessonIndex 0
-
-  @autorun =>
-    #@subscribe "curriculums.all"
-    #@subscribe "lessons.all"
-    #@subscribe "modules.all"
 
 Template.Home_page.helpers
   curriculumsReady: ->
     instance = Template.instance()
-    #ContentInterface.get().subscriptionsReady(instance)
     return instance.subscriptionsReady()
 
   menuArgs: ->
