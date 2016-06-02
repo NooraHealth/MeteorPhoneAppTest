@@ -26,9 +26,13 @@ FlowRouter.route '/', {
       BlazeLayout.render 'Layout', { main : 'Configure_app_page' }
     else
       hospital = AppState.get().getHospital()
+      alert "Arrived home! Version 1.1 ", hospital
       analytics.identify hospital, {
         hospital: hospital
+        language: AppState.get().getLanguage()
+        condition: AppState.get().getCondition()
       }
+      analytics.track "visitedHomePage"
       BlazeLayout.render 'Layout', { main : 'Home_page' }
 }
 
@@ -38,6 +42,10 @@ FlowRouter.route '/', {
 FlowRouter.route '/lesson/:_id', {
   name: "lesson"
   action: ( params, qparams )->
+    hospital = AppState.get().getHospital()
+    analytics.identify hospital, {
+      hospital: hospital
+    }
     console.log "Going to the lessons page"
     BlazeLayout.render "Layout", { main: "Lesson_view_page" }
 

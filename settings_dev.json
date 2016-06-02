@@ -1,6 +1,13 @@
 {
   "public": {
     "CONTENT_SRC" : "http://s3-us-west-1.amazonaws.com/noorahealthcontent.noorahealth.org/",
-    "TESTING": true
+    "TESTING": true,
+    "analyticsSettings": {
+      "Google Analytics": { "trackingId": "UA-78610302-1" },
+      "Mixpanel": { 
+        "token" : "a4c19d76150632bba336d8ecf99fcaa2",
+        "people": true
+      }
+    }
   }
 }

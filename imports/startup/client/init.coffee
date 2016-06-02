@@ -5,8 +5,6 @@
 require 'meteor/loftsteinn:framework7-ios'
 
 Meteor.startup ()->
-  console.log "STARTUP"
-  console.log analytics
   if (Meteor.isCordova and not AppState.get().isSubscribed()) or Meteor.status().connected
     Meteor.subscribe "curriculums.all"
     Meteor.subscribe "lessons.all"
