@@ -166,7 +166,6 @@ Template.Lesson_view_page.onCreated ()->
       numberOfModulesInLesson: lesson.modules.length
     }
 
-    console.log "About to go to the home router"
     FlowRouter.go "home"
 
   @goToNextModule = =>
