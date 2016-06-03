@@ -26,12 +26,8 @@ Template.Configure_app_page.onCreated ->
     @subscribe "facilities.all"
     @subscribe "conditions.all"
 
-  @autorun =>
-    console.log @subscriptionsReady()
- 
 Template.Configure_app_page.helpers
   subscriptionsReady: ()->
-    console.log "in the subscriptionsReady"
     instance = Template.instance()
     return instance.subscriptionsReady()
 
@@ -43,8 +39,6 @@ Template.Configure_app_page.helpers
 
   buttonArgs: ->
     instance = Template.instance()
-    console.log "Configure app"
-    console.log instance.configureApp
     return {
       onClick: instance.configureApp
       content: 'CONFIGURE'

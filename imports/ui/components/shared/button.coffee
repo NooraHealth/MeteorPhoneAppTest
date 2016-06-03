@@ -13,6 +13,8 @@ Template.Button.onCreated ->
       "attributes.name": {type: String, optional: true}
     }).validate(Template.currentData())
 
+    @data = Template.currentData()
+
   @removeActiveState = ->
     active = @find(".active-state")
     if active?
@@ -24,6 +26,10 @@ Template.Button.events
     data = Template.currentData()
     data.onClick e
     instance.removeActiveState()
+
+    analytics.track "Pressed Button", {
+      content: instance.data.content
+    }
 
 Template.Button.onRendered ->
   Template.currentData().onRendered?()

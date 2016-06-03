@@ -12,6 +12,12 @@ Template.Audio.onCreated ->
       whenPaused: {type: Function, optional: true}
     }).validate @data
 
+  @onEnd = =>
+    @data.whenFinished( @sound.pos(), true, @data.attributes.src )
+
+  @onPause = =>
+    @data.whenPaused( @sound.pos(), false, @data.attributes.src )
+
   @autorun =>
     data = Template.currentData()
     shouldReplay = data.replay
