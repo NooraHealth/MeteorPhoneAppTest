@@ -50,10 +50,13 @@ Template.Lesson_view_page.onCreated ()->
     return index > modules?.indexOf moduleId
 
   @trackAudioStopped = (pos, completed, src) =>
+    console.log "Tracking audio stopped"
     lesson = @getLesson()
     condition = AppState.get().getCondition()
     language = AppState.get().getLanguage()
     module = @getCurrentModule()
+    console.log "Module? "
+    console.log module.title
     text = if module.title then module.title else module.question
     analytics.track "Audio Stopped", {
       moduleText: text
@@ -65,23 +68,6 @@ Template.Lesson_view_page.onCreated ()->
       completed: completed
       lessonTitle: lesson.title
       lessonId: lesson._id
-    }
-
-  @trackResponsedToQuestion = =>
-    lesson = @getLesson()
-    condition = AppState.get().getCondition()
-    language = AppState.get().getLanguage()
-    module = @getCurrentModule()
-    text = if module.title then module.title else module.question
-    analytics.track "Responded to Question", {
-      moduleId: module._id
-      moduleText: text
-      choice: choice
-      lessonTitle: lesson.title
-      lessonId: lesson._id
-      condition: condition
-      language: language
-      type: type
     }
 
   @getPagesForPaginator = =>
@@ -119,11 +105,28 @@ Template.Lesson_view_page.onCreated ()->
         }
 
       #analytics
-      instance.trackResponsedToQuestion()
+      lesson = instance.getLesson()
+      condition = AppState.get().getCondition()
+      language = AppState.get().getLanguage()
+      module = instance.getCurrentModule()
+      text = if module.title then module.title else module.question
+      analytics.track "Responded to Question", {
+        moduleId: module._id
+        moduleText: text
+        choice: choice
+        lessonTitle: lesson.title
+        lessonId: lesson._id
+        condition: condition
+        language: language
+        type: type
+      }
 
   @onCompletedQuestion = (instance) ->
     return ->
+      console.log "COMPLETED QUESTION!!!"
+      console.log instance.state.get "audioPlaying"
       instance.state.set "audioPlaying", "EXPLANATION"
+      console.log instance.state.get "audioPlaying"
 
   @stopPlayingSoundEffect = =>
     @state.set "soundEfffectPlaying", null
@@ -147,9 +150,9 @@ Template.Lesson_view_page.onCreated ()->
   @celebrateCompletion = =>
     AppState.get().incrementLesson()
     new Award().sendAward()
-    @goHome(true)
+    @goHome( null, true)
 
-  @goHome = (completedLesson) ->
+  @goHome = ( event, completedLesson) =>
     lesson = @getLesson()
     module = @getCurrentModule()
     text = if module.title then module.title else module.question
@@ -163,6 +166,7 @@ Template.Lesson_view_page.onCreated ()->
       numberOfModulesInLesson: lesson.modules.length
     }
 
+    console.log "About to go to the home router"
     FlowRouter.go "home"
 
   @goToNextModule = =>
@@ -170,8 +174,10 @@ Template.Lesson_view_page.onCreated ()->
     console.log "-----------------------"
     index = @state.get "moduleIndex"
     newIndex = ++index
+
     @state.set "moduleIndex", newIndex
     @state.set "nextButtonAnimated", false
+    @state.set "audioPlaying", "QUESTION"
     @setCurrentModuleId()
 
     module = @getCurrentModule()
@@ -222,11 +228,6 @@ Template.Lesson_view_page.onCreated ()->
   @shouldPlayExplanationAudio = (id) =>
     shouldPlay = @state.get "playingExplanation"
     if @isCurrent(id) and shouldPlay then return true else return false
-
-  @autorun =>
-    lessonId = @getLessonId()
-    #@subscribe "lesson", lessonId
-    #@subscribe "modules.inLesson", lessonId
 
   @autorun =>
     if ContentInterface.get().subscriptionsReady(@)
@@ -295,10 +296,13 @@ Template.Lesson_view_page.helpers
     return module.correct_audio?
 
   explanationArgs: (module) ->
+    console.log "Calculating explanationAudio args....."
     instance = Template.instance()
     playing = instance.state.get("audioPlaying") == "EXPLANATION"
     replay = instance.state.get("replayAudio")
     isCurrent = instance.isCurrent(module._id)
+    if isCurrent
+      console.log "Is playing the explanation ", playing
     return {
       attributes: {
         src: ContentInterface.get().getSrc module.correct_audio
@@ -311,10 +315,13 @@ Template.Lesson_view_page.helpers
     }
 
   audioArgs: (module) ->
+    console.log "Calculating Audio args....."
     instance = Template.instance()
     playing = instance.state.get("audioPlaying") == "QUESTION"
     replay = instance.state.get("replayAudio")
     isCurrent = instance.isCurrent(module._id)
+    if isCurrent
+      console.log "Is playing the question ", playing
     return {
       attributes: {
         src: ContentInterface.get().getSrc module.audio

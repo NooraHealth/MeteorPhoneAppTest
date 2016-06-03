@@ -23,6 +23,7 @@ Template.Lesson_view_page_footer.helpers
   goHomeButtonArgs: (data) ->
     return {
       attributes: {
+        id: "homeBtn"
         class: 'link gohome-btn button footer-button color-green button-rounded button-fill'
       }
       content: '<i class="fa fa-home fa-2x"></i> HOME'
@@ -35,6 +36,7 @@ Template.Lesson_view_page_footer.helpers
     if data.animated then classes += ' slide-up'
     return {
       attributes: {
+        id: "nextModuleBtn"
         class: classes
       }
       content: data.text + '<i class="fa fa-arrow-right fa-2x"></i>'
@@ -54,6 +56,7 @@ Template.Lesson_view_page_footer.helpers
     classes = 'link button button-rounded color-pink button-fill'
     return {
       attributes: {
+        id: "replayBtn"
         class: classes
       }
       content: '<i class="fa fa-repeat fa-2x"></i>'

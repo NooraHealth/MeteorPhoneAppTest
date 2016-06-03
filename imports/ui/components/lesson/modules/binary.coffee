@@ -22,7 +22,7 @@ Template.Lesson_view_page_binary.onCreated ->
   @state = new ReactiveDict()
   @state.setDefault {
     selected: null
-    buttonAttributes: {}
+    optionAttributes: {}
   }
 
   @getOnSelected = (instance, option) ->
@@ -61,6 +61,7 @@ Template.Lesson_view_page_binary.onCreated ->
     
     mapData = (option, i) ->
       map[option] = {
+        id: "#{option}OptionForModule#{module._id}"
         class: getClasses(option)
         value: option
       }

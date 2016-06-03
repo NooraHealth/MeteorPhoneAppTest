@@ -7,13 +7,12 @@ Template.Button.onCreated ->
       onClick: {type: Function, optional: true}
       onRendered: {type: Function, optional: true}
       content: {type: String}
+      "attributes.id": {type: String}
       "attributes.class": {type: String, optional: true}
-      "attributes.id": {type: String, optional: true}
       "attributes.value": {type: String, optional: true}
       "attributes.name": {type: String, optional: true}
     }).validate(Template.currentData())
 
-    @data = Template.currentData()
 
   @removeActiveState = ->
     active = @find(".active-state")
@@ -28,8 +27,9 @@ Template.Button.events
     instance.removeActiveState()
 
     analytics.track "Pressed Button", {
-      content: instance.data.content
+      id: data.attributes.id
     }
+
 
 Template.Button.onRendered ->
   Template.currentData().onRendered?()
