@@ -33,7 +33,6 @@ FlowRouter.route '/', {
         condition: condition,
         language: language
       }
-      alert "Arrived home! Version 1.1 ", hospital
       BlazeLayout.render 'Layout', { main : 'Home_page' }
 }
 
