@@ -32,6 +32,7 @@ Template.Configure_app_page.helpers
     return instance.subscriptionsReady()
 
   hospitals: ->
+    console.log("Returning the hospitals")
     return Facilities.find({}).fetch()
 
   conditions: ->
