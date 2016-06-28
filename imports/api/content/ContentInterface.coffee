@@ -8,6 +8,8 @@
 ##############################################################################
 
 { OfflineFiles } = require("meteor/noorahealth:mongo-schemas")
+{ Lessons } = require("meteor/noorahealth:mongo-schemas")
+{ Modules } = require("meteor/noorahealth:mongo-schemas")
 { Curriculums } = require("meteor/noorahealth:mongo-schemas")
 { AppState } = require("../AppState.coffee")
 
@@ -50,9 +52,12 @@ class ContentInterface
       #if Meteor.status().connected
         #return instance.subscriptionsReady()
       #else if Meteor.isCordova
-      if Meteor.isCordova
-        return AppState.get().isSubscribed()
-      else
-        return instance.subscriptionsReady()
+      console.log("Are the subscriptions ready?")
+      console.log(instance.subscriptionsReady())
+      return instance.subscriptionsReady()
+      #if Meteor.isCordova
+        #return AppState.get().isSubscribed()
+      #else
+        #return instance.subscriptionsReady()
 
 module.exports.ContentInterface = ContentInterface
