@@ -41,9 +41,9 @@ class ContentInterface
     # that particular file -- in Cordova, this is local and in the browser
     # it will find it remotely
     getSrc: (path) =>
-      url = @getEndpoint(path)
+      #url = @getEndpoint(path)
       if Meteor.isCordova
-        offlineFile = OfflineFiles.findOne {url: url}
+        offlineFile = OfflineFiles.findOne {path: path}
         return if offlineFile? then WebAppLocalServer.localFileSystemUrl(offlineFile.fsPath) else ""
       else
         return url
