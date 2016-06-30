@@ -183,8 +183,8 @@ class @ContentDownloader
 
       return deferred.promise
 
-    deleteUnusedFiles: ( cursor, onComplete )->
-      console.log "About to delete unused files"
+    cleanLocalContent: ( cursor, onComplete )->
+      console.log "About to delete unused files (cleanLocalContent)"
       try
         #validate the arguments
         new SimpleSchema({

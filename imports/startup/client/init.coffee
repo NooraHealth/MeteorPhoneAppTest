@@ -8,7 +8,8 @@ Meteor.startup ()->
   console.log "starup"
   if (Meteor.isCordova and not AppState.get().isSubscribed()) or Meteor.status().connected
     console.log("Subscribing to all")
-    Meteor.subscribe "curriculums.all"
+    Meteor.subscribe "curriculums.all", ()->
+      console.log "in the meteor on ready callback curriculums"
     Meteor.subscribe "lessons.all"
     Meteor.subscribe "modules.all"
     AppState.get().setSubscribed true

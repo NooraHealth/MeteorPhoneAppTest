@@ -31,5 +31,7 @@ Template.Load_curriculums_page.onCreated ->
             AppState.get().setError e
           AppState.get().setShouldPlayIntro true
           FlowRouter.go "home"
+          console.log "about to go clean the local content"
+          ContentDownloader.get().cleanLocalContent curriculums
         ContentDownloader.get().loadCurriculums curriculums, onComplete
   
