@@ -10,18 +10,18 @@ Meteor.startup ()->
     console.log("Subscribing to all")
     Meteor.subscribe "curriculums.all", ()->
       console.log "in the meteor on ready callback curriculums"
+      condition = AppState.getCondition()
+      updateContent = ()->
+        console.log "UPDATING THE CONTENT"
+        FlowRouter.go "load"
+
+      Curriculums.find({condition: condition}).observe updateContent
     Meteor.subscribe "lessons.all"
     Meteor.subscribe "modules.all"
     AppState.get().setSubscribed true
 
   BlazeLayout.setRoot "body"
 
-  condition = AppState.getCondition()
-  updateContent = ()->
-    console.log "UPDATING THE CONTENT"
-    FlowRouter.go "load"
-
-  Curriculums.find({condition: condition}).observe updateContent
 
   this.App = new Framework7(
     materialRipple: true

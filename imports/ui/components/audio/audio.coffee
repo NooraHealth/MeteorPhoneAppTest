@@ -16,8 +16,6 @@ Template.Audio.onCreated ->
     @data.whenFinished( @sound.pos(), true, @data.attributes.src )
 
   @onPause = =>
-    console.log @sound
-    console.log @sound.pos()
     @data.whenPaused( @sound.pos(), false, @data.attributes.src )
 
   @autorun =>
@@ -33,7 +31,6 @@ Template.Audio.onCreated ->
     shouldPlay = data.playing
     alreadyPlaying = @sound?.playing()
     if shouldPlay and not alreadyPlaying
-      console.log "About to play"
       #@sound = new Media(data.attributes.src)
       @sound ?= new Howl {
         src: [data.attributes.src]
@@ -51,7 +48,6 @@ Template.Audio.onCreated ->
       @sound.play()
       #@sound.mute(false)
     else if not shouldPlay and @sound?
-      console.log "About to pause this audio", data.attributes.src
       @sound.pause()
 
 Template.Audio.onDestroyed ->

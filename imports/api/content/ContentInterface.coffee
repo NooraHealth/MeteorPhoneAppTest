@@ -52,8 +52,6 @@ class ContentInterface
       #if Meteor.status().connected
         #return instance.subscriptionsReady()
       #else if Meteor.isCordova
-      console.log("Are the subscriptions ready?")
-      console.log(instance.subscriptionsReady())
       return instance.subscriptionsReady()
       #if Meteor.isCordova
         #return AppState.get().isSubscribed()
