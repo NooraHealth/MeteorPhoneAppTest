@@ -28,6 +28,13 @@ Template.Lesson_view_page.onCreated ()->
     audioPlaying: "QUESTION"
   }
 
+  @autorun =>
+   if Meteor.isCordova and Meteor.status().connected
+    console.log "HOME: In the meteor isConnected and cordova in init"
+    @subscribe "curriculums.all"
+    @subscribe "lessons.all"
+    @subscribe "modules.all"
+
   @getCurrentModuleId = =>
     @state.get "currentModuleId"
 

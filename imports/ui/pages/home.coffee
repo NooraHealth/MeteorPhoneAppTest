@@ -19,6 +19,13 @@ require '../../ui/components/shared/loading.coffee'
 
 Template.Home_page.onCreated ->
 
+  @autorun =>
+   if Meteor.isCordova and Meteor.status().connected
+    console.log "HOME: In the meteor isConnected and cordova in init"
+    @subscribe "curriculums.all"
+    @subscribe "lessons.all"
+    @subscribe "modules.all"
+
   @getLessonDocuments = =>
     curriculum = @getCurriculumDoc()
     docs = curriculum?.getLessonDocuments()
@@ -66,6 +73,8 @@ Template.Home_page.helpers
   thumbnailArgs: (lesson) ->
     instance = Template.instance()
     isCurrentLesson = ( lesson?._id == instance.currentLessonId() )
+    console.log "Making this thumbnail"
+    console.log lesson
     return {
       lesson: lesson
       onLessonSelected: instance.onLessonSelected
