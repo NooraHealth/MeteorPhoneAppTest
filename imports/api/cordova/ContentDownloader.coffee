@@ -167,7 +167,8 @@ class @ContentDownloader
               else
                 console.log "Retrying download"
                 # Try downloading again
-                retry.push file
+                retry.push file.name
+                console.log retry
                 downloadFile file
             else
               markAsResolved(file)
@@ -183,8 +184,8 @@ class @ContentDownloader
 
       return deferred.promise
 
-    deleteUnusedFiles: ( cursor, onComplete )->
-      console.log "About to delete unused files"
+    cleanLocalContent: ( cursor, onComplete )->
+      console.log "Cleaning local content"
       try
         #validate the arguments
         new SimpleSchema({
@@ -198,6 +199,7 @@ class @ContentDownloader
         console.log e
 
     _getUnusedFilePaths: (curriculums)->
+      console.log("getting the unused file paths")
       pathsInUse = []
       for curriculum in curriculums
         pathsInUse.merge @_allContentPathsInCurriculum(curriculum)
@@ -205,8 +207,10 @@ class @ContentDownloader
       localFiles = OfflineFiles.find().fetch()
       unused = []
       for file in localFiles
+        console.log("file: ", file.path)
         if not file.path in pathsInUse
           unused.push file
+      console.log "Returning the unused: ", unused.length
       return unused
 
     _deleteFiles: (filePaths) ->

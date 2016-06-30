@@ -19,9 +19,15 @@ require '../../ui/components/shared/loading.coffee'
 
 Template.Home_page.onCreated ->
 
+  #condition = AppState.getCondition()
+  #updateContent = ()->
+    #console.log "UPDATING THE CONTENT"
+    #FlowRouter.go "load"
+
+  #Curriculums.find({condition: condition}).observe updateContent
+
   @autorun =>
    if Meteor.isCordova and Meteor.status().connected
-    console.log "HOME: In the meteor isConnected and cordova in init"
     @subscribe "curriculums.all"
     @subscribe "lessons.all"
     @subscribe "modules.all"
@@ -73,8 +79,6 @@ Template.Home_page.helpers
   thumbnailArgs: (lesson) ->
     instance = Template.instance()
     isCurrentLesson = ( lesson?._id == instance.currentLessonId() )
-    console.log "Making this thumbnail"
-    console.log lesson
     return {
       lesson: lesson
       onLessonSelected: instance.onLessonSelected

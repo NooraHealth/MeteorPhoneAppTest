@@ -15,6 +15,13 @@ Meteor.startup ()->
 
   BlazeLayout.setRoot "body"
 
+  condition = AppState.getCondition()
+  updateContent = ()->
+    console.log "UPDATING THE CONTENT"
+    FlowRouter.go "load"
+
+  Curriculums.find({condition: condition}).observe updateContent
+
   this.App = new Framework7(
     materialRipple: true
     router:false

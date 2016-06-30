@@ -2,6 +2,7 @@
 { AppState } = require '../../api/AppState.coffee'
 { Conditions } = require 'meteor/noorahealth:mongo-schemas'
 { Facilities } = require 'meteor/noorahealth:mongo-schemas'
+{ Curriculums } = require 'meteor/noorahealth:mongo-schemas'
 
 require './configure.html'
 
