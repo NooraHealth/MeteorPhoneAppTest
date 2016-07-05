@@ -14,16 +14,17 @@ Template.Lesson_view_page_video.onCreated ->
   @autorun =>
     schema = new SimpleSchema({
       module: {type: Modules._helpers}
-      onPlayVideo: {type: Function}
-      onStopVideo: {type: Function}
-      onVideoEnd: {type: Function}
+      onPlayVideo: {type: Function, optional: true}
+      onStopVideo: {type: Function, optional: true}
+      onVideoEnd: {type: Function, optional: true}
       playing: {type: Boolean}
     }).validate(Template.currentData())
 
     @data = Template.currentData()
 
   @onStopVideo = (location) =>
-    @data.onStopVideo()
+    if @data.onStopVideo
+      @data.onStopVideo()
 
   @trackStoppedVideo = (currentTime, completed) ->
     analytics.track "Stopped Video", {
@@ -36,10 +37,12 @@ Template.Lesson_view_page_video.onCreated ->
 
   @onPlayVideo = =>
     console.log "Playing the video"
-    @data.onPlayVideo()
+    if @data.onPlayVideo
+      @data.onPlayVideo()
 
   @onVideoEnd = =>
-    @data.onVideoEnd()
+    if @data.onVideoEnd
+      @data.onVideoEnd()
 
   @elem = (template) ->
     if not @state.get("rendered") then return ""
