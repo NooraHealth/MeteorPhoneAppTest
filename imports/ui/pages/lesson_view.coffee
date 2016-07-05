@@ -56,7 +56,10 @@ Template.Lesson_view_page.onCreated ()->
     condition = AppState.get().getCondition()
     language = AppState.get().getLanguage()
     module = @getCurrentModule()
+    console.log "Lessons"
+    console.log lesson
     console.log "Module? "
+    console.log module
     console.log module.title
     text = if module.title then module.title else module.question
     analytics.track "Audio Stopped", {
@@ -239,8 +242,8 @@ Template.Lesson_view_page.onCreated ()->
    if Meteor.isCordova and Meteor.status().connected
     console.log "HOME: In the meteor isConnected and cordova in init"
     lessonId = @getLessonId()
-    @subscribe "lesson", lessonId
-    @subscribe "modules.inLesson", lessonId
+    @subscribe "lessons.all"
+    @subscribe "modules.all"
 
   @autorun =>
     if ContentInterface.get().subscriptionsReady(@)

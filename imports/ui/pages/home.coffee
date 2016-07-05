@@ -19,13 +19,6 @@ require '../../ui/components/shared/loading.coffee'
 
 Template.Home_page.onCreated ->
 
-  @autorun =>
-   if Meteor.isCordova and Meteor.status().connected
-    @subscribe "curriculums.all", ()->
-      console.log "in the meteor on ready callback curriculums"
-    @subscribe "lessons.all"
-    @subscribe "modules.all"
-
   @getLessonDocuments = =>
     curriculum = @getCurriculumDoc()
     docs = curriculum?.getLessonDocuments()
@@ -59,6 +52,13 @@ Template.Home_page.onCreated ->
 
     AppState.get().setLanguage language
     AppState.get().setLessonIndex 0
+
+  @autorun =>
+   if Meteor.isCordova and Meteor.status().connected
+    @subscribe "curriculums.all"
+    @subscribe "lessons.all"
+    @subscribe "modules.all"
+
 
 Template.Home_page.helpers
   curriculumsReady: ->
