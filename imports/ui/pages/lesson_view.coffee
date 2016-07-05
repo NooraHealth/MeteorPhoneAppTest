@@ -127,15 +127,7 @@ Template.Lesson_view_page.onCreated ()->
 
   @onCompletedQuestion = (instance) ->
     return ->
-      console.log "COMPLETED QUESTION!!!"
-      console.log instance.state.get "audioPlaying"
       instance.state.set "audioPlaying", "EXPLANATION"
-      console.log instance.state.get "audioPlaying"
-
-  @stopPlayingEmptySound = =>
-    console.log "on stop playing the empty sound"
-    @state.set "playingEmptySound", false
-    @state.set "playingVideo", true
 
   @stopPlayingSoundEffect = =>
     @state.set "soundEfffectPlaying", null
@@ -216,9 +208,6 @@ Template.Lesson_view_page.onCreated ()->
     module = @getCurrentModule()
     return module?.type isnt "VIDEO"
 
-  @onPlayVideo = =>
-    console.log "About to play the empty sound and then play the video"
-
   @onStopVideo = =>
     @state.set "playingVideo", false
 
@@ -296,7 +285,6 @@ Template.Lesson_view_page.helpers
     else if module.type == "VIDEO"
       return {
         module: module
-        onPlayVideo: instance.onPlayVideo
         onStopVideo: instance.onStopVideo
         onVideoEnd: instance.onVideoEnd
         playing: instance.isCurrent(module._id) and instance.videoPlaying()
@@ -372,19 +360,6 @@ Template.Lesson_view_page.helpers
       whenPaused: instance.stopPlayingSoundEffect
     }
 
-  emptySoundEffectArgs: ->
-    instance = Template.instance()
-    playing = instance.state.get("playingEmptySound")
-    if not playing? then playing = false
-    return {
-      attributes: {
-        src: ContentInterface.get().correctSoundEffectFilePath()
-      }
-      playing: playing
-      whenFinished: instance.stopPlayingEmptySound
-      whenPaused: instance.stopPlayingEmptySound
-    }
-  
   modules: ->
     instance = Template.instance()
     return instance.getModules()
