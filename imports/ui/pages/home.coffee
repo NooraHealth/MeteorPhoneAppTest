@@ -40,8 +40,6 @@ Template.Home_page.onCreated ->
 
   @onLessonSelected = (id) ->
     FlowRouter.go "lesson", {_id: id}
-    #AppState.get().setRoute "Lessons_view_page"
-    #AppState.get().setLessonId id
 
   @onLanguageSelected = (language) ->
     analytics.track "Changed Language", {
