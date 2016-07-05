@@ -28,12 +28,6 @@ Template.Lesson_view_page.onCreated ()->
     audioPlaying: "QUESTION"
   }
 
-  @autorun =>
-   if Meteor.isCordova and Meteor.status().connected
-    console.log "HOME: In the meteor isConnected and cordova in init"
-    lessonId = @getLesson()._id
-    @subscribe "lesson", lessonId
-    @subscribe "modules.inLesson", lessonId
 
   @getCurrentModuleId = =>
     @state.get "currentModuleId"
@@ -221,7 +215,6 @@ Template.Lesson_view_page.onCreated ()->
 
   @onPlayVideo = =>
     console.log "About to play the empty sound and then play the video"
-    @playEmptySound()
 
   @onStopVideo = =>
     @state.set "playingVideo", false
@@ -241,6 +234,13 @@ Template.Lesson_view_page.onCreated ()->
   @shouldPlayExplanationAudio = (id) =>
     shouldPlay = @state.get "playingExplanation"
     if @isCurrent(id) and shouldPlay then return true else return false
+
+  @autorun =>
+   if Meteor.isCordova and Meteor.status().connected
+    console.log "HOME: In the meteor isConnected and cordova in init"
+    lessonId = @getLessonId()
+    @subscribe "lesson", lessonId
+    @subscribe "modules.inLesson", lessonId
 
   @autorun =>
     if ContentInterface.get().subscriptionsReady(@)
