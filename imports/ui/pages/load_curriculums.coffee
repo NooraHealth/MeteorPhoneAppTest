@@ -15,7 +15,6 @@ Template.Load_curriculums_page.onCreated ->
 
   @autorun =>
     console.log "Getting whether subscriptionsReady"
-    console.log ContentInterface.get().subscriptionsReady(@)
     if ContentInterface.get().subscriptionsReady(@) and @firstRun
       @firstRun = false
       configuration = AppState.get().getConfiguration()
@@ -30,5 +29,8 @@ Template.Load_curriculums_page.onCreated ->
             AppState.get().setError e
           AppState.get().setShouldPlayIntro true
           FlowRouter.go "home"
+          #delete any unused local content
+          console.log "about to go clean the local content"
+          ContentDownloader.get().cleanLocalContent curriculums
         ContentDownloader.get().loadCurriculums curriculums, onComplete
   

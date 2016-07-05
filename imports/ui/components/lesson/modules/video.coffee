@@ -22,8 +22,17 @@ Template.Lesson_view_page_video.onCreated ->
 
     @data = Template.currentData()
 
-  @onStopVideo = =>
+  @onStopVideo = (location) =>
     @data.onStopVideo()
+
+  @trackStoppedVideo = (currentTime, completed) ->
+    analytics.track "Stopped Video", {
+      time: currentTime
+      completed: completed
+      title: @data.module.title
+      moduleId: @data.module._id
+      src: @data.module.video
+    }
 
   @onPlayVideo = =>
     console.log "Playing the video"
@@ -81,13 +90,16 @@ Template.Lesson_view_page_video.onRendered ->
   instance = Template.instance()
   instance.state.set "rendered", true
 
-  instance.elem(instance).addEventListener "playing", ->
+  elem = instance.elem(instance)
+  elem.addEventListener "playing", ->
     instance.onPlayVideo()
 
-  instance.elem(instance).addEventListener "pause", ->
+  elem.addEventListener "pause", ->
     instance.onStopVideo()
+    instance.trackStoppedVideo( elem.currentTime, false )
 
-  instance.elem(instance).addEventListener "onended", ->
+  elem.addEventListener "onended", ->
     instance.onVideoEnd()
+    instance.trackStoppedVideo( elem.currentTime, true )
   
   

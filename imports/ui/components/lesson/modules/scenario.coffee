@@ -66,16 +66,18 @@ Template.Lesson_view_page_scenario.onCreated ->
         instance.state.set "selected", selected
       if module.isCorrectAnswer option
         instance.state.set "complete", true
-        instance.data.onCorrectChoice()
+        instance.data.onCorrectChoice(option)
         instance.data.onCompletedQuestion()
       else
-        instance.data.onWrongChoice()
+        instance.data.onWrongChoice(option)
 
 Template.Lesson_view_page_scenario.helpers
   normalButtonArgs: ->
     instance = Template.instance()
+    module = instance.data.module
     return {
       attributes: {
+        id: "normalOptionForModule#{module._id}"
         class: instance.getNormalButtonClasses()
       }
       content: '<i class="fa fa-home fa-2x"></i> NORMAL'
@@ -84,8 +86,10 @@ Template.Lesson_view_page_scenario.helpers
 
   callDoctorButtonArgs: ->
     instance = Template.instance()
+    module = instance.data.module
     return {
       attributes: {
+        id: "calldocOptionForModule#{module._id}"
         class: instance.getCallDoctorButtonClasses()
       }
       content: '<i class="fa fa-phone fa-2x"></i> CALL DOCTOR'
@@ -94,8 +98,10 @@ Template.Lesson_view_page_scenario.helpers
 
   emergencyButtonArgs: ->
     instance = Template.instance()
+    module = instance.data.module
     return {
       attributes: {
+        id: "emergencyOptionForModule#{module._id}"
         class: instance.getEmergencyButtonClasses()
       }
       content: '<i class="fa fa-ambulance fa-2x"></i> EMERGENCY'

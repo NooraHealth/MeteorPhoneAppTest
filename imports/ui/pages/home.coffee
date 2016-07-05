@@ -18,14 +18,20 @@ require '../../ui/components/audio/audio.coffee'
 require '../../ui/components/shared/loading.coffee'
 
 Template.Home_page.onCreated ->
-  #loads the soundeffects, circumventing a howler.js bug that prevents
-  #them from loading in lessons_view.coffee
-  #new Howl {
-    #src: [ContentInterface.get().getSrc(ContentInterface.gg)]
-  #}
-  #new Howl {
-    #src: ['correct_soundeffect.mp3']
-  #}
+
+  condition = AppState.get().getCondition()
+  updateContent = ()->
+    console.log "UPDATING THE CONTENT"
+    FlowRouter.go "load"
+
+  Curriculums.find({condition: condition}).observe { changed: updateContent }
+
+  @autorun =>
+   if Meteor.isCordova and Meteor.status().connected
+    @subscribe "curriculums.all", ()->
+      console.log "in the meteor on ready callback curriculums"
+    @subscribe "lessons.all"
+    @subscribe "modules.all"
 
   @getLessonDocuments = =>
     curriculum = @getCurriculumDoc()
@@ -52,18 +58,18 @@ Template.Home_page.onCreated ->
     #AppState.get().setLessonId id
 
   @onLanguageSelected = (language) ->
+    analytics.track "Changed Language", {
+      fromLanguage: AppState.get().getLanguage()
+      toLanguage: language
+      condition: AppState.get().getCondition()
+    }
+
     AppState.get().setLanguage language
     AppState.get().setLessonIndex 0
-
-  @autorun =>
-    #@subscribe "curriculums.all"
-    #@subscribe "lessons.all"
-    #@subscribe "modules.all"
 
 Template.Home_page.helpers
   curriculumsReady: ->
     instance = Template.instance()
-    #ContentInterface.get().subscriptionsReady(instance)
     return instance.subscriptionsReady()
 
   menuArgs: ->

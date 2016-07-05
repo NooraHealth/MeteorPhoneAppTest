@@ -26,6 +26,14 @@ FlowRouter.route '/', {
     if not AppState.get().isConfigured()
       BlazeLayout.render 'Layout', { main : 'Configure_app_page' }
     else
+      hospital = AppState.get().getHospital()
+      condition = AppState.get().getCondition()
+      language = AppState.get().getLanguage()
+      analytics.identify hospital, {
+        hospital: hospital,
+        condition: condition,
+        language: language
+      }
       BlazeLayout.render 'Layout', { main : 'Home_page' }
 }
 
@@ -35,6 +43,14 @@ FlowRouter.route '/', {
 FlowRouter.route '/lesson/:_id', {
   name: "lesson"
   action: ( params, qparams )->
+    hospital = AppState.get().getHospital()
+    condition = AppState.get().getCondition()
+    language = AppState.get().getLanguage()
+    analytics.identify hospital, {
+      hospital: hospital,
+      condition: condition,
+      language: language
+    }
     console.log "Going to the lessons page"
     BlazeLayout.render "Layout", { main: "Lesson_view_page" }
 
@@ -47,6 +63,14 @@ if Meteor.isCordova
   FlowRouter.route '/load', {
     name: "load"
     action: ( params, qparams )->
+      hospital = AppState.get().getHospital()
+      condition = AppState.get().getCondition()
+      language = AppState.get().getLanguage()
+      analytics.identify hospital, {
+        hospital: hospital,
+        condition: condition,
+        language: language
+      }
       console.log "Going to the load curriculums page"
       BlazeLayout.render "Layout", { main: "Load_curriculums_page" }
   }

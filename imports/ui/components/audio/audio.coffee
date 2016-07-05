@@ -12,6 +12,12 @@ Template.Audio.onCreated ->
       whenPaused: {type: Function, optional: true}
     }).validate @data
 
+  @onEnd = =>
+    @data.whenFinished( @sound.pos(), true, @data.attributes.src )
+
+  @onPause = =>
+    @data.whenPaused( @sound.pos(), false, @data.attributes.src )
+
   @autorun =>
     data = Template.currentData()
     shouldReplay = data.replay
@@ -25,7 +31,6 @@ Template.Audio.onCreated ->
     shouldPlay = data.playing
     alreadyPlaying = @sound?.playing()
     if shouldPlay and not alreadyPlaying
-      console.log "About to play"
       #@sound = new Media(data.attributes.src)
       @sound ?= new Howl {
         src: [data.attributes.src]

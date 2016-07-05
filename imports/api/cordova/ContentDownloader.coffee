@@ -34,19 +34,17 @@ class @ContentDownloader
     loadCurriculums: (cursor, onComplete) =>
       try
         #validate the arguments
-        console.log "VALIDATION THE SCHEMA"
         new SimpleSchema({
           cursor: {type: Mongo.Cursor}
           onComplete: {type: Function}
         }).validate({cursor: cursor, onComplete: onComplete})
-        console.log "VALIDATED"
 
         if not Meteor.status().connected
           throw new Meteor.Error "not-connected", "The iPad is not connected to data. Please connect and try again"
 
-        docs = cursor.fetch()
+        curriculums = cursor.fetch()
         console.log "Downloading these docs"
-        console.log docs
+        console.log curriculums
         console.log "number of curriculums in the database"
         console.log Curriculums.find().count()
 
@@ -55,17 +53,17 @@ class @ContentDownloader
         paths.push ContentInterface.get().correctSoundEffectFilePath()
         paths.push ContentInterface.get().incorrectSoundEffectFilePath()
 
-        for doc in docs
+        for curriculum in curriculums
           #curriculum = Curriculums.findOne { _id: docs[0]._id }
-          if Meteor.settings.public.TESTING
+          if Meteor.settings.public.METEOR_ENV == "development"
             if doc.language isnt "Hindi" then continue
 
-          curriculum = Curriculums.findOne { _id: doc._id }
-          if not curriculum? then throw new Meteor.Error "curriculum-not-found", "Curriculum of id #{id} not found"
+          #curriculum = Curriculums.findOne { _id: doc._id }
+          #if not curriculum? then throw new Meteor.Error "curriculum-not-found", "Curriculum of id #{id} not found"
 
-          lessons = curriculum.getLessonDocuments()
-          for lesson in lessons
-            paths.merge @_allContentPathsInLesson(lesson)
+          console.log curriculum
+          paths.merge @_allContentPathsInCurriculum( curriculum )
+          console.log paths
 
         getFileName = (path, index) ->
           getRandomInt = (min, max) => Math.floor(Math.random() * (max - min)) + min
@@ -76,10 +74,15 @@ class @ContentDownloader
           return newFilename
 
         filteredFiles = []
-        files = ( {url: ContentInterface.get().getEndpoint(path), name: getFileName(path, index)} for path, index in paths )
-        filteredFiles.push file for file in files when not OfflineFiles.findOne({url: file.url})?
+        files = ({
+          path: path
+          #url: ContentInterface.get().getEndpoint(path),
+          name: getFileName(path, index)
+        } for path, index in paths )
+        #filteredFiles.push file for file in files when not OfflineFiles.findOne({url: file.url})?
+        #filteredFiles.push file for file in files when not OfflineFiles.findOne({path: file.path})?
 
-        @_downloadFiles filteredFiles
+        @_downloadFiles files
         .then (error)->
           #this is where you do the on success thing
           console.log "about to run on complete"
@@ -95,11 +98,12 @@ class @ContentDownloader
         console.log e
         onComplete e
 
+
     _downloadFiles: (files) ->
 
       new SimpleSchema({
         "files.$.name": {type: String}
-        "files.$.url": {type: String}
+        "files.$.path": {type: String}
       }).validate({files: files})
 
       deferred = Q.defer()
@@ -123,7 +127,7 @@ class @ContentDownloader
         downloadFile = (file) ->
           offlineId = Random.id()
           fsPath = fs.root.toURL() + offlineId + file.name
-          ft.download(file.url, fsPath, getSuccessCallback(file, fsPath), getErrorCallback(file, fsPath), true)
+          ft.download(ContentInterface.get().getEndpoint(file.path), fsPath, getSuccessCallback(file, fsPath), getErrorCallback(file, fsPath), true)
 
         markAsResolved = (entry) ->
           numRecieved++
@@ -134,7 +138,8 @@ class @ContentDownloader
         getSuccessCallback = (file, fsPath) ->
           return (entry)->
             id = OfflineFiles.insert {
-              url: file.url
+              #url: file.url
+              path: file.path
               name: file.name
               fsPath: fsPath
             }
@@ -162,14 +167,15 @@ class @ContentDownloader
               else
                 console.log "Retrying download"
                 # Try downloading again
-                retry.push file
+                retry.push file.name
+                console.log retry
                 downloadFile file
             else
               markAsResolved(file)
               error = err
 
         for file in files
-          if not (OfflineFiles.findOne { url: file.url })?
+          if not (OfflineFiles.findOne { path: file.path })?
             downloadFile file
 
       , (err)->
@@ -177,6 +183,59 @@ class @ContentDownloader
         deferred.resolve err
 
       return deferred.promise
+
+    cleanLocalContent: ( cursor, onComplete )->
+      console.log "About to delete unused files (cleanLocalContent)"
+      try
+        #validate the arguments
+        new SimpleSchema({
+          cursor: {type: Mongo.Cursor}
+          onComplete: {type: Function, optional: true}
+        }).validate({cursor: cursor, onComplete: onComplete})
+        unusedPaths = _getUnusedFilePaths(curriculums)
+        @_deleteFiles(filesToDelete)
+      catch e
+        console.log "Error deleting unused files"
+        console.log e
+
+    _getUnusedFilePaths: (curriculums)->
+      console.log("getting the unused file paths")
+      pathsInUse = []
+      for curriculum in curriculums
+        pathsInUse.merge @_allContentPathsInCurriculum(curriculum)
+
+      localFiles = OfflineFiles.find().fetch()
+      unused = []
+      for file in localFiles
+        console.log("file: ", file.path)
+        if not file.path in pathsInUse
+          unused.push file
+      console.log "Returning the unused: ", unused.length
+      return unused
+
+    _deleteFiles: (filePaths) ->
+      ## This is where we will delete files
+      console.log "About to delete #{ filePaths.length } files"
+      console.log filePaths
+      window.requestFileSystem LocalFileSystem.PERSISTENT, 0, (fs)->
+        for path in filePaths
+          fs.root.getFile path, {create: false}, (entry)->
+            entry.remove ( file )->
+              console.log "File removed!#{ path }"
+            , ( error )->
+              console.log "Error removing file #{ path }"
+            , ()->
+              console.log "Attempted to remove #{ path }, file DNE"
+          , ( event )->
+            console.log "Error retrieving file"
+            console.log evt.target.error.code
+      
+    _allContentPathsInCurriculum: (curriculum) ->
+      paths = []
+      lessons = curriculum.getLessonDocuments()
+      for lesson in lessons
+        paths.merge @_allContentPathsInLesson(lesson)
+      return paths
 
     _allContentPathsInLesson: (lesson) ->
       if not lesson?

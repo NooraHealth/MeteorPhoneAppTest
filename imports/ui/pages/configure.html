@@ -14,32 +14,34 @@
           <p class="color-grey"> Please select your hospital and condition </p>
         </div>
 
-        <div class='row'>
-          <div class='center'>
-            <div class="item-input">
-              <label for="hospital_select">Hospital</label>
-              <select id="hospital_select">
-              {{#each hospital in hospitals}}
-                <option>{{hospital.name}}</option>
-              {{/each}}
-              </select>
+        {{#if subscriptionsReady}}
+          <div class='row'>
+            <div class='center'>
+              <div class="item-input">
+                <label for="hospital_select">Hospital</label>
+                <select id="hospital_select">
+                {{#each hospital in hospitals}}
+                  <option>{{hospital.name}}</option>
+                {{/each}}
+                </select>
+              </div>  
             </div>  
           </div>  
-        </div>  
 
-        <div class='row'>
-          <div class='center'>
-            <div class="item-input">
-              <label for="condition_select">Condition</label>
-              <select id="condition_select">
-              {{#each condition in conditions}}
-                <option>{{condition.name}}</option>
-              {{/each}}
-              </select>
+          <div class='row'>
+            <div class='center'>
+              <div class="item-input">
+                <label for="condition_select">Condition</label>
+                <select id="condition_select">
+                {{#each condition in conditions}}
+                  <option>{{condition.name}}</option>
+                {{/each}}
+                </select>
+              </div>  
             </div>  
-          </div>  
-        </div>
-        <br/>
+          </div>
+          <br/>
+        {{/if}}
 
         <div class='row'>
           {{>Button buttonArgs}}
