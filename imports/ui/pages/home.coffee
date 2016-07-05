@@ -19,13 +19,6 @@ require '../../ui/components/shared/loading.coffee'
 
 Template.Home_page.onCreated ->
 
-  condition = AppState.get().getCondition()
-  updateContent = ()->
-    console.log "UPDATING THE CONTENT"
-    FlowRouter.go "load"
-
-  Curriculums.find({condition: condition}).observe { changed: updateContent }
-
   @autorun =>
    if Meteor.isCordova and Meteor.status().connected
     @subscribe "curriculums.all", ()->
