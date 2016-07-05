@@ -39,7 +39,6 @@ kadira:flow-router
 kadira:blaze-layout
 arillo:flow-router-helpers
 mrt:q
-percolatestudio:segment.io
 reactive-var
 manuel:reactivearray
 reactive-dict
@@ -54,3 +53,4 @@ xolvio:cleaner
 practicalmeteor:chai
 bojicas:howler2
 noorahealth:mongo-schemas
+okgrow:analytics
