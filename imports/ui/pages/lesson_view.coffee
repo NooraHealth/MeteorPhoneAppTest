@@ -28,7 +28,6 @@ Template.Lesson_view_page.onCreated ()->
     audioPlaying: "QUESTION"
   }
 
-
   @getCurrentModuleId = =>
     @state.get "currentModuleId"
 
@@ -208,6 +207,9 @@ Template.Lesson_view_page.onCreated ()->
     module = @getCurrentModule()
     return module?.type isnt "VIDEO"
 
+  @onPlayVideo = =>
+    @state.set "playingVideo", true
+
   @onStopVideo = =>
     @state.set "playingVideo", false
 
@@ -217,6 +219,7 @@ Template.Lesson_view_page.onCreated ()->
 
   @videoPlaying = =>
     playing = @state.get "playingVideo"
+    console.log("Playing video? #{playing}")
     if playing? then return playing else return false
 
   @shouldPlayQuestionAudio = (id) =>
@@ -229,8 +232,6 @@ Template.Lesson_view_page.onCreated ()->
 
   @autorun =>
    if Meteor.isCordova and Meteor.status().connected
-    console.log "HOME: In the meteor isConnected and cordova in init"
-    lessonId = @getLessonId()
     @subscribe "lessons.all"
     @subscribe "modules.all"
 
@@ -285,6 +286,7 @@ Template.Lesson_view_page.helpers
     else if module.type == "VIDEO"
       return {
         module: module
+        onPlayVideo: instance.onPlayVideo
         onStopVideo: instance.onStopVideo
         onVideoEnd: instance.onVideoEnd
         playing: instance.isCurrent(module._id) and instance.videoPlaying()
