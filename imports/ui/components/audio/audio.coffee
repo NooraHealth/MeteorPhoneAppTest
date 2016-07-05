@@ -40,9 +40,6 @@ Template.Audio.onCreated ->
           console.trace()
         onend: @data.whenFinished
         onpause: @data.whenPaused
-        onplay: ()->
-          console.log "begun playing #{data.attributes.src}"
-          console.log @
         #html5: true
       }
       @sound.play()
@@ -53,6 +50,5 @@ Template.Audio.onCreated ->
 Template.Audio.onDestroyed ->
   instance = Template.instance()
   if instance.sound? and instance.sound.playing()
-    console.log "pausing the sound"
     instance.sound.pause()
   #instance.sound?.unload()
