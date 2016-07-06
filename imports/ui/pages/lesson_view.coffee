@@ -304,13 +304,10 @@ Template.Lesson_view_page.helpers
     return module.correct_audio?
 
   explanationArgs: (module) ->
-    console.log "Calculating explanationAudio args....."
     instance = Template.instance()
     playing = instance.state.get("audioPlaying") == "EXPLANATION"
     replay = instance.state.get("replayAudio")
     isCurrent = instance.isCurrent(module._id)
-    if isCurrent
-      console.log "Is playing the explanation ", playing
     return {
       attributes: {
         src: ContentInterface.get().getSrc module.correct_audio
@@ -323,13 +320,10 @@ Template.Lesson_view_page.helpers
     }
 
   audioArgs: (module) ->
-    console.log "Calculating Audio args....."
     instance = Template.instance()
     playing = instance.state.get("audioPlaying") == "QUESTION"
     replay = instance.state.get("replayAudio")
     isCurrent = instance.isCurrent(module._id)
-    if isCurrent
-      console.log "Is playing the question ", playing
     return {
       attributes: {
         src: ContentInterface.get().getSrc module.audio
