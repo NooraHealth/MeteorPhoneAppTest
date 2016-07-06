@@ -151,7 +151,7 @@
   padding-right: 50px;
   letter-spacing: 2px;
   font-size: 25px;
-  position: absolute;
+  /*position: absolute !important;*/
 }
 
 .green {
@@ -160,8 +160,12 @@
 
 .gohome-button {
   margin-right: 60px;
+  right: 20px;
 }
 
+.replay-button {
+  /*right: 20px;*/
+}
 
 .dotstyle {
   display: inline-block;

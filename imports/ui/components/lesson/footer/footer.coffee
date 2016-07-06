@@ -45,7 +45,7 @@ Template.Lesson_view_page_footer.helpers
     }
 
   nextButtonWrapperClasses: (animated) ->
-    classes = 'next-button-wrapper'
+    classes = ''
     if animated then classes += ' animate-scale'
     return classes
 
@@ -53,7 +53,7 @@ Template.Lesson_view_page_footer.helpers
     return data.shouldShow()
 
   replayButtonArgs: (data) ->
-    classes = 'link button button-rounded color-pink button-fill'
+    classes = 'link footer-button button button-rounded color-pink button-fill'
     return {
       attributes: {
         id: "replayBtn"

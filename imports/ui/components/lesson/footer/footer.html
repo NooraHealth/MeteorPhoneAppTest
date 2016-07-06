@@ -1,14 +1,18 @@
 <template name="Lesson_view_page_footer">
 
-  <div class="middle">
-    {{> Lesson_view_page_footer_paginator (paginatorArgs pages)}}
-  </div>
+  <div class="toolbar">
 
-  {{#if shouldShow replayButton}}
-    {{> Button (replayButtonArgs replayButton)}}
-  {{/if}}
-  <div class={{nextButtonWrapperClasses nextButton.animated}}>
-    {{> Button (nextButtonArgs nextButton)}}
+    <div class="toolbar-inner">
+      {{> Lesson_view_page_footer_paginator (paginatorArgs pages)}}
+
+      {{#if shouldShow replayButton}}
+        {{> Button (replayButtonArgs replayButton)}}
+      {{/if}}
+
+      <div class={{nextButtonWrapperClasses nextButton.animated}}>
+        {{> Button (nextButtonArgs nextButton)}}
+      </div>
+    </div>
   </div>
 
 </template>

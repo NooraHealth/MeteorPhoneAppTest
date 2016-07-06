@@ -27,6 +27,7 @@ Template.Lesson_view_page.onCreated ()->
     soundEfffectPlaying: null
     audioPlaying: "QUESTION"
   }
+  console.log "Creating the lessons view page"
 
   @getCurrentModuleId = =>
     @state.get "currentModuleId"
@@ -42,7 +43,6 @@ Template.Lesson_view_page.onCreated ()->
 
   @isCurrent = (moduleId) =>
     current = @getCurrentModuleId()
-    console.log "Checking if is current #{current} ==? #{moduleId}"
     return moduleId is current
 
   @isCompleted = (moduleId) =>
@@ -139,11 +139,15 @@ Template.Lesson_view_page.onCreated ()->
     #return AppState.get().getLessonId()
     index = AppState.get().getLessonIndex()
     curriculum = AppState.get().getCurriculumDoc()
+    console.log "This is the curriculum"
+    console.log curriculum
     return curriculum.lessons[index]
 
   @getLesson = =>
     id = @getLessonId()
     lesson = Lessons.findOne { _id: id }
+    console.log "Getting the lesson #{id}"
+    console.log lesson
     return lesson
 
   @celebrateCompletion = =>
