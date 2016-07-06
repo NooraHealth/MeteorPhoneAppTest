@@ -1,0 +1,35 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'run', 'dev-ios' ]
+2 info using npm@2.12.1
+3 info using node@v0.12.0
+4 verbose run-script [ 'predev-ios', 'dev-ios', 'postdev-ios' ]
+5 info predev-ios training-app@0.0.4
+6 info dev-ios training-app@0.0.4
+7 verbose unsafe-perm in lifecycle true
+8 info training-app@0.0.4 Failed to exec dev-ios script
+9 verbose stack Error: training-app@0.0.4 dev-ios: `MONGO_URL=mongodb://artichokes:fordinnerfranko@c312.lighthouse.2.mongolayer.com:10312,lighthouse.3.mongolayer.com:10311/webapp?replicaSet=set-555b94436b0733dec5001b44 VELOCITY=0 meteor run ios-device --settings settings.json`
+9 verbose stack Exit status 8
+9 verbose stack     at EventEmitter.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/lifecycle.js:213:16)
+9 verbose stack     at EventEmitter.emit (events.js:110:17)
+9 verbose stack     at ChildProcess.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/spawn.js:24:14)
+9 verbose stack     at ChildProcess.emit (events.js:110:17)
+9 verbose stack     at maybeClose (child_process.js:1008:16)
+9 verbose stack     at Process.ChildProcess._handle.onexit (child_process.js:1080:5)
+10 verbose pkgid training-app@0.0.4
+11 verbose cwd /Users/user/NooraHealth/training-app
+12 error Darwin 15.4.0
+13 error argv "node" "/usr/local/bin/npm" "run" "dev-ios"
+14 error node v0.12.0
+15 error npm  v2.12.1
+16 error code ELIFECYCLE
+17 error training-app@0.0.4 dev-ios: `MONGO_URL=mongodb://artichokes:fordinnerfranko@c312.lighthouse.2.mongolayer.com:10312,lighthouse.3.mongolayer.com:10311/webapp?replicaSet=set-555b94436b0733dec5001b44 VELOCITY=0 meteor run ios-device --settings settings.json`
+17 error Exit status 8
+18 error Failed at the training-app@0.0.4 dev-ios script 'MONGO_URL=mongodb://artichokes:fordinnerfranko@c312.lighthouse.2.mongolayer.com:10312,lighthouse.3.mongolayer.com:10311/webapp?replicaSet=set-555b94436b0733dec5001b44 VELOCITY=0 meteor run ios-device --settings settings.json'.
+18 error This is most likely a problem with the training-app package,
+18 error not with npm itself.
+18 error Tell the author that this fails on your system:
+18 error     MONGO_URL=mongodb://artichokes:fordinnerfranko@c312.lighthouse.2.mongolayer.com:10312,lighthouse.3.mongolayer.com:10311/webapp?replicaSet=set-555b94436b0733dec5001b44 VELOCITY=0 meteor run ios-device --settings settings.json
+18 error You can get their info via:
+18 error     npm owner ls training-app
+18 error There is likely additional logging output above.
+19 verbose exit [ 1, true ]

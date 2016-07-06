@@ -8,6 +8,7 @@
 # PAGES
 require '../../ui/layouts/layout.coffee'
 require '../../ui/pages/home.coffee'
+require '../../ui/pages/select_language.coffee'
 require '../../ui/pages/lesson_view.coffee'
 #require '../../ui/pages/wrapper_page.coffee'
 
@@ -34,13 +35,14 @@ FlowRouter.route '/', {
         condition: condition,
         language: language
       }
-      BlazeLayout.render 'Layout', { main : 'Home_page' }
+      BlazeLayout.render 'Layout', { main : 'Select_language_page' }
 }
 
 ###
 # Go through the modules in a lesson
 ###
-FlowRouter.route '/lesson/:_id', {
+#FlowRouter.route '/lesson/:_id', {
+FlowRouter.route '/lessons', {
   name: "lesson"
   action: ( params, qparams )->
     hospital = AppState.get().getHospital()
