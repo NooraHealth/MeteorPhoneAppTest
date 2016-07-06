@@ -28,6 +28,13 @@ Template.Lesson_view_page.onCreated ()->
     audioPlaying: "QUESTION"
   }
 
+  @autorun =>
+   if Meteor.isCordova and Meteor.status().connected
+    console.log "HOME: In the meteor isConnected and cordova in init"
+    @subscribe "curriculums.all"
+    @subscribe "lessons.all"
+    @subscribe "modules.all"
+
   @getCurrentModuleId = =>
     @state.get "currentModuleId"
 
@@ -55,11 +62,6 @@ Template.Lesson_view_page.onCreated ()->
     condition = AppState.get().getCondition()
     language = AppState.get().getLanguage()
     module = @getCurrentModule()
-    console.log "Lessons"
-    console.log lesson
-    console.log "Module? "
-    console.log module
-    console.log module.title
     text = if module.title then module.title else module.question
     analytics.track "Audio Stopped", {
       moduleText: text
@@ -126,7 +128,10 @@ Template.Lesson_view_page.onCreated ()->
 
   @onCompletedQuestion = (instance) ->
     return ->
+      console.log "COMPLETED QUESTION!!!"
+      console.log instance.state.get "audioPlaying"
       instance.state.set "audioPlaying", "EXPLANATION"
+      console.log instance.state.get "audioPlaying"
 
   @stopPlayingSoundEffect = =>
     @state.set "soundEfffectPlaying", null
