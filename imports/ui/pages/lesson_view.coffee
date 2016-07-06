@@ -30,7 +30,6 @@ Template.Lesson_view_page.onCreated ()->
 
   @autorun =>
    if Meteor.isCordova and Meteor.status().connected
-    console.log "HOME: In the meteor isConnected and cordova in init"
     @subscribe "curriculums.all"
     @subscribe "lessons.all"
     @subscribe "modules.all"
@@ -57,7 +56,6 @@ Template.Lesson_view_page.onCreated ()->
     return index > modules?.indexOf moduleId
 
   @trackAudioStopped = (pos, completed, src) =>
-    console.log "Tracking audio stopped"
     lesson = @getLesson()
     condition = AppState.get().getCondition()
     language = AppState.get().getLanguage()
