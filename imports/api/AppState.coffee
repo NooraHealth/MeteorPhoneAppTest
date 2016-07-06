@@ -47,7 +47,7 @@ class AppState
     getLanguage: ->
       @dict.get "language"
 
-    getCurriculumId: ->
+    getCurriculumDoc: ->
       if not @isConfigured()
         @setError new Meteor.Error("developer-error", "The app is calling setConfiguration after it has already been configured. This should not have happened. Developer error")
 
@@ -56,7 +56,7 @@ class AppState
       if not language? or not condition?
         return null
       curriculum = Curriculums.findOne {language: language, condition: condition}
-      return curriculum?._id
+      return curriculum
 
     setShouldPlayIntro: (state) ->
       @dict.setPersistent "playIntro", state

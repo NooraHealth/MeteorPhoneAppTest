@@ -28,18 +28,18 @@ Template.Lesson_view_page.onCreated ()->
     audioPlaying: "QUESTION"
   }
 
-  @autorun =>
-   if Meteor.isCordova and Meteor.status().connected
-    @subscribe "curriculums.all"
-    @subscribe "lessons.all"
-    @subscribe "modules.all"
-
   @getCurrentModuleId = =>
+    console.log("getting the current module id")
     @state.get "currentModuleId"
+    console.log @state.get "currentModuleId"
 
   @setCurrentModuleId = =>
     index = @state.get "moduleIndex"
+    console.log "setting the current module id"
+    console.log index
     moduleId = @getLesson()?.modules[index]
+    console.log moduleId
+    console.log @getLesson
     @state.set "currentModuleId", moduleId
 
   @getCurrentModule = =>
@@ -144,7 +144,12 @@ Template.Lesson_view_page.onCreated ()->
 
   @getLessonId = =>
     #return AppState.get().getLessonId()
-    return FlowRouter.getParam "_id"
+    index = AppState.get().getLessonIndex()
+    curriculum = AppState.get().getCurriculumDoc()
+    console.log "The curriculum"
+    console.log curriculum
+    console.log curriculum.lessons[index]
+    return curriculum.lessons[index]
 
   @getLesson = =>
     id = @getLessonId()
@@ -235,6 +240,7 @@ Template.Lesson_view_page.onCreated ()->
 
   @autorun =>
    if Meteor.isCordova and Meteor.status().connected
+    @subscribe "curriculums.all"
     @subscribe "lessons.all"
     @subscribe "modules.all"
 

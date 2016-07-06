@@ -21,6 +21,7 @@ Template.Select_language_page.onCreated ->
 
     AppState.get().setLanguage language
     AppState.get().setLessonIndex 0
+    FlowRouter.go "lessons"
 
 Template.Select_language_page.helpers
 

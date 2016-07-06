@@ -43,7 +43,7 @@ FlowRouter.route '/', {
 ###
 #FlowRouter.route '/lesson/:_id', {
 FlowRouter.route '/lessons', {
-  name: "lesson"
+  name: "lessons"
   action: ( params, qparams )->
     hospital = AppState.get().getHospital()
     condition = AppState.get().getCondition()
