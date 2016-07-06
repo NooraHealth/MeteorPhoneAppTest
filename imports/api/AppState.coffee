@@ -18,6 +18,9 @@ class AppState
     getLessonIndex: ->
       @dict.get "lessonIndex"
 
+    isLastLesson: ->
+      return @getLessonIndex() == @getCurriculumDoc().lessons.length - 1
+
     incrementLesson: ->
       index = @getLessonIndex()
       @setLessonIndex ++index

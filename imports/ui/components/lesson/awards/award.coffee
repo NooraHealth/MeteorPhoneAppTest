@@ -24,16 +24,24 @@ class Award
 
   constructor: ()->
 
-  sendAward: ()->
+  sendAward: ( onConfirm, onCancel )=>
     rand = Math.random() * ( @.messages.length)
     console.log "This is rand:"  + rand
     message = @.messages[Math.floor(rand)]
     swal({
       title: message.title
       imageUrl: message.image
+      confirmButtonText: "Go To Next Lesson"
+      cancelButtonText: "Finish"
+      showCancelButton: true
       animation: "slide-from-bottom"
       timer: 5000
-    })
+    }, ( isConfirm ) =>
+      if isConfirm
+        onConfirm()
+      else
+        onCancel()
+    )
   
 
 module.exports.Award = Award

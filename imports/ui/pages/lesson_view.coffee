@@ -27,7 +27,6 @@ Template.Lesson_view_page.onCreated ()->
     soundEfffectPlaying: null
     audioPlaying: "QUESTION"
   }
-  console.log "Creating the lessons view page"
 
   @getCurrentModuleId = =>
     @state.get "currentModuleId"
@@ -121,7 +120,6 @@ Template.Lesson_view_page.onCreated ()->
 
   @onCompletedQuestion = (instance) ->
     return ->
-      console.log instance.state.get "audioPlaying"
       instance.state.set "audioPlaying", "EXPLANATION"
 
   @stopPlayingSoundEffect = =>
@@ -139,21 +137,30 @@ Template.Lesson_view_page.onCreated ()->
     #return AppState.get().getLessonId()
     index = AppState.get().getLessonIndex()
     curriculum = AppState.get().getCurriculumDoc()
-    console.log "This is the curriculum"
-    console.log curriculum
-    return curriculum.lessons[index]
+    return curriculum.lessons?[index]
 
   @getLesson = =>
     id = @getLessonId()
     lesson = Lessons.findOne { _id: id }
-    console.log "Getting the lesson #{id}"
-    console.log lesson
     return lesson
 
   @celebrateCompletion = =>
     AppState.get().incrementLesson()
-    new Award().sendAward()
-    @goHome( null, true)
+    onConfirm = ()=>
+      console.log "ON CONFIRM"
+      console.log "About to increment the lesson"
+      if AppState.get().isLastLesson()
+        FlowRouter.go "home"
+      else
+        AppState.get().incrementLesson()
+        @state.set "moduleIndex", 0
+
+    onCancel = ()->
+      console.log "CANCCEEELLLL"
+      FlowRouter.go "home"
+
+    new Award().sendAward( onConfirm, onCancel )
+    #@goHome( null, true)
 
   @goHome = ( event, completedLesson) =>
     lesson = @getLesson()
@@ -172,7 +179,6 @@ Template.Lesson_view_page.onCreated ()->
     FlowRouter.go "home"
 
   @goToNextModule = =>
-    console.log "-----------------------"
     index = @state.get "moduleIndex"
     newIndex = ++index
 
