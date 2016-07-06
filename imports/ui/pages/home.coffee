@@ -18,23 +18,6 @@ require '../../ui/components/audio/audio.coffee'
 require '../../ui/components/shared/loading.coffee'
 
 Template.Home_page.onCreated ->
-<<<<<<< HEAD
-=======
-
-  condition = AppState.get().getCondition()
-  updateContent = ()->
-    console.log "UPDATING THE CONTENT"
-    FlowRouter.go "load"
-
-  Curriculums.find({condition: condition}).observe { changed: updateContent }
-
-  @autorun =>
-   if Meteor.isCordova and Meteor.status().connected
-    @subscribe "curriculums.all", ()->
-      console.log "in the meteor on ready callback curriculums"
-    @subscribe "lessons.all"
-    @subscribe "modules.all"
->>>>>>> google-analytics
 
   @getLessonDocuments = =>
     curriculum = @getCurriculumDoc()
@@ -68,16 +51,12 @@ Template.Home_page.onCreated ->
     AppState.get().setLanguage language
     AppState.get().setLessonIndex 0
 
-<<<<<<< HEAD
   @autorun =>
    if Meteor.isCordova and Meteor.status().connected
     @subscribe "curriculums.all"
     @subscribe "lessons.all"
     @subscribe "modules.all"
 
-
-=======
->>>>>>> google-analytics
 Template.Home_page.helpers
   curriculumsReady: ->
     instance = Template.instance()
