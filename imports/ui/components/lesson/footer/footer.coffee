@@ -20,15 +20,15 @@ Template.Lesson_view_page_footer.onCreated ->
     }).validate Template.currentData()
 
 Template.Lesson_view_page_footer.helpers
-  goHomeButtonArgs: (data) ->
-    return {
-      attributes: {
-        id: "homeBtn"
-        class: 'link gohome-btn button footer-button color-green button-rounded button-fill'
-      }
-      content: '<i class="fa fa-home fa-2x"></i> HOME'
-      onClick: data.onClick
-    }
+  #goHomeButtonArgs: (data) ->
+    #return {
+      #attributes: {
+        #id: "homeBtn"
+        #class: 'link gohome-btn button footer-button color-green button-rounded button-fill'
+      #}
+      #content: '<i class="fa fa-home fa-2x"></i> HOME'
+      #onClick: data.onClick
+    #}
     
   nextButtonArgs: (data) ->
     instance = Template.instance()

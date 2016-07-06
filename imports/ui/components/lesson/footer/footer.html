@@ -1,8 +1,8 @@
 <template name="Lesson_view_page_footer">
 
-  {{> Button (goHomeButtonArgs homeButton)}}
-
-  {{> Lesson_view_page_footer_paginator (paginatorArgs pages)}}
+  <div class="middle">
+    {{> Lesson_view_page_footer_paginator (paginatorArgs pages)}}
+  </div>
 
   {{#if shouldShow replayButton}}
     {{> Button (replayButtonArgs replayButton)}}

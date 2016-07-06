@@ -29,17 +29,11 @@ Template.Lesson_view_page.onCreated ()->
   }
 
   @getCurrentModuleId = =>
-    console.log("getting the current module id")
     @state.get "currentModuleId"
-    console.log @state.get "currentModuleId"
 
   @setCurrentModuleId = =>
     index = @state.get "moduleIndex"
-    console.log "setting the current module id"
-    console.log index
     moduleId = @getLesson()?.modules[index]
-    console.log moduleId
-    console.log @getLesson
     @state.set "currentModuleId", moduleId
 
   @getCurrentModule = =>
@@ -48,6 +42,7 @@ Template.Lesson_view_page.onCreated ()->
 
   @isCurrent = (moduleId) =>
     current = @getCurrentModuleId()
+    console.log "Checking if is current #{current} ==? #{moduleId}"
     return moduleId is current
 
   @isCompleted = (moduleId) =>
@@ -126,10 +121,8 @@ Template.Lesson_view_page.onCreated ()->
 
   @onCompletedQuestion = (instance) ->
     return ->
-      console.log "COMPLETED QUESTION!!!"
       console.log instance.state.get "audioPlaying"
       instance.state.set "audioPlaying", "EXPLANATION"
-      console.log instance.state.get "audioPlaying"
 
   @stopPlayingSoundEffect = =>
     @state.set "soundEfffectPlaying", null
@@ -146,9 +139,6 @@ Template.Lesson_view_page.onCreated ()->
     #return AppState.get().getLessonId()
     index = AppState.get().getLessonIndex()
     curriculum = AppState.get().getCurriculumDoc()
-    console.log "The curriculum"
-    console.log curriculum
-    console.log curriculum.lessons[index]
     return curriculum.lessons[index]
 
   @getLesson = =>
@@ -178,7 +168,6 @@ Template.Lesson_view_page.onCreated ()->
     FlowRouter.go "home"
 
   @goToNextModule = =>
-    console.log "Going to next module"
     console.log "-----------------------"
     index = @state.get "moduleIndex"
     newIndex = ++index
@@ -227,7 +216,6 @@ Template.Lesson_view_page.onCreated ()->
 
   @videoPlaying = =>
     playing = @state.get "playingVideo"
-    console.log("Playing video? #{playing}")
     if playing? then return playing else return false
 
   @shouldPlayQuestionAudio = (id) =>
