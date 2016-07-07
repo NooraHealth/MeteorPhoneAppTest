@@ -3,6 +3,8 @@
   <div class="toolbar">
 
     <div class="toolbar-inner">
+      {{> Button (goHomeButtonArgs homeButton)}}
+
       {{> Lesson_view_page_footer_paginator (paginatorArgs pages)}}
 
       {{> Button (replayButtonArgs replayButton)}}
