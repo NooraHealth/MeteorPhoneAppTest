@@ -29,6 +29,8 @@ Template.Lesson_view_page.onCreated ()->
     audioPlaying: "QUESTION"
   }
 
+  @incorrectResponses = []
+
   @getCurrentModuleId = =>
     @state.get "currentModuleId"
 
@@ -69,6 +71,9 @@ Template.Lesson_view_page.onCreated ()->
       lessonId: lesson._id
     }
 
+  @answeredIncorrectly = ( id )=>
+    return id in @incorrectResponses
+
   @getPagesForPaginator = =>
     modules = @getModules()
     if not modules?
@@ -78,6 +83,7 @@ Template.Lesson_view_page.onCreated ()->
         data = {
           completed: @isCompleted module._id
           current: @isCurrent module._id
+          incorrect: @answeredIncorrectly module._id
           index: i+1
         }
         return data
@@ -94,8 +100,17 @@ Template.Lesson_view_page.onCreated ()->
         instance.state.set "soundEfffectPlaying", "CORRECT"
         alertType = 'success'
       else
+        console.log "IN ONCHJOICE"
         instance.state.set "soundEfffectPlaying", "INCORRECT"
         alertType = 'error'
+        module = instance.getCurrentModule()
+        console.log instance.incorrectResponses
+        console.log module._id
+        console.log module._id in instance.incorrectResponses
+        if not (module._id in instance.incorrectResponses)
+          console.log "ADDING TO INCORRECT RESPONSES"
+          instance.incorrectResponses.push module._id
+          console.log instance.incorrectResponses
       if showAlert
         swal {
           title: ""
@@ -132,6 +147,11 @@ Template.Lesson_view_page.onCreated ()->
     index = @state.get "moduleIndex"
     return index == lesson?.modules?.length-1
 
+  @secondToLastModule = =>
+    lesson = @getLesson()
+    index = @state.get "moduleIndex"
+    return index == lesson?.modules?.length-2
+
   @getModules = =>
     return @getLesson()?.getModulesSequence()
 
@@ -150,8 +170,7 @@ Template.Lesson_view_page.onCreated ()->
     lessonsComplete = AppState.get().getLessonIndex() + 1
     totalLessons = AppState.get().getCurriculumDoc().lessons.length
     onConfirm = ()=>
-      AppState.get().incrementLesson()
-      @displayModule(0)
+      @goToNextLesson()
 
     onCancel = ()=>
       @goHome(null, false)
@@ -163,6 +182,18 @@ Template.Lesson_view_page.onCreated ()->
     else
       new Award().sendAward( onConfirm, onCancel, lessonsComplete, totalLessons )
 
+  @goToNextLesson = =>
+    AppState.get().incrementLesson()
+    @displayModule(0)
+
+  @offerBonusVideo = =>
+    onConfirm = =>
+      @goToNextModule()
+
+    onCancel = =>
+      @goToNextLesson()
+
+    new BonusVideoPopup().display onConfirm, onCancel
 
   @goHome = ( event, completedCurriculum) =>
     lesson = @getLesson()
@@ -184,7 +215,6 @@ Template.Lesson_view_page.onCreated ()->
     @state.set "nextButtonAnimated", false
     @state.set "audioPlaying", "QUESTION"
     @setCurrentModuleId()
-    console.log @swiper
     @swiper.slideTo index
 
   @goToNextModule = =>
@@ -203,8 +233,15 @@ Template.Lesson_view_page.onCreated ()->
       followFinger: false
     }
 
+  @hasBonusVideo = =>
+    #lesson = @getLesson()
+    #lastModule = Modules.findOne { _id: lesson.modules[lesson.modules.length - 1] }
+    #return lastModule.type == "VIDEO"
+    return true
+
   @onNextButtonClicked = =>
-    if @lessonComplete() then @celebrateCompletion() else @goToNextModule()
+    if @hasBonusVideo() and @secondToLastModule() then @offerBonusVideo()
+    else if @lessonComplete() then @celebrateCompletion() else @goToNextModule()
 
   @nextButtonText = => if @lessonComplete() then "FINISH" else "NEXT" + '<i class="fa fa-arrow-right fa-2x"></i>'
 

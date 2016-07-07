@@ -7,7 +7,8 @@ class BonusVideoPopup
     { text: "By learning these skills, you can help prevent complications" },
     { text: "This knowledge is essential to care for your condition properly" }
   ]
-  aFewWrong: "Looks like you got a few wrong"
+
+  aFewWrong: "Looks like you got a few wrong."
 
   mostlyCorrect: "Good job!"
 
@@ -15,18 +16,17 @@ class BonusVideoPopup
 
   constructor: ()->
 
-  displayPopup: ( onConfirm, onCancel , lessonsComplete, totalLessons )=>
-    endOfCurriculum = lessonsComplete == totalLessons
+  display: ( onConfirm, onCancel )=>
     confirmButtonText = "Watch Video"
-    text = "You have completed #{lessonsComplete} out of #{totalLessons} lessons!"
+    text = @pitches[0].text
+    title = @aFewWrong + " " + @question
     swal({
-      title: message.title
+      title: title
       text: text
-      imageUrl: message.image
       confirmButtonText: confirmButtonText
       cancelButtonText: "Go To Next Lesson"
-      showCancelButton: !endOfCurriculum
-      animation: "slide-from-bottom"
+      showCancelButton: true
+      animation: "pop"
     }, ( isConfirm ) =>
       if isConfirm
         onConfirm?()
