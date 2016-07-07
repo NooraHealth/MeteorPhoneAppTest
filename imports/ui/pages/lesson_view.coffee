@@ -33,7 +33,8 @@ Template.Lesson_view_page.onCreated ()->
 
   @setCurrentModuleId = =>
     index = @state.get "moduleIndex"
-    moduleId = @getLesson()?.modules[index]
+    lesson = @getLesson()
+    moduleId = lesson?.modules[index]
     @state.set "currentModuleId", moduleId
 
   @getCurrentModule = =>
@@ -137,7 +138,7 @@ Template.Lesson_view_page.onCreated ()->
     #return AppState.get().getLessonId()
     index = AppState.get().getLessonIndex()
     curriculum = AppState.get().getCurriculumDoc()
-    return curriculum.lessons?[index]
+    return curriculum?.lessons?[index]
 
   @getLesson = =>
     id = @getLessonId()
@@ -145,21 +146,23 @@ Template.Lesson_view_page.onCreated ()->
     return lesson
 
   @celebrateCompletion = =>
-    AppState.get().incrementLesson()
     onConfirm = ()=>
-      console.log "ON CONFIRM"
       console.log "About to increment the lesson"
-      if AppState.get().isLastLesson()
-        FlowRouter.go "home"
-      else
-        AppState.get().incrementLesson()
-        @state.set "moduleIndex", 0
+      AppState.get().incrementLesson()
+      @displayModule(0)
+      @mySwiper.slideTo 0
 
     onCancel = ()->
       console.log "CANCCEEELLLL"
       FlowRouter.go "home"
 
-    new Award().sendAward( onConfirm, onCancel )
+    if AppState.get().isLastLesson()
+      console.log("That was the last lesson!!")
+      new Award().sendAward( null, null, true)
+      FlowRouter.go "home"
+    else
+      new Award().sendAward( onConfirm, onCancel, false )
+
     #@goHome( null, true)
 
   @goHome = ( event, completedLesson) =>
@@ -175,22 +178,22 @@ Template.Lesson_view_page.onCreated ()->
       completedLesson: completedLesson
       numberOfModulesInLesson: lesson.modules.length
     }
-
     FlowRouter.go "home"
 
-  @goToNextModule = =>
-    index = @state.get "moduleIndex"
-    newIndex = ++index
-
-    @state.set "moduleIndex", newIndex
+  @displayModule = (index) =>
+    console.log "about to display the module"
+    @state.set "moduleIndex", index
     @state.set "nextButtonAnimated", false
     @state.set "audioPlaying", "QUESTION"
     @setCurrentModuleId()
 
-    module = @getCurrentModule()
-  
+  @goToNextModule = =>
+    index = @state.get "moduleIndex"
+    newIndex = ++index
+    @displayModule( newIndex )
+
   @onNextButtonRendered = =>
-    mySwiper = App.swiper '.swiper-container', {
+    @mySwiper = App.swiper '.swiper-container', {
       lazyLoading: true,
       preloadImages: false,
       nextButton: '.swiper-button-next',
@@ -279,6 +282,9 @@ Template.Lesson_view_page.helpers
     isQuestion = (type) ->
       return type == "BINARY" or type == "SCENARIO" or type == "MULTIPLE_CHOICE"
 
+    isCurrentModule = instance.isCurrent(module._id)
+    if isCurrentModule
+      console.log "THIS IS THE CURRENT MODULE!! #{module._id}"
     if isQuestion module.type
       showAlert = if module.type == 'MULTIPLE_CHOICE' then false else true
       return {
@@ -296,7 +302,7 @@ Template.Lesson_view_page.helpers
         onPlayVideo: instance.onPlayVideo
         onStopVideo: instance.onStopVideo
         onVideoEnd: instance.onVideoEnd
-        playing: instance.isCurrent(module._id) and instance.videoPlaying()
+        playing: isCurrentModule and instance.videoPlaying()
       }
     else
       return {module: module}

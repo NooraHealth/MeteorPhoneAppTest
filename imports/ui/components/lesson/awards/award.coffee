@@ -24,23 +24,28 @@ class Award
 
   constructor: ()->
 
-  sendAward: ( onConfirm, onCancel )=>
+  sendAward: ( onConfirm, onCancel , endOfCurriculum )=>
     rand = Math.random() * ( @.messages.length)
     console.log "This is rand:"  + rand
     message = @.messages[Math.floor(rand)]
+    confirmButtonText = if endOfCurriculum then "" else "NEXT LESSON"
+    console.log "This this the confirm button text: #{confirmButtonText}"
     swal({
       title: message.title
       imageUrl: message.image
-      confirmButtonText: "Go To Next Lesson"
+      confirmButtonText: confirmButtonText
       cancelButtonText: "Finish"
-      showCancelButton: true
+      showCancelButton: !endOfCurriculum
       animation: "slide-from-bottom"
       timer: 5000
     }, ( isConfirm ) =>
       if isConfirm
-        onConfirm()
+        console.log "On confirm"
+        console.log onConfirm?
+        onConfirm?()
       else
-        onCancel()
+        console.log onCancel?
+        onCancel?()
     )
   
 

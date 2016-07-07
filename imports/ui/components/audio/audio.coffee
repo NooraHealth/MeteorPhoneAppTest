@@ -35,9 +35,6 @@ Template.Audio.onCreated ->
       @sound ?= new Howl {
         src: [data.attributes.src]
         onloaderror: (id, error)->
-          console.log "LOADERROR #{data.attributes.src}"
-          console.log error
-          console.trace()
         onend: @data.whenFinished
         onpause: @data.whenPaused
         #html5: true
