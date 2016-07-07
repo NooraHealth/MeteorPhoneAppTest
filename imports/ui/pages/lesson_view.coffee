@@ -4,7 +4,8 @@
 { Modules } = require("meteor/noorahealth:mongo-schemas")
 
 { AppState } = require('../../api/AppState.coffee')
-{ Award } = require('../components/lesson/awards/award.coffee')
+{ Award } = require('../components/lesson/popups/award.coffee')
+{ BonusVideoPopup } = require('../components/lesson/popups/watchBonusVideo.coffee')
 { ContentInterface }= require('../../api/content/ContentInterface.coffee')
 
 require './lesson_view.html'
@@ -146,25 +147,24 @@ Template.Lesson_view_page.onCreated ()->
     return lesson
 
   @celebrateCompletion = =>
+    lessonsComplete = AppState.get().getLessonIndex() + 1
+    totalLessons = AppState.get().getCurriculumDoc().lessons.length
     onConfirm = ()=>
-      console.log "About to increment the lesson"
       AppState.get().incrementLesson()
       @displayModule(0)
 
-    onCancel = ()->
-      console.log "CANCCEEELLLL"
-      FlowRouter.go "home"
-
+    onCancel = ()=>
+      @goHome(null, false)
+    
     if AppState.get().isLastLesson()
-      console.log("That was the last lesson!!")
-      new Award().sendAward( null, null, true)
+      new Award().sendAward( null, null, lessonsComplete, totalLessons)
+      @goHome( null, true )
       FlowRouter.go "home"
     else
-      new Award().sendAward( onConfirm, onCancel, false )
+      new Award().sendAward( onConfirm, onCancel, lessonsComplete, totalLessons )
 
-    #@goHome( null, true)
 
-  @goHome = ( event, completedLesson) =>
+  @goHome = ( event, completedCurriculum) =>
     lesson = @getLesson()
     module = @getCurrentModule()
     text = if module.title then module.title else module.question
@@ -174,13 +174,12 @@ Template.Lesson_view_page.onCreated ()->
       lastModuleId: module._id
       lastModuleText: text
       lastModuleType: module.type
-      completedLesson: completedLesson
+      completedCurriculum: completedCurriculum
       numberOfModulesInLesson: lesson.modules.length
     }
     FlowRouter.go "home"
 
   @displayModule = (index) =>
-    console.log "about to display the module"
     @state.set "moduleIndex", index
     @state.set "nextButtonAnimated", false
     @state.set "audioPlaying", "QUESTION"
@@ -195,9 +194,10 @@ Template.Lesson_view_page.onCreated ()->
 
   @onNextButtonRendered = =>
     @swiper = App.swiper '.swiper-container', {
+      effect: "coverflow",
       lazyLoading: true,
       preloadImages: false,
-      #nextButton: '.swiper-button-next',
+      speed: 700,
       shortSwipes: false
       longSwipes: false
       followFinger: false
@@ -206,7 +206,7 @@ Template.Lesson_view_page.onCreated ()->
   @onNextButtonClicked = =>
     if @lessonComplete() then @celebrateCompletion() else @goToNextModule()
 
-  @nextButtonText = => if @lessonComplete() then "FINISH" else "NEXT"
+  @nextButtonText = => if @lessonComplete() then "FINISH" else "NEXT" + '<i class="fa fa-arrow-right fa-2x"></i>'
 
   @afterReplay = =>
     @state.set "replayAudio", false

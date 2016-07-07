@@ -39,7 +39,7 @@ Template.Lesson_view_page_footer.helpers
         id: "nextModuleBtn"
         class: classes
       }
-      content: data.text + '<i class="fa fa-arrow-right fa-2x"></i>'
+      content: data.text
       onClick: data.onClick
       onRendered: data.onRendered
     }
