@@ -184,51 +184,51 @@ class @ContentDownloader
 
       return deferred.promise
 
-    cleanLocalContent: ( cursor, onComplete )->
-      console.log "About to delete unused files (cleanLocalContent)"
-      try
-        #validate the arguments
-        new SimpleSchema({
-          cursor: {type: Mongo.Cursor}
-          onComplete: {type: Function, optional: true}
-        }).validate({cursor: cursor, onComplete: onComplete})
-        unusedPaths = _getUnusedFilePaths(curriculums)
-        @_deleteFiles(filesToDelete)
-      catch e
-        console.log "Error deleting unused files"
-        console.log e
+    #cleanLocalContent: ( cursor, onComplete )->
+      #console.log "About to delete unused files (cleanLocalContent)"
+      #try
+        ##validate the arguments
+        #new SimpleSchema({
+          #cursor: {type: Mongo.Cursor}
+          #onComplete: {type: Function, optional: true}
+        #}).validate({cursor: cursor, onComplete: onComplete})
+        #unusedPaths = _getUnusedFilePaths(curriculums)
+        #@_deleteFiles(filesToDelete)
+      #catch e
+        #console.log "Error deleting unused files"
+        #console.log e
 
-    _getUnusedFilePaths: (curriculums)->
-      console.log("getting the unused file paths")
-      pathsInUse = []
-      for curriculum in curriculums
-        pathsInUse.merge @_allContentPathsInCurriculum(curriculum)
+    #_getUnusedFilePaths: (curriculums)->
+      #console.log("getting the unused file paths")
+      #pathsInUse = []
+      #for curriculum in curriculums
+        #pathsInUse.merge @_allContentPathsInCurriculum(curriculum)
 
-      localFiles = OfflineFiles.find().fetch()
-      unused = []
-      for file in localFiles
-        console.log("file: ", file.path)
-        if not file.path in pathsInUse
-          unused.push file
-      console.log "Returning the unused: ", unused.length
-      return unused
+      #localFiles = OfflineFiles.find().fetch()
+      #unused = []
+      #for file in localFiles
+        #console.log("file: ", file.path)
+        #if not file.path in pathsInUse
+          #unused.push file
+      #console.log "Returning the unused: ", unused.length
+      #return unused
 
-    _deleteFiles: (filePaths) ->
+    #_deleteFiles: (filePaths) ->
       ## This is where we will delete files
-      console.log "About to delete #{ filePaths.length } files"
-      console.log filePaths
-      window.requestFileSystem LocalFileSystem.PERSISTENT, 0, (fs)->
-        for path in filePaths
-          fs.root.getFile path, {create: false}, (entry)->
-            entry.remove ( file )->
-              console.log "File removed!#{ path }"
-            , ( error )->
-              console.log "Error removing file #{ path }"
-            , ()->
-              console.log "Attempted to remove #{ path }, file DNE"
-          , ( event )->
-            console.log "Error retrieving file"
-            console.log evt.target.error.code
+      #console.log "About to delete #{ filePaths.length } files"
+      #console.log filePaths
+      #window.requestFileSystem LocalFileSystem.PERSISTENT, 0, (fs)->
+        #for path in filePaths
+          #fs.root.getFile path, {create: false}, (entry)->
+            #entry.remove ( file )->
+              #console.log "File removed!#{ path }"
+            #, ( error )->
+              #console.log "Error removing file #{ path }"
+            #, ()->
+              #console.log "Attempted to remove #{ path }, file DNE"
+          #, ( event )->
+            #console.log "Error retrieving file"
+            #console.log evt.target.error.code
       
     _allContentPathsInCurriculum: (curriculum) ->
       paths = []
