@@ -16,6 +16,7 @@ Template.Lesson_view_page_footer.onCreated ->
       "nextButton.text": {type: String}
       "pages.$.current": {type: Boolean}
       "pages.$.completed": {type: Boolean}
+      "pages.$.incorrect": {type: Boolean}
       "pages.$.index": {type: Number}
     }).validate Template.currentData()
 

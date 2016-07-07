@@ -7,7 +7,7 @@
           {{#if page.current}} 
             <li class="current" name="{{page.index}}"><a name="{{page.index}}">{{page.index}}</a></li>
           {{else}}
-            <li name="{{page.index}}"><a class="module_footer {{#if page.completed}} green {{/if}}" name="{{i}}">{{page.index}}</a></li>
+            <li name="{{page.index}}"><a class="module_footer {{colorClass page}}" name="{{i}}">{{page.index}}</a></li>
           {{/if}}
 
         {{/each}}
