@@ -54,6 +54,8 @@ Template.Lesson_view_page_footer.helpers
 
   replayButtonArgs: (data) ->
     classes = 'link footer-button button button-rounded color-pink button-fill'
+    if not data.shouldShow()
+      classes += " hidden"
     return {
       attributes: {
         id: "replayBtn"

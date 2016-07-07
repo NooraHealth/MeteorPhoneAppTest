@@ -5,9 +5,7 @@
     <div class="toolbar-inner">
       {{> Lesson_view_page_footer_paginator (paginatorArgs pages)}}
 
-      {{#if shouldShow replayButton}}
-        {{> Button (replayButtonArgs replayButton)}}
-      {{/if}}
+      {{> Button (replayButtonArgs replayButton)}}
 
       <div class={{nextButtonWrapperClasses nextButton.animated}}>
         {{> Button (nextButtonArgs nextButton)}}
