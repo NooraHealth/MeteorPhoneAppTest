@@ -150,7 +150,6 @@ Template.Lesson_view_page.onCreated ()->
       console.log "About to increment the lesson"
       AppState.get().incrementLesson()
       @displayModule(0)
-      @mySwiper.slideTo 0
 
     onCancel = ()->
       console.log "CANCCEEELLLL"
@@ -186,6 +185,8 @@ Template.Lesson_view_page.onCreated ()->
     @state.set "nextButtonAnimated", false
     @state.set "audioPlaying", "QUESTION"
     @setCurrentModuleId()
+    console.log @swiper
+    @swiper.slideTo index
 
   @goToNextModule = =>
     index = @state.get "moduleIndex"
@@ -193,10 +194,10 @@ Template.Lesson_view_page.onCreated ()->
     @displayModule( newIndex )
 
   @onNextButtonRendered = =>
-    @mySwiper = App.swiper '.swiper-container', {
+    @swiper = App.swiper '.swiper-container', {
       lazyLoading: true,
       preloadImages: false,
-      nextButton: '.swiper-button-next',
+      #nextButton: '.swiper-button-next',
       shortSwipes: false
       longSwipes: false
       followFinger: false
