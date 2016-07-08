@@ -5,6 +5,7 @@
 
 { AppState } = require('../../api/AppState.coffee')
 { Award } = require('../components/lesson/popups/award.coffee')
+{ BonusVideoPopup } = require('../components/lesson/popups/watchBonusVideo.coffee')
 { ContentInterface }= require('../../api/content/ContentInterface.coffee')
 
 require './lesson_view.html'
@@ -99,15 +100,10 @@ Template.Lesson_view_page.onCreated ()->
         instance.state.set "soundEfffectPlaying", "CORRECT"
         alertType = 'success'
       else
-        console.log "IN ONCHJOICE"
         instance.state.set "soundEfffectPlaying", "INCORRECT"
         alertType = 'error'
         module = instance.getCurrentModule()
-        console.log instance.incorrectResponses
-        console.log module._id
-        console.log module._id in instance.incorrectResponses
         if not (module._id in instance.incorrectResponses)
-          console.log "ADDING TO INCORRECT RESPONSES"
           instance.incorrectResponses.push module._id
           console.log instance.incorrectResponses
       if showAlert
@@ -184,17 +180,22 @@ Template.Lesson_view_page.onCreated ()->
     if AppState.get().isLastLesson()
       @goHome(null, false)
     else
+      @incorrectResponses = []
       AppState.get().incrementLesson()
       @displayModule(0)
 
   @offerBonusVideo = =>
+    console.log "Offering bonus video!!"
     onConfirm = =>
-      @goToNextModule()
+      #@playVideo()
 
     onCancel = =>
+      #data.onCancel()
       @goToNextLesson()
 
-
+    aFewWrong = @incorrectResponses.length > 1
+    new BonusVideoPopup().display onConfirm, onCancel, aFewWrong
+      
   @goHome = ( event, completedCurriculum) =>
     lesson = @getLesson()
     module = @getCurrentModule()
@@ -216,15 +217,18 @@ Template.Lesson_view_page.onCreated ()->
     @state.set "audioPlaying", "QUESTION"
     @setCurrentModuleId()
     @swiper.slideTo index
+    module = @getCurrentModule()
+    if @isBonus module
+      @offerBonusVideo()
 
   @goToNextModule = =>
     index = @state.get "moduleIndex"
     newIndex = ++index
     @displayModule( newIndex )
+    console.log "Checkign if is bonus video"
 
   @onNextButtonRendered = =>
     @swiper = App.swiper '.swiper-container', {
-      effect: "coverflow",
       lazyLoading: true,
       preloadImages: false,
       speed: 700,
@@ -233,17 +237,14 @@ Template.Lesson_view_page.onCreated ()->
       followFinger: false
     }
 
-  @hasBonusVideo = =>
-    #lesson = @getLesson()
-    #lastModule = Modules.findOne { _id: lesson.modules[lesson.modules.length - 1] }
-    #return lastModule.type == "VIDEO"
-    return true
-
   @isBonus = (module) =>
     lesson = @getLesson()
     lastModule = lesson?.modules?[lesson?.modules?.length - 1]
-    #return module.type == "VIDEO" and lastModule == module._id
-    return true
+    console.log "This is the lastModule #{lastModule} == #{module._id}"
+    console.log module
+    console.log lesson
+    return module.type == "VIDEO" and lastModule == module._id
+    #return true
 
   @onNextButtonClicked = =>
     #if @hasBonusVideo() and @secondToLastModule() then @offerBonusVideo()
@@ -346,10 +347,7 @@ Template.Lesson_view_page.helpers
         onPlayVideo: instance.onPlayVideo
         onStopVideo: instance.onStopVideo
         onVideoEnd: instance.onVideoEnd
-        onCancel: instance.goToNextLesson
         playing: isCurrentModule and instance.videoPlaying()
-        isBonus: instance.isBonus module
-        isCurrent: isCurrentModule
       }
     else
       return {module: module}

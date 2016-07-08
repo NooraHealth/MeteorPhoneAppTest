@@ -37,10 +37,10 @@ Template.Audio.onCreated ->
         onloaderror: (id, error)->
         onend: @data.whenFinished
         onpause: @data.whenPaused
+        #volume: 0
         #html5: true
       }
       @sound.play()
-      #@sound.mute(false)
     else if not shouldPlay and @sound?
       @sound.pause()
 

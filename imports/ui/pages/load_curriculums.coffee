@@ -29,6 +29,9 @@ Template.Load_curriculums_page.onCreated ->
             AppState.get().setError e
           AppState.get().setShouldPlayIntro true
           FlowRouter.go "home"
-          #delete any unused local content
+          #diconnect from the server to freeze the app at its current state
+          if Meteor.settings.public.METEOR_ENV == "production"
+            Meteor.disconnect()
+
         ContentDownloader.get().loadCurriculums curriculums, onComplete
   
