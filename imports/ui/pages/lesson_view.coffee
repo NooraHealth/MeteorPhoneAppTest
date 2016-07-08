@@ -5,7 +5,6 @@
 
 { AppState } = require('../../api/AppState.coffee')
 { Award } = require('../components/lesson/popups/award.coffee')
-{ BonusVideoPopup } = require('../components/lesson/popups/watchBonusVideo.coffee')
 { ContentInterface }= require('../../api/content/ContentInterface.coffee')
 
 require './lesson_view.html'
@@ -178,13 +177,15 @@ Template.Lesson_view_page.onCreated ()->
     if AppState.get().isLastLesson()
       new Award().sendAward( null, null, lessonsComplete, totalLessons)
       @goHome( null, true )
-      FlowRouter.go "home"
     else
       new Award().sendAward( onConfirm, onCancel, lessonsComplete, totalLessons )
 
   @goToNextLesson = =>
-    AppState.get().incrementLesson()
-    @displayModule(0)
+    if AppState.get().isLastLesson()
+      @goHome(null, false)
+    else
+      AppState.get().incrementLesson()
+      @displayModule(0)
 
   @offerBonusVideo = =>
     onConfirm = =>
@@ -193,20 +194,19 @@ Template.Lesson_view_page.onCreated ()->
     onCancel = =>
       @goToNextLesson()
 
-    new BonusVideoPopup().display onConfirm, onCancel
 
   @goHome = ( event, completedCurriculum) =>
     lesson = @getLesson()
     module = @getCurrentModule()
-    text = if module.title then module.title else module.question
+    text = if module?.title then module?.title else module?.question
     analytics.track "Left Lesson For Home", {
-      lessonTitle: lesson.title
-      lessonId: lesson._id
-      lastModuleId: module._id
+      lessonTitle: lesson?.title
+      lessonId: lesson?._id
+      lastModuleId: module?._id
       lastModuleText: text
-      lastModuleType: module.type
+      lastModuleType: module?.type
       completedCurriculum: completedCurriculum
-      numberOfModulesInLesson: lesson.modules.length
+      numberOfModulesInLesson: lesson?.modules.length
     }
     FlowRouter.go "home"
 
@@ -239,9 +239,15 @@ Template.Lesson_view_page.onCreated ()->
     #return lastModule.type == "VIDEO"
     return true
 
+  @isBonus = (module) =>
+    lesson = @getLesson()
+    lastModule = lesson?.modules?[lesson?.modules?.length - 1]
+    #return module.type == "VIDEO" and lastModule == module._id
+    return true
+
   @onNextButtonClicked = =>
-    if @hasBonusVideo() and @secondToLastModule() then @offerBonusVideo()
-    else if @lessonComplete() then @celebrateCompletion() else @goToNextModule()
+    #if @hasBonusVideo() and @secondToLastModule() then @offerBonusVideo()
+    if @lessonComplete() then @celebrateCompletion() else @goToNextModule()
 
   @nextButtonText = => if @lessonComplete() then "FINISH" else "NEXT" + '<i class="fa fa-arrow-right fa-2x"></i>'
 
@@ -340,7 +346,10 @@ Template.Lesson_view_page.helpers
         onPlayVideo: instance.onPlayVideo
         onStopVideo: instance.onStopVideo
         onVideoEnd: instance.onVideoEnd
+        onCancel: instance.goToNextLesson
         playing: isCurrentModule and instance.videoPlaying()
+        isBonus: instance.isBonus module
+        isCurrent: isCurrentModule
       }
     else
       return {module: module}
