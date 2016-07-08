@@ -37,6 +37,8 @@ Template.Lesson_view_page_video.onCreated ->
         @playVideo()
 
       onCancel = =>
+        console.log "IN THE ON CANCEL"
+        @displayedPopup = false
         data.onCancel()
 
       console.log "IS CURRENT ABOUT TO POPUUP"
