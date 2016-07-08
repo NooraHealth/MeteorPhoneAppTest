@@ -1,5 +1,6 @@
 
 { Modules } = require("meteor/noorahealth:mongo-schemas")
+{ BonusVideoPopup } = require('../popups/watchBonusVideo.coffee')
 { ContentInterface } = require('../../../../api/content/ContentInterface.coffee')
 require "./video.html"
 
@@ -17,11 +18,30 @@ Template.Lesson_view_page_video.onCreated ->
       onPlayVideo: {type: Function, optional: true}
       onStopVideo: {type: Function, optional: true}
       onVideoEnd: {type: Function, optional: true}
+      onCancel: {type: Function, optional: true}
       playing: {type: Boolean}
+      isBonus: {type: Boolean}
+      isCurrent: {type: Boolean}
     }).validate(Template.currentData())
 
     @data = Template.currentData()
 
+  @displayedPopup = false
+  @autorun =>
+    console.log "AUTORUN"
+    console.log Template.currentData().isCurrent
+    data = Template.currentData()
+    if data.isCurrent and data.isBonus and not @displayedPopup
+      @displayedPopup = true
+      onConfirm = =>
+        @playVideo()
+
+      onCancel = =>
+        data.onCancel()
+
+      console.log "IS CURRENT ABOUT TO POPUUP"
+      new BonusVideoPopup().display onConfirm, onCancel
+      
   @onStopVideo = (location) =>
     if @data.onStopVideo
       @data.onStopVideo()
