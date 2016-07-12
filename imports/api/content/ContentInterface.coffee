@@ -22,20 +22,37 @@ class ContentInterface
   class PrivateInterface
 
     constructor: ->
+      @audioDirectory = "NooraHealthContent/Audio/"
+      @imageDirectory = "NooraHealthContent/Image/"
+      @videoDirectory = "NooraHealthContent/Video/"
       @remoteContentEndpoint = Meteor.settings.public.CONTENT_SRC
 
     introPath: =>
-      return "NooraHealthContent/Audio/AppIntro.mp3"
+      return @audioDirectory + "AppIntro.mp3"
 
     correctSoundEffectFilePath: =>
-      return "NooraHealthContent/Audio/correct_soundeffect.mp3"
+      return @audioDirectory + "correct_soundeffect.mp3"
 
     incorrectSoundEffectFilePath: =>
-      return "NooraHealthContent/Audio/incorrect_soundeffect.mp3"
+      return @audioDirectory + "incorrect_soundeffect.mp3"
 
+    getDirectory: ( type )=>
+      if type == "VIDEO"
+        return @videoDirectory
+      if type == "IMAGE"
+        return @imageDirectory
+      if type == "AUDIO"
+        return @audioDirectory
+ 
     # Where the content is stored remotely (AWS S3 server)
-    getEndpoint: (path) =>
-      if path? then return encodeURI(@remoteContentEndpoint + path) else return encodeURI(@remoteContentEndpoint)
+    getEndpoint: (path, type) =>
+      regEx = /^(VIDEO|IMAGE|AUDIO)$/
+      new SimpleSchema({
+        path: {type: String}
+        type: {type: String, allowedValues: ["VIDEO", "AUDIO", "IMAGE"]}
+      }).validate({path: path, type: type})
+
+      if path? then return encodeURI(@remoteContentEndpoint + @getDirectory(type) + path) else return encodeURI(@remoteContentEndpoint)
 
     # Given a filename (path), getSrc will identify where to find
     # that particular file -- in Cordova, this is local and in the browser
@@ -49,13 +66,6 @@ class ContentInterface
         return url
 
     subscriptionsReady: (instance) ->
-      #if Meteor.status().connected
-        #return instance.subscriptionsReady()
-      #else if Meteor.isCordova
       return instance.subscriptionsReady()
-      #if Meteor.isCordova
-        #return AppState.get().isSubscribed()
-      #else
-        #return instance.subscriptionsReady()
 
 module.exports.ContentInterface = ContentInterface
