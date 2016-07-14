@@ -365,7 +365,7 @@ Template.Lesson_view_page.helpers
     isCurrent = instance.isCurrent(module._id)
     return {
       attributes: {
-        src: ContentInterface.get().getSrc module.correct_audio
+        src: ContentInterface.get().getSrc module.correct_audio, "AUDIO"
       }
       playing: playing and isCurrent
       replay: playing and replay and isCurrent
@@ -381,7 +381,7 @@ Template.Lesson_view_page.helpers
     isCurrent = instance.isCurrent(module._id)
     return {
       attributes: {
-        src: ContentInterface.get().getSrc module.audio
+        src: ContentInterface.get().getSrc module.audio, "AUDIO"
       }
       playing: playing and isCurrent
       replay: playing and replay and isCurrent
@@ -395,7 +395,7 @@ Template.Lesson_view_page.helpers
     playing = instance.state.get("soundEfffectPlaying") == "INCORRECT"
     return {
       attributes: {
-        src: ContentInterface.get().getSrc(ContentInterface.get().incorrectSoundEffectFilePath())
+        src: ContentInterface.get().getSrc(ContentInterface.get().incorrectSoundEffectFilename(), "AUDIO")
       }
       playing: playing
       whenFinished: instance.stopPlayingSoundEffect
@@ -407,7 +407,7 @@ Template.Lesson_view_page.helpers
     playing = instance.state.get("soundEfffectPlaying") == "CORRECT"
     return {
       attributes: {
-        src: ContentInterface.get().getSrc(ContentInterface.get().correctSoundEffectFilePath())
+        src: ContentInterface.get().getSrc(ContentInterface.get().correctSoundEffectFilename(), "AUDIO")
       }
       playing: playing
       whenFinished: instance.stopPlayingSoundEffect

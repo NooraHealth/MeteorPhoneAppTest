@@ -87,7 +87,7 @@ Template.Home_page.helpers
     setPlayIntroToFalse = -> AppState.get().setShouldPlayIntro false
     return {
       attributes: {
-        src: ContentInterface.get().getSrc(ContentInterface.get().introPath())
+        src: ContentInterface.get().getSrc(ContentInterface.get().introFilename(), "AUDIO")
       }
       playing: AppState.get().getShouldPlayIntro()
       whenPaused: setPlayIntroToFalse

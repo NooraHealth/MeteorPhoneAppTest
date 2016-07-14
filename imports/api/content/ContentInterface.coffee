@@ -22,45 +22,60 @@ class ContentInterface
   class PrivateInterface
 
     constructor: ->
-      @audioDirectory = "NooraHealthContent/Audio/"
-      @imageDirectory = "NooraHealthContent/Image/"
-      @videoDirectory = "NooraHealthContent/Video/"
+      Template.registerHelper 'getSrc', ( filename, type )=>
+        console.log "IN THE GLOBAL HELPER"
+        @getSrc filename, type
+
       @remoteContentEndpoint = Meteor.settings.public.CONTENT_SRC
 
-    introPath: =>
-      return @audioDirectory + "AppIntro.mp3"
+    _audioDirectory: ->
+      return "NooraHealthContent/Audio/"
 
-    correctSoundEffectFilePath: =>
-      return @audioDirectory + "correct_soundeffect.mp3"
+    _imageDirectory: ->
+      return "NooraHealthContent/Image/"
 
-    incorrectSoundEffectFilePath: =>
-      return @audioDirectory + "incorrect_soundeffect.mp3"
+    _videoDirectory: ->
+      return "NooraHealthContent/Video/"
 
-    getDirectory: ( type )=>
+    introFilename: =>
+      console.log "getting the intro path"
+      return "AppIntro.mp3"
+
+    correctSoundEffectFilename: =>
+      return "correct_soundeffect.mp3"
+
+    incorrectSoundEffectFilename: =>
+      return "incorrect_soundeffect.mp3"
+
+    getDirectory: (type) =>
       if type == "VIDEO"
-        return @videoDirectory
+        return @_videoDirectory()
       if type == "IMAGE"
-        return @imageDirectory
+        return @_imageDirectory()
       if type == "AUDIO"
-        return @audioDirectory
- 
-    # Where the content is stored remotely (AWS S3 server)
-    getEndpoint: (path, type) =>
-      regEx = /^(VIDEO|IMAGE|AUDIO)$/
-      new SimpleSchema({
-        path: {type: String}
-        type: {type: String, allowedValues: ["VIDEO", "AUDIO", "IMAGE"]}
-      }).validate({path: path, type: type})
+        return @_audioDirectory()
 
-      if path? then return encodeURI(@remoteContentEndpoint + @getDirectory(type) + path) else return encodeURI(@remoteContentEndpoint)
+    # Where the content is stored remotely (AWS S3 server)
+    getEndpoint: (filename) =>
+      new SimpleSchema({
+        filename: {type: String}
+      }).validate({filename: filename})
+
+      return encodeURI(@remoteContentEndpoint + filename)
 
     # Given a filename (path), getSrc will identify where to find
     # that particular file -- in Cordova, this is local and in the browser
     # it will find it remotely
-    getSrc: (path) =>
+    getSrc: (filename, type) =>
+      new SimpleSchema({
+        filename: {type: String},
+        type: {type: String}
+      }).validate({filename: filename, type: type})
+      console.log "returning the src of #{filename}"
       #url = @getEndpoint(path)
       if Meteor.isCordova
-        offlineFile = OfflineFiles.findOne {path: path}
+        offlineFile = OfflineFiles.findOne { path: @getDirectory(type) + filename}
+        console.log "This is the offlinefile #{offlineFile}"
         return if offlineFile? then WebAppLocalServer.localFileSystemUrl(offlineFile.fsPath) else ""
       else
         return url

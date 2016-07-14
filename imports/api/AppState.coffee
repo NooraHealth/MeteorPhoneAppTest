@@ -128,19 +128,4 @@ class AppState
       subscribed = @dict.get "subscribed"
       if subscribed? then return subscribed else return false
 
-    #setRoute: (route) ->
-      #@dict.setTemporary "route", route
-      #@
-
-    #route: ->
-      #console.log "Returning the route"
-      #console.log @dict.get "route"
-      #@dict.get "route"
-
-    #setLessonId: (id) ->
-      #@dict.setTemporary "lessonId", id
-
-    #getLessonId: ->
-      #@dict.get "lessonId"
-
 module.exports.AppState = AppState
