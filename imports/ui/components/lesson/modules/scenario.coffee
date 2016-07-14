@@ -18,9 +18,9 @@ Template.Lesson_view_page_scenario.onCreated ->
     }).validate(Template.currentData())
 
     @data = Template.currentData()
-    @NORMAL = Template.currentData().module?.options[0]
-    @CALLDOC = Template.currentData().module?.options[1]
-    @EMERGENCY = Template.currentData().module?.options[2]
+    @NORMAL = "Normal"
+    @CALLDOC = "CallDoc"
+    @EMERGENCY = "Call911"
 
   #set the state
   @state = new ReactiveDict()
