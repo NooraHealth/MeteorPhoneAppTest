@@ -180,8 +180,8 @@ Template.Lesson_view_page.onCreated ()->
     if AppState.get().isLastLesson()
       @goHome(null, false)
     else
-      @incorrectResponses = []
       AppState.get().incrementLesson()
+      @incorrectResponses = []
       @displayModule(0)
 
   @offerBonusVideo = =>
@@ -212,20 +212,37 @@ Template.Lesson_view_page.onCreated ()->
     FlowRouter.go "home"
 
   @displayModule = (index) =>
+    console.log "Displaying module #{index}"
     @state.set "moduleIndex", index
     @state.set "nextButtonAnimated", false
     @state.set "audioPlaying", "QUESTION"
     @setCurrentModuleId()
+    console.log "Slideing to #{index}"
+    console.log @swiper
     @swiper.slideTo index
     module = @getCurrentModule()
     if @isBonus module
       @offerBonusVideo()
 
   @goToNextModule = =>
+    console.log "Going to the next module"
     index = @state.get "moduleIndex"
     newIndex = ++index
+    console.log "Initializing the swiper"
+    #temporary shim to fix the issues with swiper not re
+    #initializing when changing to a new lesson
+    #leading to bugs when the lesson has more modules
+    #than the first lesson (when the swiper was initialized)
+    if newIndex == 1
+      @swiper = App.swiper '.swiper-container', {
+        lazyLoading: true,
+        preloadImages: false,
+        speed: 700,
+        shortSwipes: false
+        longSwipes: false
+        followFinger: false
+      }
     @displayModule( newIndex )
-    console.log "Checkign if is bonus video"
 
   @onNextButtonRendered = =>
     @swiper = App.swiper '.swiper-container', {
@@ -236,18 +253,20 @@ Template.Lesson_view_page.onCreated ()->
       longSwipes: false
       followFinger: false
     }
+    @swiper.on "slideChangeStart", ()->
+      console.log "SLIDE CHANGE STARt"
+
+    @swiper.once "sliderMove", ()->
+      console.log "SWIPER MOVE"
 
   @isBonus = (module) =>
     lesson = @getLesson()
     lastModule = lesson?.modules?[lesson?.modules?.length - 1]
-    console.log "This is the lastModule #{lastModule} == #{module._id}"
-    console.log module
-    console.log lesson
     return module.type == "VIDEO" and lastModule == module._id
-    #return true
 
   @onNextButtonClicked = =>
     #if @hasBonusVideo() and @secondToLastModule() then @offerBonusVideo()
+    lessonComplete = @lessonComplete()
     if @lessonComplete() then @celebrateCompletion() else @goToNextModule()
 
   @nextButtonText = => if @lessonComplete() then "FINISH" else "NEXT" + '<i class="fa fa-arrow-right fa-2x"></i>'
@@ -266,9 +285,11 @@ Template.Lesson_view_page.onCreated ()->
     @state.set "playingVideo", true
 
   @onStopVideo = =>
+    console.log "stopping the video"
     @state.set "playingVideo", false
 
   @onVideoEnd = =>
+    console.log "video end"
     @state.set "playingVideo", false
     @state.set "nextButtonAnimated", true
 
@@ -301,6 +322,7 @@ Template.Lesson_view_page.helpers
 
   footerArgs: ->
     instance = Template.instance()
+    console.log "Calculating footer args"
     return {
       homeButton: {
         onClick: instance.goHome
@@ -323,13 +345,12 @@ Template.Lesson_view_page.helpers
     return instance.getLesson()?.title
 
   moduleArgs: (module) ->
+    console.log "calculating module args"
     instance = Template.instance()
     isQuestion = (type) ->
       return type == "BINARY" or type == "SCENARIO" or type == "MULTIPLE_CHOICE"
 
     isCurrentModule = instance.isCurrent(module._id)
-    if isCurrentModule
-      console.log "THIS IS THE CURRENT MODULE!! #{module._id}"
     if isQuestion module.type
       showAlert = if module.type == 'MULTIPLE_CHOICE' then false else true
       return {

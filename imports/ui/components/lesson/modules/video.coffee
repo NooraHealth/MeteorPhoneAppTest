@@ -82,7 +82,7 @@ Template.Lesson_view_page_video.helpers
     }
   
   playing: ->
-    console.log("Returning whether playing")
+    console.log("Returning whether video is playing")
     instance = Template.instance()
     console.log instance.data.playing
     return instance.data.playing

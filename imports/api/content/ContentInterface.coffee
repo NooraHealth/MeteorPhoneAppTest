@@ -23,7 +23,6 @@ class ContentInterface
 
     constructor: ->
       Template.registerHelper 'getSrc', ( filename, type )=>
-        console.log "IN THE GLOBAL HELPER"
         @getSrc filename, type
 
       @remoteContentEndpoint = Meteor.settings.public.CONTENT_SRC
@@ -38,7 +37,6 @@ class ContentInterface
       return "NooraHealthContent/Video/"
 
     introFilename: =>
-      console.log "getting the intro path"
       return "AppIntro.mp3"
 
     correctSoundEffectFilename: =>
@@ -71,11 +69,9 @@ class ContentInterface
         filename: {type: String},
         type: {type: String}
       }).validate({filename: filename, type: type})
-      console.log "returning the src of #{filename}"
       #url = @getEndpoint(path)
       if Meteor.isCordova
         offlineFile = OfflineFiles.findOne { path: @getDirectory(type) + filename}
-        console.log "This is the offlinefile #{offlineFile}"
         return if offlineFile? then WebAppLocalServer.localFileSystemUrl(offlineFile.fsPath) else ""
       else
         return url
