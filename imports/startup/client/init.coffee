@@ -5,13 +5,16 @@
 require 'meteor/loftsteinn:framework7-ios'
 
 Meteor.startup ()->
-  console.log "starup"
   if (Meteor.isCordova and not AppState.get().isSubscribed()) or Meteor.status().connected
+    alert "Subscribing!!"
     console.log("Subscribing to all")
     Meteor.subscribe "lessons.all"
     Meteor.subscribe "curriculums.all"
     Meteor.subscribe "modules.all"
     AppState.get().setSubscribed true
+  else
+    Meteor.disconnect()
+    alert "disonnected again???!!"
 
   BlazeLayout.setRoot "body"
 
