@@ -67,7 +67,7 @@ Template.Lesson_view_page_multiple_choice.onCreated ->
     
     mapData = (option, i) ->
       map[option] = {
-        src: ContentInterface.get().getSrc( option )
+        src: ContentInterface.get().getSrc( option, "IMAGE")
         class: getClasses(option)
       }
 

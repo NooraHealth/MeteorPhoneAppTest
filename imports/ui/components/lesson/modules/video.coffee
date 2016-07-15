@@ -77,12 +77,12 @@ Template.Lesson_view_page_video.helpers
     return {
       title: module.title
       class: "video-module center"
-      src: ContentInterface.get().getSrc(module.video)
+      src: ContentInterface.get().getSrc(module.video, "VIDEO")
       controls: true
     }
   
   playing: ->
-    console.log("Returning whether playing")
+    console.log("Returning whether video is playing")
     instance = Template.instance()
     console.log instance.data.playing
     return instance.data.playing
