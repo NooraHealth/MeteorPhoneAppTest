@@ -6,17 +6,13 @@ require 'meteor/loftsteinn:framework7-ios'
 
 Meteor.startup ()->
   console.log "STARTED APPSEE #{Meteor.settings.public.APPSEE_API_KEY}"
-  #Appsee.start(Meteor.settings.public.APPSEE_API_KEY)
+  Appsee.start(Meteor.settings.public.APPSEE_API_KEY)
   if (Meteor.isCordova and not AppState.get().isSubscribed()) or Meteor.status().connected
-    alert "Subscribing!!"
     console.log("Subscribing to all")
     Meteor.subscribe "lessons.all"
     Meteor.subscribe "curriculums.all"
     Meteor.subscribe "modules.all"
     AppState.get().setSubscribed true
-  else
-    Meteor.disconnect()
-    alert "disonnected again???!!"
 
   BlazeLayout.setRoot "body"
 

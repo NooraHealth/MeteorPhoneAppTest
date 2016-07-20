@@ -10,8 +10,6 @@ aldeed:collection2
 dburles:collection-helpers
 http
 pcel:loading
-
-
 mystor:device-detection
 ground:db
 natestrauser:cordova-file-server
@@ -54,3 +52,4 @@ practicalmeteor:chai
 bojicas:howler2
 noorahealth:mongo-schemas
 okgrow:analytics
+tap:i18n

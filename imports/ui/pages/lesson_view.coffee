@@ -7,6 +7,7 @@
 { Award } = require('../components/lesson/popups/award.coffee')
 { BonusVideoPopup } = require('../components/lesson/popups/watchBonusVideo.coffee')
 { ContentInterface }= require('../../api/content/ContentInterface.coffee')
+{ TAPi18n } = require("meteor/tap:i18n")
 
 require './lesson_view.html'
 require '../components/lesson/modules/binary.coffee'
@@ -17,6 +18,15 @@ require '../components/lesson/modules/video.coffee'
 require '../components/lesson/footer/footer.coffee'
 
 Template.Lesson_view_page.onCreated ()->
+
+  language = AppState.get().getLanguage()
+  console.log "Setting the language to #{language.toLowerCase()}"
+  
+  console.log "Supported language "
+  console.log TAPi18n.getLanguages()
+  console.log TAPi18n
+  TAPi18n.setLanguage(language.toLowerCase())
+
   @state = new ReactiveDict()
   @state.setDefault {
     moduleIndex: 0
@@ -269,7 +279,13 @@ Template.Lesson_view_page.onCreated ()->
     lessonComplete = @lessonComplete()
     if @lessonComplete() then @celebrateCompletion() else @goToNextModule()
 
-  @nextButtonText = => if @lessonComplete() then "FINISH" else "NEXT" + '<i class="fa fa-arrow-right fa-2x"></i>'
+  @nextButtonText = =>
+    console.log "Translations"
+    console.log TAPi18n
+    console.log "GETing tlanguage #{TAPi18n.getLanguage()}"
+    console.log TAPi18n._ "finish"
+    console.log TAPi18n._ "next"
+    if @lessonComplete() then TAPil8n._ "finish" else TAPil8n._ "next" + '<i class="fa fa-arrow-right fa-2x"></i>'
 
   @afterReplay = =>
     @state.set "replayAudio", false
@@ -322,7 +338,6 @@ Template.Lesson_view_page.helpers
 
   footerArgs: ->
     instance = Template.instance()
-    console.log "Calculating footer args"
     return {
       homeButton: {
         onClick: instance.goHome

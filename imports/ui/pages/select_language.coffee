@@ -12,7 +12,6 @@ Template.Select_language_page.onCreated ->
   console.log "Select language page created"
 
   @onLanguageSelected = (language) ->
-    console.log "Language selected #{language}"
     analytics.track "Changed Language", {
       fromLanguage: AppState.get().getLanguage()
       toLanguage: language

@@ -59,11 +59,11 @@ Template.Home_page.onCreated ->
 
 Template.Home_page.helpers
   curriculumsReady: ->
+    console.log "CURRICUKUMS READY BEING CALLEd"
     instance = Template.instance()
     return instance.subscriptionsReady()
 
   menuArgs: ->
-    instance = Template.instance()
     return {
       onLanguageSelected: instance.onLanguageSelected
       languages: ['English', 'Hindi', 'Kannada']
@@ -77,10 +77,6 @@ Template.Home_page.helpers
       onLessonSelected: instance.onLessonSelected
       isCurrentLesson: isCurrentLesson
     }
-
-  languageSelected: ->
-    language = AppState.get().getLanguage()
-    return language? and language isnt null
 
   audioArgs: ->
     instance = Template.instance()

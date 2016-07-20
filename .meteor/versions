@@ -19,6 +19,7 @@ bojicas:howler2@2.0.0_9
 caching-compiler@1.0.6
 caching-html-compiler@1.0.6
 callback-hook@1.0.9
+cfs:http-methods@0.0.32
 check@1.2.3
 coffeescript@1.1.3
 dburles:collection-helpers@1.0.4
@@ -62,6 +63,7 @@ manuel:reactivearray@1.0.5
 mdg:validation-error@0.5.1
 meteor@1.1.16
 meteor-base@1.0.4
+meteorspark:util@0.2.0
 minifier-css@1.1.13
 minifier-js@1.1.13
 minimongo@1.0.17
@@ -104,6 +106,7 @@ spacebars@1.0.12
 spacebars-compiler@1.0.12
 standard-minifier-css@1.0.8
 standard-minifier-js@1.0.8
+tap:i18n@1.8.2
 templating@1.1.13
 templating-tools@1.0.4
 tmeasday:test-reporter-helpers@0.2.1
