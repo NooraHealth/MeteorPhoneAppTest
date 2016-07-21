@@ -35,15 +35,15 @@ FlowRouter.route '/', {
         condition: condition,
         language: language
       }
-      BlazeLayout.render 'Layout', { main : 'Select_language_page' }
+      BlazeLayout.render 'Layout', { main : 'Home_page' }
 }
 
 ###
 # Go through the modules in a lesson
 ###
 #FlowRouter.route '/lesson/:_id', {
-FlowRouter.route '/lessons', {
-  name: "lessons"
+FlowRouter.route '/level/:level', {
+  name: "level"
   action: ( params, qparams )->
     hospital = AppState.get().getHospital()
     condition = AppState.get().getCondition()
@@ -53,7 +53,7 @@ FlowRouter.route '/lessons', {
       condition: condition,
       language: language
     }
-    console.log "Going to the lessons page"
+    console.log "Going to the level page"
     BlazeLayout.render "Layout", { main: "Lesson_view_page" }
 
 }

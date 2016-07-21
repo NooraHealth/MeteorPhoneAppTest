@@ -21,8 +21,8 @@
                 <div class="list-block">
                   <div class="cards-list">
                     <ul class="lessons-list">
-                      {{#each lesson in lessons}}
-                        {{ >Home_thumbnail (thumbnailArgs lesson)}}
+                      {{#each level in levels}}
+                        {{ >Home_thumbnail (thumbnailArgs level)}}
                       {{/each}}
                     </ul>
                   </div>
@@ -34,7 +34,5 @@
         {{/if}}
       </div>
     </div>
-    {{> Home_page_footer }}
-    {{> Audio (audioArgs) }}
 </template>
 

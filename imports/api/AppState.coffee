@@ -10,21 +10,12 @@ class AppState
     constructor: (name) ->
       @dict = new PersistentReactiveDict name
       @dict.set "route", "Home_page"
-
-    setLessonIndex: (i) ->
-      @dict.setPersistent "lessonIndex", i
-      @
-
-    getLessonIndex: ->
-      @dict.get "lessonIndex"
-
-    isLastLesson: ->
-      return @getLessonIndex() == @getCurriculumDoc().lessons.length - 1
-
-    incrementLesson: ->
-      index = @getLessonIndex()
-      @setLessonIndex ++index
-      @
+      @levels = [
+        { name: "Introduction", image: "" },
+        { name: "Beginner", image: ""},
+        { name: "Intermediate", image: ""},
+        { name: "Advanced", image: ""}
+      ]
 
     setCurriculumDownloaded: (id, state) ->
       @dict.setPersistent "curriculumDownloaded#{id}", state
@@ -44,7 +35,6 @@ class AppState
 
     setLanguage: (language) ->
       @dict.setPersistent "language", language
-      @setLessonIndex 0
       @
 
     getLanguage: ->
@@ -123,6 +113,39 @@ class AppState
     setSubscribed: (state) ->
       @dict.set "subscribed", state
       return @
+
+    setLevel: ( level )=>
+      @dict.set "level", level
+
+    getLevel: =>
+      level = @dict.get "level"
+      if level? then return level else return null
+
+    ##TODO this is a hack
+    incrementLevel: =>
+      level = @dict.get "level"
+      if level == "Introduction"
+        @dict.set "level", "Beginner"
+      if level == "Beginner"
+        @dict.set "level", "Intermediate"
+      if level == "Intermediate"
+        @dict.set "level", "Advanced"
+      if level == "Advanced"
+        @dict.set "level", "Introduction"
+
+    getLessons: ( levelName )=>
+      curriculum = @getCurriculumDoc()
+      if levelName == @levels[0].name
+        return curriculum.lessons.slice(0, 1)
+      if levelName == @levels[1].name
+        return curriculum.lessons.slice(1, 3)
+      if levelName == @levels[2].name
+        return curriculum.lessons.slice(3, 5)
+      if levelName == @levels[3].name
+        return curriculum.lessons.slice(5, 8)
+
+    getLevels: =>
+      return @levels
 
     isSubscribed: ->
       subscribed = @dict.get "subscribed"

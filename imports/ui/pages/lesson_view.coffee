@@ -17,6 +17,7 @@ require '../components/lesson/modules/video.coffee'
 require '../components/lesson/footer/footer.coffee'
 
 Template.Lesson_view_page.onCreated ()->
+  console.log "Constructing the level page"
   @state = new ReactiveDict()
   @state.setDefault {
     moduleIndex: 0
@@ -27,6 +28,7 @@ Template.Lesson_view_page.onCreated ()->
     nextButtonAnimated: false
     soundEfffectPlaying: null
     audioPlaying: "QUESTION"
+    lessonIndex: 0
   }
 
   @incorrectResponses = []
@@ -105,7 +107,6 @@ Template.Lesson_view_page.onCreated ()->
         module = instance.getCurrentModule()
         if not (module._id in instance.incorrectResponses)
           instance.incorrectResponses.push module._id
-          console.log instance.incorrectResponses
       if showAlert
         swal {
           title: ""
@@ -152,35 +153,63 @@ Template.Lesson_view_page.onCreated ()->
 
   @getLessonId = =>
     #return AppState.get().getLessonId()
-    index = AppState.get().getLessonIndex()
-    curriculum = AppState.get().getCurriculumDoc()
-    return curriculum?.lessons?[index]
+    index = @state.get "lessonIndex"
+    level = @getLevel()
+    return @lessons()?[index]
 
   @getLesson = =>
     id = @getLessonId()
     lesson = Lessons.findOne { _id: id }
     return lesson
 
+  @getLevel = =>
+    return FlowRouter.getParam( "level" )
+
+  @lessons = =>
+    level = @getLevel()
+    return AppState.get().getLessons( level )
+  
+  @isLastLesson = =>
+    console.log @state.get "lessonIndex"
+    console.log "Getting whether is last lesson"
+    console.log @state.get "lessonIndex"
+    console.log "Lesson index should have been 0"
+    console.log @lessons()
+    console.log @lessons().length - 1
+    lessonIndex = @state.get "lessonIndex"
+    return lessonIndex == @lessons().length - 1
+
+
   @celebrateCompletion = =>
-    lessonsComplete = AppState.get().getLessonIndex() + 1
-    totalLessons = AppState.get().getCurriculumDoc().lessons.length
+    lessonIndex = @state.get "lessonIndex"
+    console.log "LessonIndex", lessonIndex
+    lessonsComplete = lessonIndex + 1
+    totalLessons = @lessons().length
     onConfirm = ()=>
       @goToNextLesson()
 
     onCancel = ()=>
       @goHome(null, false)
     
-    if AppState.get().isLastLesson()
+    isLastLesson = @isLastLesson()
+    console.log "Is last lesson ", isLastLesson
+    if @isLastLesson()
+      console.log "Is last lesson"
       new Award().sendAward( null, null, lessonsComplete, totalLessons)
       @goHome( null, true )
     else
+      console.log "Not last lesson"
       new Award().sendAward( onConfirm, onCancel, lessonsComplete, totalLessons )
 
+  @incrementLesson = =>
+    lessonIndex = @state.get "lessonIndex"
+    @state.set "lessonIndex", lessonIndex + 1
+
   @goToNextLesson = =>
-    if AppState.get().isLastLesson()
+    if @isLastLesson()
       @goHome(null, false)
     else
-      AppState.get().incrementLesson()
+      @incrementLesson()
       @incorrectResponses = []
       @displayModule(0)
 
@@ -209,6 +238,10 @@ Template.Lesson_view_page.onCreated ()->
       completedCurriculum: completedCurriculum
       numberOfModulesInLesson: lesson?.modules.length
     }
+    console.log "About to increment the level"
+    AppState.get().incrementLevel()
+    console.log "New level"
+    console.log AppState.get().getLevel()
     FlowRouter.go "home"
 
   @displayModule = (index) =>
@@ -253,11 +286,6 @@ Template.Lesson_view_page.onCreated ()->
       longSwipes: false
       followFinger: false
     }
-    @swiper.on "slideChangeStart", ()->
-      console.log "SLIDE CHANGE STARt"
-
-    @swiper.once "sliderMove", ()->
-      console.log "SWIPER MOVE"
 
   @isBonus = (module) =>
     lesson = @getLesson()
@@ -285,11 +313,9 @@ Template.Lesson_view_page.onCreated ()->
     @state.set "playingVideo", true
 
   @onStopVideo = =>
-    console.log "stopping the video"
     @state.set "playingVideo", false
 
   @onVideoEnd = =>
-    console.log "video end"
     @state.set "playingVideo", false
     @state.set "nextButtonAnimated", true
 
@@ -322,7 +348,6 @@ Template.Lesson_view_page.helpers
 
   footerArgs: ->
     instance = Template.instance()
-    console.log "Calculating footer args"
     return {
       homeButton: {
         onClick: instance.goHome
@@ -345,7 +370,6 @@ Template.Lesson_view_page.helpers
     return instance.getLesson()?.title
 
   moduleArgs: (module) ->
-    console.log "calculating module args"
     instance = Template.instance()
     isQuestion = (type) ->
       return type == "BINARY" or type == "SCENARIO" or type == "MULTIPLE_CHOICE"
