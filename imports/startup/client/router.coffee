@@ -40,6 +40,23 @@ FlowRouter.route '/', {
 }
 
 ###
+# Select Language
+###
+FlowRouter.route '/select_language', {
+  name: "select_language"
+  action: ( params, qparams )->
+    console.log "In the route for select lang"
+    hospital = AppState.get().getHospital()
+    condition = AppState.get().getCondition()
+    language = AppState.get().getLanguage()
+    analytics.identify hospital, {
+      hospital: hospital,
+      condition: condition,
+      language: language
+    }
+    BlazeLayout.render 'Layout', { main : 'Select_language_page' }
+}
+###
 # Introduction
 ###
 FlowRouter.route '/introduction', {
@@ -64,6 +81,8 @@ FlowRouter.route '/introduction', {
 FlowRouter.route '/level/:level', {
   name: "level"
   action: ( params, qparams )->
+    console.log "going to level"
+    console.log params.level
     hospital = AppState.get().getHospital()
     condition = AppState.get().getCondition()
     language = AppState.get().getLanguage()

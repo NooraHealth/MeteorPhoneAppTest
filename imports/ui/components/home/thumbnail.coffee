@@ -5,6 +5,7 @@ require '../../../api/content/global_template_helpers.coffee'
 
 Template.Home_thumbnail.onCreated ->
   # Data context validation
+  console.log "Creating a home thumbnail"
   @autorun =>
     schema = new SimpleSchema({
       "level.name": {type: String }
@@ -15,6 +16,7 @@ Template.Home_thumbnail.onCreated ->
 
 Template.Home_thumbnail.events
   'click' : ( e )->
+    console.log "CLICKING ON THE THUMBNAILL"
     data = Template.currentData()
     data.onLevelSelected data.level.name
 

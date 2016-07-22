@@ -18,23 +18,10 @@ require '../../ui/components/audio/audio.coffee'
 require '../../ui/components/shared/loading.coffee'
 
 Template.Home_page.onCreated ->
-  console.log "Creating the home page"
-  console.log "Creating the home page"
 
   @onLevelSelected = ( levelName ) ->
+    console.log "Level selected!!", levelName
     FlowRouter.go "level", { level: levelName }
-
-  @onLanguageSelected = (language) ->
-    analytics.track "Changed Language", {
-      fromLanguage: AppState.get().getLanguage()
-      toLanguage: language
-      condition: AppState.get().getCondition()
-    }
-
-    AppState.get().setLanguage language
-    FlowRouter.go "introduction"
-    levels = AppState.get().getLevels()
-    AppState.get().setLevel levels[0].name
 
   @autorun =>
    if Meteor.isCordova and Meteor.status().connected
