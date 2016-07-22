@@ -351,6 +351,7 @@ Template.Lesson_view_page.helpers
     return {
       homeButton: {
         onClick: instance.goHome
+        shouldShow: -> return true
       }
       nextButton: {
         onClick: instance.onNextButtonClicked

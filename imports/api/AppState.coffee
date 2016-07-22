@@ -1,5 +1,7 @@
 
 { Curriculums } = require("meteor/noorahealth:mongo-schemas")
+{ Lessons } = require("meteor/noorahealth:mongo-schemas")
+{ Modules } = require("meteor/noorahealth:mongo-schemas")
 
 class AppState
   @get: ()->
@@ -11,10 +13,9 @@ class AppState
       @dict = new PersistentReactiveDict name
       @dict.set "route", "Home_page"
       @levels = [
-        { name: "Introduction", image: "" },
-        { name: "Beginner", image: ""},
-        { name: "Intermediate", image: ""},
-        { name: "Advanced", image: ""}
+        { name: "Easy", image: ""},
+        { name: "Medium", image: ""},
+        { name: "Hard", image: ""}
       ]
 
     setCurriculumDownloaded: (id, state) ->
@@ -136,16 +137,20 @@ class AppState
     getLessons: ( levelName )=>
       curriculum = @getCurriculumDoc()
       if levelName == @levels[0].name
-        return curriculum.lessons.slice(0, 1)
+        return curriculum.lessons.slice(1, 2)
       if levelName == @levels[1].name
-        return curriculum.lessons.slice(1, 3)
+        return curriculum.lessons.slice(2, 4)
       if levelName == @levels[2].name
-        return curriculum.lessons.slice(3, 5)
-      if levelName == @levels[3].name
-        return curriculum.lessons.slice(5, 8)
+        return curriculum.lessons.slice(4, 6)
 
     getLevels: =>
       return @levels
+
+    getIntroductionModule: ()->
+      curriculum = @getCurriculumDoc()
+      lesson = Lessons.findOne { _id: curriculum?.lessons?[0] }
+      moduleId = lesson?.modules[0]
+      return Modules.findOne { _id: moduleId }
 
     isSubscribed: ->
       subscribed = @dict.get "subscribed"

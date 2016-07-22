@@ -10,6 +10,7 @@ require '../../ui/layouts/layout.coffee'
 require '../../ui/pages/home.coffee'
 require '../../ui/pages/select_language.coffee'
 require '../../ui/pages/lesson_view.coffee'
+require '../../ui/pages/introduction_video.coffee'
 #require '../../ui/pages/wrapper_page.coffee'
 
 if Meteor.isCordova
@@ -36,6 +37,24 @@ FlowRouter.route '/', {
         language: language
       }
       BlazeLayout.render 'Layout', { main : 'Home_page' }
+}
+
+###
+# Introduction
+###
+FlowRouter.route '/introduction', {
+  name: "introduction"
+  action: ( params, qparams )->
+    console.log "In the route for introduction"
+    hospital = AppState.get().getHospital()
+    condition = AppState.get().getCondition()
+    language = AppState.get().getLanguage()
+    analytics.identify hospital, {
+      hospital: hospital,
+      condition: condition,
+      language: language
+    }
+    BlazeLayout.render 'Layout', { main : 'Introduction_video_page' }
 }
 
 ###

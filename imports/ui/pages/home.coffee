@@ -32,7 +32,7 @@ Template.Home_page.onCreated ->
     }
 
     AppState.get().setLanguage language
-    AppState.get().setLevel "Introduction"
+    FlowRouter.go "introduction"
 
   @autorun =>
    if Meteor.isCordova and Meteor.status().connected
