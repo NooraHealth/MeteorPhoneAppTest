@@ -15,7 +15,7 @@ Template.Load_curriculums_page.onCreated ->
 
   @autorun =>
     console.log "Getting whether subscriptionsReady"
-    if ContentInterface.get().subscriptionsReady(@) and @firstRun
+    if ContentInterface.subscriptionsReady(@) and @firstRun
       @firstRun = false
       configuration = AppState.get().getConfiguration()
       curriculums = Curriculums.find { condition: configuration.condition }

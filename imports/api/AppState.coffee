@@ -39,7 +39,8 @@ class AppState
       @
 
     getLanguage: ->
-      @dict.get "language"
+      language = @dict.get "language"
+      if not language? then return null else return language
 
     getCurriculumDoc: ->
       if not @isConfigured()

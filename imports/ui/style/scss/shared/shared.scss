@@ -29,7 +29,7 @@ html, body {
 }
 
 .page {
-  background: $light-blue-1 !important;
+  background: $light-blue !important;
   color: #fff;
 
   a {
@@ -167,14 +167,9 @@ html, body {
   margin: auto;
 }
 
-.small-text {
-  font-size: 75%;
+.noora-button {
+  border-radius: 25px;
 }
-
-.large-text {
-  font-size: 150%;
-}
-
 .padding-sm {
   padding: 10px
 }
@@ -202,3 +197,30 @@ html, body {
 .hidden {
   opacity: 0;
 }
+
+/* -------------------------------- 
+
+ TEXT
+
+-------------------------------- */
+
+.color-green {
+  background-color: $green !important;
+}
+
+.color-red {
+  background-color: $red !important;
+}
+
+.small-text {
+  font-size: 75%;
+}
+
+.large-text {
+  font-size: 150%;
+}
+
+.bold-text {
+  font-weight: $bold-font-weight;
+}
+

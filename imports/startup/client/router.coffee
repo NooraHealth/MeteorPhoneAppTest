@@ -27,6 +27,8 @@ FlowRouter.route '/', {
     console.log "In the route for home"
     if not AppState.get().isConfigured()
       BlazeLayout.render 'Layout', { main : 'Configure_app_page' }
+    else if not AppState.get().getLanguage()
+      FlowRouter.go "select_language"
     else
       hospital = AppState.get().getHospital()
       condition = AppState.get().getCondition()
@@ -81,8 +83,6 @@ FlowRouter.route '/introduction', {
 FlowRouter.route '/level/:level', {
   name: "level"
   action: ( params, qparams )->
-    console.log "going to level"
-    console.log params.level
     hospital = AppState.get().getHospital()
     condition = AppState.get().getCondition()
     language = AppState.get().getLanguage()
@@ -91,7 +91,6 @@ FlowRouter.route '/level/:level', {
       condition: condition,
       language: language
     }
-    console.log "Going to the level page"
     BlazeLayout.render "Layout", { main: "Lesson_view_page" }
 
 }
@@ -111,6 +110,5 @@ if Meteor.isCordova
         condition: condition,
         language: language
       }
-      console.log "Going to the load curriculums page"
       BlazeLayout.render "Layout", { main: "Load_curriculums_page" }
   }

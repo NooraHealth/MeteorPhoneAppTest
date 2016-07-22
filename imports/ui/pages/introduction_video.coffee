@@ -9,7 +9,6 @@ require './introduction_video.html'
 
 Template.Introduction_video_page.onCreated ()->
 
-  console.log "INTRODUCTION VIDEO PAGE"
   @state = new ReactiveDict()
   @state.setDefault {
     playingVideo: false
@@ -40,7 +39,6 @@ Template.Introduction_video_page.onCreated ()->
 Template.Introduction_video_page.helpers
   modulesReady: ->
     instance = Template.instance()
-    console.log "Returning whether modules ready"
     return instance.subscriptionsReady()
   
   introModule: ->

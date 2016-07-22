@@ -328,13 +328,13 @@ Template.Lesson_view_page.onCreated ()->
     @subscribe "modules.all"
 
   @autorun =>
-    if ContentInterface.get().subscriptionsReady(@)
+    if ContentInterface.subscriptionsReady(@)
       @setCurrentModuleId()
 
 Template.Lesson_view_page.helpers
   modulesReady: ->
     instance = Template.instance()
-    return ContentInterface.get().subscriptionsReady(instance)
+    return ContentInterface.subscriptionsReady(instance)
 
   footerArgs: ->
     instance = Template.instance()
@@ -401,7 +401,7 @@ Template.Lesson_view_page.helpers
     isCurrent = instance.isCurrent(module._id)
     return {
       attributes: {
-        src: ContentInterface.get().getSrc module.correct_audio, "AUDIO"
+        src: ContentInterface.getSrc module.correct_audio, "AUDIO"
       }
       playing: playing and isCurrent
       replay: playing and replay and isCurrent
@@ -417,7 +417,7 @@ Template.Lesson_view_page.helpers
     isCurrent = instance.isCurrent(module._id)
     return {
       attributes: {
-        src: ContentInterface.get().getSrc module.audio, "AUDIO"
+        src: ContentInterface.getSrc module.audio, "AUDIO"
       }
       playing: playing and isCurrent
       replay: playing and replay and isCurrent
@@ -431,7 +431,7 @@ Template.Lesson_view_page.helpers
     playing = instance.state.get("soundEfffectPlaying") == "INCORRECT"
     return {
       attributes: {
-        src: ContentInterface.get().getSrc(ContentInterface.get().incorrectSoundEffectFilename(), "AUDIO")
+        src: ContentInterface.getSrc(ContentInterface.incorrectSoundEffectFilename(), "AUDIO")
       }
       playing: playing
       whenFinished: instance.stopPlayingSoundEffect
@@ -443,7 +443,7 @@ Template.Lesson_view_page.helpers
     playing = instance.state.get("soundEfffectPlaying") == "CORRECT"
     return {
       attributes: {
-        src: ContentInterface.get().getSrc(ContentInterface.get().correctSoundEffectFilename(), "AUDIO")
+        src: ContentInterface.getSrc(ContentInterface.correctSoundEffectFilename(), "AUDIO")
       }
       playing: playing
       whenFinished: instance.stopPlayingSoundEffect

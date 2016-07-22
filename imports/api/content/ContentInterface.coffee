@@ -82,4 +82,4 @@ class ContentInterface
     subscriptionsReady: (instance) ->
       return instance.subscriptionsReady()
 
-module.exports.ContentInterface = ContentInterface
+module.exports.ContentInterface = ContentInterface.get()

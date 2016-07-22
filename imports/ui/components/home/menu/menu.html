@@ -3,11 +3,13 @@
 
   <div class="content-block">
     <div class="list-block">
-      <ul>
+      <div class="row">
         {{#each language in languages}}
+          <div class="col-33">
           {{ >Home_language_menu_list_item (listItemArgs language) }}
+          </div>
         {{/each}}
-      </ul>
+      </div>
     </div>
   </div>
 </template>

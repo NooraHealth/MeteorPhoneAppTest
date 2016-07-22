@@ -211,7 +211,7 @@
   height: 100%;
   outline: none;
   border-radius: 50%;
-  background-color: $light-blue-2;
+  background-color: $light-blue;
   text-indent: -999em;
   cursor: pointer;
   position: absolute;
@@ -228,7 +228,7 @@
 .dotstyle-scaleup li a:hover,
 .dotstyle-scaleup li a:focus {
   opacity: 1;
-  background-color: $light-blue-1;
+  background-color: $light-blue;
 }
 
 .dotstyle-scaleup li.current a {

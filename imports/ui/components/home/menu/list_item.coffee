@@ -9,6 +9,10 @@ Template.Home_language_menu_list_item.onCreated ->
       language: {type: String}
     }).validate(Template.currentData())
 
+Template.Home_language_menu_list_item.helpers
+  boldedLanguage: ( language )->
+    return language.toUpperCase()
+
 Template.Home_language_menu_list_item.events
   'touchend': ( e , template )->
     instance = Template.instance()

@@ -5,7 +5,6 @@
 require 'meteor/loftsteinn:framework7-ios'
 
 Meteor.startup ()->
-  console.log "starup"
   if (Meteor.isCordova and not AppState.get().isSubscribed()) or Meteor.status().connected
     console.log("Subscribing to all")
     Meteor.subscribe "lessons.all"
@@ -14,7 +13,6 @@ Meteor.startup ()->
     AppState.get().setSubscribed true
 
   BlazeLayout.setRoot "body"
-
 
   this.App = new Framework7(
     materialRipple: true
