@@ -27,11 +27,7 @@ Template.Introduction_video_page.onCreated ()->
     @state.set "letsBeginButtonAnimated", true
 
   @videoPlaying = =>
-    console.log "Getting whether the video is playing"
     playing = @state.get "playingVideo"
-    console.log @state
-    console.log playing
-    console.log playing
     if playing? then return playing else return false
 
   @autorun =>
@@ -49,7 +45,6 @@ Template.Introduction_video_page.helpers
     return AppState.get().getIntroductionModule()
 
   footerArgs: ->
-    console.log "FOOTER ARGS"
     instance = Template.instance()
     return {
       homeButton: {
@@ -70,16 +65,7 @@ Template.Introduction_video_page.helpers
     }
 
   videoArgs: ( module ) ->
-    console.log "The module"
-    console.log module
     instance = Template.instance()
-    console.log "Getting the template instance()"
-    console.log instance
-    console.log instance.onPlayVideo
-    console.log instance.onStopVideo
-    console.log instance.onVideoEnd
-    console.log instance.videoPlaying
-    console.log instance.videoPlaying()
     data = {
       module: module
       onPlayVideo: instance.onPlayVideo
@@ -87,6 +73,5 @@ Template.Introduction_video_page.helpers
       onVideoEnd: instance.onVideoEnd
       playing: instance.videoPlaying()
     }
-    console.log data
     return data
 

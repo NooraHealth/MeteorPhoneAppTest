@@ -33,6 +33,8 @@ Template.Home_page.onCreated ->
 
     AppState.get().setLanguage language
     FlowRouter.go "introduction"
+    levels = AppState.get().getLevels()
+    AppState.get().setLevel levels[0].name
 
   @autorun =>
    if Meteor.isCordova and Meteor.status().connected

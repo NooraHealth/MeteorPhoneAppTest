@@ -120,19 +120,28 @@ class AppState
 
     getLevel: =>
       level = @dict.get "level"
-      if level? then return level else return null
+      if level?
+        return level
+      else
+        defaultLevel = @levels[0].name
+        @setLevel( defaultLevel )
+        return defaultLevel
 
     ##TODO this is a hack
     incrementLevel: =>
       level = @dict.get "level"
-      if level == "Introduction"
-        @dict.set "level", "Beginner"
-      if level == "Beginner"
-        @dict.set "level", "Intermediate"
-      if level == "Intermediate"
-        @dict.set "level", "Advanced"
-      if level == "Advanced"
-        @dict.set "level", "Introduction"
+      if level == @levels[0].name
+        console.log "Setting level to @levels[1]"
+        @dict.set "level", @levels[1].name
+      else if level == @levels[1].name
+        console.log "Setting level to @levels[2]"
+        @dict.set "level", @levels[2].name
+      else if level == @levels[2].name
+        console.log "Setting level to @levels[3]"
+        @dict.set "level", @levels[0].name
+      else
+        console.log "Setting level to @levels[0]"
+        @dict.set "level", @levels[0].name
 
     getLessons: ( levelName )=>
       curriculum = @getCurriculumDoc()

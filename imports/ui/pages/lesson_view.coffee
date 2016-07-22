@@ -238,10 +238,7 @@ Template.Lesson_view_page.onCreated ()->
       completedCurriculum: completedCurriculum
       numberOfModulesInLesson: lesson?.modules.length
     }
-    console.log "About to increment the level"
     AppState.get().incrementLevel()
-    console.log "New level"
-    console.log AppState.get().getLevel()
     FlowRouter.go "home"
 
   @displayModule = (index) =>
