@@ -170,19 +170,12 @@ Template.Lesson_view_page.onCreated ()->
     return AppState.get().getLessons( level )
   
   @isLastLesson = =>
-    console.log @state.get "lessonIndex"
-    console.log "Getting whether is last lesson"
-    console.log @state.get "lessonIndex"
-    console.log "Lesson index should have been 0"
-    console.log @lessons()
-    console.log @lessons().length - 1
     lessonIndex = @state.get "lessonIndex"
     return lessonIndex == @lessons().length - 1
 
 
   @celebrateCompletion = =>
     lessonIndex = @state.get "lessonIndex"
-    console.log "LessonIndex", lessonIndex
     lessonsComplete = lessonIndex + 1
     totalLessons = @lessons().length
     onConfirm = ()=>

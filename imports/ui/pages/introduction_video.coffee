@@ -32,6 +32,7 @@ Template.Introduction_video_page.onCreated ()->
 
   @autorun =>
    if Meteor.isCordova and Meteor.status().connected
+    console.log "Subscribing!!"
     @subscribe "curriculums.all"
     @subscribe "lessons.all"
     @subscribe "modules.all"
@@ -39,6 +40,7 @@ Template.Introduction_video_page.onCreated ()->
 Template.Introduction_video_page.helpers
   modulesReady: ->
     instance = Template.instance()
+    console.log "Returning whether modules ready"
     return instance.subscriptionsReady()
   
   introModule: ->
