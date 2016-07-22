@@ -45,22 +45,17 @@ class @ContentDownloader
         curriculums = cursor.fetch()
         console.log "Downloading these docs"
         console.log curriculums
-        console.log "number of curriculums in the database"
-        console.log Curriculums.find().count()
 
-        console.log "THUJGHJRIJSDKJ--------------------------------"
         console.log " The curriculums to download"
         console.log curriculums
         paths = []
         paths.push ContentInterface.get().getDirectory( "AUDIO" ) + ContentInterface.get().introFilename()
-        console.log "paths"
-        console.log paths
         paths.push ContentInterface.get().getDirectory( "AUDIO" ) + ContentInterface.get().correctSoundEffectFilename()
-        console.log "paths"
-        console.log paths
         paths.push ContentInterface.get().getDirectory( "AUDIO" ) + ContentInterface.get().incorrectSoundEffectFilename()
-        console.log "paths"
-        console.log paths
+        
+        levels = AppState.get().getLevels()
+        for level in levels
+          paths.push ContentInterface.get().getDirectory( "IMAGE" ) + level.image
 
         for curriculum in curriculums
           #curriculum = Curriculums.findOne { _id: docs[0]._id }
