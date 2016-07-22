@@ -49,12 +49,7 @@ Template.Home_page.helpers
       level: level
       onLevelSelected: instance.onLevelSelected
       isCurrentLevel: isCurrentLevel
-      #isCurrentLevel: false
     }
-
-  languageSelected: ->
-    language = AppState.get().getLanguage()
-    return language? and language isnt null
 
   levels: ->
     return AppState.get().getLevels()
