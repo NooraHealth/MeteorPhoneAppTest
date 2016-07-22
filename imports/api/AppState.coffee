@@ -13,9 +13,9 @@ class AppState
       @dict = new PersistentReactiveDict name
       @dict.set "route", "Home_page"
       @levels = [
-        { name: "Easy", image: "easy.png"},
-        { name: "Medium", image: "medium.png"},
-        { name: "Hard", image: "hard.png"}
+        { name: "EASY", image: "easy.png"},
+        { name: "MEDIUM", image: "medium.png"},
+        { name: "HARD", image: "hard.png"}
       ]
 
     setCurriculumDownloaded: (id, state) ->

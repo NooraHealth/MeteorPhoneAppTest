@@ -37,7 +37,7 @@ Template.Lesson_view_page_footer.helpers
     
   nextButtonArgs: (data) ->
     instance = Template.instance()
-    classes = 'link next-module-btn footer-button button color-blue button-fill swiper-button-next'
+    classes = 'link next-module-btn footer-button button color-orange button-fill swiper-button-next'
     if data.animated then classes += ' slide-up'
     return {
       attributes: {

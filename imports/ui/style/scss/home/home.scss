@@ -57,6 +57,10 @@
   min-height: 80px;
 }
 
+.select-level-button {
+  width: 75%;
+}
+
 
 /* -------------------------------- 
 
@@ -85,21 +89,4 @@
       width: 100px !important;
     }
   }
-}
-
-/* -------------------------------- 
-
- SIDE PANEL
-
--------------------------------- */
-
-.panel  {
-  padding-top: 30px;
-  background-color: $white !important;
-  width: 350px;
-}
-
-.item-title {
-  overflow: visible !important;
-  padding: inherit;
 }

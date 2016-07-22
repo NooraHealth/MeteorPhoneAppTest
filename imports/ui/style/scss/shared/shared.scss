@@ -74,6 +74,13 @@ html, body {
   height: 60px;
 }
 
+.navbar .center {
+  overflow: initial !important;
+  display: block !important;
+  margin: auto !important;
+  width: 100%;
+}
+
 /* -------------------------------- 
 
  ANIMATIONS
@@ -137,6 +144,16 @@ html, body {
 
 .card-footer {
   min-height: 80px;
+}
+
+.button {
+  line-height: 40px !important;
+  height: 40px !important;
+  border: 2px solid $white;
+}
+
+.card {
+  border-radius: 10px;
 }
 
 /* -------------------------------- 
@@ -224,3 +241,11 @@ html, body {
   font-weight: $bold-font-weight;
 }
 
+.demi-bold-text {
+  font-weight: $demi-bold-font-weight;
+}
+
+.blue-background {
+  background-color: $primary-blue;
+}
+ 
