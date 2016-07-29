@@ -4,12 +4,14 @@
 { BlazeLayout } = require 'meteor/kadira:blaze-layout'
 { FlowRouter } = require 'meteor/kadira:flow-router'
 { AppState } = require '../../api/AppState.coffee'
+{ TAPi18n } = require("meteor/tap:i18n")
 
 # PAGES
 require '../../ui/layouts/layout.coffee'
 require '../../ui/pages/home.coffee'
 require '../../ui/pages/select_language.coffee'
 require '../../ui/pages/lesson_view.coffee'
+require '../../ui/pages/introduction_video.coffee'
 #require '../../ui/pages/wrapper_page.coffee'
 
 if Meteor.isCordova
@@ -23,9 +25,10 @@ if Meteor.isCordova
 FlowRouter.route '/', {
   name: "home"
   action: ( params, qparams )->
-    console.log "In the route for home"
     if not AppState.get().isConfigured()
       BlazeLayout.render 'Layout', { main : 'Configure_app_page' }
+    else if not AppState.get().getLanguage()
+      FlowRouter.go "select_language"
     else
       hospital = AppState.get().getHospital()
       condition = AppState.get().getCondition()
@@ -35,15 +38,50 @@ FlowRouter.route '/', {
         condition: condition,
         language: language
       }
-      BlazeLayout.render 'Layout', { main : 'Select_language_page' }
+      BlazeLayout.render 'Layout', { main : 'Home_page' }
+}
+
+###
+# Select Language
+###
+FlowRouter.route '/select_language', {
+  name: "select_language"
+  action: ( params, qparams )->
+    console.log "In the route for select lang"
+    hospital = AppState.get().getHospital()
+    condition = AppState.get().getCondition()
+    language = AppState.get().getLanguage()
+    analytics.identify hospital, {
+      hospital: hospital,
+      condition: condition,
+      language: language
+    }
+    BlazeLayout.render 'Layout', { main : 'Select_language_page' }
+}
+###
+# Introduction
+###
+FlowRouter.route '/introduction', {
+  name: "introduction"
+  action: ( params, qparams )->
+    console.log "In the route for introduction"
+    hospital = AppState.get().getHospital()
+    condition = AppState.get().getCondition()
+    language = AppState.get().getLanguage()
+    analytics.identify hospital, {
+      hospital: hospital,
+      condition: condition,
+      language: language
+    }
+    BlazeLayout.render 'Layout', { main : 'Introduction_video_page' }
 }
 
 ###
 # Go through the modules in a lesson
 ###
 #FlowRouter.route '/lesson/:_id', {
-FlowRouter.route '/lessons', {
-  name: "lessons"
+FlowRouter.route '/level/:level', {
+  name: "level"
   action: ( params, qparams )->
     hospital = AppState.get().getHospital()
     condition = AppState.get().getCondition()
@@ -53,7 +91,6 @@ FlowRouter.route '/lessons', {
       condition: condition,
       language: language
     }
-    console.log "Going to the lessons page"
     BlazeLayout.render "Layout", { main: "Lesson_view_page" }
 
 }
@@ -73,6 +110,5 @@ if Meteor.isCordova
         condition: condition,
         language: language
       }
-      console.log "Going to the load curriculums page"
       BlazeLayout.render "Layout", { main: "Load_curriculums_page" }
   }

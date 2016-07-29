@@ -1,8 +1,17 @@
 
 <template name='Home_language_menu_list_item'>
-  <li class='item-content'>
-    <div class="item-inner">
-      <div class="item-title"> {{language}}</div>
+  <div class='card blue-background'>
+    <div class="card-content">
+      <div class="card-header">
+        <div class="center large-text bold-text">
+          {{boldedLanguage language}}
+        </div>
+      </div>
+      <div class="card-header">
+        <a class="center color-green demi-bold-text large-text button-fill button button-round select-language-button">
+          SELECT
+        </a>
+      </div>
     </div>
-  </li>
+  </div>
 </template>

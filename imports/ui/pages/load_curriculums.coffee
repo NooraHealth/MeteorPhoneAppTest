@@ -15,7 +15,7 @@ Template.Load_curriculums_page.onCreated ->
 
   @autorun =>
     console.log "Getting whether subscriptionsReady"
-    if ContentInterface.get().subscriptionsReady(@) and @firstRun
+    if ContentInterface.subscriptionsReady(@) and @firstRun
       @firstRun = false
       configuration = AppState.get().getConfiguration()
       curriculums = Curriculums.find { condition: configuration.condition }
@@ -28,7 +28,7 @@ Template.Load_curriculums_page.onCreated ->
           if e
             AppState.get().setError e
           AppState.get().setShouldPlayIntro true
-          FlowRouter.go "home"
+          FlowRouter.go "select_language"
           #diconnect from the server to freeze the app at its current state
           if Meteor.settings.public.METEOR_ENV == "production"
             Meteor.disconnect()

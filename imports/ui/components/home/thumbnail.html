@@ -1,22 +1,19 @@
 
 <template name="Home_thumbnail">
-  <div class="lesson-card card {{#if isCurrentLesson}} current-lesson {{else}} faded {{/if}}">
+  <div class="lesson-card card blue-background {{#if isCurrentLevel}} current-lesson {{else}} faded {{/if}}">
     <div class="card-content">
+      <div class="card-header js-scroll-into-view">
+        <p class="center large-text bold-text">{{level.name}}</p>
+      </div>
 
       <div class="lesson-card-image card-header">
         <div class="overlay-wrapper thumbnail-image"> 
-          {{#if isCurrentLesson}}
-            <div class="inner-overlay-wrapper">
-              <img src="/play-button-overlay2.png" class="animate-scale animated-overlay"/>
-            </div>
-          {{/if}}
-
-          <img src="{{getSrc lesson.image}}" class='lazy'/>
+          <img src="{{getSrc level.image "IMAGE"}}" class='lazy'/>
         </div> 
       </div>
 
       <div class="card-footer js-scroll-into-view">
-        <p class="center large-text">{{lesson.title}}</p>
+        <a class="center bold-text large-text {{#if isCurrentLevel}} color-green button-fill animate-scale {{/if}} button button-round select-level-button"> LETS BEGIN </a>
       </div>
 
     </div>

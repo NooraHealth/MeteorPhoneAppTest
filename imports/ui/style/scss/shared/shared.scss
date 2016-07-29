@@ -29,7 +29,7 @@ html, body {
 }
 
 .page {
-  background: $light-blue-1 !important;
+  background: $light-blue !important;
   color: #fff;
 
   a {
@@ -72,6 +72,13 @@ html, body {
 .navbar {
   background-color: $primary-blue !important;
   height: 60px;
+}
+
+.navbar .center {
+  overflow: initial !important;
+  display: block !important;
+  margin: auto !important;
+  width: 100%;
 }
 
 /* -------------------------------- 
@@ -139,6 +146,16 @@ html, body {
   min-height: 80px;
 }
 
+.button {
+  line-height: 40px !important;
+  height: 40px !important;
+  border: 2px solid $white;
+}
+
+.card {
+  border-radius: 10px;
+}
+
 /* -------------------------------- 
 
  ALIGNMENT
@@ -167,14 +184,9 @@ html, body {
   margin: auto;
 }
 
-.small-text {
-  font-size: 75%;
+.noora-button {
+  border-radius: 25px;
 }
-
-.large-text {
-  font-size: 150%;
-}
-
 .padding-sm {
   padding: 10px
 }
@@ -202,3 +214,38 @@ html, body {
 .hidden {
   opacity: 0;
 }
+
+/* -------------------------------- 
+
+ TEXT
+
+-------------------------------- */
+
+.color-green {
+  background-color: $green !important;
+}
+
+.color-red {
+  background-color: $red !important;
+}
+
+.small-text {
+  font-size: 75%;
+}
+
+.large-text {
+  font-size: 150%;
+}
+
+.bold-text {
+  font-weight: $bold-font-weight;
+}
+
+.demi-bold-text {
+  font-weight: $demi-bold-font-weight;
+}
+
+.blue-background {
+  background-color: $primary-blue;
+}
+ 

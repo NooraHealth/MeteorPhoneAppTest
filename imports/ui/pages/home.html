@@ -3,38 +3,31 @@
     <div data-page="index" class="page navbar-fixed toolbar-fixed">
 
       {{#Navbar}}
-        <a data-panel="right" id="open_side_panel" class="open-panel right-aligned">Select Language</a>
+        <!--<a data-panel="right" id="open_side_panel" class="open-panel right-aligned">Select Language</a>-->
+        <a href="/select_language" class="right button">SELECT LANGUAGE</a>
       {{/Navbar}}
 
 
       <div class="page-content">
-        <div class="panel-overlay"></div>
         <!--{{#if subscriptionsReady}}-->
         <!-- Left panel, let it be with reveal effect -->
-          {{#if curriculumsReady}}
-            {{#if languageSelected}}
-              <div class="panel panel-cover panel-right">
-                {{>Home_language_menu (menuArgs)}}
-              </div>
+          
+        {{_ "next" lang="en"}}
+        {{_ "next" lang="hi"}}
+        {{_ "next" lang="kd"}}
 
-              <div class="content-block inner-container">
-                <div class="list-block">
-                  <div class="cards-list">
-                    <ul class="lessons-list">
-                      {{#each lesson in lessons}}
-                        {{ >Home_thumbnail (thumbnailArgs lesson)}}
-                      {{/each}}
-                    </ul>
+          {{#if curriculumsReady}}
+            <div class="content-block inner-container">
+              <div class="row no-gutter">
+                {{#each level in levels}}
+                  <div class="col-auto">
+                  {{ >Home_thumbnail (thumbnailArgs level)}}
                   </div>
-                </div>
+                {{/each}}
               </div>
-            {{else}}
-              {{>Home_language_menu (menuArgs)}}
+            </div>
           {{/if}}
-        {{/if}}
       </div>
     </div>
-    {{> Home_page_footer }}
-    {{> Audio (audioArgs) }}
 </template>
 

@@ -67,7 +67,7 @@ Template.Lesson_view_page_multiple_choice.onCreated ->
     
     mapData = (option, i) ->
       map[option] = {
-        src: ContentInterface.get().getSrc( option, "IMAGE")
+        src: ContentInterface.getSrc( option, "IMAGE")
         class: getClasses(option)
       }
 
@@ -92,7 +92,7 @@ Template.Lesson_view_page_multiple_choice.helpers
   audioArgs: (data) ->
     return {
       attributes: {
-        src: ContentInterface.get().getUrl data.src
+        src: ContentInterface.getSrc data.src, "AUDIO"
       }
       playing: data.playing
       whenFinished: data.onFinish

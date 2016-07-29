@@ -1,5 +1,8 @@
 
 { Curriculums } = require("meteor/noorahealth:mongo-schemas")
+{ Lessons } = require("meteor/noorahealth:mongo-schemas")
+{ Modules } = require("meteor/noorahealth:mongo-schemas")
+{ TAPi18n } = require("meteor/tap:i18n")
 
 class AppState
   @get: ()->
@@ -10,21 +13,17 @@ class AppState
     constructor: (name) ->
       @dict = new PersistentReactiveDict name
       @dict.set "route", "Home_page"
-
-    setLessonIndex: (i) ->
-      @dict.setPersistent "lessonIndex", i
-      @
-
-    getLessonIndex: ->
-      @dict.get "lessonIndex"
-
-    isLastLesson: ->
-      return @getLessonIndex() == @getCurriculumDoc().lessons.length - 1
-
-    incrementLesson: ->
-      index = @getLessonIndex()
-      @setLessonIndex ++index
-      @
+      @levels = [
+        { name: "EASY", image: "easy.png"},
+        { name: "MEDIUM", image: "medium.png"},
+        { name: "HARD", image: "hard.png"}
+      ]
+      
+      @langTags = [
+        english: "en",
+        hindi: "hi",
+        kannada: "ka"
+      ]
 
     setCurriculumDownloaded: (id, state) ->
       @dict.setPersistent "curriculumDownloaded#{id}", state
@@ -43,12 +42,19 @@ class AppState
       @dict.get "percentLoaded"
 
     setLanguage: (language) ->
-      @dict.setPersistent "language", language
-      @setLessonIndex 0
+      console.log "The langTag"
+      console.log @_getLangTag language
+      TAPi18n.setLanguage @_getLangTag language
+      @dict.set "language", language
       @
 
     getLanguage: ->
-      @dict.get "language"
+      language = @dict.get "language"
+      if not language? then return null else return language
+
+    _getLangTag: (language) ->
+      return @langTags[language.toLowerCase()]
+
 
     getCurriculumDoc: ->
       if not @isConfigured()
@@ -123,6 +129,52 @@ class AppState
     setSubscribed: (state) ->
       @dict.set "subscribed", state
       return @
+
+    setLevel: ( level )=>
+      @dict.set "level", level
+
+    getLevel: =>
+      level = @dict.get "level"
+      if level?
+        return level
+      else
+        defaultLevel = @levels[0].name
+        @setLevel( defaultLevel )
+        return defaultLevel
+
+    ##TODO this is a hack
+    incrementLevel: =>
+      level = @dict.get "level"
+      if level == @levels[0].name
+        console.log "Setting level to @levels[1]"
+        @dict.set "level", @levels[1].name
+      else if level == @levels[1].name
+        console.log "Setting level to @levels[2]"
+        @dict.set "level", @levels[2].name
+      else if level == @levels[2].name
+        console.log "Setting level to @levels[3]"
+        @dict.set "level", @levels[0].name
+      else
+        console.log "Setting level to @levels[0]"
+        @dict.set "level", @levels[0].name
+
+    getLessons: ( levelName )=>
+      curriculum = @getCurriculumDoc()
+      if levelName == @levels[0].name
+        return curriculum.lessons.slice(1, 2)
+      if levelName == @levels[1].name
+        return curriculum.lessons.slice(2, 4)
+      if levelName == @levels[2].name
+        return curriculum.lessons.slice(4, 6)
+
+    getLevels: =>
+      return @levels
+
+    getIntroductionModule: ()->
+      curriculum = @getCurriculumDoc()
+      lesson = Lessons.findOne { _id: curriculum?.lessons?[0] }
+      moduleId = lesson?.modules[0]
+      return Modules.findOne { _id: moduleId }
 
     isSubscribed: ->
       subscribed = @dict.get "subscribed"

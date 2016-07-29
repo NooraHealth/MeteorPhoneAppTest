@@ -77,7 +77,7 @@ Template.Lesson_view_page_video.helpers
     return {
       title: module.title
       class: "video-module center"
-      src: ContentInterface.get().getSrc(module.video, "VIDEO")
+      src: ContentInterface.getSrc(module.video, "VIDEO")
       controls: true
     }
   

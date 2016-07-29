@@ -18,38 +18,15 @@ require '../../ui/components/audio/audio.coffee'
 require '../../ui/components/shared/loading.coffee'
 
 Template.Home_page.onCreated ->
+  console.log "The app language", AppState.get().getLanguage()
+  console.log TAPi18n.getLanguages()
+  console.log TAPi18n.getLanguage()
+  console.log TAPi18n.__ "next" , {}, "en"
+  console.log TAPi18n.__ "next" , {}, "hi"
+  console.log TAPi18n.__ "next" , {}, "kd"
 
-  @getLessonDocuments = =>
-    curriculum = @getCurriculumDoc()
-    docs = curriculum?.getLessonDocuments()
-    return docs
-
-  @getCurriculumDoc = =>
-    id = AppState.get().getCurriculumId()
-    return Curriculums?.findOne {_id: id }
-
-  @currentLessonId = =>
-    curriculum = @getCurriculumDoc()
-    numLessons = if curriculum then curriculum.lessons.length else 0
-    if not curriculum? then return 0
-    lessonIndex = AppState.get().getLessonIndex()
-    if lessonIndex >= numLessons
-      lessonIndex = 0
-      AppState.get().setLessonIndex lessonIndex
-    return curriculum?.lessons?[lessonIndex]
-
-  @onLessonSelected = (id) ->
-    FlowRouter.go "lesson", {_id: id}
-
-  @onLanguageSelected = (language) ->
-    analytics.track "Changed Language", {
-      fromLanguage: AppState.get().getLanguage()
-      toLanguage: language
-      condition: AppState.get().getCondition()
-    }
-
-    AppState.get().setLanguage language
-    AppState.get().setLessonIndex 0
+  @onLevelSelected = ( levelName ) ->
+    FlowRouter.go "level", { level: levelName }
 
   @autorun =>
    if Meteor.isCordova and Meteor.status().connected
@@ -59,40 +36,20 @@ Template.Home_page.onCreated ->
 
 Template.Home_page.helpers
   curriculumsReady: ->
-    console.log "CURRICUKUMS READY BEING CALLEd"
     instance = Template.instance()
     return instance.subscriptionsReady()
 
-  menuArgs: ->
+  thumbnailArgs: (level ) ->
+    instance = Template.instance()
+    isCurrentLevel = ( AppState.get().getLevel() == level.name )
     return {
-      onLanguageSelected: instance.onLanguageSelected
-      languages: ['English', 'Hindi', 'Kannada']
+      level: level
+      onLevelSelected: instance.onLevelSelected
+      isCurrentLevel: isCurrentLevel
     }
 
-  thumbnailArgs: (lesson) ->
-    instance = Template.instance()
-    isCurrentLesson = ( lesson?._id == instance.currentLessonId() )
-    return {
-      lesson: lesson
-      onLessonSelected: instance.onLessonSelected
-      isCurrentLesson: isCurrentLesson
-    }
-
-  audioArgs: ->
-    instance = Template.instance()
-    setPlayIntroToFalse = -> AppState.get().setShouldPlayIntro false
-    return {
-      attributes: {
-        src: ContentInterface.get().getSrc(ContentInterface.get().introFilename(), "AUDIO")
-      }
-      playing: AppState.get().getShouldPlayIntro()
-      whenPaused: setPlayIntroToFalse
-      whenFinished: setPlayIntroToFalse
-    }
-
-  lessons: ->
-    instance = Template.instance()
-    return instance.getLessonDocuments()
+  levels: ->
+    return AppState.get().getLevels()
 
 Template.Home_page.events
   'click #open_side_panel': (e, template) ->

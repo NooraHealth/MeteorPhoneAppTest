@@ -45,22 +45,17 @@ class @ContentDownloader
         curriculums = cursor.fetch()
         console.log "Downloading these docs"
         console.log curriculums
-        console.log "number of curriculums in the database"
-        console.log Curriculums.find().count()
 
-        console.log "THUJGHJRIJSDKJ--------------------------------"
         console.log " The curriculums to download"
         console.log curriculums
         paths = []
-        paths.push ContentInterface.get().getDirectory( "AUDIO" ) + ContentInterface.get().introFilename()
-        console.log "paths"
-        console.log paths
-        paths.push ContentInterface.get().getDirectory( "AUDIO" ) + ContentInterface.get().correctSoundEffectFilename()
-        console.log "paths"
-        console.log paths
-        paths.push ContentInterface.get().getDirectory( "AUDIO" ) + ContentInterface.get().incorrectSoundEffectFilename()
-        console.log "paths"
-        console.log paths
+        paths.push ContentInterface.getDirectory( "AUDIO" ) + ContentInterface.introFilename()
+        paths.push ContentInterface.getDirectory( "AUDIO" ) + ContentInterface.correctSoundEffectFilename()
+        paths.push ContentInterface.getDirectory( "AUDIO" ) + ContentInterface.incorrectSoundEffectFilename()
+        
+        levels = AppState.get().getLevels()
+        for level in levels
+          paths.push ContentInterface.getDirectory( "IMAGE" ) + level.image
 
         for curriculum in curriculums
           #curriculum = Curriculums.findOne { _id: docs[0]._id }
@@ -87,7 +82,7 @@ class @ContentDownloader
         #filteredFiles = []
         #files = ({
           #path: path
-          ##url: ContentInterface.get().getEndpoint(path),
+          ##url: ContentInterface.getEndpoint(path),
           ##name: getFileName(path, index)
         #} for path, index in paths )
         #filteredFiles.push file for file in files when not OfflineFiles.findOne({url: file.url})?
@@ -131,7 +126,7 @@ class @ContentDownloader
 
         downloadFile = (path) ->
           fsPath = fs.root.toURL() + path
-          ft.download(ContentInterface.get().getEndpoint(path), fsPath, getSuccessCallback(path, fsPath), getErrorCallback(path, fsPath), true)
+          ft.download(ContentInterface.getEndpoint(path), fsPath, getSuccessCallback(path, fsPath), getErrorCallback(path, fsPath), true)
 
         markAsResolved = (entry) ->
           numRecieved++
@@ -249,7 +244,7 @@ class @ContentDownloader
       modules = lesson.getModulesSequence()
       paths = []
       if lesson.image
-        paths.push ContentInterface.get().getDirectory("IMAGE") + lesson.image
+        paths.push ContentInterface.getDirectory("IMAGE") + lesson.image
 
       for module in modules
         paths.merge @_allContentPathsInModule(module)
@@ -259,15 +254,15 @@ class @ContentDownloader
     _allContentPathsInModule: (module) ->
       paths = []
       if module.image
-        paths.push ContentInterface.get().getDirectory("IMAGE") + module.image
+        paths.push ContentInterface.getDirectory("IMAGE") + module.image
       if module.video
-        paths.push ContentInterface.get().getDirectory("VIDEO") + module.video
+        paths.push ContentInterface.getDirectory("VIDEO") + module.video
       if module.audio
-        paths.push ContentInterface.get().getDirectory("AUDIO") + module.audio
+        paths.push ContentInterface.getDirectory("AUDIO") + module.audio
       if module.correct_audio
-        paths.push ContentInterface.get().getDirectory("AUDIO") + module.correct_audio
+        paths.push ContentInterface.getDirectory("AUDIO") + module.correct_audio
       if module.options and module.type == 'MULTIPLE_CHOICE'
-        paths.merge (ContentInterface.get().getDirectory("IMAGE") + option for option in module.options when option?)
+        paths.merge (ContentInterface.getDirectory("IMAGE") + option for option in module.options when option?)
       return paths
 
 

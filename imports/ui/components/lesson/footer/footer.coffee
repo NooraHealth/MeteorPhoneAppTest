@@ -8,6 +8,7 @@ Template.Lesson_view_page_footer.onCreated ->
   @autorun =>
     new SimpleSchema({
       "homeButton.onClick": {type: Function}
+      "homeButton.shouldShow": {type: Function}
       "replayButton.onClick": {type: Function}
       "replayButton.shouldShow": {type: Function}
       "nextButton.onClick": {type: Function}
@@ -22,10 +23,13 @@ Template.Lesson_view_page_footer.onCreated ->
 
 Template.Lesson_view_page_footer.helpers
   goHomeButtonArgs: (data) ->
+    classes = 'link gohome-btn button footer-button color-green button-rounded button-fill'
+    if not data.shouldShow()
+      classes += " hidden"
     return {
       attributes: {
         id: "homeBtn"
-        class: 'link gohome-btn button footer-button color-green button-rounded button-fill'
+        class: classes
       }
       content: '<i class="fa fa-home fa-2x"></i> HOME'
       onClick: data.onClick
@@ -33,7 +37,7 @@ Template.Lesson_view_page_footer.helpers
     
   nextButtonArgs: (data) ->
     instance = Template.instance()
-    classes = 'link next-module-btn footer-button button color-blue button-fill swiper-button-next'
+    classes = 'link next-module-btn footer-button button color-orange button-fill swiper-button-next'
     if data.animated then classes += ' slide-up'
     return {
       attributes: {
@@ -49,9 +53,6 @@ Template.Lesson_view_page_footer.helpers
     classes = ''
     if animated then classes += ' animate-scale'
     return classes
-
-  shouldShow: (data) ->
-    return data.shouldShow()
 
   replayButtonArgs: (data) ->
     classes = 'link footer-button button button-rounded color-pink button-fill'

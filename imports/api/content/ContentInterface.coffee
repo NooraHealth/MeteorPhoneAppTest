@@ -23,7 +23,10 @@ class ContentInterface
 
     constructor: ->
       Template.registerHelper 'getSrc', ( filename, type )=>
-        @getSrc filename, type
+        console.log "getting the src of #{filename}"
+        if filename? and filename != ""
+          @getSrc filename, type
+        else return ""
 
       @remoteContentEndpoint = Meteor.settings.public.CONTENT_SRC
 
@@ -79,4 +82,4 @@ class ContentInterface
     subscriptionsReady: (instance) ->
       return instance.subscriptionsReady()
 
-module.exports.ContentInterface = ContentInterface
+module.exports.ContentInterface = ContentInterface.get()
