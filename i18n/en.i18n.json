@@ -1,4 +1,10 @@
 {
   "next": "NEXT",
-  "finish": "FINISH"
+  "finish": "FINISH",
+  "beginner": "Beginner",
+  "intermediate": "Intermediate",
+  "advanced": "Advanced",
+  "begin": "Lets Begin",
+  "select_language": "Please Select Language",
+  "name": "English"
 }

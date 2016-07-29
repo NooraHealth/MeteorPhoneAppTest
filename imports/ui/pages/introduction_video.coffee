@@ -2,6 +2,7 @@
 { Modules } = require("meteor/noorahealth:mongo-schemas")
 { ContentInterface }= require('../../api/content/ContentInterface.coffee')
 { AppState }= require('../../api/AppState.coffee')
+{ TAPi18n } = require("meteor/tap:i18n")
 
 require '../components/lesson/modules/video.coffee'
 require '../components/lesson/footer/footer.coffee'
@@ -46,6 +47,8 @@ Template.Introduction_video_page.helpers
 
   footerArgs: ->
     instance = Template.instance()
+    console.log "The language"
+    console.log TAPi18n.getLanguage()
     return {
       homeButton: {
         onClick: ->
@@ -53,7 +56,7 @@ Template.Introduction_video_page.helpers
       }
       nextButton: {
         onClick: -> FlowRouter.go "home"
-        text: "LETS BEGIN"
+        text: TAPi18n.__ "begin"
         onRendered: ->
         animated: instance.state.get("letsBeginButtonAnimated")
       }

@@ -19,11 +19,11 @@ class AppState
         { name: "HARD", image: "hard.png"}
       ]
       
-      @langTags = [
+      @langTags = {
         english: "en",
         hindi: "hi",
-        kannada: "ka"
-      ]
+        kannada: "kd"
+      }
 
     setCurriculumDownloaded: (id, state) ->
       @dict.setPersistent "curriculumDownloaded#{id}", state
@@ -42,8 +42,6 @@ class AppState
       @dict.get "percentLoaded"
 
     setLanguage: (language) ->
-      console.log "The langTag"
-      console.log @_getLangTag language
       TAPi18n.setLanguage @_getLangTag language
       @dict.set "language", language
       @
@@ -53,6 +51,10 @@ class AppState
       if not language? then return null else return language
 
     _getLangTag: (language) ->
+      console.log "Getting the langTag of #{language}"
+      console.log @langTags
+      console.log @langTags[language]
+      console.log @langTags[language.toLowerCase()]
       return @langTags[language.toLowerCase()]
 
 
