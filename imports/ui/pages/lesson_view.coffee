@@ -5,7 +5,6 @@
 
 { AppState } = require('../../api/AppState.coffee')
 { Award } = require('../components/lesson/popups/award.coffee')
-{ BonusVideoPopup } = require('../components/lesson/popups/watchBonusVideo.coffee')
 { ContentInterface }= require('../../api/content/ContentInterface.coffee')
 { TAPi18n } = require("meteor/tap:i18n")
 
@@ -18,14 +17,6 @@ require '../components/lesson/modules/video.coffee'
 require '../components/lesson/footer/footer.coffee'
 
 Template.Lesson_view_page.onCreated ()->
-
-  language = AppState.getLanguage()
-  console.log "Setting the language to #{language.toLowerCase()}"
-  
-  console.log "Supported language "
-  console.log TAPi18n.getLanguages()
-  console.log TAPi18n
-  TAPi18n.setLanguage(language.toLowerCase())
 
   @state = new ReactiveDict()
   @state.setDefault {
@@ -194,13 +185,10 @@ Template.Lesson_view_page.onCreated ()->
       @goHome(null, false)
     
     isLastLesson = @isLastLesson()
-    console.log "Is last lesson ", isLastLesson
     if @isLastLesson()
-      console.log "Is last lesson"
       new Award().sendAward( null, null, lessonsComplete, totalLessons)
       @goHome( null, true )
     else
-      console.log "Not last lesson"
       new Award().sendAward( onConfirm, onCancel, lessonsComplete, totalLessons )
 
   @incrementLesson = =>
@@ -215,18 +203,6 @@ Template.Lesson_view_page.onCreated ()->
       @incorrectResponses = []
       @displayModule(0)
 
-  @offerBonusVideo = =>
-    console.log "Offering bonus video!!"
-    onConfirm = =>
-      #@playVideo()
-
-    onCancel = =>
-      #data.onCancel()
-      @goToNextLesson()
-
-    aFewWrong = @incorrectResponses.length > 1
-    new BonusVideoPopup().display onConfirm, onCancel, aFewWrong
-      
   @goHome = ( event, completedCurriculum) =>
     lesson = @getLesson()
     module = @getCurrentModule()
@@ -244,23 +220,16 @@ Template.Lesson_view_page.onCreated ()->
     FlowRouter.go "home"
 
   @displayModule = (index) =>
-    console.log "Displaying module #{index}"
     @state.set "moduleIndex", index
     @state.set "nextButtonAnimated", false
     @state.set "audioPlaying", "QUESTION"
     @setCurrentModuleId()
-    console.log "Slideing to #{index}"
-    console.log @swiper
     @swiper.slideTo index
     module = @getCurrentModule()
-    if @isBonus module
-      @offerBonusVideo()
 
   @goToNextModule = =>
-    console.log "Going to the next module"
     index = @state.get "moduleIndex"
     newIndex = ++index
-    console.log "Initializing the swiper"
     #temporary shim to fix the issues with swiper not re
     #initializing when changing to a new lesson
     #leading to bugs when the lesson has more modules

@@ -8,7 +8,6 @@ require '../../../../api/global_template_helpers.coffee'
 Template.Lesson_view_page_binary.onCreated ->
   # Data context validation
   @autorun =>
-    console.log "Validating the scenario"
     new SimpleSchema({
       module: {type: Modules._helpers}
       language: {type: String}
@@ -20,7 +19,6 @@ Template.Lesson_view_page_binary.onCreated ->
       onCompletedQuestion: {type: Function}
     }).validate(Template.currentData())
     @data = Template.currentData()
-    console.log "validated scenario"
 
   #set the state
   @state = new ReactiveDict()
@@ -76,10 +74,7 @@ Template.Lesson_view_page_binary.helpers
   buttonArgs: (option, language) ->
     instance = Template.instance()
     attributes = instance.state.get "optionAttributes"
-    console.log "Translateing text", option
     text = AppState.translate option.toLowerCase(), language
-    console.log "Translated text"
-    console.log "angage ", language
     return {
       attributes: attributes[option]
       content: text.toUpperCase()

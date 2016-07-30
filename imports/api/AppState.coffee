@@ -55,8 +55,6 @@ class AppState
       return TAPi18n.__ key, {}, tag
 
     _getLangTag: (language) ->
-      console.log "Getting the langtag of #{language}"
-      console.log language
       return @langTags[language.toLowerCase()]
 
     getCurriculumDoc: ->
@@ -156,11 +154,11 @@ class AppState
     getLessons: ( levelName )=>
       curriculum = @getCurriculumDoc()
       if levelName == @levels[0].name
-        return curriculum.lessons.slice(1, 2)
-      if levelName == @levels[1].name
-        return curriculum.lessons.slice(2, 4)
+        return curriculum.lessons.slice(1, 5)
+      if levelName == @levels[1].name and curriculum.lessons.length >= 12
+        return curriculum.lessons.slice(5, 10)
       if levelName == @levels[2].name
-        return curriculum.lessons.slice(4, 6)
+        return curriculum.lessons.slice(10)
 
     getLevels: =>
       return @levels
