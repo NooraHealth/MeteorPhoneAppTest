@@ -76,10 +76,6 @@ Template.Lesson_view_page_scenario.onCreated ->
 Template.Lesson_view_page_scenario.helpers
   normalButtonArgs: (language, module) ->
     instance = Template.instance()
-    console.log "translating normal"
-    console.log language
-    console.log "The module"
-    console.log module
     translatedNormal = AppState.translate "normal", language
     return {
       attributes: {
@@ -92,8 +88,6 @@ Template.Lesson_view_page_scenario.helpers
 
   callDoctorButtonArgs: (language, module) ->
     instance = Template.instance()
-    console.log "translating calldoc"
-    console.log language
     translatedCallDoc = AppState.translate "call_doc", language
     return {
       attributes: {
@@ -106,8 +100,6 @@ Template.Lesson_view_page_scenario.helpers
 
   emergencyButtonArgs: (language, module) ->
     instance = Template.instance()
-    console.log "translating emergency"
-    console.log language
     translatedEmergency = AppState.translate "emergency", language
     return {
       attributes: {
