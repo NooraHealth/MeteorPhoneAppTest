@@ -12,10 +12,6 @@ require './home.html'
 require '../../ui/components/shared/navbar.html'
 require '../../ui/components/home/footer.html'
 require '../../ui/components/home/thumbnail.coffee'
-require '../../ui/components/home/menu/menu.coffee'
-require '../../ui/components/home/menu/list_item.coffee'
-require '../../ui/components/audio/audio.coffee'
-require '../../ui/components/shared/loading.coffee'
 
 Template.Home_page.onCreated ->
 

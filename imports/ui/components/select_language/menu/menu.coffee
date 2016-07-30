@@ -1,4 +1,5 @@
 
+require './list_item.coffee'
 require './menu.html'
 
 Template.Home_language_menu.onCreated ->

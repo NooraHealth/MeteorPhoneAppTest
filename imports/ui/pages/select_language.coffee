@@ -7,11 +7,9 @@ require './select_language.html'
 
 # COMPONENTS
 require '../../ui/components/shared/navbar.html'
-require '../../ui/components/home/menu/menu.coffee'
+require '../../ui/components/select_language/menu/menu.coffee'
 
 Template.Select_language_page.onCreated ->
-  console.log "Select language page created"
-
   @onLanguageSelected = (language) ->
     analytics.track "Changed Language", {
       fromLanguage: AppState.getLanguage()
