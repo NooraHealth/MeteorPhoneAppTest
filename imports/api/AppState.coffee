@@ -55,6 +55,8 @@ class AppState
       return TAPi18n.__ key, {}, tag
 
     _getLangTag: (language) ->
+      console.log "Getting the langtag of #{language}"
+      console.log language
       return @langTags[language.toLowerCase()]
 
     getCurriculumDoc: ->
