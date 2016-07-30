@@ -9,6 +9,7 @@ Template.Lesson_view_page_footer.onCreated ->
     new SimpleSchema({
       "homeButton.onClick": {type: Function}
       "homeButton.shouldShow": {type: Function}
+      "homeButton.text": {type: String}
       "replayButton.onClick": {type: Function}
       "replayButton.shouldShow": {type: Function}
       "nextButton.onClick": {type: Function}
@@ -19,6 +20,7 @@ Template.Lesson_view_page_footer.onCreated ->
       "pages.$.completed": {type: Boolean}
       "pages.$.incorrect": {type: Boolean}
       "pages.$.index": {type: Number}
+      language: {type: String}
     }).validate Template.currentData()
 
 Template.Lesson_view_page_footer.helpers
@@ -31,7 +33,7 @@ Template.Lesson_view_page_footer.helpers
         id: "homeBtn"
         class: classes
       }
-      content: '<i class="fa fa-home fa-2x"></i> HOME'
+      content: data.text
       onClick: data.onClick
     }
     

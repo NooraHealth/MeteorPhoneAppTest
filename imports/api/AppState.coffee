@@ -42,7 +42,7 @@ class AppState
       @dict.get "percentLoaded"
 
     setLanguage: (language) ->
-      TAPi18n.setLanguage @getLangTag language
+      TAPi18n.setLanguage @_getLangTag language
       @dict.set "language", language
       @
 
@@ -50,13 +50,12 @@ class AppState
       language = @dict.get "language"
       if not language? then return null else return language
 
-    getLangTag: (language) ->
-      console.log "Getting the langTag of #{language}"
-      console.log @langTags
-      console.log @langTags[language]
-      console.log @langTags[language.toLowerCase()]
-      return @langTags[language.toLowerCase()]
+    translate: ( key, language )->
+      tag = @_getLangTag language
+      return TAPi18n.__ key, {}, tag
 
+    _getLangTag: (language) ->
+      return @langTags[language.toLowerCase()]
 
     getCurriculumDoc: ->
       if not @isConfigured()

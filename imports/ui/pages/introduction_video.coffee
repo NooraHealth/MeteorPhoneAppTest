@@ -47,16 +47,17 @@ Template.Introduction_video_page.helpers
 
   footerArgs: ->
     instance = Template.instance()
-    console.log "The language"
-    console.log TAPi18n.getLanguage()
+    language = AppState.getLanguage()
     return {
+      language: language
       homeButton: {
         onClick: ->
         shouldShow: -> return false
+        text: ""
       }
       nextButton: {
         onClick: -> FlowRouter.go "home"
-        text: TAPi18n.__ "begin"
+        text: AppState.translate "begin", language
         onRendered: ->
         animated: instance.state.get("letsBeginButtonAnimated")
       }
@@ -69,8 +70,10 @@ Template.Introduction_video_page.helpers
 
   videoArgs: ( module ) ->
     instance = Template.instance()
+    language = AppState.getLanguage()
     data = {
       module: module
+      language: language
       onPlayVideo: instance.onPlayVideo
       onStopVideo: instance.onStopVideo
       onVideoEnd: instance.onVideoEnd

@@ -19,6 +19,7 @@ Template.Lesson_view_page_multiple_choice.onCreated ->
   @autorun =>
     schema = new SimpleSchema({
       module: {type: Modules._helpers}
+      language: {type: String}
       correctlySelectedClasses: {type: String}
       incorrectClasses: {type: String}
       incorrectlySelectedClasses: {type: String}

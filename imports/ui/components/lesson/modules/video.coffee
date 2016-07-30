@@ -15,6 +15,7 @@ Template.Lesson_view_page_video.onCreated ->
   @autorun =>
     schema = new SimpleSchema({
       module: {type: Modules._helpers}
+      language: {type: String}
       onPlayVideo: {type: Function, optional: true}
       onStopVideo: {type: Function, optional: true}
       onVideoEnd: {type: Function, optional: true}

@@ -296,13 +296,13 @@ Template.Lesson_view_page.onCreated ()->
     lessonComplete = @lessonComplete()
     if @lessonComplete() then @celebrateCompletion() else @goToNextModule()
 
+  @goHomeButtonText = =>
+    language = AppState.getLanguage()
+    return "<i class=''fa fa-home fa-2x'></i> " + AppState.translate "home", language
+
   @nextButtonText = =>
-    console.log "Translations"
-    console.log TAPi18n
-    console.log "GETing tlanguage #{TAPi18n.getLanguage()}"
-    console.log TAPi18n._ "finish"
-    console.log TAPi18n._ "next"
-    if @lessonComplete() then TAPil8n._ "finish" else TAPil8n._ "next" + '<i class="fa fa-arrow-right fa-2x"></i>'
+    language = AppState.getLanguage()
+    if @lessonComplete() then AppState.translate( "finish", language ) else AppState.translate( "next", language ) + '<i class="fa fa-arrow-right fa-2x"></i>'
 
   @afterReplay = =>
     @state.set "replayAudio", false
@@ -353,10 +353,13 @@ Template.Lesson_view_page.helpers
 
   footerArgs: ->
     instance = Template.instance()
+    language = AppState.getLanguage()
     return {
+      language: language
       homeButton: {
         onClick: instance.goHome
         shouldShow: -> return true
+        text: instance.goHomeButtonText()
       }
       nextButton: {
         onClick: instance.onNextButtonClicked
@@ -377,6 +380,7 @@ Template.Lesson_view_page.helpers
 
   moduleArgs: (module) ->
     instance = Template.instance()
+    language = AppState.getLanguage()
     isQuestion = (type) ->
       return type == "BINARY" or type == "SCENARIO" or type == "MULTIPLE_CHOICE"
 
@@ -385,6 +389,7 @@ Template.Lesson_view_page.helpers
       showAlert = if module.type == 'MULTIPLE_CHOICE' then false else true
       return {
         module: module
+        language: language
         incorrectClasses: instance.state.get "incorrectClasses"
         incorrectlySelectedClasses: instance.state.get "incorrectlySelectedClasses"
         correctlySelectedClasses: instance.state.get "correctlySelectedClasses"
@@ -395,13 +400,17 @@ Template.Lesson_view_page.helpers
     else if module.type == "VIDEO"
       return {
         module: module
+        language: language
         onPlayVideo: instance.onPlayVideo
         onStopVideo: instance.onStopVideo
         onVideoEnd: instance.onVideoEnd
         playing: isCurrentModule and instance.videoPlaying()
       }
     else
-      return {module: module}
+      return {
+        module: module
+        language: language
+      }
 
   hasAudio: (module) ->
     return module.audio?

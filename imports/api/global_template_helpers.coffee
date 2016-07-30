@@ -7,10 +7,7 @@
   #return ContentInterface.get().getSrc path, type
 
 Template.registerHelper 'translate', ( key, language )=>
-  console.log "Getting the translation"
-  tag = AppState.getLangTag language
-  return TAPi18n.__ key, {}, tag
-
+  AppState.translate key, language
 
 Template.registerHelper 'getSrc', ( filename, type )=>
   console.log "getting the src of #{filename}"

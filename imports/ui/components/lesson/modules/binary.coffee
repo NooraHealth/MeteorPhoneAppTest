@@ -9,6 +9,7 @@ Template.Lesson_view_page_binary.onCreated ->
   @autorun =>
     new SimpleSchema({
       module: {type: Modules._helpers}
+      language: {type: String}
       correctlySelectedClasses: {type: String}
       incorrectClasses: {type: String}
       incorrectlySelectedClasses: {type: String}
@@ -69,12 +70,13 @@ Template.Lesson_view_page_binary.onCreated ->
     instance.state.set "optionAttributes", map
 
 Template.Lesson_view_page_binary.helpers
-  buttonArgs: (option) ->
+  buttonArgs: (option, language) ->
     instance = Template.instance()
     attributes = instance.state.get "optionAttributes"
+    text = AppState.translate option, language
     return {
       attributes: attributes[option]
-      content: option.toUpperCase()
+      content: text.toUpperCase()
       onClick: instance.getOnSelected(instance, option)
     }
 
