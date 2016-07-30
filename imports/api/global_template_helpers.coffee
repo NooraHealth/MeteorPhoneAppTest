@@ -10,7 +10,6 @@ Template.registerHelper 'translate', ( key, language )=>
   AppState.translate key, language
 
 Template.registerHelper 'getSrc', ( filename, type )=>
-  console.log "getting the src of #{filename}"
   if filename? and filename != ""
     ContentInterface.getSrc filename, type
   else return ""

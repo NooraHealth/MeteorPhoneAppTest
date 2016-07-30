@@ -28,6 +28,7 @@ Template.Lesson_view_page_footer.helpers
     classes = 'link gohome-btn button footer-button color-green button-rounded button-fill'
     if not data.shouldShow()
       classes += " hidden"
+    console.log "The home button text", data.text
     return {
       attributes: {
         id: "homeBtn"

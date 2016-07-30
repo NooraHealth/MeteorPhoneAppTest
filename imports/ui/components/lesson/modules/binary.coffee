@@ -1,5 +1,6 @@
 { ContentInterface } = require('../../../../api/content/ContentInterface.coffee')
 { Modules } = require("meteor/noorahealth:mongo-schemas")
+{ AppState } = require("../../../../api/AppState.coffee")
 require "../../audio/audio.coffee"
 require "./binary.html"
 require '../../../../api/global_template_helpers.coffee'

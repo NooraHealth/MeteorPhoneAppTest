@@ -1,6 +1,7 @@
 
 { Modules } = require("meteor/noorahealth:mongo-schemas")
 { ContentInterface } = require('../../../../api/content/ContentInterface.coffee')
+{ AppState } = require("../../../../api/AppState.coffee")
 require '../../../../api/global_template_helpers.coffee'
 require "./scenario.html"
     
@@ -73,38 +74,38 @@ Template.Lesson_view_page_scenario.onCreated ->
         instance.data.onWrongChoice(option)
 
 Template.Lesson_view_page_scenario.helpers
-  normalButtonArgs: ->
+  normalButtonArgs: (language, module) ->
     instance = Template.instance()
-    module = instance.data.module
+    translatedNormal = AppState.translate "normal", language
     return {
       attributes: {
         id: "normalOptionForModule#{module._id}"
         class: instance.getNormalButtonClasses()
       }
-      content: '<i class="fa fa-home fa-2x"></i> NORMAL'
-      onClick: instance.getOnSelected( instance, instance.data.module, instance.NORMAL)
+      content: '<i class="fa fa-home fa-2x"></i> ' + translatedNormal.toUpperCase()
+      onClick: instance.getOnSelected( instance, module, instance.NORMAL)
     }
 
-  callDoctorButtonArgs: ->
+  callDoctorButtonArgs: (language, module) ->
     instance = Template.instance()
-    module = instance.data.module
+    translatedCallDoc = AppState.translate "call_doc", language
     return {
       attributes: {
         id: "calldocOptionForModule#{module._id}"
         class: instance.getCallDoctorButtonClasses()
       }
-      content: '<i class="fa fa-phone fa-2x"></i> CALL DOCTOR'
-      onClick: instance.getOnSelected( instance, instance.data.module, instance.CALLDOC)
+      content: '<i class="fa fa-phone fa-2x"></i> '  + translatedCallDoc.toUpperCase()
+      onClick: instance.getOnSelected( instance, module, instance.CALLDOC)
     }
 
-  emergencyButtonArgs: ->
+  emergencyButtonArgs: (language, module) ->
     instance = Template.instance()
-    module = instance.data.module
+    translatedEmergency = AppState.translate "emergency", language
     return {
       attributes: {
         id: "emergencyOptionForModule#{module._id}"
         class: instance.getEmergencyButtonClasses()
       }
-      content: '<i class="fa fa-ambulance fa-2x"></i> EMERGENCY'
-      onClick: instance.getOnSelected( instance, instance.data.module, instance.EMERGENCY)
+      content: '<i class="fa fa-ambulance fa-2x"></i> ' + translatedEmergency.toUpperCase()
+      onClick: instance.getOnSelected( instance, module, instance.EMERGENCY)
     }

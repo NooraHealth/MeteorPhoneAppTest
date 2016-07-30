@@ -298,7 +298,7 @@ Template.Lesson_view_page.onCreated ()->
 
   @goHomeButtonText = =>
     language = AppState.getLanguage()
-    return "<i class=''fa fa-home fa-2x'></i> " + AppState.translate "home", language
+    return "<i class='fa fa-home fa-2x'></i> " + AppState.translate("home", language)
 
   @nextButtonText = =>
     language = AppState.getLanguage()
