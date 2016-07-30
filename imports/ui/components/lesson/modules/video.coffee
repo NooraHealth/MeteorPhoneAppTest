@@ -1,6 +1,7 @@
 
 { Modules } = require("meteor/noorahealth:mongo-schemas")
 { ContentInterface } = require('../../../../api/content/ContentInterface.coffee')
+require '../../../../api/global_template_helpers.coffee'
 require "./video.html"
 
 Template.Lesson_view_page_video.onCreated ->

@@ -5,11 +5,13 @@
 require 'meteor/loftsteinn:framework7-ios'
 
 Meteor.startup ()->
-  if (Meteor.isCordova and not AppState.get().isSubscribed()) or Meteor.status().connected
+  TAPi18n.setLanguage "en"
+
+  if (Meteor.isCordova and not AppState.isSubscribed()) or Meteor.status().connected
     Meteor.subscribe "lessons.all"
     Meteor.subscribe "curriculums.all"
     Meteor.subscribe "modules.all"
-    AppState.get().setSubscribed true
+    AppState.setSubscribed true
 
   BlazeLayout.setRoot "body"
 

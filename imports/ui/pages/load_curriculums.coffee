@@ -17,17 +17,17 @@ Template.Load_curriculums_page.onCreated ->
     console.log "Getting whether subscriptionsReady"
     if ContentInterface.subscriptionsReady(@) and @firstRun
       @firstRun = false
-      configuration = AppState.get().getConfiguration()
+      configuration = AppState.getConfiguration()
       curriculums = Curriculums.find { condition: configuration.condition }
       if not Meteor.status().connected
-        AppState.get().setError(new Meteor.Error("Not Connected", "Please connect to data in order to download your curriculum."))
+        AppState.setError(new Meteor.Error("Not Connected", "Please connect to data in order to download your curriculum."))
       else
         onComplete = (e) ->
           console.log "SUCCESS LOADING"
           console.log e
           if e
-            AppState.get().setError e
-          AppState.get().setShouldPlayIntro true
+            AppState.setError e
+          AppState.setShouldPlayIntro true
           FlowRouter.go "select_language"
           #diconnect from the server to freeze the app at its current state
           if Meteor.settings.public.METEOR_ENV == "production"

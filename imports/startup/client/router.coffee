@@ -25,14 +25,15 @@ if Meteor.isCordova
 FlowRouter.route '/', {
   name: "home"
   action: ( params, qparams )->
-    if not AppState.get().isConfigured()
+    
+    if not AppState.isConfigured()
       BlazeLayout.render 'Layout', { main : 'Configure_app_page' }
-    else if not AppState.get().getLanguage()
+    else if not AppState.getLanguage()
       FlowRouter.go "select_language"
     else
-      hospital = AppState.get().getHospital()
-      condition = AppState.get().getCondition()
-      language = AppState.get().getLanguage()
+      hospital = AppState.getHospital()
+      condition = AppState.getCondition()
+      language = AppState.getLanguage()
       analytics.identify hospital, {
         hospital: hospital,
         condition: condition,
@@ -48,9 +49,9 @@ FlowRouter.route '/select_language', {
   name: "select_language"
   action: ( params, qparams )->
     console.log "In the route for select lang"
-    hospital = AppState.get().getHospital()
-    condition = AppState.get().getCondition()
-    language = AppState.get().getLanguage()
+    hospital = AppState.getHospital()
+    condition = AppState.getCondition()
+    language = AppState.getLanguage()
     analytics.identify hospital, {
       hospital: hospital,
       condition: condition,
@@ -65,9 +66,9 @@ FlowRouter.route '/introduction', {
   name: "introduction"
   action: ( params, qparams )->
     console.log "In the route for introduction"
-    hospital = AppState.get().getHospital()
-    condition = AppState.get().getCondition()
-    language = AppState.get().getLanguage()
+    hospital = AppState.getHospital()
+    condition = AppState.getCondition()
+    language = AppState.getLanguage()
     analytics.identify hospital, {
       hospital: hospital,
       condition: condition,
@@ -83,9 +84,9 @@ FlowRouter.route '/introduction', {
 FlowRouter.route '/level/:level', {
   name: "level"
   action: ( params, qparams )->
-    hospital = AppState.get().getHospital()
-    condition = AppState.get().getCondition()
-    language = AppState.get().getLanguage()
+    hospital = AppState.getHospital()
+    condition = AppState.getCondition()
+    language = AppState.getLanguage()
     analytics.identify hospital, {
       hospital: hospital,
       condition: condition,
@@ -102,9 +103,9 @@ if Meteor.isCordova
   FlowRouter.route '/load', {
     name: "load"
     action: ( params, qparams )->
-      hospital = AppState.get().getHospital()
-      condition = AppState.get().getCondition()
-      language = AppState.get().getLanguage()
+      hospital = AppState.getHospital()
+      condition = AppState.getCondition()
+      language = AppState.getLanguage()
       analytics.identify hospital, {
         hospital: hospital,
         condition: condition,

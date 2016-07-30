@@ -1,7 +1,7 @@
 
 { Lessons } = require("meteor/noorahealth:mongo-schemas")
 require './thumbnail.html'
-require '../../../api/content/global_template_helpers.coffee'
+require '../../../api/global_template_helpers.coffee'
 
 Template.Home_thumbnail.onCreated ->
   # Data context validation

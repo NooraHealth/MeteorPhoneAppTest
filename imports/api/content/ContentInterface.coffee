@@ -22,11 +22,11 @@ class ContentInterface
   class PrivateInterface
 
     constructor: ->
-      Template.registerHelper 'getSrc', ( filename, type )=>
-        console.log "getting the src of #{filename}"
-        if filename? and filename != ""
-          @getSrc filename, type
-        else return ""
+      #Template.registerHelper 'getSrc', ( filename, type )=>
+        #console.log "getting the src of #{filename}"
+        #if filename? and filename != ""
+          #@getSrc filename, type
+        #else return ""
 
       @remoteContentEndpoint = Meteor.settings.public.CONTENT_SRC
 

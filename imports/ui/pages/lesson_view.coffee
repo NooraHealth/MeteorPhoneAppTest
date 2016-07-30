@@ -19,7 +19,7 @@ require '../components/lesson/footer/footer.coffee'
 
 Template.Lesson_view_page.onCreated ()->
 
-  language = AppState.get().getLanguage()
+  language = AppState.getLanguage()
   console.log "Setting the language to #{language.toLowerCase()}"
   
   console.log "Supported language "
@@ -66,8 +66,8 @@ Template.Lesson_view_page.onCreated ()->
 
   @trackAudioStopped = (pos, completed, src) =>
     lesson = @getLesson()
-    condition = AppState.get().getCondition()
-    language = AppState.get().getLanguage()
+    condition = AppState.getCondition()
+    language = AppState.getLanguage()
     module = @getCurrentModule()
     text = if module.title then module.title else module.question
     analytics.track "Audio Stopped", {
@@ -125,8 +125,8 @@ Template.Lesson_view_page.onCreated ()->
 
       #analytics
       lesson = instance.getLesson()
-      condition = AppState.get().getCondition()
-      language = AppState.get().getLanguage()
+      condition = AppState.getCondition()
+      language = AppState.getLanguage()
       module = instance.getCurrentModule()
       text = if module.title then module.title else module.question
       analytics.track "Responded to Question", {
@@ -161,7 +161,7 @@ Template.Lesson_view_page.onCreated ()->
     return @getLesson()?.getModulesSequence()
 
   @getLessonId = =>
-    #return AppState.get().getLessonId()
+    #return AppState.getLessonId()
     index = @state.get "lessonIndex"
     level = @getLevel()
     return @lessons()?[index]
@@ -176,7 +176,7 @@ Template.Lesson_view_page.onCreated ()->
 
   @lessons = =>
     level = @getLevel()
-    return AppState.get().getLessons( level )
+    return AppState.getLessons( level )
   
   @isLastLesson = =>
     lessonIndex = @state.get "lessonIndex"
@@ -240,7 +240,7 @@ Template.Lesson_view_page.onCreated ()->
       completedCurriculum: completedCurriculum
       numberOfModulesInLesson: lesson?.modules.length
     }
-    AppState.get().incrementLevel()
+    AppState.incrementLevel()
     FlowRouter.go "home"
 
   @displayModule = (index) =>

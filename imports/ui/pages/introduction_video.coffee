@@ -43,7 +43,7 @@ Template.Introduction_video_page.helpers
     return instance.subscriptionsReady()
   
   introModule: ->
-    return AppState.get().getIntroductionModule()
+    return AppState.getIntroductionModule()
 
   footerArgs: ->
     instance = Template.instance()

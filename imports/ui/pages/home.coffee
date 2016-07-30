@@ -18,12 +18,6 @@ require '../../ui/components/audio/audio.coffee'
 require '../../ui/components/shared/loading.coffee'
 
 Template.Home_page.onCreated ->
-  console.log "The app language", AppState.get().getLanguage()
-  console.log TAPi18n.getLanguages()
-  console.log TAPi18n.getLanguage()
-  console.log TAPi18n.__ "next" , {}, "en"
-  console.log TAPi18n.__ "next" , {}, "hi"
-  console.log TAPi18n.__ "next" , {}, "kd"
 
   @onLevelSelected = ( levelName ) ->
     FlowRouter.go "level", { level: levelName }
@@ -41,7 +35,7 @@ Template.Home_page.helpers
 
   thumbnailArgs: (level ) ->
     instance = Template.instance()
-    isCurrentLevel = ( AppState.get().getLevel() == level.name )
+    isCurrentLevel = ( AppState.getLevel() == level.name )
     return {
       level: level
       onLevelSelected: instance.onLevelSelected
@@ -49,7 +43,7 @@ Template.Home_page.helpers
     }
 
   levels: ->
-    return AppState.get().getLevels()
+    return AppState.getLevels()
 
 Template.Home_page.events
   'click #open_side_panel': (e, template) ->

@@ -2,7 +2,7 @@
 { Modules } = require("meteor/noorahealth:mongo-schemas")
 require "../../audio/audio.coffee"
 require "./binary.html"
-require '../../../../api/content/global_template_helpers.coffee'
+require '../../../../api/global_template_helpers.coffee'
 
 Template.Lesson_view_page_binary.onCreated ->
   # Data context validation

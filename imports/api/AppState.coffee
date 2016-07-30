@@ -42,7 +42,7 @@ class AppState
       @dict.get "percentLoaded"
 
     setLanguage: (language) ->
-      TAPi18n.setLanguage @_getLangTag language
+      TAPi18n.setLanguage @getLangTag language
       @dict.set "language", language
       @
 
@@ -50,7 +50,7 @@ class AppState
       language = @dict.get "language"
       if not language? then return null else return language
 
-    _getLangTag: (language) ->
+    getLangTag: (language) ->
       console.log "Getting the langTag of #{language}"
       console.log @langTags
       console.log @langTags[language]
@@ -182,4 +182,4 @@ class AppState
       subscribed = @dict.get "subscribed"
       if subscribed? then return subscribed else return false
 
-module.exports.AppState = AppState
+module.exports.AppState = AppState.get()

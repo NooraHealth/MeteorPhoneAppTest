@@ -1,5 +1,6 @@
 
 { AppState } = require('../../api/AppState.coffee')
+{ TAPi18n } = require("meteor/tap:i18n")
 
 # TEMPLATE
 require './select_language.html'
@@ -13,15 +14,15 @@ Template.Select_language_page.onCreated ->
 
   @onLanguageSelected = (language) ->
     analytics.track "Changed Language", {
-      fromLanguage: AppState.get().getLanguage()
+      fromLanguage: AppState.getLanguage()
       toLanguage: language
-      condition: AppState.get().getCondition()
+      condition: AppState.getCondition()
     }
 
-    AppState.get().setLanguage language
+    AppState.setLanguage language
     FlowRouter.go "introduction"
-    levels = AppState.get().getLevels()
-    AppState.get().setLevel levels[0].name
+    levels = AppState.getLevels()
+    AppState.setLevel levels[0].name
 
 Template.Select_language_page.helpers
 
@@ -29,5 +30,5 @@ Template.Select_language_page.helpers
     instance = Template.instance()
     return {
       onLanguageSelected: instance.onLanguageSelected
-      languages: ['English', 'Hindi', 'Kannada']
+      languages: ["English", "Hindi", "Kannada"]
     }

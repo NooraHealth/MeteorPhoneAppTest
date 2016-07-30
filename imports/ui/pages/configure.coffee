@@ -16,7 +16,7 @@ Template.Configure_app_page.onCreated ->
 
     hospital = $("#hospital_select").val()
     condition = $("#condition_select").val()
-    AppState.get().setConfiguration {
+    AppState.setConfiguration {
       hospital: hospital
       condition: condition
     }
