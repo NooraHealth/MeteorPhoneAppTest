@@ -29,6 +29,7 @@ Template.Home_page.onCreated ->
     @subscribe "modules.all"
 
 Template.Home_page.helpers
+
   getLanguage: ->
     return AppState.getLanguage()
 

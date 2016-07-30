@@ -76,36 +76,36 @@ Template.Lesson_view_page_scenario.onCreated ->
 Template.Lesson_view_page_scenario.helpers
   normalButtonArgs: (language, module) ->
     instance = Template.instance()
-    translatedNormal = AppState.translate "normal", language
+    translatedNormal = AppState.translate "normal", language, "UPPER"
     return {
       attributes: {
         id: "normalOptionForModule#{module._id}"
         class: instance.getNormalButtonClasses()
       }
-      content: '<i class="fa fa-home fa-2x"></i> ' + translatedNormal.toUpperCase()
+      content: '<i class="fa fa-home fa-2x"></i> ' + translatedNormal
       onClick: instance.getOnSelected( instance, module, instance.NORMAL)
     }
 
   callDoctorButtonArgs: (language, module) ->
     instance = Template.instance()
-    translatedCallDoc = AppState.translate "call_doc", language
+    translatedCallDoc = AppState.translate "call_doc", language, "UPPER"
     return {
       attributes: {
         id: "calldocOptionForModule#{module._id}"
         class: instance.getCallDoctorButtonClasses()
       }
-      content: '<i class="fa fa-phone fa-2x"></i> '  + translatedCallDoc.toUpperCase()
+      content: '<i class="fa fa-phone fa-2x"></i> '  + translatedCallDoc
       onClick: instance.getOnSelected( instance, module, instance.CALLDOC)
     }
 
   emergencyButtonArgs: (language, module) ->
     instance = Template.instance()
-    translatedEmergency = AppState.translate "emergency", language
+    translatedEmergency = AppState.translate "emergency", language, "UPPER"
     return {
       attributes: {
         id: "emergencyOptionForModule#{module._id}"
         class: instance.getEmergencyButtonClasses()
       }
-      content: '<i class="fa fa-ambulance fa-2x"></i> ' + translatedEmergency.toUpperCase()
+      content: '<i class="fa fa-ambulance fa-2x"></i> ' + translatedEmergency
       onClick: instance.getOnSelected( instance, module, instance.EMERGENCY)
     }

@@ -6,8 +6,8 @@
   #console.log "Getting the src #{path} #{type}"
   #return ContentInterface.get().getSrc path, type
 
-Template.registerHelper 'translate', ( key, language )=>
-  AppState.translate key, language
+Template.registerHelper 'translate', ( key, language, textCase )=>
+  return AppState.translate key, language, textCase
 
 Template.registerHelper 'getSrc', ( filename, type )=>
   if filename? and filename != ""

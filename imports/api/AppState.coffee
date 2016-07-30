@@ -50,9 +50,16 @@ class AppState
       language = @dict.get "language"
       if not language? then return null else return language
 
-    translate: ( key, language )->
+    translate: ( key, language, textCase)->
       tag = @_getLangTag language
-      return TAPi18n.__ key, {}, tag
+      text = TAPi18n.__ key, {}, tag
+      console.log "Here is the text #{text}"
+      if textCase == "UPPER"
+        return text.toUpperCase()
+      if textCase == "LOWER"
+        return text.toLowerCase()
+      else
+        return text
 
     _getLangTag: (language) ->
       return @langTags[language.toLowerCase()]

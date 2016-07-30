@@ -3,7 +3,7 @@
   <div class="lesson-card card blue-background {{#if isCurrentLevel}} current-lesson {{else}} faded {{/if}}">
     <div class="card-content">
       <div class="card-header js-scroll-into-view">
-        <p class="center large-text bold-text">{{translate level.name language}}</p>
+        <p class="center large-text bold-text">{{translate level.name language "UPPER"}}</p>
       </div>
 
       <div class="lesson-card-image card-header">
@@ -13,7 +13,7 @@
       </div>
 
       <div class="card-footer js-scroll-into-view">
-        <a class="center bold-text large-text {{#if isCurrentLevel}} color-green button-fill animate-scale {{/if}} button button-round select-level-button"> {{translate "begin" language }} </a>
+        <a class="center bold-text large-text {{#if isCurrentLevel}} color-green button-fill animate-scale {{/if}} button button-round select-level-button"> {{translate "begin" language "UPPER"}} </a>
       </div>
 
     </div>

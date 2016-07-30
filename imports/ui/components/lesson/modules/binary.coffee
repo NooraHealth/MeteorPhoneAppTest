@@ -74,7 +74,7 @@ Template.Lesson_view_page_binary.helpers
   buttonArgs: (option, language) ->
     instance = Template.instance()
     attributes = instance.state.get "optionAttributes"
-    text = AppState.translate option.toLowerCase(), language
+    text = AppState.translate option.toLowerCase(), language, "UPPER"
     return {
       attributes: attributes[option]
       content: text.toUpperCase()
