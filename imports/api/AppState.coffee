@@ -14,9 +14,9 @@ class AppState
       @dict = new PersistentReactiveDict name
       @dict.set "route", "Home_page"
       @levels = [
-        { name: "EASY", image: "easy.png"},
-        { name: "MEDIUM", image: "medium.png"},
-        { name: "HARD", image: "hard.png"}
+        { name: "beginner", image: "easy.png"},
+        { name: "intermediate", image: "medium.png"},
+        { name: "advanced", image: "hard.png"}
       ]
       
       @langTags = {

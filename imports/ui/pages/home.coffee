@@ -29,6 +29,9 @@ Template.Home_page.onCreated ->
     @subscribe "modules.all"
 
 Template.Home_page.helpers
+  getLanguage: ->
+    return AppState.getLanguage()
+
   curriculumsReady: ->
     instance = Template.instance()
     return instance.subscriptionsReady()
@@ -40,6 +43,7 @@ Template.Home_page.helpers
       level: level
       onLevelSelected: instance.onLevelSelected
       isCurrentLevel: isCurrentLevel
+      language: AppState.getLanguage()
     }
 
   levels: ->

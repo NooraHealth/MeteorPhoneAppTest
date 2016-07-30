@@ -2,5 +2,9 @@
   "next": "NEXT IN HINDI",
   "begin": "Lets Begin IN HINDI",
   "name": "Hindi in Hindi",
-  "select": "Select in Hindi"
+  "select": "Select in Hindi",
+  "select_language": "Select language in Hindi",
+  "beginner": "Beginner in Hindi",
+  "intermediate": "Intermediate in Hindi",
+  "advanced": "Advanced in Hindi"
 }
