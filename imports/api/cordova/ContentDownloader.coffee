@@ -53,7 +53,7 @@ class @ContentDownloader
         paths.push ContentInterface.getDirectory( "AUDIO" ) + ContentInterface.correctSoundEffectFilename()
         paths.push ContentInterface.getDirectory( "AUDIO" ) + ContentInterface.incorrectSoundEffectFilename()
         
-        levels = AppState.get().getLevels()
+        levels = AppState.getLevels()
         for level in levels
           paths.push ContentInterface.getDirectory( "IMAGE" ) + level.image
 
@@ -67,10 +67,6 @@ class @ContentDownloader
 
           console.log curriculum
           paths.merge @_allContentPathsInCurriculum( curriculum )
-          console.log "PATHS TO DOWNLOAD"
-          console.log paths
-          console.log paths.length
-
         #getFileName = (path, index) ->
           #getRandomInt = (min, max) => Math.floor(Math.random() * (max - min)) + min
           #rand = getRandomInt(1, 400)
@@ -98,7 +94,7 @@ class @ContentDownloader
           console.log "This is the middle one"
           message = ""
         , (progress) ->
-          AppState.get().setPercentLoaded progress
+          AppState.setPercentLoaded progress
       catch e
         console.log "in the on complete"
         console.log e

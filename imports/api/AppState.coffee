@@ -70,14 +70,6 @@ class AppState
       curriculum = Curriculums.findOne {language: language, condition: condition}
       return curriculum
 
-    setShouldPlayIntro: (state) ->
-      @dict.setPersistent "playIntro", state
-      @
-
-    getShouldPlayIntro: (state) ->
-      shouldPlay = @dict.get "playIntro"
-      if shouldPlay? then return shouldPlay else return false
-
     setError: (error) ->
       if error
         new SimpleSchema({

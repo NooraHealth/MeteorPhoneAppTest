@@ -27,7 +27,6 @@ Template.Load_curriculums_page.onCreated ->
           console.log e
           if e
             AppState.setError e
-          AppState.setShouldPlayIntro true
           FlowRouter.go "select_language"
           #diconnect from the server to freeze the app at its current state
           if Meteor.settings.public.METEOR_ENV == "production"

@@ -12,7 +12,7 @@ spinner = '<div class="spinner"><div class="bounce1"></div><div class="bounce2">
 Template.Loading.onCreated ->
   console.log "Making a loading template"
   @autorun ->
-    percent = AppState.get().getPercentLoaded()
+    percent = AppState.getPercentLoaded()
     console.log "PERCENT LOADED", percent
     progressBar = $("#progress")
     console.log progressBar
@@ -20,7 +20,7 @@ Template.Loading.onCreated ->
 
 Template.Loading.helpers
   percent: ->
-    return AppState.get().getPercentLoaded()
+    return AppState.getPercentLoaded()
 
 Template.Loading.onRendered ->
   @loading = window.pleaseWait {
