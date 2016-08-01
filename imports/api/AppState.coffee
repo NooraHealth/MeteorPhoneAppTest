@@ -50,9 +50,13 @@ class AppState
       language = @dict.get "language"
       if not language? then return null else return language
 
-    translate: ( key, language, textCase)->
+    translate: ( key, language, textCase, options)->
+      console.log "The options"
+      console.log options
+      if not language
+        @setError new Meteor.Error("developer-error", "Cannot translate when the language is null or empty string")
       tag = @_getLangTag language
-      text = TAPi18n.__ key, {}, tag
+      text = TAPi18n.__ key, options, tag
       console.log "Here is the text #{text}"
       if textCase == "UPPER"
         return text.toUpperCase()
@@ -62,6 +66,9 @@ class AppState
         return text
 
     _getLangTag: (language) ->
+      console.log "Getting the langtag of #{language}"
+      if not language
+        return null
       return @langTags[language.toLowerCase()]
 
     getCurriculumDoc: ->

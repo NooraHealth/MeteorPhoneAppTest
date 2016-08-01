@@ -1,42 +1,49 @@
+{ AppState } = require('../../../../api/AppState.coffee')
+
 class Award
   messages: [
     {
       image: "/accolade_1.gif",
-      title: "Great job!"
+      title: "great_job"
     },
     {
       image: "/accolade_2.gif",
-      title: "Nice one!"
+      title: "nice_one"
     },
     {
       image: "/accolade_3.gif",
-      title: "You're on your way to better health!"
+      title: "on_your_way"
     },
     {
       image: "/accolade_4.gif",
-      title: "Well done!"
+      title: "well_done"
     },
     {
       image: "/accolade_4.gif",
-      title: "Congratulations!"
+      title: "congratulations"
     }
   ]
 
-  constructor: ()->
+  constructor: (language)->
+    @language = language
 
   sendAward: ( onConfirm, onCancel , lessonsComplete, totalLessons )=>
+    console.log "The award language #{@language}"
     rand = Math.random() * ( @.messages.length)
-    console.log "This is rand:"  + rand
     message = @.messages[Math.floor(rand)]
     endOfCurriculum = lessonsComplete == totalLessons
-    confirmButtonText = if endOfCurriculum then "OK" else "NEXT LESSON"
-    text = "You have completed #{lessonsComplete} out of #{totalLessons} lessons!"
+    confirmButtonText = if endOfCurriculum then AppState.translate "ok", @language, "UPPER" else AppState.translate "next_lesson", @language, "UPPER"
+    text = AppState.translate "you_have_completed", @language, "", {
+      postProcess: "sprintf" ,
+      sprintf: [ lessonsComplete, totalLessons ]
+    }
+
     swal({
-      title: message.title
+      title: AppState.translate message.title, @language
       text: text
       imageUrl: message.image
       confirmButtonText: confirmButtonText
-      cancelButtonText: "Finish"
+      cancelButtonText: AppState.translate "finish", @language, "UPPER"
       showCancelButton: !endOfCurriculum
       animation: "slide-from-bottom"
     }, ( isConfirm ) =>

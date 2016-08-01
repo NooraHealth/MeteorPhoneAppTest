@@ -175,6 +175,7 @@ Template.Lesson_view_page.onCreated ()->
 
 
   @celebrateCompletion = =>
+    language = AppState.getLanguage()
     lessonIndex = @state.get "lessonIndex"
     lessonsComplete = lessonIndex + 1
     totalLessons = @lessons().length
@@ -186,10 +187,10 @@ Template.Lesson_view_page.onCreated ()->
     
     isLastLesson = @isLastLesson()
     if @isLastLesson()
-      new Award().sendAward( null, null, lessonsComplete, totalLessons)
+      new Award(language).sendAward( null, null, lessonsComplete, totalLessons)
       @goHome( null, true )
     else
-      new Award().sendAward( onConfirm, onCancel, lessonsComplete, totalLessons )
+      new Award(language).sendAward( onConfirm, onCancel, lessonsComplete, totalLessons )
 
   @incrementLesson = =>
     lessonIndex = @state.get "lessonIndex"

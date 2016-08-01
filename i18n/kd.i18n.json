@@ -1,5 +1,6 @@
 {
   "next": "ಮುಂದಿನದು",
+  "begin": "Lets Begin in Kannada",
   "finish": "ಮುಕ್ತಾಯ",
   "home": "homeka",
   "beginner": "Beginner in Kannada",
@@ -11,8 +12,14 @@
   "call_doc": "Call DocKA",
   "emergency": "EmergencyKa",
   "select": "Select in Kannada",
-  "begin": "Lets Begin in Kannada",
-  "select_language": "ಭಾಷೆಯನ್ನು ಆಯ್ಕೆ ಮಾಡಿ",
+  "select_language": "Select Language",
+  "next_lesson": "Next Lesson",
+  "great_job": "Great Job!",
+  "nice_one": "Nice One!",
+  "well_done": "Well Done!",
+  "congratulations": "Congratulations!",
+  "on_your_way": "You are on your way to better health!",
+  "you_have_completed": "You have completed %s out of %s lessons!",
   "name": "ಕನ್ನಡ",
   "en": "Kannada"
 }
