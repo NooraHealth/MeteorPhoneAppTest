@@ -1,7 +1,9 @@
-require './load_curriculums.html'
 { AppState } = require '../../api/AppState.coffee'
 { Curriculums } = require 'meteor/noorahealth:mongo-schemas'
 { ContentInterface } = require('../../api/content/ContentInterface.coffee')
+
+require '../components/shared/loading.coffee'
+require './load_curriculums.html'
 
 Template.Load_curriculums_page.onCreated ->
 
@@ -17,6 +19,7 @@ Template.Load_curriculums_page.onCreated ->
       console.log "Meteor status not connected"
       AppState.setError(new Meteor.Error("Not Connected", "Please connect to data in order to download your curriculum."))
     else if ContentInterface.subscriptionsReady(@) and @firstRun
+      console.log "About to download"
       @firstRun = false
       configuration = AppState.getConfiguration()
       curriculums = Curriculums.find { condition: configuration.condition }

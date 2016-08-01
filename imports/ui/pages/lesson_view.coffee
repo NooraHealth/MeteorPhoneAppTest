@@ -5,6 +5,7 @@
 
 { AppState } = require('../../api/AppState.coffee')
 { Award } = require('../components/lesson/popups/award.coffee')
+{ IntroductionToQuestions } = require('../components/lesson/popups/introduction_to_questions.coffee')
 { ContentInterface }= require('../../api/content/ContentInterface.coffee')
 { TAPi18n } = require("meteor/tap:i18n")
 
@@ -287,12 +288,15 @@ Template.Lesson_view_page.onCreated ()->
   @onPlayVideo = =>
     @state.set "playingVideo", true
 
-  @onStopVideo = =>
-    @state.set "playingVideo", false
-
   @onVideoEnd = =>
+    console.log "THE VIDEO STOPPED!!"
     @state.set "playingVideo", false
     @state.set "nextButtonAnimated", true
+    language = AppState.getLanguage()
+    onConfirm = ()=>
+      @goToNextModule()
+    onCancel = ()=>
+    new IntroductionToQuestions().send( onConfirm, onCancel, language )
 
   @videoPlaying = =>
     playing = @state.get "playingVideo"
@@ -372,7 +376,7 @@ Template.Lesson_view_page.helpers
         module: module
         language: language
         onPlayVideo: instance.onPlayVideo
-        onStopVideo: instance.onStopVideo
+        onStopVideo: instance.onVideoEnd
         onVideoEnd: instance.onVideoEnd
         playing: isCurrentModule and instance.videoPlaying()
       }

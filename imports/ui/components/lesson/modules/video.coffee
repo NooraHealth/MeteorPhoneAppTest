@@ -107,6 +107,7 @@ Template.Lesson_view_page_video.onRendered ->
     instance.trackStoppedVideo( elem.currentTime, false )
 
   elem.addEventListener "onended", ->
+    console.log "onended has been fired"
     instance.onVideoEnd()
     instance.trackStoppedVideo( elem.currentTime, true )
   

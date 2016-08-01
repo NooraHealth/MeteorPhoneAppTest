@@ -13,9 +13,7 @@ Template.Loading.onCreated ->
   console.log "Making a loading template"
   @autorun ->
     percent = AppState.getPercentLoaded()
-    console.log "PERCENT LOADED", percent
     progressBar = $("#progress")
-    console.log progressBar
     progressBar?.val percent*100
 
 Template.Loading.helpers
@@ -29,7 +27,6 @@ Template.Loading.onRendered ->
   }
 
 Template.Loading.onDestroyed ->
-  console.log "Destroying the Loading page"
   if @loading
     @loading.finish()
 
