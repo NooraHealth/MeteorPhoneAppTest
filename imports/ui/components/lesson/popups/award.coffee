@@ -28,7 +28,6 @@ class Award
     @language = language
 
   sendAward: ( onConfirm, onCancel , lessonsComplete, totalLessons )=>
-    console.log "The award language #{@language}"
     rand = Math.random() * ( @.messages.length)
     message = @.messages[Math.floor(rand)]
     endOfCurriculum = lessonsComplete == totalLessons
