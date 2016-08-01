@@ -25,6 +25,20 @@ class AppState
         kannada: "kd"
       }
 
+    initializeApp: =>
+      @F7 = new Framework7(
+        materialRipple: true
+        router:false
+        tapHold: true
+        tapHoldPreventClicks: false
+        tapHoldDelay: 1500
+      )
+
+    getF7: =>
+      return @F7
+
+    setProgress: (container, progress, speed )=>
+      
     setCurriculumDownloaded: (id, state) ->
       @dict.setPersistent "curriculumDownloaded#{id}", state
       @

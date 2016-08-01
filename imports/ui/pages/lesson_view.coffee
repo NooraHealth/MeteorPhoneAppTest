@@ -56,6 +56,11 @@ Template.Lesson_view_page.onCreated ()->
     index = @state.get "moduleIndex"
     return index > modules?.indexOf moduleId
 
+  @getProgress = ()=>
+    numInLesson = @getLesson().modules.length
+    numCompleted = @state.get "moduleIndex"
+    return (numCompleted * 100 / numInLesson).toString()
+
   @trackAudioStopped = (pos, completed, src) =>
     lesson = @getLesson()
     condition = AppState.getCondition()
@@ -76,22 +81,6 @@ Template.Lesson_view_page.onCreated ()->
 
   @answeredIncorrectly = ( id )=>
     return id in @incorrectResponses
-
-  @getPagesForPaginator = =>
-    modules = @getModules()
-    if not modules?
-      return []
-    else
-      getPageData = (module, i) =>
-        data = {
-          completed: @isCompleted module._id
-          current: @isCurrent module._id
-          incorrect: @answeredIncorrectly module._id
-          index: i+1
-        }
-        return data
-      pages = ( getPageData(module, i) for module, i in modules )
-      return pages
 
   @onFinishExplanation = (pos, completed, src) =>
     @state.set "nextButtonAnimated", true
@@ -237,7 +226,7 @@ Template.Lesson_view_page.onCreated ()->
     #leading to bugs when the lesson has more modules
     #than the first lesson (when the swiper was initialized)
     if newIndex == 1
-      @swiper = App.swiper '.swiper-container', {
+      @swiper = AppState.getF7().swiper '.swiper-container', {
         lazyLoading: true,
         preloadImages: false,
         speed: 700,
@@ -248,7 +237,7 @@ Template.Lesson_view_page.onCreated ()->
     @displayModule( newIndex )
 
   @onNextButtonRendered = =>
-    @swiper = App.swiper '.swiper-container', {
+    @swiper = AppState.getF7().swiper '.swiper-container', {
       lazyLoading: true,
       preloadImages: false,
       speed: 700,
@@ -344,7 +333,9 @@ Template.Lesson_view_page.helpers
         onClick: instance.onReplayButtonClicked
         shouldShow: instance.shouldShowReplayButton
       }
-      pages: instance.getPagesForPaginator()
+      progressBar: {
+        percent: instance.getProgress()
+      }
     }
 
   lessonTitle: ->

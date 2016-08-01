@@ -1,11 +1,13 @@
 
 require '../../shared/button.coffee'
-require './paginator.coffee'
+require './progress.coffee'
 require './footer.html'
 
 Template.Lesson_view_page_footer.onCreated ->
   # data context validation
   @autorun =>
+    console.log "Validating the lessonViewPageFooter"
+    console.log Template.currentData()
     new SimpleSchema({
       "homeButton.onClick": {type: Function}
       "homeButton.shouldShow": {type: Function}
@@ -16,10 +18,7 @@ Template.Lesson_view_page_footer.onCreated ->
       "nextButton.onRendered": {type: Function}
       "nextButton.animated": {type: Boolean}
       "nextButton.text": {type: String}
-      "pages.$.current": {type: Boolean}
-      "pages.$.completed": {type: Boolean}
-      "pages.$.incorrect": {type: Boolean}
-      "pages.$.index": {type: Number}
+      "progressBar.percent": {type: String}
       language: {type: String}
     }).validate Template.currentData()
 
@@ -70,7 +69,3 @@ Template.Lesson_view_page_footer.helpers
       onClick: data.onClick
     }
 
-  paginatorArgs: (pages) ->
-    return {
-      pages: pages
-    }
