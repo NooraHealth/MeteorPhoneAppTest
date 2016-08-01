@@ -257,15 +257,23 @@ Template.Lesson_view_page.onCreated ()->
       followFinger: false
     }
 
-  @isBonus = (module) =>
-    lesson = @getLesson()
-    lastModule = lesson?.modules?[lesson?.modules?.length - 1]
-    return module.type == "VIDEO" and lastModule == module._id
+  @showIntroductionToQuestions = =>
+    console.log "About to show the introduction to questions"
+    language = AppState.getLanguage()
+    onConfirm = ()=>
+      @goToNextModule()
+    onCancel = ()=>
+    new IntroductionToQuestions().send( onConfirm, onCancel, language )
 
   @onNextButtonClicked = =>
     #if @hasBonusVideo() and @secondToLastModule() then @offerBonusVideo()
     lessonComplete = @lessonComplete()
-    if @lessonComplete() then @celebrateCompletion() else @goToNextModule()
+    currentModule = @getCurrentModule()
+    console.log currentModule.type
+    if currentModule.type == "VIDEO" and not lessonComplete
+      console.log "The current module is a video"
+      @showIntroductionToQuestions()
+    else if @lessonComplete() then @celebrateCompletion() else @goToNextModule()
 
   @goHomeButtonText = =>
     language = AppState.getLanguage()
@@ -292,11 +300,6 @@ Template.Lesson_view_page.onCreated ()->
     console.log "THE VIDEO STOPPED!!"
     @state.set "playingVideo", false
     @state.set "nextButtonAnimated", true
-    language = AppState.getLanguage()
-    onConfirm = ()=>
-      @goToNextModule()
-    onCancel = ()=>
-    new IntroductionToQuestions().send( onConfirm, onCancel, language )
 
   @videoPlaying = =>
     playing = @state.get "playingVideo"
