@@ -26,11 +26,12 @@
 html, body {
   height: 100%;
   overflow: hidden !important;
+  font-family: $primary-font !important;
 }
 
 .page {
   background: $light-blue !important;
-  color: #fff;
+  color: $muted;
 
   a {
     color: lighten($primary-blue, 30%);
