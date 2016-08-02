@@ -2,12 +2,18 @@
 
   <div class="toolbar">
 
-    <div class="toolbar-inner">
-      {{> Button (goHomeButtonArgs homeButton)}}
+    <div class="toolbar-inner row">
+      <div class="col-25">
+        {{> Button (goHomeButtonArgs homeButton)}}
+      </div>
 
-      {{> Lesson_view_page_footer_progress_bar percent=progressBar.percent}}
+      <div class="col-25">
+        {{> Lesson_view_page_footer_progress_bar percent=progressBar.percent}}
+      </div>
 
-      {{> Button (replayButtonArgs replayButton)}}
+      <div class="col-25">
+        {{> Button (replayButtonArgs replayButton)}}
+      </div>
 
       <div class={{nextButtonWrapperClasses nextButton.animated}}>
         {{> Button (nextButtonArgs nextButton)}}

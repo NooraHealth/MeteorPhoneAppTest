@@ -65,7 +65,10 @@ Template.Introduction_video_page.helpers
         onClick: ->
         shouldShow: -> return false
       }
-      pages: []
+      progressBar: {
+        percent: 0
+        shouldShow: false
+      }
     }
 
   videoArgs: ( module ) ->

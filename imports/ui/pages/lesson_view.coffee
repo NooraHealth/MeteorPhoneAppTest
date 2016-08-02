@@ -58,7 +58,7 @@ Template.Lesson_view_page.onCreated ()->
 
   @getProgress = ()=>
     numInLesson = @getLesson().modules.length
-    numCompleted = @state.get "moduleIndex"
+    numCompleted = (@state.get "moduleIndex") + 1
     return (numCompleted * 100 / numInLesson).toString()
 
   @trackAudioStopped = (pos, completed, src) =>

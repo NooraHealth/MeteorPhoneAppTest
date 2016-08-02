@@ -19,6 +19,7 @@ Template.Lesson_view_page_footer.onCreated ->
       "nextButton.animated": {type: Boolean}
       "nextButton.text": {type: String}
       "progressBar.percent": {type: String}
+      "progressBar.shouldShow": {type: Boolean}
       language: {type: String}
     }).validate Template.currentData()
 
@@ -52,7 +53,7 @@ Template.Lesson_view_page_footer.helpers
     }
 
   nextButtonWrapperClasses: (animated) ->
-    classes = ''
+    classes = 'col-25'
     if animated then classes += ' animate-scale'
     return classes
 
@@ -68,4 +69,6 @@ Template.Lesson_view_page_footer.helpers
       content: '<i class="fa fa-repeat fa-2x"></i>'
       onClick: data.onClick
     }
+
+
 
