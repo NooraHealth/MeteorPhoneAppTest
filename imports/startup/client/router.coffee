@@ -25,21 +25,24 @@ if Meteor.isCordova
 FlowRouter.route '/', {
   name: "home"
   action: ( params, qparams )->
-    
-    if not AppState.isConfigured()
-      BlazeLayout.render 'Layout', { main : 'Configure_app_page' }
-    else if not AppState.getLanguage()
-      FlowRouter.go "select_language"
-    else
-      hospital = AppState.getHospital()
-      condition = AppState.getCondition()
-      language = AppState.getLanguage()
-      analytics.identify hospital, {
-        hospital: hospital,
-        condition: condition,
-        language: language
-      }
-      BlazeLayout.render 'Layout', { main : 'Home_page' }
+    hospital = AppState.getHospital()
+    condition = AppState.getCondition()
+    language = AppState.getLanguage()
+    analytics.identify hospital, {
+      hospital: hospital,
+      condition: condition,
+      language: language
+    }
+    BlazeLayout.render 'Layout', { main : 'Home_page' }
+}
+
+###
+# ConfigureApp
+###
+FlowRouter.route '/configure', {
+  name: "configure"
+  action: ( params, qparams )->
+    BlazeLayout.render 'Layout', { main : 'Configure_app_page' }
 }
 
 ###
@@ -48,7 +51,6 @@ FlowRouter.route '/', {
 FlowRouter.route '/select_language', {
   name: "select_language"
   action: ( params, qparams )->
-    console.log "In the route for select lang"
     hospital = AppState.getHospital()
     condition = AppState.getCondition()
     language = AppState.getLanguage()
@@ -59,6 +61,7 @@ FlowRouter.route '/select_language', {
     }
     BlazeLayout.render 'Layout', { main : 'Select_language_page' }
 }
+
 ###
 # Introduction
 ###

@@ -16,4 +16,10 @@ Meteor.startup ()->
   BlazeLayout.setRoot "body"
 
   AppState.initializeApp()
+  if not AppState.isConfigured()
+    FlowRouter.go "configure"
+  else if not AppState.contentDownloaded()
+    FlowRouter.go "load"
+  else
+    FlowRouter.go "select_language"
 

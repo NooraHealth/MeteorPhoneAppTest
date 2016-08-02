@@ -37,8 +37,6 @@ class AppState
     getF7: =>
       return @F7
 
-    setProgress: (container, progress, speed )=>
-      
     setCurriculumDownloaded: (id, state) ->
       @dict.setPersistent "curriculumDownloaded#{id}", state
       @
@@ -57,7 +55,7 @@ class AppState
 
     setLanguage: (language) ->
       TAPi18n.setLanguage @_getLangTag language
-      @dict.set "language", language
+      @dict.setTemporary "language", language
       @
 
     getLanguage: ->
@@ -65,6 +63,7 @@ class AppState
       if not language? then return null else return language
 
     translate: ( key, language, textCase, options)->
+      console.trace()
       if not language
         @setError new Meteor.Error("developer-error", "Cannot translate when the language is null or empty string")
       tag = @_getLangTag language
@@ -116,6 +115,12 @@ class AppState
 
       @dict.setPersistent 'configuration', configuration
       return @
+
+    contentDownloaded: ->
+      @dict.get "content_downloaded"
+
+    setContentDownloaded: (value) ->
+      @dict.setPersistent "content_downloaded", value
 
     isConfigured: (state) ->
       if Meteor.isCordova

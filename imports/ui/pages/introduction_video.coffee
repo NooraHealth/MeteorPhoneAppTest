@@ -66,7 +66,7 @@ Template.Introduction_video_page.helpers
         shouldShow: -> return false
       }
       progressBar: {
-        percent: 0
+        percent: "0"
         shouldShow: false
       }
     }

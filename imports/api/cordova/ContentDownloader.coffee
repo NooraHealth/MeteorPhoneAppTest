@@ -105,19 +105,22 @@ class @ContentDownloader
 
       deferred = Q.defer()
       error = null
-      numToLoad = paths.length
-      console.log paths
+      #filter paths for those that do not already exist locally
+      toDownload = paths.filter (path)->
+        return not OfflineFiles.findOne {path: path}
+
+      if toDownload.length == 0
+        deferred.resolve(error)
+
       retry = []
       numRecieved = 0
-      if numToLoad == 0
-        deferred.resolve(error)
 
       window.requestFileSystem LocalFileSystem.PERSISTENT, 0, (fs)->
 
         ft = new FileTransfer()
 
         ft.onprogress = (event)->
-          percent = numRecieved/numToLoad
+          percent = numRecieved/toDownload.length
           deferred.notify(percent)
 
         downloadFile = (path) ->
@@ -126,8 +129,8 @@ class @ContentDownloader
 
         markAsResolved = (entry) ->
           numRecieved++
-          console.log "RESOLVED:" + numRecieved + "/"+ numToLoad
-          if numRecieved == numToLoad
+          console.log "RESOLVED:" + numRecieved + "/"+ toDownload.length
+          if numRecieved == toDownload.length
             deferred.resolve entry
 
         getSuccessCallback = (path, fsPath) ->
@@ -170,61 +173,14 @@ class @ContentDownloader
               markAsResolved(path)
               error = err
 
-        for path in paths
-          if not (OfflineFiles.findOne { path: path })?
-            downloadFile path
+        for path in toDownload
+          downloadFile path
 
       , (err)->
         # Error retrieving the local filesystem
         deferred.resolve err
 
       return deferred.promise
-
-    #cleanLocalContent: ( cursor, onComplete )->
-      #console.log "About to delete unused files (cleanLocalContent)"
-      #try
-        ##validate the arguments
-        #new SimpleSchema({
-          #cursor: {type: Mongo.Cursor}
-          #onComplete: {type: Function, optional: true}
-        #}).validate({cursor: cursor, onComplete: onComplete})
-        #unusedPaths = _getUnusedFilePaths(curriculums)
-        #@_deleteFiles(filesToDelete)
-      #catch e
-        #console.log "Error deleting unused files"
-        #console.log e
-
-    #_getUnusedFilePaths: (curriculums)->
-      #console.log("getting the unused file paths")
-      #pathsInUse = []
-      #for curriculum in curriculums
-        #pathsInUse.merge @_allContentPathsInCurriculum(curriculum)
-
-      #localFiles = OfflineFiles.find().fetch()
-      #unused = []
-      #for file in localFiles
-        #console.log("file: ", file.path)
-        #if not file.path in pathsInUse
-          #unused.push file
-      #console.log "Returning the unused: ", unused.length
-      #return unused
-
-    #_deleteFiles: (filePaths) ->
-      ## This is where we will delete files
-      #console.log "About to delete #{ filePaths.length } files"
-      #console.log filePaths
-      #window.requestFileSystem LocalFileSystem.PERSISTENT, 0, (fs)->
-        #for path in filePaths
-          #fs.root.getFile path, {create: false}, (entry)->
-            #entry.remove ( file )->
-              #console.log "File removed!#{ path }"
-            #, ( error )->
-              #console.log "Error removing file #{ path }"
-            #, ()->
-              #console.log "Attempted to remove #{ path }, file DNE"
-          #, ( event )->
-            #console.log "Error retrieving file"
-            #console.log evt.target.error.code
       
     _allContentPathsInCurriculum: (curriculum) ->
       paths = []
