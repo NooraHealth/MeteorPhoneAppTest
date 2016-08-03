@@ -266,12 +266,12 @@ Template.Lesson_view_page.onCreated ()->
   @goHomeButtonText = =>
     language = AppState.getLanguage()
     home = AppState.translate "home", language, "UPPER"
-    return "<i class='fa fa-home fa-pull-left'></i><span class='center'>#{home}</span>"
+    return "<span class='center'>#{home}<i class='fa fa-home'></i></span>"
 
   @nextButtonText = =>
     language = AppState.getLanguage()
     text = if @lessonComplete() then AppState.translate( "finish", language, "UPPER") else AppState.translate( "next", language, "UPPER")
-    return "<span class='center'>#{text}</span><i class='fa fa-arrow-right fa-pull-right'></i>"
+    return "<span class='center'>#{text}<i class='fa fa-arrow-right'></i></span>"
 
   @afterReplay = =>
     @state.set "replayAudio", false
