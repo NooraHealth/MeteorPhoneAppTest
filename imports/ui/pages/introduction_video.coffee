@@ -57,7 +57,7 @@ Template.Introduction_video_page.helpers
       }
       nextButton: {
         onClick: -> FlowRouter.go "home"
-        text: AppState.translate "begin", language
+        text: AppState.translate "begin", language, "UPPER"
         onRendered: ->
         animated: instance.state.get("letsBeginButtonAnimated")
       }

@@ -265,11 +265,13 @@ Template.Lesson_view_page.onCreated ()->
 
   @goHomeButtonText = =>
     language = AppState.getLanguage()
-    return "<i class='fa fa-home fa-2x'></i> " + AppState.translate("home", language, "UPPER")
+    home = AppState.translate "home", language, "UPPER"
+    return "<i class='fa fa-home fa-pull-left'></i><span class='center'>#{home}</span>"
 
   @nextButtonText = =>
     language = AppState.getLanguage()
-    if @lessonComplete() then AppState.translate( "finish", language, "UPPER") else AppState.translate( "next", language, "UPPER") + '<i class="fa fa-arrow-right fa-2x"></i>'
+    text = if @lessonComplete() then AppState.translate( "finish", language, "UPPER") else AppState.translate( "next", language, "UPPER")
+    return "<span class='center'>#{text}</span><i class='fa fa-arrow-right fa-pull-right'></i>"
 
   @afterReplay = =>
     @state.set "replayAudio", false
@@ -334,6 +336,7 @@ Template.Lesson_view_page.helpers
       replayButton: {
         onClick: instance.onReplayButtonClicked
         shouldShow: instance.shouldShowReplayButton()
+        text: '<span class="center"><i class="fa fa-repeat"></i></span>'
       }
       progressBar: {
         percent: instance.getProgress()

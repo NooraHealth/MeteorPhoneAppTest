@@ -176,10 +176,7 @@ class AppState
 
     getLessons: ( levelName )=>
       curriculum = @getCurriculumDoc()
-      console.log "The curriculum"
-      console.log curriculum
-      console.log curriculum[levelName]
-      return curriculum[levelName]
+      return curriculum?[levelName]
 
     getLevels: =>
       return @levels

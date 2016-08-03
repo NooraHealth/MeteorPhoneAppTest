@@ -51,7 +51,7 @@ Template.Lesson_view_page_footer.helpers
     }
 
   nextButtonWrapperClasses: (animated) ->
-    classes = 'col-25'
+    classes = ''
     if animated then classes += ' animate-scale'
     return classes
 

@@ -3,7 +3,7 @@
   <div class="toolbar">
 
     <div class="toolbar-inner row">
-      <div class="col-15">
+      <div class="col-20">
         {{#if homeButton.shouldShow}}
           {{> Button (goHomeButtonArgs homeButton)}}
         {{/if}}
@@ -15,14 +15,18 @@
         {{/if}}
       </div>
 
-      <div class="col-10">
-        {{#if replayButton.shouldShow}}
-          {{> Button (replayButtonArgs replayButton)}}
-        {{/if}}
-      </div>
+      <div class="row col-30">
+        <div class="col-30">
+          {{#if replayButton.shouldShow}}
+            {{> Button (replayButtonArgs replayButton)}}
+          {{/if}}
+        </div>
 
-      <div class={{nextButtonWrapperClasses nextButton.animated}}>
-        {{> Button (nextButtonArgs nextButton)}}
+        <div class="col-70">
+          <div class={{nextButtonWrapperClasses nextButton.animated}}>
+            {{> Button (nextButtonArgs nextButton)}}
+          </div>
+        </div>
       </div>
     </div>
   </div>
