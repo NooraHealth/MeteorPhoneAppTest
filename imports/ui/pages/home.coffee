@@ -16,7 +16,14 @@ require '../../ui/components/home/thumbnail.coffee'
 Template.Home_page.onCreated ->
 
   @onLevelSelected = ( levelName ) ->
-    FlowRouter.go "level", { level: levelName }
+    lessons = AppState.getLessons levelName
+    if lessons.length > 0
+      FlowRouter.go "level", { level: levelName }
+    else
+      swal {
+        title: "Oops!"
+        text: "We don't have lessons available for that level yet"
+      }
 
   @autorun =>
    if Meteor.isCordova and Meteor.status().connected
