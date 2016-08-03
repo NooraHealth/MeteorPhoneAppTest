@@ -58,7 +58,7 @@ Template.Lesson_view_page.onCreated ()->
     return index > modules?.indexOf moduleId
 
   @getProgress = ()=>
-    numInLesson = @getLesson().modules.length
+    numInLesson = @getLesson()?.modules?.length or 0
     numCompleted = (@state.get "moduleIndex") + 1
     return (numCompleted * 100 / numInLesson).toString()
 
