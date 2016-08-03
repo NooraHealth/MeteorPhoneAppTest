@@ -52,7 +52,7 @@ Template.Introduction_video_page.helpers
       language: language
       homeButton: {
         onClick: ->
-        shouldShow: -> return false
+        shouldShow: false
         text: ""
       }
       nextButton: {
@@ -63,7 +63,7 @@ Template.Introduction_video_page.helpers
       }
       replayButton: {
         onClick: ->
-        shouldShow: -> return false
+        shouldShow: false
       }
       progressBar: {
         percent: "0"

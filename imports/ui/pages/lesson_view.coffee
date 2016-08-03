@@ -1,5 +1,6 @@
 
 { Curriculums } = require("meteor/noorahealth:mongo-schemas")
+{ Curriculums } = require("meteor/noorahealth:mongo-schemas")
 { Lessons } = require("meteor/noorahealth:mongo-schemas")
 { Modules } = require("meteor/noorahealth:mongo-schemas")
 
@@ -145,7 +146,8 @@ Template.Lesson_view_page.onCreated ()->
     #return AppState.getLessonId()
     index = @state.get "lessonIndex"
     level = @getLevel()
-    return @lessons()?[index]
+    lessons = @lessons()
+    if lessons and lessons.length > 0 then return lessons[index] else return ""
 
   @getLesson = =>
     id = @getLessonId()
@@ -320,7 +322,7 @@ Template.Lesson_view_page.helpers
       language: language
       homeButton: {
         onClick: instance.goHome
-        shouldShow: -> return true
+        shouldShow: true
         text: instance.goHomeButtonText()
       }
       nextButton: {
@@ -331,10 +333,11 @@ Template.Lesson_view_page.helpers
       }
       replayButton: {
         onClick: instance.onReplayButtonClicked
-        shouldShow: instance.shouldShowReplayButton
+        shouldShow: instance.shouldShowReplayButton()
       }
       progressBar: {
         percent: instance.getProgress()
+        shouldShow: true
       }
     }
 
