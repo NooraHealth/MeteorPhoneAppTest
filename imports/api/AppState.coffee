@@ -63,9 +63,6 @@ class AppState
       if not language? then return null else return language
 
     translate: ( key, language, textCase, options)->
-      console.trace()
-      if not language
-        @setError new Meteor.Error("developer-error", "Cannot translate when the language is null or empty string")
       tag = @_getLangTag language
       text = TAPi18n.__ key, options, tag
       if textCase == "UPPER"
@@ -137,9 +134,6 @@ class AppState
       if not Meteor.isCordova
         @setError new Meteor.Error("developer-error", "The app should not call AppState.get().getConfiguration when not in Cordova. Developer error.")
 
-      if not @isConfigured()
-        @setError new Meteor.Error("developer-error", "The app is calling getConfiguration before it has been configured. This should not have happened. Developer error")
-
       return @dict.get "configuration"
 
     getCondition: ->
@@ -182,19 +176,17 @@ class AppState
 
     getLessons: ( levelName )=>
       curriculum = @getCurriculumDoc()
-      if levelName == @levels[0].name
-        return curriculum.lessons.slice(1, 5)
-      if levelName == @levels[1].name and curriculum.lessons.length >= 12
-        return curriculum.lessons.slice(5, 10)
-      if levelName == @levels[2].name
-        return curriculum.lessons.slice(10)
+      console.log "The curriculum"
+      console.log curriculum
+      console.log curriculum[levelName]
+      return curriculum[levelName]
 
     getLevels: =>
       return @levels
 
     getIntroductionModule: ()->
       curriculum = @getCurriculumDoc()
-      lesson = Lessons.findOne { _id: curriculum?.lessons?[0] }
+      lesson = Lessons.findOne { _id: curriculum.introduction }
       moduleId = lesson?.modules[0]
       return Modules.findOne { _id: moduleId }
 
