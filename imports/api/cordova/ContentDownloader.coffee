@@ -43,7 +43,7 @@ class @ContentDownloader
           throw new Meteor.Error "not-connected", "The iPad is not connected to data. Please connect and try again"
 
         curriculums = cursor.fetch()
-        console.log "Downloading these docs"
+        console.log "Downloading these docs!!!"
         console.log curriculums
 
         console.log " The curriculums to download"
@@ -58,31 +58,7 @@ class @ContentDownloader
           paths.push ContentInterface.getDirectory( "IMAGE" ) + level.image
 
         for curriculum in curriculums
-          #curriculum = Curriculums.findOne { _id: docs[0]._id }
-          #if Meteor.settings.public.METEOR_ENV == "development"
-            #if doc.language isnt "Hindi" then continue
-
-          #curriculum = Curriculums.findOne { _id: doc._id }
-          #if not curriculum? then throw new Meteor.Error "curriculum-not-found", "Curriculum of id #{id} not found"
-
-          console.log curriculum
           paths.merge @_allContentPathsInCurriculum( curriculum )
-        #getFileName = (path, index) ->
-          #getRandomInt = (min, max) => Math.floor(Math.random() * (max - min)) + min
-          #rand = getRandomInt(1, 400)
-          #matches = path.match(/[\.][a-z1-9]+$/)
-          #filetype = matches[ matches.length - 1 ] #the filetype extension will be the last match
-          #newFilename = index + rand + filetype
-          #return newFilename
-
-        #filteredFiles = []
-        #files = ({
-          #path: path
-          ##url: ContentInterface.getEndpoint(path),
-          ##name: getFileName(path, index)
-        #} for path, index in paths )
-        #filteredFiles.push file for file in files when not OfflineFiles.findOne({url: file.url})?
-        #filteredFiles.push file for file in files when not OfflineFiles.findOne({path: file.path})?
 
         @_downloadFiles paths
         .then (error)->
@@ -106,9 +82,11 @@ class @ContentDownloader
       deferred = Q.defer()
       error = null
       #filter paths for those that do not already exist locally
+      console.log "The number of paths #{paths.length}"
       toDownload = paths.filter (path)->
         return not OfflineFiles.findOne {path: path}
 
+      console.log "The number to download #{toDownload.length}"
       if toDownload.length == 0
         deferred.resolve(error)
 

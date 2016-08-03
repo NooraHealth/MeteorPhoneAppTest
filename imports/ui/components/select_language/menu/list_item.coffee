@@ -7,6 +7,8 @@ require './list_item.html'
 Template.Home_language_menu_list_item.onCreated ->
   # Data context validation
   @autorun =>
+    console.log "Creating a list item"
+    console.log Template.currentData()
     new SimpleSchema({
       onLanguageSelected: {type: Function}
       language: {type: String}

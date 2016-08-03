@@ -25,6 +25,7 @@ if Meteor.isCordova
 FlowRouter.route '/', {
   name: "home"
   action: ( params, qparams )->
+    console.log "GOING HOME"
     hospital = AppState.getHospital()
     condition = AppState.getCondition()
     language = AppState.getLanguage()
@@ -51,6 +52,7 @@ FlowRouter.route '/configure', {
 FlowRouter.route '/select_language', {
   name: "select_language"
   action: ( params, qparams )->
+
     hospital = AppState.getHospital()
     condition = AppState.getCondition()
     language = AppState.getLanguage()

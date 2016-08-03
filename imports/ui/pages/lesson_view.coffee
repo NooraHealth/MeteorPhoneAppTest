@@ -19,6 +19,7 @@ require '../components/lesson/modules/video.coffee'
 require '../components/lesson/footer/footer.coffee'
 
 Template.Lesson_view_page.onCreated ()->
+  console.log "Rendering lesson page"
 
   @state = new ReactiveDict()
   @state.setDefault {
@@ -67,7 +68,7 @@ Template.Lesson_view_page.onCreated ()->
     condition = AppState.getCondition()
     language = AppState.getLanguage()
     module = @getCurrentModule()
-    text = if module.title then module.title else module.question
+    text = if module?.title then module?.title else module?.question
     analytics.track "Audio Stopped", {
       moduleText: text
       audioSrc: src
@@ -110,7 +111,7 @@ Template.Lesson_view_page.onCreated ()->
       condition = AppState.getCondition()
       language = AppState.getLanguage()
       module = instance.getCurrentModule()
-      text = if module.title then module.title else module.question
+      text = if module?.title then module?.title else module?.question
       analytics.track "Responded to Question", {
         moduleId: module._id
         moduleText: text
