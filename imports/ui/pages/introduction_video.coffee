@@ -64,6 +64,7 @@ Template.Introduction_video_page.helpers
       replayButton: {
         onClick: ->
         shouldShow: false
+        text: ""
       }
       progressBar: {
         percent: "0"

@@ -3,19 +3,19 @@
   <div class="toolbar">
 
     <div class="toolbar-inner row">
-      <div class="col-25">
+      <div class="col-15">
         {{#if homeButton.shouldShow}}
           {{> Button (goHomeButtonArgs homeButton)}}
         {{/if}}
       </div>
 
-      <div class="col-25">
+      <div class="col-50">
         {{#if progressBar.shouldShow}}
           {{> Lesson_view_page_footer_progress_bar percent=progressBar.percent}}
         {{/if}}
       </div>
 
-      <div class="col-25">
+      <div class="col-10">
         {{#if replayButton.shouldShow}}
           {{> Button (replayButtonArgs replayButton)}}
         {{/if}}

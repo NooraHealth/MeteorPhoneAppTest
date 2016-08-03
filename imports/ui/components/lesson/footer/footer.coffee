@@ -14,6 +14,7 @@ Template.Lesson_view_page_footer.onCreated ->
       "homeButton.text": {type: String}
       "replayButton.onClick": {type: Function}
       "replayButton.shouldShow": {type: Boolean}
+      "replayButton.text": {type: String}
       "nextButton.onClick": {type: Function}
       "nextButton.onRendered": {type: Function}
       "nextButton.animated": {type: Boolean}
@@ -37,7 +38,7 @@ Template.Lesson_view_page_footer.helpers
     
   nextButtonArgs: (data) ->
     instance = Template.instance()
-    classes = 'link next-module-btn footer-button button color-orange button-fill swiper-button-next'
+    classes = 'link footer-button button color-orange button-fill'
     #if data.animated then classes += ' slide-up'
     return {
       attributes: {
@@ -61,7 +62,7 @@ Template.Lesson_view_page_footer.helpers
         id: "replayBtn"
         class: classes
       }
-      content: '<i class="fa fa-repeat fa-2x"></i>'
+      content: data.text
       onClick: data.onClick
     }
 
