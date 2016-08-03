@@ -10,10 +10,10 @@ Template.Lesson_view_page_footer.onCreated ->
     console.log Template.currentData()
     new SimpleSchema({
       "homeButton.onClick": {type: Function}
-      "homeButton.shouldShow": {type: Function}
+      "homeButton.shouldShow": {type: Boolean}
       "homeButton.text": {type: String}
       "replayButton.onClick": {type: Function}
-      "replayButton.shouldShow": {type: Function}
+      "replayButton.shouldShow": {type: Boolean}
       "nextButton.onClick": {type: Function}
       "nextButton.onRendered": {type: Function}
       "nextButton.animated": {type: Boolean}
@@ -26,9 +26,6 @@ Template.Lesson_view_page_footer.onCreated ->
 Template.Lesson_view_page_footer.helpers
   goHomeButtonArgs: (data) ->
     classes = 'link gohome-btn button footer-button color-green button-rounded button-fill'
-    if not data.shouldShow()
-      classes += " hidden"
-    console.log "The home button text", data.text
     return {
       attributes: {
         id: "homeBtn"
@@ -59,8 +56,6 @@ Template.Lesson_view_page_footer.helpers
 
   replayButtonArgs: (data) ->
     classes = 'link footer-button button button-rounded color-pink button-fill'
-    if not data.shouldShow()
-      classes += " hidden"
     return {
       attributes: {
         id: "replayBtn"

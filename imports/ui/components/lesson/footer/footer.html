@@ -4,15 +4,21 @@
 
     <div class="toolbar-inner row">
       <div class="col-25">
-        {{> Button (goHomeButtonArgs homeButton)}}
+        {{#if homeButton.shouldShow}}
+          {{> Button (goHomeButtonArgs homeButton)}}
+        {{/if}}
       </div>
 
       <div class="col-25">
-        {{> Lesson_view_page_footer_progress_bar percent=progressBar.percent}}
+        {{#if progressBar.shouldShow}}
+          {{> Lesson_view_page_footer_progress_bar percent=progressBar.percent}}
+        {{/if}}
       </div>
 
       <div class="col-25">
-        {{> Button (replayButtonArgs replayButton)}}
+        {{#if replayButton.shouldShow}}
+          {{> Button (replayButtonArgs replayButton)}}
+        {{/if}}
       </div>
 
       <div class={{nextButtonWrapperClasses nextButton.animated}}>
