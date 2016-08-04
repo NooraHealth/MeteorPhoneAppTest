@@ -2,7 +2,7 @@
   <div class="card-header large-text center ">{{module.question}}</div>
 
   <div class="card-content padding">
-    {{#with (getOptions module 0 3) }}
+    {{#with (firstRow module.options) }}
       <div class="row">
         {{#each option in options}}
           {{> Lesson_view_page_multiple_choice_option (optionArgs option) }}
@@ -10,7 +10,7 @@
       </div>
     {{/with}}
 
-    {{#with (getOptions module 3 6) }}
+    {{#with (secondRow module.options) }}
       <div class="row">
         {{#each option in options}}
           {{> Lesson_view_page_multiple_choice_option (optionArgs option) }}

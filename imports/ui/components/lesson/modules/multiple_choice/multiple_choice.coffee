@@ -30,6 +30,10 @@ Template.Lesson_view_page_multiple_choice.onCreated ->
 
     @data = Template.currentData()
 
+  @getOptions = (options, start, end) ->
+    filtered = (options[start...end]).filter (o) -> o?
+    return {options: filtered}
+
   @getOnSelectedCallback = (module, templateInstance) ->
     return (option) ->
       if module.isCorrectAnswer option
@@ -87,9 +91,17 @@ Template.Lesson_view_page_multiple_choice.helpers
       option: option
     }
 
-  getOptions: (module, start, end) ->
-    options = (module.options[start...end]).filter (o) -> o?
-    return {options: options}
+  firstRow: (options) ->
+    instance = Template.instance()
+    start = 0
+    end = options.length / 2
+    return instance.getOptions options, start, end
+
+  secondRow: (options) ->
+    instance = Template.instance()
+    start = options.length / 2
+    end = options.length
+    return instance.getOptions options, start, end
 
   audioArgs: (data) ->
     return {
