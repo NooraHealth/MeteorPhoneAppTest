@@ -8,4 +8,5 @@ settings.json
 settings_dev.json
 public/
 mup.json
+mup_desktop.json
 package.json
