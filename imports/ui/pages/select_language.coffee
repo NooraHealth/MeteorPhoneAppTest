@@ -10,7 +10,6 @@ require '../../ui/components/shared/navbar.html'
 require '../../ui/components/select_language/menu/menu.coffee'
 
 Template.Select_language_page.onCreated ->
-  console.log "Rendering the select language page"
   @onLanguageSelected = (language) ->
     analytics.track "Changed Language", {
       fromLanguage: AppState.getLanguage()

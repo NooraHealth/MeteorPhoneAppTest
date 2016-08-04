@@ -42,12 +42,6 @@ Template.Home_page.helpers
     return instance.subscriptionsReady()
 
   thumbnailArgs: (level ) ->
-    console.log Curriculums.find({}).count()
-    console.log "Curriculum get lesson docs"
-    curr = Curriculums.findOne()
-    console.log curr
-    curr.getLessonDocuments()
-
     instance = Template.instance()
     isCurrentLevel = ( AppState.getLevel() == level.name )
     return {

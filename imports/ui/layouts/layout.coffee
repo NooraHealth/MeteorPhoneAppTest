@@ -3,7 +3,6 @@
 require './layout.html'
 
 Template.Layout.onCreated ->
-  console.log "Rendering the layout"
   @autorun =>
     error = AppState.getError()
     if error

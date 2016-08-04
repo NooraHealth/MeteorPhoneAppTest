@@ -42,6 +42,9 @@ Template.Lesson_view_page.onCreated ()->
   @setCurrentModuleId = =>
     index = @state.get "moduleIndex"
     lesson = @getLesson()
+    console.log "The Lesson!"
+    console.log lesson.title
+    console.log lesson.modules
     moduleId = lesson?.modules[index]
     @state.set "currentModuleId", moduleId
 
@@ -55,6 +58,8 @@ Template.Lesson_view_page.onCreated ()->
 
   @isCompleted = (moduleId) =>
     modules = @getLesson()?.modules
+    console.log "The modules!!"
+    console.log modules
     index = @state.get "moduleIndex"
     return index > modules?.indexOf moduleId
 

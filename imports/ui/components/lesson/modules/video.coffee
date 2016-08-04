@@ -40,7 +40,6 @@ Template.Lesson_view_page_video.onCreated ->
     }
 
   @onPlayVideo = =>
-    console.log "Playing the video"
     if @data.onPlayVideo
       @data.onPlayVideo()
 
@@ -84,9 +83,7 @@ Template.Lesson_view_page_video.helpers
     }
   
   playing: ->
-    console.log("Returning whether video is playing")
     instance = Template.instance()
-    console.log instance.data.playing
     return instance.data.playing
 
 Template.Lesson_view_page_video.events
@@ -107,7 +104,6 @@ Template.Lesson_view_page_video.onRendered ->
     instance.trackStoppedVideo( elem.currentTime, false )
 
   elem.addEventListener "onended", ->
-    console.log "onended has been fired"
     instance.onVideoEnd()
     instance.trackStoppedVideo( elem.currentTime, true )
   
