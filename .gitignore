@@ -10,3 +10,4 @@ public/
 mup.json
 mup_desktop.json
 package.json
+.deploy/*
