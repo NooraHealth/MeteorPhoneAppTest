@@ -10,7 +10,7 @@ Template.Home_thumbnail.onCreated ->
       "level.name": {type: String }
       "level.image": {type: String }
       isCurrentLevel: {type: Boolean}
-      language: {type: String}
+      language: {type: String, defaultValue: "english"}
       onLevelSelected: {type: Function}
     }).validate(Template.currentData())
 

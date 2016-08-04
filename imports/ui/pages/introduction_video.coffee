@@ -31,8 +31,6 @@ Template.Introduction_video_page.onCreated ()->
     if playing? then return playing else return false
 
   @autorun =>
-   if Meteor.isCordova and Meteor.status().connected
-    console.log "Subscribing!!"
     @subscribe "curriculums.all"
     @subscribe "lessons.all"
     @subscribe "modules.all"

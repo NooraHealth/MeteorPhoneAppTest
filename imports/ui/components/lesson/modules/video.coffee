@@ -40,6 +40,7 @@ Template.Lesson_view_page_video.onCreated ->
     }
 
   @onPlayVideo = =>
+    console.log "on play video"
     if @data.onPlayVideo
       @data.onPlayVideo()
 
@@ -62,6 +63,7 @@ Template.Lesson_view_page_video.onCreated ->
       elem.pause()
 
   @playVideo = =>
+    console.log "Playing the videoo!!!"
     @elem(@).play()
 
 Template.Lesson_view_page_video.helpers
@@ -91,6 +93,11 @@ Template.Lesson_view_page_video.events
     instance = Template.instance()
     instance.playVideo()
 
+  'click #play_video': ->
+    console.log "CLICK"
+    instance = Template.instance()
+    instance.playVideo()
+
 Template.Lesson_view_page_video.onRendered ->
   instance = Template.instance()
   instance.state.set "rendered", true
@@ -100,10 +107,12 @@ Template.Lesson_view_page_video.onRendered ->
     instance.onPlayVideo()
 
   elem.addEventListener "pause", ->
+    console.log "pause"
     instance.onStopVideo()
     instance.trackStoppedVideo( elem.currentTime, false )
 
   elem.addEventListener "onended", ->
+    console.log "onended"
     instance.onVideoEnd()
     instance.trackStoppedVideo( elem.currentTime, true )
   

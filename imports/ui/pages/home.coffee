@@ -14,7 +14,6 @@ require '../../ui/components/home/footer.html'
 require '../../ui/components/home/thumbnail.coffee'
 
 Template.Home_page.onCreated ->
-  console.log "Rendering home page"
 
   @onLevelSelected = ( levelName ) ->
     lessons = AppState.getLessons levelName
@@ -27,7 +26,6 @@ Template.Home_page.onCreated ->
       }
 
   @autorun =>
-   if Meteor.isCordova and Meteor.status().connected
     @subscribe "curriculums.all"
     @subscribe "lessons.all"
     @subscribe "modules.all"

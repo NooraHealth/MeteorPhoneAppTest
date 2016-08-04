@@ -7,6 +7,8 @@
 require './configure.html'
 
 Template.Configure_app_page.onCreated ->
+  console.log "Creating a configure page"
+
   @configureApp = ->
     console.log "Configuring the app!!"
     analytics.track "Configured App", {
@@ -21,7 +23,11 @@ Template.Configure_app_page.onCreated ->
       condition: condition
     }
 
-    FlowRouter.go "load"
+    if Meteor.isCordova
+      FlowRouter.go "load"
+    else
+      console.log "About to go to the language page"
+      FlowRouter.go "select_language"
 
   @autorun =>
     @subscribe "facilities.all"

@@ -19,17 +19,22 @@ Template.Button.onCreated ->
     if active?
       $(active).removeClass "active-state"
 
-Template.Button.events
-  'touchend': (e) ->
-    instance = Template.instance()
-    data = Template.currentData()
+  @onClick = (e, data) =>
     data.onClick e
-    instance.removeActiveState()
+    @removeActiveState()
 
     analytics.track "Pressed Button", {
       id: data.attributes.id
     }
 
+Template.Button.events
+  'touchend': (e) ->
+    instance = Template.instance()
+    instance.onClick e, Template.currentData()
+
+  'click': (e) ->
+    instance = Template.instance()
+    instance.onClick e, Template.currentData()
 
 Template.Button.onRendered ->
   Template.currentData().onRendered?()

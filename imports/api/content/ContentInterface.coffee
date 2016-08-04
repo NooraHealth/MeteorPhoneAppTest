@@ -57,12 +57,12 @@ class ContentInterface
         return @_audioDirectory()
 
     # Where the content is stored remotely (AWS S3 server)
-    getEndpoint: (filename) =>
+    getEndpoint: (path) =>
       new SimpleSchema({
-        filename: {type: String}
-      }).validate({filename: filename})
+        path: {type: String}
+      }).validate({path: path})
 
-      return encodeURI(@remoteContentEndpoint + filename)
+      return encodeURI(@remoteContentEndpoint + path)
 
     # Given a filename (path), getSrc will identify where to find
     # that particular file -- in Cordova, this is local and in the browser
@@ -77,7 +77,8 @@ class ContentInterface
         offlineFile = OfflineFiles.findOne { path: @getDirectory(type) + filename}
         return if offlineFile? then WebAppLocalServer.localFileSystemUrl(offlineFile.fsPath) else ""
       else
-        return url
+        path = @getDirectory(type) + filename
+        return @getEndpoint(path)
 
     subscriptionsReady: (instance) ->
       return instance.subscriptionsReady()

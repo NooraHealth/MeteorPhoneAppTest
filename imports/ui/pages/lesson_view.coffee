@@ -19,7 +19,6 @@ require '../components/lesson/modules/video.coffee'
 require '../components/lesson/footer/footer.coffee'
 
 Template.Lesson_view_page.onCreated ()->
-  console.log "Rendering lesson page"
 
   @state = new ReactiveDict()
   @state.setDefault {
@@ -42,9 +41,6 @@ Template.Lesson_view_page.onCreated ()->
   @setCurrentModuleId = =>
     index = @state.get "moduleIndex"
     lesson = @getLesson()
-    console.log "The Lesson!"
-    console.log lesson.title
-    console.log lesson.modules
     moduleId = lesson?.modules[index]
     @state.set "currentModuleId", moduleId
 
@@ -58,8 +54,6 @@ Template.Lesson_view_page.onCreated ()->
 
   @isCompleted = (moduleId) =>
     modules = @getLesson()?.modules
-    console.log "The modules!!"
-    console.log modules
     index = @state.get "moduleIndex"
     return index > modules?.indexOf moduleId
 
@@ -309,7 +303,6 @@ Template.Lesson_view_page.onCreated ()->
     if @isCurrent(id) and shouldPlay then return true else return false
 
   @autorun =>
-   if Meteor.isCordova and Meteor.status().connected
     @subscribe "curriculums.all"
     @subscribe "lessons.all"
     @subscribe "modules.all"

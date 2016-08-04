@@ -12,11 +12,10 @@ require '../../ui/pages/home.coffee'
 require '../../ui/pages/select_language.coffee'
 require '../../ui/pages/lesson_view.coffee'
 require '../../ui/pages/introduction_video.coffee'
-#require '../../ui/pages/wrapper_page.coffee'
+require '../../ui/pages/configure.coffee'
 
 if Meteor.isCordova
   require '../../ui/pages/load_curriculums.coffee'
-  require '../../ui/pages/configure.coffee'
 
 ###
 # Home
@@ -25,7 +24,6 @@ if Meteor.isCordova
 FlowRouter.route '/', {
   name: "home"
   action: ( params, qparams )->
-    console.log "GOING HOME"
     hospital = AppState.getHospital()
     condition = AppState.getCondition()
     language = AppState.getLanguage()
@@ -43,6 +41,7 @@ FlowRouter.route '/', {
 FlowRouter.route '/configure', {
   name: "configure"
   action: ( params, qparams )->
+    console.log "Going to the configuration page"
     BlazeLayout.render 'Layout', { main : 'Configure_app_page' }
 }
 

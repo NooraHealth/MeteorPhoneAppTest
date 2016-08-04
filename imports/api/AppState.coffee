@@ -12,7 +12,6 @@ class AppState
   class Private
     constructor: (name) ->
       @dict = new PersistentReactiveDict name
-      @dict.set "route", "Home_page"
       @levels = [
         { name: "beginner", image: "easy.png"},
         { name: "intermediate", image: "medium.png"},
@@ -60,7 +59,7 @@ class AppState
 
     getLanguage: ->
       language = @dict.get "language"
-      if not language? then return null else return language
+      if not language? then return "English" else return language
 
     translate: ( key, language, textCase, options)->
       tag = @_getLangTag language
@@ -102,8 +101,6 @@ class AppState
       @dict.get "errorMessage"
 
     setConfiguration: (configuration) ->
-      if not Meteor.isCordova
-        @setError new Meteor.Error("developer-error", "The app should not call AppState.get().setConfiguration when not in Cordova. Developer error.")
 
       new SimpleSchema({
         hospital: {type: String, min: 1, optional: true} #Hospital and condition cannot be empty strings
@@ -114,26 +111,22 @@ class AppState
       return @
 
     contentDownloaded: ->
-      @dict.get "content_downloaded"
+      if Meteor.isCordova
+        @dict.get "content_downloaded"
+      else return true
 
     setContentDownloaded: (value) ->
       @dict.setPersistent "content_downloaded", value
 
     isConfigured: (state) ->
-      if Meteor.isCordova
-        configuration = @dict.get 'configuration'
-        return configuration? and
-          configuration?.hospital? and
-          configuration.hospital isnt "" and
-          configuration.condition? and
-          configuration.condition isnt ""
-      else
-        throw Meteor.Error('developer-error', 'App reached AppState.get().isConfigured while not in Cordova. This should not have happened. Developer Error')
+      configuration = @dict.get 'configuration'
+      return configuration? and
+        configuration?.hospital? and
+        configuration.hospital isnt "" and
+        configuration.condition? and
+        configuration.condition isnt ""
 
     getConfiguration: ->
-      if not Meteor.isCordova
-        @setError new Meteor.Error("developer-error", "The app should not call AppState.get().getConfiguration when not in Cordova. Developer error.")
-
       return @dict.get "configuration"
 
     getCondition: ->
@@ -182,6 +175,8 @@ class AppState
       return @levels
 
     getIntroductionModule: ()->
+      console.log "Getting the intro module"
+      console.log Curriculums.find().count()
       curriculum = @getCurriculumDoc()
       lesson = Lessons.findOne { _id: curriculum.introduction }
       moduleId = lesson?.modules[0]

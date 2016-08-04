@@ -18,7 +18,8 @@ Meteor.startup ()->
   AppState.initializeApp()
   if not AppState.isConfigured()
     FlowRouter.go "configure"
-  else if not AppState.contentDownloaded()
+  else if not AppState.contentDownloaded() and Meteor.isCordova
+    console.log "Going to the loading page from init"
     FlowRouter.go "load"
   else
     FlowRouter.go "select_language"

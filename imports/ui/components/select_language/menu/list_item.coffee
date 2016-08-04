@@ -12,9 +12,17 @@ Template.Home_language_menu_list_item.onCreated ->
       language: {type: String}
     }).validate(Template.currentData())
 
+  @onClick = (e, data)=>
+    data.onLanguageSelected data.language
+
 Template.Home_language_menu_list_item.events
   'touchend': ( e , template )->
     instance = Template.instance()
     data = Template.currentData()
-    data.onLanguageSelected data.language
+    instance.onClick e, data
+
+  'click': ( e , template )->
+    instance = Template.instance()
+    data = Template.currentData()
+    instance.onClick e, data
 
