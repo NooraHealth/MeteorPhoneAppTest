@@ -222,21 +222,7 @@ Template.Lesson_view_page.onCreated ()->
     @swiper.slideTo index
     module = @getCurrentModule()
 
-  @goToNextModule = =>
-    index = @state.get "moduleIndex"
-    newIndex = ++index
-    if newIndex == 1
-      @swiper = AppState.getF7().swiper '.swiper-container', {
-        lazyLoading: true,
-        preloadImages: false,
-        speed: 700,
-        shortSwipes: false
-        longSwipes: false
-        followFinger: false
-      }
-    @displayModule( newIndex )
-
-  @onNextButtonRendered = =>
+  @initializeSwiper = =>
     @swiper = AppState.getF7().swiper '.swiper-container', {
       lazyLoading: true,
       preloadImages: false,
@@ -245,6 +231,16 @@ Template.Lesson_view_page.onCreated ()->
       longSwipes: false
       followFinger: false
     }
+
+  @goToNextModule = =>
+    index = @state.get "moduleIndex"
+    newIndex = ++index
+    if newIndex == 1
+      @initializeSwiper()
+    @displayModule( newIndex )
+
+  @onNextButtonRendered = =>
+    @initializeSwiper()
 
   @showIntroductionToQuestions = =>
     language = AppState.getLanguage()

@@ -10,7 +10,7 @@ require '../../ui/components/shared/navbar.html'
 require '../../ui/components/select_language/menu/menu.coffee'
 
 Template.Select_language_page.onCreated ->
-  @onLanguageSelected = (language) ->
+  @onLanguageSelected = (language) =>
     analytics.track "Changed Language", {
       fromLanguage: AppState.getLanguage()
       toLanguage: language
@@ -18,7 +18,9 @@ Template.Select_language_page.onCreated ->
     }
 
     AppState.setLanguage language
-    FlowRouter.go "introduction"
+    #FlowRouter.go "introduction"
+    @swiper.slideTo 1
+    #$("video")[0].play()
     levels = AppState.getLevels()
     AppState.setLevel levels[0].name
 
@@ -30,3 +32,16 @@ Template.Select_language_page.helpers
       onLanguageSelected: instance.onLanguageSelected
       languages: ["English", "Hindi", "Kannada"]
     }
+
+Template.Select_language_page.onRendered ->
+  instance = Template.instance()
+  console.log "The instance"
+  console.log instance
+  instance.swiper = AppState.getF7().swiper '.swiper-container', {
+    lazyLoading: true,
+    preloadImages: false,
+    speed: 700,
+    shortSwipes: false
+    longSwipes: false
+    followFinger: false
+  }

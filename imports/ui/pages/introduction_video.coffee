@@ -86,3 +86,7 @@ Template.Introduction_video_page.helpers
     }
     return data
 
+Template.Introduction_video_page.onRendered =>
+  instance = Template.instance()
+  $("video")[0].play()
+
