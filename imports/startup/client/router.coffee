@@ -32,7 +32,8 @@ FlowRouter.route '/', {
       condition: condition,
       language: language
     }
-    BlazeLayout.render 'Layout', { main : 'Home_page' }
+    #BlazeLayout.render 'Layout', { main : 'Home_page' }
+    BlazeLayout.render 'Layout', { main : 'Lesson_view_page' }
 }
 
 ###

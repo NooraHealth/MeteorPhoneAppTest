@@ -18,9 +18,7 @@ Template.Select_language_page.onCreated ->
     }
 
     AppState.setLanguage language
-    #FlowRouter.go "introduction"
-    @swiper.slideTo 1
-    #$("video")[0].play()
+    FlowRouter.go "introduction"
     levels = AppState.getLevels()
     AppState.setLevel levels[0].name
 
@@ -35,8 +33,6 @@ Template.Select_language_page.helpers
 
 Template.Select_language_page.onRendered ->
   instance = Template.instance()
-  console.log "The instance"
-  console.log instance
   instance.swiper = AppState.getF7().swiper '.swiper-container', {
     lazyLoading: true,
     preloadImages: false,

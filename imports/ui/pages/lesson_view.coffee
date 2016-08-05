@@ -29,9 +29,20 @@ Template.Lesson_view_page.onCreated ()->
     incorrectlySelectedClasses: 'incorrectly-selected'
     nextButtonAnimated: false
     soundEfffectPlaying: null
-    audioPlaying: "QUESTION"
+    audioPlaying: null
     lessonIndex: 0
   }
+
+  @onLevelSelected = ( levelName ) =>
+    AppState.setLevel levelName
+    lessons = AppState.getLessons levelName
+    if lessons.length > 0
+      @goToNextModule()
+    else
+      swal {
+        title: "Oops!"
+        text: "We don't have lessons available for that level yet"
+      }
 
   @incorrectResponses = []
 
@@ -41,7 +52,9 @@ Template.Lesson_view_page.onCreated ()->
   @setCurrentModuleId = =>
     index = @state.get "moduleIndex"
     lesson = @getLesson()
-    moduleId = lesson?.modules[index]
+    console.log "This is the lesson"
+    console.log lesson
+    moduleId = lesson?.modules[index - 1 ]
     @state.set "currentModuleId", moduleId
 
   @getCurrentModule = =>
@@ -148,7 +161,11 @@ Template.Lesson_view_page.onCreated ()->
     #return AppState.getLessonId()
     index = @state.get "lessonIndex"
     level = @getLevel()
+    console.log "The level"
+    console.log level
     lessons = @lessons()
+    console.log "The lessons"
+    console.log lessons
     if lessons and lessons.length > 0 then return lessons[index] else return ""
 
   @getLesson = =>
@@ -157,7 +174,8 @@ Template.Lesson_view_page.onCreated ()->
     return lesson
 
   @getLevel = =>
-    return FlowRouter.getParam( "level" )
+    AppState.getLevel()
+    #return FlowRouter.getParam( "level" )
 
   @lessons = =>
     level = @getLevel()
@@ -217,10 +235,12 @@ Template.Lesson_view_page.onCreated ()->
   @displayModule = (index) =>
     @state.set "moduleIndex", index
     @state.set "nextButtonAnimated", false
+    console.log "Setting the audio to play as question"
     @state.set "audioPlaying", "QUESTION"
     @setCurrentModuleId()
     @swiper.slideTo index
     module = @getCurrentModule()
+    console.log module
 
   @initializeSwiper = =>
     @swiper = AppState.getF7().swiper '.swiper-container', {
@@ -233,10 +253,12 @@ Template.Lesson_view_page.onCreated ()->
     }
 
   @goToNextModule = =>
+    console.log "Going to the next module!!"
     index = @state.get "moduleIndex"
     newIndex = ++index
     if newIndex == 1
       @initializeSwiper()
+    console.log "Displaying module #{newIndex}"
     @displayModule( newIndex )
 
   @onNextButtonRendered = =>
@@ -303,8 +325,8 @@ Template.Lesson_view_page.onCreated ()->
       @subscribe "modules.all"
 
   @autorun =>
-    if ContentInterface.subscriptionsReady(@)
-      @setCurrentModuleId()
+    #if ContentInterface.subscriptionsReady(@)
+      #@setCurrentModuleId()
 
 Template.Lesson_view_page.helpers
   modulesReady: ->
@@ -453,3 +475,19 @@ Template.Lesson_view_page.helpers
       return "Lesson_view_page_video"
     if module?.type == "SLIDE"
       return "Lesson_view_page_slide"
+
+  getLanguage: ->
+    return AppState.getLanguage()
+
+  thumbnailArgs: (level ) ->
+    instance = Template.instance()
+    isCurrentLevel = ( AppState.getLevel() == level.name )
+    return {
+      level: level
+      onLevelSelected: instance.onLevelSelected
+      isCurrentLevel: isCurrentLevel
+      language: AppState.getLanguage()
+    }
+
+  levels: ->
+    return AppState.getLevels()

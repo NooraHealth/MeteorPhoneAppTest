@@ -10,6 +10,15 @@
         <div class="content-block row">
           <div class='swiper-container'>
             <div class='swiper-wrapper'>
+
+              <div class='swiper-slide'>
+                {{#each level in levels}}
+                  <div class="col-auto">
+                  {{ >Home_thumbnail (thumbnailArgs level)}}
+                  </div>
+                {{/each}}
+              </div>
+
               {{#each module in modules}}
                 {{#with module}}
                   <div class='swiper-slide'>
@@ -26,6 +35,7 @@
                   {{/if}}
                 {{/with}}
               {{/each}}
+
             </div>
           </div>
         </div>
