@@ -155,32 +155,22 @@ class AppState
     incrementLevel: =>
       level = @dict.get "level"
       if level == @levels[0].name
-        console.log "Setting level to @levels[1]"
         @dict.set "level", @levels[1].name
       else if level == @levels[1].name
-        console.log "Setting level to @levels[2]"
         @dict.set "level", @levels[2].name
       else if level == @levels[2].name
-        console.log "Setting level to @levels[3]"
         @dict.set "level", @levels[0].name
       else
-        console.log "Setting level to @levels[0]"
         @dict.set "level", @levels[0].name
 
     getLessons: ( levelName )=>
       curriculum = @getCurriculumDoc()
-      console.log "The curriculum"
-      console.log curriculum
-      console.log "The number of curriculums"
-      console.log Curriculums.find().count
       return curriculum?[levelName]
 
     getLevels: =>
       return @levels
 
     getIntroductionModule: ()->
-      console.log "Getting the intro module"
-      console.log Curriculums.find().count()
       curriculum = @getCurriculumDoc()
       lesson = Lessons.findOne { _id: curriculum.introduction }
       moduleId = lesson?.modules[0]
