@@ -99,10 +99,12 @@ Template.Lesson_view_page.onCreated ()->
         if not (module._id in instance.incorrectResponses)
           instance.incorrectResponses.push module._id
       if showAlert
+        language = AppState.getLanguage()
         swal {
           title: ""
           type: alertType
           timer: 3000
+          confirmButtonText: AppState.translate "ok", language
         }
 
       #analytics
