@@ -15,14 +15,14 @@
         <!-- Left panel, let it be with reveal effect -->
           
           {{#if curriculumsReady}}
-            <div class="content-block inner-container">
-              <div class="row no-gutter">
+            <div class="content-block row no-gutter">
+              <!--<div class="row no-gutter">-->
                 {{#each level in levels}}
                   <div class="col-auto">
                   {{ >Home_thumbnail (thumbnailArgs level)}}
                   </div>
                 {{/each}}
-              </div>
+              <!--</div>-->
             </div>
           {{/if}}
       </div>

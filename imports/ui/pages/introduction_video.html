@@ -1,14 +1,14 @@
 
 <template name='Introduction_video_page'>
   <div data-page="index" class="page navbar-fixed toolbar-fixed">
-    <!-- Top Navbar-->
+
     {{#Navbar}}
       <span class="right-aligned">WELCOME TO NOORA HEALTH'S CARE COMPANION PROGRAM</span>
     {{/Navbar}}
 
     {{#if modulesReady}}
       <div class="page-content">
-        <div class="content-block inner-container padding-lg">
+        <div class="content-block row">
           {{#with introModule}}
             <div id="{{_id}}" class="card module-card">
               {{> Lesson_view_page_video (videoArgs introModule) }}

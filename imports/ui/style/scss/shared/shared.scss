@@ -43,12 +43,18 @@ html, body {
   }
 }
 
+.page-content {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
 .logo {
-  position: absolute;
-  left: 30px;
-  top: 20px;
-  border-radius: 30px;
-  background-color: #fff;
+  /*position: absolute;*/
+  margin-left: 10px;
+  margin-top: 25px;
+  border-radius: 33px;
+  background-color: $white;
   padding: 10px;
   box-shadow: 5px 5px 5px grey;
 }
@@ -62,6 +68,7 @@ html, body {
   height: 100%;
   padding-left: 40px;
   padding-right: 40px;
+  padding-top: 40px;
 }
 
 /* -------------------------------- 
