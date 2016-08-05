@@ -107,6 +107,7 @@ spacebars-compiler@1.0.12
 standard-minifier-css@1.1.8
 standard-minifier-js@1.1.8
 tap:i18n@1.8.2
+tap:i18n-bundler@0.3.0
 templating@1.1.14
 templating-tools@1.0.4
 tmeasday:test-reporter-helpers@0.2.1

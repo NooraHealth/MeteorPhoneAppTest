@@ -1,0 +1,17 @@
+{
+  "name": "training-app",
+  "version": "0.0.4",
+  "description": "Noora Health's patient and caregiver training app",
+  "scripts": {
+    "prod": "meteor run --settings settings.json",
+    "dev": "meteor run --settings settings_dev.json",
+    "dev-ios": "meteor run ios-device --settings settings_dev.json",
+    "dev-android": "meteor run android-device --settings settings_dev.json",
+    "build-ios": "meteor run ios-device --mobile-server http://trainingapp.noorahealth.org",
+    "build": "meteor build ../training-app-build --server=http://trainingapp.noorahealth.org"
+  },
+  "dependencies": {
+    "chai": "^3.5.0",
+    "meteor-node-stubs": "^0.2.3"
+  }
+}

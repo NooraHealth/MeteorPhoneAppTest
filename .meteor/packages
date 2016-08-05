@@ -53,3 +53,4 @@ bojicas:howler2
 noorahealth:mongo-schemas
 okgrow:analytics
 tap:i18n
+tap:i18n-bundler
