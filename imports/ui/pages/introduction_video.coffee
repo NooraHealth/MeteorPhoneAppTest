@@ -46,6 +46,8 @@ Template.Introduction_video_page.helpers
   footerArgs: ->
     instance = Template.instance()
     language = AppState.getLanguage()
+    begin = AppState.translate "begin", language, "UPPER"
+    text = "<span class='center'>#{begin}<i class='fa fa-arrow-right'></i></span>"
     return {
       language: language
       homeButton: {
@@ -55,7 +57,7 @@ Template.Introduction_video_page.helpers
       }
       nextButton: {
         onClick: -> FlowRouter.go "home"
-        text: AppState.translate "begin", language, "UPPER"
+        text: text
         onRendered: ->
         animated: instance.state.get("letsBeginButtonAnimated")
       }
