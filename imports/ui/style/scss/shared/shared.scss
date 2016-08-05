@@ -156,6 +156,7 @@ html, body {
 
 .navbar::after {
   background-color: inherit !important;
+  height: 0px;
 }
 
 .card-header::after {
