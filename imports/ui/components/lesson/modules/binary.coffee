@@ -50,7 +50,7 @@ Template.Lesson_view_page_binary.onCreated ->
     selected = instance.state.get "selected"
 
     getClasses = (option) ->
-      classes = 'response button button-fill button-big color-lightblue'
+      classes = 'response button button-fill button-big color-blue-noora'
       if option is selected
         if module.isCorrectAnswer option
           classes += " #{data.correctlySelectedClasses}"

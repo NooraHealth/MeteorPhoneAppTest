@@ -151,7 +151,19 @@ html, body {
 -------------------------------- */
 
 .card-footer {
-  min-height: 80px;
+  /*min-height: 80px;*/
+}
+
+.navbar::after {
+  background-color: inherit !important;
+}
+
+.card-header::after {
+  background-color: inherit !important;
+}
+
+.card-footer:before {
+  background-color: inherit !important;
 }
 
 .button {
@@ -187,6 +199,7 @@ html, body {
 .center {
   display: block;
   margin: auto;
+  text-align: center;
 }
 
 .noora-button {
@@ -234,6 +247,10 @@ html, body {
   background-color: $red !important;
 }
 
+.color-blue-noora {
+  background-color: $primary-blue !important;
+}
+
 .small-text {
   font-size: 75%;
 }
@@ -250,7 +267,3 @@ html, body {
   font-weight: $demi-bold-font-weight;
 }
 
-.blue-background {
-  background-color: $primary-blue;
-}
- 
