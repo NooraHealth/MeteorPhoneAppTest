@@ -27,9 +27,10 @@ Template.Home_page.onCreated ->
       }
 
   @autorun =>
-    @subscribe "curriculums.all"
-    @subscribe "lessons.all"
-    @subscribe "modules.all"
+    if Meteor.status.connected
+      @subscribe "curriculums.all"
+      @subscribe "lessons.all"
+      @subscribe "modules.all"
 
 Template.Home_page.helpers
 
