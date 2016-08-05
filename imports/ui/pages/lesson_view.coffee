@@ -76,8 +76,8 @@ Template.Lesson_view_page.onCreated ()->
       condition: condition
       time: pos
       completed: completed
-      lessonTitle: lesson.title
-      lessonId: lesson._id
+      lessonTitle: lesson?.title
+      lessonId: lesson?._id
     }
 
   @answeredIncorrectly = ( id )=>

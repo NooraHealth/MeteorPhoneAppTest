@@ -172,7 +172,7 @@ class AppState
 
     getIntroductionModule: ()->
       curriculum = @getCurriculumDoc()
-      lesson = Lessons.findOne { _id: curriculum.introduction }
+      lesson = Lessons.findOne { _id: curriculum?.introduction }
       moduleId = lesson?.modules[0]
       return Modules.findOne { _id: moduleId }
 
