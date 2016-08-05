@@ -51,6 +51,11 @@ Template.Lesson_view_page_binary.onCreated ->
 
     getClasses = (option) ->
       classes = 'response button button-fill button-big color-blue-noora'
+      if option == "Yes"
+        classes += " yes-button"
+      if option == "No"
+        classes += " no-button"
+
       if option is selected
         if module.isCorrectAnswer option
           classes += " #{data.correctlySelectedClasses}"
