@@ -89,9 +89,9 @@ Template.Lesson_view_page_video.helpers
     return instance.data.playing
 
 Template.Lesson_view_page_video.events
-  'touchend #play_video': ->
-    instance = Template.instance()
-    instance.playVideo()
+  #'touchend #play_video': ->
+    #instance = Template.instance()
+    #instance.playVideo()
 
   'click #play_video': ->
     console.log "CLICK"

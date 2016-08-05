@@ -169,6 +169,10 @@ class AppState
 
     getLessons: ( levelName )=>
       curriculum = @getCurriculumDoc()
+      console.log "The curriculum"
+      console.log curriculum
+      console.log "The number of curriculums"
+      console.log Curriculums.find().count
       return curriculum?[levelName]
 
     getLevels: =>

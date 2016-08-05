@@ -223,10 +223,6 @@ Template.Lesson_view_page.onCreated ()->
   @goToNextModule = =>
     index = @state.get "moduleIndex"
     newIndex = ++index
-    #temporary shim to fix the issues with swiper not re
-    #initializing when changing to a new lesson
-    #leading to bugs when the lesson has more modules
-    #than the first lesson (when the swiper was initialized)
     if newIndex == 1
       @swiper = AppState.getF7().swiper '.swiper-container', {
         lazyLoading: true,

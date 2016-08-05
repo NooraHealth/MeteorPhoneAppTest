@@ -28,10 +28,9 @@ Template.Button.onCreated ->
     }
 
 Template.Button.events
-  'touchend': (e) ->
-    instance = Template.instance()
-    instance.onClick e, Template.currentData()
-
+  #'touchend': (e) ->
+    #instance = Template.instance()
+    #instance.onClick e, Template.currentData()
   'click': (e) ->
     instance = Template.instance()
     instance.onClick e, Template.currentData()

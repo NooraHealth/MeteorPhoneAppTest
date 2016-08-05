@@ -17,6 +17,7 @@ Template.Home_page.onCreated ->
 
   @onLevelSelected = ( levelName ) ->
     lessons = AppState.getLessons levelName
+    console.log lessons
     if lessons.length > 0
       FlowRouter.go "level", { level: levelName }
     else
@@ -32,12 +33,12 @@ Template.Home_page.onCreated ->
 
 Template.Home_page.helpers
 
-  getLanguage: ->
-    return AppState.getLanguage()
-
   curriculumsReady: ->
     instance = Template.instance()
     return instance.subscriptionsReady()
+
+  getLanguage: ->
+    return AppState.getLanguage()
 
   thumbnailArgs: (level ) ->
     instance = Template.instance()
