@@ -31,7 +31,7 @@ Template.Introduction_video_page.onCreated ()->
     if playing? then return playing else return false
 
   @autorun =>
-    if Meteor.status.connected
+    if Meteor.status().connected
       @subscribe "curriculums.all"
       @subscribe "lessons.all"
       @subscribe "modules.all"

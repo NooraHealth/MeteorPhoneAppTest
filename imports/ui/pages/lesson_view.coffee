@@ -301,7 +301,7 @@ Template.Lesson_view_page.onCreated ()->
     if @isCurrent(id) and shouldPlay then return true else return false
 
   @autorun =>
-    if Meteor.status.connected
+    if Meteor.status().connected
       @subscribe "curriculums.all"
       @subscribe "lessons.all"
       @subscribe "modules.all"

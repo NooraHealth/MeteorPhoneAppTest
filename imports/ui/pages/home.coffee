@@ -27,7 +27,7 @@ Template.Home_page.onCreated ->
       }
 
   @autorun =>
-    if Meteor.status.connected
+    if Meteor.status().connected
       @subscribe "curriculums.all"
       @subscribe "lessons.all"
       @subscribe "modules.all"
