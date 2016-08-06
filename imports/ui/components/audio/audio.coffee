@@ -30,7 +30,6 @@ Template.Audio.onCreated ->
     data = Template.currentData()
     shouldPlay = data.playing
     alreadyPlaying = @sound?.playing()
-    console.log "Should the audio play???"
     if shouldPlay and not alreadyPlaying
       #@sound = new Media(data.attributes.src)
       @sound ?= new Howl {
@@ -38,11 +37,10 @@ Template.Audio.onCreated ->
         onloaderror: (id, error)->
         onend: @data.whenFinished
         onpause: @data.whenPaused
-        onplay: -> console.log "Playing the audio"
+        #onplay: -> console.log "Playing the audio"
         #volume: 0
         #html5: true
       }
-      console.log "Just played the audio"
       @sound.play()
     else if not shouldPlay and @sound?
       @sound.pause()

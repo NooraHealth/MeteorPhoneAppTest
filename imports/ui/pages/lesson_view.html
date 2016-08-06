@@ -2,7 +2,14 @@
   <div data-page="index" class="page navbar-fixed toolbar-fixed">
     <!-- Top Navbar-->
     {{#Navbar}}
-      <span class="right">{{lessonTitle}}</span>
+      {{#if homePage}}
+        {{#with language=getLanguage}}
+          <a href="/select_language" class="right button">{{translate "change_language" "en" "UPPER"}}</a>
+        {{/with}}
+      {{else}}
+        <span class="right">{{lessonTitle}}</span>
+      {{/if}}
+
     {{/Navbar}}
 
     {{#if modulesReady}}
@@ -10,10 +17,9 @@
         <div class="content-block row">
           <div class='swiper-container'>
             <div class='swiper-wrapper'>
-
-              <div class='swiper-slide'>
+              <div class='swiper-slide row'>
                 {{#each level in levels}}
-                  <div class="col-auto">
+                  <div class="col-33">
                   {{ >Home_thumbnail (thumbnailArgs level)}}
                   </div>
                 {{/each}}
@@ -41,7 +47,9 @@
         </div>
       </div>
 
-      {{> Lesson_view_page_footer footerArgs}}
+      {{#unless homePage }}
+        {{> Lesson_view_page_footer footerArgs}}
+      {{/unless}}
     {{/if}}
 
     {{>Audio incorrectSoundEffectArgs}}

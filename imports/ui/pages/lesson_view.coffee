@@ -20,41 +20,46 @@ require '../components/lesson/footer/footer.coffee'
 
 Template.Lesson_view_page.onCreated ()->
 
+
   @state = new ReactiveDict()
-  @state.setDefault {
-    moduleIndex: 0
-    currentModuleId: null
-    correctlySelectedClasses: 'correctly-selected expanded'
-    incorrectClasses: 'faded'
-    incorrectlySelectedClasses: 'incorrectly-selected'
-    nextButtonAnimated: false
-    soundEfffectPlaying: null
-    audioPlaying: null
-    lessonIndex: 0
-  }
+
+  @setStateToDefault = =>
+    @state.set {
+      moduleIndex: 0
+      currentModuleId: null
+      correctlySelectedClasses: 'correctly-selected expanded'
+      incorrectClasses: 'faded'
+      incorrectlySelectedClasses: 'incorrectly-selected'
+      nextButtonAnimated: false
+      soundEfffectPlaying: null
+      audioPlaying: null
+      lessonIndex: 0
+      homePage: true
+    }
+
+  @HOME_SLIDE_INDEX = 0
 
   @onLevelSelected = ( levelName ) =>
-    AppState.setLevel levelName
     lessons = AppState.getLessons levelName
     if lessons.length > 0
-      @goToNextModule()
+      AppState.setLevel levelName
+      @startLesson(0)
     else
       swal {
         title: "Oops!"
         text: "We don't have lessons available for that level yet"
       }
 
-  @incorrectResponses = []
+  @getModuleIndex = =>
+    return @state.get "moduleIndex"
 
   @getCurrentModuleId = =>
     @state.get "currentModuleId"
 
   @setCurrentModuleId = =>
-    index = @state.get "moduleIndex"
+    index = @getModuleIndex()
     lesson = @getLesson()
-    console.log "This is the lesson"
-    console.log lesson
-    moduleId = lesson?.modules[index - 1 ]
+    moduleId = lesson?.modules[index]
     @state.set "currentModuleId", moduleId
 
   @getCurrentModule = =>
@@ -84,7 +89,7 @@ Template.Lesson_view_page.onCreated ()->
     analytics.track "Audio Stopped", {
       moduleText: text
       audioSrc: src
-      moduleId: module._id
+      moduleId: module?._id
       language: language
       condition: condition
       time: pos
@@ -92,9 +97,6 @@ Template.Lesson_view_page.onCreated ()->
       lessonTitle: lesson?.title
       lessonId: lesson?._id
     }
-
-  @answeredIncorrectly = ( id )=>
-    return id in @incorrectResponses
 
   @onFinishExplanation = (pos, completed, src) =>
     @state.set "nextButtonAnimated", true
@@ -109,8 +111,6 @@ Template.Lesson_view_page.onCreated ()->
         instance.state.set "soundEfffectPlaying", "INCORRECT"
         alertType = 'error'
         module = instance.getCurrentModule()
-        if not (module._id in instance.incorrectResponses)
-          instance.incorrectResponses.push module._id
       if showAlert
         language = AppState.getLanguage()
         swal {
@@ -155,16 +155,19 @@ Template.Lesson_view_page.onCreated ()->
     return index == lesson?.modules?.length-2
 
   @getModules = =>
+    console.log "getting the modules"
+    lesson = @getLesson()
+    console.log "The lesson"
+    console.log lesson
     return @getLesson()?.getModulesSequence()
 
   @getLessonId = =>
     #return AppState.getLessonId()
-    index = @state.get "lessonIndex"
+    index = @getLessonIndex()
+    console.log "The lesson index #{index}"
     level = @getLevel()
-    console.log "The level"
-    console.log level
     lessons = @lessons()
-    console.log "The lessons"
+    console.log "The lessons "
     console.log lessons
     if lessons and lessons.length > 0 then return lessons[index] else return ""
 
@@ -182,9 +185,8 @@ Template.Lesson_view_page.onCreated ()->
     return AppState.getLessons( level )
   
   @isLastLesson = =>
-    lessonIndex = @state.get "lessonIndex"
+    lessonIndex = @getLessonIndex()
     return lessonIndex == @lessons().length - 1
-
 
   @celebrateCompletion = =>
     language = AppState.getLanguage()
@@ -204,17 +206,32 @@ Template.Lesson_view_page.onCreated ()->
     else
       new Award(language).sendAward( onConfirm, onCancel, lessonsComplete, totalLessons )
 
-  @incrementLesson = =>
-    lessonIndex = @state.get "lessonIndex"
-    @state.set "lessonIndex", lessonIndex + 1
+  @getLessonIndex = =>
+    return @state.get "lessonIndex"
+
+  @setLessonIndex = (index) =>
+    @state.set "lessonIndex", index
+
+  @isHomePage = =>
+    return @state.get "homePage"
+
+  @setOnHomePage = (isHomePage) =>
+    @state.set "homePage", isHomePage
+
+  @startLesson = (index) =>
+    @setLessonIndex index
+    @setOnHomePage false
+    @initializeSwiper()
+    console.log "The slides"
+    console.log @swiper.slides
+    @displayModule(0)
 
   @goToNextLesson = =>
     if @isLastLesson()
       @goHome(null, false)
     else
-      @incrementLesson()
-      @incorrectResponses = []
-      @displayModule(0)
+      currentLessonIndex = @getLessonIndex()
+      @startLesson currentLessonIndex + 1
 
   @goHome = ( event, completedCurriculum) =>
     lesson = @getLesson()
@@ -230,17 +247,25 @@ Template.Lesson_view_page.onCreated ()->
       numberOfModulesInLesson: lesson?.modules.length
     }
     AppState.incrementLevel()
-    FlowRouter.go "home"
+    @setStateToDefault()
+    @swiper.slideTo @HOME_SLIDE_INDEX
+
+  @setAudioPlaying = (type) =>
+    @state.set "audioPlaying", type
+
+  @setNextButtonAnimated = (animated) =>
+    @state.set "nextButtonAnimated", animated
+
+  @setModuleIndex = (index) =>
+    @state.set "moduleIndex", index
 
   @displayModule = (index) =>
-    @state.set "moduleIndex", index
-    @state.set "nextButtonAnimated", false
-    console.log "Setting the audio to play as question"
-    @state.set "audioPlaying", "QUESTION"
+    @setModuleIndex index
+    @setNextButtonAnimated false
+    @setAudioPlaying "QUESTION"
     @setCurrentModuleId()
-    @swiper.slideTo index
+    @swiper.slideTo index + 1
     module = @getCurrentModule()
-    console.log module
 
   @initializeSwiper = =>
     @swiper = AppState.getF7().swiper '.swiper-container', {
@@ -256,8 +281,8 @@ Template.Lesson_view_page.onCreated ()->
     console.log "Going to the next module!!"
     index = @state.get "moduleIndex"
     newIndex = ++index
-    if newIndex == 1
-      @initializeSwiper()
+    #if newIndex == 1
+      #@initializeSwiper()
     console.log "Displaying module #{newIndex}"
     @displayModule( newIndex )
 
@@ -324,9 +349,7 @@ Template.Lesson_view_page.onCreated ()->
       @subscribe "lessons.all"
       @subscribe "modules.all"
 
-  @autorun =>
-    #if ContentInterface.subscriptionsReady(@)
-      #@setCurrentModuleId()
+  @setStateToDefault()
 
 Template.Lesson_view_page.helpers
   modulesReady: ->
@@ -462,6 +485,7 @@ Template.Lesson_view_page.helpers
 
   modules: ->
     instance = Template.instance()
+    console.log "returning the modules"
     return instance.getModules()
 
   getTemplate: (module) ->
@@ -491,3 +515,12 @@ Template.Lesson_view_page.helpers
 
   levels: ->
     return AppState.getLevels()
+
+  homePage: ->
+    instance = Template.instance()
+    return instance.isHomePage()
+
+#Template.Lesson_view_page.onRendered =>
+  #instance = Template.instance()
+  #instance.initializeSwiper()
+  #instance.goHome()
