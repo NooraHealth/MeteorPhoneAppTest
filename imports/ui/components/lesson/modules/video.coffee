@@ -20,6 +20,7 @@ Template.Lesson_view_page_video.onCreated ->
       onStopVideo: {type: Function, optional: true}
       onVideoEnd: {type: Function, optional: true}
       playing: {type: Boolean}
+      isCurrent: {type: Boolean}
     }).validate(Template.currentData())
 
     @data = Template.currentData()
@@ -49,22 +50,27 @@ Template.Lesson_view_page_video.onCreated ->
       @data.onVideoEnd()
 
   @elem = (template) ->
-    if not @state.get("rendered") then return ""
+    if not @isRendered() then return ""
     else
       return template.find "video"
 
-  @autorun =>
-    elemRendered = @state.get "rendered"
-    if not elemRendered then return
-    shouldPlay = Template.currentData().playing
-    instance = @
-    elem = @elem instance
-    if not shouldPlay
-      elem.pause()
+  @isRendered = =>
+    return @state.get "rendered"
+
+  @pauseVideo = =>
+    @elem(@).pause()
 
   @playVideo = =>
-    console.log "Playing the videoo!!!"
     @elem(@).play()
+
+  @autorun =>
+    if not @isRendered() then return
+
+    isCurrent = Template.currentData().isCurrent
+    if isCurrent
+      @playVideo()
+    else
+      @pauseVideo()
 
 Template.Lesson_view_page_video.helpers
   iframeAttributes: (module) ->
@@ -89,10 +95,6 @@ Template.Lesson_view_page_video.helpers
     return instance.data.playing
 
 Template.Lesson_view_page_video.events
-  #'touchend #play_video': ->
-    #instance = Template.instance()
-    #instance.playVideo()
-
   'click #play_video': ->
     console.log "CLICK"
     instance = Template.instance()

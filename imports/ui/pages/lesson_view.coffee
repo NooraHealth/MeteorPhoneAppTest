@@ -222,8 +222,6 @@ Template.Lesson_view_page.onCreated ()->
     @setLessonIndex index
     @setOnHomePage false
     @initializeSwiper()
-    console.log "The slides"
-    console.log @swiper.slides
     @displayModule(0)
 
   @goToNextLesson = =>
@@ -414,6 +412,7 @@ Template.Lesson_view_page.helpers
         onStopVideo: instance.onVideoEnd
         onVideoEnd: instance.onVideoEnd
         playing: isCurrentModule and instance.videoPlaying()
+        isCurrent: isCurrentModule
       }
     else
       return {

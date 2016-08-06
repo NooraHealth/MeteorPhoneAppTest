@@ -83,6 +83,7 @@ Template.Introduction_video_page.helpers
       onStopVideo: instance.onStopVideo
       onVideoEnd: instance.onVideoEnd
       playing: instance.videoPlaying()
+      isCurrent: true
     }
     return data
 
