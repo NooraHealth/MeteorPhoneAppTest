@@ -18,6 +18,17 @@ Template.Select_language_page.onCreated ->
     playingVideo: false
   }
 
+  @initializeSwiper = =>
+    console.log "initializing the swiper in the onRendered"
+    @swiper = AppState.getF7().swiper '.swiper-container', {
+      lazyLoading: true,
+      preloadImages: false,
+      speed: 700,
+      shortSwipes: false
+      longSwipes: false
+      followFinger: false
+    }
+
   @onLanguageSelected = (language) =>
     analytics.track "Changed Language", {
       fromLanguage: AppState.getLanguage()
@@ -28,6 +39,7 @@ Template.Select_language_page.onCreated ->
     AppState.setLanguage language
     #FlowRouter.go "introduction"
     levels = AppState.getLevels()
+    @initializeSwiper()
     @setFooterVisible true
     @playIntroVideo()
     AppState.setLevel levels[0].name
@@ -115,11 +127,4 @@ Template.Select_language_page.helpers
 
 Template.Select_language_page.onRendered ->
   instance = Template.instance()
-  instance.swiper = AppState.getF7().swiper '.swiper-container', {
-    lazyLoading: true,
-    preloadImages: false,
-    speed: 700,
-    shortSwipes: false
-    longSwipes: false
-    followFinger: false
-  }
+
