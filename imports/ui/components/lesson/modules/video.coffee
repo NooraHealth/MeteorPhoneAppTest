@@ -19,7 +19,7 @@ Template.Lesson_view_page_video.onCreated ->
       onPlayVideo: {type: Function, optional: true}
       onStopVideo: {type: Function, optional: true}
       onVideoEnd: {type: Function, optional: true}
-      playing: {type: Boolean}
+      #playing: {type: Boolean}
       isCurrent: {type: Boolean}
     }).validate(Template.currentData())
 
@@ -66,10 +66,11 @@ Template.Lesson_view_page_video.onCreated ->
   @autorun =>
     if not @isRendered() then return
     isCurrent = Template.currentData().isCurrent
-    if isCurrent
-      @playVideo()
-    else
+    if not isCurrent
       @pauseVideo()
+      #console.log "About to play the video in the AUTORUN"
+      #@playVideo()
+    #else
 
 Template.Lesson_view_page_video.helpers
   iframeAttributes: (module) ->
@@ -89,9 +90,9 @@ Template.Lesson_view_page_video.helpers
       controls: true
     }
   
-  playing: ->
-    instance = Template.instance()
-    return instance.data.playing
+  #playing: ->
+    #instance = Template.instance()
+    #return instance.data.playing
 
 Template.Lesson_view_page_video.events
   'click #play_video': ->

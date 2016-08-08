@@ -7,19 +7,27 @@
       {{/Navbar}}
 
       <div class="page-content">
-        <!--<div class="content-block row">-->
-          <!--<div class='swiper-container'>-->
-            <!--<div class='swiper-wrapper'>-->
-              <!--<div class='swiper-slide'>-->
+        <div class="content-block row">
+          <div class='swiper-container'>
+            <div class='swiper-wrapper'>
+              <div class='swiper-slide'>
                 {{>Home_language_menu (menuArgs)}}
-              <!--</div>-->
-              <!--<div class='swiper-slide'>-->
-                <!--{{>Introduction_video_page}}-->
-              <!--</div>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
+              </div>
+              <div class='swiper-slide'>
+                {{#with introModule}}
+                  <div id="{{_id}}" class="card module-card">
+                    {{> Lesson_view_page_video (videoArgs introModule) }}
+                  </div>
+                {{/with}}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+
+      {{#if footerVisible}}
+        {{> Lesson_view_page_footer footerArgs}}
+      {{/if}}
     </div>
 </template>
 

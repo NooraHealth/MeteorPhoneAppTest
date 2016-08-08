@@ -256,7 +256,6 @@ Template.Lesson_view_page.onCreated ()->
     @state.set "moduleIndex", index
 
   @displayModule = (index) =>
-    console.log "About to display"
     @setModuleIndex index
     @setNextButtonAnimated false
     @setAudioPlaying "QUESTION"
@@ -277,12 +276,10 @@ Template.Lesson_view_page.onCreated ()->
     }
 
   @goToNextModule = =>
-    console.log "Going to the next module!!"
     index = @state.get "moduleIndex"
     newIndex = ++index
     #if newIndex == 1
       #@initializeSwiper()
-    console.log "Displaying module #{newIndex}"
     @displayModule( newIndex )
 
   @onNextButtonRendered = =>
@@ -329,10 +326,6 @@ Template.Lesson_view_page.onCreated ()->
   @onVideoEnd = =>
     @state.set "playingVideo", false
     @state.set "nextButtonAnimated", true
-
-  @videoPlaying = =>
-    playing = @state.get "playingVideo"
-    if playing? then return playing else return false
 
   @shouldPlayQuestionAudio = (id) =>
     isPlayingQuestion = @state.get "playingQuestion"
@@ -412,7 +405,6 @@ Template.Lesson_view_page.helpers
         onPlayVideo: instance.onPlayVideo
         onStopVideo: instance.onVideoEnd
         onVideoEnd: instance.onVideoEnd
-        playing: isCurrentModule and instance.videoPlaying()
         isCurrent: isCurrentModule
       }
     else
@@ -498,7 +490,6 @@ Template.Lesson_view_page.helpers
 
   modules: ->
     instance = Template.instance()
-    console.log "returning the modules"
     return instance.getModules()
 
   getTemplate: (module) ->
