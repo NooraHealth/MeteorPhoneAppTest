@@ -77,9 +77,6 @@ class AppState
       return @langTags[language.toLowerCase()]
 
     getCurriculumDoc: ->
-      if not @isConfigured()
-        @setError new Meteor.Error("developer-error", "The app is calling setConfiguration after it has already been configured. This should not have happened. Developer error")
-
       language = @dict.get "language"
       condition = @dict.get('configuration').condition
       if not language? or not condition?

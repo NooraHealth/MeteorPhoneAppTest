@@ -31,10 +31,11 @@ Template.Lesson_view_page.onCreated ()->
       incorrectClasses: 'faded'
       incorrectlySelectedClasses: 'incorrectly-selected'
       nextButtonAnimated: false
-      soundEfffectPlaying: null
+      soundEffectPlaying: null
       audioPlaying: null
       lessonIndex: 0
       homePage: true
+      playStub: false
     }
 
   @HOME_SLIDE_INDEX = 0
@@ -65,6 +66,9 @@ Template.Lesson_view_page.onCreated ()->
   @getCurrentModule = =>
     id = @getCurrentModuleId()
     return Modules.findOne {_id: id}
+
+  @setPlayStub = (shouldPlay) ->
+    @state.set "playStub", shouldPlay
 
   @isCurrent = (moduleId) =>
     current = @getCurrentModuleId()
@@ -105,10 +109,10 @@ Template.Lesson_view_page.onCreated ()->
   @onChoice = (instance, type, showAlert) ->
     return (choice) ->
       if type is "CORRECT"
-        instance.state.set "soundEfffectPlaying", "CORRECT"
+        instance.state.set "soundEffectPlaying", "CORRECT"
         alertType = 'success'
       else
-        instance.state.set "soundEfffectPlaying", "INCORRECT"
+        instance.state.set "soundEffectPlaying", "INCORRECT"
         alertType = 'error'
         module = instance.getCurrentModule()
       if showAlert
@@ -142,7 +146,7 @@ Template.Lesson_view_page.onCreated ()->
       instance.state.set "audioPlaying", "EXPLANATION"
 
   @stopPlayingSoundEffect = =>
-    @state.set "soundEfffectPlaying", null
+    @state.set "soundEffectPlaying", null
 
   @lessonComplete = =>
     lesson = @getLesson()
@@ -155,20 +159,14 @@ Template.Lesson_view_page.onCreated ()->
     return index == lesson?.modules?.length-2
 
   @getModules = =>
-    console.log "getting the modules"
     lesson = @getLesson()
-    console.log "The lesson"
-    console.log lesson
     return @getLesson()?.getModulesSequence()
 
   @getLessonId = =>
     #return AppState.getLessonId()
     index = @getLessonIndex()
-    console.log "The lesson index #{index}"
     level = @getLevel()
     lessons = @lessons()
-    console.log "The lessons "
-    console.log lessons
     if lessons and lessons.length > 0 then return lessons[index] else return ""
 
   @getLesson = =>
@@ -460,7 +458,7 @@ Template.Lesson_view_page.helpers
 
   incorrectSoundEffectArgs: ->
     instance = Template.instance()
-    playing = instance.state.get("soundEfffectPlaying") == "INCORRECT"
+    playing = instance.state.get("soundEffectPlaying") == "INCORRECT"
     return {
       attributes: {
         src: ContentInterface.getSrc(ContentInterface.incorrectSoundEffectFilename(), "AUDIO")
@@ -472,7 +470,7 @@ Template.Lesson_view_page.helpers
 
   correctSoundEffectArgs: ->
     instance = Template.instance()
-    playing = instance.state.get("soundEfffectPlaying") == "CORRECT"
+    playing = instance.state.get("soundEffectPlaying") == "CORRECT"
     return {
       attributes: {
         src: ContentInterface.getSrc(ContentInterface.correctSoundEffectFilename(), "AUDIO")
@@ -480,6 +478,19 @@ Template.Lesson_view_page.helpers
       playing: playing
       whenFinished: instance.stopPlayingSoundEffect
       whenPaused: instance.stopPlayingSoundEffect
+    }
+
+  stubAudioArgs: ->
+    instance = Template.instance()
+    playing = instance.state.get("playStub") == true
+    return {
+      attributes: {
+        src: ContentInterface.getSrc(ContentInterface.correctSoundEffectFilename(), "AUDIO")
+        volume: 0
+      }
+      playing: playing
+      whenFinished: ()-> instance.setPlayStub false
+      whenPaused: ()-> instance.setPlayStub false
     }
 
   modules: ->
@@ -519,7 +530,6 @@ Template.Lesson_view_page.helpers
     instance = Template.instance()
     return instance.isHomePage()
 
-#Template.Lesson_view_page.onRendered =>
-  #instance = Template.instance()
-  #instance.initializeSwiper()
-  #instance.goHome()
+Template.Lesson_view_page.onRendered =>
+  instance = Template.instance()
+  instance.setPlayStub true

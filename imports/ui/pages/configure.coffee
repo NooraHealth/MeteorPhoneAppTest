@@ -40,6 +40,7 @@ Template.Configure_app_page.helpers
 
   hospitals: ->
     console.log("Returning the hospitals")
+    console.log Facilities.find().count()
     return Facilities.find({}).fetch()
 
   conditions: ->

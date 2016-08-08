@@ -5,6 +5,7 @@ Template.Audio.onCreated ->
     @data = Template.currentData()
     new SimpleSchema({
       "attributes.src": {type: String}
+      "attributes.volume": {type: Number, optional: true}
       playing: {type: Boolean}
       replay: {type: Boolean, optional: true}
       afterReplay: {type: Function, optional: true}
@@ -32,15 +33,18 @@ Template.Audio.onCreated ->
     alreadyPlaying = @sound?.playing()
     if shouldPlay and not alreadyPlaying
       #@sound = new Media(data.attributes.src)
+      volume = if data.attributes.volume? then data.attributes.volume else 1
+      console.log "Setting the volume to #{volume}"
       @sound ?= new Howl {
         src: [data.attributes.src]
         onloaderror: (id, error)->
         onend: @data.whenFinished
         onpause: @data.whenPaused
-        #onplay: -> console.log "Playing the audio"
-        #volume: 0
+        onplay: -> console.log "Playing the audio"
+        volume: volume
         #html5: true
       }
+      console.log "About to play ", data.attributes.src
       @sound.play()
     else if not shouldPlay and @sound?
       @sound.pause()
