@@ -256,12 +256,15 @@ Template.Lesson_view_page.onCreated ()->
     @state.set "moduleIndex", index
 
   @displayModule = (index) =>
+    console.log "About to display"
     @setModuleIndex index
     @setNextButtonAnimated false
     @setAudioPlaying "QUESTION"
     @setCurrentModuleId()
     @swiper.slideTo index + 1
     module = @getCurrentModule()
+    if module.type == "VIDEO"
+      $("#" + module._id).find("video")[0].play()
 
   @initializeSwiper = =>
     @swiper = AppState.getF7().swiper '.swiper-container', {

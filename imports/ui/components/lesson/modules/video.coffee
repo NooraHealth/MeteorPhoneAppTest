@@ -65,7 +65,6 @@ Template.Lesson_view_page_video.onCreated ->
 
   @autorun =>
     if not @isRendered() then return
-
     isCurrent = Template.currentData().isCurrent
     if isCurrent
       @playVideo()
