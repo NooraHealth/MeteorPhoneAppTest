@@ -230,6 +230,7 @@ Template.Lesson_view_page.onCreated ()->
       @startLesson currentLessonIndex + 1
 
   @goHome = ( event, completedCurriculum) =>
+    console.log "going hme!"
     lesson = @getLesson()
     module = @getCurrentModule()
     text = if module?.title then module?.title else module?.question
@@ -266,6 +267,7 @@ Template.Lesson_view_page.onCreated ()->
       $("#" + module._id).find("video")[0].play()
 
   @initializeSwiper = =>
+    console.log "initialiing the swiper"
     @swiper = AppState.getF7().swiper '.swiper-container', {
       lazyLoading: true,
       preloadImages: false,
@@ -274,6 +276,7 @@ Template.Lesson_view_page.onCreated ()->
       longSwipes: false
       followFinger: false
     }
+    console.log @swiper.slides
 
   @goToNextModule = =>
     index = @state.get "moduleIndex"
@@ -282,8 +285,8 @@ Template.Lesson_view_page.onCreated ()->
       #@initializeSwiper()
     @displayModule( newIndex )
 
-  @onNextButtonRendered = =>
-    @initializeSwiper()
+  #@onNextButtonRendered = =>
+    #@initializeSwiper()
 
   @showIntroductionToQuestions = =>
     language = AppState.getLanguage()

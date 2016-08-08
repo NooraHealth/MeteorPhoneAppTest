@@ -14,7 +14,7 @@ Template.Lesson_view_page_footer.onCreated ->
       "replayButton.shouldShow": {type: Boolean}
       "replayButton.text": {type: String}
       "nextButton.onClick": {type: Function}
-      "nextButton.onRendered": {type: Function}
+      "nextButton.onRendered": {type: Function, optional: true}
       "nextButton.animated": {type: Boolean}
       "nextButton.text": {type: String}
       "progressBar.percent": {type: String}
