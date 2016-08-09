@@ -54,6 +54,9 @@ Template.Lesson_view_page.onCreated ()->
   @getModuleIndex = =>
     return @state.get "moduleIndex"
 
+  @setModuleIndex = (index) =>
+    @state.set "moduleIndex", index
+
   @getCurrentModuleId = =>
     @state.get "currentModuleId"
 
@@ -76,12 +79,15 @@ Template.Lesson_view_page.onCreated ()->
 
   @isCompleted = (moduleId) =>
     modules = @getLesson()?.modules
-    index = @state.get "moduleIndex"
+    index = @getModuleIndex()
     return index > modules?.indexOf moduleId
 
   @getProgress = ()=>
+    console.log "Getting the progress"
     numInLesson = @getLesson()?.modules?.length or 0
-    numCompleted = (@state.get "moduleIndex") + 1
+    numCompleted = @getModuleIndex() + 1
+    console.log "Num in lesson #{numInLesson}"
+    console.log "Num completed #{numCompleted}"
     return (numCompleted * 100 / numInLesson).toString()
 
   @trackAudioStopped = (pos, completed, src) =>
@@ -152,12 +158,12 @@ Template.Lesson_view_page.onCreated ()->
 
   @lessonComplete = =>
     lesson = @getLesson()
-    index = @state.get "moduleIndex"
+    index = @getModuleIndex()
     return index == lesson?.modules?.length-1
 
   @secondToLastModule = =>
     lesson = @getLesson()
-    index = @state.get "moduleIndex"
+    index = @getModuleIndex()
     return index == lesson?.modules?.length-2
 
   @getModules = =>
@@ -259,9 +265,6 @@ Template.Lesson_view_page.onCreated ()->
     #console.log "Setting the next button animated to #{animated}"
     #@state.set "nextButtonAnimated", animated
 
-  @setModuleIndex = (index) =>
-    @state.set "moduleIndex", index
-
   @displayModule = (index) =>
     @setModuleIndex index
     @setAudioPlaying "QUESTION"
@@ -288,7 +291,7 @@ Template.Lesson_view_page.onCreated ()->
     }
 
   @goToNextModule = =>
-    index = @state.get "moduleIndex"
+    index = @getModuleIndex()
     newIndex = ++index
     #if newIndex == 1
       #@initializeSwiper()
@@ -368,6 +371,7 @@ Template.Lesson_view_page.helpers
     language = AppState.getLanguage()
     return {
       language: language
+      hidden: instance.isHomePage()
       homeButton: {
         onClick: instance.goHome
         shouldShow: true

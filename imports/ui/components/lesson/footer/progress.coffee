@@ -10,5 +10,7 @@ Template.Lesson_view_page_footer_progress_bar.onCreated ->
 
   @autorun =>
     percent = Template.currentData().percent
+    console.log "PERCENT #{percent}"
+    console.log $('.progressbar')
     AppState.getF7().setProgressbar $('.progressbar'), percent
 
