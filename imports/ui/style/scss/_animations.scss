@@ -19,9 +19,9 @@
 
 @include keyframes(slideDown) {
   from {
-    @include transform(translateY(-300px));
+    @include transform(translateY(0px));
   }
   to {
-    @include transform(translateY(0px));
+    @include transform(translateY(300px));
   }
 }
