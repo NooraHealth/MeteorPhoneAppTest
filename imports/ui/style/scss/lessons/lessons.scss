@@ -83,6 +83,10 @@
   /*@include transform(translate3d(0, 1000px,0));  */
 }
 
+.translate-down {
+  @include transition(all, 1s);
+  @include transform(translate3d(0, 300px,0));  
+}
 
 /* -------------------------------- 
 
