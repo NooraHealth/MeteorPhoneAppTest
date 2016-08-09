@@ -20,7 +20,7 @@ Template.Lesson_view_page_footer.onCreated ->
       "progressBar.percent": {type: String}
       "progressBar.shouldShow": {type: Boolean}
       language: {type: String}
-      hidden: {type: Boolean, optional: true}
+      visible: {type: Boolean, optional: true}
     }).validate Template.currentData()
 
 Template.Lesson_view_page_footer.helpers

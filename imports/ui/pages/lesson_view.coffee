@@ -371,7 +371,7 @@ Template.Lesson_view_page.helpers
     language = AppState.getLanguage()
     return {
       language: language
-      hidden: instance.isHomePage()
+      visible: !instance.isHomePage()
       homeButton: {
         onClick: instance.goHome
         shouldShow: true

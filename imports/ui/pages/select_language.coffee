@@ -99,6 +99,7 @@ Template.Select_language_page.helpers
     text = "<span class='center'>#{begin}<i class='fa fa-arrow-right'></i></span>"
     return {
       language: language
+      visible: true
       homeButton: {
         onClick: ->
         shouldShow: false
