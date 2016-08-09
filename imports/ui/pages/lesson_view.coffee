@@ -85,7 +85,6 @@ Template.Lesson_view_page.onCreated ()->
     return (numCompleted * 100 / numInLesson).toString()
 
   @trackAudioStopped = (pos, completed, src) =>
-    console.log "Tracking the audio stopped!!"
     lesson = @getLesson()
     condition = AppState.getCondition()
     language = AppState.getLanguage()
@@ -104,12 +103,8 @@ Template.Lesson_view_page.onCreated ()->
     }
 
   @onFinishExplanation = (module, pos, completed, src)=>
-    console.log "in the on finish explanation"
     currentModule = @getCurrentModule()
-    console.log "Is the module currnt"
-    console.log module
     if @isCurrent module._id
-      console.log "Setting the audio playing to null!!!"
       @setAudioPlaying null
     @trackAudioStopped( pos, completed, src )
 
@@ -237,7 +232,6 @@ Template.Lesson_view_page.onCreated ()->
       @startLesson currentLessonIndex + 1
 
   @goHome = ( event, completedCurriculum) =>
-    console.log "going hme!"
     lesson = @getLesson()
     module = @getCurrentModule()
     text = if module?.title then module?.title else module?.question
@@ -268,7 +262,6 @@ Template.Lesson_view_page.onCreated ()->
     @state.set "moduleIndex", index
 
   @displayModule = (index) =>
-    console.log "Displaying the next module"
     @setModuleIndex index
     @setAudioPlaying "QUESTION"
     @setCurrentModuleId()
@@ -278,14 +271,12 @@ Template.Lesson_view_page.onCreated ()->
       @playVideo module
 
   @stopVideo = (module) =>
-    console.log "Stopping the video!!"
     $("#" + module._id).find("video")[0].pause()
 
   @playVideo = (module) =>
     $("#" + module._id).find("video")[0].play()
 
   @initializeSwiper = =>
-    console.log "initialiing the swiper"
     @swiper = AppState.getF7().swiper '.swiper-container', {
       lazyLoading: true,
       preloadImages: false,
@@ -294,7 +285,6 @@ Template.Lesson_view_page.onCreated ()->
       longSwipes: false
       followFinger: false
     }
-    console.log @swiper.slides
 
   @goToNextModule = =>
     index = @state.get "moduleIndex"
@@ -318,7 +308,6 @@ Template.Lesson_view_page.onCreated ()->
     lessonComplete = @lessonComplete()
     currentModule = @getCurrentModule()
     if currentModule.type == "VIDEO" and not lessonComplete
-      console.log "Stoping the video"
       @stopVideo currentModule
       #@showIntroductionToQuestions()
     else if @lessonComplete() then @celebrateCompletion() else @goToNextModule()
@@ -344,7 +333,6 @@ Template.Lesson_view_page.onCreated ()->
     return module?.type isnt "VIDEO"
 
   @onVideoEnd = =>
-    console.log "Video end!!"
     lessonComplete = @lessonComplete()
     if not lessonComplete
       @showIntroductionToQuestions()
@@ -358,10 +346,6 @@ Template.Lesson_view_page.onCreated ()->
     if @isCurrent(id) and shouldPlay then return true else return false
 
   @getNextButtonAnimated = ()=>
-    console.log "Getting the next button animated"
-    console.log @getAudioPlaying()
-    console.log "This is what is being returned"
-    console.log playing is null
     playing = @getAudioPlaying()
     return playing is null
 
