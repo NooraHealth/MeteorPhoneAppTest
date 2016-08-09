@@ -7,6 +7,7 @@
 require '../components/lesson/modules/video.coffee'
 
 Template.Introduction_video_page.onCreated ()->
+  console.log "TRNASLTINg"
 
   @state = new ReactiveDict()
   @state.setDefault {

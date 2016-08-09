@@ -78,7 +78,9 @@
 }
 
 .slide-down {
-  @include transform(translate3d(0, 1000px,0));  
+  @include animation(slideDown 2s ease);
+  @include animation-fill-mode(forwards);
+  /*@include transform(translate3d(0, 1000px,0));  */
 }
 
 

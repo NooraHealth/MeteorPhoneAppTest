@@ -16,3 +16,12 @@
     @include transform(translateY(-300px));
   }
 }
+
+@include keyframes(slideDown) {
+  from {
+    @include transform(translateY(0));
+  }
+  to {
+    @include transform(translateY(300px));
+  }
+}
