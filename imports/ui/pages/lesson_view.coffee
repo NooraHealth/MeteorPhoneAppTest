@@ -85,6 +85,7 @@ Template.Lesson_view_page.onCreated ()->
     return (numCompleted * 100 / numInLesson).toString()
 
   @trackAudioStopped = (pos, completed, src) =>
+    console.log "Tracking the audio stopped!!"
     lesson = @getLesson()
     condition = AppState.getCondition()
     language = AppState.getLanguage()
@@ -102,9 +103,15 @@ Template.Lesson_view_page.onCreated ()->
       lessonId: lesson?._id
     }
 
-  @onFinishExplanation = (pos, completed, src) =>
-    @state.set "nextButtonAnimated", true
-    @trackAudioStopped( pos, completed, src)
+  @onFinishExplanation = (module, pos, completed, src)=>
+    console.log "in the on finish explanation"
+    currentModule = @getCurrentModule()
+    console.log "Is the module currnt"
+    console.log module
+    if @isCurrent module._id
+      console.log "Setting the audio playing to null!!!"
+      @setAudioPlaying null
+    @trackAudioStopped( pos, completed, src )
 
   @onChoice = (instance, type, showAlert) ->
     return (choice) ->
@@ -143,7 +150,7 @@ Template.Lesson_view_page.onCreated ()->
 
   @onCompletedQuestion = (instance) ->
     return ->
-      instance.state.set "audioPlaying", "EXPLANATION"
+      instance.setAudioPlaying "EXPLANATION"
 
   @stopPlayingSoundEffect = =>
     @state.set "soundEffectPlaying", null
@@ -247,24 +254,35 @@ Template.Lesson_view_page.onCreated ()->
     @setStateToDefault()
     @swiper.slideTo @HOME_SLIDE_INDEX
 
+  @getAudioPlaying = () =>
+    return @state.get "audioPlaying"
+
   @setAudioPlaying = (type) =>
     @state.set "audioPlaying", type
 
-  @setNextButtonAnimated = (animated) =>
-    @state.set "nextButtonAnimated", animated
+#@setNextButtonAnimated = (animated) =>
+    #console.log "Setting the next button animated to #{animated}"
+    #@state.set "nextButtonAnimated", animated
 
   @setModuleIndex = (index) =>
     @state.set "moduleIndex", index
 
   @displayModule = (index) =>
+    console.log "Displaying the next module"
     @setModuleIndex index
-    @setNextButtonAnimated false
     @setAudioPlaying "QUESTION"
     @setCurrentModuleId()
     @swiper.slideTo index + 1
     module = @getCurrentModule()
     if module.type == "VIDEO"
-      $("#" + module._id).find("video")[0].play()
+      @playVideo module
+
+  @stopVideo = (module) =>
+    console.log "Stopping the video!!"
+    $("#" + module._id).find("video")[0].pause()
+
+  @playVideo = (module) =>
+    $("#" + module._id).find("video")[0].play()
 
   @initializeSwiper = =>
     console.log "initialiing the swiper"
@@ -300,7 +318,9 @@ Template.Lesson_view_page.onCreated ()->
     lessonComplete = @lessonComplete()
     currentModule = @getCurrentModule()
     if currentModule.type == "VIDEO" and not lessonComplete
-      @showIntroductionToQuestions()
+      console.log "Stoping the video"
+      @stopVideo currentModule
+      #@showIntroductionToQuestions()
     else if @lessonComplete() then @celebrateCompletion() else @goToNextModule()
 
   @goHomeButtonText = =>
@@ -323,12 +343,11 @@ Template.Lesson_view_page.onCreated ()->
     module = @getCurrentModule()
     return module?.type isnt "VIDEO"
 
-  @onPlayVideo = =>
-    @state.set "playingVideo", true
-
   @onVideoEnd = =>
-    @state.set "playingVideo", false
-    @state.set "nextButtonAnimated", true
+    console.log "Video end!!"
+    lessonComplete = @lessonComplete()
+    if not lessonComplete
+      @showIntroductionToQuestions()
 
   @shouldPlayQuestionAudio = (id) =>
     isPlayingQuestion = @state.get "playingQuestion"
@@ -337,6 +356,14 @@ Template.Lesson_view_page.onCreated ()->
   @shouldPlayExplanationAudio = (id) =>
     shouldPlay = @state.get "playingExplanation"
     if @isCurrent(id) and shouldPlay then return true else return false
+
+  @getNextButtonAnimated = ()=>
+    console.log "Getting the next button animated"
+    console.log @getAudioPlaying()
+    console.log "This is what is being returned"
+    console.log playing is null
+    playing = @getAudioPlaying()
+    return playing is null
 
   @autorun =>
     if Meteor.status().connected
@@ -365,7 +392,7 @@ Template.Lesson_view_page.helpers
         onClick: instance.onNextButtonClicked
         text: instance.nextButtonText()
         onRendered: instance.onNextButtonRendered
-        animated: instance.state.get("nextButtonAnimated")
+        animated: instance.getNextButtonAnimated()
       }
       replayButton: {
         onClick: instance.onReplayButtonClicked
@@ -405,12 +432,11 @@ Template.Lesson_view_page.helpers
       return {
         module: module
         language: language
-        onPlayVideo: instance.onPlayVideo
         onStopVideo: instance.onVideoEnd
         onVideoEnd: instance.onVideoEnd
         isCurrent: isCurrentModule
       }
-    else
+    else if module.type == "SLIDE"
       return {
         module: module
         language: language
@@ -424,7 +450,7 @@ Template.Lesson_view_page.helpers
 
   explanationArgs: (module) ->
     instance = Template.instance()
-    playing = instance.state.get("audioPlaying") == "EXPLANATION"
+    playing = instance.getAudioPlaying() == "EXPLANATION"
     replay = instance.state.get("replayAudio")
     isCurrent = instance.isCurrent(module._id)
     return {
@@ -434,15 +460,16 @@ Template.Lesson_view_page.helpers
       playing: playing and isCurrent
       replay: playing and replay and isCurrent
       afterReplay: instance.afterReplay
-      whenFinished: instance.onFinishExplanation
-      whenPaused: instance.trackAudioStopped
+      whenFinished: instance.onFinishExplanation.bind instance, module
+      whenPaused: instance.onFinishExplanation.bind instance, module
     }
 
   audioArgs: (module) ->
     instance = Template.instance()
-    playing = instance.state.get("audioPlaying") == "QUESTION"
+    playing = instance.getAudioPlaying() == "QUESTION"
     replay = instance.state.get("replayAudio")
     isCurrent = instance.isCurrent(module._id)
+    onFinishAudio = if module.type == "SLIDE" then instance.onFinishExplanation.bind(instance, module) else instance.trackAudioStopped
     return {
       attributes: {
         src: ContentInterface.getSrc module.audio, "AUDIO"
@@ -450,8 +477,8 @@ Template.Lesson_view_page.helpers
       playing: playing and isCurrent
       replay: playing and replay and isCurrent
       afterReplay: instance.afterReplay
-      whenFinished: instance.trackAudioStopped
-      whenPaused: instance.trackAudioStopped
+      whenFinished: onFinishAudio
+      whenPaused: onFinishAudio
     }
 
   incorrectSoundEffectArgs: ->
