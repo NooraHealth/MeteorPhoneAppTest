@@ -232,6 +232,7 @@ Template.Lesson_view_page.onCreated ()->
       @startLesson currentLessonIndex + 1
 
   @goHome = ( event, completedCurriculum) =>
+    swal.close()
     lesson = @getLesson()
     module = @getCurrentModule()
     text = if module?.title then module?.title else module?.question
