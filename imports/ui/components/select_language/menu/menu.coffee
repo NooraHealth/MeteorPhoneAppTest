@@ -2,7 +2,7 @@
 require './list_item.coffee'
 require './menu.html'
 
-Template.Home_language_menu.onCreated ->
+Template.Language_menu.onCreated ->
   # Data context validation
   @autorun =>
     new SimpleSchema({
@@ -10,7 +10,7 @@ Template.Home_language_menu.onCreated ->
       languages: {type: [String]}
     }).validate(Template.currentData())
 
-Template.Home_language_menu.helpers
+Template.Language_menu.helpers
   listItemArgs: (language) ->
     instance = Template.instance()
     onLanguageSelected = Template.currentData().onLanguageSelected

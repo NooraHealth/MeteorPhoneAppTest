@@ -98,7 +98,6 @@ class AppState
       @dict.get "errorMessage"
 
     setConfiguration: (configuration) ->
-
       new SimpleSchema({
         hospital: {type: String, min: 1, optional: true} #Hospital and condition cannot be empty strings
         condition: {type: String, min: 1, optional: true}
@@ -160,21 +159,17 @@ class AppState
       else
         @dict.set "level", @levels[0].name
 
+    getLevels: =>
+      return @levels
+
     getLessons: ( levelName )=>
       curriculum = @getCurriculumDoc()
       return curriculum?[levelName]
-
-    getLevels: =>
-      return @levels
 
     getIntroductionModule: ()->
       curriculum = @getCurriculumDoc()
       lesson = Lessons.findOne { _id: curriculum?.introduction }
       moduleId = lesson?.modules[0]
       return Modules.findOne { _id: moduleId }
-
-    isSubscribed: ->
-      subscribed = @dict.get "subscribed"
-      if subscribed? then return subscribed else return false
 
 module.exports.AppState = AppState.get()

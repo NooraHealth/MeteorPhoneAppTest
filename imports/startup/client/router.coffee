@@ -8,7 +8,6 @@
 
 # PAGES
 require '../../ui/layouts/layout.coffee'
-require '../../ui/pages/home.coffee'
 require '../../ui/pages/select_language.coffee'
 require '../../ui/pages/lesson_view.coffee'
 #require '../../ui/pages/introduction_video.coffee'

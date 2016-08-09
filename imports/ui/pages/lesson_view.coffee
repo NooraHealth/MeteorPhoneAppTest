@@ -1,6 +1,5 @@
 
 { Curriculums } = require("meteor/noorahealth:mongo-schemas")
-{ Curriculums } = require("meteor/noorahealth:mongo-schemas")
 { Lessons } = require("meteor/noorahealth:mongo-schemas")
 { Modules } = require("meteor/noorahealth:mongo-schemas")
 
@@ -11,6 +10,7 @@
 { TAPi18n } = require("meteor/tap:i18n")
 
 require './lesson_view.html'
+require './../components/select_level/thumbnail.coffee'
 require '../components/lesson/modules/binary.coffee'
 require '../components/lesson/modules/scenario.coffee'
 require '../components/lesson/modules/multiple_choice/multiple_choice.coffee'
@@ -20,9 +20,7 @@ require '../components/lesson/footer/footer.coffee'
 
 Template.Lesson_view_page.onCreated ()->
 
-
   @state = new ReactiveDict()
-
   @setStateToDefault = =>
     @state.set {
       moduleIndex: 0
@@ -34,11 +32,11 @@ Template.Lesson_view_page.onCreated ()->
       soundEffectPlaying: null
       audioPlaying: null
       lessonIndex: 0
-      homePage: true
+      selectLevelSlide: true
       playStub: false
     }
 
-  @HOME_SLIDE_INDEX = 0
+  @SELECT_LEVEL_SLIDE_INDEX = 0
 
   @onLevelSelected = ( levelName ) =>
     lessons = AppState.getLessons levelName
@@ -203,12 +201,12 @@ Template.Lesson_view_page.onCreated ()->
       @goToNextLesson()
 
     onCancel = ()=>
-      @goHome(null, false)
+      @goToSelectLevel(null, false)
     
     isLastLesson = @isLastLesson()
     if @isLastLesson()
       new Award(language).sendAward( null, null, lessonsComplete, totalLessons)
-      @goHome( null, true )
+      @goToSelectLevel( null, true )
     else
       new Award(language).sendAward( onConfirm, onCancel, lessonsComplete, totalLessons )
 
@@ -218,26 +216,26 @@ Template.Lesson_view_page.onCreated ()->
   @setLessonIndex = (index) =>
     @state.set "lessonIndex", index
 
-  @isHomePage = =>
-    return @state.get "homePage"
+  @isSelectLevelSlide = =>
+    return @state.get "selectLevelSlide"
 
-  @setOnHomePage = (isHomePage) =>
-    @state.set "homePage", isHomePage
+  @setOnSelectLevel = (isSelectLevelSlide) =>
+    @state.set "selectLevelSlide", isSelectLevelSlide
 
   @startLesson = (index) =>
     @setLessonIndex index
-    @setOnHomePage false
+    @setOnSelectLevel false
     @initializeSwiper()
     @displayModule(0)
 
   @goToNextLesson = =>
     if @isLastLesson()
-      @goHome(null, false)
+      @goToSelectLevel(null, false)
     else
       currentLessonIndex = @getLessonIndex()
       @startLesson currentLessonIndex + 1
 
-  @goHome = ( event, completedCurriculum) =>
+  @goToSelectLevel = ( event, completedCurriculum) =>
     swal.close()
     lesson = @getLesson()
     module = @getCurrentModule()
@@ -253,7 +251,7 @@ Template.Lesson_view_page.onCreated ()->
     }
     AppState.incrementLevel()
     @setStateToDefault()
-    @swiper.slideTo @HOME_SLIDE_INDEX
+    @swiper.slideTo @SELECT_LEVEL_SLIDE_INDEX
 
   @getAudioPlaying = () =>
     return @state.get "audioPlaying"
@@ -316,7 +314,7 @@ Template.Lesson_view_page.onCreated ()->
       #@showIntroductionToQuestions()
     else if @lessonComplete() then @celebrateCompletion() else @goToNextModule()
 
-  @goHomeButtonText = =>
+  @goToSelectLevelButtonText = =>
     language = AppState.getLanguage()
     home = AppState.translate "home", language, "UPPER"
     return "<span class='center'>#{home}<i class='fa fa-home'></i></span>"
@@ -371,11 +369,11 @@ Template.Lesson_view_page.helpers
     language = AppState.getLanguage()
     return {
       language: language
-      visible: !instance.isHomePage()
+      visible: !instance.isSelectLevelSlide()
       homeButton: {
-        onClick: instance.goHome
+        onClick: instance.goToSelectLevel
         shouldShow: true
-        text: instance.goHomeButtonText()
+        text: instance.goToSelectLevelButtonText()
       }
       nextButton: {
         onClick: instance.onNextButtonClicked
@@ -539,9 +537,9 @@ Template.Lesson_view_page.helpers
   levels: ->
     return AppState.getLevels()
 
-  homePage: ->
+  selectLevelSlide: ->
     instance = Template.instance()
-    return instance.isHomePage()
+    return instance.isSelectLevelSlide()
 
 Template.Lesson_view_page.onRendered =>
   instance = Template.instance()

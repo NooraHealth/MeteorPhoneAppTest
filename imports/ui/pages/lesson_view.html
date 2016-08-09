@@ -2,7 +2,7 @@
   <div data-page="index" class="page navbar-fixed toolbar-fixed">
     <!-- Top Navbar-->
     {{#Navbar}}
-      {{#if homePage}}
+      {{#if selectLevelSlide}}
         {{#with language=getLanguage}}
           <a href="/select_language" class="right button">{{translate "change_language" "en" "UPPER"}}</a>
         {{/with}}
@@ -20,7 +20,7 @@
               <div class='swiper-slide row'>
                 {{#each level in levels}}
                   <div class="col-33">
-                  {{ >Home_thumbnail (thumbnailArgs level)}}
+                  {{ >Select_level_thumbnail (thumbnailArgs level)}}
                   </div>
                 {{/each}}
               </div>

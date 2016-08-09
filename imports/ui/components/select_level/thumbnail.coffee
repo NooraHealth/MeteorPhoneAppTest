@@ -1,9 +1,8 @@
 
-{ Lessons } = require("meteor/noorahealth:mongo-schemas")
 require './thumbnail.html'
 require '../../../api/global_template_helpers.coffee'
 
-Template.Home_thumbnail.onCreated ->
+Template.Select_level_thumbnail.onCreated ->
   # Data context validation
   @autorun =>
     schema = new SimpleSchema({
@@ -14,17 +13,8 @@ Template.Home_thumbnail.onCreated ->
       onLevelSelected: {type: Function}
     }).validate(Template.currentData())
 
-Template.Home_thumbnail.events
+Template.Select_level_thumbnail.events
   'click' : ( e )->
     data = Template.currentData()
     data.onLevelSelected data.level.name
 
-Template.Home_thumbnail.onRendered ->
-  if Template.currentData().isCurrentLesson
-    Template.instance().$(".js-scroll-into-view").scrollintoview {
-      duration: 2500,
-      direction: "vertical"
-    }
-    
-
-  

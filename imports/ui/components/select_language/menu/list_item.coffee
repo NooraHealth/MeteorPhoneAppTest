@@ -1,10 +1,9 @@
 
-
 { AppState } = require '../../../../api/AppState.coffee'
 require '../../../../api/global_template_helpers.coffee'
 require './list_item.html'
 
-Template.Home_language_menu_list_item.onCreated ->
+Template.Language_menu_list_item.onCreated ->
   # Data context validation
   @autorun =>
     new SimpleSchema({
@@ -15,7 +14,7 @@ Template.Home_language_menu_list_item.onCreated ->
   @onClick = (e, data)=>
     data.onLanguageSelected data.language
 
-Template.Home_language_menu_list_item.events
+Template.Language_menu_list_item.events
   'touchend': ( e , template )->
     instance = Template.instance()
     data = Template.currentData()
