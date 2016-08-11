@@ -1,6 +1,6 @@
 {
   "name": "training-app",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "description": "Noora Health's patient and caregiver training app",
   "scripts": {
     "prod": "meteor run --settings settings.json",

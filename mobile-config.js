@@ -1,5 +1,6 @@
 App.accessRule( "*");
 
+//App.setPreference('WebAppStartupTimeout', '60');
 App.setPreference('Orientation', 'landscape');
 App.setPreference('AllowInlineMediaPlayback', 'true');
 App.setPreference('MediaPlaybackRequiresUserAction', 'false');
@@ -7,7 +8,7 @@ App.setPreference('MediaPlaybackRequiresUserAction', 'false');
 App.info({
   name: "Noora Health WebApp",
   description: "Noora Health's online and mobile app curriculum",
-  version: "0.0.3"
+  version: "0.0.6"
 });
 
 App.icons({
