@@ -5,6 +5,7 @@
 require 'meteor/loftsteinn:framework7-ios'
 
 Meteor.startup ()->
+  console.log "INIT"
   TAPi18n.setLanguage "en"
 
   if (Meteor.isCordova and not AppState.isSubscribed()) or Meteor.status().connected
