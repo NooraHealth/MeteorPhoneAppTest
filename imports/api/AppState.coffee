@@ -78,7 +78,7 @@ class AppState
 
     getCurriculumDoc: ->
       language = @dict.get "language"
-      condition = @dict.get('configuration').condition
+      condition = @dict.get('configuration')?.condition
       if not language? or not condition?
         return null
       curriculum = Curriculums.findOne {language: language, condition: condition}
