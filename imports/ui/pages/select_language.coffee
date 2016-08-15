@@ -21,8 +21,6 @@ Template.Select_language_page.onCreated ->
   @initializeSwiper = =>
     console.log "initializing the swiper in the onRendered"
     @swiper = AppState.getF7().swiper '.swiper-container', {
-      lazyLoading: true,
-      preloadImages: false,
       speed: 700,
       shortSwipes: false
       longSwipes: false
@@ -30,6 +28,7 @@ Template.Select_language_page.onCreated ->
     }
 
   @onLanguageSelected = (language) =>
+    console.log "Language selected!!"
     analytics.track "Changed Language", {
       fromLanguage: AppState.getLanguage()
       toLanguage: language
@@ -80,16 +79,19 @@ Template.Select_language_page.helpers
       onPlayVideo: instance.onPlayVideo
       onStopVideo: instance.onVideoEnd
       onVideoEnd: instance.onVideoEnd
+      onRendered: -> instance.initializeSwiper()
       #playing: instance.videoPlaying()
       isCurrent: true
     }
     return data
 
   menuArgs: ->
+    console.log "Getting the menu args!!"
     instance = Template.instance()
     return {
       onLanguageSelected: instance.onLanguageSelected
       languages: ["English", "Hindi", "Kannada"]
+      onRendered: -> instance.initializeSwiper()
     }
 
   footerArgs: ->
@@ -125,7 +127,4 @@ Template.Select_language_page.helpers
   footerVisible: ->
     instance = Template.instance()
     return instance.footerIsVisible()
-
-Template.Select_language_page.onRendered ->
-  instance = Template.instance()
 

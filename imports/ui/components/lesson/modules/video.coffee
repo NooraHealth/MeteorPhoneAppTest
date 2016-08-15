@@ -13,12 +13,14 @@ Template.Lesson_view_page_video.onCreated ->
 
   # Data context validation
   @autorun =>
+    console.log "Validating the video"
     schema = new SimpleSchema({
       module: {type: Modules._helpers}
       language: {type: String}
       onPlayVideo: {type: Function, optional: true}
       onStopVideo: {type: Function, optional: true}
       onVideoEnd: {type: Function, optional: true}
+      onRendered: {type: Function, optional: true}
       #playing: {type: Boolean}
       isCurrent: {type: Boolean}
     }).validate(Template.currentData())
@@ -41,7 +43,6 @@ Template.Lesson_view_page_video.onCreated ->
     }
 
   @onPlayVideo = =>
-    console.log "on play video"
     if @data.onPlayVideo
       @data.onPlayVideo()
 
@@ -68,9 +69,6 @@ Template.Lesson_view_page_video.onCreated ->
     isCurrent = Template.currentData().isCurrent
     if not isCurrent
       @pauseVideo()
-      #console.log "About to play the video in the AUTORUN"
-      #@playVideo()
-    #else
 
 Template.Lesson_view_page_video.helpers
   iframeAttributes: (module) ->
@@ -103,6 +101,9 @@ Template.Lesson_view_page_video.events
 Template.Lesson_view_page_video.onRendered ->
   instance = Template.instance()
   instance.state.set "rendered", true
+
+  if instance.data.onRendered
+    instance.data.onRendered()
 
   elem = instance.elem(instance)
   elem.addEventListener "playing", ->

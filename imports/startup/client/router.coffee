@@ -11,7 +11,6 @@ require '../../ui/layouts/layout.coffee'
 require '../../ui/pages/home.coffee'
 require '../../ui/pages/select_language.coffee'
 require '../../ui/pages/lesson_view.coffee'
-#require '../../ui/pages/introduction_video.coffee'
 require '../../ui/pages/configure.coffee'
 
 if Meteor.isCordova
@@ -32,7 +31,6 @@ FlowRouter.route '/', {
       condition: condition,
       language: language
     }
-    #BlazeLayout.render 'Layout', { main : 'Home_page' }
     BlazeLayout.render 'Layout', { main : 'Lesson_view_page' }
 }
 

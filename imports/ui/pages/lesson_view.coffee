@@ -238,7 +238,6 @@ Template.Lesson_view_page.onCreated ()->
       @startLesson currentLessonIndex + 1
 
   @goHome = ( event, completedCurriculum) =>
-    swal.close()
     lesson = @getLesson()
     module = @getCurrentModule()
     text = if module?.title then module?.title else module?.question
@@ -254,6 +253,7 @@ Template.Lesson_view_page.onCreated ()->
     AppState.incrementLevel()
     @setStateToDefault()
     @swiper.slideTo @HOME_SLIDE_INDEX
+    swal.close()
 
   @getAudioPlaying = () =>
     return @state.get "audioPlaying"

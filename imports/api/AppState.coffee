@@ -169,7 +169,12 @@ class AppState
 
     getIntroductionModule: ()->
       curriculum = @getCurriculumDoc()
+      console.log "This is the curreiculum"
+      console.log Curriculums.find().count()
+      console.log curriculum
       lesson = Lessons.findOne { _id: curriculum?.introduction }
+      console.log lesson
+      console.log lesson
       moduleId = lesson?.modules[0]
       return Modules.findOne { _id: moduleId }
 

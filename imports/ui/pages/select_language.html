@@ -8,20 +8,24 @@
 
       <div class="page-content">
         <div class="content-block">
-          <div class='swiper-container'>
-            <div class='swiper-wrapper'>
-              <div class='swiper-slide'>
-                {{>Home_language_menu (menuArgs)}}
-              </div>
-              <div class='swiper-slide'>
-                {{#with introModule}}
-                  <div id="{{_id}}" class="card module-card">
-                    {{> Lesson_view_page_video (videoArgs introModule) }}
-                  </div>
-                {{/with}}
+
+          {{#if modulesReady}}
+            <div class='swiper-container'>
+              <div class='swiper-wrapper'>
+                <div class='swiper-slide'>
+                  {{>Home_language_menu (menuArgs)}}
+                </div>
+                <div class='swiper-slide'>
+                  {{#with introModule}}
+                    <div id="{{_id}}" class="card module-card">
+                      {{> Lesson_view_page_video (videoArgs introModule) }}
+                    </div>
+                  {{/with}}
+                </div>
               </div>
             </div>
-          </div>
+          {{/if}}
+
         </div>
       </div>
 

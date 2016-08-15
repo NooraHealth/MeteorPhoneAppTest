@@ -8,6 +8,7 @@ Template.Home_language_menu.onCreated ->
     new SimpleSchema({
       onLanguageSelected: {type: Function}
       languages: {type: [String]}
+      onRendered: {type: Function, optional: true}
     }).validate(Template.currentData())
 
 Template.Home_language_menu.helpers
@@ -21,5 +22,9 @@ Template.Home_language_menu.helpers
     
   languages: ()->
     return Template.currentData().languages
+
+Template.Home_language_menu.onRendered ->
+  if Template.currentData().onRendered
+    Template.currentData().onRendered()
 
 
