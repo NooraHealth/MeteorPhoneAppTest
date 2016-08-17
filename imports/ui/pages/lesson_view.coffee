@@ -33,6 +33,7 @@ Template.Lesson_view_page.onCreated ()->
       nextButtonAnimated: false
       soundEffectPlaying: null
       audioPlaying: null
+      nextButtonAnimated: false
       lessonIndex: 0
       homePage: true
       playStub: false
@@ -83,11 +84,8 @@ Template.Lesson_view_page.onCreated ()->
     return index > modules?.indexOf moduleId
 
   @getProgress = ()=>
-    console.log "Getting the progress"
     numInLesson = @getLesson()?.modules?.length or 0
     numCompleted = @getModuleIndex() + 1
-    console.log "Num in lesson #{numInLesson}"
-    console.log "Num completed #{numCompleted}"
     return (numCompleted * 100 / numInLesson).toString()
 
   @trackAudioStopped = (pos, completed, src) =>
@@ -111,7 +109,8 @@ Template.Lesson_view_page.onCreated ()->
   @onFinishExplanation = (module, pos, completed, src)=>
     currentModule = @getCurrentModule()
     if @isCurrent module._id
-      @setAudioPlaying null
+      @setNextButtonAnimated true
+      #@setAudioPlaying null
     @trackAudioStopped( pos, completed, src )
 
   @onChoice = (instance, type, showAlert) ->
@@ -253,7 +252,6 @@ Template.Lesson_view_page.onCreated ()->
     AppState.incrementLevel()
     @setStateToDefault()
     @swiper.slideTo @HOME_SLIDE_INDEX
-    swal.close()
 
   @getAudioPlaying = () =>
     return @state.get "audioPlaying"
@@ -261,13 +259,10 @@ Template.Lesson_view_page.onCreated ()->
   @setAudioPlaying = (type) =>
     @state.set "audioPlaying", type
 
-#@setNextButtonAnimated = (animated) =>
-    #console.log "Setting the next button animated to #{animated}"
-    #@state.set "nextButtonAnimated", animated
-
   @displayModule = (index) =>
     @setModuleIndex index
     @setAudioPlaying "QUESTION"
+    @setNextButtonAnimated false
     @setCurrentModuleId()
     @swiper.slideTo index + 1
     module = @getCurrentModule()
@@ -338,7 +333,7 @@ Template.Lesson_view_page.onCreated ()->
 
   @onVideoEnd = =>
     lessonComplete = @lessonComplete()
-    if not lessonComplete
+    if not lessonComplete and not @isHomePage()
       @showIntroductionToQuestions()
 
   @shouldPlayQuestionAudio = (id) =>
@@ -349,9 +344,13 @@ Template.Lesson_view_page.onCreated ()->
     shouldPlay = @state.get "playingExplanation"
     if @isCurrent(id) and shouldPlay then return true else return false
 
+  @setNextButtonAnimated = (value) =>
+    @state.set "nextButtonAnimated", value
+
   @getNextButtonAnimated = ()=>
-    playing = @getAudioPlaying()
-    return playing is null
+    #playing = @getAudioPlaying()
+    #return playing is null
+    return @state.get "nextButtonAnimated"
 
   @autorun =>
     if Meteor.status().connected
