@@ -81,6 +81,8 @@ class AppState
       condition = @dict.get('configuration')?.condition
       if not language? or not condition?
         return null
+      console.log "Curriculums!!!"
+      console.log Curriculums.find().count()
       curriculum = Curriculums.findOne {language: language, condition: condition}
       return curriculum
 
@@ -160,7 +162,7 @@ class AppState
       else
         @dict.set "level", @levels[0].name
 
-    getLessons: ( levelName )=>
+    getLessonIds: ( levelName )=>
       curriculum = @getCurriculumDoc()
       return curriculum?[levelName]
 
@@ -169,12 +171,7 @@ class AppState
 
     getIntroductionModule: ()->
       curriculum = @getCurriculumDoc()
-      console.log "This is the curreiculum"
-      console.log Curriculums.find().count()
-      console.log curriculum
       lesson = Lessons.findOne { _id: curriculum?.introduction }
-      console.log lesson
-      console.log lesson
       moduleId = lesson?.modules[0]
       return Modules.findOne { _id: moduleId }
 

@@ -42,7 +42,7 @@ Template.Lesson_view_page.onCreated ()->
   @HOME_SLIDE_INDEX = 0
 
   @onLevelSelected = ( levelName ) =>
-    lessons = AppState.getLessons levelName
+    lessons = AppState.getLessonIds levelName
     if lessons.length > 0
       AppState.setLevel levelName
       @startLesson(0)
@@ -67,9 +67,14 @@ Template.Lesson_view_page.onCreated ()->
     moduleId = lesson?.modules[index]
     @state.set "currentModuleId", moduleId
 
+  @autorun = =>
+    currentModuleId = @getCurrentModuleId()
+    @currentModule = Modules.findOne {_id: currentModuleId}
+
   @getCurrentModule = =>
-    id = @getCurrentModuleId()
-    return Modules.findOne {_id: id}
+    #id = @getCurrentModuleId()
+    #return Modules.findOne {_id: id}
+    return @currentModule
 
   @setPlayStub = (shouldPlay) ->
     @state.set "playStub", shouldPlay
@@ -177,9 +182,10 @@ Template.Lesson_view_page.onCreated ()->
     if lessons and lessons.length > 0 then return lessons[index] else return ""
 
   @getLesson = =>
-    id = @getLessonId()
-    lesson = Lessons.findOne { _id: id }
-    return lesson
+    return @lesson
+    #id = @getLessonId()
+    #lesson = Lessons.findOne { _id: id }
+    #return lesson
 
   @getLevel = =>
     AppState.getLevel()
@@ -187,7 +193,7 @@ Template.Lesson_view_page.onCreated ()->
 
   @lessons = =>
     level = @getLevel()
-    return AppState.getLessons( level )
+    return AppState.getLessonIds( level )
   
   @isLastLesson = =>
     lessonIndex = @getLessonIndex()
@@ -225,6 +231,8 @@ Template.Lesson_view_page.onCreated ()->
 
   @startLesson = (index) =>
     @setLessonIndex index
+    lessonIds = AppState.getLessonIds( AppState.getLevel() )
+    @lesson = Lessons.findOne {_id: lessonIds[index]}
     @setOnHomePage false
     @initializeSwiper()
     @displayModule(0)
@@ -363,7 +371,9 @@ Template.Lesson_view_page.onCreated ()->
 Template.Lesson_view_page.helpers
   modulesReady: ->
     instance = Template.instance()
-    return ContentInterface.subscriptionsReady(instance)
+    console.log "Are the modules ready???"
+    console.log instance.subscriptionsReady()
+    return instance.subscriptionsReady()
 
   footerArgs: ->
     instance = Template.instance()
