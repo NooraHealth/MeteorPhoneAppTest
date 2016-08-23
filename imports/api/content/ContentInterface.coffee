@@ -74,6 +74,7 @@ class ContentInterface
       }).validate({filename: filename, type: type})
       #url = @getEndpoint(path)
       if Meteor.isCordova
+        console.log "Getting the src of #{filename}"
         offlineFile = OfflineFiles.findOne { path: @getDirectory(type) + filename}
         return if offlineFile? then WebAppLocalServer.localFileSystemUrl(offlineFile.fsPath) else ""
       else

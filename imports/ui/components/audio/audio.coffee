@@ -1,53 +1,40 @@
-require './audio.html'
 
-Template.Audio.onCreated ->
-  @autorun =>
-    @data = Template.currentData()
+class Audio
+  constructor: (@src, @volume)->
     new SimpleSchema({
-      "attributes.src": {type: String}
-      "attributes.volume": {type: Number, optional: true}
-      playing: {type: Boolean}
-      replay: {type: Boolean, optional: true}
-      afterReplay: {type: Function, optional: true}
-      whenFinished: {type: Function, optional: true}
-      whenPaused: {type: Function, optional: true}
-    }).validate @data
+      src: {type: String}
+      volume: {type: Number, optional: true}
+    }).validate {src: @src, volume: @volume}
 
-  @onEnd = =>
-    @data.whenFinished( @sound.pos(), true, @data.attributes.src )
+  onEnd: (whenFinished) =>
+    whenFinished?( @sound.pos?(), true, @src )
 
-  @onPause = =>
-    @data.whenPaused( @sound.pos(), false, @data.attributes.src )
+  onPause: (whenPaused) =>
+    whenPaused?( @sound.pos?(), false, @src )
+  
+  replay: (afterReplay) =>
+    @stop()
+    @play()
+    afterReplay?()
 
-  @autorun =>
-    data = Template.currentData()
-    shouldReplay = data.replay
-    if shouldReplay
-      @sound?.stop()
-      @sound?.play()
-      data.afterReplay()
+  pause: =>
+    @sound?.pause()
 
-  @autorun =>
-    data = Template.currentData()
-    shouldPlay = data.playing
+  stop: =>
+    @sound?.stop()
+
+  play: ( whenFinished, whenPaused )=>
     alreadyPlaying = @sound?.playing()
-    if shouldPlay and not alreadyPlaying
-      volume = if data.attributes.volume? then data.attributes.volume else 1
-      console.log "Setting the volume to #{volume}"
+    if not alreadyPlaying
+      volume = if @volume? then @volume else 1
       @sound ?= new Howl {
-        src: [data.attributes.src]
-        onloaderror: (id, error)->
-        onend: @data.whenFinished
-        onpause: @data.whenPaused
+        src: [@src]
+        #onloaderror: (id, error)->
         #onplay: -> console.log "Playing the audio"
+        onend: @onEnd.bind(@, whenFinished)
+        onpause: @onPause.bind(@, whenPaused)
         volume: volume
       }
       @sound.play()
-    else if not shouldPlay and @sound?
-      @sound.pause()
 
-Template.Audio.onDestroyed ->
-  instance = Template.instance()
-  if instance.sound? and instance.sound.playing()
-    instance.sound.pause()
-  #instance.sound?.unload()
+module.exports.Audio = Audio

@@ -148,35 +148,19 @@ class AppState
         @setLevel( defaultLevel )
         return defaultLevel
 
-    ##TODO this is a hack
-    incrementLevel: =>
-      level = @dict.get "level"
-      if level == @levels[0].name
-        @dict.set "level", @levels[1].name
-      else if level == @levels[1].name
-        @dict.set "level", @levels[2].name
-      else if level == @levels[2].name
-        @dict.set "level", @levels[0].name
-      else
-        @dict.set "level", @levels[0].name
-
-    getLessons: ( levelName )=>
+    getLessonDocs: ( levelName )=>
       curriculum = @getCurriculumDoc()
-      return curriculum?[levelName]
+      return curriculum?.getLessonDocuments( levelName )
 
     getLevels: =>
       return @levels
 
     getIntroductionModule: ()->
       curriculum = @getCurriculumDoc()
-      console.log "This is the curreiculum"
-      console.log Curriculums.find().count()
-      console.log curriculum
-      lesson = Lessons.findOne { _id: curriculum?.introduction }
-      console.log lesson
-      console.log lesson
-      moduleId = lesson?.modules[0]
-      return Modules.findOne { _id: moduleId }
+      return curriculum?.getIntroductionModule()
+      #lesson = Lessons.findOne { _id: curriculum?.introduction }
+      #moduleId = lesson?.modules[0]
+      #return Modules.findOne { _id: moduleId }
 
     isSubscribed: ->
       subscribed = @dict.get "subscribed"
