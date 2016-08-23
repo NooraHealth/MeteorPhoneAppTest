@@ -41,6 +41,7 @@ Template.Lesson_view_page.onCreated ()->
     }
 
   @state.set "level", AppState.getLevels()[0].name
+  @liveAudio = []
   @HOME_SLIDE_INDEX = 0
 
   @onLevelSelected = ( levelName ) =>
@@ -146,6 +147,7 @@ Template.Lesson_view_page.onCreated ()->
   @playAudio = (src, volume, whenFinished, whenPaused) =>
     audio = new Audio src, volume
     audio.play whenFinished, whenPaused
+    @liveAudio.push audio
     return audio
 
   @setCurrentAudio = (audio) ->
@@ -325,13 +327,18 @@ Template.Lesson_view_page.onCreated ()->
     new IntroductionToQuestions().send( onConfirm, onCancel, language )
 
   @stopAudio = =>
-    @getCurrentAudioElem().stop()
+    @getCurrentAudio().stop()
+
+  @destroyAudio = =>
+    for audio in @liveAudio
+      audio.destroy()
+    @liveAudio = []
 
   @onNextButtonClicked = =>
     #if @hasBonusVideo() and @secondToLastModule() then @offerBonusVideo()
     lessonComplete = @lessonComplete()
     currentModule = @getCurrentModule()
-    @stopAudio()
+    @destroyAudio()
     #if currentModule.type == "VIDEO" and not lessonComplete
       #@stopVideo currentModule
     #else if @lessonComplete() then @celebrateCompletion() else @goToNextModule()
@@ -347,11 +354,11 @@ Template.Lesson_view_page.onCreated ()->
     text = if @lessonComplete() then AppState.translate( "finish", language, "UPPER") else AppState.translate( "next", language, "UPPER")
     return "<span class='center'>#{text}<i class='fa fa-arrow-right'></i></span>"
 
-  @getCurrentAudioElem = =>
+  @getCurrentAudio = =>
     return @currentAudio
 
   @onReplayButtonClicked = =>
-    @getCurrentAudioElem().replay()
+    @getCurrentAudio().replay()
 
   @shouldShowReplayButton = =>
     module = @getCurrentModule()

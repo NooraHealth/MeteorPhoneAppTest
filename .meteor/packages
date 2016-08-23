@@ -37,7 +37,7 @@ kadira:flow-router
 kadira:blaze-layout
 arillo:flow-router-helpers
 mrt:q
-reactive-var@1.0.10
+reactive-var
 manuel:reactivearray
 reactive-dict@1.1.8
 standard-minifier-css@1.1.8

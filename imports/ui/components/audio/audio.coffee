@@ -23,6 +23,9 @@ class Audio
   stop: =>
     @sound?.stop()
 
+  destroy: =>
+    @sound?.unload()
+
   play: ( whenFinished, whenPaused )=>
     alreadyPlaying = @sound?.playing()
     if not alreadyPlaying
