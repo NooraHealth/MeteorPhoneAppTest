@@ -55,10 +55,7 @@ class @ContentDownloader
         for level in levels
           paths.push ContentInterface.getDirectory( "IMAGE" ) + level.image
 
-        console.log " The curriculums to download"
-        console.log curriculums
         for curriculum in curriculums
-          console.log "Getting the stuff for curriculum #{curriculum._id}"
           paths.merge @_allContentPathsInCurriculum( curriculum )
 
         @_downloadFiles paths
@@ -162,14 +159,11 @@ class @ContentDownloader
       return deferred.promise
       
     _allContentPathsInCurriculum: (curriculum) ->
-      console.log "Getting the content paths in curriculum!!!"
       paths = []
       lessons = curriculum.getLessonDocuments("introduction")
         .concat curriculum.getLessonDocuments("beginner")
         .concat curriculum.getLessonDocuments("intermediate")
         .concat curriculum.getLessonDocuments("advanced")
-      console.log "The lessons"
-      console.log lessons
       for lesson in lessons
         paths.merge @_allContentPathsInLesson(lesson)
       return paths
