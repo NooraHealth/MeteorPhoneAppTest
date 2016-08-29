@@ -36,7 +36,6 @@ Template.Select_language_page.onCreated ->
     }
 
     AppState.setLanguage language
-    #FlowRouter.go "introduction"
     levels = AppState.getLevels()
     @initializeSwiper()
     @setFooterVisible true
@@ -46,9 +45,6 @@ Template.Select_language_page.onCreated ->
 
   @playIntroVideo = =>
     introModule = AppState.getCurriculumDoc().getIntroductionModule()
-    console.log introModule
-    #$("#" + introModule._id).find("video")[0]?.play()
-    console.log @.$("##{introModule._id}").find("video")
     @.$("##{introModule._id}").find("video")?[0]?.play()
 
   @setFooterVisible = =>
@@ -82,7 +78,8 @@ Template.Select_language_page.helpers
 
   shouldShow: (module) ->
     curriculumDoc = AppState.getCurriculumDoc()
-    return curriculumDoc?._id == module?._id
+    introModule = curriculumDoc?.getIntroductionModule()
+    return introModule?._id == module?._id
 
   videoArgs: ( module ) ->
     instance = Template.instance()
@@ -100,7 +97,6 @@ Template.Select_language_page.helpers
     return data
 
   menuArgs: ->
-    console.log "Getting the menu args!!"
     instance = Template.instance()
     return {
       onLanguageSelected: instance.onLanguageSelected
