@@ -8,7 +8,7 @@
 7 verbose unsafe-perm in lifecycle true
 8 info training-app@0.0.4 Failed to exec dev script
 9 verbose stack Error: training-app@0.0.4 dev: `meteor run --settings settings_dev.json`
-9 verbose stack Exit status 1
+9 verbose stack Exit status 2
 9 verbose stack     at EventEmitter.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/lifecycle.js:217:16)
 9 verbose stack     at emitTwo (events.js:87:13)
 9 verbose stack     at EventEmitter.emit (events.js:172:7)
@@ -25,7 +25,7 @@
 15 error npm  v2.15.8
 16 error code ELIFECYCLE
 17 error training-app@0.0.4 dev: `meteor run --settings settings_dev.json`
-17 error Exit status 1
+17 error Exit status 2
 18 error Failed at the training-app@0.0.4 dev script 'meteor run --settings settings_dev.json'.
 18 error This is most likely a problem with the training-app package,
 18 error not with npm itself.
