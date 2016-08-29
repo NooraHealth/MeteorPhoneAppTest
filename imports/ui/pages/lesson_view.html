@@ -28,16 +28,9 @@
               {{#each module in modules}}
                 {{#with module}}
                   <div class='swiper-slide'>
-                    {{#if isCurrent module}}
+                    {{#if shouldRender module}}
                     <div id="{{_id}}" class="card module-card">
                       {{> UI.dynamic template=(getTemplate module)  data=(moduleArgs module) }}
-                      <!--{{#if hasAudio module}}-->
-                        <!--{{>Audio audioArgs module}}-->
-                      <!--{{/if}}-->
-
-                      <!--{{#if hasExplanation module}}-->
-                        <!--{{>Audio explanationArgs module}} -->
-                      <!--{{/if}}-->
                     </div>
                     {{/if}}
                   </div>
@@ -51,10 +44,5 @@
 
       {{> Lesson_view_page_footer footerArgs}}
     {{/if}}
-
-    <!--{{>Audio incorrectSoundEffectArgs}}-->
-    <!--{{>Audio correctSoundEffectArgs}}-->
-    <!--{{>Audio stubAudioArgs}}-->
-
   </div>
 </template>

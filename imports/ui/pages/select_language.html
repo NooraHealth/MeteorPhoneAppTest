@@ -16,11 +16,11 @@
                   {{>Home_language_menu (menuArgs)}}
                 </div>
                 <div class='swiper-slide'>
-                  {{#with introModule}}
-                    <div id="{{_id}}" class="card module-card">
-                      {{> Lesson_view_page_video (videoArgs introModule) }}
+                  {{#each module in introModules}}
+                  <div id="{{module._id}}" class="card module-card {{#unless shouldShow module}} hidden {{/unless}}">
+                      {{> Lesson_view_page_video (videoArgs module) }}
                     </div>
-                  {{/with}}
+                  {{/each}}
                 </div>
               </div>
             </div>

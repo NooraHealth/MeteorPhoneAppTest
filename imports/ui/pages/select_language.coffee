@@ -1,6 +1,7 @@
 
 { AppState } = require('../../api/AppState.coffee')
 { TAPi18n } = require("meteor/tap:i18n")
+{ Curriculums } = require("meteor/noorahealth:mongo-schemas")
 
 # TEMPLATE
 require './select_language.html'
@@ -19,7 +20,6 @@ Template.Select_language_page.onCreated ->
   }
 
   @initializeSwiper = =>
-    console.log "initializing the swiper in the onRendered"
     @swiper = AppState.getF7().swiper '.swiper-container', {
       speed: 700,
       shortSwipes: false
@@ -45,7 +45,11 @@ Template.Select_language_page.onCreated ->
     @swiper.slideNext()
 
   @playIntroVideo = =>
-    $("video")[0]?.play()
+    introModule = AppState.getCurriculumDoc().getIntroductionModule()
+    console.log introModule
+    #$("#" + introModule._id).find("video")[0]?.play()
+    console.log @.$("##{introModule._id}").find("video")
+    @.$("##{introModule._id}").find("video")?[0]?.play()
 
   @setFooterVisible = =>
     @state.set "footerVisible", true
@@ -67,8 +71,18 @@ Template.Select_language_page.helpers
     instance = Template.instance()
     return instance.subscriptionsReady()
   
-  introModule: ->
-    return AppState.getIntroductionModule()
+  introModules: ->
+    modules = []
+    condition = AppState.getCondition()
+    for curriculum in Curriculums.find({ condition: condition }).fetch()
+      introModule = curriculum.getIntroductionModule()
+      if introModule then modules.push introModule
+
+    return modules
+
+  shouldShow: (module) ->
+    curriculumDoc = AppState.getCurriculumDoc()
+    return curriculumDoc?._id == module?._id
 
   videoArgs: ( module ) ->
     instance = Template.instance()

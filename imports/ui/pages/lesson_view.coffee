@@ -66,17 +66,20 @@ Template.Lesson_view_page.onCreated ()->
     index = @state.get "moduleIndex"
     return @getModules()?[index]
 
+  @getNextModule = =>
+    index = @state.get "moduleIndex"
+    return @getModules()?[index + 1]
+
   @setPlayStub = (shouldPlay) ->
     @state.set "playStub", shouldPlay
 
-  @isCurrent = (moduleId) =>
+  @isCurrent = (module) =>
     currentModule = @getCurrentModule()
-    return moduleId is currentModule._id
+    return module?._id is currentModule?._id
 
-  #@isCompleted = (moduleId) =>
-    #modules = @getModules()
-    #index = @getModuleIndex()
-    #return index > modules?.indexOf moduleId
+  @isNext = (module) =>
+    nextModule = @getNextModule()
+    return module?._id is nextModule?._id
 
   @getProgress = ()=>
     numInLesson = @getModules()?.length or 0
@@ -104,9 +107,8 @@ Template.Lesson_view_page.onCreated ()->
 
   @onFinishExplanation = (module, pos, completed, src)=>
     currentModule = @getCurrentModule()
-    if @isCurrent module._id
+    if @isCurrent module
       @setNextButtonAnimated true
-      #@setAudioPlaying null
     @trackAudioStopped( pos, completed, src )
 
   @onChoice = (instance, type, showAlert) ->
@@ -178,8 +180,6 @@ Template.Lesson_view_page.onCreated ()->
     return @getLessons()?[lessonIndex]
 
   @setLevel = (level) =>
-    console.log "Setting the level to "
-    console.log level
     @state.set "level", level
 
   @getLevel = =>
@@ -231,12 +231,12 @@ Template.Lesson_view_page.onCreated ()->
 
   @goToNextLesson = =>
     if @isLastLesson()
-      @goHome(null, false)
+      @goHome(null, true)
     else
       currentLessonIndex = @getLessonIndex()
       @startLesson currentLessonIndex + 1
 
-  @goHome = ( event, completedCurriculum) =>
+  @goHome = ( event, completedLevel) =>
     lesson = @getCurrentLesson()
     module = @getCurrentModule()
     text = if module?.title then module?.title else module?.question
@@ -246,48 +246,33 @@ Template.Lesson_view_page.onCreated ()->
       lastModuleId: module?._id
       lastModuleText: text
       lastModuleType: module?.type
-      completedCurriculum: completedCurriculum
+      completedLevel: completedLevel
       numberOfModulesInLesson: lesson?.modules.length
     }
-    @incrementLevel()
+    if completedLevel then @incrementLevel()
     @setStateToDefault()
-    @stopAudio()
+    @destroyAudio()
     @swiper.slideTo @HOME_SLIDE_INDEX
 
   @incrementLevel= =>
     levels = AppState.getLevels()
     level = @getLevel()
-    console.log "Incrementing the level"
-    console.log level
-    console.log levels
     if level == levels[0].name
-      console.log "SEtting level to intermediate"
       @setLevel levels[1].name
     else if level == levels[1].name
       @setLevel levels[2].name
     else if level == levels[2].name
       @setLevel levels[0].name
     else
-      console.log "Going to the default"
       @setLevel levels[0].name
 
-  @getAudioPlaying = () =>
-    return @state.get "audioPlaying"
-
-  @setAudioPlaying = (type) =>
-    @state.set "audioPlaying", type
-
   @displayModule = (index) =>
-    @setModuleIndex index
-    @setAudioPlaying "QUESTION"
-    @setNextButtonAnimated false
-    #@setCurrentModuleId()
     @swiper.slideTo index + 1
+    @setModuleIndex index
+    @setNextButtonAnimated false
     module = @getCurrentModule()
-
     if module.type == "VIDEO"
       @playVideo module
-
     if @hasAudio(module)
       onFinishAudio = if module.type == "SLIDE" then @onFinishExplanation.bind(@, module) else @trackAudioStopped
       audio = @playAudio ContentInterface.getSrc(module.audio, "AUDIO"), 1, onFinishAudio, onFinishAudio
@@ -312,12 +297,7 @@ Template.Lesson_view_page.onCreated ()->
   @goToNextModule = =>
     index = @getModuleIndex()
     newIndex = ++index
-    #if newIndex == 1
-      #@initializeSwiper()
     @displayModule( newIndex )
-
-  #@onNextButtonRendered = =>
-    #@initializeSwiper()
 
   @showIntroductionToQuestions = =>
     language = AppState.getLanguage()
@@ -335,14 +315,12 @@ Template.Lesson_view_page.onCreated ()->
     @liveAudio = []
 
   @onNextButtonClicked = =>
-    #if @hasBonusVideo() and @secondToLastModule() then @offerBonusVideo()
     lessonComplete = @lessonComplete()
     currentModule = @getCurrentModule()
     @destroyAudio()
-    #if currentModule.type == "VIDEO" and not lessonComplete
-      #@stopVideo currentModule
-    #else if @lessonComplete() then @celebrateCompletion() else @goToNextModule()
-    if @lessonComplete() then @celebrateCompletion() else @goToNextModule()
+    if currentModule.type == "VIDEO" and not lessonComplete
+      @stopVideo currentModule
+    else if @lessonComplete() then @celebrateCompletion() else @goToNextModule()
 
   @goHomeButtonText = =>
     language = AppState.getLanguage()
@@ -369,20 +347,10 @@ Template.Lesson_view_page.onCreated ()->
     if not lessonComplete and not @isHomePage()
       @showIntroductionToQuestions()
 
-  @shouldPlayQuestionAudio = (id) =>
-    isPlayingQuestion = @state.get "playingQuestion"
-    return @isCurrent(id) and isPlayingQuestion
-
-  @shouldPlayExplanationAudio = (id) =>
-    shouldPlay = @state.get "playingExplanation"
-    if @isCurrent(id) and shouldPlay then return true else return false
-
   @setNextButtonAnimated = (value) =>
     @state.set "nextButtonAnimated", value
 
   @getNextButtonAnimated = ()=>
-    #playing = @getAudioPlaying()
-    #return playing is null
     return @state.get "nextButtonAnimated"
 
   @hasAudio = (module)=>
@@ -390,7 +358,6 @@ Template.Lesson_view_page.onCreated ()->
 
   @hasExplanation = (module)=>
     return module.correct_audio?
-
 
   @autorun =>
     if Meteor.status().connected
@@ -437,9 +404,9 @@ Template.Lesson_view_page.helpers
     instance = Template.instance()
     return instance.getCurrentLesson()?.title
 
-  isCurrent: (module) ->
+  shouldRender: (module) ->
     instance = Template.instance()
-    return instance.isCurrent module._id
+    return instance.isCurrent(module) or instance.isNext(module)
 
   moduleArgs: (module) ->
     instance = Template.instance()
@@ -447,9 +414,7 @@ Template.Lesson_view_page.helpers
     isQuestion = (type) ->
       return type == "BINARY" or type == "SCENARIO" or type == "MULTIPLE_CHOICE"
 
-    console.log "This is the current module!!"
-    console.log module
-    isCurrentModule = instance.isCurrent(module._id)
+    isCurrentModule = instance.isCurrent(module)
     if isQuestion module.type
       showAlert = if module.type == 'MULTIPLE_CHOICE' then false else true
       return {
@@ -476,76 +441,6 @@ Template.Lesson_view_page.helpers
         language: language
       }
 
-  explanationArgs: (module) ->
-    instance = Template.instance()
-    playing = instance.getAudioPlaying() == "EXPLANATION"
-    replay = instance.state.get("replayAudio")
-    isCurrent = instance.isCurrent(module._id)
-    return {
-      attributes: {
-        src: ContentInterface.getSrc module.correct_audio, "AUDIO"
-      }
-      playing: playing and isCurrent
-      replay: playing and replay and isCurrent
-      afterReplay: instance.afterReplay
-      whenFinished: instance.onFinishExplanation.bind instance, module
-      whenPaused: instance.onFinishExplanation.bind instance, module
-    }
-
-  audioArgs: (module) ->
-    instance = Template.instance()
-    playing = instance.getAudioPlaying() == "QUESTION"
-    replay = instance.state.get("replayAudio")
-    isCurrent = instance.isCurrent(module._id)
-    onFinishAudio = if module.type == "SLIDE" then instance.onFinishExplanation.bind(instance, module) else instance.trackAudioStopped
-    return {
-      attributes: {
-        src: ContentInterface.getSrc module.audio, "AUDIO"
-      }
-      playing: playing and isCurrent
-      replay: playing and replay and isCurrent
-      afterReplay: instance.afterReplay
-      whenFinished: onFinishAudio
-      whenPaused: onFinishAudio
-    }
-
-  #incorrectSoundEffectArgs: ->
-    #instance = Template.instance()
-    #playing = instance.state.get("soundEffectPlaying") == "INCORRECT"
-    #return {
-      #attributes: {
-        #src: ContentInterface.getSrc(ContentInterface.incorrectSoundEffectFilename(), "AUDIO")
-      #}
-      #playing: playing
-      #whenFinished: instance.stopPlayingSoundEffect
-      #whenPaused: instance.stopPlayingSoundEffect
-    #}
-
-  #correctSoundEffectArgs: ->
-    #instance = Template.instance()
-    #playing = instance.state.get("soundEffectPlaying") == "CORRECT"
-    #return {
-      #attributes: {
-        #src: ContentInterface.getSrc(ContentInterface.correctSoundEffectFilename(), "AUDIO")
-      #}
-      #playing: playing
-      #whenFinished: instance.stopPlayingSoundEffect
-      #whenPaused: instance.stopPlayingSoundEffect
-    #}
-
-  #stubAudioArgs: ->
-    #instance = Template.instance()
-    #playing = instance.state.get("playStub") == true
-    #return {
-      #attributes: {
-        #src: ContentInterface.getSrc(ContentInterface.correctSoundEffectFilename(), "AUDIO")
-        #volume: 0
-      #}
-      #playing: playing
-      #whenFinished: ()-> instance.setPlayStub false
-      #whenPaused: ()-> instance.setPlayStub false
-    #}
-
   modules: ->
     instance = Template.instance()
     return instance.getModules()
@@ -567,8 +462,6 @@ Template.Lesson_view_page.helpers
 
   thumbnailArgs: (level ) ->
     instance = Template.instance()
-    console.log "The current level!!"
-    console.log instance.getLevel()
     isCurrentLevel = ( instance.getLevel() == level.name )
     return {
       level: level
@@ -579,7 +472,6 @@ Template.Lesson_view_page.helpers
 
   levels: ->
     return AppState.getLevels()
-
 
   homePage: ->
     instance = Template.instance()
