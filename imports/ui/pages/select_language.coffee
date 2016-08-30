@@ -40,7 +40,6 @@ Template.Select_language_page.onCreated ->
     @initializeSwiper()
     @setFooterVisible true
     @playIntroVideo()
-    AppState.setLevel levels[0].name
     @swiper.slideNext()
 
   @playIntroVideo = =>
@@ -57,7 +56,8 @@ Template.Select_language_page.onCreated ->
     @state.set "letsBeginButtonAnimated", true
 
   @autorun =>
-    if Meteor.status().connected
+    #if Meteor.status().connected
+    if AppState.templateShouldSubscribe()
       @subscribe "curriculums.all"
       @subscribe "lessons.all"
       @subscribe "modules.all"

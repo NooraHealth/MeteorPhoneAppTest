@@ -1,6 +1,5 @@
 
 { Curriculums } = require("meteor/noorahealth:mongo-schemas")
-{ Curriculums } = require("meteor/noorahealth:mongo-schemas")
 { Lessons } = require("meteor/noorahealth:mongo-schemas")
 { Modules } = require("meteor/noorahealth:mongo-schemas")
 
@@ -17,6 +16,7 @@ require '../components/lesson/modules/binary.coffee'
 require '../components/lesson/modules/scenario.coffee'
 require '../components/lesson/modules/multiple_choice/multiple_choice.coffee'
 require '../components/lesson/modules/slide.html'
+require '../components/home/thumbnail.coffee'
 require '../components/lesson/modules/video.coffee'
 require '../components/lesson/footer/footer.coffee'
 
@@ -162,9 +162,6 @@ Template.Lesson_view_page.onCreated ()->
     @setCurrentAudio audio
     @
 
-  #@stopPlayingSoundEffect = =>
-    #@state.set "soundEffectPlaying", null
-
   @lessonComplete = =>
     index = @getModuleIndex()
     modules = @getModules()
@@ -185,9 +182,13 @@ Template.Lesson_view_page.onCreated ()->
   @getLevel = =>
     @state.get "level"
 
+  @getLessonDocsOfLevel = (levelName) =>
+    curriculum = AppState.getCurriculumDoc()
+    return curriculum?.getLessonDocuments( levelName )
+
   @getLessons = =>
     level = @getLevel()
-    return AppState.getLessonDocs( level )
+    return @getLessonDocsOfLevel level
   
   @isLastLesson = =>
     lessonIndex = @getLessonIndex()
@@ -360,7 +361,8 @@ Template.Lesson_view_page.onCreated ()->
     return module.correct_audio?
 
   @autorun =>
-    if Meteor.status().connected
+    #if Meteor.status().connected
+    if AppState.templateShouldSubscribe()
       @subscribe "curriculums.all"
       @subscribe "lessons.all"
       @subscribe "modules.all"

@@ -36,14 +36,14 @@ class AppState
     getF7: =>
       return @F7
 
-    setCurriculumDownloaded: (id, state) ->
-      @dict.setPersistent "curriculumDownloaded#{id}", state
-      @
+    #setCurriculumDownloaded: (id, state) ->
+      #@dict.setPersistent "curriculumDownloaded#{id}", state
+      #@
       
-    getCurriculumDownloaded: (id) ->
-      if not id then return true
-      downloaded = @dict.get "curriculumDownloaded#{id}"
-      if not downloaded? then return false else return downloaded
+    #getCurriculumDownloaded: (id) ->
+      #if not id then return true
+      #downloaded = @dict.get "curriculumDownloaded#{id}"
+      #if not downloaded? then return false else return downloaded
       
     setPercentLoaded: (percent) ->
       @dict.setTemporary "percentLoaded", percent
@@ -133,37 +133,45 @@ class AppState
       return @getConfiguration()?.hospital
 
     setSubscribed: (state) ->
-      @dict.set "subscribed", state
+      @dict.setPersistent "subscribed", state
       return @
-
-    setLevel: ( level )=>
-      @dict.set "level", level
-
-    getLevel: =>
-      level = @dict.get "level"
-      if level?
-        return level
-      else
-        defaultLevel = @levels[0].name
-        @setLevel( defaultLevel )
-        return defaultLevel
-
-    getLessonDocs: ( levelName )=>
-      curriculum = @getCurriculumDoc()
-      return curriculum?.getLessonDocuments( levelName )
-
-    getLevels: =>
-      return @levels
-
-    getIntroductionModule: ()->
-      curriculum = @getCurriculumDoc()
-      return curriculum?.getIntroductionModule()
-      #lesson = Lessons.findOne { _id: curriculum?.introduction }
-      #moduleId = lesson?.modules[0]
-      #return Modules.findOne { _id: moduleId }
 
     isSubscribed: ->
       subscribed = @dict.get "subscribed"
       if subscribed? then return subscribed else return false
+
+    templateShouldSubscribe: ->
+      isSubscribed = @isSubscribed()
+      console.log "Is the app subscribed???"
+      console.log isSubscribed
+      if Meteor.isCordova
+        console.log "Returning whether to subscribe"
+        console.log not isSubscribed
+        return Meteor.status().connected and not isSubscribed
+      else
+        return Meteor.status().connected
+
+    #setLevel: ( level )=>
+      #@dict.set "level", level
+
+    #getLevel: =>
+      #level = @dict.get "level"
+      #if level?
+        #return level
+      #else
+        #defaultLevel = @levels[0].name
+        #@setLevel( defaultLevel )
+        #return defaultLevel
+
+    getLevels: =>
+      return @levels
+
+    #getIntroductionModule: ()->
+      #curriculum = @getCurriculumDoc()
+      #return curriculum?.getIntroductionModule()
+      #lesson = Lessons.findOne { _id: curriculum?.introduction }
+      #moduleId = lesson?.modules[0]
+      #return Modules.findOne { _id: moduleId }
+
 
 module.exports.AppState = AppState.get()
