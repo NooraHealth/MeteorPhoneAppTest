@@ -44,7 +44,7 @@ Template.Select_language_page.onCreated ->
 
   @playIntroVideo = =>
     introModule = AppState.getCurriculumDoc().getIntroductionModule()
-    @.$("##{introModule._id}").find("video")?[0]?.play()
+    @.$("##{introModule?._id}")?.find("video")?[0]?.play()
 
   @setFooterVisible = =>
     @state.set "footerVisible", true
