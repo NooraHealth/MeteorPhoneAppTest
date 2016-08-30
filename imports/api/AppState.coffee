@@ -1,5 +1,8 @@
 
 { Curriculums } = require("meteor/noorahealth:mongo-schemas")
+{ Lessons } = require("meteor/noorahealth:mongo-schemas")
+{ Modules } = require("meteor/noorahealth:mongo-schemas")
+{ TAPi18n } = require("meteor/tap:i18n")
 
 class AppState
   @get: ()->
@@ -9,28 +12,38 @@ class AppState
   class Private
     constructor: (name) ->
       @dict = new PersistentReactiveDict name
-      @dict.set "route", "Home_page"
-
-    setLessonIndex: (i) ->
-      @dict.setPersistent "lessonIndex", i
-      @
-
-    getLessonIndex: ->
-      @dict.get "lessonIndex"
-
-    incrementLesson: ->
-      index = @getLessonIndex()
-      @setLessonIndex ++index
-      @
-
-    setCurriculumDownloaded: (id, state) ->
-      @dict.setPersistent "curriculumDownloaded#{id}", state
-      @
+      @levels = [
+        { name: "beginner", image: "easy.png"},
+        { name: "intermediate", image: "medium.png"},
+        { name: "advanced", image: "hard.png"}
+      ]
       
-    getCurriculumDownloaded: (id) ->
-      if not id then return true
-      downloaded = @dict.get "curriculumDownloaded#{id}"
-      if not downloaded? then return false else return downloaded
+      @langTags = {
+        english: "en",
+        hindi: "hi",
+        kannada: "kd"
+      }
+
+    initializeApp: =>
+      @F7 = new Framework7(
+        materialRipple: true
+        router:false
+        tapHold: true
+        tapHoldPreventClicks: false
+        tapHoldDelay: 1500
+      )
+
+    getF7: =>
+      return @F7
+
+    #setCurriculumDownloaded: (id, state) ->
+      #@dict.setPersistent "curriculumDownloaded#{id}", state
+      #@
+      
+    #getCurriculumDownloaded: (id) ->
+      #if not id then return true
+      #downloaded = @dict.get "curriculumDownloaded#{id}"
+      #if not downloaded? then return false else return downloaded
       
     setPercentLoaded: (percent) ->
       @dict.setTemporary "percentLoaded", percent
@@ -40,31 +53,36 @@ class AppState
       @dict.get "percentLoaded"
 
     setLanguage: (language) ->
-      @dict.setPersistent "language", language
-      @setLessonIndex 0
+      TAPi18n.setLanguage @_getLangTag language
+      @dict.setTemporary "language", language
       @
 
     getLanguage: ->
-      @dict.get "language"
-
-    getCurriculumId: ->
-      if not @isConfigured()
-        @setError new Meteor.Error("developer-error", "The app is calling setConfiguration after it has already been configured. This should not have happened. Developer error")
-
       language = @dict.get "language"
-      condition = @dict.get('configuration').condition
+      if not language? then return "English" else return language
+
+    translate: ( key, language, textCase, options)->
+      tag = @_getLangTag language
+      text = TAPi18n.__ key, options, tag
+      if textCase == "UPPER"
+        return text.toUpperCase()
+      if textCase == "LOWER"
+        return text.toLowerCase()
+      else
+        return text
+
+    _getLangTag: (language) ->
+      if not language
+        return null
+      return @langTags[language.toLowerCase()]
+
+    getCurriculumDoc: ->
+      language = @dict.get "language"
+      condition = @dict.get('configuration')?.condition
       if not language? or not condition?
         return null
       curriculum = Curriculums.findOne {language: language, condition: condition}
-      return curriculum?._id
-
-    setShouldPlayIntro: (state) ->
-      @dict.setPersistent "playIntro", state
-      @
-
-    getShouldPlayIntro: (state) ->
-      shouldPlay = @dict.get "playIntro"
-      if shouldPlay? then return shouldPlay else return false
+      return curriculum
 
     setError: (error) ->
       if error
@@ -80,8 +98,6 @@ class AppState
       @dict.get "errorMessage"
 
     setConfiguration: (configuration) ->
-      if not Meteor.isCordova
-        @setError new Meteor.Error("developer-error", "The app should not call AppState.get().setConfiguration when not in Cordova. Developer error.")
 
       new SimpleSchema({
         hospital: {type: String, min: 1, optional: true} #Hospital and condition cannot be empty strings
@@ -91,53 +107,71 @@ class AppState
       @dict.setPersistent 'configuration', configuration
       return @
 
-    isConfigured: (state) ->
+    contentDownloaded: ->
       if Meteor.isCordova
-        configuration = @dict.get 'configuration'
-        return configuration? and
-          configuration?.hospital? and
-          configuration.hospital isnt "" and
-          configuration.condition? and
-          configuration.condition isnt ""
-      else
-        throw Meteor.Error('developer-error', 'App reached AppState.get().isConfigured while not in Cordova. This should not have happened. Developer Error')
+        @dict.get "content_downloaded"
+      else return true
+
+    setContentDownloaded: (value) ->
+      @dict.setPersistent "content_downloaded", value
+
+    isConfigured: (state) ->
+      configuration = @dict.get 'configuration'
+      return configuration? and
+        configuration?.hospital? and
+        configuration.hospital isnt "" and
+        configuration.condition? and
+        configuration.condition isnt ""
 
     getConfiguration: ->
-      if not Meteor.isCordova
-        @setError new Meteor.Error("developer-error", "The app should not call AppState.get().getConfiguration when not in Cordova. Developer error.")
-
-      if not @isConfigured()
-        @setError new Meteor.Error("developer-error", "The app is calling getConfiguration before it has been configured. This should not have happened. Developer error")
-
       return @dict.get "configuration"
 
     getCondition: ->
-      return @getConfiguration().condition
+      return @getConfiguration()?.condition
 
     getHospital: ->
-      return @getConfiguration().hospital
+      return @getConfiguration()?.hospital
 
     setSubscribed: (state) ->
-      @dict.set "subscribed", state
+      @dict.setPersistent "subscribed", state
       return @
 
     isSubscribed: ->
       subscribed = @dict.get "subscribed"
       if subscribed? then return subscribed else return false
 
-    #setRoute: (route) ->
-      #@dict.setTemporary "route", route
-      #@
+    templateShouldSubscribe: ->
+      isSubscribed = @isSubscribed()
+      console.log "Is the app subscribed???"
+      console.log isSubscribed
+      if Meteor.isCordova
+        console.log "Returning whether to subscribe"
+        console.log not isSubscribed
+        return Meteor.status().connected and not isSubscribed
+      else
+        return Meteor.status().connected
 
-    #route: ->
-      #console.log "Returning the route"
-      #console.log @dict.get "route"
-      #@dict.get "route"
+    #setLevel: ( level )=>
+      #@dict.set "level", level
 
-    #setLessonId: (id) ->
-      #@dict.setTemporary "lessonId", id
+    #getLevel: =>
+      #level = @dict.get "level"
+      #if level?
+        #return level
+      #else
+        #defaultLevel = @levels[0].name
+        #@setLevel( defaultLevel )
+        #return defaultLevel
 
-    #getLessonId: ->
-      #@dict.get "lessonId"
+    getLevels: =>
+      return @levels
 
-module.exports.AppState = AppState
+    #getIntroductionModule: ()->
+      #curriculum = @getCurriculumDoc()
+      #return curriculum?.getIntroductionModule()
+      #lesson = Lessons.findOne { _id: curriculum?.introduction }
+      #moduleId = lesson?.modules[0]
+      #return Modules.findOne { _id: moduleId }
+
+
+module.exports.AppState = AppState.get()

@@ -5,22 +5,22 @@
 require 'meteor/loftsteinn:framework7-ios'
 
 Meteor.startup ()->
-  console.log "starup"
-  if (Meteor.isCordova and not AppState.get().isSubscribed()) or Meteor.status().connected
-    console.log("Subscribing to all")
+  TAPi18n.setLanguage "en"
+
+  if (Meteor.isCordova and not AppState.isSubscribed()) or Meteor.status().connected
     Meteor.subscribe "lessons.all"
     Meteor.subscribe "curriculums.all"
     Meteor.subscribe "modules.all"
-    AppState.get().setSubscribed true
+    AppState.setSubscribed true
 
   BlazeLayout.setRoot "body"
 
-
-  this.App = new Framework7(
-    materialRipple: true
-    router:false
-    tapHold: true
-    tapHoldPreventClicks: false
-    tapHoldDelay: 1500
-  )
+  AppState.initializeApp()
+  if not AppState.isConfigured()
+    FlowRouter.go "configure"
+  else if not AppState.contentDownloaded() and Meteor.isCordova
+    console.log "Going to the loading page from init"
+    FlowRouter.go "load"
+  else
+    FlowRouter.go "select_language"
 

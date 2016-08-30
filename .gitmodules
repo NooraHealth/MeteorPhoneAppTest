@@ -1,3 +1,6 @@
 [submodule "packages/mongo-schemas-package"]
 	path = packages/mongo-schemas-package
 	url = git@github.com:NooraHealth/mongo-schemas.git
+[submodule "packages/i18n"]
+	path = packages/i18n
+	url = git@github.com:NooraHealth/i18n.git

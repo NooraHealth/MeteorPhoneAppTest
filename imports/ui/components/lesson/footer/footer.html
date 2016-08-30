@@ -1,14 +1,35 @@
 <template name="Lesson_view_page_footer">
 
-  {{> Button (goHomeButtonArgs homeButton)}}
+  <!--<div class="toolbar translate-down {{#unless hidden}} slide-up {{else}} slide-down {{/unless}}">-->
+  <div class="toolbar {{#unless visible}} translate-down {{/unless}}">
 
-  {{> Lesson_view_page_footer_paginator (paginatorArgs pages)}}
+    <div class="toolbar-inner row">
+      <div class="col-20">
+        {{#if homeButton.shouldShow}}
+          {{> Button (goHomeButtonArgs homeButton)}}
+        {{/if}}
+      </div>
 
-  {{#if shouldShow replayButton}}
-    {{> Button (replayButtonArgs replayButton)}}
-  {{/if}}
-  <div class={{nextButtonWrapperClasses nextButton.animated}}>
-    {{> Button (nextButtonArgs nextButton)}}
+      <div class="col-50">
+        {{#if progressBar.shouldShow}}
+          {{> Lesson_view_page_footer_progress_bar percent=progressBar.percent}}
+        {{/if}}
+      </div>
+
+      <div class="row col-30">
+        <div class="col-30">
+          {{#if replayButton.shouldShow}}
+            {{> Button (replayButtonArgs replayButton)}}
+          {{/if}}
+        </div>
+
+        <div class="col-70">
+          <div class={{nextButtonWrapperClasses nextButton.animated}}>
+            {{> Button (nextButtonArgs nextButton)}}
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
 </template>

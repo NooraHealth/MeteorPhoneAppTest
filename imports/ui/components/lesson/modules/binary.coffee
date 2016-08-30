@@ -1,14 +1,16 @@
 { ContentInterface } = require('../../../../api/content/ContentInterface.coffee')
 { Modules } = require("meteor/noorahealth:mongo-schemas")
-require '../../../../api/content/global_template_helpers.coffee'
+{ AppState } = require("../../../../api/AppState.coffee")
 require "../../audio/audio.coffee"
 require "./binary.html"
+require '../../../../api/global_template_helpers.coffee'
 
 Template.Lesson_view_page_binary.onCreated ->
   # Data context validation
   @autorun =>
     new SimpleSchema({
       module: {type: Modules._helpers}
+      language: {type: String}
       correctlySelectedClasses: {type: String}
       incorrectClasses: {type: String}
       incorrectlySelectedClasses: {type: String}
@@ -48,7 +50,12 @@ Template.Lesson_view_page_binary.onCreated ->
     selected = instance.state.get "selected"
 
     getClasses = (option) ->
-      classes = 'response button button-fill button-big color-lightblue'
+      classes = 'response button button-fill button-big binary-button color-blue-noora'
+      if option == "Yes"
+        classes += " yes-button"
+      if option == "No"
+        classes += " no-button"
+
       if option is selected
         if module.isCorrectAnswer option
           classes += " #{data.correctlySelectedClasses}"
@@ -69,12 +76,13 @@ Template.Lesson_view_page_binary.onCreated ->
     instance.state.set "optionAttributes", map
 
 Template.Lesson_view_page_binary.helpers
-  buttonArgs: (option) ->
+  buttonArgs: (option, language) ->
     instance = Template.instance()
     attributes = instance.state.get "optionAttributes"
+    text = AppState.translate option.toLowerCase(), language, "UPPER"
     return {
       attributes: attributes[option]
-      content: option.toUpperCase()
+      content: text.toUpperCase()
       onClick: instance.getOnSelected(instance, option)
     }
 

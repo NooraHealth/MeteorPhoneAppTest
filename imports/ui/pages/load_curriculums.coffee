@@ -1,36 +1,38 @@
-require './load_curriculums.html'
 { AppState } = require '../../api/AppState.coffee'
 { Curriculums } = require 'meteor/noorahealth:mongo-schemas'
 { ContentInterface } = require('../../api/content/ContentInterface.coffee')
+{ ContentDownloader } = require('../../api/cordova/ContentDownloader.coffee')
+
+require '../components/shared/loading.coffee'
+require './load_curriculums.html'
 
 Template.Load_curriculums_page.onCreated ->
 
   @firstRun = true
+
   @autorun =>
-   if Meteor.isCordova and Meteor.status().connected
-    console.log "In the meteor isConnected and cordova in init"
-    @subscribe "curriculums.all"
-    @subscribe "lessons.all"
-    @subscribe "modules.all"
+    if AppState.templateShouldSubscribe()
+      @subscribe "curriculums.all"
+      @subscribe "lessons.all"
+      @subscribe "modules.all"
 
   @autorun =>
     console.log "Getting whether subscriptionsReady"
-    if ContentInterface.get().subscriptionsReady(@) and @firstRun
+    if not Meteor.status().connected
+      console.log "Meteor status not connected"
+      AppState.setError(new Meteor.Error("Not Connected", "Please connect to data in order to download your curriculum."))
+    else if ContentInterface.subscriptionsReady(@) and @firstRun
+      console.log "About to download"
       @firstRun = false
-      configuration = AppState.get().getConfiguration()
+      configuration = AppState.getConfiguration()
       curriculums = Curriculums.find { condition: configuration.condition }
-      if not Meteor.status().connected
-        AppState.get().setError(new Meteor.Error("Not Connected", "Please connect to data in order to download your curriculum."))
-      else
-        onComplete = (e) ->
-          console.log "SUCCESS LOADING"
-          console.log e
-          if e
-            AppState.get().setError e
-          AppState.get().setShouldPlayIntro true
-          FlowRouter.go "home"
-          #delete any unused local content
-          console.log "about to go clean the local content"
-          ContentDownloader.get().cleanLocalContent curriculums
-        ContentDownloader.get().loadCurriculums curriculums, onComplete
+      onComplete = (e) ->
+        console.log "SUCCESS LOADING"
+        console.log e
+        if e
+          AppState.setError e
+        AppState.setContentDownloaded true
+        FlowRouter.go "select_language"
+
+      ContentDownloader.get().loadCurriculums curriculums, onComplete
   

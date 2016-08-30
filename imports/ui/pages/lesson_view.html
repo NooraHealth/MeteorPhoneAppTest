@@ -2,44 +2,47 @@
   <div data-page="index" class="page navbar-fixed toolbar-fixed">
     <!-- Top Navbar-->
     {{#Navbar}}
-      <span class="right-aligned">{{lessonTitle}}</span>
+      {{#if homePage}}
+        {{#with language=getLanguage}}
+          <a href="/select_language" class="right button">{{translate "change_language" "en" "UPPER"}}</a>
+        {{/with}}
+      {{else}}
+        <span class="right">{{lessonTitle}}</span>
+      {{/if}}
+
     {{/Navbar}}
 
     {{#if modulesReady}}
-      <div class="page-content">
-        <div class="content-block inner-container padding-lg">
+      <div class="page-content padding-lg">
+        <div class="content-block row">
           <div class='swiper-container'>
             <div class='swiper-wrapper'>
+              <div class='swiper-slide row'>
+                {{#each level in levels}}
+                  <div class="col-33">
+                  {{ >Home_thumbnail (thumbnailArgs level)}}
+                  </div>
+                {{/each}}
+              </div>
+
               {{#each module in modules}}
                 {{#with module}}
                   <div class='swiper-slide'>
+                    {{#if shouldRender module}}
                     <div id="{{_id}}" class="card module-card">
                       {{> UI.dynamic template=(getTemplate module)  data=(moduleArgs module) }}
                     </div>
+                    {{/if}}
                   </div>
-                  {{#if hasAudio module}}
-                    {{>Audio audioArgs module}}
-                  {{/if}}
-
-                  {{#if hasExplanation module}}
-                    {{>Audio explanationArgs module}} 
-                  {{/if}}
                 {{/with}}
               {{/each}}
+
             </div>
           </div>
         </div>
       </div>
 
-      <div class="toolbar">
-        <div class="toolbar-inner">
-          {{> Lesson_view_page_footer footerArgs}}
-        </div>
-      </div>
+      {{> Lesson_view_page_footer footerArgs}}
     {{/if}}
-
-    {{>Audio incorrectSoundEffectArgs}}
-    {{>Audio correctSoundEffectArgs}}
-
   </div>
 </template>

@@ -22,40 +22,66 @@ class ContentInterface
   class PrivateInterface
 
     constructor: ->
+      #Template.registerHelper 'getSrc', ( filename, type )=>
+        #console.log "getting the src of #{filename}"
+        #if filename? and filename != ""
+          #@getSrc filename, type
+        #else return ""
+
       @remoteContentEndpoint = Meteor.settings.public.CONTENT_SRC
 
-    introPath: =>
-      return "NooraHealthContent/Audio/AppIntro.mp3"
+    _audioDirectory: ->
+      return "NooraHealthContent/Audio/"
 
-    correctSoundEffectFilePath: =>
-      return "NooraHealthContent/Audio/correct_soundeffect.mp3"
+    _imageDirectory: ->
+      return "NooraHealthContent/Image/"
 
-    incorrectSoundEffectFilePath: =>
-      return "NooraHealthContent/Audio/incorrect_soundeffect.mp3"
+    _videoDirectory: ->
+      return "NooraHealthContent/Video/"
+
+    introFilename: =>
+      return "AppIntro.mp3"
+
+    correctSoundEffectFilename: =>
+      return "correct_soundeffect.mp3"
+
+    incorrectSoundEffectFilename: =>
+      return "incorrect_soundeffect.mp3"
+
+    getDirectory: (type) =>
+      if type == "VIDEO"
+        return @_videoDirectory()
+      if type == "IMAGE"
+        return @_imageDirectory()
+      if type == "AUDIO"
+        return @_audioDirectory()
 
     # Where the content is stored remotely (AWS S3 server)
     getEndpoint: (path) =>
-      if path? then return encodeURI(@remoteContentEndpoint + path) else return encodeURI(@remoteContentEndpoint)
+      new SimpleSchema({
+        path: {type: String}
+      }).validate({path: path})
+
+      return encodeURI(@remoteContentEndpoint + path)
 
     # Given a filename (path), getSrc will identify where to find
     # that particular file -- in Cordova, this is local and in the browser
     # it will find it remotely
-    getSrc: (path) =>
+    getSrc: (filename, type) =>
+      new SimpleSchema({
+        filename: {type: String},
+        type: {type: String}
+      }).validate({filename: filename, type: type})
       #url = @getEndpoint(path)
       if Meteor.isCordova
-        offlineFile = OfflineFiles.findOne {path: path}
+        console.log "Getting the src of #{filename}"
+        offlineFile = OfflineFiles.findOne { path: @getDirectory(type) + filename}
         return if offlineFile? then WebAppLocalServer.localFileSystemUrl(offlineFile.fsPath) else ""
       else
-        return url
+        path = @getDirectory(type) + filename
+        return @getEndpoint(path)
 
     subscriptionsReady: (instance) ->
-      #if Meteor.status().connected
-        #return instance.subscriptionsReady()
-      #else if Meteor.isCordova
       return instance.subscriptionsReady()
-      #if Meteor.isCordova
-        #return AppState.get().isSubscribed()
-      #else
-        #return instance.subscriptionsReady()
 
-module.exports.ContentInterface = ContentInterface
+module.exports.ContentInterface = ContentInterface.get()

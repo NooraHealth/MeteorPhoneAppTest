@@ -1,6 +1,7 @@
 
 { Modules } = require("meteor/noorahealth:mongo-schemas")
 { ContentInterface } = require('../../../../api/content/ContentInterface.coffee')
+require '../../../../api/global_template_helpers.coffee'
 require "./video.html"
 
 Template.Lesson_view_page_video.onCreated ->
@@ -12,16 +13,22 @@ Template.Lesson_view_page_video.onCreated ->
 
   # Data context validation
   @autorun =>
+    console.log "Validating the video"
     schema = new SimpleSchema({
       module: {type: Modules._helpers}
+      language: {type: String}
       onPlayVideo: {type: Function, optional: true}
       onStopVideo: {type: Function, optional: true}
       onVideoEnd: {type: Function, optional: true}
-      playing: {type: Boolean}
+      onRendered: {type: Function, optional: true}
+      #playing: {type: Boolean}
+      isCurrent: {type: Boolean}
     }).validate(Template.currentData())
 
     @data = Template.currentData()
 
+  @displayedPopup = false
+      
   @onStopVideo = (location) =>
     if @data.onStopVideo
       @data.onStopVideo()
@@ -36,7 +43,6 @@ Template.Lesson_view_page_video.onCreated ->
     }
 
   @onPlayVideo = =>
-    console.log "Playing the video"
     if @data.onPlayVideo
       @data.onPlayVideo()
 
@@ -45,22 +51,24 @@ Template.Lesson_view_page_video.onCreated ->
       @data.onVideoEnd()
 
   @elem = (template) ->
-    if not @state.get("rendered") then return ""
+    if not @isRendered() then return ""
     else
       return template.find "video"
 
-  @autorun =>
-    elemRendered = @state.get "rendered"
-    if not elemRendered then return
-    shouldPlay = Template.currentData().playing
-    instance = @
-    elem = @elem instance
-    if not shouldPlay
-      elem.pause()
+  @isRendered = =>
+    return @state.get "rendered"
+
+  @pauseVideo = =>
+    @elem(@).pause()
 
   @playVideo = =>
     @elem(@).play()
 
+  @autorun =>
+    if not @isRendered() then return
+    isCurrent = Template.currentData().isCurrent
+    if not isCurrent
+      @pauseVideo()
 
 Template.Lesson_view_page_video.helpers
   iframeAttributes: (module) ->
@@ -76,18 +84,17 @@ Template.Lesson_view_page_video.helpers
     return {
       title: module.title
       class: "video-module center"
-      src: ContentInterface.get().getSrc(module.video)
+      src: ContentInterface.getSrc(module.video, "VIDEO")
       controls: true
     }
   
-  playing: ->
-    console.log("Returning whether playing")
-    instance = Template.instance()
-    console.log instance.data.playing
-    return instance.data.playing
+  #playing: ->
+    #instance = Template.instance()
+    #return instance.data.playing
 
 Template.Lesson_view_page_video.events
-  'touchend #play_video': ->
+  'click #play_video': ->
+    console.log "CLICK"
     instance = Template.instance()
     instance.playVideo()
 
@@ -95,15 +102,20 @@ Template.Lesson_view_page_video.onRendered ->
   instance = Template.instance()
   instance.state.set "rendered", true
 
+  if instance.data.onRendered
+    instance.data.onRendered()
+
   elem = instance.elem(instance)
   elem.addEventListener "playing", ->
     instance.onPlayVideo()
 
   elem.addEventListener "pause", ->
+    console.log "pause"
     instance.onStopVideo()
     instance.trackStoppedVideo( elem.currentTime, false )
 
   elem.addEventListener "onended", ->
+    console.log "onended"
     instance.onVideoEnd()
     instance.trackStoppedVideo( elem.currentTime, true )
   

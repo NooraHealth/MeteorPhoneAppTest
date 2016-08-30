@@ -1,6 +1,7 @@
 
 { ContentInterface } = require '../../../../../api/content/ContentInterface.coffee'
 { Modules } = require("meteor/noorahealth:mongo-schemas")
+require '../../../../../api/global_template_helpers.coffee'
 require "./multiple_choice.html"
 require "./option.coffee"
 
@@ -18,6 +19,7 @@ Template.Lesson_view_page_multiple_choice.onCreated ->
   @autorun =>
     schema = new SimpleSchema({
       module: {type: Modules._helpers}
+      language: {type: String}
       correctlySelectedClasses: {type: String}
       incorrectClasses: {type: String}
       incorrectlySelectedClasses: {type: String}
@@ -27,6 +29,10 @@ Template.Lesson_view_page_multiple_choice.onCreated ->
     }).validate(Template.currentData())
 
     @data = Template.currentData()
+
+  @getOptions = (options, start, end) ->
+    filtered = (options[start...end]).filter (o) -> o?
+    return {options: filtered}
 
   @getOnSelectedCallback = (module, templateInstance) ->
     return (option) ->
@@ -67,7 +73,7 @@ Template.Lesson_view_page_multiple_choice.onCreated ->
     
     mapData = (option, i) ->
       map[option] = {
-        src: ContentInterface.get().getSrc( option )
+        src: ContentInterface.getSrc( option, "IMAGE")
         class: getClasses(option)
       }
 
@@ -85,14 +91,22 @@ Template.Lesson_view_page_multiple_choice.helpers
       option: option
     }
 
-  getOptions: (module, start, end) ->
-    options = (module.options[start...end]).filter (o) -> o?
-    return {options: options}
+  firstRow: (options) ->
+    instance = Template.instance()
+    start = 0
+    end = options.length / 2
+    return instance.getOptions options, start, end
+
+  secondRow: (options) ->
+    instance = Template.instance()
+    start = options.length / 2
+    end = options.length
+    return instance.getOptions options, start, end
 
   audioArgs: (data) ->
     return {
       attributes: {
-        src: ContentInterface.get().getUrl data.src
+        src: ContentInterface.getSrc data.src, "AUDIO"
       }
       playing: data.playing
       whenFinished: data.onFinish

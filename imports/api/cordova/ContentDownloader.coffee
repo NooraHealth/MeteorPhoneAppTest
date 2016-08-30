@@ -43,46 +43,22 @@ class @ContentDownloader
           throw new Meteor.Error "not-connected", "The iPad is not connected to data. Please connect and try again"
 
         curriculums = cursor.fetch()
-        console.log "Downloading these docs"
+        console.log "Downloading these docs!!!"
         console.log curriculums
-        console.log "number of curriculums in the database"
-        console.log Curriculums.find().count()
 
         paths = []
-        paths.push ContentInterface.get().introPath()
-        paths.push ContentInterface.get().correctSoundEffectFilePath()
-        paths.push ContentInterface.get().incorrectSoundEffectFilePath()
+        paths.push ContentInterface.getDirectory( "AUDIO" ) + ContentInterface.introFilename()
+        paths.push ContentInterface.getDirectory( "AUDIO" ) + ContentInterface.correctSoundEffectFilename()
+        paths.push ContentInterface.getDirectory( "AUDIO" ) + ContentInterface.incorrectSoundEffectFilename()
+        
+        levels = AppState.getLevels()
+        for level in levels
+          paths.push ContentInterface.getDirectory( "IMAGE" ) + level.image
 
         for curriculum in curriculums
-          #curriculum = Curriculums.findOne { _id: docs[0]._id }
-          if Meteor.settings.public.METEOR_ENV == "development"
-            if doc.language isnt "Hindi" then continue
-
-          #curriculum = Curriculums.findOne { _id: doc._id }
-          #if not curriculum? then throw new Meteor.Error "curriculum-not-found", "Curriculum of id #{id} not found"
-
-          console.log curriculum
           paths.merge @_allContentPathsInCurriculum( curriculum )
-          console.log paths
 
-        getFileName = (path, index) ->
-          getRandomInt = (min, max) => Math.floor(Math.random() * (max - min)) + min
-          rand = getRandomInt(1, 400)
-          matches = path.match(/[\.][a-z1-9]+$/)
-          filetype = matches[ matches.length - 1 ] #the filetype extension will be the last match
-          newFilename = index + rand + filetype
-          return newFilename
-
-        filteredFiles = []
-        files = ({
-          path: path
-          #url: ContentInterface.get().getEndpoint(path),
-          name: getFileName(path, index)
-        } for path, index in paths )
-        #filteredFiles.push file for file in files when not OfflineFiles.findOne({url: file.url})?
-        #filteredFiles.push file for file in files when not OfflineFiles.findOne({path: file.path})?
-
-        @_downloadFiles files
+        @_downloadFiles paths
         .then (error)->
           #this is where you do the on success thing
           console.log "about to run on complete"
@@ -92,147 +68,102 @@ class @ContentDownloader
           console.log "This is the middle one"
           message = ""
         , (progress) ->
-          AppState.get().setPercentLoaded progress
+          AppState.setPercentLoaded progress
       catch e
         console.log "in the on complete"
         console.log e
         onComplete e
 
 
-    _downloadFiles: (files) ->
-
-      new SimpleSchema({
-        "files.$.name": {type: String}
-        "files.$.path": {type: String}
-      }).validate({files: files})
+    _downloadFiles: (paths) ->
 
       deferred = Q.defer()
       error = null
-      numToLoad = files.length
-      console.log files
-      console.log "NUM TO LOAD before", numToLoad
+      #filter paths for those that do not already exist locally
+      console.log "The number of paths #{paths.length}"
+      toDownload = paths.filter (path)->
+        return not OfflineFiles.findOne {path: path}
+
+      console.log "The number to download #{toDownload.length}"
+      if toDownload.length == 0
+        deferred.resolve(error)
+
       retry = []
       numRecieved = 0
-      if numToLoad == 0
-        deferred.resolve(error)
 
       window.requestFileSystem LocalFileSystem.PERSISTENT, 0, (fs)->
 
         ft = new FileTransfer()
 
         ft.onprogress = (event)->
-          percent = numRecieved/numToLoad
+          percent = numRecieved/toDownload.length
           deferred.notify(percent)
 
-        downloadFile = (file) ->
-          offlineId = Random.id()
-          fsPath = fs.root.toURL() + offlineId + file.name
-          ft.download(ContentInterface.get().getEndpoint(file.path), fsPath, getSuccessCallback(file, fsPath), getErrorCallback(file, fsPath), true)
+        downloadFile = (path) ->
+          fsPath = fs.root.toURL() + path
+          ft.download(ContentInterface.getEndpoint(path), fsPath, getSuccessCallback(path, fsPath), getErrorCallback(path, fsPath), true)
 
         markAsResolved = (entry) ->
           numRecieved++
-          console.log "RESOLVED:" + numRecieved + "/"+ numToLoad
-          if numRecieved == numToLoad
+          console.log "RESOLVED:" + numRecieved + "/"+ toDownload.length
+          if numRecieved == toDownload.length
             deferred.resolve entry
 
-        getSuccessCallback = (file, fsPath) ->
+        getSuccessCallback = (path, fsPath) ->
           return (entry)->
+            console.log "About to insert the file"
+            console.log path
             id = OfflineFiles.insert {
               #url: file.url
-              path: file.path
-              name: file.name
+              path: path
               fsPath: fsPath
             }
             console.log "Successfully entered: here is the OfflineFile"
             console.log OfflineFiles.findOne({_id: id})
             markAsResolved()
 
-        getErrorCallback = (file) ->
+        getErrorCallback = (path) ->
           return (err)->
             console.log "There was an error: "
             console.log err
             console.log err.code
             console.log err.code == 3
             if err.http_status == 404
-              markAsResolved(file)
+              markAsResolved(path)
               error = new Meteor.Error("error-downloading", "Some content could not be found")
             else if err.code == 2
-              markAsResolved(file)
+              markAsResolved(path)
               error = new Meteor.Error("error-downloading", "Error accessing content on server")
             else if err.code == 3
-              if file.name in retry
-                markAsResolved(file)
+              if path in retry
+                markAsResolved(path)
                 # If already retried downloading, reject
                 error = new Meteor.Error("error-downloading", "Timeout accessing content on server")
               else
                 console.log "Retrying download"
                 # Try downloading again
-                retry.push file.name
+                retry.push path
                 console.log retry
-                downloadFile file
+                downloadFile path
             else
-              markAsResolved(file)
+              markAsResolved(path)
               error = err
 
-        for file in files
-          if not (OfflineFiles.findOne { path: file.path })?
-            downloadFile file
+        for path in toDownload
+          downloadFile path
 
       , (err)->
         # Error retrieving the local filesystem
         deferred.resolve err
 
       return deferred.promise
-
-    cleanLocalContent: ( cursor, onComplete )->
-      console.log "About to delete unused files (cleanLocalContent)"
-      try
-        #validate the arguments
-        new SimpleSchema({
-          cursor: {type: Mongo.Cursor}
-          onComplete: {type: Function, optional: true}
-        }).validate({cursor: cursor, onComplete: onComplete})
-        unusedPaths = _getUnusedFilePaths(curriculums)
-        @_deleteFiles(filesToDelete)
-      catch e
-        console.log "Error deleting unused files"
-        console.log e
-
-    _getUnusedFilePaths: (curriculums)->
-      console.log("getting the unused file paths")
-      pathsInUse = []
-      for curriculum in curriculums
-        pathsInUse.merge @_allContentPathsInCurriculum(curriculum)
-
-      localFiles = OfflineFiles.find().fetch()
-      unused = []
-      for file in localFiles
-        console.log("file: ", file.path)
-        if not file.path in pathsInUse
-          unused.push file
-      console.log "Returning the unused: ", unused.length
-      return unused
-
-    _deleteFiles: (filePaths) ->
-      ## This is where we will delete files
-      console.log "About to delete #{ filePaths.length } files"
-      console.log filePaths
-      window.requestFileSystem LocalFileSystem.PERSISTENT, 0, (fs)->
-        for path in filePaths
-          fs.root.getFile path, {create: false}, (entry)->
-            entry.remove ( file )->
-              console.log "File removed!#{ path }"
-            , ( error )->
-              console.log "Error removing file #{ path }"
-            , ()->
-              console.log "Attempted to remove #{ path }, file DNE"
-          , ( event )->
-            console.log "Error retrieving file"
-            console.log evt.target.error.code
       
     _allContentPathsInCurriculum: (curriculum) ->
       paths = []
-      lessons = curriculum.getLessonDocuments()
+      lessons = curriculum.getLessonDocuments("introduction")
+        .concat curriculum.getLessonDocuments("beginner")
+        .concat curriculum.getLessonDocuments("intermediate")
+        .concat curriculum.getLessonDocuments("advanced")
       for lesson in lessons
         paths.merge @_allContentPathsInLesson(lesson)
       return paths
@@ -244,7 +175,7 @@ class @ContentDownloader
       modules = lesson.getModulesSequence()
       paths = []
       if lesson.image
-        paths.push lesson.image
+        paths.push ContentInterface.getDirectory("IMAGE") + lesson.image
 
       for module in modules
         paths.merge @_allContentPathsInModule(module)
@@ -254,17 +185,15 @@ class @ContentDownloader
     _allContentPathsInModule: (module) ->
       paths = []
       if module.image
-        paths.push module.image
+        paths.push ContentInterface.getDirectory("IMAGE") + module.image
       if module.video
-        paths.push module.video
+        paths.push ContentInterface.getDirectory("VIDEO") + module.video
       if module.audio
-        paths.push module.audio
-      if module.incorrect_audio
-        paths.push module.incorrect_audio
+        paths.push ContentInterface.getDirectory("AUDIO") + module.audio
       if module.correct_audio
-        paths.push module.correct_audio
+        paths.push ContentInterface.getDirectory("AUDIO") + module.correct_audio
       if module.options and module.type == 'MULTIPLE_CHOICE'
-        paths.merge (option for option in module.options when option?)
+        paths.merge (ContentInterface.getDirectory("IMAGE") + option for option in module.options when option?)
       return paths
 
 

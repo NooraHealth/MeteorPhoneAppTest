@@ -1,4 +1,5 @@
 
+require '../../../../../api/global_template_helpers.coffee'
 require "./option.html"
 
 Template.Lesson_view_page_multiple_choice_option.onCreated ->

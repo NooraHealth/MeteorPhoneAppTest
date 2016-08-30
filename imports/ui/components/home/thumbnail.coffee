@@ -1,21 +1,23 @@
 
 { Lessons } = require("meteor/noorahealth:mongo-schemas")
-require '../../../api/content/global_template_helpers.coffee'
 require './thumbnail.html'
+require '../../../api/global_template_helpers.coffee'
 
 Template.Home_thumbnail.onCreated ->
   # Data context validation
   @autorun =>
     schema = new SimpleSchema({
-      lesson: {type: Lessons._helpers}
-      isCurrentLesson: {type: Boolean}
-      onLessonSelected: {type: Function}
+      "level.name": {type: String }
+      "level.image": {type: String }
+      isCurrentLevel: {type: Boolean}
+      language: {type: String, defaultValue: "english"}
+      onLevelSelected: {type: Function}
     }).validate(Template.currentData())
 
 Template.Home_thumbnail.events
   'click' : ( e )->
     data = Template.currentData()
-    data.onLessonSelected data.lesson._id
+    data.onLevelSelected data.level.name
 
 Template.Home_thumbnail.onRendered ->
   if Template.currentData().isCurrentLesson

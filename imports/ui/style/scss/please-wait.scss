@@ -35,7 +35,7 @@ body.pg-loading {
   top: 0;
   z-index: 1000000;
   opacity: 1;
-  background-color: $light-blue-2;
+  background-color: $light-blue;
   @include prefixed(transition, background-color 0.4s ease-in-out 0s);
 
   &.pg-loaded {

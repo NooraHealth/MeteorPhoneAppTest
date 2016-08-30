@@ -26,11 +26,12 @@
 html, body {
   height: 100%;
   overflow: hidden !important;
+  font-family: $primary-font !important;
 }
 
 .page {
-  background: $light-blue-1 !important;
-  color: #fff;
+  background: $light-blue !important;
+  color: $muted;
 
   a {
     color: lighten($primary-blue, 30%);
@@ -42,12 +43,18 @@ html, body {
   }
 }
 
+.page-content {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
 .logo {
-  position: absolute;
-  left: 30px;
-  top: 20px;
-  border-radius: 30px;
-  background-color: #fff;
+  /*position: absolute;*/
+  margin-left: 10px;
+  margin-top: 25px;
+  border-radius: 33px;
+  background-color: $white;
   padding: 10px;
   box-shadow: 5px 5px 5px grey;
 }
@@ -61,6 +68,7 @@ html, body {
   height: 100%;
   padding-left: 40px;
   padding-right: 40px;
+  padding-top: 40px;
 }
 
 /* -------------------------------- 
@@ -74,6 +82,13 @@ html, body {
   height: 60px;
 }
 
+.navbar .center {
+  overflow: initial !important;
+  display: block !important;
+  margin: auto !important;
+  width: 100%;
+}
+
 /* -------------------------------- 
 
  ANIMATIONS
@@ -83,13 +98,7 @@ html, body {
 .expanded {
   @include transition-delay(.3s);
   @include transition(scale, 2s);
-
-  @media(min-width: 600px) {
-    @include transform(scale(1.1)); 
-  }
-  @media(max-width: 600px) {
-    @include transform(scale(1.2)); 
-  }
+  @include transform(scale(1.01)); 
 }
 
 .faded {
@@ -136,8 +145,36 @@ html, body {
 -------------------------------- */
 
 .card-footer {
-  min-height: 80px;
+  /*min-height: 80px;*/
 }
+
+.navbar::after {
+  background-color: inherit !important;
+  height: 0px;
+}
+
+.card-header::after {
+  background-color: inherit !important;
+}
+
+.card-footer:before {
+  background-color: inherit !important;
+}
+
+.toolbar:before {
+  background-color: inherit !important;
+}
+
+.button {
+  line-height: 45px !important;
+  height: 40px !important;
+  border: 2px solid $white;
+}
+
+.card {
+  border-radius: 10px;
+}
+
 
 /* -------------------------------- 
 
@@ -145,9 +182,6 @@ html, body {
 
 -------------------------------- */
 
-.row {
-  margin: 20px;
-}
 
 .full-width {
   width: 100%;
@@ -165,16 +199,12 @@ html, body {
 .center {
   display: block;
   margin: auto;
+  text-align: center;
 }
 
-.small-text {
-  font-size: 75%;
+.noora-button {
+  border-radius: 25px;
 }
-
-.large-text {
-  font-size: 150%;
-}
-
 .padding-sm {
   padding: 10px
 }
@@ -200,5 +230,41 @@ html, body {
 }
 
 .hidden {
+  /*opacity: 0;*/
   display: none;
 }
+
+/* -------------------------------- 
+
+ TEXT
+
+-------------------------------- */
+
+.color-green {
+  background-color: $green !important;
+}
+
+.color-red {
+  background-color: $red !important;
+}
+
+.color-blue-noora {
+  background-color: $primary-blue !important;
+}
+
+.small-text {
+  font-size: 75%;
+}
+
+.large-text {
+  font-size: 150%;
+}
+
+.bold-text {
+  font-weight: $bold-font-weight;
+}
+
+.demi-bold-text {
+  font-weight: $demi-bold-font-weight;
+}
+

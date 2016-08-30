@@ -1,7 +1,8 @@
 
 { Modules } = require("meteor/noorahealth:mongo-schemas")
 { ContentInterface } = require('../../../../api/content/ContentInterface.coffee')
-require '../../../../api/content/global_template_helpers.coffee'
+{ AppState } = require("../../../../api/AppState.coffee")
+require '../../../../api/global_template_helpers.coffee'
 require "./scenario.html"
     
 Template.Lesson_view_page_scenario.onCreated ->
@@ -9,6 +10,7 @@ Template.Lesson_view_page_scenario.onCreated ->
   @autorun =>
     schema = new SimpleSchema({
       module: {type: Modules._helpers}
+      language: {type: String}
       correctlySelectedClasses: {type: String}
       incorrectClasses: {type: String}
       incorrectlySelectedClasses: {type: String}
@@ -18,9 +20,9 @@ Template.Lesson_view_page_scenario.onCreated ->
     }).validate(Template.currentData())
 
     @data = Template.currentData()
-    @NORMAL = Template.currentData().module?.options[0]
-    @CALLDOC = Template.currentData().module?.options[1]
-    @EMERGENCY = Template.currentData().module?.options[2]
+    @NORMAL = "Normal"
+    @CALLDOC = "CallDoc"
+    @EMERGENCY = "Call911"
 
   #set the state
   @state = new ReactiveDict()
@@ -72,38 +74,38 @@ Template.Lesson_view_page_scenario.onCreated ->
         instance.data.onWrongChoice(option)
 
 Template.Lesson_view_page_scenario.helpers
-  normalButtonArgs: ->
+  normalButtonArgs: (language, module) ->
     instance = Template.instance()
-    module = instance.data.module
+    translatedNormal = AppState.translate "normal", language, "UPPER"
     return {
       attributes: {
         id: "normalOptionForModule#{module._id}"
         class: instance.getNormalButtonClasses()
       }
-      content: '<i class="fa fa-home fa-2x"></i> NORMAL'
-      onClick: instance.getOnSelected( instance, instance.data.module, instance.NORMAL)
+      content: '<i class="fa fa-home fa-2x"></i> ' + translatedNormal
+      onClick: instance.getOnSelected( instance, module, instance.NORMAL)
     }
 
-  callDoctorButtonArgs: ->
+  callDoctorButtonArgs: (language, module) ->
     instance = Template.instance()
-    module = instance.data.module
+    translatedCallDoc = AppState.translate "call_doc", language, "UPPER"
     return {
       attributes: {
         id: "calldocOptionForModule#{module._id}"
         class: instance.getCallDoctorButtonClasses()
       }
-      content: '<i class="fa fa-phone fa-2x"></i> CALL DOCTOR'
-      onClick: instance.getOnSelected( instance, instance.data.module, instance.CALLDOC)
+      content: '<i class="fa fa-phone fa-2x"></i> '  + translatedCallDoc
+      onClick: instance.getOnSelected( instance, module, instance.CALLDOC)
     }
 
-  emergencyButtonArgs: ->
+  emergencyButtonArgs: (language, module) ->
     instance = Template.instance()
-    module = instance.data.module
+    translatedEmergency = AppState.translate "emergency", language, "UPPER"
     return {
       attributes: {
         id: "emergencyOptionForModule#{module._id}"
         class: instance.getEmergencyButtonClasses()
       }
-      content: '<i class="fa fa-ambulance fa-2x"></i> EMERGENCY'
-      onClick: instance.getOnSelected( instance, instance.data.module, instance.EMERGENCY)
+      content: '<i class="fa fa-ambulance fa-2x"></i> ' + translatedEmergency
+      onClick: instance.getOnSelected( instance, module, instance.EMERGENCY)
     }

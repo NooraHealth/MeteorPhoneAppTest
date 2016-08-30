@@ -1,54 +1,56 @@
-require './audio.html'
 
-Template.Audio.onCreated ->
-  @autorun =>
-    @data = Template.currentData()
+class Audio
+  constructor: (@src, @volume)->
+    console.log "Making a new audio"
+    console.log @src
+    console.log @volume
     new SimpleSchema({
-      "attributes.src": {type: String}
-      playing: {type: Boolean}
-      replay: {type: Boolean, optional: true}
-      afterReplay: {type: Function, optional: true}
-      whenFinished: {type: Function, optional: true}
-      whenPaused: {type: Function, optional: true}
-    }).validate @data
+      src: {type: String}
+      volume: {type: Number, optional: true}
+    }).validate {src: @src, volume: @volume}
 
-  @onEnd = =>
-    @data.whenFinished( @sound.pos(), true, @data.attributes.src )
+  onEnd: (whenFinished) =>
+    whenFinished?( @sound.pos?(), true, @src )
 
-  @onPause = =>
-    @data.whenPaused( @sound.pos(), false, @data.attributes.src )
+  onPause: (whenPaused) =>
+    whenPaused?( @sound.pos?(), false, @src )
+  
+  onLoadError: (whenFinished, id, error) =>
+    console.log "Id"
+    console.log id
+    console.log "Error"
+    console.log error
+    console.log "LoadError"
+    whenFinished?( @sound.pos?(), false, @src )
 
-  @autorun =>
-    data = Template.currentData()
-    shouldReplay = data.replay
-    if shouldReplay
-      @sound?.stop()
-      @sound?.play()
-      data.afterReplay()
+  replay: (afterReplay) =>
+    @stop()
+    @play()
+    afterReplay?()
 
-  @autorun =>
-    data = Template.currentData()
-    shouldPlay = data.playing
+  pause: =>
+    @sound?.pause()
+
+  stop: =>
+    @sound?.stop()
+
+  destroy: =>
+    @sound?.unload()
+
+  play: ( whenFinished, whenPaused )=>
+    console.log "Playing this audio #{@src}"
+    console.log @src
     alreadyPlaying = @sound?.playing()
-    if shouldPlay and not alreadyPlaying
-      #@sound = new Media(data.attributes.src)
+    if not alreadyPlaying
+      volume = if @volume? then @volume else 1
       @sound ?= new Howl {
-        src: [data.attributes.src]
-        onloaderror: (id, error)->
-          console.log "LOADERROR #{data.attributes.src}"
-          console.log error
-          console.trace()
-        onend: @data.whenFinished
-        onpause: @data.whenPaused
-        #html5: true
+        src: [@src]
+        onloaderror: @onLoadError.bind(@, whenFinished)
+        #onplay: -> console.log "Playing the audio"
+        onend: @onEnd.bind(@, whenFinished)
+        onpause: @onPause.bind(@, whenPaused)
+        volume: volume
       }
       @sound.play()
-      #@sound.mute(false)
-    else if not shouldPlay and @sound?
-      @sound.pause()
 
-Template.Audio.onDestroyed ->
-  instance = Template.instance()
-  if instance.sound? and instance.sound.playing()
-    instance.sound.pause()
-  #instance.sound?.unload()
+module.exports.Audio = Audio

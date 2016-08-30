@@ -7,21 +7,33 @@
 require './configure.html'
 
 Template.Configure_app_page.onCreated ->
+  console.log "Creating a configure page"
+
   @configureApp = ->
     console.log "Configuring the app!!"
-    analytics.track "Configured App", {
-      condition: condition
-      hospital: hospital
-    }
+    if not Meteor.status().connected
+      swal {
+        title: "Oops!"
+        text: "You aren't connected to data! Please connect to wifi or data in order to download your curriculums. You can disconnect once your content has downloaded"
+      }
+    else
+      analytics.track "Configured App", {
+        condition: condition
+        hospital: hospital
+      }
 
-    hospital = $("#hospital_select").val()
-    condition = $("#condition_select").val()
-    AppState.get().setConfiguration {
-      hospital: hospital
-      condition: condition
-    }
+      hospital = $("#hospital_select").val()
+      condition = $("#condition_select").val()
+      AppState.setConfiguration {
+        hospital: hospital
+        condition: condition
+      }
 
-    FlowRouter.go "load"
+      if Meteor.isCordova
+        FlowRouter.go "load"
+      else
+        console.log "About to go to the language page"
+        FlowRouter.go "select_language"
 
   @autorun =>
     @subscribe "facilities.all"
@@ -34,6 +46,7 @@ Template.Configure_app_page.helpers
 
   hospitals: ->
     console.log("Returning the hospitals")
+    console.log Facilities.find().count()
     return Facilities.find({}).fetch()
 
   conditions: ->
