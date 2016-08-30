@@ -1,6 +1,4 @@
 
-### --------------------------- IMPORTS ------------------------------------- ###
-
 { Curriculums } = require("meteor/noorahealth:mongo-schemas")
 { OfflineFiles } = require("meteor/noorahealth:mongo-schemas")
 { ContentInterface } = require('../content/ContentInterface.coffee')
@@ -101,7 +99,7 @@ class @ContentDownloader
 
         downloadFile = (path) ->
           fsPath = fs.root.toURL() + path
-          ft.download(ContentInterface.getEndpoint(path), fsPath, getSuccessCallback(path, fsPath), getErrorCallback(path, fsPath), true)
+          ft.download(ContentInterface.getRemoteSource(path), fsPath, getSuccessCallback(path, fsPath), getErrorCallback(path, fsPath), true)
 
         markAsResolved = (entry) ->
           numRecieved++

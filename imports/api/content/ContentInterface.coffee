@@ -57,12 +57,21 @@ class ContentInterface
         return @_audioDirectory()
 
     # Where the content is stored remotely (AWS S3 server)
-    getEndpoint: (path) =>
+    getRemoteSource: (path) =>
       new SimpleSchema({
         path: {type: String}
       }).validate({path: path})
 
       return encodeURI(@remoteContentEndpoint + path)
+    
+    # Where the content is stored remotely (AWS S3 server)
+    getLocalSource: (path) =>
+      new SimpleSchema({
+        path: {type: String}
+      }).validate({path: path})
+
+      offlineFile = OfflineFiles.findOne { path: path}
+      return if offlineFile? then WebAppLocalServer.localFileSystemUrl(offlineFile.fsPath) else ""
 
     # Given a filename (path), getSrc will identify where to find
     # that particular file -- in Cordova, this is local and in the browser
@@ -73,13 +82,11 @@ class ContentInterface
         type: {type: String}
       }).validate({filename: filename, type: type})
       #url = @getEndpoint(path)
+      path = @getDirectory(type) + filename
       if Meteor.isCordova
-        console.log "Getting the src of #{filename}"
-        offlineFile = OfflineFiles.findOne { path: @getDirectory(type) + filename}
-        return if offlineFile? then WebAppLocalServer.localFileSystemUrl(offlineFile.fsPath) else ""
+        return @getLocalSource path
       else
-        path = @getDirectory(type) + filename
-        return @getEndpoint(path)
+        return @getRemoteSource path
 
     subscriptionsReady: (instance) ->
       return instance.subscriptionsReady()
