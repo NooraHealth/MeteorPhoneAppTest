@@ -7,5 +7,8 @@
 settings.json
 settings_dev.json
 public/
+.deploy/
 mup.json
+mup.js
+mup_desktop.json
 package.json
