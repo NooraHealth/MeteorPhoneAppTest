@@ -32,8 +32,7 @@ Template.Configure_app_page.onCreated ->
       if Meteor.isCordova
         FlowRouter.go "load"
       else
-        console.log "About to go to the language page"
-        FlowRouter.go "select_language"
+        FlowRouter.go "home"
 
   @autorun =>
     @subscribe "facilities.all"

@@ -30,7 +30,7 @@ FlowRouter.route '/', {
       condition: condition,
       language: language
     }
-    BlazeLayout.render 'Layout', { main : 'Lesson_view_page' }
+    BlazeLayout.render 'Layout', { main : 'Select_language_page' }
 }
 
 ###
@@ -39,15 +39,22 @@ FlowRouter.route '/', {
 FlowRouter.route '/configure', {
   name: "configure"
   action: ( params, qparams )->
-    console.log "Going to the configuration page"
+    hospital = AppState.getHospital()
+    condition = AppState.getCondition()
+    language = AppState.getLanguage()
+    analytics.identify hospital, {
+      hospital: hospital,
+      condition: condition,
+      language: language
+    }
     BlazeLayout.render 'Layout', { main : 'Configure_app_page' }
 }
 
 ###
 # Select Language
 ###
-FlowRouter.route '/select_language', {
-  name: "select_language"
+FlowRouter.route '/lessons', {
+  name: "lessons"
   action: ( params, qparams )->
 
     hospital = AppState.getHospital()
@@ -58,44 +65,7 @@ FlowRouter.route '/select_language', {
       condition: condition,
       language: language
     }
-    BlazeLayout.render 'Layout', { main : 'Select_language_page' }
-}
-
-###
-# Introduction
-###
-#FlowRouter.route '/introduction', {
-  #name: "introduction"
-  #action: ( params, qparams )->
-    #console.log "In the route for introduction"
-    #hospital = AppState.getHospital()
-    #condition = AppState.getCondition()
-    #language = AppState.getLanguage()
-    #analytics.identify hospital, {
-      #hospital: hospital,
-      #condition: condition,
-      #language: language
-    #}
-    #BlazeLayout.render 'Layout', { main : 'Introduction_video_page' }
-#}
-
-###
-# Go through the modules in a lesson
-###
-#FlowRouter.route '/lesson/:_id', {
-FlowRouter.route '/level/:level', {
-  name: "level"
-  action: ( params, qparams )->
-    hospital = AppState.getHospital()
-    condition = AppState.getCondition()
-    language = AppState.getLanguage()
-    analytics.identify hospital, {
-      hospital: hospital,
-      condition: condition,
-      language: language
-    }
-    BlazeLayout.render "Layout", { main: "Lesson_view_page" }
-
+    BlazeLayout.render 'Layout', { main : 'Lesson_view_page' }
 }
 
 ###

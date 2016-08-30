@@ -118,7 +118,7 @@ Template.Select_language_page.helpers
         text: ""
       }
       nextButton: {
-        onClick: -> FlowRouter.go "home"
+        onClick: -> FlowRouter.go "lessons"
         text: text
         onRendered: ->
         animated: instance.state.get("letsBeginButtonAnimated")

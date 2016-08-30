@@ -35,15 +35,6 @@ class AppState
 
     getF7: =>
       return @F7
-
-    #setCurriculumDownloaded: (id, state) ->
-      #@dict.setPersistent "curriculumDownloaded#{id}", state
-      #@
-      
-    #getCurriculumDownloaded: (id) ->
-      #if not id then return true
-      #downloaded = @dict.get "curriculumDownloaded#{id}"
-      #if not downloaded? then return false else return downloaded
       
     setPercentLoaded: (percent) ->
       @dict.setTemporary "percentLoaded", percent

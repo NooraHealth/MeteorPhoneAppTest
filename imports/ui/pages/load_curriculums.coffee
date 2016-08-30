@@ -32,7 +32,7 @@ Template.Load_curriculums_page.onCreated ->
         if e
           AppState.setError e
         AppState.setContentDownloaded true
-        FlowRouter.go "select_language"
+        FlowRouter.go "home"
 
       ContentDownloader.get().loadCurriculums curriculums, onComplete
   

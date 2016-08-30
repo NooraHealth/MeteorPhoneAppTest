@@ -41,8 +41,6 @@ class @ContentDownloader
           throw new Meteor.Error "not-connected", "The iPad is not connected to data. Please connect and try again"
 
         curriculums = cursor.fetch()
-        console.log "Downloading these docs!!!"
-        console.log curriculums
 
         paths = []
         paths.push ContentInterface.getDirectory( "AUDIO" ) + ContentInterface.introFilename()
