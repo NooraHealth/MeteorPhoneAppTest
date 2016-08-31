@@ -5,7 +5,7 @@
 
 # TEMPLATE
 require './select_language.html'
-require '../components/lesson/footer/footer.coffee'
+require '../components/lessons/footer/footer.coffee'
 
 # COMPONENTS
 require '../../ui/components/shared/navbar.html'
@@ -36,7 +36,6 @@ Template.Select_language_page.onCreated ->
     }
 
     AppState.setLanguage language
-    levels = AppState.getLevels()
     @initializeSwiper()
     @setFooterVisible true
     @playIntroVideo()

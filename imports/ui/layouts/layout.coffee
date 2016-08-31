@@ -4,12 +4,12 @@ require './layout.html'
 
 Template.Layout.onCreated ->
   @autorun =>
-    error = AppState.getError()
-    if error
-      AppState.setError null
-      swal {
-        type: "error"
-        title: error.error
-        text: error.reason
-      }
+    #error = AppState.getError()
+    #if error
+      #AppState.setError null
+      #swal {
+        #type: "error"
+        #title: error.error
+        #text: error.reason
+      #}
 

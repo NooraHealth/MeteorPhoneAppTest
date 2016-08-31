@@ -12,17 +12,17 @@ class AppState
   class Private
     constructor: (name) ->
       @dict = new PersistentReactiveDict name
-      @levels = [
-        { name: "beginner", image: "easy.png"},
-        { name: "intermediate", image: "medium.png"},
-        { name: "advanced", image: "hard.png"}
-      ]
       
       @langTags = {
         english: "en",
         hindi: "hi",
         kannada: "kd"
       }
+
+      @getLangTag = (language) =>
+        if not language
+          return null
+        return @langTags[language.toLowerCase()]
 
     initializeApp: =>
       @F7 = new Framework7(
@@ -32,28 +32,29 @@ class AppState
         tapHoldPreventClicks: false
         tapHoldDelay: 1500
       )
+      @
 
     getF7: =>
       return @F7
       
-    setPercentLoaded: (percent) ->
+    setPercentLoaded: (percent) =>
       @dict.setTemporary "percentLoaded", percent
       @
 
-    getPercentLoaded: ->
+    getPercentLoaded: =>
       @dict.get "percentLoaded"
 
-    setLanguage: (language) ->
-      TAPi18n.setLanguage @_getLangTag language
+    setLanguage: (language) =>
+      TAPi18n.setLanguage @getLangTag language
       @dict.setTemporary "language", language
       @
 
-    getLanguage: ->
+    getLanguage: =>
       language = @dict.get "language"
       if not language? then return "English" else return language
 
-    translate: ( key, language, textCase, options)->
-      tag = @_getLangTag language
+    translate: ( key, language, textCase, options) =>
+      tag = @getLangTag language
       text = TAPi18n.__ key, options, tag
       if textCase == "UPPER"
         return text.toUpperCase()
@@ -62,12 +63,7 @@ class AppState
       else
         return text
 
-    _getLangTag: (language) ->
-      if not language
-        return null
-      return @langTags[language.toLowerCase()]
-
-    getCurriculumDoc: ->
+    getCurriculumDoc: =>
       language = @dict.get "language"
       condition = @dict.get('configuration')?.condition
       if not language? or not condition?
@@ -75,38 +71,25 @@ class AppState
       curriculum = Curriculums.findOne {language: language, condition: condition}
       return curriculum
 
-    setError: (error) ->
-      if error
-        new SimpleSchema({
-          reason: {type: String}
-          error: {type: String}
-        }).validate error
-
-      @dict.setTemporary "errorMessage", error
-      return @
-
-    getError: ->
-      @dict.get "errorMessage"
-
-    setConfiguration: (configuration) ->
-
+    setConfiguration: (configuration) =>
       new SimpleSchema({
         hospital: {type: String, min: 1, optional: true} #Hospital and condition cannot be empty strings
         condition: {type: String, min: 1, optional: true}
       }).validate configuration
 
       @dict.setPersistent 'configuration', configuration
-      return @
+      @
 
-    contentDownloaded: ->
+    contentDownloaded: =>
       if Meteor.isCordova
         @dict.get "content_downloaded"
       else return true
 
-    setContentDownloaded: (value) ->
+    setContentDownloaded: (value) =>
       @dict.setPersistent "content_downloaded", value
+      @
 
-    isConfigured: (state) ->
+    isConfigured: (state) =>
       configuration = @dict.get 'configuration'
       return configuration? and
         configuration?.hospital? and
@@ -114,55 +97,31 @@ class AppState
         configuration.condition? and
         configuration.condition isnt ""
 
-    getConfiguration: ->
+    getConfiguration: =>
       return @dict.get "configuration"
 
-    getCondition: ->
+    getCondition: =>
       return @getConfiguration()?.condition
 
-    getHospital: ->
+    getHospital: =>
       return @getConfiguration()?.hospital
 
-    setSubscribed: (state) ->
+    setSubscribed: (state) =>
       @dict.setPersistent "subscribed", state
-      return @
+      @
 
-    isSubscribed: ->
+    isSubscribed: =>
       subscribed = @dict.get "subscribed"
       if subscribed? then return subscribed else return false
 
     templateShouldSubscribe: ->
       isSubscribed = @isSubscribed()
-      console.log "Is the app subscribed???"
-      console.log isSubscribed
       if Meteor.isCordova
-        console.log "Returning whether to subscribe"
-        console.log not isSubscribed
         return Meteor.status().connected and not isSubscribed
       else
         return Meteor.status().connected
 
-    #setLevel: ( level )=>
-      #@dict.set "level", level
-
-    #getLevel: =>
-      #level = @dict.get "level"
-      #if level?
-        #return level
-      #else
-        #defaultLevel = @levels[0].name
-        #@setLevel( defaultLevel )
-        #return defaultLevel
-
-    getLevels: =>
-      return @levels
-
-    #getIntroductionModule: ()->
-      #curriculum = @getCurriculumDoc()
-      #return curriculum?.getIntroductionModule()
-      #lesson = Lessons.findOne { _id: curriculum?.introduction }
-      #moduleId = lesson?.modules[0]
-      #return Modules.findOne { _id: moduleId }
-
+    #setError: (error, reason, details) =>
+      #@error = new Meteor.Error 
 
 module.exports.AppState = AppState.get()

@@ -3,8 +3,8 @@
 ###
 { BlazeLayout } = require 'meteor/kadira:blaze-layout'
 { FlowRouter } = require 'meteor/kadira:flow-router'
-{ AppState } = require '../../api/AppState.coffee'
 { TAPi18n } = require("meteor/tap:i18n")
+{ AppState } = require '../../api/AppState.coffee'
 
 # PAGES
 require '../../ui/layouts/layout.coffee'
