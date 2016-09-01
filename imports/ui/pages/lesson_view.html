@@ -28,11 +28,11 @@
               {{#each module in modules}}
                 {{#with module}}
                   <div class='swiper-slide'>
-                    {{#if shouldRender module}}
+                    <!--{{#if shouldRender module}}-->
                     <div id="{{_id}}" class="card module-card">
                       {{> UI.dynamic template=(getTemplate module)  data=(moduleArgs module) }}
                     </div>
-                    {{/if}}
+                    <!--{{/if}}-->
                   </div>
                 {{/with}}
               {{/each}}

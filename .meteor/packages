@@ -44,7 +44,6 @@ standard-minifier-css@1.1.8
 standard-minifier-js@1.1.8
 modules@0.7.5
 robertlowe:persistent-reactive-dict
-aldeed:simple-schema
 practicalmeteor:mocha
 dburles:factory
 xolvio:cleaner

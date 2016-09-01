@@ -42,6 +42,7 @@ Template.Select_language_page.onCreated ->
     @swiper.slideNext()
 
   @playIntroVideo = =>
+    console.log AppState.getCurriculumDoc()
     introModule = AppState.getCurriculumDoc().getIntroductionModule()
     @.$("##{introModule?._id}")?.find("video")?[0]?.play()
 

@@ -20,8 +20,12 @@ class AppState
       }
 
       @getLangTag = (language) =>
-        if not language
-          return null
+        new SimpleSchema({
+          language: { type: String }
+        }).validate {
+          language: language
+        }
+
         return @langTags[language.toLowerCase()]
 
     initializeApp: =>
@@ -38,6 +42,12 @@ class AppState
       return @F7
       
     setPercentLoaded: (percent) =>
+      new SimpleSchema({
+        percent: { type: Number }
+      }).validate {
+        percent: percent
+      }
+
       @dict.setTemporary "percentLoaded", percent
       @
 
@@ -45,6 +55,12 @@ class AppState
       @dict.get "percentLoaded"
 
     setLanguage: (language) =>
+      new SimpleSchema({
+        language: { type: String }
+      }).validate {
+        language: language
+      }
+
       TAPi18n.setLanguage @getLangTag language
       @dict.setTemporary "language", language
       @
@@ -54,6 +70,17 @@ class AppState
       if not language? then return "English" else return language
 
     translate: ( key, language, textCase, options) =>
+
+      new SimpleSchema({
+        key: { type: String, optional: true }
+        language: { type: String, optional: true }
+        textCase: { type: String, optional: true }
+      }).validate {
+        key: key
+        language: language
+        textCase: textCase
+      }
+
       tag = @getLangTag language
       text = TAPi18n.__ key, options, tag
       if textCase == "UPPER"
@@ -66,8 +93,14 @@ class AppState
     getCurriculumDoc: =>
       language = @dict.get "language"
       condition = @dict.get('configuration')?.condition
-      if not language? or not condition?
-        return null
+      new SimpleSchema({
+        language: { type: String }
+        condition: { type: String }
+      }).validate {
+        language: language,
+        condition: condition
+      }
+
       curriculum = Curriculums.findOne {language: language, condition: condition}
       return curriculum
 
@@ -85,11 +118,17 @@ class AppState
         @dict.get "content_downloaded"
       else return true
 
-    setContentDownloaded: (value) =>
-      @dict.setPersistent "content_downloaded", value
+    setContentDownloaded: (state) =>
+      new SimpleSchema({
+        state: { type: Boolean }
+      }).validate {
+        state: state
+      }
+
+      @dict.setPersistent "content_downloaded", state
       @
 
-    isConfigured: (state) =>
+    isConfigured: =>
       configuration = @dict.get 'configuration'
       return configuration? and
         configuration?.hospital? and
@@ -107,6 +146,12 @@ class AppState
       return @getConfiguration()?.hospital
 
     setSubscribed: (state) =>
+      new SimpleSchema({
+        state: { type: Boolean }
+      }).validate {
+        state: state
+      }
+
       @dict.setPersistent "subscribed", state
       @
 
@@ -120,8 +165,5 @@ class AppState
         return Meteor.status().connected and not isSubscribed
       else
         return Meteor.status().connected
-
-    #setError: (error, reason, details) =>
-      #@error = new Meteor.Error 
 
 module.exports.AppState = AppState.get()

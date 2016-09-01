@@ -88,7 +88,4 @@ class ContentInterface
       else
         return @getRemoteSource path
 
-    subscriptionsReady: (instance) ->
-      return instance.subscriptionsReady()
-
 module.exports.ContentInterface = ContentInterface.get()

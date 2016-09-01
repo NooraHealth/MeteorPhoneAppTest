@@ -4,7 +4,7 @@
 { Modules } = require("meteor/noorahealth:mongo-schemas")
 
 { AppState } = require('../../api/AppState.coffee')
-{ Level } = require('../../api/controllers/lessons/Level.coffee')
+{ LevelModel } = require('../../api/models/lessons/Level.coffee')
 { Award } = require('../components/lessons/popups/award.coffee')
 { Audio } = require('../components/shared/audio.coffee')
 { IntroductionToQuestions } = require('../components/lessons/popups/introduction_to_questions.coffee')
@@ -26,13 +26,11 @@ Template.Lesson_view_page.onCreated ()->
   @state = new ReactiveDict()
   @setStateToDefault = =>
     @state.set {
-      moduleIndex: 0
       correctlySelectedClasses: 'correctly-selected expanded'
       incorrectClasses: 'faded'
       incorrectlySelectedClasses: 'incorrectly-selected'
       nextButtonAnimated: false
       nextButtonAnimated: false
-      lessonIndex: 0
       homePage: true
     }
 
@@ -51,21 +49,20 @@ Template.Lesson_view_page.onCreated ()->
   ## 
   # LEVELS
   ##
-  @levels = [
-    new Level(AppState.getCurriculumDoc(), "beginner", "easy.png"),
-    new Level(AppState.getCurriculumDoc(), "intermediate", "medium.png"),
-    new Level(AppState.getCurriculumDoc(), "advanced", "hard.png"),
-  ]
+  @levels = [] # To be defined once subscriptions are ready
 
   @getLevels = =>
     return @levels
 
-  @setLevel = (level) =>
-    @state.set "level", level
+  @setLevelIndex = (index) =>
+    console.log "Setting level index to #{index}"
+    @state.set "level_index", index
 
-  @getLevel = =>
-    index = @state.get "level_index"
-    return @getLevels()[index]
+  @getLevelIndex = =>
+    @state.get "level_index"
+
+  @getCurrentLevel = =>
+    return @getLevels()[@getLevelIndex()]
 
   ## 
   # HOME PAGE
@@ -91,78 +88,79 @@ Template.Lesson_view_page.onCreated ()->
     return @state.get "nextButtonAnimated"
 
   @shouldShowReplayButton = =>
-    module = @getCurrentModule()
+    module = @getCurrentLevel().currentModulesSequence().getCurrentItem()
     return module?.type isnt "VIDEO"
 
   @nextButtonText = =>
     language = AppState.getLanguage()
-    text = if @lessonComplete() then AppState.translate( "finish", language, "UPPER") else AppState.translate( "next", language, "UPPER")
+    lessonComplete = @getCurrentLevel().currentModulesSequence().getNext() == -1
+    text = if lessonComplete then AppState.translate( "finish", language, "UPPER") else AppState.translate( "next", language, "UPPER")
     return "<span class='center'>#{text}<i class='fa fa-arrow-right'></i></span>"
 
   ## 
   # MODULES
   ##
-  @getModuleIndex = =>
-    return @state.get "moduleIndex"
+  #@getModuleIndex = =>
+    #return @state.get "moduleIndex"
 
-  @setModuleIndex = (index) =>
-    @state.set "moduleIndex", index
+  #@setModuleIndex = (index) =>
+    #@state.set "moduleIndex", index
 
-  @getCurrentModule = =>
-    index = @state.get "moduleIndex"
-    return @getModules()?[index]
+  #@getCurrentModule = =>
+    #index = @state.get "moduleIndex"
+    #return @getModules()?[index]
 
-  @getNextModule = =>
-    index = @state.get "moduleIndex"
-    return @getModules()?[index + 1]
+  #@getNextModule = =>
+    #index = @state.get "moduleIndex"
+    #return @getModules()?[index + 1]
 
-  @getModules = =>
-    lesson = @getCurrentLesson()
-    modules = @getCurrentLesson()?.getModulesSequence()
-    return modules
+  #@getModules = =>
+    #lesson = @getCurrentLesson()
+    #modules = @getCurrentLesson()?.getModulesSequence()
+    #return modules
 
-  @isNext = (module) =>
-    nextModule = @getNextModule()
-    return module?._id is nextModule?._id
+  #@isNext = (module) =>
+    #nextModule = @getNextModule()
+    #return module?._id is nextModule?._id
 
-  @isCurrent = (module) =>
-    currentModule = @getCurrentModule()
-    return module?._id is currentModule?._id
+  #@isCurrent = (module) =>
+    #currentModule = @getCurrentModule()
+    #return module?._id is currentModule?._id
 
   ## 
   # LESSONS
   ##
-  @getLessonIndex = =>
-    return @state.get "lessonIndex"
+  #@getLessonIndex = =>
+    #return @state.get "lessonIndex"
 
-  @getCurrentLesson = =>
-    lessonIndex = @getLessonIndex()
-    return @getLessons()?[lessonIndex]
+  #@getCurrentLesson = =>
+    #lessonIndex = @getLessonIndex()
+    #return @getLessons()?[lessonIndex]
 
-  @getLessonDocsOfLevel = (levelName) =>
-    curriculum = AppState.getCurriculumDoc()
-    return curriculum?.getLessonDocuments( levelName )
+  #@getLessonDocsOfLevelModel = (levelName) =>
+    #curriculum = AppState.getCurriculumDoc()
+    #return curriculum?.getLessonDocuments( levelName )
 
-  @getLessons = =>
-    level = @getLevel()
-    return @getLessonDocsOfLevel level
+  #@getLessons = =>
+    #level = @getCurrentLevel()
+    #return @getLessonDocsOfLevelModel level
 
-  @setLessonIndex = (index) =>
-    @state.set "lessonIndex", index
+  #@setLessonIndex = (index) =>
+    #@state.set "lessonIndex", index
 
-  @lessonComplete = =>
-    index = @getModuleIndex()
-    modules = @getModules()
-    if modules then return index == @getModules()?.length-1 else return false
+  #@lessonComplete = =>
+    #index = @getModuleIndex()
+    #modules = @getModules()
+    #if modules then return index == @getModules()?.length-1 else return false
 
-  @isLastLesson = =>
-    lessonIndex = @getLessonIndex()
-    return lessonIndex == @getLessons().length - 1
+  #@isLastLesson = =>
+    #lessonIndex = @getLessonIndex()
+    #return lessonIndex == @getLessons().length - 1
 
-  @getProgress = ()=>
-    numInLesson = @getModules()?.length or 0
-    numCompleted = @getModuleIndex() + 1
-    return (numCompleted * 100 / numInLesson).toString()
+  #@getProgress = ()=>
+    #numInLesson = @getModules()?.length or 0
+    #numCompleted = @getModuleIndex() + 1
+    #return (numCompleted * 100 / numInLesson).toString()
   
   ## 
   # AUDIO
@@ -178,10 +176,10 @@ Template.Lesson_view_page.onCreated ()->
     @state.set "playStub", shouldPlay
 
   @trackAudioStopped = (pos, completed, src) =>
-    lesson = @getCurrentLesson()
+    lesson = @getCurrentLevel().currentLessonsSequence().getCurrentItem().lesson
+    module = @getCurrentLevel().currentModulesSequence().getCurrentItem()
     condition = AppState.getCondition()
     language = AppState.getLanguage()
-    module = @getCurrentModule()
     text = if module?.title then module?.title else module?.question
     analytics.track "Audio Stopped", {
       moduleText: text
@@ -196,23 +194,21 @@ Template.Lesson_view_page.onCreated ()->
     }
     @
 
-
  ## ----------------- CHANGING STATE ------------------- ##
 
   @incrementLevel= =>
     levels = @getLevels()
-    level = @getLevel()
-    if level == levels[0].name
-      @setLevel levels[1].name
-    else if level == levels[1].name
-      @setLevel levels[2].name
-    else if level == levels[2].name
-      @setLevel levels[0].name
+    index = @getLevelIndex()
+    console.log "Incrementing Level!!"
+    console.log levels
+    console.log index
+    if index == levels.length - 1
+      @setLevelIndex 0
     else
-      @setLevel levels[0].name
+      @setLevelIndex ++index
 
   @goToNextModule = =>
-    index = @getModuleIndex()
+    index = @getCurrentLevel().currentModulesSequence().getIndex()
     newIndex = ++index
     @displayModule( newIndex )
 
@@ -237,21 +233,22 @@ Template.Lesson_view_page.onCreated ()->
     $("#" + module._id).find("video")[0]?.play()
 
   @startLesson = (index) =>
-    @setLessonIndex index
+    @getCurrentLevel().currentLessonsSequence().goTo index
     @setOnHomePage false
     @initializeSwiper()
     @displayModule(0)
 
   @goToNextLesson = =>
-    if @isLastLesson()
+    isLastLesson = @getCurrentLevel().currentLessonsSequence().getNext() == -1
+    if isLastLesson
       @goHome(null, true)
     else
-      currentLessonIndex = @getLessonIndex()
+      currentLessonIndex = @getCurrentLevel().currentLessonsSequence().getIndex()
       @startLesson currentLessonIndex + 1
  
   @goHome = ( event, completedLevel) =>
-    lesson = @getCurrentLesson()
-    module = @getCurrentModule()
+    lesson = @getCurrentLevel().currentLessonsSequence().getCurrentItem().lesson
+    module = @getCurrentLevel().currentModulesSequence().getCurrentItem()
     text = if module?.title then module?.title else module?.question
     analytics.track "Left Lesson For Home", {
       lessonTitle: lesson?.title
@@ -269,9 +266,9 @@ Template.Lesson_view_page.onCreated ()->
 
   @displayModule = (index) =>
     @swiper.slideTo index + 1
-    @setModuleIndex index
+    @getCurrentLevel().currentModulesSequence().goTo index
     @setNextButtonAnimated false
-    module = @getCurrentModule()
+    module = @getCurrentLevel().currentModulesSequence().getCurrentItem()
     if module.type == "VIDEO"
       @playVideo module
     if module.hasAudio()
@@ -282,14 +279,16 @@ Template.Lesson_view_page.onCreated ()->
  ## ----------------- EVENTS ------------------- ##
 
   @onFinishExplanation = (module, pos, completed, src)=>
-    currentModule = @getCurrentModule()
-    if @isCurrent module
+    console.log "ON finish explanation!! "
+    isCurrent = @getCurrentLevel().currentModulesSequence().isCurrent( module )
+    console.log isCurrent
+    if isCurrent
       @setNextButtonAnimated true
     @trackAudioStopped( pos, completed, src )
 
-  @onLevelSelected = ( levelName ) =>
-    @setLevel levelName
-    lessons = @getLessons()
+  @onLevelSelected = ( index ) =>
+    @setLevelIndex index
+    lessons = @getCurrentLevel().currentLessonsSequence().getItems()
     if lessons.length > 0
       @startLesson(0)
     else
@@ -300,13 +299,13 @@ Template.Lesson_view_page.onCreated ()->
 
   @onChoice = (instance, type, showAlert) ->
     return (choice) ->
+      module = instance.getCurrentLevel().currentModulesSequence().getCurrentItem()
       if type is "CORRECT"
         instance.playAudio(ContentInterface.getSrc(ContentInterface.correctSoundEffectFilename(), "AUDIO"), 1)
         alertType = 'success'
       else
         instance.playAudio(ContentInterface.getSrc(ContentInterface.incorrectSoundEffectFilename(), "AUDIO"), 1)
         alertType = 'error'
-        module = instance.getCurrentModule()
       if showAlert
         language = AppState.getLanguage()
         swal {
@@ -317,10 +316,9 @@ Template.Lesson_view_page.onCreated ()->
         }
 
       #analytics
-      lesson = instance.getCurrentLesson()
+      lesson = instance.getCurrentLevel().currentLessonsSequence().getCurrentItem().lesson
       condition = AppState.getCondition()
       language = AppState.getLanguage()
-      module = instance.getCurrentModule()
       text = if module?.title then module?.title else module?.question
       analytics.track "Responded to Question", {
         moduleId: module._id
@@ -341,17 +339,16 @@ Template.Lesson_view_page.onCreated ()->
 
   @celebrateCompletion = =>
     language = AppState.getLanguage()
-    lessonIndex = @state.get "lessonIndex"
-    lessonsComplete = lessonIndex + 1
-    totalLessons = @getLessons().length
+    lessonsComplete = @getCurrentLevel().currentLessonsSequence().getIndex() + 1
+    totalLessons = @getCurrentLevel().currentLessonsSequence().getItems().length
     onConfirm = ()=>
       @goToNextLesson()
 
     onCancel = ()=>
       @goHome(null, false)
     
-    isLastLesson = @isLastLesson()
-    if @isLastLesson()
+    isLastLesson = @getCurrentLevel().currentLessonsSequence().getNext() == -1
+    if isLastLesson
       new Award(language).sendAward( null, null, lessonsComplete, totalLessons)
       @goHome( null, true )
     else
@@ -365,18 +362,18 @@ Template.Lesson_view_page.onCreated ()->
     new IntroductionToQuestions().send( onConfirm, onCancel, language )
 
   @onNextButtonClicked = =>
-    lessonComplete = @lessonComplete()
-    currentModule = @getCurrentModule()
+    lessonComplete = @getCurrentLevel().currentModulesSequence().getNext() == -1
+    currentModule = @getCurrentLevel().currentModulesSequence().getCurrentItem()
     @destroyAudio()
     if currentModule.type == "VIDEO" and not lessonComplete
       @stopVideo currentModule
-    else if @lessonComplete() then @celebrateCompletion() else @goToNextModule()
+    else if lessonComplete then @celebrateCompletion() else @goToNextModule()
 
   @onReplayButtonClicked = =>
     @getCurrentAudio().replay()
 
   @onVideoEnd = =>
-    lessonComplete = @lessonComplete()
+    lessonComplete = @getCurrentLevel().currentModulesSequence().goToNext() == -1
     if not lessonComplete and not @isHomePage()
       @showIntroductionToQuestions()
 
@@ -387,8 +384,16 @@ Template.Lesson_view_page.onCreated ()->
       @subscribe "lessons.all"
       @subscribe "modules.all"
 
+  @autorun =>
+    if @subscriptionsReady()
+      @levels = [
+        new LevelModel(AppState.getCurriculumDoc(), "beginner", "easy.png", 0),
+        new LevelModel(AppState.getCurriculumDoc(), "intermediate", "medium.png", 1),
+        new LevelModel(AppState.getCurriculumDoc(), "advanced", "hard.png", 2),
+      ]
+
   @setStateToDefault()
-  @state.set "level_index", 0
+  @setLevelIndex 0
   @liveAudio = []
   @HOME_SLIDE_INDEX = 0
 
@@ -396,7 +401,7 @@ Template.Lesson_view_page.onCreated ()->
 Template.Lesson_view_page.helpers
   modulesReady: ->
     instance = Template.instance()
-    return ContentInterface.subscriptionsReady(instance)
+    return instance.subscriptionsReady()
 
   footerArgs: ->
     instance = Template.instance()
@@ -421,23 +426,26 @@ Template.Lesson_view_page.helpers
         text: '<span class="center"><i class="fa fa-repeat"></i></span>'
       }
       progressBar: {
-        percent: instance.getProgress()
+        percent: instance.getCurrentLevel().currentModulesSequence().getProgress().toString()
         shouldShow: true
       }
     }
 
   lessonTitle: ->
     instance = Template.instance()
-    return instance.getCurrentLesson()?.title
+    return instance.getCurrentLevel()?.currentLessonsSequence()?.getCurrentItem()?.lesson?.title
 
   shouldRender: (module) ->
     instance = Template.instance()
-    return instance.isCurrent(module) or instance.isNext(module)
+    isCurrent = instance.getCurrentLevel().currentModulesSequence().isCurrent module
+    isNext = instance.getCurrentLevel().currentModulesSequence().isNext module
+    return isCurrent or isNext
 
   moduleArgs: (module) ->
     instance = Template.instance()
     language = AppState.getLanguage()
-    isCurrentModule = instance.isCurrent(module)
+    isCurrentModule = instance.getCurrentLevel().currentModulesSequence().isCurrent module
+
     if module.isQuestion()
       showAlert = if module.type == 'MULTIPLE_CHOICE' then false else true
       return {
@@ -466,7 +474,7 @@ Template.Lesson_view_page.helpers
 
   modules: ->
     instance = Template.instance()
-    return instance.getModules()
+    return instance.getCurrentLevel()?.currentModulesSequence().getItems()
 
   getTemplate: (module) ->
     if module?.type == "BINARY"
@@ -485,13 +493,10 @@ Template.Lesson_view_page.helpers
 
   levelThumbnailArgs: (level ) ->
     instance = Template.instance()
-    console.log "instance level"
-    console.log instance.getLevel()
-    console.log "This level"
-    console.log level
-    isCurrentLevel = instance.getLevel().isEqual(level)
+    isCurrentLevel = instance.getCurrentLevel().isEqual(level)
     return {
       level: {
+        index: level.getIndex()
         name: level.getName()
         image: level.getImage()
       }
