@@ -1,0 +1,15 @@
+<template name="Lesson_view_page_scenario">
+  <div class="card-header large-text center color-blue-noora">
+    {{module.question}}
+  </div>
+
+  <div class="card-content padding-sm">
+    <img src="{{getSrc module.image 'IMAGE'}}" class="center module-image">
+  </div>
+  
+  <div class="card-footer large-text">
+    {{> Button (normalButtonArgs language module) }}
+    {{> Button (callDoctorButtonArgs language module) }}
+    {{> Button (emergencyButtonArgs language module) }}
+  </div>
+</template>

@@ -2,7 +2,7 @@
   <div data-page="index" class="page navbar-fixed toolbar-fixed">
     <!-- Top Navbar-->
     {{#Navbar}}
-      {{#if homePage}}
+      {{#if selectLevelSlide}}
         {{#with language=getLanguage}}
           <a href="/" class="right button">{{translate "change_language" "en" "UPPER"}}</a>
         {{/with}}
@@ -12,10 +12,10 @@
 
     {{/Navbar}}
 
-    {{#if modulesReady}}
       <div class="page-content padding-lg">
         <div class="content-block row">
           <div class='swiper-container'>
+            {{#if modulesReady}}
             <div class='swiper-wrapper'>
               <div class='swiper-slide row'>
                 {{#each level in levels}}
@@ -38,10 +38,12 @@
               {{/each}}
 
             </div>
+            {{/if}}
           </div>
         </div>
       </div>
 
+    {{#if modulesReady}}
       {{> Lesson_view_page_footer footerArgs}}
     {{/if}}
   </div>
