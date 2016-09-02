@@ -90,14 +90,14 @@ class AppState
       else
         return text
 
-    getCurriculumDoc: =>
+    getCurriculumDoc: ->
       language = @dict.get "language"
       condition = @dict.get('configuration')?.condition
       new SimpleSchema({
-        language: { type: String }
+        language: { type: String, optional: true }
         condition: { type: String }
       }).validate {
-        language: language,
+        language: language
         condition: condition
       }
 
