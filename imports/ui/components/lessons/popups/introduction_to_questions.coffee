@@ -1,17 +1,18 @@
-{ AppState } = require('../../../../api/AppState.coffee')
+
+{ Translator } = require('../../../../api/utilities/Translator.coffee')
 
 class IntroductionToQuestions
 
   constructor: ()->
 
   send: ( onConfirm, onCancel, language)=>
-    title = AppState.translate "great", language
-    text = AppState.translate "introduce_questions", language
+    title = Translator.translate "great", language
+    text = Translator.translate "introduce_questions", language
 
     swal({
       title: title
       text: text
-      confirmButtonText: AppState.translate "ok", language
+      confirmButtonText: Translator.translate "ok", language
       animation: "slide-from-bottom"
     }, ( isConfirm ) =>
       if isConfirm

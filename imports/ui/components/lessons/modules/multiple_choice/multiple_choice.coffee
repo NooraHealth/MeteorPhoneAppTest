@@ -1,8 +1,12 @@
 
 { ContentInterface } = require '../../../../../api/content/ContentInterface.coffee'
+
 { Modules } = require("meteor/noorahealth:mongo-schemas")
+
 require '../../../../../api/utilities/global_template_helpers.coffee'
+
 require "./multiple_choice.html"
+
 require "./option.coffee"
 
 Template.Lesson_view_page_multiple_choice.onCreated ->

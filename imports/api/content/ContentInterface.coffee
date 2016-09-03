@@ -11,7 +11,6 @@
 { Lessons } = require("meteor/noorahealth:mongo-schemas")
 { Modules } = require("meteor/noorahealth:mongo-schemas")
 { Curriculums } = require("meteor/noorahealth:mongo-schemas")
-{ AppState } = require("../AppState.coffee")
 
 class ContentInterface
   @get: ()->

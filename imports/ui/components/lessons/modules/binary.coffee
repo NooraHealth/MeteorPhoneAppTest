@@ -1,6 +1,8 @@
 { ContentInterface } = require('../../../../api/content/ContentInterface.coffee')
 { Modules } = require("meteor/noorahealth:mongo-schemas")
-{ AppState } = require("../../../../api/AppState.coffee")
+
+{ Translator } = require("../../../../api/utilities/Translator.coffee")
+
 require "./binary.html"
 require '../../../../api/utilities/global_template_helpers.coffee'
 
@@ -78,7 +80,7 @@ Template.Lesson_view_page_binary.helpers
   buttonArgs: (option, language) ->
     instance = Template.instance()
     attributes = instance.state.get "optionAttributes"
-    text = AppState.translate option.toLowerCase(), language, "UPPER"
+    text = Translator.translate option.toLowerCase(), language, "UPPER"
     return {
       attributes: attributes[option]
       content: text.toUpperCase()

@@ -1,6 +1,9 @@
-{ AppState } = require '../../api/AppState.coffee'
+{ AppConfiguration } = require '../../api/AppConfiguration.coffee'
+
 { Curriculums } = require 'meteor/noorahealth:mongo-schemas'
+
 { ContentInterface } = require('../../api/content/ContentInterface.coffee')
+
 { ContentDownloader } = require('../../api/cordova/ContentDownloader.coffee')
 
 require '../components/shared/loading.coffee'
@@ -11,7 +14,7 @@ Template.Load_curriculums_page.onCreated ->
   @firstRun = true
 
   @autorun =>
-    if AppState.templateShouldSubscribe()
+    if AppConfiguration.templateShouldSubscribe()
       @subscribe "curriculums.all"
       @subscribe "lessons.all"
       @subscribe "modules.all"
@@ -20,19 +23,26 @@ Template.Load_curriculums_page.onCreated ->
     console.log "Getting whether subscriptionsReady"
     if not Meteor.status().connected
       console.log "Meteor status not connected"
-      AppState.setError(new Meteor.Error("Not Connected", "Please connect to data in order to download your curriculum."))
+      swal {
+        title: "Please Connect To Data"
+        text: "You need to be connected to wifi or data in order to download your curriculums"
+      }
+
     else if ContentInterface.subscriptionsReady(@) and @firstRun
-      console.log "About to download"
       @firstRun = false
-      configuration = AppState.getConfiguration()
+      configuration = AppConfiguration.getConfiguration()
       curriculums = Curriculums.find { condition: configuration.condition }
       onComplete = (e) ->
-        console.log "SUCCESS LOADING"
-        console.log e
         if e
-          AppState.setError e
-        AppState.setContentDownloaded true
-        FlowRouter.go "home"
+          console.log "Error downloading curriculum"
+          swal {
+            title: "Error downloading curriculums"
+            text: e.message
+          }
+
+        else
+          AppConfiguration.setContentDownloaded true
+          FlowRouter.go "home"
 
       ContentDownloader.get().loadCurriculums curriculums, onComplete
   

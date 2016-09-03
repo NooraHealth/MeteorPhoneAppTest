@@ -1,7 +1,10 @@
 
-{ AppState } = require '../../api/AppState.coffee'
+{ AppConfiguration } = require '../../api/AppConfiguration.coffee'
+
 { Conditions } = require 'meteor/noorahealth:mongo-schemas'
+
 { Facilities } = require 'meteor/noorahealth:mongo-schemas'
+
 { Curriculums } = require 'meteor/noorahealth:mongo-schemas'
 
 require './configure.html'
@@ -10,7 +13,6 @@ Template.Configure_app_page.onCreated ->
   console.log "Creating a configure page"
 
   @configureApp = ->
-    console.log "Configuring the app!!"
     if not Meteor.status().connected
       swal {
         title: "Oops!"
@@ -24,7 +26,7 @@ Template.Configure_app_page.onCreated ->
 
       hospital = $("#hospital_select").val()
       condition = $("#condition_select").val()
-      AppState.setConfiguration {
+      AppConfiguration.setConfiguration {
         hospital: hospital
         condition: condition
       }
@@ -44,8 +46,6 @@ Template.Configure_app_page.helpers
     return instance.subscriptionsReady()
 
   hospitals: ->
-    console.log("Returning the hospitals")
-    console.log Facilities.find().count()
     return Facilities.find({}).fetch()
 
   conditions: ->

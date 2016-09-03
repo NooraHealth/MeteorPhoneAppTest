@@ -1,5 +1,5 @@
 
-{ AppState } = require('../../api/AppState.coffee')
+{ AppConfiguration } = require('../../api/AppConfiguration.coffee')
 { LessonsPageController } = require('../../api/controllers/LessonsPage.coffee')
 { LessonsPageModel } = require '../../api/models/lessons/LessonsPage.coffee'
 
@@ -16,7 +16,7 @@ Template.Lesson_view_page.onCreated ()->
   @rendered = false
 
   @initializeSwiper = =>
-    return AppState.getF7().swiper '.swiper-container', {
+    return AppConfiguration.getF7().swiper '.swiper-container', {
       lazyLoading: true,
       preloadImages: false,
       speed: 700,
@@ -27,7 +27,7 @@ Template.Lesson_view_page.onCreated ()->
 
   #subscribe to data
   @autorun =>
-    if AppState.templateShouldSubscribe()
+    if AppConfiguration.templateShouldSubscribe()
       @subscribe "curriculums.all"
       @subscribe "lessons.all"
       @subscribe "modules.all"
@@ -35,7 +35,7 @@ Template.Lesson_view_page.onCreated ()->
   #initialize the controller when the subscriptions are ready
   @autorun =>
     if @subscriptionsReady() and @rendered = true
-      @controller = new LessonsPageController( AppState.getCurriculumDoc(), AppState.getLanguage(), AppState.getCondition() )
+      @controller = new LessonsPageController( AppConfiguration.getCurriculumDoc(), AppConfiguration.getLanguage(), AppConfiguration.getCondition() )
       @model = @controller.model
   
   #re-initialize the swiper when the modules change
@@ -46,6 +46,8 @@ Template.Lesson_view_page.onCreated ()->
   @autorun =>
     if @subscriptionsReady() and @rendered == true and @model?
       slideIndex = @model.slideIndex()
+      console.log "SLIDE INDEX"
+      console.log slideIndex
       @swiper ?= @initializeSwiper()
       @swiper.slideTo slideIndex
 
@@ -57,28 +59,28 @@ Template.Lesson_view_page.helpers
   footerArgs: ->
     model = Template.instance().model
     controller = Template.instance().controller
-    progress = module.getCurrentModels().length / model.getNumModulesCompleted() * 100
+    progress = ( model.getModuleIndex() + 1) / model.getCurrentModules()?.length * 100
     return {
       language: model.getLanguage()
-      visible: !model.slideIndex() == 0
+      visible: model.footer.get "bar", "visible"
       homeButton: {
         onClick: controller.goToSelectLevelSlide
-        shouldShow: model.footer.homeButton.visible()
-        text: model.footer.homeButton.text()
+        shouldShow: model.footer.get "homeButton", "visible"
+        text: model.footer.get "homeButton", "text"
       }
       nextButton: {
         onClick: controller.onNextButtonClicked
-        text: model.footer.nextButton.text()
+        text: model.footer.get "nextButton", "text"
         onRendered: controller.onNextButtonRendered
-        animated: model.footer.nextButton.animated()
+        animated: model.footer.get "nextButton", "animated"
       }
       replayButton: {
         onClick: controller.onReplayButtonClicked
-        shouldShow: model.footer.replayButton.visible()
-        text: '<span class="center"><i class="fa fa-repeat"></i></span>'
+        shouldShow: model.footer.get "replayButton", "visible"
+        text: model.footer.get "replayButton", "text"
       }
       progressBar: {
-        percent: progress
+        percent: progress.toString()
         shouldShow: true
       }
     }
@@ -156,7 +158,7 @@ Template.Lesson_view_page.helpers
         image: level.getImage()
       }
       onLevelSelected: controller.onLevelSelected
-      isCurrentLevel: module.isCurrentLevel level
+      isCurrentLevel: model.isCurrentLevel level
       language: model.getLanguage()
     }
 

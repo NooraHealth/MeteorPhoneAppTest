@@ -20,7 +20,10 @@ class LevelModel
 
     @lessons = @curriculum.getLessonDocuments( @name )
     docsAreEqual = (first, second) ->
-      return first._id is second._id
+      console.log "Comparing theseee"
+      console.log first
+      console.log second
+      return first?._id is second?._id
 
     sequence = @lessons.map (lesson) =>
       modulesSequence = new Sequence(lesson.getModulesSequence(), docsAreEqual)
@@ -53,37 +56,37 @@ class LevelModel
     return @lessons
 
   getCurrentLesson: ->
-    return @currentLessonsSequence().getCurrent()?.lesson
+    return @currentLessonsSequence().getCurrentItem()?.lesson
   
-  incrementLesson: ->
-    @currentLessonsSequence().goToNext()
+  goToNextLesson: ->
+    @currentLessonsSequence()?.goToNext()
 
   onLastLesson: ->
-    @currentLessonsSequence().onLast()
+    @currentLessonsSequence()?.onLast()
 
-  getNumLessonsCompleted: ->
-    @currentLessonsSequence().getNumComplete()
+  getLessonIndex: ->
+    @currentLessonsSequence()?.getIndex()
 
-  getNumModulesCompleted: ->
-    @currentModulesSequence().getNumComplete()
+  getModuleIndex: ->
+    @currentModulesSequence()?.getIndex()
 
   onLastModule: ->
-    @currentModulesSequence().onLast()
+    @currentModulesSequence()?.onLast()
 
-  incrementModule: ->
-    @currentModulesSequence().goToNext()
+  goToNextModule: ->
+    @currentModulesSequence()?.goToNext()
 
   getCurrentModules: ->
-    return @currentModulesSequence()
+    return @currentModulesSequence()?.getItems()
 
   getCurrentModule: ->
-    return @currentModulesSequence().getCurrent()
+    return @currentModulesSequence()?.getCurrentItem()
 
   isCurrentModule: ( module )->
-    @modulesSequence().isCurrent module
+    @currentModulesSequence().isCurrent module
 
   isNextModule: ( module )->
-    @modulesSequence().isNext module
+    @currentModulesSequence().isNext module
 
   resetSequences: ->
     for lessonItem in @lessonsSequence.getItems()

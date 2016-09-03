@@ -1,13 +1,10 @@
 
 { ContentInterface } = require '../content/ContentInterface.coffee'
-{ AppState } = require './../AppState.coffee'
 
-#Template.registerHelper 'getSrc', ( path, type )->
-  #console.log "Getting the src #{path} #{type}"
-  #return ContentInterface.get().getSrc path, type
+{ Translator } = require './../utilities/Translator.coffee'
 
 Template.registerHelper 'translate', ( key, language, textCase )=>
-  return AppState.translate key, language, textCase
+  return Translator.translate key, language, textCase
 
 Template.registerHelper 'getSrc', ( filename, type )=>
   if filename? and filename != ""

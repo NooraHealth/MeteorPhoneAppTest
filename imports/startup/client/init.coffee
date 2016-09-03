@@ -1,22 +1,24 @@
 
-require 'meteor/loftsteinn:framework7-ios'
-cloudinary = require("cloudinary")
-
 { BlazeLayout } = require 'meteor/kadira:blaze-layout'
-{ AppState } = require('../../api/AppState.coffee')
+
+{ AppConfiguration } = require('../../api/AppConfiguration.coffee')
+
 { Curriculums } = require("meteor/noorahealth:mongo-schemas")
 
+require 'meteor/loftsteinn:framework7-ios'
+
+cloudinary = require("cloudinary")
 
 Meteor.startup ()->
   TAPi18n.setLanguage "en"
   BlazeLayout.setRoot "body"
-  AppState.initializeApp()
+  AppConfiguration.initializeApp()
 
-  if (Meteor.isCordova and not AppState.isSubscribed()) or Meteor.status().connected
+  if (Meteor.isCordova and not AppConfiguration.isSubscribed()) or Meteor.status().connected
     Meteor.subscribe "lessons.all"
     Meteor.subscribe "curriculums.all"
     Meteor.subscribe "modules.all"
-    AppState.setSubscribed true
+    AppConfiguration.setSubscribed true
 
   cloudinary.config {
     cloud_name: Meteor.settings.public.CLOUDINARY_NAME,
@@ -24,9 +26,9 @@ Meteor.startup ()->
     api_secret: Meteor.settings.public.CLOUDINARY_API_SECRET
   }
 
-  if not AppState.isConfigured()
+  if not AppConfiguration.isConfigured()
     FlowRouter.go "configure"
-  else if not AppState.contentDownloaded() and Meteor.isCordova
+  else if not AppConfiguration.contentDownloaded() and Meteor.isCordova
     FlowRouter.go "load"
   else
     FlowRouter.go "home"

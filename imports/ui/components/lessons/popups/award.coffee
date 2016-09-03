@@ -1,4 +1,5 @@
-{ AppState } = require('../../../../api/AppState.coffee')
+
+{ Translator } = require('../../../../api/utilities/Translator.coffee')
 
 class Award
   messages: [
@@ -31,18 +32,18 @@ class Award
     rand = Math.random() * ( @.messages.length)
     message = @.messages[Math.floor(rand)]
     endOfCurriculum = lessonsComplete == totalLessons
-    confirmButtonText = if endOfCurriculum then AppState.translate("ok", @language, "UPPER") else AppState.translate("next_lesson", @language, "UPPER")
-    text = AppState.translate "you_have_completed", @language, "", {
+    confirmButtonText = if endOfCurriculum then Translator.translate("ok", @language, "UPPER") else AppState.translate("next_lesson", @language, "UPPER")
+    text = Translator.translate "you_have_completed", @language, "", {
       postProcess: "sprintf" ,
       sprintf: [ lessonsComplete, totalLessons ]
     }
 
     swal({
-      title: AppState.translate message.title, @language
+      title: Translator.translate message.title, @language
       text: text
       imageUrl: message.image
       confirmButtonText: confirmButtonText
-      cancelButtonText: AppState.translate "finish", @language, "UPPER"
+      cancelButtonText: Translator.translate "finish", @language, "UPPER"
       showCancelButton: !endOfCurriculum
       animation: "slide-from-bottom"
     }, ( isConfirm ) =>

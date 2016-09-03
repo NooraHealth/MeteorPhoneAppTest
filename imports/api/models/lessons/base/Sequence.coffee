@@ -28,17 +28,19 @@ class Sequence
   onLast: ->
     return @getIndex() == @getItems().length - 1
 
-  goTo: (index) ->
+  goTo: ( index )->
+    console.log "GOTO #{index}"
     @state.set "index", index
 
   goToNext: ->
     if @onLast()
       @reset()
     else
+      console.log "Going to enxt in sequence"
       index = @getIndex()
       if not index?
         @goTo 0
-      @goTo index++
+      @goTo ++index
 
   getNext: ->
     index = @getIndex()
@@ -50,14 +52,11 @@ class Sequence
   reset: ->
     @goTo null
 
-  getNumComplete: ->
-    return @getIndex() + 1
-
-  isNext: (item) ->
+  isNext: ( item )->
     nextItem = @getNext()
     return @areEqual item, nextItem
 
-  isCurrent: (item) ->
+  isCurrent: ( item )->
     return @areEqual( item, @getCurrentItem() )
     
 

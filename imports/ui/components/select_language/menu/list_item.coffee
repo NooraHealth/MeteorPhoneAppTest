@@ -1,7 +1,7 @@
 
 
-{ AppState } = require '../../../../api/AppState.coffee'
 require '../../../../api/utilities/global_template_helpers.coffee'
+
 require './list_item.html'
 
 Template.Home_language_menu_list_item.onCreated ->

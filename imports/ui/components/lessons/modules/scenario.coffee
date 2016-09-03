@@ -1,8 +1,12 @@
 
 { Modules } = require("meteor/noorahealth:mongo-schemas")
+
 { ContentInterface } = require('../../../../api/content/ContentInterface.coffee')
-{ AppState } = require("../../../../api/AppState.coffee")
+
+{ Translator } = require("../../../../api/utilities/Translator.coffee")
+
 require '../../../../api/utilities/global_template_helpers.coffee'
+
 require "./scenario.html"
     
 Template.Lesson_view_page_scenario.onCreated ->
@@ -76,7 +80,7 @@ Template.Lesson_view_page_scenario.onCreated ->
 Template.Lesson_view_page_scenario.helpers
   normalButtonArgs: (language, module) ->
     instance = Template.instance()
-    translatedNormal = AppState.translate "normal", language, "UPPER"
+    translatedNormal = Translator.translate "normal", language, "UPPER"
     return {
       attributes: {
         id: "normalOptionForModule#{module._id}"
@@ -88,7 +92,7 @@ Template.Lesson_view_page_scenario.helpers
 
   callDoctorButtonArgs: (language, module) ->
     instance = Template.instance()
-    translatedCallDoc = AppState.translate "call_doc", language, "UPPER"
+    translatedCallDoc = Translator.translate "call_doc", language, "UPPER"
     return {
       attributes: {
         id: "calldocOptionForModule#{module._id}"
@@ -100,7 +104,7 @@ Template.Lesson_view_page_scenario.helpers
 
   emergencyButtonArgs: (language, module) ->
     instance = Template.instance()
-    translatedEmergency = AppState.translate "emergency", language, "UPPER"
+    translatedEmergency = Translator.translate "emergency", language, "UPPER"
     return {
       attributes: {
         id: "emergencyOptionForModule#{module._id}"

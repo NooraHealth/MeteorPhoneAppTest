@@ -1,6 +1,8 @@
 
-{ AppState } = require('../../api/AppState.coffee')
-{ TAPi18n } = require("meteor/tap:i18n")
+{ AppConfiguration } = require('../../api/AppConfiguration.coffee')
+
+{ Translator } = require('../../api/utilities/Translator.coffee')
+
 { Curriculums } = require("meteor/noorahealth:mongo-schemas")
 
 # TEMPLATE
@@ -20,7 +22,7 @@ Template.Select_language_page.onCreated ->
   }
 
   @initializeSwiper = =>
-    @swiper = AppState.getF7().swiper '.swiper-container', {
+    @swiper = AppConfiguration.getF7().swiper '.swiper-container', {
       speed: 700,
       shortSwipes: false
       longSwipes: false
@@ -30,20 +32,20 @@ Template.Select_language_page.onCreated ->
   @onLanguageSelected = (language) =>
     console.log "Language selected!!"
     analytics.track "Changed Language", {
-      fromLanguage: AppState.getLanguage()
+      fromLanguage: AppConfiguration.getLanguage()
       toLanguage: language
-      condition: AppState.getCondition()
+      condition: AppConfiguration.getCondition()
     }
 
-    AppState.setLanguage language
+    AppConfiguration.setLanguage language
     @initializeSwiper()
     @setFooterVisible true
     @playIntroVideo()
     @swiper.slideNext()
 
   @playIntroVideo = =>
-    console.log AppState.getCurriculumDoc()
-    introModule = AppState.getCurriculumDoc().getIntroductionModule()
+    console.log AppConfiguration.getCurriculumDoc()
+    introModule = AppConfiguration.getCurriculumDoc().getIntroductionModule()
     @.$("##{introModule?._id}")?.find("video")?[0]?.play()
 
   @setFooterVisible = =>
@@ -57,7 +59,7 @@ Template.Select_language_page.onCreated ->
 
   @autorun =>
     #if Meteor.status().connected
-    if AppState.templateShouldSubscribe()
+    if AppConfiguration.templateShouldSubscribe()
       @subscribe "curriculums.all"
       @subscribe "lessons.all"
       @subscribe "modules.all"
@@ -69,7 +71,7 @@ Template.Select_language_page.helpers
   
   introModules: ->
     modules = []
-    condition = AppState.getCondition()
+    condition = AppConfiguration.getCondition()
     for curriculum in Curriculums.find({ condition: condition }).fetch()
       introModule = curriculum.getIntroductionModule()
       if introModule then modules.push introModule
@@ -77,13 +79,13 @@ Template.Select_language_page.helpers
     return modules
 
   shouldShow: (module) ->
-    curriculumDoc = AppState.getCurriculumDoc()
+    curriculumDoc = AppConfiguration.getCurriculumDoc()
     introModule = curriculumDoc?.getIntroductionModule()
     return introModule?._id == module?._id
 
   videoArgs: ( module ) ->
     instance = Template.instance()
-    language = AppState.getLanguage()
+    language = AppConfiguration.getLanguage()
     data = {
       module: module
       language: language
@@ -106,8 +108,8 @@ Template.Select_language_page.helpers
 
   footerArgs: ->
     instance = Template.instance()
-    language = AppState.getLanguage()
-    begin = AppState.translate "begin", language, "UPPER"
+    language = AppConfiguration.getLanguage()
+    begin = Translator.translate "begin", language, "UPPER"
     text = "<span class='center'>#{begin}<i class='fa fa-arrow-right'></i></span>"
     return {
       language: language

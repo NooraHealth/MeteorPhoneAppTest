@@ -1,9 +1,14 @@
 
+{ Translator } = require '../../utilities/Translator.coffee'
+
 { FooterModel } = require './Footer.coffee'
 
 { LevelModel } = require './Level.coffee'
 
 { Curriculums } = require("meteor/noorahealth:mongo-schemas")
+
+{ AppConfiguration } = require '../../AppConfiguration.coffee'
+
 
 class LessonsPageModel
   constructor: ( @curriculum, @language, @condition )->
@@ -19,21 +24,22 @@ class LessonsPageModel
       level_index: 0
     }
 
+    levels = AppConfiguration.getLevels()
     @levels = [
-      new LevelModel( @curriculum, "beginner", "easy.png", 0),
-      new LevelModel( @curriculum, "intermediate", "medium.png", 1),
-      new LevelModel( @curriculum, "advanced", "hard.png", 2),
+      new LevelModel( @curriculum, levels[0].name, levels[0].image, 0),
+      new LevelModel( @curriculum, levels[1].name, levels[1].image, 1),
+      new LevelModel( @curriculum, levels[2].name, levels[2].image, 2),
     ]
 
-    home = AppState.translate "home", language, "UPPER"
-    @footer = new FooterModel {
+    home = Translator.translate "home", @language, "UPPER"
+    @footer = new FooterModel({
       nextButton: {
         text: ""
         visible: true
         animated: false
       }
       homeButton: {
-        text:
+        text: "<span class='center'>#{home}<i class='fa fa-home'></i></span>"
         visible: true
         animated: false
       }
@@ -42,28 +48,31 @@ class LessonsPageModel
         visible: true
         animated: false
       }
-    }
+      bar: {
+        visible: false
+      }
+    })
 
     Tracker.autorun =>
       module = @getCurrentModule()
       if module?.type is "VIDEO"
-        @footer.set { replayButton.visible: false }
+        @footer.set "replayButton", { "visible": false }
       else
-        @footer.set { replayButton.visible: true }
+        @footer.set "replayButton", { "visible": true }
 
     Tracker.autorun =>
       onLastModule = @onLastModule()
       if onLastModule
-        text = AppState.translate( "finish", @language, "UPPER")
+        text = Translator.translate( "finish", @language, "UPPER")
       else
-        text = AppState.translate( "next", @language, "UPPER")
-      @footer.set { nextButton.text: "<span class='center'>#{text}<i class='fa fa-arrow-right'></i></span>" }
+        text = Translator.translate( "next", @language, "UPPER")
+      @footer.set "nextButton", { "text": "<span class='center'>#{text}<i class='fa fa-arrow-right'></i></span>" }
 
-    @slideIndex = ->
-      if not @getCurrentLevel()?.currentLessonsSequence()?.getIndex()?
-        return 0
-      else
-        return @getCurrentLevel().currentLessonsSequence().getIndex() + 1
+  slideIndex: ->
+    if not @getCurrentLevel().getModuleIndex()?
+      return 0
+    else
+      return @getCurrentLevel().getModuleIndex() + 1
 
   set: (option) ->
     @state.set option
@@ -111,11 +120,11 @@ class LessonsPageModel
   getCurrentLessons: ->
     return @getCurrentLevel().getLessons()
 
-  getNumLessonsCompleted: ->
-    return @getCurrentLevel()?.getNumLessonsCompleted()
+  getLessonIndex: ->
+    return @getCurrentLevel()?.getLessonIndex()
 
   getCurrentModules: ->
-    return @getCurrentLevel().currentModulesSequence()
+    return @getCurrentLevel().getCurrentModules()
 
   getCurrentModule: ->
     return @getCurrentLevel().getCurrentModule()
@@ -126,8 +135,8 @@ class LessonsPageModel
   isNextModule: ( module )->
     return @getCurrentLevel().isNextModule module
 
-  getNumModulesCompleted: ->
-    return @getCurrentLevel()?.getNumModulesCompleted()
+  getModuleIndex: ->
+    return @getCurrentLevel()?.getModuleIndex()
 
   getLanguage: ->
     return @language
@@ -136,6 +145,6 @@ class LessonsPageModel
     return @slideIndex() == 0
 
   animate: ( button, state )->
-    @footer.set { "#{button}.animated", state }
+    @footer.set button, { animated: state }
 
 module.exports.LessonsPageModel = LessonsPageModel

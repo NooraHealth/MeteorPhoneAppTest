@@ -1,5 +1,4 @@
 
-{ AppState } = require('../../api/AppState.coffee')
 require './layout.html'
 
 Template.Layout.onCreated ->

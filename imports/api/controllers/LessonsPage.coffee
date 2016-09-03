@@ -1,4 +1,7 @@
 
+{ AppConfiguration } = require '../AppConfiguration.coffee'
+
+{ Translator } = require '../utilities/Translator.coffee'
 
 { Curriculums } = require("meteor/noorahealth:mongo-schemas")
 
@@ -19,7 +22,7 @@ class LessonsPageController
       @model.animate "nextButton", true
     @trackAudioStopped( pos, completed, src )
 
-  onLevelSelected: ( index ) ->
+  onLevelSelected: ( index )=>
     @model.startLevel index
     #@model.goToNextLesson()
     #lessons = @model.getCurrentLessons()
@@ -31,7 +34,7 @@ class LessonsPageController
       #}
 
   ##TODO: Change the way context is passed here
-  onChoice: (self, type, showAlert) ->
+  onChoice: (self, type, showAlert)=>
     return (choice) ->
       module = self.model.getCurrentModule()
       if type is "CORRECT"
@@ -41,12 +44,12 @@ class LessonsPageController
         self.playAudio(ContentInterface.getSrc(ContentInterface.incorrectSoundEffectFilename(), "AUDIO"), 1)
         alertType = 'error'
       if showAlert
-        language = AppState.getLanguage()
+        language = AppConfiguration.getLanguage()
         swal {
           title: ""
           type: alertType
           timer: 3000
-          confirmButtonText: AppState.translate "ok", language
+          confirmButtonText: Translator.translate "ok", language
         }
 
       #analytics
@@ -63,30 +66,30 @@ class LessonsPageController
         type: type
       }
 
-  onCompletedQuestion: (module) ->
+  onCompletedQuestion: ( module )=>
     @stopAudio()
     audio = @playAudio ContentInterface.getSrc(module.correct_audio, "AUDIO"), 1, @onFinishExplanation.bind(@, module), @onFinishExplanation.bind(@, module)
     @setCurrentAudio audio
     @
 
-  @celebrateCompletion: ->
+  @celebrateCompletion: =>
     onConfirm = ()=>
       if @model.isLastLesson()
-        @goHome(null, true)
+        @goToSelectLevelSlide(null, true)
       else
         @model.goToNextLesson()
         @autoplayMedia()
 
     onCancel = ()=>
-      @goHome(null, false)
+      @goToSelectLevelSlide(null, false)
     
     if @model.onLastLesson()
       new Award(@language).sendAward( null, null, lessonsComplete, totalLessons)
-      @goHome( null, true )
+      @goToSelectLevelSlide( null, true )
     else
       new Award(@language).sendAward( onConfirm, onCancel, lessonsComplete, totalLessons )
 
-  @onNextButtonClicked = =>
+  onNextButtonClicked: =>
     lessonComplete = @model.onLastModule()
     currentModule = @model.getCurrentModule()
     @destroyAudio()
@@ -99,19 +102,18 @@ class LessonsPageController
       @model.goToNextModule()
       @autoplayMedia()
 
-  @onReplayButtonClicked = =>
+  onReplayButtonClicked: =>
     @getCurrentAudio().replay()
 
-  @onVideoEnd = =>
+  onVideoEnd: =>
     if not @model.onLastModule() and not @isHomePage()
       @showIntroductionToQuestions()
-  
-  ## ------------- PRIVATE METHODS ------------ ##
   
   constructor: ( @curriculum, @language, @condition ) ->
     @model = new LessonsPageModel @curriculum, @language, @condition
     @liveAudio = []
 
+    ## ------------- PRIVATE METHODS ------------ ##
     @showIntroductionToQuestions = ->
       onConfirm = ()=>
         @model.goToNextModule()
@@ -148,12 +150,7 @@ class LessonsPageController
     @playVideo = ( module )->
       $("#" + module._id).find("video")[0]?.play()
 
-    @startLesson = ( index )->
-      @getCurrentLevel().currentLessonsSequence().goTo index
-      #@setOnHomePage false
-      @initializeSwiper()
-
-    @goHome = ( event, completedLevel) ->
+    @goToSelectLevelSlide = ( event, completedLevel) ->
       lesson = @model.getCurrentLesson()
       module = @model.getCurrentModule()
       text = if module?.title then module?.title else module?.question

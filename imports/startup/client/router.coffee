@@ -4,7 +4,7 @@
 { BlazeLayout } = require 'meteor/kadira:blaze-layout'
 { FlowRouter } = require 'meteor/kadira:flow-router'
 { TAPi18n } = require("meteor/tap:i18n")
-{ AppState } = require '../../api/AppState.coffee'
+{ AppConfiguration } = require '../../api/AppConfiguration.coffee'
 
 # PAGES
 require '../../ui/layouts/layout.coffee'
@@ -22,9 +22,9 @@ if Meteor.isCordova
 FlowRouter.route '/', {
   name: "home"
   action: ( params, qparams )->
-    hospital = AppState.getHospital()
-    condition = AppState.getCondition()
-    language = AppState.getLanguage()
+    hospital = AppConfiguration.getHospital()
+    condition = AppConfiguration.getCondition()
+    language = AppConfiguration.getLanguage()
     analytics.identify hospital, {
       hospital: hospital,
       condition: condition,
@@ -39,9 +39,9 @@ FlowRouter.route '/', {
 FlowRouter.route '/configure', {
   name: "configure"
   action: ( params, qparams )->
-    hospital = AppState.getHospital()
-    condition = AppState.getCondition()
-    language = AppState.getLanguage()
+    hospital = AppConfiguration.getHospital()
+    condition = AppConfiguration.getCondition()
+    language = AppConfiguration.getLanguage()
     analytics.identify hospital, {
       hospital: hospital,
       condition: condition,
@@ -57,9 +57,9 @@ FlowRouter.route '/lessons', {
   name: "lessons"
   action: ( params, qparams )->
 
-    hospital = AppState.getHospital()
-    condition = AppState.getCondition()
-    language = AppState.getLanguage()
+    hospital = AppConfiguration.getHospital()
+    condition = AppConfiguration.getCondition()
+    language = AppConfiguration.getLanguage()
     analytics.identify hospital, {
       hospital: hospital,
       condition: condition,
@@ -75,9 +75,9 @@ if Meteor.isCordova
   FlowRouter.route '/load', {
     name: "load"
     action: ( params, qparams )->
-      hospital = AppState.getHospital()
-      condition = AppState.getCondition()
-      language = AppState.getLanguage()
+      hospital = AppConfiguration.getHospital()
+      condition = AppConfiguration.getCondition()
+      language = AppConfiguration.getLanguage()
       analytics.identify hospital, {
         hospital: hospital,
         condition: condition,

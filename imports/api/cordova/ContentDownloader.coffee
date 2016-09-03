@@ -2,7 +2,7 @@
 { Curriculums } = require("meteor/noorahealth:mongo-schemas")
 { OfflineFiles } = require("meteor/noorahealth:mongo-schemas")
 { ContentInterface } = require('../content/ContentInterface.coffee')
-{ AppState } = require('../AppState.coffee')
+{ AppConfiguration } = require('../AppConfiguration.coffee')
 
 ### --------------------------- ARRAY CUSTOMIZATION ------------------------------------- ###
 
@@ -47,7 +47,7 @@ class @ContentDownloader
         paths.push ContentInterface.getDirectory( "AUDIO" ) + ContentInterface.correctSoundEffectFilename()
         paths.push ContentInterface.getDirectory( "AUDIO" ) + ContentInterface.incorrectSoundEffectFilename()
         
-        levels = AppState.getLevels()
+        levels = AppConfiguration.getLevels()
         for level in levels
           paths.push ContentInterface.getDirectory( "IMAGE" ) + level.image
 
@@ -64,7 +64,7 @@ class @ContentDownloader
           console.log "This is the middle one"
           message = ""
         , (progress) ->
-          AppState.setPercentLoaded progress
+          AppConfiguration.setPercentLoaded progress
       catch e
         console.log "in the on complete"
         console.log e

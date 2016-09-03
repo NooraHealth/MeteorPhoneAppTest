@@ -1,5 +1,5 @@
 
-{ AppState } = require '../../../../api/AppState.coffee'
+{ AppConfiguration } = require '../../../../api/AppConfiguration.coffee'
 require './progress.html'
 
 Template.Lesson_view_page_footer_progress_bar.onCreated ->
@@ -10,5 +10,5 @@ Template.Lesson_view_page_footer_progress_bar.onCreated ->
 
   @autorun =>
     percent = Template.currentData().percent
-    AppState.getF7().setProgressbar $('.progressbar'), percent
+    AppConfiguration.getF7().setProgressbar $('.progressbar'), percent
 

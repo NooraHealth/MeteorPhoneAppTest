@@ -7,7 +7,7 @@
 
 { Translator } = require './utilities/Translator.coffee'
 
-class AppState
+class AppConfiguration
   @get: ()->
     @dict ?= new Private "NooraHealthApp"
     return @dict
@@ -16,12 +16,6 @@ class AppState
     constructor: (name) ->
       @dict = new PersistentReactiveDict name
       
-      @langTags = {
-        english: "en",
-        hindi: "hi",
-        kannada: "kd"
-      }
-
     initializeApp: =>
       @F7 = new Framework7(
         materialRipple: true
@@ -31,6 +25,13 @@ class AppState
         tapHoldDelay: 1500
       )
       @
+
+    getLevels: ->
+      return [
+        { name: "beginner", image: "easy.png" }
+        { name: "intermediate", image: "medium.png" }
+        { name: "advanced", image: "hard.png" }
+      ]
 
     getF7: =>
       return @F7
@@ -139,4 +140,4 @@ class AppState
       else
         return Meteor.status().connected
 
-module.exports.AppState = AppState.get()
+module.exports.AppConfiguration = AppConfiguration.get()
