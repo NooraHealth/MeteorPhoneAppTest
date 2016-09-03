@@ -1,0 +1,24 @@
+
+<template name="Lesson_view_page_slides">
+  <div class='swiper-wrapper'>
+    <div class='swiper-slide row'>
+      {{#each level in levels}}
+        <div class="col-33">
+        {{ >Level_thumbnail (levelThumbnailArgs level language levelOptions)}}
+        </div>
+      {{/each}}
+    </div>
+
+    {{#each module in modules}}
+      {{#with module}}
+        <div class='swiper-slide'>
+          <!--{{#if shouldRender module}}-->
+          <div id="{{_id}}" class="card module-card">
+            {{> UI.dynamic template=(getTemplate module)  data=(moduleArgs module language moduleOptions) }}
+          </div>
+          <!--{{/if}}-->
+        </div>
+      {{/with}}
+    {{/each}}
+  </div>
+</template>
