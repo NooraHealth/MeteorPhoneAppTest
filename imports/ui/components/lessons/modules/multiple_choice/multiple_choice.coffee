@@ -41,16 +41,16 @@ Template.Lesson_view_page_multiple_choice.onCreated ->
   @getOnSelectedCallback = (module, templateInstance) ->
     return (option) ->
       if module.isCorrectAnswer option
-        templateInstance.data.onCorrectChoice(option)
+        templateInstance.data.onCorrectChoice(module, option)
         correctlySelected = templateInstance.state.get "correctlySelected"
         if option not in correctlySelected
           correctlySelected.push option
           templateInstance.state.set "correctlySelected", correctlySelected
           if correctlySelected.length == module.correct_answer.length
             templateInstance.state.set "completed", true
-            templateInstance.data.onCompletedQuestion()
+            templateInstance.data.onCompletedQuestion module
       else
-        templateInstance.data.onWrongChoice(option)
+        templateInstance.data.onWrongChoice(module, option)
         incorrectlySelected = templateInstance.state.get "incorrectlySelected"
         if option not in incorrectlySelected
           incorrectlySelected.push option

@@ -33,10 +33,10 @@ Template.Lesson_view_page_binary.onCreated ->
       module = instance.data.module
       instance.state.set "selected", option
       if module.isCorrectAnswer option
-        instance.data.onCorrectChoice(option)
-        instance.data.onCompletedQuestion()
+        instance.data.onCorrectChoice( module, option)
+        instance.data.onCompletedQuestion module
       else
-        instance.data.onWrongChoice(option)
+        instance.data.onWrongChoice(module, option)
 
   @questionComplete = ->
     selected = @state.get "selected"

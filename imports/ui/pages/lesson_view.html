@@ -16,28 +16,7 @@
         <div class="content-block row">
           <div class='swiper-container'>
             {{#if modulesReady}}
-            <div class='swiper-wrapper'>
-              <div class='swiper-slide row'>
-                {{#each level in levels}}
-                  <div class="col-33">
-                  {{ >Level_thumbnail (levelThumbnailArgs level)}}
-                  </div>
-                {{/each}}
-              </div>
-
-              {{#each module in modules}}
-                {{#with module}}
-                  <div class='swiper-slide'>
-                    <!--{{#if shouldRender module}}-->
-                    <div id="{{_id}}" class="card module-card">
-                      {{> UI.dynamic template=(getTemplate module)  data=(moduleArgs module) }}
-                    </div>
-                    <!--{{/if}}-->
-                  </div>
-                {{/with}}
-              {{/each}}
-
-            </div>
+              {{>Lesson_view_page_slides language=getLanguage modules=modules levels=levels levelOptions=levelOptions moduleOptions=moduleOptions }}
             {{/if}}
           </div>
         </div>
@@ -48,3 +27,4 @@
     {{/if}}
   </div>
 </template>
+

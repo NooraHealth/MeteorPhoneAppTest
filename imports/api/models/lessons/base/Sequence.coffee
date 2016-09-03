@@ -29,14 +29,12 @@ class Sequence
     return @getIndex() == @getItems().length - 1
 
   goTo: ( index )->
-    console.log "GOTO #{index}"
     @state.set "index", index
 
   goToNext: ->
     if @onLast()
       @reset()
     else
-      console.log "Going to enxt in sequence"
       index = @getIndex()
       if not index?
         @goTo 0

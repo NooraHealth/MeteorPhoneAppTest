@@ -9,16 +9,8 @@
       {{/each}}
     </div>
 
-    {{#each module in modules}}
-      {{#with module}}
-        <div class='swiper-slide'>
-          <!--{{#if shouldRender module}}-->
-          <div id="{{_id}}" class="card module-card">
-            {{> UI.dynamic template=(getTemplate module)  data=(moduleArgs module language moduleOptions) }}
-          </div>
-          <!--{{/if}}-->
-        </div>
-      {{/with}}
-    {{/each}}
+    {{>Module_slides modules=modules moduleOptions=moduleOptions language=language}}
+
   </div>
 </template>
+

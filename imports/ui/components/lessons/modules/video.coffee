@@ -16,8 +16,6 @@ Template.Lesson_view_page_video.onCreated ->
 
   # Data context validation
   @autorun =>
-    console.log "Validating the video"
-    console.log Template.currentData().module
     schema = new SimpleSchema({
       module: {type: Modules._helpers}
       language: {type: String}

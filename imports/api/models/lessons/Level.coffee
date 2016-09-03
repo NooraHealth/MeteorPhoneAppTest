@@ -20,9 +20,6 @@ class LevelModel
 
     @lessons = @curriculum.getLessonDocuments( @name )
     docsAreEqual = (first, second) ->
-      console.log "Comparing theseee"
-      console.log first
-      console.log second
       return first?._id is second?._id
 
     sequence = @lessons.map (lesson) =>
@@ -60,6 +57,7 @@ class LevelModel
   
   goToNextLesson: ->
     @currentLessonsSequence()?.goToNext()
+    @goToNextModule()
 
   onLastLesson: ->
     @currentLessonsSequence()?.onLast()

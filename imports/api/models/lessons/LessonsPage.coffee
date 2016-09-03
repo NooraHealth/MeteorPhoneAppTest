@@ -70,8 +70,10 @@ class LessonsPageModel
 
   slideIndex: ->
     if not @getCurrentLevel().getModuleIndex()?
+      console.log "Returning slide index 000"
       return 0
     else
+      console.log "Returning slide index not 0"
       return @getCurrentLevel().getModuleIndex() + 1
 
   set: (option) ->

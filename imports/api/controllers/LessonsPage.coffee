@@ -22,7 +22,7 @@ class LessonsPageController
       @model.animate "nextButton", true
     @trackAudioStopped( pos, completed, src )
 
-  onLevelSelected: ( index )=>
+  onLevelSelected: ( index )->
     @model.startLevel index
     #@model.goToNextLesson()
     #lessons = @model.getCurrentLessons()
@@ -33,54 +33,42 @@ class LessonsPageController
         #text: "We don't have lessons available for that level yet"
       #}
 
-  ##TODO: Change the way context is passed here
-  onChoice: (self, type, showAlert)=>
-    return (choice) ->
-      module = self.model.getCurrentModule()
-      if type is "CORRECT"
-        self.playAudio(ContentInterface.getSrc(ContentInterface.correctSoundEffectFilename(), "AUDIO"), 1)
-        alertType = 'success'
-      else
-        self.playAudio(ContentInterface.getSrc(ContentInterface.incorrectSoundEffectFilename(), "AUDIO"), 1)
-        alertType = 'error'
-      if showAlert
-        language = AppConfiguration.getLanguage()
-        swal {
-          title: ""
-          type: alertType
-          timer: 3000
-          confirmButtonText: Translator.translate "ok", language
-        }
-
-      #analytics
-      lesson = self.model.getCurrentLesson()
-      text = if module?.title then module?.title else module?.question
-      analytics.track "Responded to Question", {
-        moduleId: module._id
-        moduleText: text
-        choice: choice
-        lessonTitle: lesson.title
-        lessonId: lesson._id
-        condition: self.condition
-        language: self.language
-        type: type
+  onWrongChoice: ( module, choice )->
+    @playAudio(ContentInterface.getSrc(ContentInterface.incorrectSoundEffectFilename(), "AUDIO"), 1)
+    if module.type is not "MULTIPLE_CHOICE"
+      swal {
+        title: ""
+        type: "error"
+        timer: 3000
+        confirmButtonText: Translator.translate "ok", language
       }
 
-  onCompletedQuestion: ( module )=>
+  onCorrectChoice: ( module, choice )->
+    @playAudio(ContentInterface.getSrc(ContentInterface.correctSoundEffectFilename(), "AUDIO"), 1)
+    if module.type is not "MULTIPLE_CHOICE"
+      swal {
+        title: ""
+        type: "success"
+        timer: 3000
+        confirmButtonText: Translator.translate "ok", language
+      }
+    @trackChoice module, choice
+
+  onCompletedQuestion: ( module )->
     @stopAudio()
     audio = @playAudio ContentInterface.getSrc(module.correct_audio, "AUDIO"), 1, @onFinishExplanation.bind(@, module), @onFinishExplanation.bind(@, module)
     @setCurrentAudio audio
     @
 
-  @celebrateCompletion: =>
-    onConfirm = ()=>
+  @celebrateCompletion: ->
+    onConfirm = =>
       if @model.isLastLesson()
         @goToSelectLevelSlide(null, true)
       else
         @model.goToNextLesson()
         @autoplayMedia()
 
-    onCancel = ()=>
+    onCancel = =>
       @goToSelectLevelSlide(null, false)
     
     if @model.onLastLesson()
@@ -191,6 +179,20 @@ class LessonsPageController
         lessonId: lesson?._id
       }
       @
+
+    @trackChoice = ( module, choice )->
+      lesson = @model.getCurrentLesson()
+      text = if module?.title then module?.title else module?.question
+      analytics.track "Responded to Question", {
+        moduleId: module._id
+        moduleText: text
+        choice: choice
+        lessonTitle: lesson.title
+        lessonId: lesson._id
+        condition: @condition
+        language: @language
+        type: type
+      }
 
 
   module.exports.LessonsPageController = LessonsPageController
