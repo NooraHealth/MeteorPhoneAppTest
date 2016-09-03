@@ -1,8 +1,11 @@
 
 { Curriculums } = require("meteor/noorahealth:mongo-schemas")
+
 { Lessons } = require("meteor/noorahealth:mongo-schemas")
+
 { Modules } = require("meteor/noorahealth:mongo-schemas")
-{ TAPi18n } = require("meteor/tap:i18n")
+
+{ Translator } = require './utilities/Translator.coffee'
 
 class AppState
   @get: ()->
@@ -18,15 +21,6 @@ class AppState
         hindi: "hi",
         kannada: "kd"
       }
-
-      @getLangTag = (language) =>
-        new SimpleSchema({
-          language: { type: String }
-        }).validate {
-          language: language
-        }
-
-        return @langTags[language.toLowerCase()]
 
     initializeApp: =>
       @F7 = new Framework7(
@@ -61,34 +55,13 @@ class AppState
         language: language
       }
 
-      TAPi18n.setLanguage @getLangTag language
+      Translator.setLanguage language
       @dict.setTemporary "language", language
       @
 
     getLanguage: =>
       language = @dict.get "language"
       if not language? then return "English" else return language
-
-    translate: ( key, language, textCase, options) =>
-
-      new SimpleSchema({
-        key: { type: String, optional: true }
-        language: { type: String, optional: true }
-        textCase: { type: String, optional: true }
-      }).validate {
-        key: key
-        language: language
-        textCase: textCase
-      }
-
-      tag = @getLangTag language
-      text = TAPi18n.__ key, options, tag
-      if textCase == "UPPER"
-        return text.toUpperCase()
-      if textCase == "LOWER"
-        return text.toLowerCase()
-      else
-        return text
 
     getCurriculumDoc: ->
       language = @dict.get "language"
