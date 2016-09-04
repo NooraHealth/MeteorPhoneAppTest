@@ -20,6 +20,8 @@ Template.Lesson_view_page.onCreated ()->
       followFinger: false
     }
 
+  @numSlides = new ReactiveVar()
+
   #subscribe to data
   @autorun =>
     if AppConfiguration.templateShouldSubscribe()
@@ -34,11 +36,16 @@ Template.Lesson_view_page.onCreated ()->
       @model = @controller.model
       @swiper = @initializeSwiper()
       
-  @onModulesRendered = (numSlides) ->
-    if numSlides != @swiper.slides.length
+  @onModulesRendered = ( numSlides )->
+    if numSlides != @numSlides.get()
       @swiper = @initializeSwiper()
-    slideIndex = @model.slideIndex()
-    @swiper.slideTo slideIndex
+      @numSlides.set @swiper.slides.length
+
+  @autorun =>
+    if @subscriptionsReady() and @rendered == true and @model?
+      numSlides = @numSlides.get()
+      slideIndex = @model.slideIndex()
+      @swiper.slideTo slideIndex
 
 
 Template.Lesson_view_page.helpers

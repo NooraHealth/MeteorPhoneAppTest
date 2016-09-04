@@ -69,11 +69,7 @@ class LessonsPageModel
       @footer.set "nextButton", { "text": "<span class='center'>#{text}<i class='fa fa-arrow-right'></i></span>" }
 
     Tracker.autorun =>
-      console.log "in the autorun to set the visibilty of the footer"
-      console.log @
-      console.log @.footer
       if @slideIndex() != 0
-        console.log "About to make the footer visible"
         @footer.set "bar", { "visible": true }
       else
         @footer.set "bar", { "visible": false }
