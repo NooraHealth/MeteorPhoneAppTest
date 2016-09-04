@@ -32,30 +32,14 @@ Template.Lesson_view_page.onCreated ()->
     if @subscriptionsReady() and @rendered == true
       @controller = new LessonsPageController( AppConfiguration.getCurriculumDoc(), AppConfiguration.getLanguage(), AppConfiguration.getCondition() )
       @model = @controller.model
-  
-  #re-initialize the swiper when the modules change
-  @slideIndex = new ReactiveVar()
-
-  @autorun =>
-    if @subscriptionsReady() and @rendered == true and @model?
-      console.log "setting the sklide index"
-      #@slideIndex.set(@model.slideIndex())
-      slideIndex = @model.slideIndex()
-      #Tracker.afterFlush =>
+      @swiper = @initializeSwiper()
       
-  @onModulesRendered = ->
-    console.log "in after flush"
-    console.log "Teh slide index #{slideIndex}"
-    console.log @model
-    console.log @model.slideIndex()
+  @onModulesRendered = (numSlides) ->
+    if numSlides != @swiper.slides.length
+      @swiper = @initializeSwiper()
     slideIndex = @model.slideIndex()
-    @swiper = @initializeSwiper()
-    console.log @swiper.slides
     @swiper.slideTo slideIndex
 
-  #@autorun =>
-    #console.log
-    #if @subscriptionsReady() and @rendered == true and @model?
 
 Template.Lesson_view_page.helpers
   modulesReady: ->
@@ -126,7 +110,6 @@ Template.Lesson_view_page.helpers
     }
 
   modules: ->
-    console.log "the modules are different"
     model = Template.instance().model
     return model.getCurrentModules()
 

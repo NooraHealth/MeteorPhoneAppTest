@@ -68,12 +68,20 @@ class LessonsPageModel
         text = Translator.translate( "next", @language, "UPPER")
       @footer.set "nextButton", { "text": "<span class='center'>#{text}<i class='fa fa-arrow-right'></i></span>" }
 
+    Tracker.autorun =>
+      console.log "in the autorun to set the visibilty of the footer"
+      console.log @
+      console.log @.footer
+      if @slideIndex() != 0
+        console.log "About to make the footer visible"
+        @footer.set "bar", { "visible": true }
+      else
+        @footer.set "bar", { "visible": false }
+
   slideIndex: ->
     if not @getCurrentLevel().getModuleIndex()?
-      console.log "Returning slide index 000"
       return 0
     else
-      console.log "Returning slide index not 0"
       return @getCurrentLevel().getModuleIndex() + 1
 
   set: (option) ->
