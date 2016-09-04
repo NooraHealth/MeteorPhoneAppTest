@@ -3,12 +3,6 @@
 
 require './slides.html'
 require './module_slides.coffee'
-require './levels/thumbnail.coffee'
-require './modules/binary.coffee'
-require './modules/slide.html'
-require './modules/scenario.coffee'
-require './modules/video.coffee'
-require './modules/multiple_choice/multiple_choice.coffee'
 
 Template.Lesson_view_page_slides.onCreated ->
   new SimpleSchema({

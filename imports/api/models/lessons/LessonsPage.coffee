@@ -147,6 +147,12 @@ class LessonsPageModel
   getLanguage: ->
     return @language
 
+  lessonsComplete: ->
+    @getCurrentLessons().onLast()
+
+  goToSelectLevelSlide: ->
+    @getCurrentLevel().resetSequences()
+
   onSelectLevelSlide: ->
     return @slideIndex() == 0
 

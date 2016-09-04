@@ -68,7 +68,6 @@ Template.Lesson_view_page.helpers
       nextButton: {
         onClick: controller.onNextButtonClicked.bind controller
         text: model.footer.get "nextButton", "text"
-        onRendered: controller.onNextButtonRendered
         animated: model.footer.get "nextButton", "animated"
       }
       replayButton: {

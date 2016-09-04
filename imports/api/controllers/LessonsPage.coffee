@@ -62,9 +62,9 @@ class LessonsPageController
     @setCurrentAudio audio
     @
 
-  @celebrateCompletion: ->
+  celebrateCompletion: ->
     onConfirm = =>
-      if @model.isLastLesson()
+      if @model.onLastLesson()
         @goToSelectLevelSlide(null, true)
       else
         @model.goToNextLesson()
@@ -73,11 +73,13 @@ class LessonsPageController
     onCancel = =>
       @goToSelectLevelSlide(null, false)
     
+    numLessons = @model.getCurrentLessons().length
+    numLessonsCompleted = @model.getLessonIndex() + 1
     if @model.onLastLesson()
-      new Award(@language).sendAward( null, null, lessonsComplete, totalLessons)
+      new Award(@language).sendAward( null, null, numLessonsCompleted, numLessons)
       @goToSelectLevelSlide( null, true )
     else
-      new Award(@language).sendAward( onConfirm, onCancel, lessonsComplete, totalLessons )
+      new Award(@language).sendAward( onConfirm, onCancel, numLessonsCompleted, numLessons )
 
   onNextButtonClicked: ->
     lessonComplete = @model.onLastModule()
@@ -106,7 +108,6 @@ class LessonsPageController
 
     ## ------------- PRIVATE METHODS ------------ ##
     @showIntroductionToQuestions = ->
-      console.log "Showing introduction to questions"
       onConfirm = ()=>
         @model.goToNextModule()
         @autoplayMedia()
@@ -147,17 +148,9 @@ class LessonsPageController
     @goToSelectLevelSlide = ( event, completedLevel) ->
       lesson = @model.getCurrentLesson()
       module = @model.getCurrentModule()
-      text = if module?.title then module?.title else module?.question
-      analytics.track "Left Lesson For Home", {
-        lessonTitle: lesson?.title
-        lessonId: lesson?._id
-        lastModuleId: module?._id
-        lastModuleText: text
-        lastModuleType: module?.type
-        completedLevel: completedLevel
-        numberOfModulesInLesson: lesson?.modules.length
-      }
+      @trackGoingToSelectLevel lesson, module, completedLevel
       if completedLevel then @model.goToNextLevel()
+      else @model.goToSelectLevelSlide()
       @destroyAudio()
 
     @autoplayMedia = ->
@@ -170,9 +163,21 @@ class LessonsPageController
         audio = @playAudio ContentInterface.getSrc(module.audio, "AUDIO"), 1, onFinishAudio, onFinishAudio
         @setCurrentAudio audio
 
+    @trackGoingToSelectLevel = ( lesson, module, completedLevel )->
+      text = if module?.title then module?.title else module?.question
+      analytics.track "Left Lesson For Home", {
+        lessonTitle: lesson?.title
+        lessonId: lesson?._id
+        lastModuleId: module?._id
+        lastModuleText: text
+        lastModuleType: module?.type
+        completedLevel: completedLevel
+        numberOfModulesInLesson: lesson?.modules.length
+      }
+
     @trackAudioStopped = (pos, completed, src) ->
-      lesson = @getCurrentLevel().currentLessonsSequence().getCurrentItem().lesson
-      module = @getCurrentLevel().currentModulesSequence().getCurrentItem()
+      lesson = @model.getCurrentLesson()
+      module = @model.getCurrentModule()
       text = if module?.title then module?.title else module?.question
       analytics.track "Audio Stopped", {
         moduleText: text

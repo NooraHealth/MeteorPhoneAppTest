@@ -81,7 +81,10 @@ class LevelModel
     return @currentModulesSequence()?.getCurrentItem()
 
   isCurrentModule: ( module )->
-    @currentModulesSequence().isCurrent module
+    if @currentModulesSequence()?
+      return @currentModulesSequence().isCurrent module
+    else
+      return false
 
   isNextModule: ( module )->
     @currentModulesSequence().isNext module
