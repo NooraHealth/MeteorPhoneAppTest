@@ -20,6 +20,8 @@ Template.Lesson_view_page_binary.onCreated ->
       onCompletedQuestion: {type: Function}
     }).validate(Template.currentData())
     @data = Template.currentData()
+    console.log "binary data"
+    console.log @data
 
   #set the state
   @state = new ReactiveDict()
@@ -33,9 +35,11 @@ Template.Lesson_view_page_binary.onCreated ->
       module = instance.data.module
       instance.state.set "selected", option
       if module.isCorrectAnswer option
+        console.log "About to call on correct choice"
         instance.data.onCorrectChoice( module, option)
         instance.data.onCompletedQuestion module
       else
+        console.log "About to call on wrong choice"
         instance.data.onWrongChoice(module, option)
 
   @questionComplete = ->

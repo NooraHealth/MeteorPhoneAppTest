@@ -35,7 +35,8 @@ Template.Lesson_view_page.onCreated ()->
       @controller = new LessonsPageController( AppConfiguration.getCurriculumDoc(), AppConfiguration.getLanguage(), AppConfiguration.getCondition() )
       @model = @controller.model
       @swiper = @initializeSwiper()
-      
+      @controller.onPageRendered?()
+
   @onModulesRendered = ( numSlides )->
     if numSlides != @numSlides.get()
       @swiper = @initializeSwiper()
@@ -137,6 +138,7 @@ Template.Lesson_view_page.helpers
     return model?.onSelectLevelSlide()
 
 Template.Lesson_view_page.onRendered =>
+  console.log "RENDERED"
   instance = Template.instance()
   instance.rendered = true
   #instance.playAudio ContentInterface.getSrc(ContentInterface.correctSoundEffectFilename(), "AUDIO"), 0

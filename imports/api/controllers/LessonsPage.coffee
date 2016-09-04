@@ -1,4 +1,5 @@
 
+
 { AppConfiguration } = require '../AppConfiguration.coffee'
 
 { ContentInterface } = require '../content/ContentInterface.coffee'
@@ -13,6 +14,10 @@
 
 { Audio } = require('../../ui/components/shared/audio.coffee')
 
+{ AudioController } = require './Audio.coffee'
+
+{ VideoController } = require './Video.coffee'
+
 { IntroductionToQuestions } = require('../../ui/components/lessons/popups/introduction_to_questions.coffee')
 
 class LessonsPageController
@@ -26,6 +31,7 @@ class LessonsPageController
 
   onLevelSelected: ( index )->
     @model.startLevel index
+    @autoplayMedia()
     #@model.goToNextLesson()
     #lessons = @model.getCurrentLessons()
     #if lessons.length > 0
@@ -37,22 +43,25 @@ class LessonsPageController
 
   onWrongChoice: ( module, choice )->
     @playAudio(ContentInterface.getSrc(ContentInterface.incorrectSoundEffectFilename(), "AUDIO"), 1)
-    if module.type is not "MULTIPLE_CHOICE"
+    console.log "in on Wrong chceoi"
+    if module.type != "MULTIPLE_CHOICE"
+      console.log "CHOICE!!"
+      console.log "making a swal"
       swal {
         title: ""
         type: "error"
         timer: 3000
-        confirmButtonText: Translator.translate "ok", language
+        confirmButtonText: Translator.translate "ok", @model.getLanguage()
       }
 
   onCorrectChoice: ( module, choice )->
     @playAudio(ContentInterface.getSrc(ContentInterface.correctSoundEffectFilename(), "AUDIO"), 1)
-    if module.type is not "MULTIPLE_CHOICE"
+    if module.type != "MULTIPLE_CHOICE"
       swal {
         title: ""
         type: "success"
         timer: 3000
-        confirmButtonText: Translator.translate "ok", language
+        confirmButtonText: Translator.translate "ok", @model.getLanguage()
       }
     @trackChoice module, choice
 
@@ -97,11 +106,12 @@ class LessonsPageController
     @getCurrentAudio().replay()
 
   onVideoEnd: ->
-    console.log "in the on video end"
-    console.log @
     if not @model.onLastModule() and not @model.onSelectLevelSlide()
       @showIntroductionToQuestions()
   
+  onPageRendered: ->
+    @playAudio ContentInterface.getSrc(ContentInterface.correctSoundEffectFilename(), "AUDIO"), 0 
+    
   constructor: ( @curriculum, @language, @condition ) ->
     @model = new LessonsPageModel @curriculum, @language, @condition
     @liveAudio = []
