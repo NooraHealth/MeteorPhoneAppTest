@@ -1,6 +1,8 @@
 
 { AppConfiguration } = require '../AppConfiguration.coffee'
 
+{ ContentInterface } = require '../content/ContentInterface.coffee'
+
 { Translator } = require '../utilities/Translator.coffee'
 
 { Curriculums } = require("meteor/noorahealth:mongo-schemas")
@@ -77,24 +79,25 @@ class LessonsPageController
     else
       new Award(@language).sendAward( onConfirm, onCancel, lessonsComplete, totalLessons )
 
-  onNextButtonClicked: =>
+  onNextButtonClicked: ->
     lessonComplete = @model.onLastModule()
     currentModule = @model.getCurrentModule()
     @destroyAudio()
     if currentModule.type == "VIDEO"
       @stopVideo currentModule
-
-    if @model.onLastModule()
+    else if @model.onLastModule()
       @celebrateCompletion()
     else
       @model.goToNextModule()
       @autoplayMedia()
 
-  onReplayButtonClicked: =>
+  onReplayButtonClicked: ->
     @getCurrentAudio().replay()
 
-  onVideoEnd: =>
-    if not @model.onLastModule() and not @isHomePage()
+  onVideoEnd: ->
+    console.log "in the on video end"
+    console.log @
+    if not @model.onLastModule() and not @model.onSelectLevelSlide()
       @showIntroductionToQuestions()
   
   constructor: ( @curriculum, @language, @condition ) ->
@@ -103,6 +106,7 @@ class LessonsPageController
 
     ## ------------- PRIVATE METHODS ------------ ##
     @showIntroductionToQuestions = ->
+      console.log "Showing introduction to questions"
       onConfirm = ()=>
         @model.goToNextModule()
         @autoplayMedia()
@@ -136,6 +140,8 @@ class LessonsPageController
       $("#" + module._id).find("video")[0]?.pause()
 
     @playVideo = ( module )->
+      console.log $("#" + module._id)
+      console.log $("#" + module._id).find("video")
       $("#" + module._id).find("video")[0]?.play()
 
     @goToSelectLevelSlide = ( event, completedLevel) ->
@@ -157,9 +163,10 @@ class LessonsPageController
     @autoplayMedia = ->
       module = @model.getCurrentModule()
       if module.type == "VIDEO"
+        console.log "About to play the video"
         @playVideo module
       if module.hasAudio()
-        onFinishAudio = if module.hasExplanation() then @trackAudioStopped else @onFinishExplanation.bind(@, module)
+        onFinishAudio = if module.hasExplanation() then @trackAudioStopped.bind(@) else @onFinishExplanation.bind(@, module)
         audio = @playAudio ContentInterface.getSrc(module.audio, "AUDIO"), 1, onFinishAudio, onFinishAudio
         @setCurrentAudio audio
 
@@ -191,7 +198,7 @@ class LessonsPageController
         lessonId: lesson._id
         condition: @condition
         language: @language
-        type: type
+        type: module.type
       }
 
 

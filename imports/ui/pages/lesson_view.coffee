@@ -61,18 +61,18 @@ Template.Lesson_view_page.helpers
       language: model.getLanguage()
       visible: model.footer.get "bar", "visible"
       homeButton: {
-        onClick: controller.goToSelectLevelSlide
+        onClick: controller.goToSelectLevelSlide.bind controller
         shouldShow: model.footer.get "homeButton", "visible"
         text: model.footer.get "homeButton", "text"
       }
       nextButton: {
-        onClick: controller.onNextButtonClicked
+        onClick: controller.onNextButtonClicked.bind controller
         text: model.footer.get "nextButton", "text"
         onRendered: controller.onNextButtonRendered
         animated: model.footer.get "nextButton", "animated"
       }
       replayButton: {
-        onClick: controller.onReplayButtonClicked
+        onClick: controller.onReplayButtonClicked.bind controller
         shouldShow: model.footer.get "replayButton", "visible"
         text: model.footer.get "replayButton", "text"
       }
