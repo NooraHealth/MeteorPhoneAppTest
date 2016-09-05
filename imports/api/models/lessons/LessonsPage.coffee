@@ -97,8 +97,10 @@ class LessonsPageModel
     return @getCurrentLevel().isEqual level
 
   goToNextLevel: ->
+    @getCurrentLevel().resetSequences()
+
     index = @getLevelIndex()
-    if index == @levelModels.length - 1
+    if index == @levels.length - 1
       @set { level_index: 0 }
     else
       @set { level_index: ++index }

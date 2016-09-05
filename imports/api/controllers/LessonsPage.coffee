@@ -12,8 +12,6 @@
 
 { Award } = require('../../ui/components/lessons/popups/award.coffee')
 
-{ Audio } = require('../../ui/components/shared/audio.coffee')
-
 { AudioController } = require './Audio.coffee'
 
 { VideoController } = require './Video.coffee'
@@ -23,26 +21,18 @@
 class LessonsPageController
   ## ------------- PUBLIC METHODS ------------ ##
 
-  onFinishExplanation: (module, pos, completed, src) ->
+  onFinishExplanation: (module, lesson, pos, completed, src) ->
     isCurrent = @model.isCurrentModule module
     if isCurrent
       @model.animate "nextButton", true
-    @trackAudioStopped( pos, completed, src )
+    @audioController.trackAudioStopped( module, lesson, pos, completed, src )
 
   onLevelSelected: ( index )->
     @model.startLevel index
     @autoplayMedia()
-    #@model.goToNextLesson()
-    #lessons = @model.getCurrentLessons()
-    #if lessons.length > 0
-    #else
-      #swal {
-        #title: "Oops!"
-        #text: "We don't have lessons available for that level yet"
-      #}
 
   onWrongChoice: ( module, choice )->
-    @playAudio(ContentInterface.getSrc(ContentInterface.incorrectSoundEffectFilename(), "AUDIO"), 1)
+    @audioController.playAudio(ContentInterface.getSrc(ContentInterface.incorrectSoundEffectFilename(), "AUDIO"), 1, true)
     if module.type != "MULTIPLE_CHOICE"
       swal {
         title: ""
@@ -52,7 +42,7 @@ class LessonsPageController
       }
 
   onCorrectChoice: ( module, choice )->
-    @playAudio(ContentInterface.getSrc(ContentInterface.correctSoundEffectFilename(), "AUDIO"), 1)
+    @audioController.playAudio(ContentInterface.getSrc(ContentInterface.correctSoundEffectFilename(), "AUDIO"), 1, true)
     if module.type != "MULTIPLE_CHOICE"
       swal {
         title: ""
@@ -63,9 +53,8 @@ class LessonsPageController
     @trackChoice module, choice
 
   onCompletedQuestion: ( module )->
-    @stopAudio()
-    audio = @playAudio ContentInterface.getSrc(module.correct_audio, "AUDIO"), 1, @onFinishExplanation.bind(@, module), @onFinishExplanation.bind(@, module)
-    @setCurrentAudio audio
+    @audioController.stopAudio()
+    audio = @audioController.playAudio ContentInterface.getSrc(module.correct_audio, "AUDIO"), 1, false, @onFinishExplanation.bind(@, module), @onFinishExplanation.bind(@, module)
     @
 
   celebrateCompletion: ->
@@ -90,9 +79,9 @@ class LessonsPageController
   onNextButtonClicked: ->
     lessonComplete = @model.onLastModule()
     currentModule = @model.getCurrentModule()
-    @destroyAudio()
+    @audioController.destroyAudio()
     if currentModule.type == "VIDEO"
-      @stopVideo currentModule
+      @videoController.stopVideo currentModule
     else if @model.onLastModule()
       @celebrateCompletion()
     else
@@ -100,18 +89,21 @@ class LessonsPageController
       @autoplayMedia()
 
   onReplayButtonClicked: ->
-    @getCurrentAudio().replay()
+    @audioController.replayCurrentAudio()
 
   onVideoEnd: ->
     if not @model.onLastModule() and not @model.onSelectLevelSlide()
       @showIntroductionToQuestions()
+    else
+      @celebrateCompletion()
   
   onPageRendered: ->
-    @playAudio ContentInterface.getSrc(ContentInterface.correctSoundEffectFilename(), "AUDIO"), 0 
+    @audioController.playAudio ContentInterface.getSrc(ContentInterface.correctSoundEffectFilename(), "AUDIO"), 0, true
     
   constructor: ( @curriculum, @language, @condition ) ->
+    @audioController = new AudioController()
+    @videoController = new VideoController()
     @model = new LessonsPageModel @curriculum, @language, @condition
-    @liveAudio = []
 
     ## ------------- PRIVATE METHODS ------------ ##
     @showIntroductionToQuestions = ->
@@ -123,52 +115,24 @@ class LessonsPageController
 
       new IntroductionToQuestions().send( onConfirm, onCancel, @language )
 
-    @setCurrentAudio = (audio) ->
-      @currentAudio = audio
-      @
-
-    @getCurrentAudio = ->
-      return @currentAudio
-
-    @playAudio = (src, volume, whenFinished, whenPaused) ->
-      audio = new Audio src, volume
-      audio.play whenFinished, whenPaused
-      @liveAudio.push audio
-      return audio
-
-    @stopAudio = ->
-      @getCurrentAudio().stop()
-
-    @destroyAudio = ->
-      for audio in @liveAudio
-        audio.destroy()
-      @liveAudio = []
-
-    @stopVideo = ( module )->
-      $("#" + module._id).find("video")[0]?.pause()
-
-    @playVideo = ( module )->
-      console.log $("#" + module._id)
-      console.log $("#" + module._id).find("video")
-      $("#" + module._id).find("video")[0]?.play()
-
     @goToSelectLevelSlide = ( event, completedLevel) ->
       lesson = @model.getCurrentLesson()
       module = @model.getCurrentModule()
       @trackGoingToSelectLevel lesson, module, completedLevel
       if completedLevel then @model.goToNextLevel()
       else @model.goToSelectLevelSlide()
-      @destroyAudio()
+      @audioController.destroyAudio()
 
     @autoplayMedia = ->
       module = @model.getCurrentModule()
+      lesson = @model.getCurrentLesson()
+      console.log "The current module"
+      console.log module
       if module?.type == "VIDEO"
-        console.log "About to play the video"
-        @playVideo module
-      if module.hasAudio()
-        onFinishAudio = if module.hasExplanation() then @trackAudioStopped.bind(@) else @onFinishExplanation.bind(@, module)
-        audio = @playAudio ContentInterface.getSrc(module.audio, "AUDIO"), 1, onFinishAudio, onFinishAudio
-        @setCurrentAudio audio
+        @videoController.playVideo module
+      if module?.hasAudio()
+        onFinishAudio = if module.hasExplanation() then @audioController.trackAudioStopped.bind(@, module, lesson) else @onFinishExplanation.bind(@, module, lesson)
+        audio = @audioController.playAudio ContentInterface.getSrc(module.audio, "AUDIO"), 1, false, onFinishAudio, onFinishAudio
 
     @trackGoingToSelectLevel = ( lesson, module, completedLevel )->
       text = if module?.title then module?.title else module?.question
@@ -181,23 +145,6 @@ class LessonsPageController
         completedLevel: completedLevel
         numberOfModulesInLesson: lesson?.modules.length
       }
-
-    @trackAudioStopped = (pos, completed, src) ->
-      lesson = @model.getCurrentLesson()
-      module = @model.getCurrentModule()
-      text = if module?.title then module?.title else module?.question
-      analytics.track "Audio Stopped", {
-        moduleText: text
-        audioSrc: src
-        moduleId: module?._id
-        language: @language
-        condition: @condition
-        time: pos
-        completed: completed
-        lessonTitle: lesson?.title
-        lessonId: lesson?._id
-      }
-      @
 
     @trackChoice = ( module, choice )->
       lesson = @model.getCurrentLesson()
