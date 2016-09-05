@@ -38,6 +38,9 @@ Template.Lesson_view_page.onCreated ()->
       @controller.onPageRendered?()
 
   @onModulesRendered = ( numSlides )->
+    console.log "ON MODULES RENDERED"
+    console.log "num slies #{ numSlides }"
+    console.log "numSlides.get() #{ @numSlides.get() }"
     if numSlides != @numSlides.get()
       @swiper = @initializeSwiper()
       @numSlides.set @swiper.slides.length
@@ -46,6 +49,7 @@ Template.Lesson_view_page.onCreated ()->
     if @subscriptionsReady() and @rendered == true and @model?
       numSlides = @numSlides.get()
       slideIndex = @model.slideIndex()
+      console.log slideIndex
       @swiper.slideTo slideIndex
 
 
@@ -133,8 +137,10 @@ Template.Lesson_view_page.helpers
         isCurrent:model.isCurrentLevel.bind model, level
       }
 
-  selectLevelSlide: ->
+  onSelectLevelSlide: ->
     model = Template.instance().model
+    console.log "On select level sllide??"
+    console.log model?.onSelectLevelSlide()
     return model?.onSelectLevelSlide()
 
 Template.Lesson_view_page.onRendered =>

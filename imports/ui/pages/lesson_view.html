@@ -2,12 +2,14 @@
   <div data-page="index" class="page navbar-fixed toolbar-fixed">
     <!-- Top Navbar-->
     {{#Navbar}}
-      {{#if selectLevelSlide}}
-        {{#with language=getLanguage}}
-          <a href="/" class="right button">{{translate "change_language" "en" "UPPER"}}</a>
-        {{/with}}
-      {{else}}
-        <span class="right">{{lessonTitle}}</span>
+      {{#if modulesReady}}
+        {{#if onSelectLevelSlide}}
+          {{#with language=getLanguage}}
+            <a href="/" class="right button">{{translate "change_language" "en" "UPPER"}}</a>
+          {{/with}}
+        {{else}}
+          <span class="right">{{lessonTitle}}</span>
+        {{/if}}
       {{/if}}
 
     {{/Navbar}}
