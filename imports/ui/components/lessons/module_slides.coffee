@@ -24,6 +24,7 @@ Template.Module_slides.onCreated ->
     "moduleOptions.isCurrent": { type: Function }
     "moduleOptions.onRendered": { type: Function }
   }).validate Template.currentData()
+  console.log "MAKING MODULE SLIDEs"
   
   @autorun =>
     onRendered = Template.currentData().moduleOptions?.onRendered

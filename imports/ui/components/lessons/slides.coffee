@@ -25,6 +25,7 @@ Template.Lesson_view_page_slides.onCreated ->
     "levelOptions.onLevelSelected": { type: Function }
   }).validate Template.currentData()
 
+
 Template.Lesson_view_page_slides.helpers
 
   levelThumbnailArgs: ( level, language, options )->

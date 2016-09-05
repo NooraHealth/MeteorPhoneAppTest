@@ -1,4 +1,5 @@
 
+
 { Translator } = require '../../utilities/Translator.coffee'
 
 { FooterModel } = require './Footer.coffee'

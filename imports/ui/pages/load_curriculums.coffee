@@ -28,7 +28,7 @@ Template.Load_curriculums_page.onCreated ->
         text: "You need to be connected to wifi or data in order to download your curriculums"
       }
 
-    else if ContentInterface.subscriptionsReady(@) and @firstRun
+    else if @subscriptionsReady(@) and @firstRun
       @firstRun = false
       configuration = AppConfiguration.getConfiguration()
       curriculums = Curriculums.find { condition: configuration.condition }

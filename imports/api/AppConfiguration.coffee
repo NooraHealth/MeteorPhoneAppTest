@@ -135,9 +135,10 @@ class AppConfiguration
 
     templateShouldSubscribe: ->
       isSubscribed = @isSubscribed()
-      if Meteor.isCordova
-        return Meteor.status().connected and not isSubscribed
-      else
-        return Meteor.status().connected
+      #if Meteor.isCordova
+        #return Meteor.status().connected and not isSubscribed
+      #else
+        #return Meteor.status().connected
+      return Meteor.status().connected
 
 module.exports.AppConfiguration = AppConfiguration.get()

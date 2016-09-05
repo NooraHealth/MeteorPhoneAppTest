@@ -104,12 +104,15 @@ class LessonsPageController
   onSlideToNext: ->
     @model.disable "nextButton", false
 
+  #######################################
+  ### CONSTRUCTOR AND PRIVATE METHODS ###
+  #######################################
+  
   constructor: ( @curriculum, @language, @condition ) ->
     @audioController = new AudioController()
     @videoController = new VideoController()
     @model = new LessonsPageModel @curriculum, @language, @condition
 
-    ## ------------- PRIVATE METHODS ------------ ##
     @showIntroductionToQuestions = ->
       goToNext = ()=>
         @model.goToNextModule()
