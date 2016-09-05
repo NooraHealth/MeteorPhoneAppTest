@@ -43,10 +43,7 @@ class LessonsPageController
 
   onWrongChoice: ( module, choice )->
     @playAudio(ContentInterface.getSrc(ContentInterface.incorrectSoundEffectFilename(), "AUDIO"), 1)
-    console.log "in on Wrong chceoi"
     if module.type != "MULTIPLE_CHOICE"
-      console.log "CHOICE!!"
-      console.log "making a swal"
       swal {
         title: ""
         type: "error"
@@ -165,7 +162,7 @@ class LessonsPageController
 
     @autoplayMedia = ->
       module = @model.getCurrentModule()
-      if module.type == "VIDEO"
+      if module?.type == "VIDEO"
         console.log "About to play the video"
         @playVideo module
       if module.hasAudio()

@@ -91,8 +91,13 @@ class LevelModel
 
   resetSequences: ->
     for lessonItem in @lessonsSequence.getItems()
+      console.log lessonItem
       lessonItem.modulesSequence.reset()
+      console.log "Resetting this modules sequence"
+      console.log lessonItem.modulesSequence.getIndex()
     @lessonsSequence.reset()
+    console.log "After reset"
+    console.log @lessonsSequence
     
   isEqual: ( level )->
     return level.getName() == @getName() and

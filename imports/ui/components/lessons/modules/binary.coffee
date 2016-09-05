@@ -20,8 +20,6 @@ Template.Lesson_view_page_binary.onCreated ->
       onCompletedQuestion: {type: Function}
     }).validate(Template.currentData())
     @data = Template.currentData()
-    console.log "binary data"
-    console.log @data
 
   #set the state
   @state = new ReactiveDict()

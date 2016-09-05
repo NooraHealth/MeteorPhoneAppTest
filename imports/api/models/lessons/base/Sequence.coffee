@@ -11,7 +11,7 @@ class Sequence
 
     @state = new ReactiveDict()
     @state.set {
-      index: -1
+      index: null
     }
 
   getIndex: ->
@@ -38,7 +38,8 @@ class Sequence
       index = @getIndex()
       if not index?
         @goTo 0
-      @goTo ++index
+      else
+        @goTo ++index
 
   getNext: ->
     index = @getIndex()
