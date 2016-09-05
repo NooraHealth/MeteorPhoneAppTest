@@ -118,17 +118,20 @@ Template.Select_language_page.helpers
         onClick: ->
         shouldShow: false
         text: ""
+        disabled: false
       }
       nextButton: {
         onClick: -> FlowRouter.go "lessons"
         text: text
         onRendered: ->
         animated: instance.state.get("letsBeginButtonAnimated")
+        disabled: false
       }
       replayButton: {
         onClick: ->
         shouldShow: false
         text: ""
+        disabled: false
       }
       progressBar: {
         percent: "0"

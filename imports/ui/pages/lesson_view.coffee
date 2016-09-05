@@ -46,9 +46,8 @@ Template.Lesson_view_page.onCreated ()->
     if @subscriptionsReady() and @rendered == true and @model?
       numSlides = @numSlides.get()
       slideIndex = @model.slideIndex()
-      console.log "SLIDING!! to #{ slideIndex }"
-      console.log @swiper.slides
       @swiper.slideTo slideIndex
+      @controller.onSlideToNext()
 
 
 Template.Lesson_view_page.helpers
@@ -67,16 +66,19 @@ Template.Lesson_view_page.helpers
         onClick: controller.goToSelectLevelSlide.bind controller
         shouldShow: model.footer.get "homeButton", "visible"
         text: model.footer.get "homeButton", "text"
+        disabled: model.footer.get "homeButton", "disabled"
       }
       nextButton: {
         onClick: controller.onNextButtonClicked.bind controller
         text: model.footer.get "nextButton", "text"
         animated: model.footer.get "nextButton", "animated"
+        disabled: model.footer.get "nextButton", "disabled"
       }
       replayButton: {
         onClick: controller.onReplayButtonClicked.bind controller
         shouldShow: model.footer.get "replayButton", "visible"
         text: model.footer.get "replayButton", "text"
+        disabled: model.footer.get "replayButton", "disabled"
       }
       progressBar: {
         percent: progress.toString()
@@ -137,12 +139,9 @@ Template.Lesson_view_page.helpers
 
   onSelectLevelSlide: ->
     model = Template.instance().model
-    console.log "On select level sllide??"
-    console.log model?.onSelectLevelSlide()
     return model?.onSelectLevelSlide()
 
 Template.Lesson_view_page.onRendered =>
-  console.log "RENDERED"
   instance = Template.instance()
   instance.rendered = true
   #instance.playAudio ContentInterface.getSrc(ContentInterface.correctSoundEffectFilename(), "AUDIO"), 0

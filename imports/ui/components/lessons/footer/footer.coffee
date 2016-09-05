@@ -10,13 +10,16 @@ Template.Lesson_view_page_footer.onCreated ->
       "homeButton.onClick": {type: Function}
       "homeButton.shouldShow": {type: Boolean}
       "homeButton.text": {type: String}
+      "homeButton.disabled": {type: Boolean}
       "replayButton.onClick": {type: Function}
       "replayButton.shouldShow": {type: Boolean}
       "replayButton.text": {type: String}
+      "replayButton.disabled": {type: Boolean}
       "nextButton.onClick": {type: Function}
       "nextButton.onRendered": {type: Function, optional: true}
       "nextButton.animated": {type: Boolean}
       "nextButton.text": {type: String}
+      "nextButton.disabled": {type: Boolean}
       "progressBar.percent": {type: String}
       "progressBar.shouldShow": {type: Boolean}
       language: {type: String}
@@ -30,6 +33,7 @@ Template.Lesson_view_page_footer.helpers
       attributes: {
         id: "homeBtn"
         class: classes
+        disabled: data.disabled
       }
       content: data.text
       onClick: data.onClick
@@ -43,6 +47,7 @@ Template.Lesson_view_page_footer.helpers
       attributes: {
         id: "nextModuleBtn"
         class: classes
+        disabled: data.disabled
       }
       content: data.text
       onClick: data.onClick
@@ -60,6 +65,7 @@ Template.Lesson_view_page_footer.helpers
       attributes: {
         id: "replayBtn"
         class: classes
+        disabled: data.disabled
       }
       content: data.text
       onClick: data.onClick

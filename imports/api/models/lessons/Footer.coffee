@@ -10,12 +10,15 @@ class FooterModel
       "homeButton.text": { type: String }
       "homeButton.visible": { type: Boolean }
       "homeButton.animated": { type: Boolean }
+      "homeButton.disabled": { type: Boolean }
       "nextButton.text": { type: String }
       "nextButton.visible": { type: Boolean }
       "nextButton.animated": { type: Boolean }
+      "nextButton.disabled": { type: Boolean }
       "replayButton.text": { type: String }
       "replayButton.visible": { type: Boolean }
       "replayButton.animated": { type: Boolean }
+      "replayButton.disabled": { type: Boolean }
       "bar.visible": { type: Boolean }
     }).validate options
 

@@ -80,6 +80,7 @@ class LessonsPageController
     lessonComplete = @model.onLastModule()
     currentModule = @model.getCurrentModule()
     @audioController.destroyAudio()
+    @model.disable "nextButton", true
     if currentModule.type == "VIDEO"
       @videoController.stopVideo currentModule
     else if @model.onLastModule()
@@ -100,6 +101,9 @@ class LessonsPageController
   onPageRendered: ->
     @audioController.playAudio ContentInterface.getSrc(ContentInterface.correctSoundEffectFilename(), "AUDIO"), 0, true
     
+  onSlideToNext: ->
+    @model.disable "nextButton", false
+
   constructor: ( @curriculum, @language, @condition ) ->
     @audioController = new AudioController()
     @videoController = new VideoController()
@@ -107,13 +111,11 @@ class LessonsPageController
 
     ## ------------- PRIVATE METHODS ------------ ##
     @showIntroductionToQuestions = ->
-      onConfirm = ()=>
+      goToNext = ()=>
         @model.goToNextModule()
         @autoplayMedia()
 
-      onCancel = ()=>
-
-      new IntroductionToQuestions().send( onConfirm, onCancel, @language )
+      new IntroductionToQuestions().send( goToNext, goToNext, @language )
 
     @goToSelectLevelSlide = ( event, completedLevel) ->
       lesson = @model.getCurrentLesson()

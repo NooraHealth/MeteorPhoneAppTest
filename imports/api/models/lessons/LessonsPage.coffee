@@ -37,16 +37,19 @@ class LessonsPageModel
         text: ""
         visible: true
         animated: false
+        disabled: false
       }
       homeButton: {
         text: "<span class='center'>#{home}<i class='fa fa-home'></i></span>"
         visible: true
         animated: false
+        disabled: false
       }
       replayButton: {
         text: '<span class="center"><i class="fa fa-repeat"></i></span>'
         visible: true
         animated: false
+        disabled: false
       }
       bar: {
         visible: false
@@ -160,5 +163,8 @@ class LessonsPageModel
 
   animate: ( button, state )->
     @footer.set button, { animated: state }
+
+  disable: ( button, state )->
+    @footer.set button, { disabled: state }
 
 module.exports.LessonsPageModel = LessonsPageModel
