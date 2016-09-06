@@ -22,18 +22,6 @@ Meteor.startup ()->
     Meteor.subscribe "modules.all"
     AppConfiguration.setSubscribed true
 
-  cloudinary.config {
-    cloud_name: Meteor.settings.public.CLOUDINARY_NAME,
-    api_key: Meteor.settings.public.CLOUDINARY_API_KEY,
-    api_secret: Meteor.settings.public.CLOUDINARY_API_SECRET
-  }
-  console.log cloudinary
-  console.log "CONFIGED"
-  src = ContentInterface.getSrc(ContentInterface.correctSoundEffectFilename(), "AUDIO")
-  console.log cloudinary.url( src, {}, ( result ) ->
-    console.log result
-  )
-
 
   if not AppConfiguration.isConfigured()
     FlowRouter.go "configure"

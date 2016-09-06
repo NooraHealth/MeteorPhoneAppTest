@@ -29,7 +29,7 @@ class @ContentDownloader
 
     constructor: ->
 
-    loadCurriculums: (cursor, onComplete) =>
+    loadCurriculums: ( cursor, onComplete )=>
       try
         #validate the arguments
         new SimpleSchema({
@@ -42,27 +42,41 @@ class @ContentDownloader
 
         curriculums = cursor.fetch()
 
-        paths = []
-        paths.push ContentInterface.getDirectory( "AUDIO" ) + ContentInterface.introFilename()
-        paths.push ContentInterface.getDirectory( "AUDIO" ) + ContentInterface.correctSoundEffectFilename()
-        paths.push ContentInterface.getDirectory( "AUDIO" ) + ContentInterface.incorrectSoundEffectFilename()
+        images = []
+        audio = []
+        video = []
+
+        audio.push ContentInterface.getDirectory( "AUDIO" ) + ContentInterface.introFilename()
+        audio.push ContentInterface.getDirectory( "AUDIO" ) + ContentInterface.correctSoundEffectFilename()
+        audio.push ContentInterface.getDirectory( "AUDIO" ) + ContentInterface.incorrectSoundEffectFilename()
         
         levels = AppConfiguration.getLevels()
         for level in levels
-          paths.push ContentInterface.getDirectory( "IMAGE" ) + level.image
+          images.push ContentInterface.getDirectory( "IMAGE" ) + level.image
 
         for curriculum in curriculums
-          paths.merge @_allContentPathsInCurriculum( curriculum )
+          images.merge @_allContentPathsInCurriculum curriculum, "IMAGE"
+          audio.merge @_allContentPathsInCurriculum curriculum, "AUDIO"
+          video.merge @_allContentPathsInCurriculum curriculum, "VIDEO"
 
-        @_downloadFiles paths
-        .then (error)->
-          #this is where you do the on success thing
-          console.log "about to run on complete"
-          console.log error
-          onComplete(error)
+        removeAlreadyExistingPaths = ( path )->
+          return not OfflineFiles.findOne {path: path}
+
+        images = images.filter removeAlreadyExistingPaths
+        video = video.filter removeAlreadyExistingPaths
+        audio = audio.filter removeAlreadyExistingPaths
+
+        @_downloadFiles([
+          { paths: images, type: "IMAGE" },
+          { paths: video, type: "VIDEO" },
+          { paths: audio, type: "AUDIO" },
+        ])
+        .then ->
+          onComplete null
         , (err)->
           console.log "This is the middle one"
           message = ""
+          onComplete err
         , (progress) ->
           AppConfiguration.setPercentLoaded progress
       catch e
@@ -70,101 +84,111 @@ class @ContentDownloader
         console.log e
         onComplete e
 
-
-    _downloadFiles: (paths) ->
-
+    _downloadFiles: ( pathObjects )->
       deferred = Q.defer()
       error = null
-      #filter paths for those that do not already exist locally
-      console.log "The number of paths #{paths.length}"
-      toDownload = paths.filter (path)->
-        return not OfflineFiles.findOne {path: path}
-
-      console.log "The number to download #{toDownload.length}"
-      if toDownload.length == 0
-        deferred.resolve(error)
-
       retry = []
       numRecieved = 0
+      numToDownload = 0
+      ( numToDownload += obj.paths.length for obj in pathObjects )
+
+      if pathObjects.length == 0
+        deferred.resolve(error)
 
       window.requestFileSystem LocalFileSystem.PERSISTENT, 0, (fs)->
 
         ft = new FileTransfer()
 
-        ft.onprogress = (event)->
-          percent = numRecieved/toDownload.length
-          deferred.notify(percent)
+        ft.onprogress = ( event )->
+          percent = numRecieved / numToDownload
+          deferred.notify percent
 
-        downloadFile = (path) ->
+        downloadFile = ( path, type )->
           fsPath = fs.root.toURL() + path
-          ft.download(ContentInterface.getRemoteSource(path), fsPath, getSuccessCallback(path, fsPath), getErrorCallback(path, fsPath), true)
+          src = ContentInterface.getRemoteSource(path, type.toLowerCase())
+          console.log src
+          ft.download( src , fsPath, onSuccess.bind( @, path, fsPath, type ), onError.bind(@, path, fsPath, type), true)
 
-        markAsResolved = (entry) ->
+        markAsResolved = ( entry )->
           numRecieved++
-          console.log "RESOLVED:" + numRecieved + "/"+ toDownload.length
-          if numRecieved == toDownload.length
+          console.log "RESOLVED:" + numRecieved + "/"+ numToDownload
+          if numRecieved == numToDownload
             deferred.resolve entry
 
-        getSuccessCallback = (path, fsPath) ->
-          return (entry)->
-            console.log "About to insert the file"
-            console.log path
-            id = OfflineFiles.insert {
-              #url: file.url
-              path: path
-              fsPath: fsPath
-            }
-            console.log "Successfully entered: here is the OfflineFile"
-            console.log OfflineFiles.findOne({_id: id})
-            markAsResolved()
+        onSuccess = ( path, fsPath, type, entry )->
+          id = OfflineFiles.insert {
+            #url: file.url
+            path: path
+            fsPath: fsPath
+          }
+          markAsResolved()
 
-        getErrorCallback = (path) ->
-          return (err)->
-            console.log "There was an error: "
-            console.log err
-            console.log err.code
-            console.log err.code == 3
-            if err.http_status == 404
-              markAsResolved(path)
-              error = new Meteor.Error("error-downloading", "Some content could not be found")
-            else if err.code == 2
-              markAsResolved(path)
-              error = new Meteor.Error("error-downloading", "Error accessing content on server")
-            else if err.code == 3
-              if path in retry
-                markAsResolved(path)
-                # If already retried downloading, reject
-                error = new Meteor.Error("error-downloading", "Timeout accessing content on server")
-              else
-                console.log "Retrying download"
-                # Try downloading again
-                retry.push path
-                console.log retry
-                downloadFile path
+        onError = ( path, type, err )->
+          console.log "There was an error: "
+          console.log err
+          console.log err.code
+          console.log err.code == 3
+          if err.http_status == 404
+            markAsResolved path
+            error = new Meteor.Error("error-downloading", "Some content could not be found")
+          else if err.code == 2
+            markAsResolved path
+            error = new Meteor.Error("error-downloading", "Error accessing content on server")
+          else if err.code == 3
+            if path in retry
+              markAsResolved path
+              # If already retried downloading, reject
+              error = new Meteor.Error("error-downloading", "Timeout accessing content on server")
             else
-              markAsResolved(path)
-              error = err
+              console.log "Retrying download"
+              # Try downloading again
+              retry.push path
+              downloadFile path, type
+          else
+            markAsResolved path
+            error = err
 
-        for path in toDownload
-          downloadFile path
+        for obj in pathObjects
+          for path in obj.paths
+            downloadFile path, obj.type
 
-      , (err)->
+      , ( err )->
         # Error retrieving the local filesystem
         deferred.resolve err
 
       return deferred.promise
       
-    _allContentPathsInCurriculum: (curriculum) ->
+    _allContentPathsInCurriculum: ( curriculum, type )->
       paths = []
       lessons = curriculum.getLessonDocuments("introduction")
         .concat curriculum.getLessonDocuments("beginner")
         .concat curriculum.getLessonDocuments("intermediate")
         .concat curriculum.getLessonDocuments("advanced")
       for lesson in lessons
-        paths.merge @_allContentPathsInLesson(lesson)
+        switch type
+          when "IMAGE"
+            paths.merge @_allImagesInLesson(lesson)
+          when "AUDIO"
+            paths.merge @_allAudioInLesson(lesson)
+          when "VIDEO"
+            paths.merge @_allVideosInLesson(lesson)
       return paths
 
-    _allContentPathsInLesson: (lesson) ->
+    #_allContentPathsInLesson: (lesson) ->
+      #if not lesson?
+        #return []
+
+      #modules = lesson.getModulesSequence()
+      #paths = []
+      #if lesson.image
+        #paths.push ContentInterface.getDirectory("IMAGE") + lesson.image
+
+      #for module in modules
+        #paths.merge @_allContentPathsInModule(module)
+
+      #return paths
+
+    _allImagesInLesson: (lesson) ->
       if not lesson?
         return []
 
@@ -174,24 +198,53 @@ class @ContentDownloader
         paths.push ContentInterface.getDirectory("IMAGE") + lesson.image
 
       for module in modules
-        paths.merge @_allContentPathsInModule(module)
+        paths.merge @_allImagesInModule(module)
 
       return paths
 
-    _allContentPathsInModule: (module) ->
+    _allAudioInLesson: (lesson) ->
+      if not lesson?
+        return []
+
+      modules = lesson.getModulesSequence()
+      paths = []
+      for module in modules
+        paths.merge @_allAudioInModule(module)
+
+      return paths
+
+    _allVideosInLesson: (lesson) ->
+      if not lesson?
+        return []
+
+      modules = lesson.getModulesSequence()
+      paths = []
+      for module in modules
+        paths.merge @_allVideosInModule(module)
+
+      return paths
+
+    _allImagesInModule: ( module )->
       paths = []
       if module.image
         paths.push ContentInterface.getDirectory("IMAGE") + module.image
-      if module.video
-        paths.push ContentInterface.getDirectory("VIDEO") + module.video
-      if module.audio
-        paths.push ContentInterface.getDirectory("AUDIO") + module.audio
-      if module.correct_audio
-        paths.push ContentInterface.getDirectory("AUDIO") + module.correct_audio
       if module.options and module.type == 'MULTIPLE_CHOICE'
         paths.merge (ContentInterface.getDirectory("IMAGE") + option for option in module.options when option?)
       return paths
 
+    _allVideosInModule: ( module )->
+      paths = []
+      if module.video
+        paths.push ContentInterface.getDirectory("VIDEO") + module.video
+      return paths
+
+    _allAudioInModule: ( module )->
+      paths = []
+      if module.audio
+        paths.push ContentInterface.getDirectory("AUDIO") + module.audio
+      if module.correct_audio
+        paths.push ContentInterface.getDirectory("AUDIO") + module.correct_audio
+      return paths
 
 module.exports.ContentDownloader = ContentDownloader
 

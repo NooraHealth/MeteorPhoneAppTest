@@ -62,8 +62,7 @@ class ContentInterface
       return "incorrect_soundeffect.mp3"
 
     getDirectory: (type) =>
-      console.log "TYPE "
-      console.log type
+      type = type.toLowerCase()
       if type == "video"
         return @_videoDirectory()
       if type == "image"
@@ -74,16 +73,12 @@ class ContentInterface
     # Where the content is stored remotely (AWS S3 server)
     getRemoteSource: ( path, resource_type ) =>
       new SimpleSchema({
-        path: {type: String}
-      }).validate({path: path})
+        path: { type: String }
+        type: { type: String }
+      }).validate({ path: path, type: resource_type })
 
-      console.log "THE REMOTE SOURCE"
-      console.log path
-      console.log cloudinary.url(path)
+      resource_type = resource_type.toLowerCase()
       return cloudinary.url path, { resource_type: resource_type }
-      #return cloudinary.url "testing/commons/2/26/YellowLabradorLooking_new.jpg"
-      #return encodeURI(@remoteContentEndpoint + path)
-    
     
     # Where the content is stored remotely (AWS S3 server)
     getLocalSource: (path) =>
