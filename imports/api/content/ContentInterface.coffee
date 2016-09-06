@@ -8,9 +8,14 @@
 ##############################################################################
 
 { OfflineFiles } = require("meteor/noorahealth:mongo-schemas")
+
 { Lessons } = require("meteor/noorahealth:mongo-schemas")
+
 { Modules } = require("meteor/noorahealth:mongo-schemas")
+
 { Curriculums } = require("meteor/noorahealth:mongo-schemas")
+
+cloudinary = require("cloudinary")
 
 class ContentInterface
   @get: ()->
@@ -21,6 +26,12 @@ class ContentInterface
   class PrivateInterface
 
     constructor: ->
+      console.log Meteor.settings.public.CLOUDINARY_NAME
+      cloudinary.config {
+        cloud_name: Meteor.settings.public.CLOUDINARY_NAME,
+        api_key: Meteor.settings.public.CLOUDINARY_API_KEY,
+        api_secret: Meteor.settings.public.CLOUDINARY_API_SECRET
+      }
       #Template.registerHelper 'getSrc', ( filename, type )=>
         #console.log "getting the src of #{filename}"
         #if filename? and filename != ""
@@ -30,13 +41,16 @@ class ContentInterface
       @remoteContentEndpoint = Meteor.settings.public.CONTENT_SRC
 
     _audioDirectory: ->
-      return "NooraHealthContent/Audio/"
+      #return "NooraHealthContent/Audio/"
+      return "Audio/"
 
     _imageDirectory: ->
-      return "NooraHealthContent/Image/"
+      #return "NooraHealthContent/Image/"
+      return "Image/"
 
     _videoDirectory: ->
-      return "NooraHealthContent/Video/"
+      #return "NooraHealthContent/Video/"
+      return "Video/"
 
     introFilename: =>
       return "AppIntro.mp3"
@@ -48,20 +62,28 @@ class ContentInterface
       return "incorrect_soundeffect.mp3"
 
     getDirectory: (type) =>
-      if type == "VIDEO"
+      console.log "TYPE "
+      console.log type
+      if type == "video"
         return @_videoDirectory()
-      if type == "IMAGE"
+      if type == "image"
         return @_imageDirectory()
-      if type == "AUDIO"
+      if type == "audio"
         return @_audioDirectory()
 
     # Where the content is stored remotely (AWS S3 server)
-    getRemoteSource: (path) =>
+    getRemoteSource: ( path, resource_type ) =>
       new SimpleSchema({
         path: {type: String}
       }).validate({path: path})
 
-      return encodeURI(@remoteContentEndpoint + path)
+      console.log "THE REMOTE SOURCE"
+      console.log path
+      console.log cloudinary.url(path)
+      return cloudinary.url path, { resource_type: resource_type }
+      #return cloudinary.url "testing/commons/2/26/YellowLabradorLooking_new.jpg"
+      #return encodeURI(@remoteContentEndpoint + path)
+    
     
     # Where the content is stored remotely (AWS S3 server)
     getLocalSource: (path) =>
@@ -80,11 +102,12 @@ class ContentInterface
         filename: {type: String},
         type: {type: String}
       }).validate({filename: filename, type: type})
-      #url = @getEndpoint(path)
+
+      type = type.toLowerCase()
       path = @getDirectory(type) + filename
       if Meteor.isCordova
         return @getLocalSource path
       else
-        return @getRemoteSource path
+        return @getRemoteSource path, type
 
 module.exports.ContentInterface = ContentInterface.get()
