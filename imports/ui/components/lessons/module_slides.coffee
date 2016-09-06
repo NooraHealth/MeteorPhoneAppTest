@@ -22,10 +22,10 @@ Template.Module_slides.onCreated ->
     "moduleOptions.onVideoEnd": { type: Function }
     "moduleOptions.onStopVideo": { type: Function }
     "moduleOptions.isCurrent": { type: Function }
+    "moduleOptions.isNext": { type: Function }
     "moduleOptions.onRendered": { type: Function }
   }).validate Template.currentData()
-  console.log "MAKING MODULE SLIDEs"
-  
+
   @autorun =>
     onRendered = Template.currentData().moduleOptions?.onRendered
     numModules = Template.currentData().modules?.length
@@ -45,6 +45,9 @@ Template.Module_slides.helpers
       return "Lesson_view_page_video"
     if module?.type == "SLIDE"
       return "Lesson_view_page_slide"
+
+  shouldRender: ( module, options )->
+    return options.isCurrent module# or options.isNext module
 
   moduleArgs: ( module )->
     instance = Template.instance()

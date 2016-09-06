@@ -90,12 +90,6 @@ Template.Lesson_view_page.helpers
     model = Template.instance().model
     return model?.getCurrentLesson()?.title
 
-  shouldRender: (module) ->
-    model = Template.instance().model
-    isCurrent = model.isCurrentModule module
-    isNext = model.isNextModule module
-    return isCurrent or isNext
-
   moduleOptions: ->
     instance = Template.instance()
     model = Template.instance().model
@@ -111,6 +105,8 @@ Template.Lesson_view_page.helpers
       onVideoEnd: controller.onVideoEnd.bind controller
       isCurrent: model.isCurrentModule.bind model
       onRendered: instance.onModulesRendered.bind instance
+      isCurrent: model.isCurrentModule.bind model
+      isNext: model.isNextModule.bind model
     }
 
   levelOptions: ->

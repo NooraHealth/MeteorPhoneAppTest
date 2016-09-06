@@ -37,12 +37,6 @@ class AppConfiguration
       return @F7
       
     setPercentLoaded: (percent) =>
-      new SimpleSchema({
-        percent: { type: Number }
-      }).validate {
-        percent: percent
-      }
-
       @dict.setTemporary "percentLoaded", percent
       @
 

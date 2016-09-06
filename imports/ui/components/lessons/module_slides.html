@@ -2,11 +2,11 @@
 <template name="Module_slides">
   {{#each module in modules}}
   <div class='swiper-slide'>
-    <!--{{#if shouldRender module}}-->
-    <div id="{{module._id}}" class="card module-card">
-      {{> UI.dynamic template=(getTemplate module)  data=(moduleArgs module) }}
-    </div>
-    <!--{{/if}}-->
+    <div id="{{module._id}}" class="card module-card {{#unless shouldRender module moduleOptions}} hidden {{/unless}}">
+        <!--{{#if shouldRender module moduleOptions}}-->
+          {{> UI.dynamic template=(getTemplate module)  data=(moduleArgs module) }}
+        <!--{{/if}}-->
+      </div>
   </div>
   {{/each}}
 </template>
