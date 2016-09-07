@@ -78,6 +78,8 @@ class ContentInterface
       }).validate({ path: path, type: resource_type })
 
       resource_type = resource_type.toLowerCase()
+      if resource_type == "audio"
+        resource_type = "video"
       return cloudinary.url path, { resource_type: resource_type }
     
     # Where the content is stored remotely (AWS S3 server)
