@@ -123,8 +123,11 @@ class LessonsPageModel
   onLastLesson: ->
     @getCurrentLevel().onLastLesson()
 
+  getLevel: ( index )->
+    return @getLevels()[index]
+
   getCurrentLevel: ->
-    return @getLevels()[@getLevelIndex()]
+    return @getLevel @getLevelIndex()
 
   getCurrentLesson: ->
     return @getCurrentLevel().getCurrentLesson()
@@ -161,6 +164,10 @@ class LessonsPageModel
 
   onSelectLevelSlide: ->
     return @slideIndex() == 0
+
+  levelHasLessons: ( index )->
+    level = @getLevel index
+    return level.getLessons().length > 0
 
   animate: ( button, state )->
     @footer.set button, { animated: state }

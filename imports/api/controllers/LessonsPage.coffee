@@ -28,8 +28,14 @@ class LessonsPageController
     @audioController.trackAudioStopped( module, lesson, pos, completed, src )
 
   onLevelSelected: ( index )->
-    @model.startLevel index
-    @autoplayMedia()
+    if not @model.levelHasLessons index
+      swal {
+        title: "Oops"
+        text: "We don't have lessons available for that level yet"
+      }
+    else
+      @model.startLevel index
+      @autoplayMedia()
 
   onWrongChoice: ( module, choice )->
     @audioController.playAudio(ContentInterface.getSrc(ContentInterface.incorrectSoundEffectFilename(), "AUDIO"), 1, true)
