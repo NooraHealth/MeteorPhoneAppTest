@@ -32,6 +32,7 @@ Template.Load_curriculums_page.onCreated ->
       onComplete = (e) ->
         if e
           console.log "Error downloading curriculum"
+          console.log e
           swal {
             title: "Error downloading curriculums"
             text: e.message

@@ -4,8 +4,8 @@
 { AudioContent } = require '../content/AudioContent.coffee'
 { correctSoundEffectFilename } = require '../content/AudioContent.coffee'
 { incorrectSoundEffectFilename } = require '../content/AudioContent.coffee'
-{ ImageContent } = require '../content/AudioContent.coffee'
-{ VideoContent } = require '../content/AudioContent.coffee'
+{ ImageContent } = require '../content/ImageContent.coffee'
+{ VideoContent } = require '../content/VideoContent.coffee'
 { AppConfiguration } = require '../AppConfiguration.coffee'
 
 ### --------------------------- ARRAY CUSTOMIZATION --------------------------------- ###
@@ -34,55 +34,60 @@ class @ContentDownloader
     constructor: ->
 
     loadCurriculums: ( cursor, onComplete )=>
-      try
-        #validate the arguments
-        new SimpleSchema({
-          cursor: {type: Mongo.Cursor}
-          onComplete: {type: Function}
-        }).validate({cursor: cursor, onComplete: onComplete})
+      #try
+      #validate the arguments
+      console.log "About to download!!"
+      new SimpleSchema({
+        cursor: {type: Mongo.Cursor}
+        onComplete: {type: Function}
+      }).validate({cursor: cursor, onComplete: onComplete})
 
-        if not Meteor.status().connected
-          throw new Meteor.Error "not-connected", "The iPad is not connected to data. Please connect and try again"
+      if not Meteor.status().connected
+        throw new Meteor.Error "not-connected", "The iPad is not connected to data. Please connect and try again"
 
-        curriculums = cursor.fetch()
+      curriculums = cursor.fetch()
 
-        images = []
-        audio = []
-        video = []
+      images = []
+      audio = []
+      video = []
 
-        audio.push correctSoundEffectFilename
-        audio.push incorrectSoundEffectFilename
+      audio.push correctSoundEffectFilename
+      audio.push incorrectSoundEffectFilename
 
-        levels = AppConfiguration.getLevels()
-        for level in levels
-          images.push ImageContent.getFullPath level.image
+      levels = AppConfiguration.getLevels()
+      for level in levels
+        images.push level.image
 
-        for curriculum in curriculums
-          images.merge @_allFilesInCurriculum curriculum, "IMAGE"
-          audio.merge @_allFilesInCurriculum curriculum, "AUDIO"
-          video.merge @_allFilesInCurriculum curriculum, "VIDEO"
+      for curriculum in curriculums
+        images.merge @_allFilesInCurriculum curriculum, "IMAGE"
+        audio.merge @_allFilesInCurriculum curriculum, "AUDIO"
+        video.merge @_allFilesInCurriculum curriculum, "VIDEO"
 
-        removeAlreadyExistingFiles = ( filename )->
-          return not OfflineFiles.findOne { filename: filename }
+      removeAlreadyExistingFiles = ( filename )->
+        return not OfflineFiles.findOne { filename: filename }
 
-        images = images.filter removeAlreadyExistingFiles
-        video = video.filter removeAlreadyExistingFiles
-        audio = audio.filter removeAlreadyExistingFiles
+      images = images.filter removeAlreadyExistingFiles
+      video = video.filter removeAlreadyExistingFiles
+      audio = audio.filter removeAlreadyExistingFiles
+      console.log "About to download these files"
+      console.log images
+      console.log audio
+      console.log video
 
-        @_downloadFiles([
-          { filenames: images, type: "IMAGE" },
-          { filenames: video, type: "VIDEO" },
-          { filenames: audio, type: "AUDIO" },
-        ])
-        .then ->
-          onComplete null
-        , (err)->
-          message = ""
-          onComplete err
-        , (progress) ->
-          AppConfiguration.setPercentLoaded progress
-      catch e
-        onComplete e
+      @_downloadFiles([
+        { filenames: images, type: "IMAGE" },
+        { filenames: video, type: "VIDEO" },
+        { filenames: audio, type: "AUDIO" },
+      ])
+      .then ->
+        onComplete null
+      , (err)->
+        message = ""
+        onComplete err
+      , (progress) ->
+        AppConfiguration.setPercentLoaded progress
+      #catch e
+        #onComplete e
 
     _downloadFiles: ( fileObjects )->
       deferred = Q.defer()

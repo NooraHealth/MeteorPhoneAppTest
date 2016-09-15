@@ -1,6 +1,6 @@
 
 { BlazeLayout } = require 'meteor/kadira:blaze-layout'
-#{ AppConfiguration } = require('../../api/AppConfiguration.coffee')
+{ AppConfiguration } = require('../../api/AppConfiguration.coffee')
 
 require 'meteor/loftsteinn:framework7-ios'
 
