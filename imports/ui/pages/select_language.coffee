@@ -1,8 +1,6 @@
 
 { AppConfiguration } = require('../../api/AppConfiguration.coffee')
-
 { Translator } = require('../../api/utilities/Translator.coffee')
-
 { Curriculums } = require("meteor/noorahealth:mongo-schemas")
 
 # TEMPLATE

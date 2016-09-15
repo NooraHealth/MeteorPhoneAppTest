@@ -1,19 +1,21 @@
 
+{ AudioContent } = require '../../../api/content/AudioContent.coffee'
+
 class Audio
-  constructor: (@src, @volume)->
+  constructor: (@filename, @volume)->
     new SimpleSchema({
-      src: {type: String}
+      filename: {type: String}
       volume: {type: Number, optional: true}
-    }).validate {src: @src, volume: @volume}
+    }).validate {filename: @filename, volume: @volume}
 
   onEnd: (whenFinished) =>
-    whenFinished?( @sound.pos?(), true, @src )
+    whenFinished?( @sound.pos?(), true, @filename )
 
   onPause: (whenPaused) =>
-    whenPaused?( @sound.pos?(), false, @src )
+    whenPaused?( @sound.pos?(), false, @filename )
   
   onLoadError: (whenFinished, id, error) =>
-    whenFinished?( @sound.pos?(), false, @src )
+    whenFinished?( @sound.pos?(), false, @filename )
 
   replay: (afterReplay) =>
     @stop()
@@ -33,8 +35,9 @@ class Audio
     alreadyPlaying = @sound?.playing()
     if not alreadyPlaying
       volume = if @volume? then @volume else 1
+      src = AudioContent.getSrc @filename
       @sound ?= new Howl {
-        src: [@src]
+        src: [src]
         onloaderror: @onLoadError.bind(@, whenFinished)
         #onplay: -> console.log "Playing the audio"
         onend: @onEnd.bind(@, whenFinished)

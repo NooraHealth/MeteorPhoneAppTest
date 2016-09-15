@@ -1,15 +1,8 @@
 
 { BlazeLayout } = require 'meteor/kadira:blaze-layout'
-
-{ AppConfiguration } = require('../../api/AppConfiguration.coffee')
-
-{ ContentInterface } = require('../../api/content/ContentInterface.coffee')
-
-{ Curriculums } = require("meteor/noorahealth:mongo-schemas")
+#{ AppConfiguration } = require('../../api/AppConfiguration.coffee')
 
 require 'meteor/loftsteinn:framework7-ios'
-
-cloudinary = require("cloudinary")
 
 Meteor.startup ()->
   TAPi18n.setLanguage "en"

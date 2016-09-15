@@ -1,15 +1,10 @@
 
 
 { Translator } = require '../../utilities/Translator.coffee'
-
 { FooterModel } = require './Footer.coffee'
-
 { LevelModel } = require './Level.coffee'
-
 { Curriculums } = require("meteor/noorahealth:mongo-schemas")
-
 { AppConfiguration } = require '../../AppConfiguration.coffee'
-
 
 class LessonsPageModel
   constructor: ( @curriculum, @language, @condition )->

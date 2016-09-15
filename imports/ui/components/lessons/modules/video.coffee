@@ -1,10 +1,8 @@
 
 { Modules } = require("meteor/noorahealth:mongo-schemas")
-
-{ ContentInterface } = require('../../../../api/content/ContentInterface.coffee')
+{ VideoContent } = require('../../../../api/content/VideoContent.coffee')
 
 require '../../../../api/utilities/global_template_helpers.coffee'
-
 require "./video.html"
 
 Template.Lesson_view_page_video.onCreated ->
@@ -86,7 +84,7 @@ Template.Lesson_view_page_video.helpers
     return {
       title: module.title
       class: "video-module center"
-      src: ContentInterface.getSrc(module.video, "VIDEO")
+      src: VideoContent.getSrc module.video
       controls: true
     }
   

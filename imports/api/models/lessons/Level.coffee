@@ -1,6 +1,5 @@
 
 { Curriculums } = require "meteor/noorahealth:mongo-schemas"
-
 { Sequence } = require "./base/Sequence.coffee"
 
 class LevelModel

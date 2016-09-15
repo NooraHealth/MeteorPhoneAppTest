@@ -1,13 +1,10 @@
 
-{ ContentInterface } = require '../../../../../api/content/ContentInterface.coffee'
-
+{ ImageContent } = require '../../../../../api/content/ImageContent.coffee'
 { Modules } = require("meteor/noorahealth:mongo-schemas")
 
 require '../../../../../api/utilities/global_template_helpers.coffee'
-
-require "./multiple_choice.html"
-
 require "./option.coffee"
+require "./multiple_choice.html"
 
 Template.Lesson_view_page_multiple_choice.onCreated ->
   # Data context validation
@@ -77,7 +74,7 @@ Template.Lesson_view_page_multiple_choice.onCreated ->
     
     mapData = (option, i) ->
       map[option] = {
-        src: ContentInterface.getSrc( option, "IMAGE")
+        src: ImageContent.getSrc option
         class: getClasses(option)
       }
 
@@ -106,14 +103,4 @@ Template.Lesson_view_page_multiple_choice.helpers
     start = options.length / 2
     end = options.length
     return instance.getOptions options, start, end
-
-  audioArgs: (data) ->
-    return {
-      attributes: {
-        src: ContentInterface.getSrc data.src, "AUDIO"
-      }
-      playing: data.playing
-      whenFinished: data.onFinish
-      whenPaused: data.onPause
-    }
 

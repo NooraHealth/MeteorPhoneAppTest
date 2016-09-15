@@ -1,12 +1,8 @@
 
 { Modules } = require("meteor/noorahealth:mongo-schemas")
-
-{ ContentInterface } = require('../../../../api/content/ContentInterface.coffee')
-
 { Translator } = require("../../../../api/utilities/Translator.coffee")
 
 require '../../../../api/utilities/global_template_helpers.coffee'
-
 require "./scenario.html"
     
 Template.Lesson_view_page_scenario.onCreated ->

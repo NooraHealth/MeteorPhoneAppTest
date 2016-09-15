@@ -1,10 +1,14 @@
 
-{ Curriculums } = require("meteor/noorahealth:mongo-schemas")
-{ OfflineFiles } = require("meteor/noorahealth:mongo-schemas")
-{ ContentInterface } = require('../content/ContentInterface.coffee')
-{ AppConfiguration } = require('../AppConfiguration.coffee')
+{ Curriculums } = require "meteor/noorahealth:mongo-schemas"
+{ OfflineFiles } = require "meteor/noorahealth:mongo-schemas"
+{ AudioContent } = require '../content/AudioContent.coffee'
+{ correctSoundEffectFilename } = require '../content/AudioContent.coffee'
+{ incorrectSoundEffectFilename } = require '../content/AudioContent.coffee'
+{ ImageContent } = require '../content/AudioContent.coffee'
+{ VideoContent } = require '../content/AudioContent.coffee'
+{ AppConfiguration } = require '../AppConfiguration.coffee'
 
-### --------------------------- ARRAY CUSTOMIZATION ------------------------------------- ###
+### --------------------------- ARRAY CUSTOMIZATION --------------------------------- ###
 
 Array::merge = (other) -> Array::push.apply @, other
 
@@ -13,7 +17,7 @@ Array::merge = (other) -> Array::push.apply @, other
 # ContentDownloader                                                          
 #
 # Given the id of a Curriculum, the CurriculumDownloader fetches all of the 
-# images, audio, and videos from the remote server (ContentInterface), 
+# images, audio, and videos from the remote server
 # and stores them locally on the device. A reference to each file is stored
 # as an OfflineFile document upon successful download.
 #
@@ -46,53 +50,49 @@ class @ContentDownloader
         audio = []
         video = []
 
-        audio.push ContentInterface.getDirectory( "AUDIO" ) + ContentInterface.introFilename()
-        audio.push ContentInterface.getDirectory( "AUDIO" ) + ContentInterface.correctSoundEffectFilename()
-        audio.push ContentInterface.getDirectory( "AUDIO" ) + ContentInterface.incorrectSoundEffectFilename()
-        
+        audio.push correctSoundEffectFilename
+        audio.push incorrectSoundEffectFilename
+
         levels = AppConfiguration.getLevels()
         for level in levels
-          images.push ContentInterface.getDirectory( "IMAGE" ) + level.image
+          images.push ImageContent.getFullPath level.image
 
         for curriculum in curriculums
-          images.merge @_allContentPathsInCurriculum curriculum, "IMAGE"
-          audio.merge @_allContentPathsInCurriculum curriculum, "AUDIO"
-          video.merge @_allContentPathsInCurriculum curriculum, "VIDEO"
+          images.merge @_allFilesInCurriculum curriculum, "IMAGE"
+          audio.merge @_allFilesInCurriculum curriculum, "AUDIO"
+          video.merge @_allFilesInCurriculum curriculum, "VIDEO"
 
-        removeAlreadyExistingPaths = ( path )->
-          return not OfflineFiles.findOne {path: path}
+        removeAlreadyExistingFiles = ( filename )->
+          return not OfflineFiles.findOne { filename: filename }
 
-        images = images.filter removeAlreadyExistingPaths
-        video = video.filter removeAlreadyExistingPaths
-        audio = audio.filter removeAlreadyExistingPaths
+        images = images.filter removeAlreadyExistingFiles
+        video = video.filter removeAlreadyExistingFiles
+        audio = audio.filter removeAlreadyExistingFiles
 
         @_downloadFiles([
-          { paths: images, type: "IMAGE" },
-          { paths: video, type: "VIDEO" },
-          { paths: audio, type: "AUDIO" },
+          { filenames: images, type: "IMAGE" },
+          { filenames: video, type: "VIDEO" },
+          { filenames: audio, type: "AUDIO" },
         ])
         .then ->
           onComplete null
         , (err)->
-          console.log "This is the middle one"
           message = ""
           onComplete err
         , (progress) ->
           AppConfiguration.setPercentLoaded progress
       catch e
-        console.log "in the on complete"
-        console.log e
         onComplete e
 
-    _downloadFiles: ( pathObjects )->
+    _downloadFiles: ( fileObjects )->
       deferred = Q.defer()
       error = null
       retry = []
       numRecieved = 0
       numToDownload = 0
-      ( numToDownload += obj.paths.length for obj in pathObjects )
+      ( numToDownload += obj.filenames.length for obj in fileObjects )
 
-      if pathObjects.length == 0
+      if fileObjects.length == 0
         deferred.resolve(error)
 
       window.requestFileSystem LocalFileSystem.PERSISTENT, 0, (fs)->
@@ -103,11 +103,15 @@ class @ContentDownloader
           percent = numRecieved / numToDownload
           deferred.notify percent
 
-        downloadFile = ( path, type )->
-          fsPath = fs.root.toURL() + path
-          src = ContentInterface.getRemoteSource(path, type.toLowerCase())
-          console.log src
-          ft.download( src , fsPath, onSuccess.bind( @, path, fsPath, type ), onError.bind(@, path, fsPath, type), true)
+        downloadFile = ( filename, type )->
+          fsPath = fs.root.toURL() + filename
+          switch type
+            when "AUDIO" then src = AudioContent.getRemoteContent filename
+            when "IMAGE" then src = ImageContent.getRemoteContent filename
+            when "VIDEO" then src = VideoContent.getRemoteContent filename
+            else src = ""
+
+          ft.download( src , fsPath, onSuccess.bind( @, filename, fsPath, type ), onError.bind(@, filename, fsPath, type), true)
 
         markAsResolved = ( entry )->
           numRecieved++
@@ -115,42 +119,42 @@ class @ContentDownloader
           if numRecieved == numToDownload
             deferred.resolve entry
 
-        onSuccess = ( path, fsPath, type, entry )->
+        onSuccess = ( filename, fsPath, type, entry )->
           id = OfflineFiles.insert {
             #url: file.url
-            path: path
+            filename: filename
             fsPath: fsPath
           }
           markAsResolved()
 
-        onError = ( path, type, err )->
+        onError = ( filename, type, err )->
           console.log "There was an error: "
           console.log err
           console.log err.code
           console.log err.code == 3
           if err.http_status == 404
-            markAsResolved path
+            markAsResolved filename
             error = new Meteor.Error("error-downloading", "Some content could not be found")
           else if err.code == 2
-            markAsResolved path
+            markAsResolved filename
             error = new Meteor.Error("error-downloading", "Error accessing content on server")
           else if err.code == 3
-            if path in retry
-              markAsResolved path
+            if filename in retry
+              markAsResolved filename
               # If already retried downloading, reject
               error = new Meteor.Error("error-downloading", "Timeout accessing content on server")
             else
               console.log "Retrying download"
               # Try downloading again
-              retry.push path
-              downloadFile path, type
+              retry.push filename
+              downloadFile filename, type
           else
-            markAsResolved path
+            markAsResolved filename
             error = err
 
-        for obj in pathObjects
-          for path in obj.paths
-            downloadFile path, obj.type
+        for obj in fileObjects
+          for filename in obj.filenames
+            downloadFile filename, obj.type
 
       , ( err )->
         # Error retrieving the local filesystem
@@ -158,8 +162,8 @@ class @ContentDownloader
 
       return deferred.promise
       
-    _allContentPathsInCurriculum: ( curriculum, type )->
-      paths = []
+    _allFilesInCurriculum: ( curriculum, type )->
+      filenames = []
       lessons = curriculum.getLessonDocuments("introduction")
         .concat curriculum.getLessonDocuments("beginner")
         .concat curriculum.getLessonDocuments("intermediate")
@@ -167,84 +171,70 @@ class @ContentDownloader
       for lesson in lessons
         switch type
           when "IMAGE"
-            paths.merge @_allImagesInLesson(lesson)
+            filenames.merge @_allImagesInLesson(lesson)
           when "AUDIO"
-            paths.merge @_allAudioInLesson(lesson)
+            filenames.merge @_allAudioInLesson(lesson)
           when "VIDEO"
-            paths.merge @_allVideosInLesson(lesson)
-      return paths
-
-    #_allContentPathsInLesson: (lesson) ->
-      #if not lesson?
-        #return []
-
-      #modules = lesson.getModulesSequence()
-      #paths = []
-      #if lesson.image
-        #paths.push ContentInterface.getDirectory("IMAGE") + lesson.image
-
-      #for module in modules
-        #paths.merge @_allContentPathsInModule(module)
-
-      #return paths
+            filenames.merge @_allVideosInLesson(lesson)
+      return filenames
 
     _allImagesInLesson: (lesson) ->
       if not lesson?
         return []
 
       modules = lesson.getModulesSequence()
-      paths = []
+      filenames = []
       if lesson.image
-        paths.push ContentInterface.getDirectory("IMAGE") + lesson.image
+        filenames.push lesson.image
 
       for module in modules
-        paths.merge @_allImagesInModule(module)
+        filenames.merge @_allImagesInModule(module)
 
-      return paths
+      return filenames
 
     _allAudioInLesson: (lesson) ->
       if not lesson?
         return []
 
       modules = lesson.getModulesSequence()
-      paths = []
+      filenames = []
       for module in modules
-        paths.merge @_allAudioInModule(module)
+        filenames.merge @_allAudioInModule(module)
 
-      return paths
+      return filenames
 
     _allVideosInLesson: (lesson) ->
       if not lesson?
         return []
 
       modules = lesson.getModulesSequence()
-      paths = []
+      filenames = []
       for module in modules
-        paths.merge @_allVideosInModule(module)
+        filenames.merge @_allVideosInModule(module)
 
-      return paths
+      return filenames
 
     _allImagesInModule: ( module )->
-      paths = []
+      filenames = []
       if module.image
-        paths.push ContentInterface.getDirectory("IMAGE") + module.image
+        filenames.push module.image
       if module.options and module.type == 'MULTIPLE_CHOICE'
-        paths.merge (ContentInterface.getDirectory("IMAGE") + option for option in module.options when option?)
-      return paths
+        filenames.merge ( option for option in module.options when option?)
+      return filenames
 
     _allVideosInModule: ( module )->
-      paths = []
+      filenames = []
       if module.video
-        paths.push ContentInterface.getDirectory("VIDEO") + module.video
-      return paths
+        filenames.push module.video
+      return filenames
 
     _allAudioInModule: ( module )->
-      paths = []
+      filenames = []
       if module.audio
-        paths.push ContentInterface.getDirectory("AUDIO") + module.audio
+        filenames.push module.audio
       if module.correct_audio
-        paths.push ContentInterface.getDirectory("AUDIO") + module.correct_audio
-      return paths
+        filenames.push module.correct_audio
+      return filenames
 
 module.exports.ContentDownloader = ContentDownloader
 

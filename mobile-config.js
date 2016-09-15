@@ -1,6 +1,6 @@
 App.accessRule( "*");
 
-App.setPreference('Orientation', 'landscape');
+//App.setPreference('Orientation', 'landscape');
 App.setPreference('AllowInlineMediaPlayback', 'true');
 App.setPreference('MediaPlaybackRequiresUserAction', 'false');
 
@@ -14,6 +14,7 @@ App.icons({
   // iOS
   'iphone': 'public/icons/icon-60x60.png',
   'ipad': 'public/icons/icon-76x76.png',
+  'ipad_2x': 'public/icons/icon-76x76.png',
 
   //// Android
   'android_ldpi': 'public/icons/icon-36x36.png',

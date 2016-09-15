@@ -1,22 +1,15 @@
 
 
 { AppConfiguration } = require '../AppConfiguration.coffee'
-
-{ ContentInterface } = require '../content/ContentInterface.coffee'
-
 { Translator } = require '../utilities/Translator.coffee'
-
 { Curriculums } = require("meteor/noorahealth:mongo-schemas")
-
 { LessonsPageModel } = require '../models/lessons/LessonsPage.coffee'
-
 { Award } = require('../../ui/components/lessons/popups/award.coffee')
-
 { AudioController } = require './Audio.coffee'
-
 { VideoController } = require './Video.coffee'
-
 { IntroductionToQuestions } = require('../../ui/components/lessons/popups/introduction_to_questions.coffee')
+{ correctSoundEffectFilename } = require '../content/AudioContent.coffee'
+{ incorrectSoundEffectFilename } = require '../content/AudioContent.coffee'
 
 class LessonsPageController
   ## ------------- PUBLIC METHODS ------------ ##
@@ -38,7 +31,7 @@ class LessonsPageController
       @autoplayMedia()
 
   onWrongChoice: ( module, choice )->
-    @audioController.playAudio(ContentInterface.getSrc(ContentInterface.incorrectSoundEffectFilename(), "AUDIO"), 1, true)
+    @audioController.playAudio( incorrectSoundEffectFilename , 1, true)
     if module.type != "MULTIPLE_CHOICE"
       swal {
         title: ""
@@ -48,7 +41,7 @@ class LessonsPageController
       }
 
   onCorrectChoice: ( module, choice )->
-    @audioController.playAudio(ContentInterface.getSrc(ContentInterface.correctSoundEffectFilename(), "AUDIO"), 1, true)
+    @audioController.playAudio( correctSoundEffectFilename , 1, true)
     if module.type != "MULTIPLE_CHOICE"
       swal {
         title: ""
@@ -60,7 +53,7 @@ class LessonsPageController
 
   onCompletedQuestion: ( module )->
     @audioController.stopAudio()
-    audio = @audioController.playAudio ContentInterface.getSrc(module.correct_audio, "AUDIO"), 1, false, @onFinishExplanation.bind(@, module), @onFinishExplanation.bind(@, module)
+    audio = @audioController.playAudio module.correct_audio, 1, false, @onFinishExplanation.bind(@, module), @onFinishExplanation.bind(@, module)
     @
 
   celebrateCompletion: ->
@@ -105,7 +98,7 @@ class LessonsPageController
       @celebrateCompletion()
   
   onPageRendered: ->
-    @audioController.playAudio ContentInterface.getSrc(ContentInterface.correctSoundEffectFilename(), "AUDIO"), 0, true
+    @audioController.playAudio correctSoundEffectFilename, 0, true
     
   onSlideToNext: ->
     @model.disable "nextButton", false
@@ -143,7 +136,7 @@ class LessonsPageController
         @videoController.playVideo module
       if module?.hasAudio()
         onFinishAudio = if module.hasExplanation() then @audioController.trackAudioStopped.bind(@, module, lesson) else @onFinishExplanation.bind(@, module, lesson)
-        audio = @audioController.playAudio ContentInterface.getSrc(module.audio, "AUDIO"), 1, false, onFinishAudio, onFinishAudio
+        audio = @audioController.playAudio module.audio, 1, false, onFinishAudio, onFinishAudio
 
     @trackGoingToSelectLevel = ( lesson, module, completedLevel )->
       text = if module?.title then module?.title else module?.question

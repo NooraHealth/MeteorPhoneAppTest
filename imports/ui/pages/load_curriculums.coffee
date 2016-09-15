@@ -1,9 +1,6 @@
+
 { AppConfiguration } = require '../../api/AppConfiguration.coffee'
-
 { Curriculums } = require 'meteor/noorahealth:mongo-schemas'
-
-{ ContentInterface } = require('../../api/content/ContentInterface.coffee')
-
 { ContentDownloader } = require('../../api/cordova/ContentDownloader.coffee')
 
 require '../components/shared/loading.coffee'

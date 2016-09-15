@@ -25,19 +25,19 @@ class AudioController
       audio.destroy()
     @liveAudio = []
 
-  playAudio: (src, volume, isSoundEffect, whenFinished, whenPaused) ->
-    audio = new Audio src, volume
+  playAudio: ( filename, volume, isSoundEffect, whenFinished, whenPaused )->
+    audio = new Audio filename, volume
     audio.play whenFinished, whenPaused
     @liveAudio.push audio
     if not isSoundEffect
       @setCurrentAudio audio
     return audio
 
-  trackAudioStopped: ( module, lesson, pos, completed, src ) ->
+  trackAudioStopped: ( module, lesson, pos, completed, filename ) ->
     text = if module?.title then module?.title else module?.question
     analytics.track "Audio Stopped", {
       moduleText: text
-      audioSrc: src
+      filename: filename
       moduleId: module?._id
       language: @language
       condition: @condition
