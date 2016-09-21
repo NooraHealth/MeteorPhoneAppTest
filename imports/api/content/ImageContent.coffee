@@ -18,14 +18,14 @@ class ImageContent extends ContentInterface
   constructor: ->
     super()
     @_directory = "Image/"
-    
+
   getRemoteContent: ( filename )->
     new SimpleSchema({
       filename: { type: String }
     }).validate({ filename: filename })
   
     path = @getFullPath filename
-    return cloudinary.url path, { resource_type: "image" }
+    return cloudinary.url path, { resource_type: "image", transformation: ["iPad_image_medium"] }
 
 class SingletonWrapper
   @getImageContent: ->

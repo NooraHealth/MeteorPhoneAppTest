@@ -8,9 +8,16 @@ require '../components/lessons/slides.coffee'
 require '../components/lessons/footer/footer.coffee'
 
 Template.Lesson_view_page.onCreated ()->
-  @rendered = false
+  @state = new ReactiveDict()
+  @state.set {
+    rendered: false
+    controllerInitialized: false
+    numSlides: 0
+  }
 
   @initializeSwiper = =>
+    console.log "The swiper container"
+    console.log $(".swiper-container")
     return AppConfiguration.getF7().swiper '.swiper-container', {
       lazyLoading: true,
       preloadImages: false,
@@ -20,31 +27,32 @@ Template.Lesson_view_page.onCreated ()->
       followFinger: false
     }
 
-  @numSlides = new ReactiveVar()
-
   #subscribe to data
   @autorun =>
     if AppConfiguration.templateShouldSubscribe()
+      alert "SUBSCRIBING in LESSONS PAGE VIEW"
       @subscribe "curriculums.all"
       @subscribe "lessons.all"
       @subscribe "modules.all"
 
   #initialize the controller when the subscriptions are ready
   @autorun =>
-    if @subscriptionsReady() and @rendered == true
+    if @subscriptionsReady() and @state.get("rendered") == true
+      console.log "INITIALIZING THE CONTROLLER"
       @controller = new LessonsPageController( AppConfiguration.getCurriculumDoc(), AppConfiguration.getLanguage(), AppConfiguration.getCondition() )
       @model = @controller.model
       @swiper = @initializeSwiper()
       @controller.onPageRendered?()
+      @state.set "controllerInitialized", true
 
   @onModulesRendered = ( numSlides )->
-    if numSlides != @numSlides.get()
+    if numSlides != @state.get("numSlides")
       @swiper = @initializeSwiper()
-      @numSlides.set @swiper.slides.length
+      @state.set "numSlides", @swiper.slides.length
 
   @autorun =>
-    if @subscriptionsReady() and @rendered == true and @model?
-      numSlides = @numSlides.get()
+    if @subscriptionsReady() and @state.get("rendered") and @state.get("controllerInitialized")
+      numSlides = @state.get "numSlides"
       slideIndex = @model.slideIndex()
       @swiper.slideTo slideIndex
       @controller.onSlideToNext()
@@ -53,7 +61,11 @@ Template.Lesson_view_page.onCreated ()->
 Template.Lesson_view_page.helpers
   modulesReady: ->
     instance = Template.instance()
-    return instance.subscriptionsReady() and instance.model?
+    controllerInitialized = instance.state.get "controllerInitialized"
+    ready = instance.subscriptionsReady()
+    #alert "SUBSCRIPTIONS READY?? model: #{ model } subscribed: #{ ready }"
+    console.log "SUBSCRIPTIONS READY?? controller: #{controllerInitialized} subscribed: #{ ready }"
+    return instance.subscriptionsReady() and controllerInitialized
 
   footerArgs: ->
     model = Template.instance().model
@@ -139,5 +151,5 @@ Template.Lesson_view_page.helpers
 
 Template.Lesson_view_page.onRendered =>
   instance = Template.instance()
-  instance.rendered = true
-  #instance.playAudio ContentInterface.getSrc(ContentInterface.correctSoundEffectFilename(), "AUDIO"), 0
+  instance.state.set "rendered", true
+  

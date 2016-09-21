@@ -25,7 +25,7 @@ class VideoContent extends ContentInterface
     }).validate({ filename: filename })
   
     path = @getFullPath filename
-    return cloudinary.url path, { resource_type: "video" }
+    return cloudinary.url path, { resource_type: "video", transformation: ["iPad_video"] }
 
 class SingletonWrapper
   @getVideoContent: ->

@@ -95,6 +95,7 @@ class @ContentDownloader
       retry = []
       numRecieved = 0
       numToDownload = 0
+      totalBytes = 0
       ( numToDownload += obj.filenames.length for obj in fileObjects )
 
       if fileObjects.length == 0
@@ -105,6 +106,8 @@ class @ContentDownloader
         ft = new FileTransfer()
 
         ft.onprogress = ( event )->
+          if event.loaded == event.total
+            totalBytes += event.total
           percent = numRecieved / numToDownload
           deferred.notify percent
 
@@ -122,6 +125,7 @@ class @ContentDownloader
           numRecieved++
           console.log "RESOLVED:" + numRecieved + "/"+ numToDownload
           if numRecieved == numToDownload
+            console.log "TOTAL BYTES DOWNLOADED #{ totalBytes }"
             deferred.resolve entry
 
         onSuccess = ( filename, fsPath, type, entry )->

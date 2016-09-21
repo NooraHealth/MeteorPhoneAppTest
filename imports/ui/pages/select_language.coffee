@@ -91,7 +91,6 @@ Template.Select_language_page.helpers
       onStopVideo: instance.onVideoEnd
       onVideoEnd: instance.onVideoEnd
       onRendered: -> instance.initializeSwiper()
-      #playing: instance.videoPlaying()
       isCurrent: true
     }
     return data

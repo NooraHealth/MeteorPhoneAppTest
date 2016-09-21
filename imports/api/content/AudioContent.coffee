@@ -24,7 +24,7 @@ class AudioContent extends ContentInterface
     }).validate({ filename: filename })
   
     path = @getFullPath filename
-    return cloudinary.url path, { resource_type: "video" }
+    return cloudinary.url path, { resource_type: "video", transformation: ["mobile_audio"] }
 
 class SingletonWrapper
   @getAudioContent: ->

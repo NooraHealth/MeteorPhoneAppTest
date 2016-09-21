@@ -1,10 +1,6 @@
 
 { Curriculums } = require("meteor/noorahealth:mongo-schemas")
 
-{ Lessons } = require("meteor/noorahealth:mongo-schemas")
-
-{ Modules } = require("meteor/noorahealth:mongo-schemas")
-
 { Translator } = require './utilities/Translator.coffee'
 
 class AppConfiguration
@@ -129,10 +125,10 @@ class AppConfiguration
 
     templateShouldSubscribe: ->
       isSubscribed = @isSubscribed()
-      #if Meteor.isCordova
-        #return Meteor.status().connected and not isSubscribed
-      #else
-        #return Meteor.status().connected
-      return Meteor.status().connected
+      if Meteor.isCordova
+        return Meteor.status().connected and not isSubscribed
+      else
+        return Meteor.status().connected
+      #return true
 
 module.exports.AppConfiguration = AppConfiguration.get()
