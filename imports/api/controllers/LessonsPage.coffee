@@ -56,30 +56,12 @@ class LessonsPageController
     audio = @audioController.playAudio module.correct_audio, 1, false, @onFinishExplanation.bind(@, module), @onFinishExplanation.bind(@, module)
     @
 
-  celebrateCompletion: ->
-    onConfirm = =>
-      if @model.onLastLesson()
-        @goToSelectLevelSlide(null, true)
-      else
-        @model.goToNextLesson()
-        @autoplayMedia()
-
-    onCancel = =>
-      @goToSelectLevelSlide(null, false)
-    
-    numLessons = @model.getCurrentLessons().length
-    numLessonsCompleted = @model.getLessonIndex() + 1
-    if @model.onLastLesson()
-      new Award(@language).sendAward( null, null, numLessonsCompleted, numLessons)
-      @goToSelectLevelSlide( null, true )
-    else
-      new Award(@language).sendAward( onConfirm, onCancel, numLessonsCompleted, numLessons )
-
   onNextButtonClicked: ->
     lessonComplete = @model.onLastModule()
     currentModule = @model.getCurrentModule()
     @audioController.destroyAudio()
     @model.disable "nextButton", true
+
     if currentModule.type == "VIDEO"
       @videoController.stopVideo currentModule
     else if @model.onLastModule()
@@ -123,20 +105,40 @@ class LessonsPageController
       lesson = @model.getCurrentLesson()
       module = @model.getCurrentModule()
       @trackGoingToSelectLevel lesson, module, completedLevel
-      if completedLevel then @model.goToNextLevel()
+      if completedLevel
+          @model.goToNextLevel()
       else @model.goToSelectLevelSlide()
       @audioController.destroyAudio()
+
+    @celebrateCompletion = ->
+      onConfirm = =>
+        if @model.onLastLesson()
+          @goToSelectLevelSlide(null, true)
+        else
+          @model.goToNextLesson()
+          @autoplayMedia()
+
+      onCancel = =>
+        @goToSelectLevelSlide(null, false)
+      
+      numLessons = @model.getCurrentLessons().length
+      numLessonsCompleted = @model.getLessonIndex() + 1
+      if @model.onLastLesson()
+        new Award(@language).sendAward( null, null, numLessonsCompleted, numLessons)
+        @goToSelectLevelSlide( null, true )
+      else
+        new Award(@language).sendAward( onConfirm, onCancel, numLessonsCompleted, numLessons )
+
 
     @autoplayMedia = ->
       module = @model.getCurrentModule()
       lesson = @model.getCurrentLesson()
-      console.log "The current module"
-      console.log module
+
       if module?.type == "VIDEO"
         @videoController.playVideo module
       if module?.hasAudio()
         onFinishAudio = if module.hasExplanation() then @audioController.trackAudioStopped.bind(@, module, lesson) else @onFinishExplanation.bind(@, module, lesson)
-        audio = @audioController.playAudio module.audio, 1, false, onFinishAudio, onFinishAudio
+        @audioController.playAudio module.audio, 1, false, onFinishAudio, onFinishAudio
 
     @trackGoingToSelectLevel = ( lesson, module, completedLevel )->
       text = if module?.title then module?.title else module?.question
@@ -163,6 +165,5 @@ class LessonsPageController
         language: @language
         type: module.type
       }
-
 
   module.exports.LessonsPageController = LessonsPageController

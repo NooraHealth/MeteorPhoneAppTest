@@ -1,12 +1,12 @@
 
-@import "{wolves:bourbon}/_bourbon";
+.select-language-button-container {
+  width: 250px;
+  height: 250px;
+  border-radius: 250px;
+}
 
-@import '../_variables'; 
-
-@import '../_mixins';
-
-@import '../_layout';
-
-.select-language-button {
-  width: 75%;
+.select-language-button-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }

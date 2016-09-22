@@ -8,7 +8,6 @@
 ##############################################################################
 
 { OfflineFiles } = require("meteor/noorahealth:mongo-schemas")
-
 { ContentInterface } = require "./base/ContentInterface.coffee"
 
 cloudinary = require("cloudinary")

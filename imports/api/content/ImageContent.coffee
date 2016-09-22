@@ -8,7 +8,6 @@
 ##############################################################################
 
 { OfflineFiles } = require("meteor/noorahealth:mongo-schemas")
-
 { ContentInterface } = require "./base/ContentInterface.coffee"
 
 cloudinary = require("cloudinary")
@@ -25,7 +24,8 @@ class ImageContent extends ContentInterface
     }).validate({ filename: filename })
   
     path = @getFullPath filename
-    return cloudinary.url path, { resource_type: "image", transformation: ["iPad_image_medium"] }
+    #return cloudinary.url path, { resource_type: "image", transformation: ["iPad_image_medium"] }
+    return cloudinary.url path, { resource_type: "image" }
 
 class SingletonWrapper
   @getImageContent: ->

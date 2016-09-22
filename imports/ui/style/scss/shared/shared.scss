@@ -1,4 +1,5 @@
 
+
 @import "{wolves:bourbon}/_bourbon";
 
 @import '../_variables'; 
@@ -30,16 +31,14 @@ html, body {
 }
 
 .page {
-  background: $light-blue !important;
-  color: $muted;
+  background: $primary-color-3 !important;
+  color: $primary-font-color !important;
 
   a {
-    color: lighten($primary-blue, 30%);
-    text-decoration: none;
-    
-    &:hover {
-      text-decoration: none;
-    }
+    color: $secondary-font-color;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
   }
 }
 
@@ -50,13 +49,12 @@ html, body {
 }
 
 .logo {
-  /*position: absolute;*/
-  margin-left: 10px;
-  margin-top: 25px;
-  border-radius: 33px;
-  background-color: $white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  left: 0;
   padding: 10px;
-  box-shadow: 5px 5px 5px grey;
 }
 
 .container {
@@ -78,8 +76,8 @@ html, body {
 -------------------------------- */
 
 .navbar {
-  background-color: $primary-blue !important;
-  height: 60px;
+  background-color: $primary-color-1 !important;
+  height: 80px;
 }
 
 .navbar .center {
@@ -172,7 +170,11 @@ html, body {
 }
 
 .card {
-  border-radius: 10px;
+  /*border-radius: 10px;*/
+}
+
+.card {
+  /*border-radius: 10px;*/
 }
 
 
@@ -184,7 +186,11 @@ html, body {
 
 
 .full-width {
-  width: 100%;
+  width: 100% !important;
+}
+
+.full-height {
+  height: 100% !important;
 }
 
 .right-aligned {
@@ -240,16 +246,36 @@ html, body {
 
 -------------------------------- */
 
+.color-gold {
+  background-color: $gold !important;
+}
+
 .color-green {
   background-color: $green !important;
 }
 
-.color-red {
+.color-red-noora {
   background-color: $red !important;
 }
 
 .color-blue-noora {
-  background-color: $primary-blue !important;
+  background-color: $blue !important;
+}
+
+.light-blue-noora {
+  background-color: $light-blue !important;
+}
+
+.light-gold {
+  background-color: $light-gold !important;
+}
+
+.light-red {
+  background-color: $light-red !important;
+}
+
+.light-green {
+  background-color: $light-green !important;
 }
 
 .small-text {
@@ -260,11 +286,7 @@ html, body {
   font-size: 150%;
 }
 
-.bold-text {
-  font-weight: $bold-font-weight;
-}
-
-.demi-bold-text {
-  font-weight: $demi-bold-font-weight;
+.extra-large-text {
+  font-size: 250%;
 }
 

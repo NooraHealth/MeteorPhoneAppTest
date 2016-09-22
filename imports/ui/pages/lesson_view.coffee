@@ -16,8 +16,6 @@ Template.Lesson_view_page.onCreated ()->
   }
 
   @initializeSwiper = =>
-    console.log "The swiper container"
-    console.log $(".swiper-container")
     return AppConfiguration.getF7().swiper '.swiper-container', {
       lazyLoading: true,
       preloadImages: false,
@@ -30,7 +28,6 @@ Template.Lesson_view_page.onCreated ()->
   #subscribe to data
   @autorun =>
     if AppConfiguration.templateShouldSubscribe()
-      alert "SUBSCRIBING in LESSONS PAGE VIEW"
       @subscribe "curriculums.all"
       @subscribe "lessons.all"
       @subscribe "modules.all"
@@ -38,7 +35,6 @@ Template.Lesson_view_page.onCreated ()->
   #initialize the controller when the subscriptions are ready
   @autorun =>
     if @subscriptionsReady() and @state.get("rendered") == true
-      console.log "INITIALIZING THE CONTROLLER"
       @controller = new LessonsPageController( AppConfiguration.getCurriculumDoc(), AppConfiguration.getLanguage(), AppConfiguration.getCondition() )
       @model = @controller.model
       @swiper = @initializeSwiper()
@@ -62,9 +58,6 @@ Template.Lesson_view_page.helpers
   modulesReady: ->
     instance = Template.instance()
     controllerInitialized = instance.state.get "controllerInitialized"
-    ready = instance.subscriptionsReady()
-    #alert "SUBSCRIPTIONS READY?? model: #{ model } subscribed: #{ ready }"
-    console.log "SUBSCRIPTIONS READY?? controller: #{controllerInitialized} subscribed: #{ ready }"
     return instance.subscriptionsReady() and controllerInitialized
 
   footerArgs: ->

@@ -1,22 +1,34 @@
 // colors
 
-$light-blue: #e3f4f7; // blue light03A9F4
-$primary-blue: #b8e3ec; // 
-$green: #8eb16b;
-$orange: #faaa4c;
-$red: #dc6740;
+
+$primary-color-1: #FBAF18;
+$primary-color-2: #5BC6D2;
+$primary-color-3: white;
+
+$green: #46B74B;
+$gold: #FBAF18;
+$red: #F0535D;
+$blue: #5BC6D2;
 $white: #FFFFFF;
+
+$light-blue: #bbe4eb;
+$light-gold: #f6d89d;
+$light-green: #deeaae;
+$light-red: #f27aa0;
+$white: #FFFFFF;
+
 $font-color: #3e3e3f;
-
 $border-color: #ddd;
-// fonts 
 
-$primary-font: Avenir Next;
+// fonts 
+$primary-font: 'Roboto Slab';
+$secondary-font: 'Assistant';
 $primary-font-color: black;
+$secondary-font-color: white;
 $muted: #757575;
 $primary-font-weight: 400;
 $demi-bold-font-weight: 500;
-$bold-font-weight: 600;
+$bold-font-weight: 700;
 
 $nav-height: 50px;
 /*$modular-scale-ratio: $golden;*/
@@ -33,8 +45,3 @@ $padding-M: 15px;
 $padding-S: 8px;
 
 $footer-height: 50px;
-
-$success: #4caf50;
-$danger: #f44336;
-$warning: #f4511e;
-

@@ -1,18 +1,17 @@
 
 { Curriculums } = require("meteor/noorahealth:mongo-schemas")
-
 { Translator } = require './utilities/Translator.coffee'
 
 class AppConfiguration
-  @get: ()->
+  @get: ->
     @dict ?= new Private "NooraHealthApp"
     return @dict
 
   class Private
-    constructor: (name) ->
+    constructor: ( name )->
       @dict = new PersistentReactiveDict name
       
-    initializeApp: =>
+    initializeApp: ->
       @F7 = new Framework7(
         materialRipple: true
         router:false
@@ -29,17 +28,17 @@ class AppConfiguration
         { name: "advanced", image: "hard.png" }
       ]
 
-    getF7: =>
+    getF7: ->
       return @F7
       
-    setPercentLoaded: (percent) =>
+    setPercentLoaded: ( percent )->
       @dict.setTemporary "percentLoaded", percent
       @
 
-    getPercentLoaded: =>
+    getPercentLoaded: ->
       @dict.get "percentLoaded"
 
-    setLanguage: (language) =>
+    setLanguage: ( language )->
       new SimpleSchema({
         language: { type: String }
       }).validate {
@@ -50,7 +49,7 @@ class AppConfiguration
       @dict.setTemporary "language", language
       @
 
-    getLanguage: =>
+    getLanguage: ->
       language = @dict.get "language"
       if not language? then return "English" else return language
 
@@ -68,7 +67,7 @@ class AppConfiguration
       curriculum = Curriculums.findOne {language: language, condition: condition}
       return curriculum
 
-    setConfiguration: (configuration) =>
+    setConfiguration: ( configuration )->
       new SimpleSchema({
         hospital: {type: String, min: 1, optional: true} #Hospital and condition cannot be empty strings
         condition: {type: String, min: 1, optional: true}
@@ -77,12 +76,12 @@ class AppConfiguration
       @dict.setPersistent 'configuration', configuration
       @
 
-    contentDownloaded: =>
+    contentDownloaded: ->
       if Meteor.isCordova
         @dict.get "content_downloaded"
       else return true
 
-    setContentDownloaded: (state) =>
+    setContentDownloaded: ( state )->
       new SimpleSchema({
         state: { type: Boolean }
       }).validate {
@@ -92,7 +91,7 @@ class AppConfiguration
       @dict.setPersistent "content_downloaded", state
       @
 
-    isConfigured: =>
+    isConfigured: ->
       configuration = @dict.get 'configuration'
       return configuration? and
         configuration?.hospital? and
@@ -100,16 +99,16 @@ class AppConfiguration
         configuration.condition? and
         configuration.condition isnt ""
 
-    getConfiguration: =>
+    getConfiguration: ->
       return @dict.get "configuration"
 
-    getCondition: =>
+    getCondition: ->
       return @getConfiguration()?.condition
 
-    getHospital: =>
+    getHospital: ->
       return @getConfiguration()?.hospital
 
-    setSubscribed: (state) =>
+    setSubscribed: (state) ->
       new SimpleSchema({
         state: { type: Boolean }
       }).validate {
@@ -119,7 +118,7 @@ class AppConfiguration
       @dict.setPersistent "subscribed", state
       @
 
-    isSubscribed: =>
+    isSubscribed: ->
       subscribed = @dict.get "subscribed"
       if subscribed? then return subscribed else return false
 

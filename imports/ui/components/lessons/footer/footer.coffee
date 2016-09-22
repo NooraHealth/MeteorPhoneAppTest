@@ -28,7 +28,7 @@ Template.Lesson_view_page_footer.onCreated ->
 
 Template.Lesson_view_page_footer.helpers
   goHomeButtonArgs: (data) ->
-    classes = 'link gohome-btn button footer-button color-green button-rounded button-fill'
+    classes = 'link gohome-btn button footer-button color-blue-noora button-rounded'
     return {
       attributes: {
         id: "homeBtn"
@@ -41,7 +41,7 @@ Template.Lesson_view_page_footer.helpers
     
   nextButtonArgs: (data) ->
     instance = Template.instance()
-    classes = 'link footer-button button color-orange button-fill'
+    classes = 'link footer-button button color-gold'
     #if data.animated then classes += ' slide-up'
     return {
       attributes: {
@@ -60,7 +60,7 @@ Template.Lesson_view_page_footer.helpers
     return classes
 
   replayButtonArgs: (data) ->
-    classes = 'link footer-button button button-rounded color-pink button-fill'
+    classes = 'link footer-button button button-rounded color-red-noora'
     return {
       attributes: {
         id: "replayBtn"
