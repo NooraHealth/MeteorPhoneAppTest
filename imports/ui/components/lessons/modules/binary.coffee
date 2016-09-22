@@ -51,7 +51,7 @@ Template.Lesson_view_page_binary.onCreated ->
     selected = instance.state.get "selected"
 
     getClasses = (option) ->
-      classes = 'response button button-fill button-big binary-button color-blue-noora'
+      classes = 'response button button-fill button-big binary-button color-gold'
       if option == "Yes"
         classes += " yes-button"
       if option == "No"
