@@ -23,9 +23,9 @@ class AppConfiguration
 
     getLevels: ->
       return [
-        { name: "beginner", image: "easy.png" }
-        { name: "intermediate", image: "medium.png" }
-        { name: "advanced", image: "hard.png" }
+        { name: "beginner", image: "easy_white.png" }
+        { name: "intermediate", image: "medium_white.png" }
+        { name: "advanced", image: "hard_white.png" }
       ]
 
     getF7: ->
