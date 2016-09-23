@@ -1,6 +1,6 @@
 
 <template name="Level_thumbnail">
-  <div class="lesson-card card light-blue-noora {{#if isCurrentLevel}} current-lesson {{else}} faded {{/if}}">
+  <div class="lesson-card card color-gold {{#if isCurrentLevel}} current-lesson {{else}} faded {{/if}}">
     <div class="card-content">
       <div class="card-header">
         <p class="center large-text bold-text">{{translate level.name language "UPPER"}}</p>
@@ -13,7 +13,7 @@
       </div>
 
       <div class="card-footer">
-        <a class="center select-level-button bold-text large-text {{#if isCurrentLevel}} button-fill color-green animate-scale {{/if}} button button-round "> {{translate "begin" language "UPPER"}} </a>
+        <a class="center select-level-button bold-text large-text {{#if isCurrentLevel}} animate-scale {{/if}} button button-round "> {{translate "begin" language "UPPER"}} </a>
       </div>
     </div>
   </div>
