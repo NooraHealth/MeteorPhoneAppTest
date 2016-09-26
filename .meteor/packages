@@ -5,22 +5,22 @@
 # but you can also edit it by hand.
 
 underscore@1.0.9
-coffeescript@1.2.3
+coffeescript@1.2.4_1
 aldeed:collection2
 dburles:collection-helpers
-http@1.2.8
+http@1.2.9
 pcel:loading
 mystor:device-detection
 ground:db
 natestrauser:cordova-file-server
 meteor-base@1.0.4
 mobile-experience@1.0.4
-mongo@1.1.10
+mongo@1.1.12
 blaze-html-templates@1.0.4
 session@1.1.6
 jquery@1.11.9
 tracker@1.1.0
-logging@1.1.14
+logging@1.1.15
 reload@1.1.10
 random@1.0.10
 ejson@1.0.12
@@ -37,12 +37,12 @@ kadira:flow-router
 kadira:blaze-layout
 arillo:flow-router-helpers
 mrt:q
-reactive-var
+reactive-var@1.0.10
 manuel:reactivearray
 reactive-dict@1.1.8
-standard-minifier-css@1.1.8
-standard-minifier-js@1.1.8
-modules@0.7.5
+standard-minifier-css@1.2.0
+standard-minifier-js@1.2.0
+modules@0.7.6
 robertlowe:persistent-reactive-dict
 practicalmeteor:mocha
 dburles:factory
@@ -50,6 +50,7 @@ xolvio:cleaner
 practicalmeteor:chai
 bojicas:howler2
 noorahealth:mongo-schemas
-okgrow:analytics
 tap:i18n
 tap:i18n-bundler
+shell-server
+okgrow:analytics
