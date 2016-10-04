@@ -16,6 +16,9 @@ Template.Lesson_view_page.onCreated ()->
   }
 
   @initializeSwiper = =>
+    ## GOTTA LEAVE THIS CONSOLE LOG IN THERE
+    # Otherwise F7 errors in finding the swiper-container
+    console.log $(".swiper-container")
     return AppConfiguration.getF7().swiper '.swiper-container', {
       lazyLoading: true,
       preloadImages: false,
