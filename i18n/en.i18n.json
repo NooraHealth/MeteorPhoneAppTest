@@ -22,7 +22,7 @@
   "well_done": "Well Done!",
   "congratulations": "Congratulations!",
   "on_your_way": "You are on your way to better health!",
-  "you_have_completed": "You have completed __numcompleted__ out of __total__ lessons!",
+  "you_have_completed": "You have completed %s out of %s lessons!",
   "great": "Great!",
   "introduce_questions": "Now we will ask you some questions about the video you just watched",
   "cardiac_surgery": "Cardiac Surgery",
