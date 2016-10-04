@@ -7,8 +7,8 @@
     "dev": "meteor run --settings settings_dev.json",
     "dev-ios": "meteor run ios-device --settings settings_dev.json",
     "dev-android": "meteor run android --settings settings_dev.json --verbose",
-    "build-ios": "meteor run ios-device --mobile-server http://trainingapp.noorahealth.org",
-    "build": "meteor build ../training-app-build --server=http://trainingapp.noorahealth.org"
+    "build-ios": "meteor run ios-device --mobile-server http://ios10.noorahealth.org",
+    "build": "meteor build ../training-app-build --server=http://ios10.noorahealth.org"
   },
   "dependencies": {
     "chai": "^3.5.0",

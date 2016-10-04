@@ -14,7 +14,7 @@ App.icons({
   // iOS
   'iphone': 'public/icons/icon-60x60.png',
   'ipad': 'public/icons/icon-76x76.png',
-  'ipad_2x': 'public/icons/icon-76x76.png',
+  'ipad_2x': 'public/icons/icon-152x152.png',
 
   //// Android
   'android_ldpi': 'public/icons/icon-36x36.png',
@@ -31,7 +31,7 @@ App.launchScreens({
   //'iphone6p_portrait': 'public/splash/splash-414x736@3x.png',
   //'iphone6p_landscape': 'public/splash/splash-736x414@3x.png',
 
-  'ipad_portrait': 'public/splash/splash-1024x768.png',
+  'ipad_portrait': 'public/splash/splash-768x1024.png',
   //'ipad_portrait_2x': 'public/splash/splash-768x1024@2x.png',
   'ipad_landscape': 'public/splash/splash-1024x768.png',
   //'ipad_landscape_2x': 'public/splash/splash-1024x768@2x.png',
