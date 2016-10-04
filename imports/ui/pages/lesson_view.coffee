@@ -16,8 +16,6 @@ Template.Lesson_view_page.onCreated ()->
   }
 
   @initializeSwiper = =>
-    console.log "The swiper container"
-    console.log $(".swiper-container")
     return AppConfiguration.getF7().swiper '.swiper-container', {
       lazyLoading: true,
       preloadImages: false,
@@ -43,10 +41,14 @@ Template.Lesson_view_page.onCreated ()->
       @controller.onPageRendered?()
       @state.set "controllerInitialized", true
 
-  @onModulesRendered = ( numSlides )->
+  @onSlidesChanged = ( numSlides )->
+    console.log "on SlidesChanged called"
+    console.log "numSlides #{ numSlides }"
+    console.log @state.get "numSlides"
     if numSlides != @state.get("numSlides")
+      console.log "initializing the swiper"
       @swiper = @initializeSwiper()
-      @state.set "numSlides", @swiper.slides.length
+      @state.set "numSlides", numSlides
 
   @autorun =>
     if @subscriptionsReady() and @state.get("rendered") and @state.get("controllerInitialized")
@@ -112,7 +114,7 @@ Template.Lesson_view_page.helpers
       onStopVideo: controller.onVideoEnd.bind controller
       onVideoEnd: controller.onVideoEnd.bind controller
       isCurrent: model.isCurrentModule.bind model
-      onRendered: instance.onModulesRendered.bind instance
+      onSlidesChanged: instance.onSlidesChanged.bind instance
       isCurrent: model.isCurrentModule.bind model
       isNext: model.isNextModule.bind model
     }

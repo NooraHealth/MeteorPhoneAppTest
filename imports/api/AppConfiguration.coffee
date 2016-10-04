@@ -1,6 +1,5 @@
 
 { Curriculums } = require("meteor/noorahealth:mongo-schemas")
-
 { Translator } = require './utilities/Translator.coffee'
 
 class AppConfiguration

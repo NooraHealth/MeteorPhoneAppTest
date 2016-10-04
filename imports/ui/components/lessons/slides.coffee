@@ -22,7 +22,7 @@ Template.Lesson_view_page_slides.onCreated ->
     "moduleOptions.onStopVideo": { type: Function }
     "moduleOptions.isCurrent": { type: Function }
     "moduleOptions.isNext": { type: Function }
-    "moduleOptions.onRendered": { type: Function }
+    "moduleOptions.onSlidesChanged": { type: Function }
     "levelOptions.onLevelSelected": { type: Function }
   }).validate Template.currentData()
 

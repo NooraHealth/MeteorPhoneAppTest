@@ -94,7 +94,6 @@ Template.Lesson_view_page_video.helpers
 
 Template.Lesson_view_page_video.events
   'click #play_video': ->
-    console.log "CLICK"
     instance = Template.instance()
     instance.playVideo()
 
@@ -110,12 +109,10 @@ Template.Lesson_view_page_video.onRendered ->
     instance.onPlayVideo()
 
   elem.addEventListener "pause", ->
-    console.log "pause"
     instance.onStopVideo()
     instance.trackStoppedVideo( elem.currentTime, false )
 
   elem.addEventListener "onended", ->
-    console.log "onended"
     instance.onVideoEnd()
     instance.trackStoppedVideo( elem.currentTime, true )
   

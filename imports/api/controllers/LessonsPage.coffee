@@ -130,8 +130,6 @@ class LessonsPageController
     @autoplayMedia = ->
       module = @model.getCurrentModule()
       lesson = @model.getCurrentLesson()
-      console.log "The current module"
-      console.log module
       if module?.type == "VIDEO"
         @videoController.playVideo module
       if module?.hasAudio()

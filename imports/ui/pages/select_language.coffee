@@ -28,7 +28,6 @@ Template.Select_language_page.onCreated ->
     }
 
   @onLanguageSelected = (language) =>
-    console.log "Language selected!!"
     analytics.track "Changed Language", {
       fromLanguage: AppConfiguration.getLanguage()
       toLanguage: language
@@ -42,7 +41,6 @@ Template.Select_language_page.onCreated ->
     @swiper.slideNext()
 
   @playIntroVideo = =>
-    console.log AppConfiguration.getCurriculumDoc()
     introModule = AppConfiguration.getCurriculumDoc().getIntroductionModule()
     @.$("##{introModule?._id}")?.find("video")?[0]?.play()
 
@@ -73,7 +71,7 @@ Template.Select_language_page.helpers
     for curriculum in Curriculums.find({ condition: condition }).fetch()
       introModule = curriculum.getIntroductionModule()
       if introModule then modules.push introModule
-
+    
     return modules
 
   shouldShow: (module) ->

@@ -24,7 +24,6 @@ Template.Home_language_menu.helpers
     return Template.currentData().languages
 
 Template.Home_language_menu.onRendered ->
-  if Template.currentData().onRendered
-    Template.currentData().onRendered()
+  Template.currentData().onRendered?()
 
 

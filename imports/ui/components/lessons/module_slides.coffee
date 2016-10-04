@@ -23,14 +23,14 @@ Template.Module_slides.onCreated ->
     "moduleOptions.onStopVideo": { type: Function }
     "moduleOptions.isCurrent": { type: Function }
     "moduleOptions.isNext": { type: Function }
-    "moduleOptions.onRendered": { type: Function }
+    "moduleOptions.onSlidesChanged": { type: Function }
   }).validate Template.currentData()
 
   @autorun =>
-    onRendered = Template.currentData().moduleOptions?.onRendered
+    onSlidesChanged = Template.currentData().moduleOptions?.onSlidesChanged
     numModules = Template.currentData().modules?.length
     Tracker.afterFlush =>
-      onRendered numModules
+      onSlidesChanged numModules
 
 Template.Module_slides.helpers
 
