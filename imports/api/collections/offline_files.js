@@ -1,7 +1,7 @@
 
-let OfflineFiles = new Ground.Collection( "offline_files", {connection: null} );
+const OfflineFiles = new Ground.Collection( "offline_files", {connection: null} );
 
-let OfflineFilesSchema = new SimpleSchema({
+const OfflineFilesSchema = new SimpleSchema({
   fsPath: {
     type:String
   },
