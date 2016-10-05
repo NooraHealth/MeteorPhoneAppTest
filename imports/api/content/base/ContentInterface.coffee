@@ -7,7 +7,7 @@
 #
 ##############################################################################
 
-{ OfflineFiles } = require("meteor/noorahealth:mongo-schemas")
+{ OfflineFiles } = require "../../collections/offline_files.js"
 
 cloudinary = require("cloudinary")
 
