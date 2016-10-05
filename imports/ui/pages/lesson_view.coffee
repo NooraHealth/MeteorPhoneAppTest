@@ -45,11 +45,7 @@ Template.Lesson_view_page.onCreated ()->
       @state.set "controllerInitialized", true
 
   @onSlidesChanged = ( numSlides )->
-    console.log "on SlidesChanged called"
-    console.log "numSlides #{ numSlides }"
-    console.log @state.get "numSlides"
     if numSlides != @state.get("numSlides")
-      console.log "initializing the swiper"
       @swiper = @initializeSwiper()
       @state.set "numSlides", numSlides
 

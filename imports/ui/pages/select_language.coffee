@@ -71,7 +71,6 @@ Template.Select_language_page.helpers
     for curriculum in Curriculums.find({ condition: condition }).fetch()
       introModule = curriculum.getIntroductionModule()
       if introModule then modules.push introModule
-    
     return modules
 
   shouldShow: (module) ->

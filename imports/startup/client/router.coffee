@@ -56,8 +56,6 @@ FlowRouter.route '/configure', {
 FlowRouter.route '/lessons', {
   name: "lessons"
   action: ( params, qparams )->
-    console.log "GOING TO THE LESSONS PAGE"
-
     hospital = AppConfiguration.getHospital()
     condition = AppConfiguration.getCondition()
     language = AppConfiguration.getLanguage()
