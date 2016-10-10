@@ -1,5 +1,6 @@
 
 { Audio } = require('../../ui/components/shared/audio.coffee')
+{ Analytics } = require '../../api/analytics/Analytics.coffee'
 
 class AudioController
   constructor: ->
@@ -35,7 +36,7 @@ class AudioController
 
   trackAudioStopped: ( module, lesson, pos, completed, filename ) ->
     text = if module?.title then module?.title else module?.question
-    analytics.track "Audio Stopped", {
+    Analytics.registerEvent "TRACK", "Audio Stopped", {
       moduleText: text
       filename: filename
       moduleId: module?._id

@@ -5,6 +5,7 @@
 { FlowRouter } = require 'meteor/kadira:flow-router'
 { TAPi18n } = require("meteor/tap:i18n")
 { AppConfiguration } = require '../../api/AppConfiguration.coffee'
+{ Analytics } = require '../../api/analytics/Analytics.coffee'
 
 # PAGES
 require '../../ui/layouts/layout.coffee'
@@ -22,10 +23,12 @@ if Meteor.isCordova
 FlowRouter.route '/', {
   name: "home"
   action: ( params, qparams )->
+    console.log "In the route for home"
+    console.log "Registering page"
     hospital = AppConfiguration.getHospital()
     condition = AppConfiguration.getCondition()
     language = AppConfiguration.getLanguage()
-    analytics.identify hospital, {
+    Analytics.registerEvent "IDENTIFY", hospital, {
       hospital: hospital,
       condition: condition,
       language: language
@@ -42,7 +45,7 @@ FlowRouter.route '/configure', {
     hospital = AppConfiguration.getHospital()
     condition = AppConfiguration.getCondition()
     language = AppConfiguration.getLanguage()
-    analytics.identify hospital, {
+    Analytics.registerEvent "IDENTIFY", hospital, {
       hospital: hospital,
       condition: condition,
       language: language
@@ -59,7 +62,7 @@ FlowRouter.route '/lessons', {
     hospital = AppConfiguration.getHospital()
     condition = AppConfiguration.getCondition()
     language = AppConfiguration.getLanguage()
-    analytics.identify hospital, {
+    Analytics.registerEvent "IDENTIFY", hospital, {
       hospital: hospital,
       condition: condition,
       language: language
@@ -77,7 +80,7 @@ if Meteor.isCordova
       hospital = AppConfiguration.getHospital()
       condition = AppConfiguration.getCondition()
       language = AppConfiguration.getLanguage()
-      analytics.identify hospital, {
+      Analytics.registerEvent "IDENTIFY", hospital, {
         hospital: hospital,
         condition: condition,
         language: language

@@ -38,14 +38,9 @@ Template.Button.helpers
     return newAttributes
 
 Template.Button.events
-  #'touchend': (e) ->
-    #instance = Template.instance()
-    #instance.onClick e, Template.currentData()
   'click': (e) ->
     instance = Template.instance()
     instance.onClick e, Template.currentData()
 
 Template.Button.onRendered ->
   Template.currentData().onRendered?()
-
-

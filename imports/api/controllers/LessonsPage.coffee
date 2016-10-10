@@ -4,6 +4,7 @@
 { Translator } = require '../utilities/Translator.coffee'
 { Curriculums } = require("meteor/noorahealth:mongo-schemas")
 { LessonsPageModel } = require '../models/lessons/LessonsPage.coffee'
+{ Analytics } = require '../analytics/Analytics.coffee'
 { Award } = require('../../ui/components/lessons/popups/award.coffee')
 { AudioController } = require './Audio.coffee'
 { VideoController } = require './Video.coffee'
@@ -66,7 +67,7 @@ class LessonsPageController
 
     onCancel = =>
       @goToSelectLevelSlide(null, false)
-    
+
     numLessons = @model.getCurrentLessons().length
     numLessonsCompleted = @model.getLessonIndex() + 1
     if @model.onLastLesson()
@@ -96,17 +97,17 @@ class LessonsPageController
       @showIntroductionToQuestions()
     else
       @celebrateCompletion()
-  
+
   onPageRendered: ->
     @audioController.playAudio correctSoundEffectFilename, 0, true
-    
+
   onSlideToNext: ->
     @model.disable "nextButton", false
 
   #######################################
   ### CONSTRUCTOR AND PRIVATE METHODS ###
   #######################################
-  
+
   constructor: ( @curriculum, @language, @condition ) ->
     @audioController = new AudioController()
     @videoController = new VideoController()
@@ -138,7 +139,7 @@ class LessonsPageController
 
     @trackGoingToSelectLevel = ( lesson, module, completedLevel )->
       text = if module?.title then module?.title else module?.question
-      analytics.track "Left Lesson For Home", {
+      Analytics.registerEvent "TRACK", "Left Lesson For Home", {
         lessonTitle: lesson?.title
         lessonId: lesson?._id
         lastModuleId: module?._id
@@ -151,7 +152,7 @@ class LessonsPageController
     @trackChoice = ( module, choice )->
       lesson = @model.getCurrentLesson()
       text = if module?.title then module?.title else module?.question
-      analytics.track "Responded to Question", {
+      Analytics.registerEvent "TRACK", "Responded to Question", {
         moduleId: module._id
         moduleText: text
         choice: choice

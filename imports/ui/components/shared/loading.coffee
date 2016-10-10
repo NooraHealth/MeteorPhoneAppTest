@@ -11,7 +11,6 @@ message = '<p class="loading-message">'+"Welcome to Noora Health"+'</p><p class=
 spinner = '<div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>'
 
 Template.Loading.onCreated ->
-  console.log "MAKING A LOADING TEMPLATe"
   @autorun ->
     percent = AppConfiguration.getPercentLoaded()
     progressBar = $("#progress")
@@ -30,4 +29,3 @@ Template.Loading.onRendered ->
 Template.Loading.onDestroyed ->
   if @loading
     @loading.finish()
-
