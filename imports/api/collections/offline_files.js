@@ -13,4 +13,3 @@ const OfflineFilesSchema = new SimpleSchema({
 OfflineFiles.attachSchema( OfflineFilesSchema );
 
 module.exports.OfflineFiles = OfflineFiles;
-

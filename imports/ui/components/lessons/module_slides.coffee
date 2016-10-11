@@ -30,6 +30,7 @@ Template.Module_slides.onCreated ->
     onSlidesChanged = Template.currentData().moduleOptions?.onSlidesChanged
     numModules = Template.currentData().modules?.length
     Tracker.afterFlush =>
+      console.log "MODULE SLIDES afterFlush"
       onSlidesChanged numModules
 
 Template.Module_slides.helpers
@@ -75,11 +76,9 @@ Template.Module_slides.helpers
         isCurrent: options.isCurrent module
       }
     else if module.type == "SLIDE"
-      console.log "MAKING A SLIDE"
       return {
         module: module
         language: language
       }
 
 Template.Module_slides.onRendered ->
-

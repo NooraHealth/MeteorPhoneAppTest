@@ -26,6 +26,9 @@ Template.Lesson_view_page_slides.onCreated ->
     "levelOptions.onLevelSelected": { type: Function }
   }).validate Template.currentData()
 
+  @autorun ()->
+    Tracker.afterFlush =>
+      console.log "SLIDE SLIDES afterFlush"
 
 Template.Lesson_view_page_slides.helpers
 

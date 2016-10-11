@@ -4,13 +4,13 @@
 
 class AppConfiguration
   @get: ()->
-    @dict ?= new Private "NooraHealthApp"
-    return @dict
+    @config ?= new Private "NooraHealthApp"
+    return @config
 
   class Private
     constructor: (name) ->
       @dict = new PersistentReactiveDict name
-      
+
     initializeApp: =>
       @F7 = new Framework7(
         materialRipple: true
@@ -30,7 +30,7 @@ class AppConfiguration
 
     getF7: =>
       return @F7
-      
+
     setPercentLoaded: (percent) =>
       @dict.setTemporary "percentLoaded", percent
       @
@@ -63,7 +63,9 @@ class AppConfiguration
         language: language
         condition: condition
       }
-
+      console.log language
+      console.log condition
+      console.log Curriculums.find({}).count()
       curriculum = Curriculums.findOne {language: language, condition: condition}
       return curriculum
 

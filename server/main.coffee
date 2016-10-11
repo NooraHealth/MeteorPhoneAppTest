@@ -7,8 +7,6 @@ require 'meteor/noorahealth:mongo-schemas'
 cloudinary = require("cloudinary")
 
 { Conditions } = require 'meteor/noorahealth:mongo-schemas'
-{ Analytics } = require '../imports/api/analytics/Analytics.coffee'
-{ OfflineEvents } = require '../imports/api/collections/offline_events.coffee'
 { Facilities } = require 'meteor/noorahealth:mongo-schemas'
 { Curriculums } = require 'meteor/noorahealth:mongo-schemas'
 { Modules } = require 'meteor/noorahealth:mongo-schemas'

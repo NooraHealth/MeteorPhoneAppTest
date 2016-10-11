@@ -19,6 +19,7 @@ Template.Lesson_view_page.onCreated ()->
     ## GOTTA LEAVE THIS CONSOLE LOG IN THERE
     # Otherwise F7 errors in finding the swiper-container
     console.log $(".swiper-container")
+    console.log "initializing the swiper"
     return AppConfiguration.getF7().swiper '.swiper-container', {
       lazyLoading: true,
       preloadImages: false,
@@ -41,13 +42,20 @@ Template.Lesson_view_page.onCreated ()->
       @controller = new LessonsPageController( AppConfiguration.getCurriculumDoc(), AppConfiguration.getLanguage(), AppConfiguration.getCondition() )
       @model = @controller.model
       @swiper = @initializeSwiper()
+      console.log @swiper.slides
       @controller.onPageRendered?()
       @state.set "controllerInitialized", true
 
   @onSlidesChanged = ( numSlides )->
     if numSlides != @state.get("numSlides")
+      console.log "in the on slides changed initializing the swiper"
       @swiper = @initializeSwiper()
+      console.log @swiper.slides
       @state.set "numSlides", numSlides
+
+  @autorun ()->
+    Tracker.afterFlush =>
+      console.log "LESSON PAGE afterFlush"
 
   @autorun =>
     if @subscriptionsReady() and @state.get("rendered") and @state.get("controllerInitialized")
@@ -149,4 +157,3 @@ Template.Lesson_view_page.helpers
 Template.Lesson_view_page.onRendered =>
   instance = Template.instance()
   instance.state.set "rendered", true
-  

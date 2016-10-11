@@ -1,5 +1,6 @@
 
 { AppConfiguration } = require('../../api/AppConfiguration.coffee')
+{ Analytics } = require('../../api/analytics/Analytics.coffee')
 { Translator } = require('../../api/utilities/Translator.coffee')
 { Curriculums } = require("meteor/noorahealth:mongo-schemas")
 
@@ -41,6 +42,8 @@ Template.Select_language_page.onCreated ->
     @swiper.slideNext()
 
   @playIntroVideo = =>
+    console.log "The curriculum doc"
+    console.log AppConfiguration.getCurriculumDoc()
     introModule = AppConfiguration.getCurriculumDoc().getIntroductionModule()
     @.$("##{introModule?._id}")?.find("video")?[0]?.play()
 
@@ -60,11 +63,15 @@ Template.Select_language_page.onCreated ->
       @subscribe "lessons.all"
       @subscribe "modules.all"
 
+  @autorun =>
+    if Meteor.status().connected and @subscriptionsReady()
+      Analytics.clearOfflineEvents()
+
 Template.Select_language_page.helpers
   modulesReady: ->
     instance = Template.instance()
     return instance.subscriptionsReady()
-  
+
   introModules: ->
     modules = []
     condition = AppConfiguration.getCondition()
@@ -136,4 +143,3 @@ Template.Select_language_page.helpers
   footerVisible: ->
     instance = Template.instance()
     return instance.footerIsVisible()
-

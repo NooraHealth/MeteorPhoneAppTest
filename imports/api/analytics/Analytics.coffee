@@ -3,47 +3,58 @@
 # Segment.io wrapper to include offline support
 ##
 
-{ OfflineEvents } = require '../collections/offline_events.coffee'
+moment = require 'moment'
 
-class Analytics
+class AnalyticsWrapper
+  @getOfflineAnalytics: ->
+    @analytics ?= new PrivateAnalytics()
+    return @analytics
 
-  @registerEvent: ( type, name, params )->
-    console.log Meteor.status?().connected
-    console.log Meteor.status?
-    if Meteor.status is undefined or Meteor.status().connected
-      console.log "Analytics registering an event"
-      switch type
-        when "IDENTIFY" then analytics.identify name, params
-        when "TRACK" then analytics.track name, params
-        when "PAGE" then analytics.page name, params
-    else
-      console.log "Analytics inserting an event for later"
-      console.log "PARAMs"
-      console.log params
-      OfflineEvents.insert { type: type, name: name, params: JSON.stringify(params) }
+  class PrivateAnalytics
+    constructor: ->
+      @dict = new PersistentReactiveDict "offline_events"
+      @dict.setPersistent "events", ""
 
-if Meteor.isClient
+    getOfflineEvents: ->
+      events = @dict.get("events")
+      if events
+        return JSON.parse(events)
+      else
+        return []
 
-  Meteor.startup ()->
-    console.log "Creating a new worker"
-    # worker = new Worker('./clear_offline_events_worker.js')
-    # console.log worker
-    # worker.postMessage( "something" )
-    #
-    clearOfflineEvents = ->
-      console.log "About to clear the offline events"
-      events = OfflineEvents.find({}).fetch()
-      console.log events
+    clearOfflineEvents: ->
+      if not Meteor.status().connected then return
+      events = @getOfflineEvents()
+      clearedEvents = 0
+      totalEvents = events.length
       for event in events
-        Analytics.registerEvent event.type, event.name, JSON.parse(event.params)
-        deleteEvent = ( _id )->
-          console.log "Removing the event"
-          OfflineEvents.remove { _id: event._id }
-        #set timeout to put this on the bottom of the render loop
-        Meteor.setTimeout( deleteEvent.bind(this, event._id), 10 )
+        clearEvents = ( event )->
+          @registerEvent event.type, event.name, event.params
+          clearedEvents++
+          if clearedEvents == totalEvents
+            @dict.setPersistent "events", ""
 
-    clearOfflineEvents()
-    #
-    # Meteor.setInterval clearOfflineEvents, 10000
+        Meteor.setTimeout clearEvents.bind(@, event), 100
+
+    registerEvent: ( type, name, params )->
+      if not params.Date
+        params.Date = moment().format("DD/MM/YYYY")
+        console.log params
+      if Meteor.status is undefined or Meteor.status().connected
+        switch type
+          when "IDENTIFY" then analytics.identify name, params
+          when "TRACK" then analytics.track name, params
+          when "PAGE" then analytics.page name, params
+      else
+        events = @getOfflineEvents()
+        events.push {
+          name: name
+          type: type
+          params: params
+        }
+        str = JSON.stringify(events)
+        @dict.setPersistent "events", str
+
+Analytics = AnalyticsWrapper.getOfflineAnalytics()
 
 module.exports.Analytics = Analytics
