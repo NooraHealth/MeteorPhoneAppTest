@@ -23,8 +23,6 @@ if Meteor.isCordova
 FlowRouter.route '/', {
   name: "home"
   action: ( params, qparams )->
-    console.log "In the route for home"
-    console.log "Registering page"
     hospital = AppConfiguration.getHospital()
     condition = AppConfiguration.getCondition()
     language = AppConfiguration.getLanguage()

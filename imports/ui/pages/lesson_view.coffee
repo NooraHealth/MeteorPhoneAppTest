@@ -42,15 +42,12 @@ Template.Lesson_view_page.onCreated ()->
       @controller = new LessonsPageController( AppConfiguration.getCurriculumDoc(), AppConfiguration.getLanguage(), AppConfiguration.getCondition() )
       @model = @controller.model
       @swiper = @initializeSwiper()
-      console.log @swiper.slides
       @controller.onPageRendered?()
       @state.set "controllerInitialized", true
 
   @onSlidesChanged = ( numSlides )->
     if numSlides != @state.get("numSlides")
-      console.log "in the on slides changed initializing the swiper"
       @swiper = @initializeSwiper()
-      console.log @swiper.slides
       @state.set "numSlides", numSlides
 
   @autorun ()->

@@ -2,46 +2,51 @@
 { AudioContent } = require '../../../api/content/AudioContent.coffee'
 
 class Audio
-  constructor: (@filename, @volume)->
+  constructor: (@filename, @volume, @whenFinished, @whenPaused)->
     new SimpleSchema({
       filename: {type: String}
       volume: {type: Number, optional: true}
     }).validate {filename: @filename, volume: @volume}
 
-  onEnd: (whenFinished) =>
-    whenFinished?( @sound.pos?(), true, @filename )
+  onEnd: =>
+    @whenFinished?( true, @filename, @sound.duration() )
 
-  onPause: (whenPaused) =>
-    whenPaused?( @sound.pos?(), false, @filename )
-  
-  onLoadError: (whenFinished, id, error) =>
-    whenFinished?( @sound.pos?(), false, @filename )
+  onPause: =>
+    @whenPaused?( false, @filename, @sound.duration() )
 
-  replay: (afterReplay) =>
+  onLoadError: ( whenFinished, id, error )=>
+    @whenFinished?( false, @filename, @sound.duration() )
+
+  replay: ( afterReplay )=>
     @stop()
     @play()
     afterReplay?()
 
   pause: =>
+    console.log "Pausing the audio"
     @sound?.pause()
 
   stop: =>
+    console.log "Stopping the audio"
     @sound?.stop()
 
   destroy: =>
+    console.log "DESTROYING"
+    console.log @
+    @pause()
     @sound?.unload()
 
-  play: ( whenFinished, whenPaused )=>
+  play: =>
     alreadyPlaying = @sound?.playing()
     if not alreadyPlaying
       volume = if @volume? then @volume else 1
       src = AudioContent.getSrc @filename
       @sound ?= new Howl {
         src: [src]
-        onloaderror: @onLoadError.bind(@, whenFinished)
+        onloaderror: @onLoadError.bind(@)
         #onplay: -> console.log "Playing the audio"
-        onend: @onEnd.bind(@, whenFinished)
-        onpause: @onPause.bind(@, whenPaused)
+        onend: @onEnd.bind(@)
+        onpause: @onPause.bind(@)
         volume: volume
       }
       @sound.play()

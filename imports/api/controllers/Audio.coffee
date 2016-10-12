@@ -14,8 +14,6 @@ class AudioController
       return @currentAudio
 
   stopAudio: ->
-    console.log "STOPPING THE AUDIO"
-    console.log @getCurrentAudio()
     @getCurrentAudio().stop()
 
   replayCurrentAudio: ->
@@ -27,23 +25,23 @@ class AudioController
     @liveAudio = []
 
   playAudio: ( filename, volume, isSoundEffect, whenFinished, whenPaused )->
-    audio = new Audio filename, volume
-    audio.play whenFinished, whenPaused
+    audio = new Audio filename, volume, whenFinished, whenPaused
+    audio.play()
     @liveAudio.push audio
     if not isSoundEffect
       @setCurrentAudio audio
     return audio
 
-  trackAudioStopped: ( module, lesson, pos, completed, filename ) ->
+  trackAudioStopped: ( module, lesson, language, condition, completedAudio, filename, duration ) ->
     text = if module?.title then module?.title else module?.question
     Analytics.registerEvent "TRACK", "Audio Stopped", {
       moduleText: text
       filename: filename
       moduleId: module?._id
-      language: @language
-      condition: @condition
-      time: pos
-      completed: completed
+      language: language
+      condition: condition
+      completedAudio: completedAudio
+      duration: duration
       lessonTitle: lesson?.title
       lessonId: lesson?._id
     }

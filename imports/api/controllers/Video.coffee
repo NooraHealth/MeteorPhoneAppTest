@@ -3,10 +3,13 @@
 class VideoController
   constructor: ->
 
+  getVideoElem: ( module )->
+    return $("#" + module._id)
+
   stopVideo: ( module )->
-    $("#" + module._id).find("video")[0]?.pause()
+    @getVideoElem( module ).find("video")[0]?.pause()
 
   playVideo: ( module )->
-    $("#" + module._id).find("video")[0]?.play()
+    @getVideoElem( module ).find("video")[0]?.play()
 
 module.exports.VideoController = VideoController

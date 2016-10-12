@@ -15,11 +15,13 @@
 class LessonsPageController
   ## ------------- PUBLIC METHODS ------------ ##
 
-  onFinishExplanation: (module, lesson, pos, completed, src) ->
+  onFinishExplanation: ( module, lesson, completedAudio, filename, duration ) ->
+    console.log "IN the on finish explanation"
     isCurrent = @model.isCurrentModule module
     if isCurrent
       @model.animate "nextButton", true
-    @audioController.trackAudioStopped( module, lesson, pos, completed, src )
+    console.log "About to track audio stopped"
+    @audioController.trackAudioStopped( module, lesson, @language, @condition, completedAudio, filename, duration )
 
   onLevelSelected: ( index )->
     if not @model.levelHasLessons index
@@ -30,6 +32,7 @@ class LessonsPageController
     else
       @model.startLevel index
       @autoplayMedia()
+      @trackStartedLesson( @model.getCurrentLesson() )
 
   onWrongChoice: ( module, choice )->
     @audioController.playAudio( incorrectSoundEffectFilename , 1, true)
@@ -40,6 +43,7 @@ class LessonsPageController
         timer: 3000
         confirmButtonText: Translator.translate "ok", @model.getLanguage()
       }
+    @trackChoice module, choice
 
   onCorrectChoice: ( module, choice )->
     @audioController.playAudio( correctSoundEffectFilename , 1, true)
@@ -63,6 +67,7 @@ class LessonsPageController
         @goToSelectLevelSlide(null, true)
       else
         @model.goToNextLesson()
+        @trackStartedLesson( @model.getCurrentLesson() )
         @autoplayMedia()
 
     onCancel = =>
@@ -134,8 +139,14 @@ class LessonsPageController
       if module?.type == "VIDEO"
         @videoController.playVideo module
       if module?.hasAudio()
-        onFinishAudio = if module.hasExplanation() then @audioController.trackAudioStopped.bind(@, module, lesson) else @onFinishExplanation.bind(@, module, lesson)
+        onFinishAudio = if module.hasExplanation() then @audioController.trackAudioStopped.bind(@, module, lesson, @language, @condition) else @onFinishExplanation.bind(@, module, lesson)
         audio = @audioController.playAudio module.audio, 1, false, onFinishAudio, onFinishAudio
+
+    @trackStartedLesson = ( lesson )->
+      Analytics.registerEvent "TRACK", "Left Lesson For Home", {
+        lessonTitle: lesson?.title
+        lessonId: lesson?._id
+      }
 
     @trackGoingToSelectLevel = ( lesson, module, completedLevel )->
       text = if module?.title then module?.title else module?.question

@@ -22,4 +22,3 @@ Meteor.startup ()->
     FlowRouter.go "load"
   else
     FlowRouter.go "home"
-
