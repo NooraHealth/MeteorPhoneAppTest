@@ -87,6 +87,7 @@ class LessonsPageController
     @audioController.destroyAudio()
     @model.disable "nextButton", true
     if currentModule.type == "VIDEO"
+      @completedVideo = false
       @videoController.stopVideo currentModule
     else if @model.onLastModule()
       @celebrateCompletion()
@@ -102,6 +103,9 @@ class LessonsPageController
       @showIntroductionToQuestions()
     else
       @celebrateCompletion()
+
+    @trackVideoStopped(@model.getCurrentModule(), @model.getCurrentLesson(), @language, @condition, @completedVideo)
+    @completedVideo = true
 
   onPageRendered: ->
     @audioController.playAudio correctSoundEffectFilename, 0, true
@@ -137,6 +141,7 @@ class LessonsPageController
       module = @model.getCurrentModule()
       lesson = @model.getCurrentLesson()
       if module?.type == "VIDEO"
+        @completedVideo = true
         @videoController.playVideo module
       if module?.hasAudio()
         onFinishAudio = if module.hasExplanation() then @audioController.trackAudioStopped.bind(@, module, lesson, @language, @condition) else @onFinishExplanation.bind(@, module, lesson)
@@ -173,6 +178,19 @@ class LessonsPageController
         language: @language
         type: module.type
       }
+
+  trackVideoStopped: ( module, lesson, language, condition, completedVideo ) ->
+    Analytics.registerEvent "TRACK", "Video Stopped", {
+      moduleText: module.title
+      filename: module.video
+      moduleId: module._id
+      language: language
+      condition: condition
+      completedVideo: completedVideo
+      lessonTitle: lesson.title
+      lessonId: lesson._id
+    }
+    @
 
 
   module.exports.LessonsPageController = LessonsPageController
