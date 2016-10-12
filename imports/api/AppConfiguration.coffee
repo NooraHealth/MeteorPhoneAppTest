@@ -1,6 +1,7 @@
 
 { Curriculums } = require("meteor/noorahealth:mongo-schemas")
 { Translator } = require './utilities/Translator.coffee'
+moment = require 'moment'
 
 class AppConfiguration
   @get: ()->
@@ -119,6 +120,16 @@ class AppConfiguration
 
       @dict.setPersistent "subscribed", state
       @
+
+    getCurrentUserId: =>
+      return @dict.get "user_id"
+
+    setCurrentUserId: =>
+      hospital = @getHospital()
+      condition = @getCondition()
+      language = @getLanguage()
+      id = "#{hospital}, #{language}: " + moment().format("DD/MM/YYYY hh:mm")
+      @dict.set "user_id", id
 
     isSubscribed: =>
       subscribed = @dict.get "subscribed"

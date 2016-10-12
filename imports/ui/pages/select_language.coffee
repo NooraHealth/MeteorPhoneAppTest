@@ -42,8 +42,6 @@ Template.Select_language_page.onCreated ->
     @swiper.slideNext()
 
   @playIntroVideo = =>
-    console.log "The curriculum doc"
-    console.log AppConfiguration.getCurriculumDoc()
     introModule = AppConfiguration.getCurriculumDoc().getIntroductionModule()
     @.$("##{introModule?._id}")?.find("video")?[0]?.play()
 
@@ -63,9 +61,9 @@ Template.Select_language_page.onCreated ->
       @subscribe "lessons.all"
       @subscribe "modules.all"
 
-  @autorun =>
-    if Meteor.status().connected and @subscriptionsReady()
-      Analytics.clearOfflineEvents()
+  # @autorun =>
+  #   if Meteor.status().connected and @subscriptionsReady()
+  #     Analytics.clearOfflineEvents()
 
 Template.Select_language_page.helpers
   modulesReady: ->
@@ -103,7 +101,7 @@ Template.Select_language_page.helpers
     instance = Template.instance()
     return {
       onLanguageSelected: instance.onLanguageSelected
-      languages: ["English", "Hindi", "Kannada"]
+      languages: ["English", "Kannada"]
       onRendered: -> instance.initializeSwiper()
     }
 

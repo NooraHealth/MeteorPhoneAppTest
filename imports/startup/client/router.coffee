@@ -23,10 +23,12 @@ if Meteor.isCordova
 FlowRouter.route '/', {
   name: "home"
   action: ( params, qparams )->
+    AppConfiguration.setCurrentUserId()
     hospital = AppConfiguration.getHospital()
     condition = AppConfiguration.getCondition()
     language = AppConfiguration.getLanguage()
-    Analytics.registerEvent "IDENTIFY", hospital, {
+    id = "#{hospital}, #{condition}, #{language}"
+    Analytics.registerEvent "IDENTIFY", id , {
       hospital: hospital,
       condition: condition,
       language: language
@@ -43,11 +45,11 @@ FlowRouter.route '/configure', {
     hospital = AppConfiguration.getHospital()
     condition = AppConfiguration.getCondition()
     language = AppConfiguration.getLanguage()
-    Analytics.registerEvent "IDENTIFY", hospital, {
-      hospital: hospital,
-      condition: condition,
-      language: language
-    }
+    # Analytics.registerEvent "IDENTIFY", hospital, {
+    #   hospital: hospital,
+    #   condition: condition,
+    #   language: language
+    # }
     BlazeLayout.render 'Layout', { main : 'Configure_app_page' }
 }
 
@@ -60,11 +62,11 @@ FlowRouter.route '/lessons', {
     hospital = AppConfiguration.getHospital()
     condition = AppConfiguration.getCondition()
     language = AppConfiguration.getLanguage()
-    Analytics.registerEvent "IDENTIFY", hospital, {
-      hospital: hospital,
-      condition: condition,
-      language: language
-    }
+    # Analytics.registerEvent "IDENTIFY", hospital, {
+    #   hospital: hospital,
+    #   condition: condition,
+    #   language: language
+    # }
     BlazeLayout.render 'Layout', { main : 'Lesson_view_page' }
 }
 
@@ -78,10 +80,10 @@ if Meteor.isCordova
       hospital = AppConfiguration.getHospital()
       condition = AppConfiguration.getCondition()
       language = AppConfiguration.getLanguage()
-      Analytics.registerEvent "IDENTIFY", hospital, {
-        hospital: hospital,
-        condition: condition,
-        language: language
-      }
+      # Analytics.registerEvent "IDENTIFY", hospital, {
+      #   hospital: hospital,
+      #   condition: condition,
+      #   language: language
+      # }
       BlazeLayout.render "Layout", { main: "Load_curriculums_page" }
   }

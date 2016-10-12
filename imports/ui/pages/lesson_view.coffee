@@ -1,5 +1,6 @@
 
 { AppConfiguration } = require('../../api/AppConfiguration.coffee')
+{ Analytics } = require('../../api/analytics/Analytics.coffee')
 { LessonsPageController } = require('../../api/controllers/LessonsPage.coffee')
 { LessonsPageModel } = require '../../api/models/lessons/LessonsPage.coffee'
 
@@ -53,6 +54,10 @@ Template.Lesson_view_page.onCreated ()->
   @autorun ()->
     Tracker.afterFlush =>
       console.log "LESSON PAGE afterFlush"
+
+  @autorun =>
+    if @subscriptionsReady() and Meteor.status().connected
+      Analytics.clearOfflineEvents()
 
   @autorun =>
     if @subscriptionsReady() and @state.get("rendered") and @state.get("controllerInitialized")

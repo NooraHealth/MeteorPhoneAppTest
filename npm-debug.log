@@ -1,13 +1,13 @@
 0 info it worked if it ends with ok
-1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'run', 'dev' ]
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'run', 'dev-ios' ]
 2 info using npm@2.15.8
 3 info using node@v4.4.7
-4 verbose run-script [ 'predev', 'dev', 'postdev' ]
-5 info predev training-app@0.0.4
-6 info dev training-app@0.0.4
+4 verbose run-script [ 'predev-ios', 'dev-ios', 'postdev-ios' ]
+5 info predev-ios training-app@0.0.4
+6 info dev-ios training-app@0.0.4
 7 verbose unsafe-perm in lifecycle true
-8 info training-app@0.0.4 Failed to exec dev script
-9 verbose stack Error: training-app@0.0.4 dev: `meteor run --settings settings_dev.json`
+8 info training-app@0.0.4 Failed to exec dev-ios script
+9 verbose stack Error: training-app@0.0.4 dev-ios: `meteor run ios-device --settings settings_dev.json`
 9 verbose stack Exit status 2
 9 verbose stack     at EventEmitter.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/lifecycle.js:217:16)
 9 verbose stack     at emitTwo (events.js:87:13)
@@ -20,17 +20,17 @@
 10 verbose pkgid training-app@0.0.4
 11 verbose cwd /Users/user/Documents/NooraHealth/training-app
 12 error Darwin 16.0.0
-13 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dev"
+13 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dev-ios"
 14 error node v4.4.7
 15 error npm  v2.15.8
 16 error code ELIFECYCLE
-17 error training-app@0.0.4 dev: `meteor run --settings settings_dev.json`
+17 error training-app@0.0.4 dev-ios: `meteor run ios-device --settings settings_dev.json`
 17 error Exit status 2
-18 error Failed at the training-app@0.0.4 dev script 'meteor run --settings settings_dev.json'.
+18 error Failed at the training-app@0.0.4 dev-ios script 'meteor run ios-device --settings settings_dev.json'.
 18 error This is most likely a problem with the training-app package,
 18 error not with npm itself.
 18 error Tell the author that this fails on your system:
-18 error     meteor run --settings settings_dev.json
+18 error     meteor run ios-device --settings settings_dev.json
 18 error You can get information on how to open an issue for this project with:
 18 error     npm bugs training-app
 18 error Or if that isn't available, you can get their info via:

@@ -28,7 +28,7 @@ Template.Load_curriculums_page.onCreated ->
     else if @subscriptionsReady(@) and @firstRun
       @firstRun = false
       configuration = AppConfiguration.getConfiguration()
-      curriculums = Curriculums.find { condition: configuration.condition }
+      curriculums = Curriculums.find { condition: configuration.condition, language: {$in: ["Kannada", "English"] }}
       onComplete = (e) ->
         if e
           console.log "Error downloading curriculum"
@@ -43,4 +43,3 @@ Template.Load_curriculums_page.onCreated ->
           FlowRouter.go "home"
 
       ContentDownloader.get().loadCurriculums curriculums, onComplete
-  

@@ -13,10 +13,10 @@
 Array::merge = (other) -> Array::push.apply @, other
 
 ##
-#                                                                
-# ContentDownloader                                                          
 #
-# Given the id of a Curriculum, the CurriculumDownloader fetches all of the 
+# ContentDownloader
+#
+# Given the id of a Curriculum, the CurriculumDownloader fetches all of the
 # images, audio, and videos from the remote server
 # and stores them locally on the device. A reference to each file is stored
 # as an OfflineFile document upon successful download.
@@ -36,7 +36,6 @@ class @ContentDownloader
     loadCurriculums: ( cursor, onComplete )=>
       #try
       #validate the arguments
-      console.log "About to download!!"
       new SimpleSchema({
         cursor: {type: Mongo.Cursor}
         onComplete: {type: Function}
@@ -170,7 +169,7 @@ class @ContentDownloader
         deferred.resolve err
 
       return deferred.promise
-      
+
     _allFilesInCurriculum: ( curriculum, type )->
       filenames = []
       lessons = curriculum.getLessonDocuments("introduction")
@@ -246,4 +245,3 @@ class @ContentDownloader
       return filenames
 
 module.exports.ContentDownloader = ContentDownloader
-

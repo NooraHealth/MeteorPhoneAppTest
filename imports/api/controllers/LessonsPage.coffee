@@ -32,6 +32,7 @@ class LessonsPageController
     else
       @model.startLevel index
       @autoplayMedia()
+      @trackStartedLevel( @model.getCurrentLevel() )
       @trackStartedLesson( @model.getCurrentLesson() )
 
   onWrongChoice: ( module, choice )->
@@ -43,7 +44,7 @@ class LessonsPageController
         timer: 3000
         confirmButtonText: Translator.translate "ok", @model.getLanguage()
       }
-    @trackChoice module, choice
+    @trackChoice module, choice, "INCORRECT"
 
   onCorrectChoice: ( module, choice )->
     @audioController.playAudio( correctSoundEffectFilename , 1, true)
@@ -54,7 +55,7 @@ class LessonsPageController
         timer: 3000
         confirmButtonText: Translator.translate "ok", @model.getLanguage()
       }
-    @trackChoice module, choice
+    @trackChoice module, choice, "CORRECT"
 
   onCompletedQuestion: ( module )->
     @audioController.stopAudio()
@@ -65,6 +66,7 @@ class LessonsPageController
     onConfirm = =>
       if @model.onLastLesson()
         @goToSelectLevelSlide(null, true)
+        @trackFinishedCurriculum()
       else
         @model.goToNextLesson()
         @trackStartedLesson( @model.getCurrentLesson() )
@@ -132,7 +134,7 @@ class LessonsPageController
     @goToSelectLevelSlide = ( event, completedLevel) ->
       lesson = @model.getCurrentLesson()
       module = @model.getCurrentModule()
-      @trackGoingToSelectLevel lesson, module, completedLevel
+      @trackGoingToSelectLevel lesson, module, completedLevel, @model.getCurrentLevel()
       if completedLevel then @model.goToNextLevel()
       else @model.goToSelectLevelSlide()
       @audioController.destroyAudio()
@@ -148,16 +150,17 @@ class LessonsPageController
         audio = @audioController.playAudio module.audio, 1, false, onFinishAudio, onFinishAudio
 
     @trackStartedLesson = ( lesson )->
-      Analytics.registerEvent "TRACK", "Left Lesson For Home", {
+      Analytics.registerEvent "TRACK", "Started a Lesson", {
         lessonTitle: lesson?.title
         lessonId: lesson?._id
       }
 
-    @trackGoingToSelectLevel = ( lesson, module, completedLevel )->
+    @trackGoingToSelectLevel = ( lesson, module, completedLevel, currentLevel )->
       text = if module?.title then module?.title else module?.question
-      Analytics.registerEvent "TRACK", "Left Lesson For Home", {
+      Analytics.registerEvent "TRACK", "Went to Select Level Page", {
         lessonTitle: lesson?.title
         lessonId: lesson?._id
+        currentLevel: currentLevel
         lastModuleId: module?._id
         lastModuleText: text
         lastModuleType: module?.type
@@ -165,7 +168,7 @@ class LessonsPageController
         numberOfModulesInLesson: lesson?.modules.length
       }
 
-    @trackChoice = ( module, choice )->
+    @trackChoice = ( module, choice, answeredCorrectly )->
       lesson = @model.getCurrentLesson()
       text = if module?.title then module?.title else module?.question
       Analytics.registerEvent "TRACK", "Responded to Question", {
@@ -177,20 +180,34 @@ class LessonsPageController
         condition: @condition
         language: @language
         type: module.type
+        answeredCorrectly: answeredCorrectly
       }
 
-  trackVideoStopped: ( module, lesson, language, condition, completedVideo ) ->
-    Analytics.registerEvent "TRACK", "Video Stopped", {
-      moduleText: module.title
-      filename: module.video
-      moduleId: module._id
-      language: language
-      condition: condition
-      completedVideo: completedVideo
-      lessonTitle: lesson.title
-      lessonId: lesson._id
-    }
-    @
+    @trackFinishedCurriculum = ->
+      Analytics.registerEvent "TRACK", "Finished Curriculum", {
+        condition: @condition
+        language: @language
+      }
+
+    @trackStartedLevel = ( level )->
+      Analytics.registerEvent "TRACK", "Started Level", {
+        condition: @condition
+        language: @language
+        level: level
+      }
+
+    @trackVideoStopped = ( module, lesson, language, condition, completedVideo )->
+      Analytics.registerEvent "TRACK", "Video Stopped", {
+        moduleText: module.title
+        filename: module.video
+        moduleId: module._id
+        language: language
+        condition: condition
+        completedVideo: completedVideo
+        lessonTitle: lesson.title
+        lessonId: lesson._id
+      }
+      @
 
 
   module.exports.LessonsPageController = LessonsPageController
