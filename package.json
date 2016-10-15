@@ -4,6 +4,7 @@
   "description": "Noora Health's patient and caregiver training app",
   "scripts": {
     "prod": "meteor run --settings settings.json",
+    "prod-ios": "meteor run ios-device --settings settings.json",
     "dev": "meteor run --settings settings_dev.json",
     "dev-ios": "meteor run ios-device --settings settings_dev.json",
     "dev-android": "meteor run android --settings settings_dev.json --verbose",

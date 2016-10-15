@@ -2,7 +2,7 @@
 
 { AppConfiguration } = require '../AppConfiguration.coffee'
 { Translator } = require '../utilities/Translator.coffee'
-{ Curriculums } = require("meteor/noorahealth:mongo-schemas")
+{ Curriculums } = require("../../api/collections/schemas/curriculums/curriculums.js")
 { LessonsPageModel } = require '../models/lessons/LessonsPage.coffee'
 { Analytics } = require '../analytics/Analytics.coffee'
 { Award } = require('../../ui/components/lessons/popups/award.coffee')

@@ -1,6 +1,6 @@
 
 { AppConfiguration } = require '../../api/AppConfiguration.coffee'
-{ Curriculums } = require 'meteor/noorahealth:mongo-schemas'
+{ Curriculums } = require("../../api/collections/schemas/curriculums/curriculums.js")
 { ContentDownloader } = require('../../api/cordova/ContentDownloader.coffee')
 
 require '../components/shared/loading.coffee'
@@ -10,11 +10,10 @@ Template.Load_curriculums_page.onCreated ->
 
   @firstRun = true
 
-  @autorun =>
-    if AppConfiguration.templateShouldSubscribe()
-      @subscribe "curriculums.all"
-      @subscribe "lessons.all"
-      @subscribe "modules.all"
+  # @autorun =>
+  #   @subscribe "curriculums.all"
+  #   @subscribe "lessons.all"
+  #   @subscribe "modules.all"
 
   @autorun =>
     console.log "Getting whether subscriptionsReady"

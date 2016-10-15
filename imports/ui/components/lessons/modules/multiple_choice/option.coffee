@@ -22,4 +22,3 @@ Template.Lesson_view_page_multiple_choice_option.events
     data = Template.currentData()
     template.state.set "selected", true
     data.onSelected data.option
-

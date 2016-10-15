@@ -1,5 +1,5 @@
 
-{ Modules } = require 'meteor/noorahealth:mongo-schemas'
+{ Modules } = require "../../../api/collections/schemas/curriculums/curriculums.js"
 
 require './module_slides.html'
 require './levels/thumbnail.coffee'
@@ -10,21 +10,21 @@ require './modules/slide.html'
 require './modules/multiple_choice/multiple_choice.coffee'
 
 Template.Module_slides.onCreated ->
-  new SimpleSchema({
-    modules: { type: Modules._helpers, optional: true }
-    language: { type: String }
-    "moduleOptions.incorrectClasses": { type: String }
-    "moduleOptions.incorrectlySelectedClasses": { type: String }
-    "moduleOptions.correctlySelectedClasses": { type: String }
-    "moduleOptions.onCorrectChoice": { type: Function }
-    "moduleOptions.onWrongChoice": { type: Function }
-    "moduleOptions.onCompletedQuestion": { type: Function }
-    "moduleOptions.onVideoEnd": { type: Function }
-    "moduleOptions.onStopVideo": { type: Function }
-    "moduleOptions.isCurrent": { type: Function }
-    "moduleOptions.isNext": { type: Function }
-    "moduleOptions.onSlidesChanged": { type: Function }
-  }).validate Template.currentData()
+  # new SimpleSchema({
+  #   modules: { type: Modules._helpers, optional: true }
+  #   language: { type: String }
+  #   "moduleOptions.incorrectClasses": { type: String }
+  #   "moduleOptions.incorrectlySelectedClasses": { type: String }
+  #   "moduleOptions.correctlySelectedClasses": { type: String }
+  #   "moduleOptions.onCorrectChoice": { type: Function }
+  #   "moduleOptions.onWrongChoice": { type: Function }
+  #   "moduleOptions.onCompletedQuestion": { type: Function }
+  #   "moduleOptions.onVideoEnd": { type: Function }
+  #   "moduleOptions.onStopVideo": { type: Function }
+  #   "moduleOptions.isCurrent": { type: Function }
+  #   "moduleOptions.isNext": { type: Function }
+  #   "moduleOptions.onSlidesChanged": { type: Function }
+  # }).validate Template.currentData()
 
   @autorun =>
     onSlidesChanged = Template.currentData().moduleOptions?.onSlidesChanged

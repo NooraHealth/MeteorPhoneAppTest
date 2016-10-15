@@ -1,6 +1,6 @@
 
 { ImageContent } = require '../../../../../api/content/ImageContent.coffee'
-{ Modules } = require("meteor/noorahealth:mongo-schemas")
+{ Modules } = require "../../../../../api/collections/schemas/curriculums/curriculums.js"
 
 require '../../../../../api/utilities/global_template_helpers.coffee'
 require "./option.coffee"
@@ -18,16 +18,16 @@ Template.Lesson_view_page_multiple_choice.onCreated ->
   }
 
   @autorun =>
-    schema = new SimpleSchema({
-      module: {type: Modules._helpers}
-      language: {type: String}
-      correctlySelectedClasses: {type: String}
-      incorrectClasses: {type: String}
-      incorrectlySelectedClasses: {type: String}
-      onWrongChoice: {type: Function}
-      onCorrectChoice: {type: Function}
-      onCompletedQuestion: {type: Function}
-    }).validate(Template.currentData())
+    # schema = new SimpleSchema({
+    #   module: {type: Modules._helpers}
+    #   language: {type: String}
+    #   correctlySelectedClasses: {type: String}
+    #   incorrectClasses: {type: String}
+    #   incorrectlySelectedClasses: {type: String}
+    #   onWrongChoice: {type: Function}
+    #   onCorrectChoice: {type: Function}
+    #   onCompletedQuestion: {type: Function}
+    # }).validate(Template.currentData())
 
     @data = Template.currentData()
 
@@ -71,7 +71,7 @@ Template.Lesson_view_page_multiple_choice.onCreated ->
       else if instance.state.get "completed"
         classes += " #{data.incorrectClasses}"
       return classes
-    
+
     mapData = (option, i) ->
       map[option] = {
         src: ImageContent.getSrc option
@@ -103,4 +103,3 @@ Template.Lesson_view_page_multiple_choice.helpers
     start = options.length / 2
     end = options.length
     return instance.getOptions options, start, end
-

@@ -52,7 +52,6 @@ class Award
       else
         onCancel?()
     )
-  
+
 
 module.exports.Award = Award
-

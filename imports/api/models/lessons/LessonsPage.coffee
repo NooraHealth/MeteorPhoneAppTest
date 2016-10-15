@@ -3,7 +3,7 @@
 { Translator } = require '../../utilities/Translator.coffee'
 { FooterModel } = require './Footer.coffee'
 { LevelModel } = require './Level.coffee'
-{ Curriculums } = require("meteor/noorahealth:mongo-schemas")
+{ Curriculums } = require "../../collections/schemas/curriculums/curriculums.js"
 { AppConfiguration } = require '../../AppConfiguration.coffee'
 
 class LessonsPageModel

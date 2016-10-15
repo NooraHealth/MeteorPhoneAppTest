@@ -13,8 +13,7 @@ require '../../ui/pages/select_language.coffee'
 require '../../ui/pages/lesson_view.coffee'
 require '../../ui/pages/configure.coffee'
 
-if Meteor.isCordova
-  require '../../ui/pages/load_curriculums.coffee'
+require '../../ui/pages/load_curriculums.coffee'
 
 ###
 # Home

@@ -2,7 +2,7 @@
 { AppConfiguration } = require('../../api/AppConfiguration.coffee')
 { Analytics } = require('../../api/analytics/Analytics.coffee')
 { Translator } = require('../../api/utilities/Translator.coffee')
-{ Curriculums } = require("meteor/noorahealth:mongo-schemas")
+{ Curriculums } = require("../../api/collections/schemas/curriculums/curriculums.js")
 
 # TEMPLATE
 require './select_language.html'
@@ -42,8 +42,10 @@ Template.Select_language_page.onCreated ->
     @swiper.slideNext()
 
   @playIntroVideo = =>
-    introModule = AppConfiguration.getCurriculumDoc().getIntroductionModule()
-    @.$("##{introModule?._id}")?.find("video")?[0]?.play()
+    console.log "Checking to see if can get intro module"
+    if @subscriptionsReady()
+      introModule = AppConfiguration.getCurriculumDoc().getIntroductionModule()
+      @.$("##{introModule?._id}")?.find("video")?[0]?.play()
 
   @setFooterVisible = =>
     @state.set "footerVisible", true
@@ -56,7 +58,9 @@ Template.Select_language_page.onCreated ->
 
   @autorun =>
     #if Meteor.status().connected
+    console.log "Shoudl the template subscribe???"
     if AppConfiguration.templateShouldSubscribe()
+      alert "SUBSCRIBING in SELECT LANGIAGE"
       @subscribe "curriculums.all"
       @subscribe "lessons.all"
       @subscribe "modules.all"
@@ -68,12 +72,15 @@ Template.Select_language_page.onCreated ->
 Template.Select_language_page.helpers
   modulesReady: ->
     instance = Template.instance()
+    console.log "ready??"
+    console.log instance.subscriptionsReady()
     return instance.subscriptionsReady()
 
   introModules: ->
     modules = []
     condition = AppConfiguration.getCondition()
     for curriculum in Curriculums.find({ condition: condition }).fetch()
+      console.log "Getting all the intro modules"
       introModule = curriculum.getIntroductionModule()
       if introModule then modules.push introModule
     return modules

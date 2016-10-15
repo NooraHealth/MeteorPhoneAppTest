@@ -1,7 +1,7 @@
 
 { AppConfiguration } = require '../../api/AppConfiguration.coffee'
-{ Conditions } = require 'meteor/noorahealth:mongo-schemas'
-{ Facilities } = require 'meteor/noorahealth:mongo-schemas'
+{ Facilities } = require("../../api/collections/schemas/facilities.js")
+{ Conditions } = require("../../api/collections/schemas/conditions.js")
 
 require './configure.html'
 
@@ -28,18 +28,20 @@ Template.Configure_app_page.onCreated ->
       }
 
       if Meteor.isCordova
-        console.log "Going to load"
         FlowRouter.go "load"
       else
         FlowRouter.go "home"
 
-  @autorun =>
-    @subscribe "facilities.all"
-    @subscribe "conditions.all"
+  # @autorun =>
+    # @subscribe "facilities.all"
+    # @subscribe "conditions.all"
 
 Template.Configure_app_page.helpers
   subscriptionsReady: ()->
     instance = Template.instance()
+    console.log "THE FACILITIES AND CONDITIONS"
+    console.log Facilities.find({})
+    console.log Conditions.find({})
     return instance.subscriptionsReady()
 
   hospitals: ->

@@ -1,23 +1,23 @@
 
-{ Modules } = require("meteor/noorahealth:mongo-schemas")
+{ Modules } = require "../../../../api/collections/schemas/curriculums/curriculums.js"
 { Translator } = require("../../../../api/utilities/Translator.coffee")
 
 require '../../../../api/utilities/global_template_helpers.coffee'
 require "./scenario.html"
-    
+
 Template.Lesson_view_page_scenario.onCreated ->
   # Data context validation
   @autorun =>
-    schema = new SimpleSchema({
-      module: {type: Modules._helpers}
-      language: {type: String}
-      correctlySelectedClasses: {type: String}
-      incorrectClasses: {type: String}
-      incorrectlySelectedClasses: {type: String}
-      onWrongChoice: {type: Function}
-      onCorrectChoice: {type: Function}
-      onCompletedQuestion: {type: Function}
-    }).validate(Template.currentData())
+    # schema = new SimpleSchema({
+    #   module: {type: Modules._helpers}
+    #   language: {type: String}
+    #   correctlySelectedClasses: {type: String}
+    #   incorrectClasses: {type: String}
+    #   incorrectlySelectedClasses: {type: String}
+    #   onWrongChoice: {type: Function}
+    #   onCorrectChoice: {type: Function}
+    #   onCompletedQuestion: {type: Function}
+    # }).validate(Template.currentData())
 
     @data = Template.currentData()
     @NORMAL = "Normal"
@@ -47,7 +47,7 @@ Template.Lesson_view_page_scenario.onCreated ->
     else if option in selected
       return "#{@data.incorrectlySelectedClasses} #{@data.incorrectClasses}"
     else return ""
-      
+
   @getNormalButtonClasses = ->
     classes = "#{@responseClasses(@NORMAL)} #{@sharedButtonClasses} color-green"
     return classes

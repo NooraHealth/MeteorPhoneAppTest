@@ -11,4 +11,3 @@ Template.Lesson_view_page_footer_progress_bar.onCreated ->
   @autorun =>
     percent = Template.currentData().percent
     AppConfiguration.getF7().setProgressbar $('.progressbar'), percent
-

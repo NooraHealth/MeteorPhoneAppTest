@@ -1,5 +1,7 @@
 
-{ Curriculums } = require "meteor/noorahealth:mongo-schemas"
+{ Curriculums } = require "../collections/schemas/curriculums/curriculums.js"
+{ Modules } = require "../collections/schemas/curriculums/modules.js"
+{ Lessons } = require "../collections/schemas/curriculums/lessons.js"
 { OfflineFiles } = require "../collections/offline_files.js"
 { AudioContent } = require '../content/AudioContent.coffee'
 { correctSoundEffectFilename } = require '../content/AudioContent.coffee'

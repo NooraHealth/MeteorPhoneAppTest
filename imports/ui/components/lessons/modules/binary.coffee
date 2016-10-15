@@ -1,4 +1,4 @@
-{ Modules } = require("meteor/noorahealth:mongo-schemas")
+{ Modules } = require "../../../../api/collections/schemas/curriculums/curriculums.js"
 { Translator } = require("../../../../api/utilities/Translator.coffee")
 
 require "./binary.html"
@@ -7,16 +7,16 @@ require '../../../../api/utilities/global_template_helpers.coffee'
 Template.Lesson_view_page_binary.onCreated ->
   # Data context validation
   @autorun =>
-    new SimpleSchema({
-      module: {type: Modules._helpers}
-      language: {type: String}
-      correctlySelectedClasses: {type: String}
-      incorrectClasses: {type: String}
-      incorrectlySelectedClasses: {type: String}
-      onWrongChoice: {type: Function}
-      onCorrectChoice: {type: Function}
-      onCompletedQuestion: {type: Function}
-    }).validate(Template.currentData())
+    # new SimpleSchema({
+    #   module: {type: Modules._helpers}
+    #   language: {type: String}
+    #   correctlySelectedClasses: {type: String}
+    #   incorrectClasses: {type: String}
+    #   incorrectlySelectedClasses: {type: String}
+    #   onWrongChoice: {type: Function}
+    #   onCorrectChoice: {type: Function}
+    #   onCompletedQuestion: {type: Function}
+    # }).validate(Template.currentData())
     @data = Template.currentData()
 
   #set the state
@@ -66,7 +66,7 @@ Template.Lesson_view_page_binary.onCreated ->
       else if instance.questionComplete()
         classes += " #{data.incorrectClasses}"
       return classes
-    
+
     mapData = (option, i) ->
       map[option] = {
         id: "#{option}OptionForModule#{module._id}"
@@ -86,4 +86,3 @@ Template.Lesson_view_page_binary.helpers
       content: text.toUpperCase()
       onClick: instance.getOnSelected(instance, option)
     }
-

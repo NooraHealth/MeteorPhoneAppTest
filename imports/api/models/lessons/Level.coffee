@@ -1,11 +1,11 @@
 
-{ Curriculums } = require "meteor/noorahealth:mongo-schemas"
+{ Curriculums } = require "../../collections/schemas/curriculums/curriculums.js"
 { Sequence } = require "./base/Sequence.coffee"
 
 class LevelModel
 
   constructor: (@curriculum, @name, @image, @index) ->
-    
+
     # Validate the arguments
     new SimpleSchema({
       curriculum: {type: Curriculums._helpers}
@@ -53,7 +53,7 @@ class LevelModel
 
   getCurrentLesson: ->
     return @currentLessonsSequence().getCurrentItem()?.lesson
-  
+
   goToNextLesson: ->
     @currentLessonsSequence()?.goToNext()
     @goToNextModule()
@@ -92,7 +92,7 @@ class LevelModel
     for lessonItem in @lessonsSequence.getItems()
       lessonItem.modulesSequence.reset()
     @lessonsSequence.reset()
-    
+
   isEqual: ( level )->
     return level.getName() == @getName() and
       level.getImage()== @getImage() and

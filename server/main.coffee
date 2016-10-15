@@ -3,16 +3,17 @@
 # COLLECTIONS
 ##
 
-require 'meteor/noorahealth:mongo-schemas'
+require '../imports/api/collections/publications/publications.js'
 cloudinary = require("cloudinary")
 
-{ Conditions } = require 'meteor/noorahealth:mongo-schemas'
-{ Facilities } = require 'meteor/noorahealth:mongo-schemas'
-{ Curriculums } = require 'meteor/noorahealth:mongo-schemas'
-{ Modules } = require 'meteor/noorahealth:mongo-schemas'
-{ Lessons } = require 'meteor/noorahealth:mongo-schemas'
+{ Conditions } = require '../imports/api/collections/schemas/conditions.js'
+{ Facilities } = require '../imports/api/collections/schemas/facilities.js'
+{ Curriculums } = require '../imports/api/collections/schemas/curriculums/curriculums.js'
+{ Modules } = require '../imports/api/collections/schemas/curriculums/modules.js'
+{ Lessons } = require '../imports/api/collections/schemas/curriculums/lessons.js'
 
 Meteor.startup ()->
+  console.log process.env.MONGO_URL
 
   cloudinary.config {
     cloud_name: Meteor.settings.public.CLOUDINARY_NAME,

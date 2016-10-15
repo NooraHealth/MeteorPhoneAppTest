@@ -38,7 +38,7 @@ Template.Lesson_view_page_footer.helpers
       content: data.text
       onClick: data.onClick
     }
-    
+
   nextButtonArgs: (data) ->
     instance = Template.instance()
     classes = 'link footer-button button color-orange button-fill'
@@ -70,6 +70,3 @@ Template.Lesson_view_page_footer.helpers
       content: data.text
       onClick: data.onClick
     }
-
-
-

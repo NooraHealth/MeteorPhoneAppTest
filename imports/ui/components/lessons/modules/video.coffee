@@ -1,5 +1,5 @@
 
-{ Modules } = require("meteor/noorahealth:mongo-schemas")
+{ Modules } = require "../../../../api/collections/schemas/curriculums/curriculums.js"
 { VideoContent } = require('../../../../api/content/VideoContent.coffee')
 
 require '../../../../api/utilities/global_template_helpers.coffee'
@@ -14,21 +14,23 @@ Template.Lesson_view_page_video.onCreated ->
 
   # Data context validation
   @autorun =>
-    schema = new SimpleSchema({
-      module: {type: Modules._helpers}
-      language: {type: String}
-      onPlayVideo: {type: Function, optional: true}
-      onStopVideo: {type: Function, optional: true}
-      onVideoEnd: {type: Function, optional: true}
-      onRendered: {type: Function, optional: true}
-      #playing: {type: Boolean}
-      isCurrent: {type: Boolean}
-    }).validate(Template.currentData())
+    console.log VideoContent
+    console.log Modules
+    # schema = new SimpleSchema({
+    #   module: {type: Modules._helpers}
+    #   language: {type: String}
+    #   onPlayVideo: {type: Function, optional: true}
+    #   onStopVideo: {type: Function, optional: true}
+    #   onVideoEnd: {type: Function, optional: true}
+    #   onRendered: {type: Function, optional: true}
+    #   #playing: {type: Boolean}
+    #   isCurrent: {type: Boolean}
+    # }).validate(Template.currentData())
 
     @data = Template.currentData()
 
   @displayedPopup = false
-      
+
   @onStopVideo = (location) =>
     if @data.onStopVideo
       @data.onStopVideo()
@@ -87,7 +89,7 @@ Template.Lesson_view_page_video.helpers
       src: VideoContent.getSrc module.video
       controls: true
     }
-  
+
   #playing: ->
     #instance = Template.instance()
     #return instance.data.playing
@@ -115,5 +117,3 @@ Template.Lesson_view_page_video.onRendered ->
   elem.addEventListener "onended", ->
     instance.onVideoEnd()
     instance.trackStoppedVideo( elem.currentTime, true )
-  
-  

@@ -33,6 +33,7 @@ Template.Lesson_view_page.onCreated ()->
   #subscribe to data
   @autorun =>
     if AppConfiguration.templateShouldSubscribe()
+      alert "Subscribing in LessonViw"
       @subscribe "curriculums.all"
       @subscribe "lessons.all"
       @subscribe "modules.all"

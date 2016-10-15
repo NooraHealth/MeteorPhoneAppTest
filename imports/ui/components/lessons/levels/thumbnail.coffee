@@ -1,5 +1,5 @@
 
-{ Lessons } = require("meteor/noorahealth:mongo-schemas")
+{ Modules } = require "../../../../api/collections/schemas/curriculums/lessons.js"
 require './thumbnail.html'
 require '../../../../api/utilities/global_template_helpers.coffee'
 
@@ -26,6 +26,3 @@ Template.Level_thumbnail.onRendered ->
       duration: 2500,
       direction: "vertical"
     }
-    
-
-  

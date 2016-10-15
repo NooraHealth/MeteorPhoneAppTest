@@ -1,6 +1,9 @@
 
-{ Curriculums } = require("meteor/noorahealth:mongo-schemas")
+{ Curriculums } = require("./collections/schemas/curriculums/curriculums.js")
+{ Modules } = require("./collections/schemas/curriculums/modules.js")
+{ Lessons } = require("./collections/schemas/curriculums/lessons.js")
 { Translator } = require './utilities/Translator.coffee'
+
 moment = require 'moment'
 
 class AppConfiguration
@@ -10,7 +13,9 @@ class AppConfiguration
 
   class Private
     constructor: (name) ->
+      console.log "MAKING AN APP CONFIGURATION"
       @dict = new PersistentReactiveDict name
+      console.log @dict
 
     initializeApp: =>
       @F7 = new Framework7(
@@ -28,6 +33,8 @@ class AppConfiguration
         { name: "intermediate", image: "medium.png" }
         { name: "advanced", image: "hard.png" }
       ]
+
+    getSupportedLanguages: ->
 
     getF7: =>
       return @F7
@@ -68,6 +75,7 @@ class AppConfiguration
       console.log condition
       console.log Curriculums.find({}).count()
       curriculum = Curriculums.findOne {language: language, condition: condition}
+      console.log "The curriculum"
       return curriculum
 
     setConfiguration: (configuration) =>
@@ -112,13 +120,15 @@ class AppConfiguration
       return @getConfiguration()?.hospital
 
     setSubscribed: (state) =>
+      console.log "Setting subscribed to "
+      console.log state
       new SimpleSchema({
         state: { type: Boolean }
       }).validate {
         state: state
       }
 
-      @dict.setPersistent "subscribed", state
+      @dict.setTemporary "subscribed", state
       @
 
     getCurrentUserId: =>
@@ -133,14 +143,46 @@ class AppConfiguration
 
     isSubscribed: =>
       subscribed = @dict.get "subscribed"
+      console.log "isSubscribed", subscribed
       if subscribed? then return subscribed else return false
 
     templateShouldSubscribe: ->
       isSubscribed = @isSubscribed()
       if Meteor.isCordova
-        return Meteor.status().connected and not isSubscribed
+        return false
+        # return Meteor.status().connected and not isSubscribed
       else
-        return Meteor.status().connected
+        # return Meteor.status().connected
+        return false
       #return true
+
+    restoreLocalCollectionsFromPersistentStorage: ( curriculums, lessons, modules )->
+      curriculums = JSON.parse @dict.get "curriculums"
+      lessons = JSON.parse @dict.get "lessons"
+      modules = JSON.parse @dict.get "modules"
+
+      @_storeCollectionsLocally curriculums, lessons, modules
+
+    storeCollectionsLocally: ( curriculums, lessons, modules )->
+      console.log "STORING COLLECTIONS LOCALLY"
+      console.log curriculums
+      console.log lessons
+      console.log modules
+      Curriculums.remove({})
+      Lessons.remove({})
+      Modules.remove({})
+
+      for curriculum in curriculums
+        Curriculums.insert curriculum
+
+      for lesson in lessons
+        Lessons.insert lesson
+
+      for module in modules
+        Modules.insert module
+
+      @dict.setPersistent "curriculums", JSON.stringify(curriculums)
+      @dict.setPersistent "lessons", JSON.stringify(lessons)
+      @dict.setPersistent "modules", JSON.stringify(modules)
 
 module.exports.AppConfiguration = AppConfiguration.get()
