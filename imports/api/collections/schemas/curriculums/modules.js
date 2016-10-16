@@ -185,7 +185,7 @@ let ModuleSchema = new SimpleSchema({
 });
 
 Modules.attachSchema( ModuleSchema );
-LocalModules.attachSchema( ModuleSchema );
+// LocalModules.attachSchema( ModuleSchema );
 
 const helpers = ({
 
@@ -214,8 +214,8 @@ const helpers = ({
 
 });
 
-Modules.helpers = helpers;
-LocalModules.helpers = helpers;
+Modules.helpers(helpers);
+LocalModules.helpers(helpers);
 
 Ground.Collection( Modules );
 Ground.Collection( LocalModules );

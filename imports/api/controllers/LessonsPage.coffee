@@ -32,7 +32,7 @@ class LessonsPageController
     else
       @model.startLevel index
       @autoplayMedia()
-      @trackStartedLevel( @model.getCurrentLevel() )
+      @trackStartedLevel( @model.getCurrentLevel().getName() )
       @trackStartedLesson( @model.getCurrentLesson() )
 
   onWrongChoice: ( module, choice )->

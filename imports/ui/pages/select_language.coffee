@@ -3,6 +3,8 @@
 { Analytics } = require('../../api/analytics/Analytics.coffee')
 { Translator } = require('../../api/utilities/Translator.coffee')
 { Curriculums } = require("../../api/collections/schemas/curriculums/curriculums.js")
+{ Modules } = require("../../api/collections/schemas/curriculums/modules.js")
+{ Lessons } = require("../../api/collections/schemas/curriculums/lessons.js")
 
 # TEMPLATE
 require './select_language.html'
@@ -58,12 +60,16 @@ Template.Select_language_page.onCreated ->
 
   @autorun =>
     #if Meteor.status().connected
-    console.log "Shoudl the template subscribe???"
     if AppConfiguration.templateShouldSubscribe()
-      alert "SUBSCRIBING in SELECT LANGIAGE"
       @subscribe "curriculums.all"
       @subscribe "lessons.all"
       @subscribe "modules.all"
+
+  @autorun =>
+    console.log "NUMBER OF CURRICULUMS"
+    console.log Curriculums.find({}).fetch()
+    if @subscriptionsReady() and Curriculums.find({}).count() == 0
+      AppConfiguration.restoreLocalCollectionsFromPersistentStorage()
 
   # @autorun =>
   #   if Meteor.status().connected and @subscriptionsReady()
@@ -81,6 +87,11 @@ Template.Select_language_page.helpers
     condition = AppConfiguration.getCondition()
     for curriculum in Curriculums.find({ condition: condition }).fetch()
       console.log "Getting all the intro modules"
+      console.log curriculum
+      console.log "Modules "
+      console.log Modules.find({}).count()
+      console.log Lessons.find({}).count()
+      console.log curriculum.getIntroductionModule
       introModule = curriculum.getIntroductionModule()
       if introModule then modules.push introModule
     return modules

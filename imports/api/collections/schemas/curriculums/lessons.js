@@ -24,7 +24,7 @@ let LessonSchema = new SimpleSchema({
 });
 
 Lessons.attachSchema( LessonSchema );
-LocalLessons.attachSchema( LessonSchema );
+// LocalLessons.attachSchema( LessonSchema );
 
 const helpers = ({
   getModulesSequence: function() {
@@ -38,8 +38,8 @@ const helpers = ({
   }
 });
 
-Lessons.helpers = helpers;
-LocalLessons.helpers = helpers;
+Lessons.helpers(helpers);
+LocalLessons.helpers(helpers);
 
 Ground.Collection( Lessons );
 Ground.Collection( LocalLessons );

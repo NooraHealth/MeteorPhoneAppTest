@@ -32,23 +32,16 @@ Template.Configure_app_page.onCreated ->
       else
         FlowRouter.go "home"
 
-  # @autorun =>
-    # @subscribe "facilities.all"
-    # @subscribe "conditions.all"
-
 Template.Configure_app_page.helpers
   subscriptionsReady: ()->
     instance = Template.instance()
-    console.log "THE FACILITIES AND CONDITIONS"
-    console.log Facilities.find({})
-    console.log Conditions.find({})
     return instance.subscriptionsReady()
 
   hospitals: ->
-    return Facilities.find({}).fetch()
+    return [{ name: "Jayadeva" }]
 
   conditions: ->
-    return Conditions.find({}).fetch()
+    return [{ name: "Cardiac Surgery" }]
 
   buttonArgs: ->
     instance = Template.instance()

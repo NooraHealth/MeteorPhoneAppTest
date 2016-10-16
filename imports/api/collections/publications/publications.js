@@ -1,7 +1,7 @@
 
-import { Curriculums } from '../schemas/curriculums/curriculums.js';
-import { Lessons } from '../schemas/curriculums/lessons.js';
-import { Modules } from '../schemas/curriculums/modules.js';
+import { ExternalCurriculums as Curriculums } from '../schemas/curriculums/curriculums.js';
+import { ExternalLessons as Lessons } from '../schemas/curriculums/lessons.js';
+import { ExternalModules as Modules} from '../schemas/curriculums/modules.js';
 import { Conditions } from '../schemas/conditions.js';
 import { Facilities } from '../schemas/facilities.js';
 
@@ -52,4 +52,3 @@ Meteor.publish("modules.inLesson", function(lessonId) {
     return Modules.find( {_id: {$in: lesson.modules}} );
   }, Lessons.findOne( { _id: lessonId }, { fields: { modules: 1 } }));
 });
-

@@ -1,9 +1,9 @@
 
 { BlazeLayout } = require 'meteor/kadira:blaze-layout'
 { AppConfiguration } = require('../../api/AppConfiguration.coffee')
-{ Curriculums } = require('../../api/collections/schemas/curriculums/curriculums.coffee')
-{ ExternalLessons } = require('../../api/collections/schemas/curriculums/lessons.coffee')
-{ ExternalModules } = require('../../api/collections/schemas/curriculums/modules.coffee')
+{ ExternalCurriculums } = require('../../api/collections/schemas/curriculums/curriculums.js')
+{ ExternalLessons } = require('../../api/collections/schemas/curriculums/lessons.js')
+{ ExternalModules } = require('../../api/collections/schemas/curriculums/modules.js')
 
 require 'meteor/loftsteinn:framework7-ios'
 
@@ -12,27 +12,24 @@ Meteor.startup ()->
   BlazeLayout.setRoot "body"
   AppConfiguration.initializeApp()
 
-  console.log process.env.MONGO_URL
-  console.log "IN INIT"
-  console.log "App is subscribed?? " + AppConfiguration.isSubscribed()
   if not AppConfiguration.isSubscribed()
-    alert "SUBSCRIBING in the init"
-    Meteor.subscribe "facilities.all"
-    Meteor.subscribe "conditions.all"
+    # facilitiesHandle = Meteor.subscribe "facilities.all"
+    # conditionsHandle = Meteor.subscribe "conditions.all"
     currHandle = Meteor.subscribe "curriculums.all"
     lessonsHandle = Meteor.subscribe "lessons.all"
     modulesHandle = Meteor.subscribe "modules.all"
     AppConfiguration.setSubscribed true
-    console.log "Setting a tracker autorun"
+
+    firstRun = true
     Tracker.autorun ->
-      console.log "WHEN TO STORE SUBSCRIPTIONS LOCALLY"
-      if currHandle.ready() and lessonsHandle.ready() and modulesHandle.ready()
+      if currHandle.ready() and lessonsHandle.ready() and modulesHandle.ready() and firstRun
+        firstRun = false
         curriculums = ExternalCurriculums.find({}).fetch()
         modules = ExternalModules.find({}).fetch()
         lessons = ExternalLessons.find({}).fetch()
         AppConfiguration.storeCollectionsLocally curriculums, lessons, modules
-  else
-    Meteor.disconnect()
+  # else
+  #   Meteor.disconnect()
 
   if not AppConfiguration.isConfigured()
     FlowRouter.go "configure"
