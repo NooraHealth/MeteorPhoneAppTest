@@ -13,7 +13,7 @@ class AnalyticsWrapper
 
   class PrivateAnalytics
     constructor: ->
-      @dict = new PersistentReactiveDict "offline_events"
+      @dict = new PersistentReactiveDict "new_offline_events"
 
     getOfflineEvents: ->
       events = @dict.get("events")
@@ -65,7 +65,9 @@ class AnalyticsWrapper
         }
         str = JSON.stringify(events)
         console.log "Registered event for later"
-        console.log events
+        console.log type
+        console.log name
+        console.log params
         @dict.setPersistent "events", str
 
 Analytics = AnalyticsWrapper.getOfflineAnalytics()

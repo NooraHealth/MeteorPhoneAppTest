@@ -8,7 +8,7 @@ moment = require 'moment'
 
 class AppConfiguration
   @get: ()->
-    @config ?= new Private "NooraHealthApp"
+    @config ?= new Private "NooraHealthApp_new"
     return @config
 
   class Private

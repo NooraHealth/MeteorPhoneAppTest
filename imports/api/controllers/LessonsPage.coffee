@@ -134,7 +134,7 @@ class LessonsPageController
     @goToSelectLevelSlide = ( event, completedLevel) ->
       lesson = @model.getCurrentLesson()
       module = @model.getCurrentModule()
-      @trackGoingToSelectLevel lesson, module, completedLevel, @model.getCurrentLevel()
+      @trackGoingToSelectLevel lesson, module, completedLevel, @model.getCurrentLevel().getName()
       if completedLevel then @model.goToNextLevel()
       else @model.goToSelectLevelSlide()
       @audioController.destroyAudio()
