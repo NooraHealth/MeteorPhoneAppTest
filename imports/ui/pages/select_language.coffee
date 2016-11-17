@@ -119,7 +119,7 @@ Template.Select_language_page.helpers
     instance = Template.instance()
     return {
       onLanguageSelected: instance.onLanguageSelected
-      languages: ["English", "Kannada"]
+      languages: AppConfiguration.getSupportedLanguages()
       onRendered: -> instance.initializeSwiper()
     }
 

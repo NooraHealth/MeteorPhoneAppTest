@@ -2,6 +2,9 @@ App.accessRule( "*");
 
 App.setPreference('Orientation', 'landscape');
 App.setPreference('AllowInlineMediaPlayback', 'true');
+App.setPreference('hardwareAccelerated', 'true');
+App.setPreference('android:hardwareAccelerated', 'true');
+App.setPreference('HardwareAccelerated', 'true');
 App.setPreference('MediaPlaybackRequiresUserAction', 'false');
 
 App.info({

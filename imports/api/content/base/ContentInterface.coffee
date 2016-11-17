@@ -1,7 +1,7 @@
 ##############################################################################
 #
 # ContentInterface
-# 
+#
 # The interface between the app and the Noora Health content (images, videos, audio).
 # It knows where the Noora Health content is located and how to get there.
 #
@@ -20,7 +20,7 @@ class ContentInterface
       api_key: Meteor.settings.public.CLOUDINARY_API_KEY,
       api_secret: Meteor.settings.public.CLOUDINARY_API_SECRET
     }
-  
+
   getFullPath: ( filename )->
     return @_directory + filename
 
@@ -42,6 +42,7 @@ class ContentInterface
 
     if Meteor.isCordova
       return @getLocalContent filename
+      # return @getRemoteContent filename
     else
       return @getRemoteContent filename
 

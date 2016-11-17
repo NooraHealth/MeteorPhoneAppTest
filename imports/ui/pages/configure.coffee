@@ -38,7 +38,7 @@ Template.Configure_app_page.helpers
     return instance.subscriptionsReady()
 
   hospitals: ->
-    return [{ name: "Jayadeva" }]
+    return [{ name: "Jayadeva" }, { name: "Manipal KMC" }]
 
   conditions: ->
     return [{ name: "Cardiac Surgery" }]

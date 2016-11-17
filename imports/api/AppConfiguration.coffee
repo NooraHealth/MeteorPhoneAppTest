@@ -35,6 +35,7 @@ class AppConfiguration
       ]
 
     getSupportedLanguages: ->
+      return ['English', 'Kannada']
 
     getF7: =>
       return @F7

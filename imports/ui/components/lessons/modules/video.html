@@ -4,7 +4,7 @@
   </div>
 
   <div class="card-content padding-sm">
-    <div class="thumbnail-image"> 
+    <div class="thumbnail-image">
       <!--<div class="inner-overlay-wrapper {{#if playing}} hidden {{/if}}">-->
         <!--<img id='play_video' src="/play-button-overlay2.png" class="color-orange animate-scale animated-overlay"/>-->
       <!--</div>-->
@@ -12,7 +12,8 @@
       {{#if module.isEmbedded}}
         <iframe {{iframeAttributes module}}></iframe>
       {{else}}
-        <video {{videoTagAttributes module}}>
+        <video {{videoTagAttributes module}} webkit-playsinline>
+          <source src={{ src module }}>
           Your browser does not support the video tag. Please logout and use another browser.
         </video>
       {{/if}}

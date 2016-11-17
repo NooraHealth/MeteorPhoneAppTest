@@ -27,7 +27,8 @@ Template.Load_curriculums_page.onCreated ->
     else if @subscriptionsReady(@) and @firstRun
       @firstRun = false
       configuration = AppConfiguration.getConfiguration()
-      curriculums = Curriculums.find { condition: configuration.condition, language: {$in: ["Kannada", "English"] }}
+      languages = AppConfiguration.getSupportedLanguages()
+      curriculums = Curriculums.find { condition: configuration.condition, language: {$in: languages }}
       onComplete = (e) ->
         if e
           console.log "Error downloading curriculum"

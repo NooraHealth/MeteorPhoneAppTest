@@ -86,9 +86,11 @@ Template.Lesson_view_page_video.helpers
     return {
       title: module.title
       class: "video-module center"
-      src: VideoContent.getSrc module.video
       controls: true
     }
+
+  src: (module) ->
+    return VideoContent.getSrc module.video
 
   #playing: ->
     #instance = Template.instance()

@@ -2,7 +2,7 @@
 ##############################################################################
 #
 # ImageContent
-# 
+#
 # The interface between the images on the remote server and the app
 #
 ##############################################################################
@@ -22,7 +22,7 @@ class ImageContent extends ContentInterface
     new SimpleSchema({
       filename: { type: String }
     }).validate({ filename: filename })
-  
+
     path = @getFullPath filename
     return cloudinary.url path, { resource_type: "image", transformation: ["iPad_image_medium"] }
 

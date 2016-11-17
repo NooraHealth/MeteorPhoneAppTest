@@ -70,10 +70,6 @@ class @ContentDownloader
       images = images.filter removeAlreadyExistingFiles
       video = video.filter removeAlreadyExistingFiles
       audio = audio.filter removeAlreadyExistingFiles
-      console.log "About to download these files"
-      console.log images
-      console.log audio
-      console.log video
 
       @_downloadFiles([
         { filenames: images, type: "IMAGE" },

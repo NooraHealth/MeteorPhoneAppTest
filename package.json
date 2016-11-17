@@ -7,12 +7,14 @@
     "prod-ios": "meteor run ios-device --settings settings.json",
     "dev": "meteor run --settings settings_dev.json",
     "dev-ios": "meteor run ios-device --settings settings_dev.json",
-    "dev-android": "meteor run android --settings settings_dev.json --verbose",
+    "android": "meteor run android-device --settings settings_dev.json --verbose",
     "build-ios": "meteor run ios-device --mobile-server http://trainingapp.noorahealth.org",
     "build": "meteor build ../training-app-build --server=http://trainingapp.noorahealth.org"
   },
   "dependencies": {
+    "babel-runtime": "^6.18.0",
     "chai": "^3.5.0",
+    "cloudinary": "^1.4.4",
     "meteor-node-stubs": "^0.2.3"
   }
 }
