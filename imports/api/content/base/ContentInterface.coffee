@@ -42,7 +42,6 @@ class ContentInterface
 
     if Meteor.isCordova
       return @getLocalContent filename
-      # return @getRemoteContent filename
     else
       return @getRemoteContent filename
 

@@ -6,7 +6,6 @@
 require './configure.html'
 
 Template.Configure_app_page.onCreated ->
-  console.log "Creating a configure page"
 
   @configureApp = ->
     if not Meteor.status().connected

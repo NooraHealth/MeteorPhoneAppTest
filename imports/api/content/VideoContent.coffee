@@ -2,7 +2,7 @@
 ##############################################################################
 #
 # VideoContent
-# 
+#
 # The interface between the images on the remote server and the app
 #
 ##############################################################################
@@ -17,12 +17,12 @@ class VideoContent extends ContentInterface
   constructor: ->
     super()
     @_directory = "Video/"
-    
+
   getRemoteContent: ( filename )->
     new SimpleSchema({
       filename: { type: String }
     }).validate({ filename: filename })
-  
+
     path = @getFullPath filename
     return cloudinary.url path, { resource_type: "video", transformation: ["iPad_video"] }
 

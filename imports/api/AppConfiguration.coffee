@@ -55,8 +55,6 @@ class AppConfiguration
       }
 
       Translator.setLanguage language
-      console.log "LANGUGE"
-      console.log @dict.get "language"
       @dict.setTemporary "language", language
       @
 
@@ -103,8 +101,6 @@ class AppConfiguration
 
     isConfigured: =>
       configuration = @dict.get 'app_configuration'
-      console.log "CURRENT CONFIG"
-      console.log configuration
       return configuration? and
         configuration?.hospital? and
         configuration.hospital isnt "" and
@@ -142,7 +138,6 @@ class AppConfiguration
 
     isSubscribed: =>
       subscribed = @dict.get "is_subscribed"
-      console.log "isSubscribed? ", subscribed
       if subscribed? then return subscribed else return false
 
     templateShouldSubscribe: ->
@@ -160,10 +155,6 @@ class AppConfiguration
       curriculums = @dict.get "local_curriculums"
       lessons = @dict.get "local_lessons"
       modules = @dict.get "local_modules"
-      console.log "RESTORING LOCAL COLLECTIONS"
-      console.log curriculums
-      console.log lessons
-      console.log modules
 
       if curriculums and lessons and modules
         @storeCollectionsLocally JSON.parse(curriculums), JSON.parse(lessons), JSON.parse(modules)
@@ -173,11 +164,6 @@ class AppConfiguration
       Curriculums.remove({})
       Lessons.remove({})
       Modules.remove({})
-
-      console.log "Storing locally"
-      console.log curriculums
-      console.log lessons
-      console.log modules
 
       for curriculum in curriculums
         Curriculums.insert {
@@ -213,11 +199,6 @@ class AppConfiguration
           is_active: module.is_active
         }
 
-      console.log Curriculums.find({}).fetch()
-
-      console.log "BEFORE setting"
-      console.log @dict.get "local_curriculums"
-      console.log @dict.get "local_lessons"
       @dict.setPersistent "local_curriculums", JSON.stringify(curriculums)
       @dict.setPersistent "local_lessons", JSON.stringify(lessons)
       @dict.setPersistent "local_modules", JSON.stringify(modules)
