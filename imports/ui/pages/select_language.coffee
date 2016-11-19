@@ -47,7 +47,10 @@ Template.Select_language_page.onCreated ->
     console.log "Checking to see if can get intro module"
     if @subscriptionsReady()
       introModule = AppConfiguration.getCurriculumDoc().getIntroductionModule()
-      @.$("##{introModule?._id}")?.find("video")?[0]?.play()
+      videoElem = @.$("##{introModule?._id}")?.find("video")?[0]
+      if videoElem?
+        videoElem.load()
+        videoElem.play()
 
   @setFooterVisible = =>
     @state.set "footerVisible", true
@@ -85,13 +88,8 @@ Template.Select_language_page.helpers
   introModules: ->
     modules = []
     condition = AppConfiguration.getCondition()
-    for curriculum in Curriculums.find({ condition: condition }).fetch()
-      console.log "Getting all the intro modules"
-      console.log curriculum
-      console.log "Modules "
-      console.log Modules.find({}).count()
-      console.log Lessons.find({}).count()
-      console.log curriculum.getIntroductionModule
+    languages = AppConfiguration.getSupportedLanguages()
+    for curriculum in Curriculums.find({ condition: condition, language: { $in: languages }}).fetch()
       introModule = curriculum.getIntroductionModule()
       if introModule then modules.push introModule
     return modules

@@ -14,7 +14,9 @@ cloudinary = require("cloudinary")
 
 Meteor.startup ()->
   console.log process.env.MONGO_URL
+  console.log process.env
 
+  console.log "DDP CONNECTON"
   cloudinary.config {
     cloud_name: Meteor.settings.public.CLOUDINARY_NAME,
     api_key: Meteor.settings.public.CLOUDINARY_API_KEY,
