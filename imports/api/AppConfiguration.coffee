@@ -13,7 +13,6 @@ class AppConfiguration
 
   class Private
     constructor: (name) ->
-      console.log "MAKING AN APP CONFIGURATION"
       @dict = new PersistentReactiveDict name
       console.log @dict
 
@@ -36,6 +35,12 @@ class AppConfiguration
 
     getSupportedLanguages: ->
       return ['English', 'Kannada']
+
+    getFacilities: ->
+      return [{ name: 'Jayadeva' },{ name: 'Manipal KMC' },{ name: 'Manipal Vijayawada' }]
+
+    getConditions: ->
+      return [{ name: 'Cardiac Surgery' }]
 
     getF7: =>
       return @F7

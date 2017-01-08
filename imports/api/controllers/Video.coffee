@@ -10,7 +10,8 @@ class VideoController
     @getVideoElem( module )?.pause()
 
   playVideo: ( module )->
-    @getVideoElem( module )?.load()
+    console.log "Playing the video for module"
+    console.log module
     @getVideoElem( module )?.play()
 
 module.exports.VideoController = VideoController

@@ -1,8 +1,5 @@
 
 { AppConfiguration } = require '../../api/AppConfiguration.coffee'
-{ Facilities } = require("../../api/collections/schemas/facilities.js")
-{ Conditions } = require("../../api/collections/schemas/conditions.js")
-
 require './configure.html'
 
 Template.Configure_app_page.onCreated ->
@@ -37,10 +34,11 @@ Template.Configure_app_page.helpers
     return instance.subscriptionsReady()
 
   hospitals: ->
-    return [{ name: "Jayadeva" }, { name: "Manipal KMC" }]
+    # return [{ name: "Jayadeva" }, { name: "Manipal KMC" }]
+    return AppConfiguration.getFacilities()
 
   conditions: ->
-    return [{ name: "Cardiac Surgery" }]
+    return AppConfiguration.getConditions()
 
   buttonArgs: ->
     instance = Template.instance()

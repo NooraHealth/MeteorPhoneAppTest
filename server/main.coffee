@@ -13,8 +13,9 @@ cloudinary = require("cloudinary")
 { Lessons } = require '../imports/api/collections/schemas/curriculums/lessons.js'
 
 Meteor.startup ()->
+  console.log "SETTINGS AND SUCH"
   console.log process.env.MONGO_URL
-  console.log process.env
+  console.log Meteor.settings
 
   console.log "DDP CONNECTON"
   cloudinary.config {

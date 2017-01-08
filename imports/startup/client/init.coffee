@@ -12,7 +12,7 @@ Meteor.startup ()->
   BlazeLayout.setRoot "body"
   AppConfiguration.initializeApp()
 
-  if not AppConfiguration.isSubscribed()
+  if not AppConfiguration.isConfigured()
     # facilitiesHandle = Meteor.subscribe "facilities.all"
     # conditionsHandle = Meteor.subscribe "conditions.all"
     currHandle = Meteor.subscribe "curriculums.all"

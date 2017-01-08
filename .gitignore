@@ -11,3 +11,4 @@ mup.json
 mup.js
 mup_desktop.json
 .deploy/*
+.tags
