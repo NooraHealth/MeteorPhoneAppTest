@@ -138,6 +138,7 @@ class LessonsPageController
       if completedLevel then @model.goToNextLevel()
       else @model.goToSelectLevelSlide()
       @audioController.destroyAudio()
+      @videoController.cleanup()
 
     @autoplayMedia = ->
       module = @model.getCurrentModule()

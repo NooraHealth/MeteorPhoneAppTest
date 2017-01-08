@@ -14,4 +14,15 @@ class VideoController
     console.log module
     @getVideoElem( module )?.play()
 
+  cleanup: ->
+    console.log "Cleaning up!!"
+    console.log $("video")
+    videos = $("video")
+    for video in videos
+      video.remove()
+      video.src = ""
+      video.load()
+
+
+
 module.exports.VideoController = VideoController

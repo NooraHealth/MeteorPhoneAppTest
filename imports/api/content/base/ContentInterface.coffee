@@ -41,6 +41,8 @@ class ContentInterface
     }).validate({ filename: filename })
 
     if Meteor.isCordova
+      console.log "This is the file returning"
+      console.log @getLocalContent filename
       return @getLocalContent filename
     else
       return @getRemoteContent filename

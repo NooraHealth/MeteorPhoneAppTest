@@ -12,7 +12,7 @@
       {{#if module.isEmbedded}}
         <iframe {{iframeAttributes module}}></iframe>
       {{else}}
-        <video {{videoTagAttributes module}} webkit-playsinline>
+        <video {{videoTagAttributes module}}>
           <source src={{ src module }}>
           Your browser does not support the video tag. Please logout and use another browser.
         </video>
