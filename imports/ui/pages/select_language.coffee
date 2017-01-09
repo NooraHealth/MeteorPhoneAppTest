@@ -126,6 +126,15 @@ Template.Select_language_page.helpers
     language = AppConfiguration.getLanguage()
     begin = Translator.translate "begin", language, "UPPER"
     text = "<span class='center'>#{begin}<i class='fa fa-arrow-right'></i></span>"
+    onClickNext = ->
+      #TODO Make this into VideoController
+      videos = $("video")
+      for video in videos
+        video.remove()
+        video.src = ""
+        video.load()
+        
+      FlowRouter.go "lessons"
     return {
       language: language
       visible: true

@@ -68,6 +68,7 @@ class LessonsPageController
         @goToSelectLevelSlide(null, true)
         @trackFinishedCurriculum()
       else
+        @videoController.cleanup()
         @model.goToNextLesson()
         @trackStartedLesson( @model.getCurrentLesson() )
         @autoplayMedia()
