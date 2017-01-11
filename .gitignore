@@ -1,6 +1,7 @@
 /client/bower_components/
 *.swp
 *.swo
+npm_debug.log
 /server/startup.coffee
 .uploads/
 .DS_store
