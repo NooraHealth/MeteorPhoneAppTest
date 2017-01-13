@@ -4,6 +4,7 @@
 
 class AudioController
   constructor: ->
+    Howler.unload()
     @liveAudio = []
 
     @setCurrentAudio = (audio) ->
@@ -20,6 +21,7 @@ class AudioController
     @getCurrentAudio().replay()
 
   destroyAudio: ->
+    console.log Howler
     for audio in @liveAudio
       audio.destroy()
     @liveAudio = []

@@ -43,10 +43,7 @@ Curriculums.attachSchema( CurriculumSchema );
 const helpers = ({
 
   getIntroductionModule: function() {
-    console.log("Getting into module");
     const lesson = Lessons.findOne({_id: this.introduction});
-    console.log("LESSON");
-    console.log(lesson);
     if(!lesson)
       return null;
     const moduleId = lesson.modules[0];

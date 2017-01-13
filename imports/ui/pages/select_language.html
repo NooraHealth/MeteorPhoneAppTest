@@ -17,7 +17,7 @@
                 </div>
                 <div class='swiper-slide'>
                   {{#each module in introModules}}
-                  <div id="{{module._id}}" class="card module-card {{#unless shouldShow module}} hidden {{/unless}}">
+                    <div id="{{module._id}}" class="card module-card {{#unless shouldShow module}} hidden {{/unless}}">
                       {{> Lesson_view_page_video (videoArgs module) }}
                     </div>
                   {{/each}}

@@ -44,7 +44,6 @@ Template.Select_language_page.onCreated ->
     @swiper.slideNext()
 
   @playIntroVideo = =>
-    console.log "Checking to see if can get intro module"
     if @subscriptionsReady()
       introModule = AppConfiguration.getCurriculumDoc().getIntroductionModule()
       @.$("##{introModule?._id}")?.find("video")?[0]?.play()
@@ -66,8 +65,6 @@ Template.Select_language_page.onCreated ->
       @subscribe "modules.all"
 
   @autorun =>
-    console.log "NUMBER OF CURRICULUMS"
-    console.log Curriculums.find({}).fetch()
     if @subscriptionsReady() and Curriculums.find({}).count() == 0
       AppConfiguration.restoreLocalCollectionsFromPersistentStorage()
 
@@ -78,27 +75,22 @@ Template.Select_language_page.onCreated ->
 Template.Select_language_page.helpers
   modulesReady: ->
     instance = Template.instance()
-    console.log "ready??"
-    console.log instance.subscriptionsReady()
     return instance.subscriptionsReady()
 
   introModules: ->
     modules = []
     condition = AppConfiguration.getCondition()
+    console.log Curriculums.find({ condition: condition }).fetch()
     for curriculum in Curriculums.find({ condition: condition }).fetch()
-      console.log "Getting all the intro modules"
-      console.log curriculum
-      console.log "Modules "
-      console.log Modules.find({}).count()
-      console.log Lessons.find({}).count()
-      console.log curriculum.getIntroductionModule
       introModule = curriculum.getIntroductionModule()
       if introModule then modules.push introModule
     return modules
 
   shouldShow: (module) ->
+    console.log "Should show module??"
     curriculumDoc = AppConfiguration.getCurriculumDoc()
     introModule = curriculumDoc?.getIntroductionModule()
+    console.log introModule?._id == module?._id
     return introModule?._id == module?._id
 
   videoArgs: ( module ) ->

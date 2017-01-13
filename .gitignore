@@ -1,14 +1,1 @@
-/client/bower_components/
-*.swp
-*.swo
-npm_debug.log
-/server/startup.coffee
-.uploads/
-.DS_store
-settings.json
-settings_dev.json
-public/
-mup.json
-mup.js
-mup_desktop.json
-.deploy/*
+../configuration-files/gitignore

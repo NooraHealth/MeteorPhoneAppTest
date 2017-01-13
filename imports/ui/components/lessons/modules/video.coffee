@@ -14,8 +14,6 @@ Template.Lesson_view_page_video.onCreated ->
 
   # Data context validation
   @autorun =>
-    console.log VideoContent
-    console.log Modules
     # schema = new SimpleSchema({
     #   module: {type: Modules._helpers}
     #   language: {type: String}
