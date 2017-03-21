@@ -9,28 +9,28 @@ Template.Configure_app_page.onCreated ->
   console.log "Creating a configure page"
 
   @configureApp = ->
-    if not Meteor.status().connected
-      swal {
-        title: "Oops!"
-        text: "You aren't connected to data! Please connect to wifi or data in order to download your curriculums. You can disconnect once your content has downloaded"
-      }
+    # if not Meteor.status().connected
+    #   swal {
+    #     title: "Oops!"
+    #     text: "You aren't connected to data! Please connect to wifi or data in order to download your curriculums. You can disconnect once your content has downloaded"
+    #   }
+    # else
+    analytics.track "Configured App", {
+      condition: condition
+      hospital: hospital
+    }
+
+    hospital = $("#hospital_select").val()
+    condition = $("#condition_select").val()
+    AppConfiguration.setConfiguration {
+      hospital: hospital
+      condition: condition
+    }
+
+    if Meteor.isCordova
+      FlowRouter.go "load"
     else
-      analytics.track "Configured App", {
-        condition: condition
-        hospital: hospital
-      }
-
-      hospital = $("#hospital_select").val()
-      condition = $("#condition_select").val()
-      AppConfiguration.setConfiguration {
-        hospital: hospital
-        condition: condition
-      }
-
-      if Meteor.isCordova
-        FlowRouter.go "load"
-      else
-        FlowRouter.go "home"
+      FlowRouter.go "home"
 
 Template.Configure_app_page.helpers
   subscriptionsReady: ()->
@@ -38,10 +38,10 @@ Template.Configure_app_page.helpers
     return instance.subscriptionsReady()
 
   hospitals: ->
-    return [{ name: "Jayadeva" }]
+    return AppConfiguration.getSupportedHospitals()
 
   conditions: ->
-    return [{ name: "Cardiac Surgery" }]
+    return AppConfiguration.getSupportedConditions()
 
   buttonArgs: ->
     instance = Template.instance()

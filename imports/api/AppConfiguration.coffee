@@ -35,6 +35,13 @@ class AppConfiguration
       ]
 
     getSupportedLanguages: ->
+      return [{ "Hindi" }]
+
+    getSupportedHospitals: ->
+      return [{ name: "SSI" }, { name: "Jayadeva" }]
+
+    getSupportedConditions: ->
+      return [{ name: "Cardiac Surgery" }]
 
     getF7: =>
       return @F7
@@ -159,24 +166,14 @@ class AppConfiguration
       curriculums = @dict.get "local_curriculums"
       lessons = @dict.get "local_lessons"
       modules = @dict.get "local_modules"
-      console.log "RESTORING LOCAL COLLECTIONS"
-      console.log curriculums
-      console.log lessons
-      console.log modules
 
       if curriculums and lessons and modules
         @storeCollectionsLocally JSON.parse(curriculums), JSON.parse(lessons), JSON.parse(modules)
 
     storeCollectionsLocally: ( curriculums, lessons, modules )->
-
       Curriculums.remove({})
       Lessons.remove({})
       Modules.remove({})
-
-      console.log "Storing locally"
-      console.log curriculums
-      console.log lessons
-      console.log modules
 
       for curriculum in curriculums
         Curriculums.insert {
@@ -212,11 +209,6 @@ class AppConfiguration
           is_active: module.is_active
         }
 
-      console.log Curriculums.find({}).fetch()
-
-      console.log "BEFORE setting"
-      console.log @dict.get "local_curriculums"
-      console.log @dict.get "local_lessons"
       @dict.setPersistent "local_curriculums", JSON.stringify(curriculums)
       @dict.setPersistent "local_lessons", JSON.stringify(lessons)
       @dict.setPersistent "local_modules", JSON.stringify(modules)

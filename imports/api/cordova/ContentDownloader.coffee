@@ -43,9 +43,6 @@ class @ContentDownloader
         onComplete: {type: Function}
       }).validate({cursor: cursor, onComplete: onComplete})
 
-      if not Meteor.status().connected
-        throw new Meteor.Error "not-connected", "The iPad is not connected to data. Please connect and try again"
-
       curriculums = cursor.fetch()
 
       images = []
@@ -139,6 +136,8 @@ class @ContentDownloader
 
         onError = ( filename, type, err )->
           console.log "There was an error: "
+          console.log filename
+          console.log type
           console.log err
           console.log err.code
           console.log err.code == 3

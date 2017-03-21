@@ -17,17 +17,18 @@ Template.Load_curriculums_page.onCreated ->
 
   @autorun =>
     console.log "Getting whether subscriptionsReady"
-    if not Meteor.status().connected
-      console.log "Meteor status not connected"
-      swal {
-        title: "Please Connect To Data"
-        text: "You need to be connected to wifi or data in order to download your curriculums"
-      }
+    # if @firstRun and not Meteor.status().connected
+    #   console.log "Meteor status not connected"
+    #   swal {
+    #     title: "Please Connect To Data"
+    #     text: "You need to be connected to wifi or data in order to download your curriculums"
+    #   }
 
-    else if @subscriptionsReady(@) and @firstRun
+    # else if @subscriptionsReady(@) and @firstRun
+    if @subscriptionsReady(@) and @firstRun
       @firstRun = false
       configuration = AppConfiguration.getConfiguration()
-      curriculums = Curriculums.find { condition: configuration.condition, language: {$in: ["Kannada", "English"] }}
+      curriculums = Curriculums.find { condition: configuration.condition, language: {$in: AppConfiguration.getSupportedLanguages() }}
       onComplete = (e) ->
         if e
           console.log "Error downloading curriculum"
