@@ -13,9 +13,7 @@ class AppConfiguration
 
   class Private
     constructor: (name) ->
-      console.log "MAKING AN APP CONFIGURATION"
       @dict = new PersistentReactiveDict name
-      console.log @dict
 
     initializeApp: =>
       @F7 = new Framework7(
@@ -35,7 +33,7 @@ class AppConfiguration
       ]
 
     getSupportedLanguages: ->
-      return [{ "Hindi" }]
+      return [ "Hindi" ]
 
     getSupportedHospitals: ->
       return [{ name: "SSI" }, { name: "Jayadeva" }]
@@ -61,8 +59,6 @@ class AppConfiguration
       }
 
       Translator.setLanguage language
-      console.log "LANGUGE"
-      console.log @dict.get "language"
       @dict.setTemporary "language", language
       @
 
@@ -109,8 +105,6 @@ class AppConfiguration
 
     isConfigured: =>
       configuration = @dict.get 'app_configuration'
-      console.log "CURRENT CONFIG"
-      console.log configuration
       return configuration? and
         configuration?.hospital? and
         configuration.hospital isnt "" and
@@ -148,7 +142,6 @@ class AppConfiguration
 
     isSubscribed: =>
       subscribed = @dict.get "is_subscribed"
-      console.log "isSubscribed? ", subscribed
       if subscribed? then return subscribed else return false
 
     templateShouldSubscribe: ->

@@ -78,19 +78,19 @@ Template.Select_language_page.helpers
     return instance.subscriptionsReady()
 
   introModules: ->
+    console.log "Getting intro modules"
     modules = []
     condition = AppConfiguration.getCondition()
-    console.log Curriculums.find({ condition: condition }).fetch()
-    for curriculum in Curriculums.find({ condition: condition }).fetch()
+    languages = AppConfiguration.getSupportedLanguages()
+    console.log Curriculums.find({ condition: condition, language: { $in: languages }}).fetch()
+    for curriculum in Curriculums.find({ condition: condition, language: {$in: languages} }).fetch()
       introModule = curriculum.getIntroductionModule()
       if introModule then modules.push introModule
     return modules
 
   shouldShow: (module) ->
-    console.log "Should show module??"
     curriculumDoc = AppConfiguration.getCurriculumDoc()
     introModule = curriculumDoc?.getIntroductionModule()
-    console.log introModule?._id == module?._id
     return introModule?._id == module?._id
 
   videoArgs: ( module ) ->
@@ -109,9 +109,11 @@ Template.Select_language_page.helpers
 
   menuArgs: ->
     instance = Template.instance()
+    languages = AppConfiguration.getSupportedLanguages()
+    console.log languages
     return {
       onLanguageSelected: instance.onLanguageSelected
-      languages: ["English", "Kannada"]
+      languages: languages
       onRendered: -> instance.initializeSwiper()
     }
 
