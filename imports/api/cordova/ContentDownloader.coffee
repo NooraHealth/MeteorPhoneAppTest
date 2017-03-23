@@ -44,6 +44,8 @@ class @ContentDownloader
       }).validate({cursor: cursor, onComplete: onComplete})
 
       curriculums = cursor.fetch()
+      console.log "Curriculums"
+      console.log curriculums
 
       images = []
       audio = []

@@ -8,7 +8,7 @@
     "dev": "meteor run --settings settings_dev.json --port 8080",
     "dev-ios": "meteor run ios-device --settings settings_dev.json",
     "dev-android": "meteor run android --settings settings_dev.json --verbose",
-    "dev-android-device": "meteor run android-device --settings settings_dev.json --verbose --port 8080",
+    "dev-android-device": "meteor run android-device --settings settings.json --verbose --mobile-server http://trainingappstaging.noorahealth.org",
     "build-ios": "meteor run ios-device --mobile-server http://trainingapp.noorahealth.org",
     "build-ios-staging": "meteor run ios-device --mobile-server http://trainingappstaging.noorahealth.org",
     "build": "meteor build ../training-app-build --server=http://trainingapp.noorahealth.org",

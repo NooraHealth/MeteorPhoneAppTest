@@ -8,6 +8,7 @@
 require 'meteor/loftsteinn:framework7-ios'
 
 Meteor.startup ()->
+  console.log Meteor.status()
   TAPi18n.setLanguage "en"
   BlazeLayout.setRoot "body"
   AppConfiguration.initializeApp()
@@ -22,7 +23,9 @@ Meteor.startup ()->
 
     firstRun = true
     Tracker.autorun ->
+      console.log "READY??"
       if currHandle.ready() and lessonsHandle.ready() and modulesHandle.ready() and firstRun
+        console.log "READY!!!!"
         firstRun = false
         curriculums = ExternalCurriculums.find({}).fetch()
         modules = ExternalModules.find({}).fetch()
