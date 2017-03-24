@@ -74,7 +74,6 @@ class @ContentDownloader
       console.log audio
       console.log video
 
-      srcs = []
       @_downloadFiles([
         { filenames: images, type: "IMAGE" },
         { filenames: video, type: "VIDEO" },
@@ -114,13 +113,11 @@ class @ContentDownloader
 
         downloadFile = ( filename, type )->
           fsPath = fs.root.toURL() + filename
-          src ""
           switch type
             when "AUDIO" then src = AudioContent.getRemoteContent filename
             when "IMAGE" then src = ImageContent.getRemoteContent filename
             when "VIDEO" then src = VideoContent.getRemoteContent filename
             else src = ""
-          srcs.push(src)
           ft.download( src , fsPath, onSuccess.bind( @, filename, fsPath, type ), onError.bind(@, filename, fsPath, type), true)
 
         markAsResolved = ( entry )->
@@ -128,7 +125,6 @@ class @ContentDownloader
           console.log "RESOLVED:" + numRecieved + "/"+ numToDownload
           if numRecieved == numToDownload
             console.log "TOTAL BYTES DOWNLOADED #{ totalBytes }"
-            console.log srcs
             deferred.resolve entry
 
         onSuccess = ( filename, fsPath, type, entry )->
@@ -140,12 +136,6 @@ class @ContentDownloader
           markAsResolved()
 
         onError = ( filename, type, err )->
-          console.log "There was an error: "
-          console.log filename
-          console.log type
-          console.log err
-          console.log err.code
-          console.log err.code == 3
           if err.http_status == 404
             markAsResolved filename
             error = new Meteor.Error("error-downloading", "Some content could not be found")
