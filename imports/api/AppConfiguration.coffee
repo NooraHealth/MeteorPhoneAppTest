@@ -157,8 +157,7 @@ class AppConfiguration
       #return true
 
     fillLocalCollectionsFromStorage: ->
-      if curriculums and lessons and modules
-        @storeCollectionsLocally JSON.parse(Store.curriculums), JSON.parse(Store.lessons), JSON.parse(Store.modules)
+      @storeCollectionsLocally Store.curriculums, Store.lessons, Store.modules
 
     storeCollectionsLocally: ( curriculums, lessons, modules )->
       Curriculums.remove({})
@@ -198,13 +197,5 @@ class AppConfiguration
           video: module.video
           is_active: module.is_active
         }
-
-      @dict.setPersistent "local_curriculums", JSON.stringify(curriculums)
-      @dict.setPersistent "local_lessons", JSON.stringify(lessons)
-      @dict.setPersistent "local_modules", JSON.stringify(modules)
-
-      console.log JSON.stringify curriculums
-      console.log JSON.stringify lessons
-      console.log JSON.stringify modules
 
 module.exports.AppConfiguration = AppConfiguration.get()
