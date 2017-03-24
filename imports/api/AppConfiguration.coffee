@@ -2,6 +2,7 @@
 { Curriculums } = require("./collections/schemas/curriculums/curriculums.js")
 { Modules } = require("./collections/schemas/curriculums/modules.js")
 { Lessons } = require("./collections/schemas/curriculums/lessons.js")
+{ Store } = require("./collections/collection_store/store.coffee")
 { Translator } = require './utilities/Translator.coffee'
 
 moment = require 'moment'
@@ -155,13 +156,9 @@ class AppConfiguration
       #   return false
       #return true
 
-    restoreLocalCollectionsFromPersistentStorage: ->
-      curriculums = @dict.get "local_curriculums"
-      lessons = @dict.get "local_lessons"
-      modules = @dict.get "local_modules"
-
+    fillLocalCollectionsFromStorage: ->
       if curriculums and lessons and modules
-        @storeCollectionsLocally JSON.parse(curriculums), JSON.parse(lessons), JSON.parse(modules)
+        @storeCollectionsLocally JSON.parse(Store.curriculums), JSON.parse(Store.lessons), JSON.parse(Store.modules)
 
     storeCollectionsLocally: ( curriculums, lessons, modules )->
       Curriculums.remove({})
@@ -205,5 +202,9 @@ class AppConfiguration
       @dict.setPersistent "local_curriculums", JSON.stringify(curriculums)
       @dict.setPersistent "local_lessons", JSON.stringify(lessons)
       @dict.setPersistent "local_modules", JSON.stringify(modules)
+
+      console.log JSON.stringify curriculums
+      console.log JSON.stringify lessons
+      console.log JSON.stringify modules
 
 module.exports.AppConfiguration = AppConfiguration.get()
