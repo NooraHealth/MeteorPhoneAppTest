@@ -27,10 +27,10 @@ Template.Configure_app_page.onCreated ->
       condition: condition
     }
 
-    if Meteor.isCordova
-      FlowRouter.go "load"
-    else
-      FlowRouter.go "home"
+    # if Meteor.isCordova
+    #   FlowRouter.go "load"
+    # else
+    FlowRouter.go "home"
 
 Template.Configure_app_page.helpers
   subscriptionsReady: ()->

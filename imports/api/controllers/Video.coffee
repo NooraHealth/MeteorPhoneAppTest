@@ -15,13 +15,11 @@ class VideoController
     video.addEventListener("canplay", ()=> video.play());
     numLoads = 1
     video.addEventListener("error", (e)=>
-      console.log "Error loading"
-      console.log e
-      #try again
-      if( numLoads < 4 )
-        video.load()
-        numLoads++
-      # swal({ title: "Error Loading Video", text: e.message })
+      Meteor.setTimeout( ()->
+        if( numLoads < 6 )
+          video.load()
+          numLoads++
+      , 500);
     )
 
 module.exports.VideoController = VideoController

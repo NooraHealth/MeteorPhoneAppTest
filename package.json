@@ -5,16 +5,12 @@
   "scripts": {
     "prod": "meteor run --settings settings.json",
     "prod-ios": "meteor run ios-device --settings settings.json",
-    "dev": "meteor run --settings settings_dev.json --port 8080",
+    "dev": "meteor run --settings settings_dev.json",
     "dev-ios": "meteor run ios-device --settings settings_dev.json",
     "dev-android": "meteor run android --settings settings_dev.json --verbose",
-    "dev-android-device": "meteor run android-device --settings settings.json --verbose --mobile-server http://trainingappstaging.noorahealth.org",
+    "dev-android-device": "meteor run android-device --settings settings.json --verbose --mobile-server http://trainingapp.noorahealth.org",
     "build-ios": "meteor run ios-device --mobile-server http://trainingapp.noorahealth.org",
-    "build-ios-staging": "meteor run ios-device --mobile-server http://trainingappstaging.noorahealth.org",
-    "build": "meteor build ../training-app-build --server=http://trainingapp.noorahealth.org",
-    "build-staging": "meteor build ../training-app-build --server=http://trainingappstaging.noorahealth.org",
-    "build-staging-debug": "meteor build ../training-app-build --server=http://trainingappstaging.noorahealth.org --debug",
-    "deploy-staging": "mup deploy --config mup-staging.js --settings settings.json",
+    "build": "meteor build ../training-app-build --debug --server=http://trainingapp.noorahealth.org",
     "deploy": "mup deploy"
   },
   "dependencies": {
