@@ -62,7 +62,7 @@ Template.Lesson_view_page_multiple_choice.onCreated ->
     getClasses = (option) ->
       correctlySelected = instance.state.get "correctlySelected"
       incorrectlySelected = instance.state.get "incorrectlySelected"
-      classes = 'image-choice'
+      classes = 'image-choice center'
       if option in correctlySelected
         classes += " #{data.correctlySelectedClasses}"
       else if option in incorrectlySelected

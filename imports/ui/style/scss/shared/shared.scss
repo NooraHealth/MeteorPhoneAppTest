@@ -1,7 +1,7 @@
 
 @import "{wolves:bourbon}/_bourbon";
 
-@import '../_variables'; 
+@import '../_variables';
 
 @import '../_mixins';
 
@@ -9,7 +9,7 @@
 
 @import '../_animations';
 
-/* -------------------------------- 
+/* --------------------------------
 
  BODY
 
@@ -36,7 +36,7 @@ html, body {
   a {
     color: lighten($primary-blue, 30%);
     text-decoration: none;
-    
+
     &:hover {
       text-decoration: none;
     }
@@ -51,12 +51,13 @@ html, body {
 
 .logo {
   /*position: absolute;*/
+  width: 55%;
   margin-left: 10px;
-  margin-top: 25px;
-  border-radius: 33px;
-  background-color: $white;
-  padding: 10px;
-  box-shadow: 5px 5px 5px grey;
+  // margin-top: 25px;
+  // border-radius: 33px;
+  // background-color: $white;
+  // padding: 10px;
+  // box-shadow: 5px 5px 5px grey;
 }
 
 .container {
@@ -71,7 +72,7 @@ html, body {
   padding-top: 40px;
 }
 
-/* -------------------------------- 
+/* --------------------------------
 
  NAVBAR
 
@@ -79,7 +80,7 @@ html, body {
 
 .navbar {
   background-color: $primary-blue !important;
-  height: 60px;
+  height: 40px;
 }
 
 .navbar .center {
@@ -89,7 +90,7 @@ html, body {
   width: 100%;
 }
 
-/* -------------------------------- 
+/* --------------------------------
 
  ANIMATIONS
 
@@ -98,7 +99,7 @@ html, body {
 .expanded {
   @include transition-delay(.3s);
   @include transition(scale, 2s);
-  @include transform(scale(1.01)); 
+  @include transform(scale(1.01));
 }
 
 .faded {
@@ -112,20 +113,20 @@ html, body {
   @include animation(scale 1.0s ease-in);
   @include animation-iteration-count(infinite);
   @include animation-direction(alternate-reverse);
-} 
+}
 
 .offscreen-right {
   @include transform(translateX(3000px));
   @include transition(2s);
-} 
+}
 
 .offscreen-left {
   left: -3000px;
   @include transition(2s);
-} 
+}
 
 
-/* -------------------------------- 
+/* --------------------------------
 
  LOADING
 
@@ -138,9 +139,9 @@ html, body {
   font-family: sans-serif;
 }
 
-/* -------------------------------- 
+/* --------------------------------
 
- LIBRARY MODIFICATIONS 
+ LIBRARY MODIFICATIONS
 
 -------------------------------- */
 
@@ -166,8 +167,8 @@ html, body {
 }
 
 .button {
-  line-height: 45px !important;
-  height: 40px !important;
+  line-height: 30px !important;
+  height: 30px !important;
   border: 2px solid $white;
 }
 
@@ -176,7 +177,7 @@ html, body {
 }
 
 
-/* -------------------------------- 
+/* --------------------------------
 
  ALIGNMENT
 
@@ -206,7 +207,7 @@ html, body {
   border-radius: 25px;
 }
 .padding-sm {
-  padding: 10px
+  padding: 5px
 }
 
 .padding {
@@ -234,7 +235,7 @@ html, body {
   display: none;
 }
 
-/* -------------------------------- 
+/* --------------------------------
 
  TEXT
 
@@ -267,4 +268,3 @@ html, body {
 .demi-bold-text {
   font-weight: $demi-bold-font-weight;
 }
-

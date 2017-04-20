@@ -8,12 +8,14 @@
     "dev": "meteor run --settings settings_dev.json",
     "dev-ios": "meteor run ios-device --settings settings_dev.json",
     "dev-android": "meteor run android --settings settings_dev.json --verbose",
-    "dev-android-device": "meteor run android-device --settings settings.json --verbose --mobile-server http://trainingapp.noorahealth.org",
+    "dev-android-device": "meteor run android-device --settings settings.json --verbose",
+    "run-android-device": "meteor run android-device --settings settings.json --verbose --mobile-server http://trainingapp.noorahealth.org",
     "build-ios": "meteor run ios-device --mobile-server http://trainingapp.noorahealth.org",
     "build": "meteor build ../training-app-build --debug --server=http://trainingapp.noorahealth.org",
     "deploy": "mup deploy"
   },
   "dependencies": {
+    "babel-runtime": "^6.23.0",
     "chai": "^3.5.0",
     "meteor-node-stubs": "^0.2.3"
   }

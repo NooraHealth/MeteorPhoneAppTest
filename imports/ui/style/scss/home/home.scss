@@ -5,14 +5,14 @@
 
 /*@import '_bourbon';*/
 
-@import '../_variables'; 
+@import '../_variables';
 
 @import '../_mixins';
 
 @import '../_layout';
 
 
-/* -------------------------------- 
+/* --------------------------------
 
  LESSON THUMBNAILS
 
@@ -37,7 +37,7 @@
 }
 
 .lesson-card-image {
-  height: 40vw;
+  height: 40vh;
   background-size: cover;
   background-position: center;
 }
@@ -54,11 +54,11 @@
 }
 
 .select-level-button {
-  width: 75%;
+  width: 100%;
 }
 
 
-/* -------------------------------- 
+/* --------------------------------
 
  THUMBNAIL OVERLAYS
 

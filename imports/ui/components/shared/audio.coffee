@@ -2,7 +2,7 @@
 { AudioContent } = require '../../../api/content/AudioContent.coffee'
 
 class Audio
-  constructor: (@filename, @volume, @whenFinished, @whenPaused)->
+  constructor: (@filename, @volume, @whenFinished, @whenPaused, @onLoadError)->
     new SimpleSchema({
       filename: {type: String}
       volume: {type: Number, optional: true}
@@ -15,7 +15,7 @@ class Audio
     @whenPaused?( false, @filename, @sound.duration() )
 
   onLoadError: ( whenFinished, id, error )=>
-    @whenFinished?( false, @filename, @sound.duration() )
+    @onLoadError?( @filename, @sound.duration() )
 
   replay: ( afterReplay )=>
     @stop()

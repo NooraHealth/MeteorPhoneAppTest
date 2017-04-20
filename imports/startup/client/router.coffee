@@ -32,6 +32,9 @@ FlowRouter.route '/', {
       condition: condition,
       language: language
     }
+    # if not AppConfiguration.isConfigured()
+    #   FlowRouter.go "configure"
+    # else
     BlazeLayout.render 'Layout', { main : 'Select_language_page' }
 }
 

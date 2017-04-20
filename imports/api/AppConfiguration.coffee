@@ -191,6 +191,7 @@ class AppConfiguration
           image: module.image
           type: module.type
           question: module.question
+          title: module.title
           options: module.options
           correct_answer: module.correct_answer
           correct_audio: module.correct_audio

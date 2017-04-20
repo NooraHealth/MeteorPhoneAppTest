@@ -61,9 +61,6 @@ Template.Lesson_view_page_video.onCreated ->
   @pauseVideo = =>
     @elem(@).pause()
 
-  @playVideo = =>
-    @elem(@).play()
-
   @autorun =>
     if not @isRendered() then return
     isCurrent = Template.currentData().isCurrent
@@ -84,18 +81,19 @@ Template.Lesson_view_page_video.helpers
     return {
       title: module.title
       class: "video-module center"
-      src: VideoContent.getSrc module.video
+      # src: VideoContent.getSrc "test.ogv"
       controls: true
+      preload: "none"
     }
 
-  #playing: ->
-    #instance = Template.instance()
-    #return instance.data.playing
+  videoSrc1: ( module )->
+    return VideoContent.getSrc module.video, "ogg"
 
-Template.Lesson_view_page_video.events
-  'click #play_video': ->
-    instance = Template.instance()
-    instance.playVideo()
+  videoSrc2: ( module )->
+    return VideoContent.getSrc module.video, "mp4"
+
+  type: ( module )->
+    return "video/webm"
 
 Template.Lesson_view_page_video.onRendered ->
   instance = Template.instance()

@@ -32,8 +32,9 @@ class ContentInterface
       filename: {type: String}
     }).validate({ filename: filename })
 
-    console.log 'content/' + filename
-    return 'content/'+ filename
+    # offlineFile = OfflineFiles.findOne { filename: filename }
+    # return if offlineFile? then WebAppLocalServer.localFileSystemUrl(offlineFile.fsPath) else ""
+    return '/content/'+ filename
 
   getSrc: ( filename )->
     new SimpleSchema({

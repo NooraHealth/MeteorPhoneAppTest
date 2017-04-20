@@ -28,8 +28,10 @@ Template.Configure_app_page.onCreated ->
     }
 
     # if Meteor.isCordova
+    #   console.log "Going to load"
     #   FlowRouter.go "load"
     # else
+    #   FlowRouter.go "home"
     FlowRouter.go "home"
 
 Template.Configure_app_page.helpers

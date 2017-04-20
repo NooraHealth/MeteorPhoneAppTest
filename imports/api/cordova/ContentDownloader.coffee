@@ -128,6 +128,8 @@ class @ContentDownloader
             deferred.resolve entry
 
         onSuccess = ( filename, fsPath, type, entry )->
+          console.log "FSPATH"
+          console.log fsPath
           id = OfflineFiles.insert {
             #url: file.url
             filename: filename

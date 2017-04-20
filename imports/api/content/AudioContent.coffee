@@ -1,7 +1,7 @@
 ##############################################################################
 #
 # AudioContent
-# 
+#
 # The interface between the audio on the remote server and the app
 #
 ##############################################################################
@@ -16,14 +16,19 @@ class AudioContent extends ContentInterface
   constructor: ->
     super()
     @_directory = "Audio/"
-    
+
   getRemoteContent: ( filename )->
     new SimpleSchema({
       filename: { type: String }
     }).validate({ filename: filename })
-  
+
     path = @getFullPath filename
-    return cloudinary.url path, { resource_type: "video", transformation: ["mobile_audio"] }
+    return cloudinary.url path, {
+      resource_type: "video",
+      quality: 50,
+      bit_rate: 935,
+      audio_codec: "vorbis"
+    }
 
 class SingletonWrapper
   @getAudioContent: ->
@@ -32,7 +37,6 @@ class SingletonWrapper
 
 module.exports.AudioContent = SingletonWrapper.getAudioContent()
 
-module.exports.correctSoundEffectFilename = "correct_soundeffect.mp3"
+module.exports.correctSoundEffectFilename = "correct_soundeffect.ogg"
 
-module.exports.incorrectSoundEffectFilename = "incorrect_soundeffect.mp3"
-
+module.exports.incorrectSoundEffectFilename = "incorrect_soundeffect.ogg"

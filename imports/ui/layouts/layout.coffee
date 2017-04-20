@@ -11,4 +11,3 @@ Template.Layout.onCreated ->
         #title: error.error
         #text: error.reason
       #}
-

@@ -1,10 +1,10 @@
 <template name="Lesson_view_page_video">
-  <div class="card-header large-text">
+  <!-- <div class="card-header large-text">
     {{module.title}}
-  </div>
+  </div> -->
 
   <div class="card-content padding-sm">
-    <div class="thumbnail-image"> 
+    <div class="thumbnail-image">
       <!--<div class="inner-overlay-wrapper {{#if playing}} hidden {{/if}}">-->
         <!--<img id='play_video' src="/play-button-overlay2.png" class="color-orange animate-scale animated-overlay"/>-->
       <!--</div>-->
@@ -13,6 +13,8 @@
         <iframe {{iframeAttributes module}}></iframe>
       {{else}}
         <video {{videoTagAttributes module}}>
+          <source src={{ videoSrc1 module }} />
+          <source src={{ videoSrc2 module }} />
           Your browser does not support the video tag. Please logout and use another browser.
         </video>
       {{/if}}

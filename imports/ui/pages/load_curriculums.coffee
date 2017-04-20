@@ -32,9 +32,6 @@ Template.Load_curriculums_page.onCreated ->
         condition: configuration.condition,
         language: { $in: AppConfiguration.getSupportedLanguages()}
       }
-      console.log "The curriculums"
-      console.log AppConfiguration.getSupportedLanguages()
-      console.log curriculums.fetch()
       onComplete = (e) ->
         if e
           console.log "Error downloading curriculum"

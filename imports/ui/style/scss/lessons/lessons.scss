@@ -5,13 +5,13 @@
 
 /*@import '_bourbon';*/
 
-@import '../_variables'; 
+@import '../_variables';
 
 @import '../_mixins';
 
 @import '../_layout';
 
-/* -------------------------------- 
+/* --------------------------------
 
  BASE
 
@@ -36,7 +36,7 @@
 }
 
 .module-card {
-  width: 800px;
+  // width: 800px;
   height: 75%;
   margin: auto;
   border: 4px solid $primary-blue;
@@ -65,7 +65,7 @@
   border: 4px solid $danger !important;
 }
 
-/* -------------------------------- 
+/* --------------------------------
 
  ANIMATIONS
 
@@ -85,10 +85,10 @@
 
 .translate-down {
   @include transition(all, 1s);
-  @include transform(translate3d(0, 300px,0));  
+  @include transform(translate3d(0, 300px,0));
 }
 
-/* -------------------------------- 
+/* --------------------------------
 
   TEMPLATE-SPECIFIC
 
@@ -103,9 +103,9 @@
 
 .binary-button {
   font-weight: $bold-font-weight !important;
-  font-size: 30px !important;
+  font-size: 20px !important;
   position: absolute;
-  line-height: 50px !important;
+  line-height: 30px !important;
 }
 
 .yes-button {
@@ -121,13 +121,13 @@
 }
 
 .binary-image {
-  height:45vh;
+  height: 30vh;
   max-width: 80%;
 }
 
 .video-module {
   width: 100%;
-  height: 450px;
+  height: 65vh;
 }
 
 .embedded-video {
@@ -143,12 +143,11 @@
 
 .image-choice {
   cursor: pointer;
-  width: 90%;
-  height: 22vh;
+  height: 19vh;
   padding: 3px;
 }
 
-/* -------------------------------- 
+/* --------------------------------
 
   FOOTER
 
@@ -157,7 +156,7 @@
 .toolbar {
   background-color: $white !important;
   color: $font-color !important;
-  height: 60px;
+  height: 40px;
 }
 
 .footer-button {
@@ -271,14 +270,14 @@
   @include transition(all 1s);
 }
 
-/* -------------------------------- 
+/* --------------------------------
 
   F7 OVERRIDES
 
 -------------------------------- */
 
 .swiper-wrapper {
-  align-items: center
+  align-items: center;
 }
 
 .swiper-button-next {

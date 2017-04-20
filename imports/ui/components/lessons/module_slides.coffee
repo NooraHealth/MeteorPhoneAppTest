@@ -76,6 +76,9 @@ Template.Module_slides.helpers
         isCurrent: options.isCurrent module
       }
     else if module.type == "SLIDE"
+      console.log "Module"
+      console.log module
+      console.log module.title
       return {
         module: module
         language: language

@@ -1,14 +1,14 @@
 <template name="Lesson_view_page_binary">
 
-  <div class="card-header large-text center color-blue-noora">
-    {{module.question}}
+  <div class="card-header small-text center color-blue-noora">
+    {{ module.question }}
   </div>
 
   <div class="card-content padding-sm">
     <img src="{{getSrc module.image 'IMAGE'}}" class="center binary-image">
   </div>
 
-  <div class="card-footer large-text">
+  <div class="card-footer small-text">
     {{ > Button (buttonArgs module.options.[1] language) }}
     {{ > Button (buttonArgs module.options.[0] language) }}
   </div>

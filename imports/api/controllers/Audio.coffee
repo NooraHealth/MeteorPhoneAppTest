@@ -27,7 +27,12 @@ class AudioController
     @liveAudio = []
 
   playAudio: ( filename, volume, isSoundEffect, whenFinished, whenPaused )->
-    audio = new Audio filename, volume, whenFinished, whenPaused
+    onLoadError = ( error )->
+      swal {
+        title: "Error loading audio"
+        text: error
+      }
+    audio = new Audio filename, volume, whenFinished, whenPaused, onLoadError
     audio.play()
     @liveAudio.push audio
     if not isSoundEffect
