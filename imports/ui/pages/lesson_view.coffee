@@ -102,7 +102,7 @@ Template.Lesson_view_page.helpers
       }
       progressBar: {
         percent: progress.toString()
-        shouldShow: true
+        shouldShow: false
       }
     }
 

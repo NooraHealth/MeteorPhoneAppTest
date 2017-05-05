@@ -3,9 +3,7 @@
   <div class='swiper-wrapper'>
     <div class='swiper-slide row full-width'>
       {{#each level in levels}}
-        <div class="col-33">
         {{ >Level_thumbnail (levelThumbnailArgs level language levelOptions)}}
-        </div>
       {{/each}}
     </div>
 
