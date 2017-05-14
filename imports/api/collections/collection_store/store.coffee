@@ -1,7 +1,7 @@
 
 { curriculums } = require './curriculums.coffee'
 { lessons } = require './lessons.coffee'
-{ modules } = require './modules_mp4_ogg.coffee'
+{ modules } = require './modules.coffee'
 
 store = {}
 store.curriculums = curriculums
