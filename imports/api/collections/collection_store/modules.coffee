@@ -286,7 +286,7 @@ module.exports.modules = [{
 	"_id": "9NnQW9JrG4ER3cCkw",
 	"type": "VIDEO",
 	"title": "Video",
-	"video": "8fb40118439a412aae27004e6423fd21.mp4"
+	"video": "8fb40118439a412aae27004e6423fd21.webm"
 },
 {
 	"_id": "9uHHppNwM9RByRjx2",
@@ -365,7 +365,7 @@ module.exports.modules = [{
 	"_id": "Av8Kgnin2ibmKQdJu",
 	"type": "VIDEO",
 	"title": "नब्ज",
-	"video": "c9d9647aa21f402abf56d607ed5fe5eb.mp4",
+	"video": "c9d9647aa21f402abf56d607ed5fe5eb.webm",
 	"is_active": true
 },
 {
@@ -388,7 +388,7 @@ module.exports.modules = [{
 	"_id": "BBzGKzSL9GZnjYW9j",
 	"type": "VIDEO",
 	"title": "ಉಷ್ಣತೆ",
-	"video": "e18eeb43474045a89abb20f367f65e12.mp4",
+	"video": "e18eeb43474045a89abb20f367f65e12.webm",
 	"is_active": true
 },
 {
@@ -437,7 +437,7 @@ module.exports.modules = [{
 	"_id": "EkTmsT5LLby43Sbxd",
 	"type": "VIDEO",
 	"title": "नमस्ते। नूरा हेल्थ केयर कम्पेनियन ट्रेनिंग ऐप में आपका स्वागत है।",
-	"video": "1b3a2164a27e416b94a9213e90788883.mp4",
+	"video": "1b3a2164a27e416b94a9213e90788883.webm",
 	"is_active": true
 },
 {
@@ -455,14 +455,14 @@ module.exports.modules = [{
 	"_id": "FGBcEiJP5m4WuaqvT",
 	"type": "VIDEO",
 	"title": "तापमान",
-	"video": "04748389ee294423981f4ba3d13459d6.mp4",
+	"video": "04748389ee294423981f4ba3d13459d6.webm",
 	"is_active": true
 },
 {
 	"_id": "FuPBiSvv4tT7qFpK8",
 	"type": "VIDEO",
 	"title": "स्वच्छता",
-	"video": "0a7b29e66cb24909afb93d2ae7fe452c.mp4",
+	"video": "0a7b29e66cb24909afb93d2ae7fe452c.webm",
 	"is_active": true
 },
 {
@@ -536,7 +536,7 @@ module.exports.modules = [{
 		null
 	],
 	"options": [],
-	"video": "NooraHealthContent/Video/aaa.mp4",
+	"video": "NooraHealthContent/Video/aaa.webm",
 	"nh_id": "H2wvYqBb76uv4eEzK"
 },
 {
@@ -755,7 +755,7 @@ module.exports.modules = [{
 	"_id": "L8SjFBHmviqBNjpKF",
 	"type": "VIDEO",
 	"title": "ನೂರಾ ಹೆಲ್ತ್ ಆರೈಕೆ ಸಂಗಾತಿ ಕಾರ್ಯಕ್ರಮದ ಟ್ರೈನಿಂಗ್ ಆಪ್",
-	"video": "8b141eccf3dd4dea97ab026c60aaf8e4.mp4",
+	"video": "8b141eccf3dd4dea97ab026c60aaf8e4.webm",
 	"is_active": true
 },
 {
@@ -788,7 +788,7 @@ module.exports.modules = [{
 	"_id": "M7kM36Dxq5SALx4e5",
 	"type": "VIDEO",
 	"title": "Hygiene",
-	"video": "cc8764cc98ca4718beb30bb47bf06f7e.mp4",
+	"video": "cc8764cc98ca4718beb30bb47bf06f7e.webm",
 	"is_active": true
 },
 {
@@ -854,7 +854,7 @@ module.exports.modules = [{
 	"_id": "NvGDBd4JFruPygFni",
 	"type": "VIDEO",
 	"title": "ಉಸಿರಾಟದ ದರ",
-	"video": "688533eef9b3415ca0b16df3e96d7cf2.mp4",
+	"video": "688533eef9b3415ca0b16df3e96d7cf2.webm",
 	"is_active": true
 },
 {
@@ -909,7 +909,7 @@ module.exports.modules = [{
 	"_id": "QJqzGA4bxebePQ9Mv",
 	"type": "VIDEO",
 	"title": "ನಾಡಿಮಿಡಿತ",
-	"video": "9bb09f6651d94c36a79db696ce01f9ec.mp4",
+	"video": "9bb09f6651d94c36a79db696ce01f9ec.webm",
 	"is_active": true
 },
 {
@@ -940,7 +940,7 @@ module.exports.modules = [{
 	"_id": "QsXXatJX567EzEMJN",
 	"type": "VIDEO",
 	"title": "ನೈರ್ಮಾಲ್ಯ ಮತ್ತು ಶುದ್ಧತೆ",
-	"video": "cb4f1a9baafd44c1abadfc7d17ee808c.mp4",
+	"video": "cb4f1a9baafd44c1abadfc7d17ee808c.webm",
 	"is_active": true
 },
 {
@@ -1026,7 +1026,7 @@ module.exports.modules = [{
 	"_id": "Tquk7aHMNekREd2Wx",
 	"type": "VIDEO",
 	"title": "ನೈರ್ಮಾಲ್ಯ ಮತ್ತು ಶುದ್ಧತೆ",
-	"video": "ce310e542bb546dda4f9117aaba2a956.mp4",
+	"video": "ce310e542bb546dda4f9117aaba2a956.webm",
 	"is_active": true
 },
 {
@@ -1080,7 +1080,7 @@ module.exports.modules = [{
 	"_id": "XxsQjx5eiXFC7qHKj",
 	"type": "VIDEO",
 	"title": "Temperature",
-	"video": "96756829c6f64c3daddfda6ccba28a21.mp4",
+	"video": "96756829c6f64c3daddfda6ccba28a21.webm",
 	"is_active": true
 },
 {
@@ -1103,14 +1103,14 @@ module.exports.modules = [{
 	"_id": "Yg8vjtdhQTEfEX2ho",
 	"type": "VIDEO",
 	"title": "ನಾಡಿಮಿಡಿತ",
-	"video": "22533a170bee452e91aeaed71b6ec54a.mp4",
+	"video": "22533a170bee452e91aeaed71b6ec54a.webm",
 	"is_active": true
 },
 {
 	"_id": "ZGhpzAqHfBchNtkvG",
 	"type": "VIDEO",
 	"title": "श्वसन दर",
-	"video": "0c0891b1e2e041c7b13491b56e2d5327.mp4",
+	"video": "0c0891b1e2e041c7b13491b56e2d5327.webm",
 	"is_active": true
 },
 {
@@ -1174,7 +1174,7 @@ module.exports.modules = [{
 	"_id": "a7gByxooHNhfgkSpm",
 	"type": "VIDEO",
 	"title": "Pulse",
-	"video": "bf33570cb24f43d199762764e5fb599c.mp4",
+	"video": "bf33570cb24f43d199762764e5fb599c.webm",
 	"is_active": true
 },
 {
@@ -1197,7 +1197,7 @@ module.exports.modules = [{
 	"_id": "bqTjG256SKbFtWA95",
 	"type": "VIDEO",
 	"title": "ಉಷ್ಣತೆ",
-	"video": "611fe20bebd3450fb4a19816b94c5d8d.mp4",
+	"video": "611fe20bebd3450fb4a19816b94c5d8d.webm",
 	"is_active": true
 },
 {
@@ -1224,7 +1224,7 @@ module.exports.modules = [{
 	"_id": "c8wsLSFJfX2AsTpai",
 	"type": "VIDEO",
 	"title": "ಉಸಿರಾಟದ ದರ",
-	"video": "21082026c38e4a4fb020183be3d000e4.mp4",
+	"video": "21082026c38e4a4fb020183be3d000e4.webm",
 	"is_active": true
 },
 {
@@ -1235,7 +1235,7 @@ module.exports.modules = [{
 		null
 	],
 	"type": "VIDEO",
-	"video": "NooraHealthContent/Video/4Temperature_1.mp4",
+	"video": "NooraHealthContent/Video/4Temperature_1.webm",
 	"start": 0,
 	"options": [],
 	"correct_answer": [],
@@ -1278,7 +1278,7 @@ module.exports.modules = [{
 	"_id": "fSga6kkykcPBpLrRN",
 	"type": "VIDEO",
 	"title": "Hygiene",
-	"video": "c8d1f8437fbe4490933edc93b043d467.mp4",
+	"video": "c8d1f8437fbe4490933edc93b043d467.webm",
 	"is_active": true
 },
 {
@@ -1471,7 +1471,7 @@ module.exports.modules = [{
 	"_id": "kJdTqWCpFGsoaMfch",
 	"type": "VIDEO",
 	"title": "Breathing rate",
-	"video": "b5c4fd9451754bcc906ea0821b03f4d8.mp4",
+	"video": "b5c4fd9451754bcc906ea0821b03f4d8.webm",
 	"is_active": true
 },
 {
@@ -1530,7 +1530,7 @@ module.exports.modules = [{
 	"_id": "nM338PqrXtLDSbaw4",
 	"type": "VIDEO",
 	"title": "Introduction -  English",
-	"video": "b619503608b748758eb4f7c6ae9db35c.mp4",
+	"video": "b619503608b748758eb4f7c6ae9db35c.webm",
 	"is_active": true
 },
 {
@@ -1638,7 +1638,7 @@ module.exports.modules = [{
 	"_id": "qP3RzW8yukLHvLRxd",
 	"type": "VIDEO",
 	"title": "Breathing rate",
-	"video": "924b66bd0be640c78e6696bf142b1a49.mp4",
+	"video": "924b66bd0be640c78e6696bf142b1a49.webm",
 	"is_active": true
 },
 {
@@ -1662,7 +1662,7 @@ module.exports.modules = [{
 	"_id": "qaTXtXjLKiZzPTjY3",
 	"type": "VIDEO",
 	"title": "Video",
-	"video": "60399ab8f758490c8b46339172870241.mp4"
+	"video": "60399ab8f758490c8b46339172870241.webm"
 },
 {
 	"_id": "qypWfbZ5QrM6mgTJB",
@@ -1693,7 +1693,7 @@ module.exports.modules = [{
 	"_id": "r8JqWj5EFnPas2NRd",
 	"type": "VIDEO",
 	"title": "Temperature",
-	"video": "ca0f5f7977e044c7ad9f593482448914.mp4",
+	"video": "ca0f5f7977e044c7ad9f593482448914.webm",
 	"is_active": true
 },
 {
@@ -1737,7 +1737,7 @@ module.exports.modules = [{
 	"_id": "sapGsNoYYQjgah8nr",
 	"type": "VIDEO",
 	"title": "दवा",
-	"video": "3ae2436b6cec435f9cbd0bfe1628ef4f.mp4",
+	"video": "3ae2436b6cec435f9cbd0bfe1628ef4f.webm",
 	"is_active": true
 },
 {
@@ -1778,7 +1778,7 @@ module.exports.modules = [{
 	"_id": "szRtpmjhqv4BF7trb",
 	"type": "VIDEO",
 	"title": "आहार",
-	"video": "1b537028f9c4471facb8a12dceb41b4e.mp4",
+	"video": "1b537028f9c4471facb8a12dceb41b4e.webm",
 	"is_active": true
 },
 {
@@ -1820,7 +1820,7 @@ module.exports.modules = [{
 	"_id": "uhPKLwLSTDazJBNjw",
 	"type": "VIDEO",
 	"title": "Pulse",
-	"video": "589af048d000430c8ac4dc4c57494e13.mp4",
+	"video": "589af048d000430c8ac4dc4c57494e13.webm",
 	"is_active": true
 },
 {

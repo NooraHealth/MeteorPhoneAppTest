@@ -25,9 +25,7 @@ class ImageContent extends ContentInterface
 
     path = @getFullPath filename
     return cloudinary.url path, {
-      resource_type: "image",
-      width: 125,
-      crop: "scale"
+      resource_type: "image"
     }
 
 class SingletonWrapper

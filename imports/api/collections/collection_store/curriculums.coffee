@@ -29,12 +29,9 @@ module.exports.curriculums = [{
 	"language": "Hindi",
 	"beginner": [
 		"L9xf36mgPdr5TsEas",
-		"KyXYxStgcrsmx87XQ",
-		"KyXYxStgcrsmx87XQ",
-		"L9xf36mgPdr5TsEas"
+		"KyXYxStgcrsmx87XQ"
 	],
 	"intermediate": [
-		"j3XNgvcyXFPhvmNNH",
 		"j3XNgvcyXFPhvmNNH",
 		"Q3yLCHKvkyovDbhgA"
 	],
