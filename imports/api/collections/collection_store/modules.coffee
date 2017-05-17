@@ -932,7 +932,7 @@ module.exports.modules = [{
 	"correct_answer": [
 		"No"
 	],
-	"correct_audio": "ad99947d1ebd474392afb116f2c01605.ogg",
+	"correct_audio": "Medication_R_2.ogg",
 	"audio": "4a443804d1a24c9f85c5fb8ebee5e154.ogg",
 	"is_active": true
 },
